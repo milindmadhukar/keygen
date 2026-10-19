@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Keygen Build Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: one reading column; the Redox layout is parsed from its KLE file and drawn as SVG on a PCB-green outline */
+:root{
+  --bg:#f3f2ee; --surface:#fbfaf7; --fg:#22231f; --muted:#64655d; --line:#d6d4cc;
+  --cap:#e9e7e0; --cap-edge:#bdbab0; --legend:#2b2c27; --mod:#dcdad1;
+  --accent:#1f6a72; --accent-cap:#cfe3e2; --accent-edge:#5c9a9f;
+  --pcb:#e2ebe3; --pcb-edge:#7fa58a; --part:#f0e6cf; --part-edge:#b99a55;
+  --warn:#8a5a12; --warn-bg:#f6ead2;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#191a17; --surface:#20211e; --fg:#e8e7e1; --muted:#a2a397; --line:#383a33;
+  --cap:#2d2f2a; --cap-edge:#4a4c44; --legend:#e6e5de; --mod:#363832;
+  --accent:#7cc3c6; --accent-cap:#1f3f41; --accent-edge:#4f8f93;
+  --pcb:#1c2a21; --pcb-edge:#4c7a5a; --part:#3a3220; --part-edge:#9a7f45;
+  --warn:#e2b26a; --warn-bg:#33291a;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#191a17; --surface:#20211e; --fg:#e8e7e1; --muted:#a2a397; --line:#383a33;
+  --cap:#2d2f2a; --cap-edge:#4a4c44; --legend:#e6e5de; --mod:#363832;
+  --accent:#7cc3c6; --accent-cap:#1f3f41; --accent-edge:#4f8f93;
+  --pcb:#1c2a21; --pcb-edge:#4c7a5a; --part:#3a3220; --part-edge:#9a7f45;
+  --warn:#e2b26a; --warn-bg:#33291a;
+  color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.6}
+.wrap{max-width:980px;margin:0 auto;padding-inline:20px;padding-block:40px 80px}
+.prose{max-width:66ch}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.15;margin:0}
+h1{font-size:clamp(2rem,5vw,3.1rem);font-weight:700;letter-spacing:-.01em;margin-top:6px}
+h2{font-size:1.6rem;font-weight:700;margin-top:56px}
+h3{font-size:1.1rem;font-weight:700;margin-top:24px}
+p{margin:12px 0}
+.eyebrow{font-family:var(--mono);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.lede{font-size:1.15rem}
+.muted{color:var(--muted)}
+code,.k{font-family:var(--mono);font-size:.88em}
+.k{display:inline-block;padding:0 6px;border:1px solid var(--cap-edge);border-bottom-width:2px;border-radius:4px;background:var(--cap);line-height:1.5;white-space:nowrap}
+.figure{margin-top:20px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;overflow-x:auto}
+.figure svg{display:block;width:100%;height:auto;min-width:680px}
+.cap{font-size:.9rem;color:var(--muted);margin-top:10px}
+.legend{display:flex;flex-wrap:wrap;gap:16px;font-size:.85rem;color:var(--muted);margin-top:10px}
+.sw{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:-2px;margin-right:6px;border:1.5px solid}
+.verdict{margin-top:28px;padding:18px 20px;border-left:4px solid var(--accent);background:var(--surface)}
+.verdict p{margin:6px 0}
+.note{margin-top:16px;padding:12px 16px;border-radius:8px;background:var(--warn-bg);color:var(--fg);font-size:.95rem;max-width:72ch}
+.note strong{color:var(--warn)}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+.tablewrap{overflow-x:auto;margin-top:16px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500}
+td:first-child{font-weight:700}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.total td{border-top:2px solid var(--line);font-weight:700}
+.pill{display:inline-block;font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;padding:1px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.pill.th{border-color:var(--accent-edge);color:var(--accent)}
+.pill.smd{border-color:var(--part-edge);color:var(--warn)}
+.pill.ok{border-color:var(--accent-edge);color:var(--accent)}
+.pill.flag{border-color:var(--part-edge);color:var(--warn)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:16px}
+.cols > div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;min-width:0}
+.cols h3{margin-top:0}
+.cols ul{margin:8px 0 0;padding-left:1.1em}
+.cols li{margin:4px 0}
+ol.steps{padding-left:1.3em;max-width:72ch}
+ol.steps li{margin:12px 0}
+ol.steps strong{font-family:var(--display)}
+ul.refs{list-style:none;padding:0;margin:16px 0 0;display:grid;gap:12px}
+ul.refs li{border-bottom:1px solid var(--line);padding-bottom:12px}
+.src{font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-left:6px}
+blockquote{margin:8px 0 0;padding-left:12px;border-left:2px solid var(--line);color:var(--muted);font-size:.92rem}
+a{color:var(--accent);text-underline-offset:3px}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+pre.mermaid{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;margin-top:16px;overflow-x:auto}
+svg text{font-family:var(--mono)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="eyebrow">Keygen · v4 · Redox fork · 19 Oct 2026</p>
+  <h1>A wireless Redox with a knob, trackpad, OLED and per-key RGB</h1>
+  <p class="lede prose">Keep Redox's key positions and thumb cluster, then redraw the electronics around two nRF52840 controllers. You get Bluetooth to the computer, Bluetooth between the halves, and a cable for either link when you want one. It's a one-off build, so every feature goes in now.</p>
+
+  <div class="verdict prose">
+    <p><strong>Good news:</strong> Redox's thumb cluster is already a 2×2 block, two 1u keys over two 1.5u keys and rotated 30°, plus one 1.25u key. That's the Manuform-style block you wanted, on a flat board.</p>
+    <p><strong>Controller:</strong> one nRF52840 per half (nice!nano v2 or a SuperMini clone, both on the Pro Micro footprint Redox already uses). Firmware is ZMK, the only mature firmware that does Bluetooth split.</p>
+    <p><strong>What you reuse:</strong> Redox is MIT-licensed, so the fork is fine. The key coordinates and outline carry over. The copper doesn't: rev1 is a 2018 KiCad 5 board with solder-in switches and no LEDs, so the schematic and routing get redone in KiCad 9. That's the PCB learning you wanted.</p>
+  </div>
+
+  <h2>The layout</h2>
+  <p class="prose">This is drawn from Redox's own layout file (<code>redox-layout.json</code>), so the positions are the real ones. QWERTY is untouched. The bottom row follows the Kinesis pattern you like.</p>
+  <div class="figure" role="img" aria-label="Redox layout with QWERTY legends, a knob replacing the left inner top key, OLED and controller on the left inner edge, and a trackpad beside the right thumb cluster">
+    <svg id="full" viewBox="0 0 960 380"></svg>
+  </div>
+  <div class="legend">
+    <span><span class="sw" style="background:var(--cap);border-color:var(--cap-edge)"></span>QWERTY, unchanged</span>
+    <span><span class="sw" style="background:var(--mod);border-color:var(--cap-edge)"></span>Modifier / moved</span>
+    <span><span class="sw" style="background:var(--accent-cap);border-color:var(--accent-edge)"></span>Redox thumb block (2×2 + 1.25u)</span>
+    <span><span class="sw" style="background:var(--part);border-color:var(--part-edge)"></span>New parts</span>
+  </div>
+  <p class="cap">The left inner top key becomes the EC11 knob. On the right, the same spot gets an optional second encoder footprint. The halves are drawn further apart than they'd sit, to make room for the trackpad.</p>
+
+  <div class="tablewrap"><table>
+    <thead><tr><th>Thumb key</th><th>Left</th><th>Right</th><th>Reach</th></tr></thead>
+    <tbody>
+      <tr><td>1.5u, hand side (rest)</td><td><span class="k">Backspace</span></td><td><span class="k">Space</span></td><td>where the thumb rests</td></tr>
+      <tr><td>1.5u, centre side</td><td><span class="k">Del</span></td><td><span class="k">Enter</span></td><td>one step</td></tr>
+      <tr><td>1u, top row</td><td><span class="k">Ctrl</span> <span class="k">Alt</span></td><td><span class="k">Alt</span> <span class="k">Ctrl</span></td><td>one step up</td></tr>
+      <tr><td>1.25u, toward the palm</td><td><span class="k">Super</span></td><td><span class="k">Fn</span></td><td>curl in; fine for held keys</td></tr>
+    </tbody>
+  </table></div>
+  <p class="cap">Fn layer: arrows on <span class="k">I</span> <span class="k">J</span> <span class="k">K</span> <span class="k">L</span>, F-keys on the number row, plus Bluetooth profile switching and the USB/Bluetooth toggle.</p>
+
+  <h2>Bluetooth and wired, both</h2>
+  <p class="prose">There are two separate links, and each can be wireless or wired. Wireless between the halves needs a controller in each half. A single controller with a cable to the other half can't go wireless, so it's two nRF52840s.</p>
+  <pre class="mermaid">
+flowchart LR
+  PC["Computer / phone / tablet"]
+  L["LEFT half · central<br/>nRF52840 · knob · OLED"]
+  R["RIGHT half · peripheral<br/>nRF52840 · trackpad"]
+  PC <-- "Bluetooth (up to 5 paired devices)" --> L
+  PC <-- "USB-C cable" --> L
+  L <-- "Bluetooth split (default)" --> R
+  L <-. "TRRS cable, wired-split firmware" .-> R
+  </pre>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Link</th><th>Wireless</th><th>Wired</th><th>Switching</th></tr></thead>
+    <tbody>
+      <tr><td>Keyboard ↔ computer</td><td>Bluetooth, 5 profiles</td><td>USB-C on the left half</td><td><span class="pill ok">live</span> One key toggles USB/Bluetooth, and plugging in USB takes priority.</td></tr>
+      <tr><td>Left ↔ right half</td><td>Bluetooth (BLE split)</td><td>TRRS cable, full-duplex UART</td><td><span class="pill flag">reflash</span> ZMK fixes this at build time, so swapping means dropping a different firmware file on the board.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note prose"><strong>Limit:</strong> ZMK supports wired split since v0.3 (Aug 2025), but only one split transport per firmware build. It won't switch automatically between cable and Bluetooth. The hardware here supports both. Keep two firmware files and swap with drag-and-drop over USB, which takes about 30 seconds. A community transport called <a href="https://github.com/damex/zmk-feature-split-esb" target="_blank" rel="noopener">zmk-feature-split-esb</a> does mix wired and wireless, but it isn't official.</div>
+  <p class="cap">The TRRS cable carries only ground, TX and RX, never battery power. Each half has its own battery, so the two batteries never get tied together. That also makes plugging the cable in or out safe.</p>
+
+  <h2>Redox rev1 → Keygen: what changes</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Part</th><th>Redox rev1 (2018)</th><th>Keygen</th></tr></thead>
+    <tbody>
+      <tr><td>Key positions</td><td>70 keys, 7×5 per half</td><td>Kept exactly; import <code>redox-layout.json</code> with the KB Placer plugin</td></tr>
+      <tr><td>Controller</td><td>Pro Micro (ATmega32U4)</td><td>nice!nano v2 / SuperMini nRF52840 on the same footprint, socketed, plus pads for its 3 extra inner pins</td></tr>
+      <tr><td>Switches</td><td>MX/Alps, solder-in</td><td>Kailh MX hotswap sockets</td></tr>
+      <tr><td>Diodes</td><td>1N4148, through-hole, dual-sided</td><td>1N4148 through-hole (DO-35) kept</td></tr>
+      <tr><td>RGB</td><td>optional 14 WS2812B underglow via wires</td><td>SK6812MINI-E under every key + 6 underglow per half, on one chain</td></tr>
+      <tr><td>Link</td><td>TRRS serial</td><td>TRRS kept (wired-split UART) + Bluetooth</td></tr>
+      <tr><td>Power</td><td>USB only</td><td>LiPo per half, power slide switch, LED power cut-off</td></tr>
+      <tr><td>New</td><td>none</td><td>EC11 knob (left), OLED/nice!view header (left), Cirque 40 mm trackpad (right), optional right encoder</td></tr>
+      <tr><td>PCB</td><td>one reversible board for both halves</td><td>separate left and right boards, because the halves have different parts</td></tr>
+      <tr><td>Case</td><td>rev1 3D-printed cases</td><td>new case, since the board grows on the inner edge. Export the 3D model from KiCad into Fusion, as in the Modular build.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Parts per half</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Part</th><th>Left</th><th>Right</th><th>Mount</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>nRF52840 module (nice!nano v2 or SuperMini)</td><td class="num">1</td><td class="num">1</td><td><span class="pill th">header</span></td><td>Socket it with Mill-Max pins. SuperMini clones use the <code>nice_nano_v2</code> board target, but quality varies, so buy a spare.</td></tr>
+      <tr><td>MX switch + Kailh hotswap socket</td><td class="num">34</td><td class="num">35</td><td><span class="pill smd">hand-solder</span></td><td>Big pads, easy with an iron.</td></tr>
+      <tr><td>1N4148 diode</td><td class="num">34</td><td class="num">35</td><td><span class="pill th">TH</span></td><td>DO-35, as Redox already uses.</td></tr>
+      <tr><td>SK6812MINI-E LED</td><td class="num">40</td><td class="num">41</td><td><span class="pill smd">SMD</span></td><td>Per-key plus 6 underglow. The one unavoidably SMD part. Hand-solder as in the Corne video, or have JLCPCB assemble these.</td></tr>
+      <tr><td>P-MOSFET (AO3401) + 10 kΩ pull-up</td><td class="num">1</td><td class="num">1</td><td><span class="pill smd">SOT-23</span></td><td>Cuts LED power entirely. Even dark, each SK6812 draws about 1 mA, so 40 LEDs would be 40 mA all the time.</td></tr>
+      <tr><td>LiPo cell + JST-PH 2-pin</td><td class="num">1</td><td class="num">1</td><td><span class="pill th">TH</span></td><td>1000–2000 mAh flat pouch under the PCB. The Dactyl CC builder uses 18650 cells for 4+ months of battery.</td></tr>
+      <tr><td>Slide power switch (SS12D00)</td><td class="num">1</td><td class="num">1</td><td><span class="pill th">TH</span></td><td>In the battery line. The nice!nano has a charger but no switch.</td></tr>
+      <tr><td>Reset button 6 mm</td><td class="num">1</td><td class="num">1</td><td><span class="pill th">TH</span></td><td>Same as Redox.</td></tr>
+      <tr><td>TRRS jack PJ-320A</td><td class="num">1</td><td class="num">1</td><td><span class="pill th">TH</span></td><td>Same as Redox. GND/TX/RX only.</td></tr>
+      <tr><td>EC11 rotary encoder</td><td class="num">1</td><td class="num">(1)</td><td><span class="pill th">TH</span></td><td>Left is populated. The right footprint is optional, so check ZMK's support for encoders on the peripheral half first.</td></tr>
+      <tr><td>Display header</td><td class="num">1</td><td class="num">–</td><td><span class="pill th">header</span></td><td>Put footprints for both a 0.91" SSD1306 OLED (I²C, 4-pin) and a nice!view (SPI, 5-pin), then fit one. A nice!view uses microamps; an OLED is about 10 mA while on.</td></tr>
+      <tr><td>Cirque TM040040 + adapter board</td><td class="num">–</td><td class="num">1</td><td><span class="pill th">header</span></td><td>The trackpad's 12-pin 0.5 mm FFC is fiddly. An open adapter like <a href="https://github.com/Keycapsss/cirque-trackpad" target="_blank" rel="noopener">Keycapsss cirque-trackpad</a> turns it into a pin header.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="cap">For two complete keyboards, double the counts. JLCPCB's minimum is 5 boards per design, so one order of 5 left + 5 right covers both keyboards with spares.</p>
+
+  <h3>Pin budget on the nRF52840 (21 usable GPIO)</h3>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Function</th><th>Left</th><th>Right</th></tr></thead>
+    <tbody>
+      <tr><td>Key matrix, 5 rows × 7 columns</td><td class="num">12</td><td class="num">12</td></tr>
+      <tr><td>Encoder A/B</td><td class="num">2</td><td class="num">(2)</td></tr>
+      <tr><td>Display (OLED I²C 2, or nice!view SPI 3)</td><td class="num">2–3</td><td class="num">–</td></tr>
+      <tr><td>Cirque trackpad (I²C + data-ready)</td><td class="num">–</td><td class="num">3</td></tr>
+      <tr><td>RGB data</td><td class="num">1</td><td class="num">1</td></tr>
+      <tr><td>LED power MOSFET gate</td><td class="num">1</td><td class="num">1</td></tr>
+      <tr><td>Wired split UART TX/RX</td><td class="num">2</td><td class="num">2</td></tr>
+      <tr class="total"><td>Total</td><td class="num">20–21</td><td class="num">19–21</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note prose"><strong>Tight but it fits.</strong> Three of the 21 pins are the nice!nano's inner pads (P1.01, P1.02, P1.07), so the footprint must include them. Two others (P0.09, P0.10) are NFC pins that only work as GPIO after a config flag, so give them slow jobs like a matrix row. If you run out, a 74HC595 shift register on the columns frees about 5 pins, and ZMK supports it.</div>
+
+  <h2>Firmware: ZMK</h2>
+  <div class="cols">
+    <div>
+      <h3>Supported out of the box</h3>
+      <ul>
+        <li>Bluetooth split, USB + 5 Bluetooth profiles</li>
+        <li>Full-duplex wired split (v0.3+)</li>
+        <li>Encoder on the central half</li>
+        <li>SSD1306 OLED and nice!view displays</li>
+        <li>Trackpad on the peripheral half: input from the right half is forwarded to the left (merged Dec 2024)</li>
+        <li>ZMK Studio for live remapping, which the Dactyl CC builder calls a must-have</li>
+        <li>RGB underglow, with external power cut-off and auto-off when idle</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Needs community modules or care</h3>
+      <ul>
+        <li><strong>Per-key RGB effects:</strong> official ZMK treats all LEDs as one underglow strip. For per-key or reactive effects use <a href="https://github.com/dima-m711/zmk-rgb-matrix" target="_blank" rel="noopener">zmk-rgb-matrix</a> or <a href="https://github.com/jagonmo/zmk-pro-rgb" target="_blank" rel="noopener">zmk-pro-rgb</a>.</li>
+        <li><strong>Cirque driver:</strong> a community input module such as <a href="https://github.com/tokyo2006/cirque-input-module" target="_blank" rel="noopener">cirque-input-module</a>.</li>
+        <li><strong>Battery and RGB:</strong> per-key RGB drains a battery in hours, not weeks. Plan to light it only when USB is plugged in.</li>
+        <li><strong>Encoder on the right half:</strong> a 2024 Redox builder found it unsupported. Verify against current ZMK before relying on it.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>How to go about it</h2>
+  <ol class="steps">
+    <li><strong>Fit test.</strong> Print the Redox layout 1:1 from <code>redox-layout.json</code> (keyboard-layout-editor.com renders it). Rest your hand on it and confirm the 2×2 thumb block and the trackpad spot work for your hands. Read the "15 geometries vs hand anatomy" post first if you can.</li>
+    <li><strong>Open Redox in KiCad 9.</strong> Clone <a href="https://github.com/mattdibi/redox-keyboard" target="_blank" rel="noopener">mattdibi/redox-keyboard</a> and open <code>redox/pcb/rev1.0/kicad_files</code>. KiCad upgrades the 2018 files. Use it to copy the outline and mounting holes, and to see how Mattia routed the matrix.</li>
+    <li><strong>New schematic, per half.</strong> Use the Scotto KiCad library: hotswap MX + 1N4148 matrix, the SK6812 chain behind a MOSFET, nice!nano with all 21 pins, encoder, display headers, Cirque header, TRRS (GND/TX/RX), battery JST, power switch, reset.</li>
+    <li><strong>Place and route.</strong> Place keys from the KLE file with KB Placer, then grow the inner edge for the controller, OLED and trackpad. Route rows on the front and columns on the back. Run DRC.</li>
+    <li><strong>Bring-up board first, optional.</strong> If you'd rather not risk the full order, a small board with 4 keys, the encoder, OLED, 4 LEDs and the nice!nano costs a few dollars and tests every circuit.</li>
+    <li><strong>Order and build.</strong> JLCPCB, HASL finish, 5 + 5 boards, LED assembly optional. Flash the left and right ZMK UF2 files, plus the wired-split variants.</li>
+    <li><strong>Case and tenting.</strong> Export the board's 3D model into Fusion and design a case with a battery pocket, foam, and weight in the base. For tenting, use screw-in legs like the Corne case, or magnetic phone stands like a wireless Sofle builder on Reddit.</li>
+  </ol>
+
+  <h2>Checklist before ordering</h2>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Check</th><th>Why</th><th>Source</th></tr></thead>
+    <tbody>
+      <tr><td>Footprint includes the nRF52840's extra pins</td><td>The plain Pro Micro footprint leaves you 3 pins short.</td><td>Pin budget</td></tr>
+      <tr><td>Pin functions checked</td><td>"Not all pins are created equal." That includes the NFC pins and which pins can drive the LED data line.</td><td>Modular build</td></tr>
+      <tr><td>LED power on its own MOSFET</td><td>Otherwise the LEDs drain the battery even when they're off.</td><td>SK6812 idle current</td></tr>
+      <tr><td>No battery power over TRRS</td><td>Tying two batteries together through a jack can short them while you plug the cable in.</td><td>Design choice</td></tr>
+      <tr><td>Display refresh capped</td><td>The Dungeon Delver had 1 s of key lag until he limited OLED updates and set I²C to 400 kHz.</td><td>Dungeon Delver</td></tr>
+      <tr><td>Test the LED chain one column at a time</td><td>One bad SK6812 joint kills every LED after it.</td><td>Corne guide</td></tr>
+      <tr><td>Socketed controller</td><td>A dead nRF52840 becomes a swap, not a desolder.</td><td>Corne guide</td></tr>
+      <tr><td>Weight in the case</td><td>Halves slide when you push inward. The Wolf builder also wished his were heavier.</td><td>Dactyl build, Wolf</td></tr>
+      <tr><td>Antenna clear of copper</td><td>Keep ground pour and the metal case away from the nRF52840's antenna end, or range drops.</td><td>nRF52840 module layout</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>Ideas from r/ErgoMechKeyboards</h2>
+  <p class="prose">Pulled through Reddit's RSS feeds, since Reddit blocks automated browsers. These are builds close to what you're making.</p>
+  <ul class="refs">
+    <li><a href="https://www.reddit.com/r/ErgoMechKeyboards/comments/1fpv3d7/third_redox_first_wireless/" target="_blank" rel="noopener">Third Redox, First Wireless</a> · <a href="https://www.reddit.com/r/ErgoMechKeyboards/comments/wafgyf/diy_wireless_redox_using_nicenano/" target="_blank" rel="noopener">DIY Wireless Redox using nice!nano</a> · <a href="https://www.reddit.com/r/ErgoMechKeyboards/comments/qr0ke2/wireless_redox_with_nicenano/" target="_blank" rel="noopener">Wireless Redox with nice!nano</a><br><span class="muted">Shows the plan works: "the nrf52840 was basically a drop in replacement for a pro-micro" on the Redox v1 PCB. The same builder hit the right-hand encoder limit.</span></li>
+    <li><a href="https://www.reddit.com/r/ErgoMechKeyboards/comments/1njgf5x/daedalus_a_fully_open_source_ergonomic_keyboard/" target="_blank" rel="noopener">Daedalus</a> (<a href="https://github.com/perseus333/daedalus-keyboard" target="_blank" rel="noopener">repo</a>)<br><span class="muted">Fully open-source ergo board with a trackpad and encoder. Read its trackpad circuit before drawing yours.</span></li>
+    <li><a href="https://www.reddit.com/r/ErgoMechKeyboards/comments/1m4gunj/harite_v30_directional_keyboard/" target="_blank" rel="noopener">Harite v3.0</a> (<a href="https://github.com/dlip/harite" target="_blank" rel="noopener">repo</a>)<br><span class="muted">"Bluetooth wireless or USB-C wired", ZMK Studio, dual trackpads, fully open source. The closest open reference for the wireless + trackpad combination.</span></li>
+    <li><a href="https://www.reddit.com/r/ErgoMechKeyboards/comments/1x8d8sb/introducing_the_wolf_keyboard/" target="_blank" rel="noopener">The Wolf</a><span class="src">your kora</span><br><span class="muted">XIAO nRF52840 + ZMK, 700 mAh per half, "really stable" wireless. About 4.76 mm of column stagger was essential for them. Their one regret was weight.</span></li>
+    <li><a href="https://www.reddit.com/r/ErgoMechKeyboards/comments/1tp0r9s/dactyl_cc_heavy_balanced_and_uncompromising_split/" target="_blank" rel="noopener">Dactyl CC</a><span class="src">your kora</span><br><span class="muted">A Kinesis-geometry fan who types 6–7 hours a day. Wireless ZMK with 18650 cells lasts 4+ months; they charge on a separate charger board. Remapping through Vial or ZMK Studio is their one hard requirement.</span></li>
+    <li><a href="https://www.reddit.com/r/ErgoMechKeyboards/comments/1ls6857/my_latest_project_the_elora_hyper_case/" target="_blank" rel="noopener">Elora Hyper Case</a><br><span class="muted">A small-handed user who tried Glove80, Kinesis and Moonlander, and "really loved the aggressive staggering of the Kyria for my small hands" but kept a number row. Worth comparing to Redox's stagger in your fit test.</span></li>
+    <li><a href="https://www.reddit.com/r/ErgoMechKeyboards/comments/1l0j5vs/hillsideview_46_with_oleds_encoders_ldsa_keycaps/" target="_blank" rel="noopener">HillsideView 46 with OLEDs + encoders</a> · <a href="https://www.reddit.com/r/ErgoMechKeyboards/comments/1j7xctx/first_wireless/" target="_blank" rel="noopener">Wireless Sofle with encoders</a><br><span class="muted">OLED and EC11 placement on flat splits. The Sofle uses "basic magnetic phone stands for tenting", a cheap stand idea.</span></li>
+    <li><a href="https://www.reddit.com/r/ErgoMechKeyboards/comments/1x48qa5/i_modeled_15_keyboard_geometries_and_human_hand/" target="_blank" rel="noopener">15 keyboard geometries vs hand anatomy</a><span class="src">your kora · not read</span><br><span class="muted">Reddit rate-limited this one every time. Open it yourself before the fit test.</span></li>
+  </ul>
+
+  <h2>References</h2>
+  <ul class="refs">
+    <li><a href="https://github.com/mattdibi/redox-keyboard" target="_blank" rel="noopener">mattdibi/redox-keyboard</a><span class="src">your kora · MIT</span><br><span class="muted">rev1.0 has KiCad 5 sources. rev2.0WHS has only Gerbers and a PDF schematic, so fork rev1.</span></li>
+    <li><a href="https://zmk.dev/docs/features/split-keyboards" target="_blank" rel="noopener">ZMK split keyboards</a> · <a href="https://zmk.dev/docs/config/split" target="_blank" rel="noopener">split config</a> · <a href="https://github.com/zmkfirmware/zmk/pull/2766" target="_blank" rel="noopener">wired split PR #2766</a> · <a href="https://zmk.dev/docs/development/hardware-integration/pointing" target="_blank" rel="noopener">pointing devices</a> · <a href="https://zmk.dev/docs/features/lighting" target="_blank" rel="noopener">lighting</a></li>
+    <li><a href="https://www.youtube.com/watch?v=8WXpGTIbxlQ" target="_blank" rel="noopener">How to Design Keyboard PCBs with KiCad</a><span class="src">your kora</span><br><span class="muted">Scotto library, Fabrication Toolkit, HASL. Your step 3.</span></li>
+    <li><a href="https://www.youtube.com/watch?v=vzDTdLaAzXc" target="_blank" rel="noopener">How to Build a Corne</a><span class="src">your kora</span><blockquote>"…fit everything through hole if possible… the 4 thumb cluster of keys in each hand and the rotary encoders… tenting"</blockquote><span class="muted">Covers SK6812MINI-E soldering, socketing and tenting legs.</span></li>
+    <li><a href="https://www.youtube.com/watch?v=KwFWBdfZKnI" target="_blank" rel="noopener">I Built My DREAM Keyboard from Scratch</a> · <a href="https://www.youtube.com/watch?v=CZaAxaHlsBY" target="_blank" rel="noopener">Dungeon Delver</a><span class="src">your kora</span><br><span class="muted">KLE → KB Placer → KiCad → Fusion pipeline, plus the mistakes in the checklist.</span></li>
+    <li><a href="https://kbd.news/Dilemma-Max-2139.html" target="_blank" rel="noopener">Dilemma Max</a> · <a href="https://splitkb.com/products/halcyon-elora" target="_blank" rel="noopener">Halcyon Elora</a> · <a href="https://www.cirque.com/glidepoint-circle-trackpads" target="_blank" rel="noopener">Cirque GlidePoint</a><br><span class="muted">Trackpad and encoder references from the previous version of this page.</span></li>
+  </ul>
+</div>
+
+<script>
+const NS="http://www.w3.org/2000/svg";
+function el(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e}
+// Redox KLE (mattdibi/redox-keyboard img/redox-layout.json), legends stripped
+const KLE=[[{x:3.5},"",{x:10.5},""],[{y:-0.875,x:2.5},"",{x:1},"",{x:8.5},"",{x:1},""],[{y:-0.875,x:5.5},"",{x:6.5},""],[{y:-0.875,x:0.25,w:1.25},"","",{x:14.5},"",{w:1.25},""],[{y:-0.625,x:6.5},"",{x:4.5},""],[{y:-0.75,x:3.5},"",{x:10.5},""],[{y:-0.875,x:2.5},"",{x:1},"",{x:8.5},"",{x:1},""],[{y:-0.875,x:5.5},"",{x:6.5},""],[{y:-0.875,x:0.25,w:1.25},"","",{x:14.5},"",{w:1.25},""],[{y:-0.625,x:6.5,h:1.5},"",{x:4.5,h:1.5},""],[{y:-0.75,x:3.5},"",{x:10.5},""],[{y:-0.875,x:2.5},"",{x:1},"",{x:8.5},"",{x:1},""],[{y:-0.875,x:5.5},"",{x:6.5},""],[{y:-0.875,x:0.25,w:1.25},"","",{x:14.5},"",{w:1.25},""],[{y:-0.375,x:3.5},"",{x:10.5},""],[{y:-0.875,x:2.5},"",{x:1},"",{x:8.5},"",{x:1},""],[{y:-0.875,x:5.5},"",{x:6.5},""],[{y:-0.875,x:0.25,w:1.25},"","",{x:14.5},"",{w:1.25},""],[{y:-0.375,x:3.5},"",{x:10.5},""],[{y:-0.875,x:2.5},"",{x:12.5},""],[{y:-0.75,x:0.5},"","",{x:14.5},"",""],[{r:15,y:-2.625,x:5.75,w:1.25},""],[{r:30,rx:6.5,ry:4.25,y:-1},"",""],[{h:1.5},"",{h:1.5},""],[{r:-30,rx:13,y:-1,x:-2},"",""],[{x:-2,h:1.5},"",{h:1.5},""],[{r:-15,rx:0,ry:0,y:7.75,x:11.75,w:1.25},""]];
+function parseKLE(rows){const keys=[];let c={x:0,y:0,w:1,h:1,r:0,rx:0,ry:0};const cl={x:0,y:0};
+  for(const row of rows){for(const it of row){if(typeof it==="object"){if(it.r!=null)c.r=it.r;if(it.rx!=null){c.rx=cl.x=it.rx;c.x=cl.x;c.y=cl.y}if(it.ry!=null){c.ry=cl.y=it.ry;c.x=cl.x;c.y=cl.y}if(it.x)c.x+=it.x;if(it.y)c.y+=it.y;if(it.w)c.w=it.w;if(it.h)c.h=it.h}else{keys.push({x:c.x,y:c.y,w:c.w,h:c.h,r:c.r,rx:c.rx,ry:c.ry});c.x+=c.w;c.w=1;c.h=1}}c.y+=1;c.x=c.rx}return keys}
+const keys=parseKLE(KLE);
+// legends in KLE order; kind: s=std, m=mod, t=thumb, e=encoder, o=optional encoder
+const LG=[["3","s"],["8","s"],["2","s"],["4","s"],["7","s"],["9","s"],["5","s"],["6","s"],["=","m"],["1","s"],["0","s"],["-","m"],["","e"],["","o"],
+["E","s"],["I","s"],["W","s"],["R","s"],["U","s"],["O","s"],["T","s"],["Y","s"],["Tab","m"],["Q","s"],["P","s"],["\\","m"],["[","m"],["]","m"],
+["D","s"],["K","s"],["S","s"],["F","s"],["J","s"],["L","s"],["G","s"],["H","s"],["Esc","m"],["A","s"],[";","s"],["'","m"],
+["C","s"],[",","s"],["X","s"],["V","s"],["M","s"],[".","s"],["B","s"],["N","s"],["Shft","m"],["Z","s"],["/","s"],["Shft","m"],
+["→","m"],["↑","m"],["←","m"],["↓","m"],["`","m"],["\\","m"],["Home","m"],["End","m"],
+["Supr","t"],["Ctrl","t"],["Alt","t"],["Bksp","t"],["Del","t"],["Alt","t"],["Ctrl","t"],["Entr","t"],["Spc","t"],["Fn","t"]];
+// fix bottom-row order: KLE order there is x3.5,x15,x2.5,x16,x0.5,x1.5,x17,x18
+LG[52]=["→","m"];LG[53]=["↑","m"];LG[54]=["←","m"];LG[55]=["↓","m"];LG[56]=["`","m"];LG[57]=["Caps","m"];LG[58]=["Home","m"];LG[59]=["End","m"];
+const U=44, GAP=1.6, OX=14, OY=20; // px per u; extra gap between halves (u)
+const isRight=k=>{const cx=k.rx+(k.x+k.w/2-k.rx);return k.r<0||(k.r===0&&cx>9.5)||(k.r===-15)};
+const svg=document.getElementById("full");
+const pcbL=el("g",{},svg), pcbR=el("g",{},svg), g=el("g",{},svg);
+const ptsL=[],ptsR=[];
+function tf(x,y,k,shift){const a=k.r*Math.PI/180,dx=x-k.rx,dy=y-k.ry;return [OX+(k.rx+dx*Math.cos(a)-dy*Math.sin(a)+shift)*U, OY+(k.ry+dx*Math.sin(a)+dy*Math.cos(a))*U]}
+keys.forEach((k,i)=>{
+  const right=isRight(k), sh=right?GAP:0, [lab,kind]=LG[i]||["","s"];
+  const fills={s:["var(--cap)","var(--cap-edge)"],m:["var(--mod)","var(--cap-edge)"],t:["var(--accent-cap)","var(--accent-edge)"],e:["var(--part)","var(--part-edge)"],o:["var(--part)","var(--part-edge)"]};
+  const [f,s]=fills[kind];
+  const [px,py]=tf(k.x,k.y,k,sh);
+  const grp=el("g",{transform:`translate(${px} ${py}) rotate(${k.r})`},g);
+  const r=el("rect",{x:2,y:2,width:k.w*U-4,height:k.h*U-4,rx:6,fill:f,stroke:s,"stroke-width":1.5},grp);
+  if(kind==="o")r.setAttribute("stroke-dasharray","4 3");
+  if(kind==="e"||kind==="o"){el("circle",{cx:k.w*U/2,cy:k.h*U/2,r:13,fill:"var(--cap)",stroke:"var(--part-edge)","stroke-width":1.5},grp);el("line",{x1:k.w*U/2,y1:k.h*U/2-12,x2:k.w*U/2,y2:k.h*U/2-4,stroke:"var(--legend)","stroke-width":2},grp)}
+  else if(lab){const fs=lab.length>3?10:13.5;el("text",{x:k.w*U/2,y:k.h*U/2+fs/3,"text-anchor":"middle","font-size":fs,fill:"var(--legend)","font-weight":kind==="t"?700:500},grp).textContent=lab}
+  const P=right?ptsR:ptsL;[[k.x-0.12,k.y-0.12],[k.x+k.w+0.12,k.y-0.12],[k.x+k.w+0.12,k.y+k.h+0.12],[k.x-0.12,k.y+k.h+0.12]].forEach(([x,y])=>P.push(tf(x,y,k,sh)));
+});
+const at=(x,y)=>[OX+x*U,OY+y*U];
+function part(x,y,w,h,label,dark,P){const [px,py]=at(x,y);el("rect",{x:px,y:py,width:w*U,height:h*U,rx:4,fill:dark?"var(--legend)":"var(--part)",stroke:"var(--part-edge)","stroke-width":1.5},g);
+  const cx=px+w*U/2,cy=py+h*U/2;el("text",{x:cx,y:cy+3,"text-anchor":"middle","font-size":9,fill:dark?"var(--cap)":"var(--legend)",transform:`rotate(-90 ${cx} ${cy})`},g).textContent=label;
+  [[x-0.12,y-0.12],[x+w+0.12,y-0.12],[x+w+0.12,y+h+0.12],[x-0.12,y+h+0.12]].forEach(p=>P.push(at(...p)))}
+// left inner edge: controller + OLED
+part(7.62,-0.05,0.85,1.75,"nRF52840",false,ptsL);
+part(7.66,1.85,0.75,1.85,"OLED",true,ptsL);
+// right inner edge: controller (mirrored), trackpad toward centre
+part(19.5-8.47+GAP,-0.05,0.85,1.75,"nRF52840",false,ptsR);
+const tr=(40/19)/2, tcx=10.0+GAP*0.35, tcy=3.0;
+{const [cx,cy]=at(tcx,tcy);el("circle",{cx,cy,r:tr*U,fill:"var(--part)",stroke:"var(--part-edge)","stroke-width":1.5},g);
+ el("circle",{cx,cy,r:tr*U-9,fill:"none",stroke:"var(--part-edge)","stroke-width":1,"stroke-dasharray":"2 4"},g);
+ el("text",{x:cx,y:cy+4,"text-anchor":"middle","font-size":10,fill:"var(--legend)"},g).textContent="trackpad";
+ for(let i=0;i<20;i++){const a=i*Math.PI/10;ptsR.push(at(tcx+(tr+0.12)*Math.cos(a),tcy+(tr+0.12)*Math.sin(a)))}}
+// battery pockets (dashed, underneath)
+function hull(pts){pts=pts.slice().sort((a,b)=>a[0]-b[0]||a[1]-b[1]);const cr=(o,a,b)=>(a[0]-o[0])*(b[1]-o[1])-(a[1]-o[1])*(b[0]-o[0]);const lo=[],up=[];for(const p of pts){while(lo.length>=2&&cr(lo[lo.length-2],lo[lo.length-1],p)<=0)lo.pop();lo.push(p)}for(const p of pts.reverse()){while(up.length>=2&&cr(up[up.length-2],up[up.length-1],p)<=0)up.pop();up.push(p)}return lo.slice(0,-1).concat(up.slice(0,-1))}
+for(const [P,grp] of [[ptsL,pcbL],[ptsR,pcbR]]){const h=hull(P);el("path",{d:"M"+h.map(p=>p.map(v=>v.toFixed(1)).join(" ")).join(" L ")+" Z",fill:"var(--pcb)",stroke:"var(--pcb-edge)","stroke-width":1.5,"stroke-linejoin":"round"},grp)}
+const lab=(x,y,t,a="middle")=>{const [px,py]=at(x,y);el("text",{x:px,y:py,"text-anchor":a,"font-size":11,fill:"var(--muted)"},svg).textContent=t};
+lab(3.8,7.9,"LEFT · central · USB-C + Bluetooth to host");
+lab(15.6+GAP,7.9,"RIGHT · peripheral");
+lab(7.0,-0.15,"knob","middle");
+lab(12.5+GAP,-0.15,"optional encoder","middle");
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
+<script>
+const dark=matchMedia("(prefers-color-scheme: dark)").matches;
+mermaid.initialize({startOnLoad:true,theme:dark?"dark":"default"});
+</script>
+</body>
+</html>
