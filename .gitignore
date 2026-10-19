@@ -6,3 +6,7 @@ _autosave-*
 __pycache__/
 *.lck
 \#auto_saved_files\#
+tools/freerouting*.jar
+pcb/*.dsn
+pcb/*.ses
+pcb/fp-info-cache
