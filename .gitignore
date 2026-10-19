@@ -10,3 +10,4 @@ tools/freerouting*.jar
 pcb/*.dsn
 pcb/*.ses
 pcb/fp-info-cache
+.history/
