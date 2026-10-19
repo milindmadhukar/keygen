@@ -24,6 +24,7 @@ OFF = (15.0, 15.0)            # shift the whole design into positive coordinates
 MIRROR_X = 19.5 * U           # left x  <->  right x  (Redox is mirror-symmetric about 9.75u)
 
 FP_DIRS = {
+    "keygen": ROOT / "pcb/lib/keygen.pretty",
     "marbastlib-mx": ROOT / "lib/marbastlib/footprints/marbastlib-mx.pretty",
     "marbastlib-various": ROOT / "lib/marbastlib/footprints/marbastlib-various.pretty",
     "marbastlib-xp-promicroish": ROOT / "lib/marbastlib/footprints/marbastlib-xp-promicroish.pretty",

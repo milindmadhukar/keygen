@@ -3,5 +3,6 @@
   (lib (name "marbastlib-mx")(type "KiCad")(uri "${KIPRJMOD}/../lib/marbastlib/footprints/marbastlib-mx.pretty")(options "")(descr ""))
   (lib (name "marbastlib-various")(type "KiCad")(uri "${KIPRJMOD}/../lib/marbastlib/footprints/marbastlib-various.pretty")(options "")(descr ""))
   (lib (name "marbastlib-xp-promicroish")(type "KiCad")(uri "${KIPRJMOD}/../lib/marbastlib/footprints/marbastlib-xp-promicroish.pretty")(options "")(descr ""))
+  (lib (name "keygen")(type "KiCad")(uri "${KIPRJMOD}/lib/keygen.pretty")(options "")(descr "Keygen project footprints"))
   (lib (name "Keebio-Parts")(type "KiCad")(uri "${KIPRJMOD}/../lib/Keebio-Parts.pretty")(options "")(descr ""))
 )

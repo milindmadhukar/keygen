@@ -66,7 +66,7 @@ UNDERGLOW = 6
 
 FP = {
     "mcu": "marbastlib-xp-promicroish:nice_nano_H_USBup",
-    "sw": "marbastlib-mx:SW_MX_HS_CPG151101S11_{}u",
+    "sw": "keygen:SW_MX_HS_CPG151101S11_{}u",      # marbastlib + switch outline (see keygen_footprints)
     "diode": "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal",
     "led": "LED_SMD:LED_SK6812MINI-E_3.2x2.8mm_P1.5mm_ReverseMount",
     "cap": "Capacitor_SMD:C_0805_2012Metric",
@@ -134,6 +134,24 @@ def flatten(child_lib, child, parent_name):
     for n in find(p, "symbol"):
         u = copy.deepcopy(n); u[1] = u[1].replace(parent_name, child, 1); out.append(u)
     return out
+
+def keygen_footprints():
+    """pcb/lib/keygen.pretty: marbastlib's MX hotswap footprints plus the 14 mm switch body on
+    B.SilkS, which lands on the front silkscreen because the footprint is placed flipped."""
+    from sexp import parse as sparse
+    src = ROOT / "lib/marbastlib/footprints/marbastlib-mx.pretty"
+    out = PCB / "lib/keygen.pretty"; out.mkdir(parents=True, exist_ok=True)
+    for size in ("1", "1.25", "1.5"):
+        name = f"SW_MX_HS_CPG151101S11_{size}u"
+        fp = sparse((src / f"{name}.kicad_mod").read_text())
+        fp[1] = name
+        for d in find(fp, "descr"): d[1] = d[1] + " (Keygen: 14 mm switch outline on the opposite silkscreen)"
+        h = 7.0
+        corners = [(-h, -h), (h, -h), (h, h), (-h, h)]
+        for a, b in zip(corners, corners[1:] + corners[:1]):
+            fp.append([S("fp_line"), [S("start"), a[0], a[1]], [S("end"), b[0], b[1]],
+                       [S("stroke"), [S("width"), 0.15], [S("type"), S("solid")]], [S("layer"), "B.SilkS"], [S("uuid"), U()]])
+        (out / f"{name}.kicad_mod").write_text(dump(fp) + "\n")
 
 def keygen_lib():
     lib = [S("kicad_symbol_lib"), [S("version"), 20241209], [S("generator"), "keygen_gen_schematic"],
@@ -355,12 +373,14 @@ def write_project(out, proj):
         ")\n")
     fps = ["marbastlib-mx", "marbastlib-various", "marbastlib-xp-promicroish"]
     rows = "".join(f'  (lib (name "{f}")(type "KiCad")(uri "{lib}/marbastlib/footprints/{f}.pretty")(options "")(descr ""))\n' for f in fps)
+    rows += '  (lib (name "keygen")(type "KiCad")(uri "${KIPRJMOD}/lib/keygen.pretty")(options "")(descr "Keygen project footprints"))\n'
     rows += f'  (lib (name "Keebio-Parts")(type "KiCad")(uri "{lib}/Keebio-Parts.pretty")(options "")(descr ""))\n'
     (out / "fp-lib-table").write_text("(fp_lib_table\n  (version 7)\n" + rows + ")\n")
 
 
 if __name__ == "__main__":
     keygen_lib()
+    keygen_footprints()
     root = U()
     sheets = {"left": U(), "right": U()}
     for side, sid in sheets.items():
