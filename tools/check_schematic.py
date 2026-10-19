@@ -36,11 +36,25 @@ def erc(sch):
     return [(v["severity"], v["type"], v["description"], [i["description"] for i in v["items"]])
             for s in data["sheets"] for v in s["violations"]]
 
+sch = ROOT / "pcb/keygen.kicad_sch"
+for sev, typ, desc, items in erc(sch):
+    check(False, f"ERC {sev} {typ}: {desc} {items[:2]}")
+all_nets, all_fps = netlist(sch)
 for side in ("left", "right"):
-    sch = ROOT / f"pcb/{side}/keygen-{side}.kicad_sch"
-    for sev, typ, desc, items in erc(sch):
-        check(False, f"{side} ERC {sev} {typ}: {desc} {items[:2]}")
-    nets, fps = netlist(sch)
+    base = g.BASE[side]
+    # Rename this half's refs back to SW1/U1/... and keep only its sheet-local nets.
+    def local(ref):
+        import re
+        m = re.match(r"(#?[A-Z]+)(\d+)$", ref)
+        n = int(m[2])
+        return f"{m[1]}{n - base}" if base < n < base + 100 else None
+    nets = {}
+    for name, nodes in all_nets.items():
+        mine = {(local(r), p) for r, p in nodes if local(r)}
+        if not mine: continue
+        check(len(mine) == len(nodes), f"net {name} mixes left and right parts")
+        nets[name.split("/", 1)[1] if name.startswith(side + "/") else name] = mine
+    fps = {local(r): f for r, f in all_fps.items() if local(r)}
     by_pin = {pin: net for net, pins in nets.items() for pin in pins}
     net_of = lambda ref, pin: by_pin.get((ref, pin))
 

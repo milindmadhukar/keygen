@@ -8,9 +8,11 @@ Bluetooth or USB-C to the host and over Bluetooth or a TRRS cable between halves
 
 - `plan/index.html` — the build plan: layout drawing, connectivity, parts, pin budget,
   firmware notes, build steps, checklist, references. Open it in a browser.
-- `pcb/left`, `pcb/right` — KiCad 10 projects. The schematics are generated: edit the tables in
-  `tools/gen_schematic.py`, run it, then run `tools/check_schematic.py` (KiCad ERC + a netlist check
-  that every connection matches the tables). PDFs of both schematics sit next to them.
+- `pcb/keygen.kicad_pro` — the KiCad 10 project. One schematic (top sheet with `left` and `right`
+  sub-sheets; refs 1xx / 2xx) and, later, one PCB carrying both halves joined by snap-off tabs. The
+  schematics are generated: edit the tables in `tools/gen_schematic.py`, run it, then run
+  `tools/check_schematic.py` (KiCad ERC + a netlist check that every connection matches the tables).
+  `pcb/keygen-schematic.pdf` is the printable version.
 - `lib/` — git submodules: marbastlib (MX hotswap, nice!nano, MSK12C02 footprints) and
   Keebio-Parts (PJ-320A). Clone with `git clone --recursive`.
 - `bom/bom.csv` — bill of materials with Indian and import sources. Edit it, then run
