@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Keygen BOM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Atkinson+Hyperlegible:wght@400;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: one reading column; the Redox layout is parsed from its KLE file and drawn as SVG on a PCB-green outline */
+:root{
+  --bg:#f3f2ee; --surface:#fbfaf7; --fg:#22231f; --muted:#64655d; --line:#d6d4cc;
+  --cap:#e9e7e0; --cap-edge:#bdbab0; --legend:#2b2c27; --mod:#dcdad1;
+  --accent:#1f6a72; --accent-cap:#cfe3e2; --accent-edge:#5c9a9f;
+  --pcb:#e2ebe3; --pcb-edge:#7fa58a; --part:#f0e6cf; --part-edge:#b99a55;
+  --warn:#8a5a12; --warn-bg:#f6ead2;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#191a17; --surface:#20211e; --fg:#e8e7e1; --muted:#a2a397; --line:#383a33;
+  --cap:#2d2f2a; --cap-edge:#4a4c44; --legend:#e6e5de; --mod:#363832;
+  --accent:#7cc3c6; --accent-cap:#1f3f41; --accent-edge:#4f8f93;
+  --pcb:#1c2a21; --pcb-edge:#4c7a5a; --part:#3a3220; --part-edge:#9a7f45;
+  --warn:#e2b26a; --warn-bg:#33291a;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#191a17; --surface:#20211e; --fg:#e8e7e1; --muted:#a2a397; --line:#383a33;
+  --cap:#2d2f2a; --cap-edge:#4a4c44; --legend:#e6e5de; --mod:#363832;
+  --accent:#7cc3c6; --accent-cap:#1f3f41; --accent-edge:#4f8f93;
+  --pcb:#1c2a21; --pcb-edge:#4c7a5a; --part:#3a3220; --part-edge:#9a7f45;
+  --warn:#e2b26a; --warn-bg:#33291a;
+  color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.6}
+.wrap{max-width:980px;margin:0 auto;padding-inline:20px;padding-block:40px 80px}
+.prose{max-width:66ch}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.15;margin:0}
+h1{font-size:clamp(2rem,5vw,3.1rem);font-weight:700;letter-spacing:-.01em;margin-top:6px}
+h2{font-size:1.6rem;font-weight:700;margin-top:56px}
+h3{font-size:1.1rem;font-weight:700;margin-top:24px}
+p{margin:12px 0}
+.eyebrow{font-family:var(--mono);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.lede{font-size:1.15rem}
+.muted{color:var(--muted)}
+code,.k{font-family:var(--mono);font-size:.88em}
+.k{display:inline-block;padding:0 6px;border:1px solid var(--cap-edge);border-bottom-width:2px;border-radius:4px;background:var(--cap);line-height:1.5;white-space:nowrap}
+.figure{margin-top:20px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;overflow-x:auto}
+.figure svg{display:block;width:100%;height:auto;min-width:680px}
+.cap{font-size:.9rem;color:var(--muted);margin-top:10px}
+.legend{display:flex;flex-wrap:wrap;gap:16px;font-size:.85rem;color:var(--muted);margin-top:10px}
+.sw{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:-2px;margin-right:6px;border:1.5px solid}
+.verdict{margin-top:28px;padding:18px 20px;border-left:4px solid var(--accent);background:var(--surface)}
+.verdict p{margin:6px 0}
+.note{margin-top:16px;padding:12px 16px;border-radius:8px;background:var(--warn-bg);color:var(--fg);font-size:.95rem;max-width:72ch}
+.note strong{color:var(--warn)}
+table{border-collapse:collapse;width:100%;font-size:.95rem}
+.tablewrap{overflow-x:auto;margin-top:16px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500}
+td:first-child{font-weight:700}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.total td{border-top:2px solid var(--line);font-weight:700}
+.pill{display:inline-block;font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;padding:1px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.pill.th{border-color:var(--accent-edge);color:var(--accent)}
+.pill.smd{border-color:var(--part-edge);color:var(--warn)}
+.pill.ok{border-color:var(--accent-edge);color:var(--accent)}
+.pill.flag{border-color:var(--part-edge);color:var(--warn)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:16px}
+.cols > div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;min-width:0}
+.cols h3{margin-top:0}
+.cols ul{margin:8px 0 0;padding-left:1.1em}
+.cols li{margin:4px 0}
+ol.steps{padding-left:1.3em;max-width:72ch}
+ol.steps li{margin:12px 0}
+ol.steps strong{font-family:var(--display)}
+ul.refs{list-style:none;padding:0;margin:16px 0 0;display:grid;gap:12px}
+ul.refs li{border-bottom:1px solid var(--line);padding-bottom:12px}
+.src{font-family:var(--mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-left:6px}
+blockquote{margin:8px 0 0;padding-left:12px;border-left:2px solid var(--line);color:var(--muted);font-size:.92rem}
+a{color:var(--accent);text-underline-offset:3px}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+pre.mermaid{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;margin-top:16px;overflow-x:auto}
+svg text{font-family:var(--mono)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="eyebrow">Keygen · bill of materials · generated from bom/bom.csv</p>
+  <h1>Bill of materials</h1>
+  <p class="lede prose">Everything needed for two keyboards, with spares, and where to get it in India or from abroad. Prices are what the listings showed on 19 Oct 2026, or rough guides where marked with ~. <a href="index.html">Back to the build plan</a>.</p>
+  <div class="note prose"><strong>Buying strategy:</strong> one LCSC or AliExpress order for the SK6812MINI-E LEDs (not stocked in India), StacksKB for sockets, diodes and TRRS jacks, Robu.in or Lamington Road for batteries and small parts, and Lion Circuits (Bengaluru) for the boards. Batteries rarely ship to India from abroad, so buy those locally.</div>
+  <h2>Electronics</h2>
+<div class="tablewrap"><table>
+<thead><tr><th>Part</th><th>Spec</th><th>Per keyboard</th><th>Buy for 2</th><th>India</th><th>Import</th><th>Price</th><th>Status</th></tr></thead><tbody><tr><td>Controller</td><td>Pro Micro nRF52840, nice!nano v2 clone (ZMK target nice_nano_v2)<br><span class="muted">4 needed + 1 spare. Check pin labels match nice!nano v2 and B+/B- pads. Measure USB-C height on arrival (sets case depth).</span></td><td class="num">2</td><td class="num">5</td><td></td><td><a href="https://www.aliexpress.com/item/1005010435718176.html" target="_blank" rel="noopener">AliExpress listing</a></td><td class="num">check listing</td><td><span class="pill ok">decided</span></td></tr><tr><td>Controller sockets</td><td>Low-profile machined round-pin female header, 1×12, plus matching round male pins<br><span class="muted">Controller sits hidden on the PCB underside; sockets make it swappable. 2 strips per controller.</span></td><td class="num">8 strips</td><td class="num">10 strips</td><td>Robu.in / Lamington Road: search &quot;machined round female header 2.54&quot;</td><td>AliExpress: &quot;Mill-Max low profile socket pro micro&quot;</td><td class="num">~₹30–60 per 1×40 strip</td><td><span class="pill ok">decided</span></td></tr><tr><td>Hotswap sockets</td><td>Kailh MX hotswap socket (CPG151101S11)<br><span class="muted">100 covers keyboard 1 (66) with 34 spare. Keyboard 2 needs 66 more, so buy ~40 when you build it.</span></td><td class="num">66</td><td class="num">have 100; +40 for keyboard 2</td><td>Already owned (100). Top-up: <a href="https://stackskb.com/store/gateron-hotswap-sockets/" target="_blank" rel="noopener">StacksKB Gateron sockets</a> fit the same footprint</td><td>AliExpress Kailh official store, 100-pack; <a href="https://divinikey.com/products/kailh-hot-swap-sockets" target="_blank" rel="noopener">Divinikey 100-pack</a></td><td class="num">owned / ₹10 each top-up</td><td><span class="pill ok">decided</span></td></tr><tr><td>Diodes</td><td>1N4148, through-hole DO-35<br><span class="muted">33 left + 34 right (encoder push switch is in the matrix). Cathode toward the row (COL2ROW).</span></td><td class="num">67</td><td class="num">200</td><td><a href="https://stackskb.com/store/1n4148-through-hole-diode/" target="_blank" rel="noopener">StacksKB 1N4148 (10-pack)</a></td><td>LCSC / AliExpress (100-pack)</td><td class="num">₹15 per 10 (StacksKB)</td><td><span class="pill ok">decided</span></td></tr><tr><td>Per-key + underglow LEDs</td><td>SK6812MINI-E (reverse mount, 3.2×2.8 mm)<br><span class="muted">33 per-key + 6 underglow per half. The only fiddly SMD part; buy plenty, joints fail. Alternative: JLCPCB assembles them.</span></td><td class="num">78</td><td class="num">200</td><td>Not stocked by Indian stores I checked</td><td>LCSC (~$0.08 each) / AliExpress &quot;SK6812MINI-E&quot; 100-pack</td><td class="num">~$0.08 each</td><td><span class="pill ok">decided</span></td></tr><tr><td>LED decoupling</td><td>10 µF + 100 nF capacitors (0805 SMD or through-hole)<br><span class="muted">One of each near the first LED of each half&#x27;s chain, on the nice!nano VCC rail.</span></td><td class="num">2 + 2</td><td class="num">10 + 10</td><td>Robu.in / Lamington Road</td><td>LCSC</td><td class="num">negligible</td><td><span class="pill ok">decided</span></td></tr><tr><td>Rotary encoder</td><td>EC11 with push switch, 20 mm shaft<br><span class="muted">Right half only. Check shaft type (knurled vs D) before buying the knob.</span></td><td class="num">1</td><td class="num">3</td><td><a href="https://probots.co.in/20-position-360-degree-rotary-encoder-ec11-w-push-button.html" target="_blank" rel="noopener">Probots EC11 20 mm</a></td><td>AliExpress / LCSC</td><td class="num">₹89 (Probots)</td><td><span class="pill ok">decided</span></td></tr><tr><td>Knob</td><td>Aluminium knob for 6 mm shaft, ~19 mm diameter<br><span class="muted">Must match the encoder&#x27;s shaft (knurled or D).</span></td><td class="num">1</td><td class="num">2</td><td>Robu.in / Amazon.in &quot;potentiometer knob aluminium 6mm&quot;</td><td>AliExpress</td><td class="num">~₹50–150</td><td><span class="pill ok">decided</span></td></tr><tr><td>TRRS jack</td><td>PJ-320A, through-hole<br><span class="muted">For the optional wired split. Carries GND, TX, RX only.</span></td><td class="num">2</td><td class="num">6</td><td><a href="https://stackskb.com/store/pj-320a-jack/" target="_blank" rel="noopener">StacksKB PJ-320A</a></td><td><a href="https://keeb.io/products/trrs-jack-3-5mm" target="_blank" rel="noopener">Keebio</a> / AliExpress</td><td class="num">₹25 (StacksKB)</td><td><span class="pill ok">decided</span></td></tr><tr><td>TRRS cable</td><td>3.5 mm 4-pole male-male (TRRS, not TRS), 30–50 cm<br><span class="muted">Must be 4-pole (three black rings on the plug).</span></td><td class="num">1</td><td class="num">2</td><td>Amazon.in &quot;3.5mm 4 pole aux cable male to male&quot;</td><td>AliExpress coiled TRRS cable</td><td class="num">~₹150–400</td><td><span class="pill ok">decided</span></td></tr></tbody></table></div><h2>Power</h2>
+<div class="tablewrap"><table>
+<thead><tr><th>Part</th><th>Spec</th><th>Per keyboard</th><th>Buy for 2</th><th>India</th><th>Import</th><th>Price</th><th>Status</th></tr></thead><tbody><tr><td>Battery</td><td>3.7 V LiPo pouch with protection circuit, ~1000 mAh, ≤6 mm thick, JST-PH 2.0 lead<br><span class="muted">Final dimensions depend on the case. Check JST-PH polarity matches the PCB before plugging in.</span></td><td class="num">2</td><td class="num">4</td><td>Robu.in / Lamington Road: search &quot;3.7V 1000mAh lipo JST PH&quot;</td><td>Avoid: batteries rarely ship to India from abroad</td><td class="num">~₹300–500 each</td><td><span class="pill flag">size after case</span></td></tr><tr><td>Battery connector</td><td>JST-PH 2-pin PCB header, through-hole (B2B-PH-K-S vertical or S2B-PH-K-S side)<br><span class="muted">Footprint chosen in the schematic step.</span></td><td class="num">2</td><td class="num">10</td><td>Robu.in &quot;JST PH 2.0 2 pin&quot;</td><td>LCSC</td><td class="num">negligible</td><td><span class="pill ok">decided</span></td></tr><tr><td>Power switch</td><td>SS12D00 SPDT slide switch, through-hole<br><span class="muted">In the battery line; the nRF52840 board has a charger but no switch.</span></td><td class="num">2</td><td class="num">10</td><td>Robu.in / Lamington Road &quot;SS12D00&quot;</td><td>LCSC / AliExpress</td><td class="num">~₹5–10 each</td><td><span class="pill ok">decided</span></td></tr><tr><td>Reset button</td><td>6×6 mm tactile switch, through-hole (5–7 mm tall, reachable via case pinhole)<br><span class="muted">ZMK can also enter the bootloader from a key, so this is a backup.</span></td><td class="num">2</td><td class="num">10</td><td>Robu.in / StacksKB</td><td>LCSC</td><td class="num">~₹2–5 each</td><td><span class="pill ok">decided</span></td></tr></tbody></table></div><h2>Fabrication</h2>
+<div class="tablewrap"><table>
+<thead><tr><th>Part</th><th>Spec</th><th>Per keyboard</th><th>Buy for 2</th><th>India</th><th>Import</th><th>Price</th><th>Status</th></tr></thead><tbody><tr><td>Main PCBs</td><td>2-layer FR4, 1.6 mm, HASL, 1 oz, left and right designs (each half ~17 × 13 cm)<br><span class="muted">Minimum 5 per design, so 5 left + 5 right. Check their DFM limits (6/6 mil on 1 oz) when routing.</span></td><td class="num">2</td><td class="num">5 + 5</td><td><a href="https://lioncircuits.com/" target="_blank" rel="noopener">Lion Circuits</a> (Bengaluru, instant quote, 5–6 days, no customs)</td><td>JLCPCB as a fallback</td><td class="num">from ₹799 for 5 (entry offer; quote for full size)</td><td><span class="pill ok">decided</span></td></tr><tr><td>Switch plate</td><td>TBD in the plate step: FR4 from JLCPCB (same order) or 3D-printed</td><td class="num">2</td><td class="num">TBD</td><td>—</td><td>Lion Circuits (same order) or JLCPCB</td><td class="num">TBD</td><td><span class="pill flag">next step</span></td></tr><tr><td>LED assembly (optional)</td><td>Lion Circuits / JLCPCB assembly of the SK6812MINI-E only<br><span class="muted">Avoids hand-soldering 156 LEDs; adds cost and lead time.</span></td><td class="num">—</td><td class="num">optional</td><td>—</td><td>Lion Circuits or JLCPCB</td><td class="num">TBD</td><td><span class="pill flag">optional</span></td></tr></tbody></table></div><h2>Switches &amp; keycaps</h2>
+<div class="tablewrap"><table>
+<thead><tr><th>Part</th><th>Spec</th><th>Per keyboard</th><th>Buy for 2</th><th>India</th><th>Import</th><th>Price</th><th>Status</th></tr></thead><tbody><tr><td>Switches</td><td>MX-compatible, 5-pin or 3-pin<br><span class="muted">Decided later.</span></td><td class="num">66</td><td class="num">70+ per kb</td><td><a href="https://stackskb.com/product-category/switches/tactile/" target="_blank" rel="noopener">StacksKB</a> / Meckeys</td><td>AliExpress</td><td class="num">TBD</td><td><span class="pill flag">later</span></td></tr><tr><td>Keycaps</td><td>Uniform profile (DSA/XDA): 4×1.5u, 10×1.25u, 52×1u<br><span class="muted">No stabilizers needed (nothing over 1.5u).</span></td><td class="num">66</td><td class="num">per kb</td><td><a href="https://keyora.store/collections/keycaps" target="_blank" rel="noopener">Keyora</a> / StacksKB</td><td>AliExpress blank DSA/XDA</td><td class="num">TBD</td><td><span class="pill flag">later</span></td></tr></tbody></table></div><h2>Case</h2>
+<div class="tablewrap"><table>
+<thead><tr><th>Part</th><th>Spec</th><th>Per keyboard</th><th>Buy for 2</th><th>India</th><th>Import</th><th>Price</th><th>Status</th></tr></thead><tbody><tr><td>Case</td><td>3D-printed PETG, closed, with slots for USB-C, TRRS and the switch</td><td class="num">2</td><td class="num">—</td><td>Print at home or a local print service</td><td>—</td><td class="num">TBD</td><td><span class="pill flag">after PCB</span></td></tr><tr><td>Fasteners</td><td>M2 heat-set inserts, M2 screws, rubber feet</td><td class="num">—</td><td class="num">1 kit</td><td><a href="https://stackskb.com/store/m2-spacer-standoff-6mm-brass-nickel/" target="_blank" rel="noopener">StacksKB M2 standoffs</a> / Robu.in</td><td>AliExpress</td><td class="num">TBD</td><td><span class="pill flag">after PCB</span></td></tr><tr><td>Weight + foam</td><td>Steel plate or washers for weight; case foam / PE foam<br><span class="muted">Halves slide when you push inward without weight.</span></td><td class="num">—</td><td class="num">—</td><td>Lamington Road / hardware store</td><td>—</td><td class="num">TBD</td><td><span class="pill flag">after PCB</span></td></tr><tr><td>Tenting</td><td>Screw-in legs (18 mm front / 40 mm rear) or magnetic phone stands</td><td class="num">—</td><td class="num">—</td><td>Amazon.in / hardware store</td><td>—</td><td class="num">TBD</td><td><span class="pill flag">after PCB</span></td></tr></tbody></table></div><h2>Tools</h2>
+<div class="tablewrap"><table>
+<thead><tr><th>Part</th><th>Spec</th><th>Per keyboard</th><th>Buy for 2</th><th>India</th><th>Import</th><th>Price</th><th>Status</th></tr></thead><tbody><tr><td>Soldering</td><td>Temperature-controlled iron, 0.5–0.6 mm solder, no-clean flux, fine tweezers, solder wick<br><span class="muted">From the Corne video: 350–370 °C for lead-free, flux makes SK6812s easy.</span></td><td class="num">—</td><td class="num">—</td><td>Robu.in / Lamington Road</td><td>—</td><td class="num">—</td><td><span class="pill flag">check what you have</span></td></tr><tr><td>Testing</td><td>Multimeter, Kapton tape, IPA<br><span class="muted">Test each LED column as you go: one bad joint kills the chain after it.</span></td><td class="num">—</td><td class="num">—</td><td>Robu.in / Amazon.in</td><td>—</td><td class="num">—</td><td><span class="pill flag">check what you have</span></td></tr></tbody></table></div>
+</div>
+</body>
+</html>

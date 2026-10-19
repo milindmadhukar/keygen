@@ -1,0 +1,83 @@
+#!/usr/bin/env python3
+"""Render bom/bom.csv into plan/bom.html and the vault's BOM note."""
+import csv, html, re, sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+rows = list(csv.DictReader(open(ROOT / "bom" / "bom.csv", newline="")))
+md_link = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
+
+def to_html(s):
+    out, last = [], 0
+    for m in md_link.finditer(s):
+        out.append(html.escape(s[last:m.start()]))
+        out.append(f'<a href="{html.escape(m[2])}" target="_blank" rel="noopener">{html.escape(m[1])}</a>')
+        last = m.end()
+    out.append(html.escape(s[last:]))
+    return "".join(out)
+
+sections = []
+for r in rows:
+    if not sections or sections[-1][0] != r["section"]:
+        sections.append((r["section"], []))
+    sections[-1][1].append(r)
+
+# ---- HTML -------------------------------------------------------------------
+head = (ROOT / "plan" / "index.html").read_text()
+style = head[head.index("<style>"):head.index("</style>") + len("</style>")]
+fonts = "\n".join(l for l in head.splitlines() if "fonts.g" in l)
+body = []
+for name, items in sections:
+    body.append(f"<h2>{html.escape(name)}</h2>\n<div class=\"tablewrap\"><table>\n<thead><tr><th>Part</th><th>Spec</th><th>Per keyboard</th><th>Buy for 2</th><th>India</th><th>Import</th><th>Price</th><th>Status</th></tr></thead><tbody>")
+    for r in items:
+        st = r["status"]
+        pill = "ok" if st == "decided" else "flag"
+        note = f'<br><span class="muted">{to_html(r["notes"])}</span>' if r["notes"] else ""
+        body.append(f'<tr><td>{to_html(r["part"])}</td><td>{to_html(r["spec"])}{note}</td><td class="num">{to_html(r["per_kb"])}</td><td class="num">{to_html(r["buy_2kb"])}</td><td>{to_html(r["india"])}</td><td>{to_html(r["import"])}</td><td class="num">{to_html(r["price"])}</td><td><span class="pill {pill}">{html.escape(st)}</span></td></tr>')
+    body.append("</tbody></table></div>")
+page = f"""<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Keygen BOM</title>
+{fonts}
+{style}
+</head>
+<body>
+<div class="wrap">
+  <p class="eyebrow">Keygen · bill of materials · generated from bom/bom.csv</p>
+  <h1>Bill of materials</h1>
+  <p class="lede prose">Everything needed for two keyboards, with spares, and where to get it in India or from abroad. Prices are what the listings showed on 19 Oct 2026, or rough guides where marked with ~. <a href="index.html">Back to the build plan</a>.</p>
+  <div class="note prose"><strong>Buying strategy:</strong> one LCSC or AliExpress order for the SK6812MINI-E LEDs (not stocked in India), StacksKB for sockets, diodes and TRRS jacks, Robu.in or Lamington Road for batteries and small parts, and Lion Circuits (Bengaluru) for the boards. Batteries rarely ship to India from abroad, so buy those locally.</div>
+  {"".join(body)}
+</div>
+</body>
+</html>
+"""
+(ROOT / "plan" / "bom.html").write_text(page)
+
+# ---- Markdown (vault) -------------------------------------------------------
+def md(s): return s.replace("|", "\\|")
+lines = ["---", "created: 2026-10-19", "name: 13 - bill of materials", "tags:", "  - keyboards", "---",
+         "# Bill of Materials", "",
+         "> [!info] Generated file",
+         "> Generated from `~/Code/keygen/bom/bom.csv` by `tools/render_bom.py`. Edit the CSV, not this note. The rendered page is `plan/bom.html`. Design context: [[12 - final design]].", "",
+         "Quantities cover **two keyboards with spares**. Prices are what the listings showed on 2026-10-19; `~` marks a rough guide.", "",
+         "> [!tip] Buying strategy",
+         "> - **LCSC or AliExpress:** SK6812MINI-E LEDs (not stocked in India)",
+         "> - **StacksKB:** sockets, diodes, TRRS jacks",
+         "> - **Robu.in or Lamington Road:** batteries and small parts",
+         "> - **Lion Circuits (Bengaluru):** the boards",
+         ">",
+         "> Batteries rarely ship to India from abroad, so buy those locally.", ""]
+for name, items in sections:
+    lines += [f"## {name}", "", "| Part | Spec | Per kb | Buy for 2 | India | Import | Price | Status |", "|---|---|---|---|---|---|---|---|"]
+    for r in items:
+        spec = md(r["spec"]) + (f"<br>*{md(r['notes'])}*" if r["notes"] else "")
+        lines.append(f"| {md(r['part'])} | {spec} | {md(r['per_kb'])} | {md(r['buy_2kb'])} | {md(r['india'])} | {md(r['import'])} | {md(r['price'])} | {md(r['status'])} |")
+    lines.append("")
+vault = Path.home() / "Documents/Obsidian Vault/01 - Projects/Hardware & Electronics/Keygen Custom Keyboard/13 - bill of materials.md"
+if vault.parent.exists():
+    vault.write_text("\n".join(lines))
+print(f"rendered {len(rows)} rows -> plan/bom.html" + (f" and {vault.name}" if vault.parent.exists() else ""))
