@@ -6,6 +6,9 @@ one rotary encoder on the right, per-key RGB + underglow and no screen. Two nRF5
 controllers (nice!nano v2) are hidden on the PCB underside and run ZMK, connecting over
 Bluetooth or USB-C to the host and over Bluetooth or a TRRS cable between halves.
 
+![Keygen, top](docs/render-top.png)
+![Keygen, underside](docs/render-bottom.png)
+
 - `plan/index.html` — the build plan: layout drawing, connectivity, parts, pin budget,
   firmware notes, build steps, checklist, references. Open it in a browser.
 - `pcb/keygen.kicad_pro` — the KiCad 10 project. One schematic (top sheet with `left` and `right`

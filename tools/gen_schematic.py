@@ -65,14 +65,14 @@ ENCODER_POS = {"right": (0, 6)}   # encoder push switch sits in the matrix here
 UNDERGLOW = 6
 
 FP = {
-    "mcu": "marbastlib-xp-promicroish:nice_nano_H_USBup",
+    "mcu": "keygen:nice_nano_H_USBup",
     "sw": "keygen:SW_MX_HS_CPG151101S11_{}u",      # marbastlib + switch outline (see keygen_footprints)
     "diode": "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal",
     "led": "LED_SMD:LED_SK6812MINI-E_3.2x2.8mm_P1.5mm_ReverseMount",
     "cap": "Capacitor_SMD:C_0805_2012Metric",
-    "enc": "Rotary_Encoder:RotaryEncoder_Alps_EC11E-Switch_Vertical_H20mm",
-    "trrs": "Keebio-Parts:TRRS-PJ-320A",
-    "pwr": "marbastlib-various:SW_MSK12C02-HB",
+    "enc": "keygen:ROT_Alps_EC11E-Switch",           # marbastlib, origin at the shaft
+    "trrs": "keygen:TRRS-PJ-320A",
+    "pwr": "keygen:SW_MSK12C02-HB",
     "rst": "Button_Switch_THT:SW_PUSH_6mm_H5mm",
     "bat": "Connector_JST:JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal",
 }
@@ -135,23 +135,95 @@ def flatten(child_lib, child, parent_name):
         u = copy.deepcopy(n); u[1] = u[1].replace(parent_name, child, 1); out.append(u)
     return out
 
+SHAPES = "${KIPRJMOD}/lib/keygen.3dshapes"
+VENDOR3D = {"marbastlib": "${KIPRJMOD}/../lib/marbastlib/3dmodels", "keebio": "${KIPRJMOD}/../lib/Keebio-Parts.pretty/3dmodels"}
+PCB_T = 1.6        # board thickness, mm
+
+def model(path, offset=(0, 0, 0), rotate=(0, 0, 0)):
+    return [S("model"), path, [S("offset"), [S("xyz"), *offset]], [S("scale"), [S("xyz"), 1, 1, 1]],
+            [S("rotate"), [S("xyz"), *rotate]]]
+
+def vendor_model(node, base):
+    """Re-point a footprint's model at the copy inside the repo, keeping its offset/rotation."""
+    node = copy.deepcopy(node); node[1] = base + "/" + node[1].split("/")[-1]; return node
+
+# Parts on the back flip their models with them; anything that has to stand on the FRONT
+# (switch, keycap) is turned over and pushed through the board so the flip puts it back on top.
+ON_FRONT = dict(rotate=(0, 180, 0))
+
+def wrl_box_mesh(boxes):
+    """VRML (KiCad units: 0.1 inch) for a list of (x0,y0,z0,x1,y1,z1,rgb) boxes in mm."""
+    out = ["#VRML V2.0 utf8"]
+    for x0, y0, z0, x1, y1, z1, rgb in boxes:
+        v = [(x, y, z) for z in (z0, z1) for y in (y0, y1) for x in (x0, x1)]
+        pts = ",".join(f"{x/2.54:.4f} {y/2.54:.4f} {z/2.54:.4f}" for x, y, z in v)
+        faces = "0,2,3,1,-1,4,5,7,6,-1,0,1,5,4,-1,2,6,7,3,-1,0,4,6,2,-1,1,3,7,5,-1"
+        out.append(f"Shape {{ appearance Appearance {{ material Material {{ diffuseColor {rgb} }} }} "
+                   f"geometry IndexedFaceSet {{ coord Coordinate {{ point [{pts}] }} coordIndex [{faces}] }} }}")
+    return "\n".join(out) + "\n"
+
+def wrl_keycap(w_u, rgb="0.86 0.85 0.80"):
+    """Uniform-profile (DSA-like) keycap: 18.2 mm base, 12.7 mm top, 7.4 mm tall, origin at base centre."""
+    bw, bd = w_u * 19.05 - 0.85, 18.2
+    tw, td, h = bw - 5.5, bd - 5.5, 7.4
+    v = [(-bw/2, -bd/2, 0), (bw/2, -bd/2, 0), (bw/2, bd/2, 0), (-bw/2, bd/2, 0),
+         (-tw/2, -td/2, h), (tw/2, -td/2, h), (tw/2, td/2, h), (-tw/2, td/2, h)]
+    pts = ",".join(f"{x/2.54:.4f} {y/2.54:.4f} {z/2.54:.4f}" for x, y, z in v)
+    faces = "0,3,2,1,-1,4,5,6,7,-1,0,1,5,4,-1,1,2,6,5,-1,2,3,7,6,-1,3,0,4,7,-1"
+    return ("#VRML V2.0 utf8\n" f"Shape {{ appearance Appearance {{ material Material {{ diffuseColor {rgb} }} }} "
+            f"geometry IndexedFaceSet {{ coord Coordinate {{ point [{pts}] }} coordIndex [{faces}] }} }}\n")
+
 def keygen_footprints():
-    """pcb/lib/keygen.pretty: marbastlib's MX hotswap footprints plus the 14 mm switch body on
-    B.SilkS, which lands on the front silkscreen because the footprint is placed flipped."""
+    """pcb/lib/keygen.pretty + keygen.3dshapes: project copies of the vendored footprints with
+    model paths that resolve inside the repo, the 14 mm switch outline, and simple keycap and
+    controller models for KiCad's 3D view."""
     from sexp import parse as sparse
-    src = ROOT / "lib/marbastlib/footprints/marbastlib-mx.pretty"
+    shapes = PCB / "lib/keygen.3dshapes"; shapes.mkdir(parents=True, exist_ok=True)
     out = PCB / "lib/keygen.pretty"; out.mkdir(parents=True, exist_ok=True)
+    def load(path, name):
+        fp = sparse((path / f"{name}.kicad_mod").read_text()); fp[1] = name; return fp
+    def save(fp, name): (out / f"{name}.kicad_mod").write_text(dump(fp) + "\n")
+    marb = ROOT / "lib/marbastlib/footprints"
+
+    # MX hotswap switches (placed on the back): socket model + switch + keycap on the front
     for size in ("1", "1.25", "1.5"):
         name = f"SW_MX_HS_CPG151101S11_{size}u"
-        fp = sparse((src / f"{name}.kicad_mod").read_text())
-        fp[1] = name
-        for d in find(fp, "descr"): d[1] = d[1] + " (Keygen: 14 mm switch outline on the opposite silkscreen)"
+        (shapes / f"Keycap_{size}u.wrl").write_text(wrl_keycap(float(size)))
+        fp = load(marb / "marbastlib-mx.pretty", name)
+        sock = [vendor_model(m, VENDOR3D["marbastlib"]) for m in find(fp, "model")]
+        fp[:] = [n for n in fp if not (isinstance(n, list) and n and n[0] == "model")]
+        for d in find(fp, "descr"): d[1] = d[1] + " (Keygen: switch outline + switch/keycap 3D models)"
         h = 7.0
         corners = [(-h, -h), (h, -h), (h, h), (-h, h)]
         for a, b in zip(corners, corners[1:] + corners[:1]):
             fp.append([S("fp_line"), [S("start"), a[0], a[1]], [S("end"), b[0], b[1]],
                        [S("stroke"), [S("width"), 0.15], [S("type"), S("solid")]], [S("layer"), "B.SilkS"], [S("uuid"), U()]])
-        (out / f"{name}.kicad_mod").write_text(dump(fp) + "\n")
+        fp += sock
+        fp.append(model(f"{SHAPES}/SW_Cherry_MX_PCB.wrl", offset=(0, 0, -PCB_T), **ON_FRONT))
+        fp.append(model(f"{SHAPES}/Keycap_{size}u.wrl", offset=(0, 0, -(PCB_T + 11.5)), **ON_FRONT))
+        save(fp, name)
+
+    # controller: no public model, so a plain block hanging under the board on its header sockets.
+    # KiCad turns models of back-side footprints end over end, so the footprint's USB end (-y)
+    # is drawn at +y here.
+    (shapes / "nRF52840_ProMicro.wrl").write_text(wrl_box_mesh([
+        (-9.0, -16.65, 4.5, 9.0, 16.65, 5.7, "0.10 0.12 0.30"),          # board
+        (-4.5, 10.0, 5.7, 4.5, 17.4, 8.9, "0.75 0.75 0.78"),             # USB-C (+y: see note above)
+        (-3.5, -9.0, 5.7, 3.5, -2.0, 6.6, "0.15 0.15 0.15"),             # nRF52840
+    ] + [(x - 1.25, y - 1.25, 0.0, x + 1.25, y + 1.25, 4.5, "0.12 0.12 0.12")    # header sockets
+         for x in (-7.62, 7.62) for y in [(-13.97 + 2.54 * i) for i in range(12)]]))
+    fp = load(marb / "marbastlib-xp-promicroish.pretty", "nice_nano_H_USBup")
+    fp[:] = [n for n in fp if not (isinstance(n, list) and n and n[0] == "model")]
+    fp.append(model(f"{SHAPES}/nRF52840_ProMicro.wrl")); save(fp, "nice_nano_H_USBup")
+
+    for lib, name, base in (("marbastlib-various.pretty", "SW_MSK12C02-HB", VENDOR3D["marbastlib"]),
+                            ("marbastlib-various.pretty", "ROT_Alps_EC11E-Switch", VENDOR3D["marbastlib"])):
+        fp = load(marb / lib, name)
+        fp[:] = [n if not (isinstance(n, list) and n and n[0] == "model") else vendor_model(n, base) for n in fp]
+        save(fp, name)
+    fp = load(ROOT / "lib/Keebio-Parts.pretty", "TRRS-PJ-320A")
+    fp[:] = [n if not (isinstance(n, list) and n and n[0] == "model") else vendor_model(n, VENDOR3D["keebio"]) for n in fp]
+    save(fp, "TRRS-PJ-320A")
 
 def keygen_lib():
     lib = [S("kicad_symbol_lib"), [S("version"), 20241209], [S("generator"), "keygen_gen_schematic"],
