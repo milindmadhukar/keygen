@@ -95,7 +95,7 @@ svg text{font-family:var(--mono)}
   <div class="verdict prose">
     <p><strong>Good news:</strong> Redox's thumb cluster is already a 2×2 block, two 1u keys over two 1.5u keys and rotated 30°, plus one 1.25u key. That's the Manuform-style block you wanted, on a flat board.</p>
     <p><strong>Controller:</strong> one nRF52840 per half (nice!nano v2 or a SuperMini clone, both on the Pro Micro footprint Redox already uses). Firmware is ZMK, the only mature firmware that does Bluetooth split.</p>
-    <p><strong>What you reuse:</strong> Redox is MIT-licensed, so the fork is fine. The key coordinates and outline carry over. The copper doesn't: rev1 is a 2018 KiCad 5 board with solder-in switches and no LEDs, so the schematic and routing get redone in KiCad 9. That's the PCB learning you wanted.</p>
+    <p><strong>What you reuse:</strong> Redox is MIT-licensed, so the fork is fine. The key coordinates and outline carry over. The copper doesn't: rev1 is a 2018 KiCad 5 board with solder-in switches and no LEDs, so the schematic and routing get redone in KiCad 10. That's the PCB learning you wanted.</p>
   </div>
 
   <h2>The layout</h2>
@@ -170,7 +170,6 @@ flowchart LR
       <tr><td>MX switch + Kailh hotswap socket</td><td class="num">33</td><td class="num">33</td><td><span class="pill smd">hand-solder</span></td><td>Big pads, easy with an iron.</td></tr>
       <tr><td>1N4148 diode</td><td class="num">33</td><td class="num">34</td><td><span class="pill th">TH</span></td><td>DO-35, as Redox already uses.</td></tr>
       <tr><td>SK6812MINI-E LED</td><td class="num">39</td><td class="num">39</td><td><span class="pill smd">SMD</span></td><td>Per-key plus 6 underglow. The one unavoidably SMD part. Hand-solder as in the Corne video, or have JLCPCB assemble these.</td></tr>
-      <tr><td>P-MOSFET (AO3401) + 10 kΩ pull-up</td><td class="num">1</td><td class="num">1</td><td><span class="pill smd">SOT-23</span></td><td>Cuts LED power entirely. Even dark, each SK6812 draws about 1 mA, so 40 LEDs would be 40 mA all the time.</td></tr>
       <tr><td>LiPo cell + JST-PH 2-pin</td><td class="num">1</td><td class="num">1</td><td><span class="pill th">TH</span></td><td>1000–2000 mAh flat pouch under the PCB. The Dactyl CC builder uses 18650 cells for 4+ months of battery.</td></tr>
       <tr><td>Slide power switch (SS12D00)</td><td class="num">1</td><td class="num">1</td><td><span class="pill th">TH</span></td><td>In the battery line. The nice!nano has a charger but no switch.</td></tr>
       <tr><td>Reset button 6 mm</td><td class="num">1</td><td class="num">1</td><td><span class="pill th">TH</span></td><td>Reachable through a pinhole in the case. ZMK can also enter the bootloader from a key, so you rarely need it.</td></tr>
@@ -178,7 +177,7 @@ flowchart LR
       <tr><td>EC11 rotary encoder + knob</td><td class="num">–</td><td class="num">1</td><td><span class="pill th">TH</span></td><td>Right half only. ZMK has supported encoders on the peripheral half since PR #1841 (Oct 2023). Its push switch goes into the key matrix as one extra position. A 15 mm shaft and knob clear MX keycaps.</td></tr>
     </tbody>
   </table></div>
-  <p class="cap">For two complete keyboards, double the counts. JLCPCB's minimum is 5 boards per design, so one order of 5 left + 5 right covers both keyboards with spares.</p>
+  <p class="cap">For two complete keyboards, double the counts. Lion Circuits' minimum is 5 boards per design, so one order of 5 left + 5 right covers both keyboards with spares. Full shopping list with shops: <a href="bom.html">bom.html</a>.</p>
 
   <h3>Pin budget on the nRF52840 (21 usable GPIO)</h3>
   <div class="tablewrap"><table>
@@ -187,12 +186,11 @@ flowchart LR
       <tr><td>Key matrix, 5 rows × 7 columns</td><td class="num">12</td><td class="num">12</td></tr>
       <tr><td>Encoder A/B (push switch is in the matrix)</td><td class="num">–</td><td class="num">2</td></tr>
       <tr><td>RGB data</td><td class="num">1</td><td class="num">1</td></tr>
-      <tr><td>LED power MOSFET gate</td><td class="num">1</td><td class="num">1</td></tr>
       <tr><td>Wired split UART TX/RX</td><td class="num">2</td><td class="num">2</td></tr>
-      <tr class="total"><td>Total</td><td class="num">16</td><td class="num">18</td></tr>
+      <tr class="total"><td>Total</td><td class="num">15</td><td class="num">17</td></tr>
     </tbody>
   </table></div>
-  <div class="note prose"><strong>Room to spare.</strong> Without the trackpad and screen, both halves fit in the 18 pins on the standard Pro Micro edge pads, with no NFC pins and no inner pads. Add footprints for the inner pads (P1.01, P1.02, P1.07) anyway, so you have spares for the empty left inner edge.</div>
+  <div class="note prose"><strong>Fits on the edge pads.</strong> The Pro Micro edge has 18 GPIO, two of them NFC pins (P0.09, P0.10) that work as GPIO once <code>nfct-pins-as-gpios</code> is set. The left half (15 pins) never needs them. The right half (17) uses one for the encoder's B line. Add the inner pads (P1.01, P1.02, P1.07) to the footprint as spares; they're low-frequency pins, fine for matrix lines but not LED data or UART.</div>
 
   <h2>Firmware: ZMK</h2>
   <div class="cols">
@@ -221,11 +219,11 @@ flowchart LR
   <h2>How to go about it</h2>
   <ol class="steps">
     <li><strong>Fit test.</strong> Print the Redox layout 1:1 from <code>redox-layout.json</code> (keyboard-layout-editor.com renders it). Rest your hand on it and confirm the 2×2 thumb block and the knob position work for your hands. Read the "15 geometries vs hand anatomy" post first if you can.</li>
-    <li><strong>Open Redox in KiCad 9.</strong> Clone <a href="https://github.com/mattdibi/redox-keyboard" target="_blank" rel="noopener">mattdibi/redox-keyboard</a> and open <code>redox/pcb/rev1.0/kicad_files</code>. KiCad upgrades the 2018 files. Use it to copy the outline and mounting holes, and to see how Mattia routed the matrix.</li>
-    <li><strong>New schematic, per half.</strong> Use the Scotto KiCad library: hotswap MX + 1N4148 matrix, the SK6812 chain behind a MOSFET, nice!nano on the back with all 21 pins, encoder (right), TRRS (GND/TX/RX), battery JST, power switch, reset.</li>
+    <li><strong>Open Redox in KiCad 10.</strong> Clone <a href="https://github.com/mattdibi/redox-keyboard" target="_blank" rel="noopener">mattdibi/redox-keyboard</a> and open <code>redox/pcb/rev1.0/kicad_files</code>. KiCad upgrades the 2018 files. Use it to copy the outline and mounting holes, and to see how Mattia routed the matrix.</li>
+    <li><strong>New schematic, per half.</strong> Use the Scotto KiCad library: hotswap MX + 1N4148 matrix, the SK6812 chain on the controller's switched VCC with a 10 µF + 100 nF capacitor, nice!nano on the back with all 21 pins, encoder (right), TRRS (GND/TX/RX), battery JST, power switch, reset.</li>
     <li><strong>Place and route.</strong> Place keys from the KLE file with KB Placer, then delete the inner column, put the controller footprint on the back where it was, and put the knob on the right front. Keep ground pour away from the controller's antenna end. Route rows on the front and columns on the back. Run DRC.</li>
     <li><strong>Bring-up board first, optional.</strong> If you'd rather not risk the full order, a small board with 4 keys, the encoder, 4 LEDs and an underside-mounted nice!nano costs a few dollars and tests every circuit.</li>
-    <li><strong>Order and build.</strong> JLCPCB, HASL finish, 5 + 5 boards, LED assembly optional. Flash the left and right ZMK UF2 files, plus the wired-split variants.</li>
+    <li><strong>Order and build.</strong> Lion Circuits (Bengaluru), HASL finish, 5 + 5 boards, LED assembly optional. Flash the left and right ZMK UF2 files, plus the wired-split variants.</li>
     <li><strong>Case and tenting.</strong> Export the board's 3D model into Fusion and design a closed case: depth for the underside controller and battery, slots on the top edge for USB-C, TRRS and the power switch, foam, and weight in the base. For tenting, use screw-in legs like the Corne case, or magnetic phone stands like a wireless Sofle builder on Reddit.</li>
   </ol>
 
@@ -235,7 +233,7 @@ flowchart LR
     <tbody>
       <tr><td>Footprint includes the nRF52840's extra pins</td><td>The plain Pro Micro footprint leaves you 3 pins short.</td><td>Pin budget</td></tr>
       <tr><td>Pin functions checked</td><td>"Not all pins are created equal." That includes the NFC pins and which pins can drive the LED data line.</td><td>Modular build</td></tr>
-      <tr><td>LED power on its own MOSFET</td><td>Otherwise the LEDs drain the battery even when they're off.</td><td>SK6812 idle current</td></tr>
+      <tr><td>LEDs on the switched VCC</td><td>The controller's P0.13 MOSFET cuts LED power. Otherwise the LEDs drain the battery even when they're off.</td><td>SK6812 idle current</td></tr>
       <tr><td>No battery power over TRRS</td><td>Tying two batteries together through a jack can short them while you plug the cable in.</td><td>Design choice</td></tr>
       <tr><td>USB-C lines up with the case slot</td><td>The controller is hidden, so the port position is set by the PCB. Check it in the KiCad 3D view against the case before ordering.</td><td>Hidden controller</td></tr>
       <tr><td>Test the LED chain one column at a time</td><td>One bad SK6812 joint kills every LED after it.</td><td>Corne guide</td></tr>
