@@ -52,7 +52,7 @@ def antenna_keepouts(b):
 
 def outlines(b):
     polys = pcbnew.SHAPE_POLY_SET()
-    b.GetBoardPolygonOutlines(polys)
+    b.GetBoardPolygonOutlines(polys, False)
     out = []
     for i in range(polys.OutlineCount()):
         ol = polys.Outline(i)
@@ -77,12 +77,14 @@ def ground_pours(b):
             b.Add(z)
     pcbnew.ZONE_FILLER(b).Fill(b.Zones())
 
-def main(passes=100):
+def main(passes=100, import_only=False):
     b = pcbnew.LoadBoard(str(PCB))
     for t in list(b.GetTracks()): b.Remove(t)                    # route from scratch
     for z in list(b.Zones()): b.Remove(z)
     netclasses(b)
     antenna_keepouts(b)
+    if import_only:                                              # reuse the last Freerouting result
+        return finish(b)
     if not pcbnew.ExportSpecctraDSN(b, str(DSN)): sys.exit("DSN export failed")
     t0 = time.time()
     r = subprocess.run(["java", "-jar", str(JAR), "--gui.enabled=false", "-de", str(DSN), "-do", str(SES),
@@ -91,10 +93,15 @@ def main(passes=100):
     print("\n".join(l for l in log if any(k in l.lower() for k in ("pass", "unrouted", "complete", "error", "incomplete")))[-3000:])
     if not SES.exists(): sys.exit(f"Freerouting produced no session file (exit {r.returncode})")
     print(f"freerouting: {time.time() - t0:.0f} s")
+    finish(b)
+
+def finish(b):
     if not pcbnew.ImportSpecctraSES(b, str(SES)): sys.exit("SES import failed")
     ground_pours(b)
     pcbnew.SaveBoard(str(PCB), b)
     print(f"tracks: {len(b.GetTracks())}")
 
 if __name__ == "__main__":
-    main(int(sys.argv[1]) if len(sys.argv) > 1 else 100)
+    args = sys.argv[1:]
+    if "--import-only" in args: main(import_only=True)
+    else: main(int(args[0]) if args else 100)
