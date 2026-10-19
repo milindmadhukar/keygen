@@ -268,7 +268,7 @@ LEFT_PARTS = {
 }
 CAP_NEAR_LED1 = [(-6.5, 4.6), (-3.0, 4.6)]   # C1/C2 relative to the first LED, back side
 ENCODER_SHAFT = (12.5 * U, TOP_EDGE + 16.65 * 2 + 15.0)   # right half, front, below the controller
-ENC_ORIGIN_TO_SHAFT = (7.5, 2.5)                          # EC11 footprint origin is pin A
+ENC_ORIGIN_TO_SHAFT = (0.0, 0.0)                          # marbastlib EC11: origin at the shaft
 
 
 def build():
@@ -297,7 +297,7 @@ def build():
             # encoder diode: next to the encoder's switch pins
             n = num[enc]
             sx, sy = ENCODER_SHAFT
-            B.place(f"D{base+n}", sx + 4.0, sy + 10.5, 0, back=True, extra=0)
+            B.place(f"D{base+n}", sx + 8.6, sy + 3.0, 0, back=True, extra=90)   # beside S1/S2
         # underglow LEDs: front side, in the gap between two keys of one column
         for j, ((r1, r2), c) in enumerate(UNDERGLOW_GAPS):
             a, b2 = geo[(side, r1, c)], geo[(side, r2, c)]

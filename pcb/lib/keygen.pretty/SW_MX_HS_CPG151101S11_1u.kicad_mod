@@ -3,7 +3,7 @@
   (generator "pcbnew")
   (generator_version "9.0")
   (layer "F.Cu")
-  (descr "Footprint for Cherry MX style switches with Kailh hotswap socket (Keygen: 14 mm switch outline on the opposite silkscreen)"
+  (descr "Footprint for Cherry MX style switches with Kailh hotswap socket (Keygen: switch outline + switch/keycap 3D models)"
   )
   (property "Reference" "REF**"
     (at -4.25 -1.75 0)
@@ -411,37 +411,47 @@
     (uuid "03e21442-98c6-468f-a9bf-67569c56c4d9")
   )
   (embedded_fonts no)
-  (model "${KICAD8_3RD_PARTY}/3dmodels/com_github_ebastler_marbastlib/HS_CPG151101S11_MX.step"
-    (offset (xyz -4.82 6.74 1.82))
-    (scale (xyz 1 1 1))
-    (rotate (xyz 180 0 0))
-  )
   (fp_line
     (start -7 -7)
     (end 7 -7)
     (stroke (width 0.15) (type solid))
     (layer "B.SilkS")
-    (uuid "bb07dfb3-8121-47b3-ab2b-45ea94036905")
+    (uuid "42f91d77-51d3-40e3-8059-04b7dcac966e")
   )
   (fp_line
     (start 7 -7)
     (end 7 7)
     (stroke (width 0.15) (type solid))
     (layer "B.SilkS")
-    (uuid "afa7c42e-9632-43eb-a94f-d0270f4f634b")
+    (uuid "91a81954-b447-4df2-a289-bd0693589a5b")
   )
   (fp_line
     (start 7 7)
     (end -7 7)
     (stroke (width 0.15) (type solid))
     (layer "B.SilkS")
-    (uuid "093db968-60bb-4025-8076-1348ee4dc1e6")
+    (uuid "10372d49-1414-430e-99b9-c8837f08386d")
   )
   (fp_line
     (start -7 7)
     (end -7 -7)
     (stroke (width 0.15) (type solid))
     (layer "B.SilkS")
-    (uuid "8a6123ca-43a2-439f-8af0-aeda6ac4137a")
+    (uuid "cf357210-0afe-4455-ba10-39686bd8fce0")
+  )
+  (model "${KIPRJMOD}/../lib/marbastlib/3dmodels/HS_CPG151101S11_MX.step"
+    (offset (xyz -4.82 6.74 1.82))
+    (scale (xyz 1 1 1))
+    (rotate (xyz 180 0 0))
+  )
+  (model "${KIPRJMOD}/lib/keygen.3dshapes/SW_Cherry_MX_PCB.wrl"
+    (offset (xyz 0 0 -1.6))
+    (scale (xyz 1 1 1))
+    (rotate (xyz 0 180 0))
+  )
+  (model "${KIPRJMOD}/lib/keygen.3dshapes/Keycap_1u.wrl"
+    (offset (xyz 0 0 -13.1))
+    (scale (xyz 1 1 1))
+    (rotate (xyz 0 180 0))
   )
 )
