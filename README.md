@@ -8,6 +8,11 @@ Bluetooth or USB-C to the host and over Bluetooth or a TRRS cable between halves
 
 - `plan/index.html` — the build plan: layout drawing, connectivity, parts, pin budget,
   firmware notes, build steps, checklist, references. Open it in a browser.
+- `pcb/left`, `pcb/right` — KiCad 10 projects. The schematics are generated: edit the tables in
+  `tools/gen_schematic.py`, run it, then run `tools/check_schematic.py` (KiCad ERC + a netlist check
+  that every connection matches the tables). PDFs of both schematics sit next to them.
+- `lib/` — git submodules: marbastlib (MX hotswap, nice!nano, MSK12C02 footprints) and
+  Keebio-Parts (PJ-320A). Clone with `git clone --recursive`.
 - `bom/bom.csv` — bill of materials with Indian and import sources. Edit it, then run
   `tools/render_bom.py` to regenerate `plan/bom.html` and the vault note `13 - bill of materials.md`.
 - `notes/` — symlink to the project notes in the Obsidian vault
