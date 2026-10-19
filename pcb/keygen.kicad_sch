@@ -2,7 +2,7 @@
   (version 20250114)
   (generator "eeschema")
   (generator_version "9.0")
-  (uuid "f06c1c88-93af-42e4-a67f-bd5a1563b0f8")
+  (uuid "e20767d7-8157-4885-a37d-e09a6393a8e4")
   (paper "A4")
   (title_block
     (title "Keygen")
@@ -16,7 +16,7 @@
     (exclude_from_sim no)
     (at 38.1 30.48 0)
     (effects (font (size 2 2)) (justify left top))
-    (uuid "f21bc5b7-22c6-4be7-ba70-f390265de8bc")
+    (uuid "392b7006-c752-4878-949a-9488fb870c1d")
   )
   (sheet
     (at 38.1 50.8)
@@ -27,7 +27,7 @@
     (dnp no)
     (stroke (width 0.1524) (type solid))
     (fill (color 0 0 0 0))
-    (uuid "829fe66b-e8fa-4aec-81c0-e6dd8b674f10")
+    (uuid "ea6ac97c-b4df-47fe-a83f-3b78e330c226")
     (property "Sheetname" "left"
       (at 38.1 50.038 0)
       (effects (font (size 1.27 1.27)) (justify left bottom))
@@ -36,7 +36,7 @@
       (at 38.1 81.8896 0)
       (effects (font (size 1.27 1.27)) (justify left top))
     )
-    (instances (project "keygen" (path "/f06c1c88-93af-42e4-a67f-bd5a1563b0f8" (page "2"))))
+    (instances (project "keygen" (path "/e20767d7-8157-4885-a37d-e09a6393a8e4" (page "2"))))
   )
   (sheet
     (at 114.3 50.8)
@@ -47,7 +47,7 @@
     (dnp no)
     (stroke (width 0.1524) (type solid))
     (fill (color 0 0 0 0))
-    (uuid "92725f5d-eae8-4ecd-8a08-c85d963f8a6e")
+    (uuid "9db6a448-83f8-401f-9228-b8527d5ae49d")
     (property "Sheetname" "right"
       (at 114.3 50.038 0)
       (effects (font (size 1.27 1.27)) (justify left bottom))
@@ -56,7 +56,7 @@
       (at 114.3 81.8896 0)
       (effects (font (size 1.27 1.27)) (justify left top))
     )
-    (instances (project "keygen" (path "/f06c1c88-93af-42e4-a67f-bd5a1563b0f8" (page "3"))))
+    (instances (project "keygen" (path "/e20767d7-8157-4885-a37d-e09a6393a8e4" (page "3"))))
   )
   (sheet_instances (path "/" (page "1")))
   (embedded_fonts no)
