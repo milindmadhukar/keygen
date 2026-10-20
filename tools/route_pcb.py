@@ -142,6 +142,7 @@ def stitch_fragments(b, pitch=0.5, margin=0.6, min_gap=0.9):
     for netname, layers in gz.items():
         if pcbnew.F_Cu not in layers or pcbnew.B_Cu not in layers: continue
         F, B = layers[pcbnew.F_Cu], layers[pcbnew.B_Cu]
+        parent.clear()                                    # piece keys are per net
         nodes = [("F", i) for i in range(F.OutlineCount())] + [("B", i) for i in range(B.OutlineCount())]
         for n in nodes: find(n)
         conn = []   # (x, y, radius) copper that spans both layers on this net

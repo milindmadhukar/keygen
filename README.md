@@ -19,7 +19,8 @@ Bluetooth or USB-C to the host and over Bluetooth or a TRRS cable between halves
 - PCB pipeline (each step is a script in `tools/`, run in this order):
   `gen_pcb.py` (place footprints, outline, holes) → `route_pcb.py` (Freerouting, ground left to the
   pour) → `finish_route.py` (grid maze router for whatever Freerouting leaves; `--include-gnd`,
-  `--pads-to-ground REF.PAD`) → `stitch_gnd.py` / `cleanup_pcb.py` (ground stitching, dangling copper)
+  `--pads-to-ground REF.PAD`) → `smooth_route.py` (straighten tracks into clean 0/45/90° runs)
+  → `stitch_gnd.py` / `cleanup_pcb.py` (ground stitching, dangling copper)
   → `sync_pcb.py` (relink to the schematic). `kicad-cli pcb drc --schematic-parity` is the judge.
   `tools/check_datasheets.py` then audits the routed board against the part datasheets in
   `docs/datasheets/`: controller pinout and orientation, nRF52840 pin restrictions, battery path,
