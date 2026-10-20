@@ -21,6 +21,9 @@ Bluetooth or USB-C to the host and over Bluetooth or a TRRS cable between halves
   pour) → `finish_route.py` (grid maze router for whatever Freerouting leaves; `--include-gnd`,
   `--pads-to-ground REF.PAD`) → `stitch_gnd.py` / `cleanup_pcb.py` (ground stitching, dangling copper)
   → `sync_pcb.py` (relink to the schematic). `kicad-cli pcb drc --schematic-parity` is the judge.
+  `tools/check_datasheets.py` then audits the routed board against the part datasheets in
+  `docs/datasheets/`: controller pinout and orientation, nRF52840 pin restrictions, battery path,
+  LED/diode/encoder/jack pinouts, antenna clearance and current budget (`-v` lists the passes).
 - `fab/` — manufacturing files: `keygen-left-gerbers.zip` + `keygen-right-gerbers.zip` (order
   these; cheaper per half), `keygen-gerbers.zip` (both in one), `BOM.md` + `BOM-left/right.csv`, `BOM-assembly-left/right.csv` (fab
   assembly-BOM format: item, designator, qty, description, MPN, footprint, value, instructions)
