@@ -12,7 +12,7 @@ The shopping list with spares and prices is `bom/bom.csv` / `plan/bom.html`.
 | 100 nF capacitor (0805) | 1 | C102 | SMD, next to the first LED |
 | 1N4148 diode | 33 | D101–D133 | through-hole, back side; band (cathode) toward the square pad |
 | PJ-320A TRRS jack | 1 | J101 | through-hole, back side at the top edge |
-| SK6812MINI-E LED | 39 | LED101–LED139 | SMD, reverse-mount on the back (per-key) / front (underglow); mind the corner mark |
+| SK6812MINI-E LED | 33 | LED101–LED133 | SMD, reverse-mount on the back; mind the corner mark |
 | MX switch, 1.25u key | 5 | SW101, SW107, SW113, SW120, SW131 | Kailh socket on the back; switch + 1.25u keycap |
 | MX switch, 1u key | 26 | SW102–SW106, SW108–SW112, SW114–SW119, SW121–SW130 | Kailh socket on the back; switch + 1u keycap on top |
 | MX switch, 1.5u key (tall thumb) | 2 | SW132, SW133 | Kailh socket on the back; switch + 1.5u keycap, turned 90° |
@@ -30,7 +30,7 @@ The shopping list with spares and prices is `bom/bom.csv` / `plan/bom.html`.
 | 1N4148 diode | 34 | D201–D234 | through-hole, back side; band (cathode) toward the square pad |
 | EC11 rotary encoder | 1 | ENC201 | through-hole, front side (right half only) |
 | PJ-320A TRRS jack | 1 | J201 | through-hole, back side at the top edge |
-| SK6812MINI-E LED | 39 | LED201–LED239 | SMD, reverse-mount on the back (per-key) / front (underglow); mind the corner mark |
+| SK6812MINI-E LED | 33 | LED201–LED233 | SMD, reverse-mount on the back; mind the corner mark |
 | MX switch, 1.25u key | 5 | SW201, SW208, SW214, SW221, SW232 | Kailh socket on the back; switch + 1.25u keycap |
 | MX switch, 1u key | 26 | SW202–SW206, SW209–SW213, SW215–SW220, SW222–SW231 | Kailh socket on the back; switch + 1u keycap on top |
 | MX switch, 1.5u key (tall thumb) | 2 | SW233, SW234 | Kailh socket on the back; switch + 1.5u keycap, turned 90° |
@@ -47,7 +47,7 @@ The shopping list with spares and prices is `bom/bom.csv` / `plan/bom.html`.
 | 100 nF capacitor (0805) | 2 | 4 | Robu.in / Lamington Road |
 | 1N4148 diode | 67 | 134 | [StacksKB 1N4148 (10-pack)](https://stackskb.com/store/1n4148-through-hole-diode/) |
 | PJ-320A TRRS jack | 2 | 4 | [StacksKB PJ-320A](https://stackskb.com/store/pj-320a-jack/) |
-| SK6812MINI-E LED | 78 | 156 | Not stocked by Indian stores I checked |
+| SK6812MINI-E LED | 66 | 132 | Not stocked by Indian stores I checked |
 | MX switch, 1.25u key | 10 | 20 | Kailh sockets: you own 100 (enough for keyboard 1). Switches: still to choose |
 | MX switch, 1u key | 52 | 104 | Kailh sockets: you own 100 (enough for keyboard 1). Switches: still to choose |
 | MX switch, 1.5u key (tall thumb) | 4 | 8 | Kailh sockets: you own 100 (enough for keyboard 1). Switches: still to choose |

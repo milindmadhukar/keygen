@@ -88,7 +88,7 @@ for side in ("left", "right"):
         want = sum(1 for cell in cells if cell[1] == c and cell[3] is not None) + 1 + (1 if enc and enc[1] == c else 0)
         check(len(nets[f"COL{c}"]) == want, f"{side} COL{c} has {len(nets[f'COL{c}'])} nodes, want {want}")
 
-    nled = len(keys) + g.UNDERGLOW
+    nled = len(keys)
     for i in range(1, nled + 1):
         L = f"LED{i}"
         # KiCad stock SK6812MINI-E numbering (mirrored datasheet view for reverse mount)
