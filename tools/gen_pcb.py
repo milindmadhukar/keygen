@@ -266,8 +266,25 @@ LEFT_PARTS = {
     "SW91": dict(x=MCU_X + 9.0 + 1.5 + 6.5, y=TOP_EDGE + 36.0, back=True),
 }
 CAP_NEAR_LED1 = [(-6.5, 4.6), (-3.0, 4.6)]   # C1/C2 relative to the first LED, back side
+BAT_PLUS = (3.5, 0.0)                        # "+" beside the battery connector's pad 1, outside its outline
 ENCODER_SHAFT = (12.5 * U, TOP_EDGE + 16.65 * 2 + 15.0)   # right half, front, below the controller
 ENC_ORIGIN_TO_SHAFT = (0.0, 0.0)                          # marbastlib EC11: origin at the shaft
+
+
+def battery_plus(b):
+    """Mark the battery connector's + pad (pad 1) on the back silkscreen. A reversed pack destroys
+    the charger. Skips a mark that's already there, so it can run on a routed board."""
+    for ref in ("BT101", "BT201"):
+        fp = b.FindFootprintByReference(ref)
+        if fp is None: continue
+        c = next(p for p in fp.Pads() if p.GetNumber() == "1").GetPosition()
+        pos = pcbnew.VECTOR2I(c.x + pcbnew.FromMM(BAT_PLUS[0]), c.y + pcbnew.FromMM(BAT_PLUS[1]))
+        if any(isinstance(d, pcbnew.PCB_TEXT) and d.GetText() == "+" and d.GetPosition() == pos for d in b.GetDrawings()):
+            continue
+        t = pcbnew.PCB_TEXT(b)
+        t.SetText("+"); t.SetLayer(pcbnew.B_SilkS); t.SetPosition(pos); t.SetMirrored(True)
+        t.SetTextSize(pcbnew.VECTOR2I(pcbnew.FromMM(1.2), pcbnew.FromMM(1.2))); t.SetTextThickness(pcbnew.FromMM(0.2))
+        b.Add(t)
 
 
 def build():
@@ -326,6 +343,7 @@ def build():
         B.outline(outline_pts)
         B.mounting_holes(convex_hull(outline_pts), side)
 
+    battery_plus(B.b)
     missing = set(comps) - B.placed - {r for r in comps if r.startswith("#")}
     if missing: raise RuntimeError(f"not placed: {sorted(missing)}")
     path = PCB / "keygen.kicad_pcb"
