@@ -1,8 +1,8 @@
 # Ordering the Keygen PCBs (bare boards, self-assembly)
 
-Upload **`keygen-gerbers.zip`** (both halves in one file). If the fab asks you to split it, or
-charges extra for "multiple designs in one panel", upload `keygen-left-gerbers.zip` and
-`keygen-right-gerbers.zip` as two separate orders instead.
+Place **two orders**: `keygen-left-gerbers.zip` and `keygen-right-gerbers.zip`, 5 of each.
+Per half came out cheaper at Lion Circuits than the combined file (checked 2026-10-20).
+`keygen-gerbers.zip` (both halves in one design) is kept for fabs that price it better.
 
 | Setting | Value |
 |---|---|
@@ -10,7 +10,7 @@ charges extra for "multiple designs in one panel", upload `keygen-left-gerbers.z
 | Material | FR-4, 1.6 mm |
 | Copper | 1 oz (35 µm) |
 | Board size | both halves: 363.0 × 125.9 mm · one half: 162.7 × 125.9 mm |
-| Quantity | 5 (one-file order) — or 5 left + 5 right |
+| Quantity | 5 left + 5 right (two orders) |
 | Surface finish | HASL lead-free (cheapest; fine for hand soldering) |
 | Soldermask / silkscreen | any colour (green + white is cheapest) |
 | Min track / clearance | 0.15 mm / 0.2 mm (6/8 mil) |
