@@ -19,7 +19,7 @@ Per half came out cheaper at Lion Circuits than the combined file (checked 2026-
 | Stencil | not needed |
 
 **Things to tell the fab or check in their DFM report**
-- Each half has 39 small internal rectangular cut-outs (reverse-mount LED windows, about
+- Each half has 33 small internal rectangular cut-outs (reverse-mount LED windows, about
   3.5 × 3.2 mm, with corner reliefs). They are on the Edge.Cuts layer and must be routed (milled).
 - LED pads sit about 0.25 mm from those cut-outs (copper-to-edge 0.2 mm).
 - The USB-C end of each controller overhangs the board edge by 1 mm on purpose (no copper there).
