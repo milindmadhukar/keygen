@@ -8,7 +8,7 @@ fab/ORDER.md                   what to enter in the fab's order form
 
 Each zip holds Gerbers (copper, soldermask, silkscreen, outline) and Excellon drill files.
 """
-import shutil, subprocess, sys, tempfile, zipfile
+import re, shutil, subprocess, sys, tempfile, zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -64,6 +64,12 @@ def one_half(side, dest):
     shutil.copy(PCB.with_suffix(".kicad_pro"), dest.with_suffix(".kicad_pro"))
 
 
+def led_windows(board):
+    """Reverse-mount LEDs on one half: each sits in its own Edge.Cuts light cut-out."""
+    import pcbnew
+    return sum(1 for fp in pcbnew.LoadBoard(str(board)).GetFootprints() if re.match(r"LED1\d\d$", fp.GetReference()))
+
+
 def outline_size(board):
     import pcbnew
     b = pcbnew.LoadBoard(str(board))
@@ -83,6 +89,7 @@ def main():
             gerbers(half, OUT / f"keygen-{side}-gerbers.zip")
             sizes[side] = outline_size(half)
     w, h = sizes["left"]
+    leds = led_windows(PCB)
     W, H = sizes["both"]
     (OUT / "ORDER.md").write_text(f"""# Ordering the Keygen PCBs (bare boards, self-assembly)
 
@@ -105,7 +112,7 @@ Per half came out cheaper at Lion Circuits than the combined file (checked 2026-
 | Stencil | not needed |
 
 **Things to tell the fab or check in their DFM report**
-- Each half has 39 small internal rectangular cut-outs (reverse-mount LED windows, about
+- Each half has {leds} small internal rectangular cut-outs (reverse-mount LED windows, about
   3.5 × 3.2 mm, with corner reliefs). They are on the Edge.Cuts layer and must be routed (milled).
 - LED pads sit about 0.25 mm from those cut-outs (copper-to-edge 0.2 mm).
 - The USB-C end of each controller overhangs the board edge by 1 mm on purpose (no copper there).
