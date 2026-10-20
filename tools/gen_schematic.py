@@ -15,7 +15,14 @@ ROOT = Path(__file__).resolve().parent.parent
 STOCK = Path("/usr/share/kicad/symbols")
 MARB = ROOT / "lib/marbastlib/symbols"
 PCB = ROOT / "pcb"
-U = lambda: str(uuid.uuid4())
+_NS = uuid.UUID("6f0c8a52-4b1e-4d7a-9a51-0d5b2a7e3c11")      # Keygen namespace for stable IDs
+_count = [0]
+def U(key=None):
+    """Deterministic UUIDs: symbols, sheets and the root are keyed by name so the PCB's links to
+    them survive regenerating the schematic; everything else uses generation order."""
+    if key is None:
+        _count[0] += 1; key = f"item:{_count[0]}"
+    return str(uuid.uuid5(_NS, key))
 S = Sym
 
 # --------------------------------------------------------------------------------------
@@ -75,6 +82,7 @@ FP = {
     "pwr": "keygen:SW_MSK12C02-HB",
     "rst": "Button_Switch_THT:SW_PUSH_6mm_H5mm",
     "bat": "Connector_JST:JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal",
+    "hole": "MountingHole:MountingHole_2.2mm_M2",
 }
 
 # --------------------------------------------------------------------------------------
@@ -214,6 +222,7 @@ def keygen_footprints():
          for x in (-7.62, 7.62) for y in [(-13.97 + 2.54 * i) for i in range(12)]]))
     fp = load(marb / "marbastlib-xp-promicroish.pretty", "nice_nano_H_USBup")
     fp[:] = [n for n in fp if not (isinstance(n, list) and n and n[0] == "model")]
+    fp[:] = [[S("attr"), S("through_hole")] if isinstance(n, list) and n and n[0] == "attr" else n for n in fp]
     fp.append(model(f"{SHAPES}/nRF52840_ProMicro.wrl")); save(fp, "nice_nano_H_USBup")
 
     for lib, name, base in (("marbastlib-various.pretty", "SW_MSK12C02-HB", VENDOR3D["marbastlib"]),
@@ -243,6 +252,7 @@ LIBSYMS = {
     "Switch:SW_SPDT": lambda: lib_symbol(STOCK / "Switch.kicad_sym", "SW_SPDT"),
     "Switch:SW_Push": lambda: lib_symbol(STOCK / "Switch.kicad_sym", "SW_Push"),
     "power:PWR_FLAG": lambda: lib_symbol(STOCK / "power.kicad_sym", "PWR_FLAG"),
+    "Mechanical:MountingHole": lambda: lib_symbol(STOCK / "Mechanical.kicad_sym", "MountingHole"),
 }
 _cache = {}
 def libsym(lib_id):
@@ -258,20 +268,21 @@ def libsym(lib_id):
 class Sheet:
     def __init__(self, project, title, root, sheet=None):
         """root: root schematic uuid; sheet: uuid of the sheet symbol in the root (None = root)."""
-        self.project, self.root, self.sheet, self.uuid = project, root, sheet, U()
+        self.project, self.root, self.sheet = project, root, sheet
+        self.uuid = U(f"file:{title}")
         self.path = "/" + root + ("/" + sheet if sheet else "")
         self.items, self.used = [], []
         self.title = title
         self.nets = {}          # net -> [(ref, pin)]
 
-    def symbol(self, lib_id, ref, value, x, y, footprint="", unconnected=(), nets=None, in_bom=True, fields=()):
+    def symbol(self, lib_id, ref, value, x, y, footprint="", unconnected=(), nets=None, in_bom=True, fields=(), on_board=None):
         """Place a symbol and connect pins by net name. nets: {pin_number: net}."""
         if lib_id not in self.used: self.used.append(lib_id)
         sym = libsym(lib_id)
         pl = pins(sym)
         node = [S("symbol"), [S("lib_id"), lib_id], [S("at"), x, y, 0], [S("unit"), 1],
                 [S("exclude_from_sim"), S("no")], [S("in_bom"), S("yes" if in_bom else "no")],
-                [S("on_board"), S("yes" if in_bom else "no")], [S("dnp"), S("no")], [S("uuid"), U()],
+                [S("on_board"), S("yes" if (in_bom if on_board is None else on_board) else "no")], [S("dnp"), S("no")], [S("uuid"), U(f"symbol:{self.path}:{ref}")],
                 [S("property"), "Reference", ref, [S("at"), x, y - 6.35, 0], font()],
                 [S("property"), "Value", value, [S("at"), x, y + 6.35, 0], font()],
                 [S("property"), "Footprint", footprint, [S("at"), x, y, 0], hidden()],
@@ -401,6 +412,12 @@ def build(side, root, sheet):
         sh.symbol("Device:RotaryEncoder_Switch", R("ENC", 1), "EC11", EX, EY, FP["enc"],
                   nets={"A": "ENC_A", "B": "ENC_B", "C": "GND", "S1": f"COL{enc[1]}", "S2": f"K{enc[0]}{enc[1]}"})
 
+    # ---- mounting holes (placed on the PCB by gen_pcb.py) ----------------------------
+    HX, HY = 360.68, 271.78
+    sh.text("MOUNTING HOLES (M2)", HX - 25.4, HY - 12.7, 2)
+    for i in range(1, 6):
+        sh.symbol("Mechanical:MountingHole", R("H", i), "M2", HX - 20.32 + (i - 1) * 10.16, HY, FP["hole"],
+                  in_bom=False, on_board=True)
     sh.write(PCB / f"{side}.kicad_sch")
     return sh
 
@@ -434,7 +451,11 @@ def write_root(root, sheets):
 
 
 def write_project(out, proj):
-    pro = json.loads(Path("/usr/share/kicad/template/kicad.kicad_pro").read_text())
+    if (out / f"{proj}.kicad_pro").exists():
+        # keep the existing project: it holds the board's design rules and net classes
+        pro = json.loads((out / f"{proj}.kicad_pro").read_text())
+    else:
+        pro = json.loads(Path("/usr/share/kicad/template/kicad.kicad_pro").read_text())
     pro.setdefault("meta", {})["filename"] = f"{proj}.kicad_pro"
     (out / f"{proj}.kicad_pro").write_text(json.dumps(pro, indent=2) + "\n")
     lib = "${KIPRJMOD}/../lib"
@@ -453,8 +474,8 @@ def write_project(out, proj):
 if __name__ == "__main__":
     keygen_lib()
     keygen_footprints()
-    root = U()
-    sheets = {"left": U(), "right": U()}
+    root = U("root:keygen")
+    sheets = {"left": U("sheet:left"), "right": U("sheet:right")}
     for side, sid in sheets.items():
         sh = build(side, root, sid)
         print(f"{side}: {sum(1 for i in sh.items if i[0]=='symbol')} symbols, {len(sh.nets)} nets")

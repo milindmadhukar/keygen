@@ -347,7 +347,7 @@ def build():
 
 
 RULES = {                       # Lion Circuits: 6/6 mil on 1 oz copper; we keep some margin
-    "min_clearance": 0.2, "min_track_width": 0.2, "min_via_diameter": 0.6, "min_via_annular_width": 0.13,
+    "min_clearance": 0.2, "min_track_width": 0.15, "min_via_diameter": 0.6, "min_via_annular_width": 0.13,
     "min_through_hole_diameter": 0.3, "min_hole_clearance": 0.25, "min_hole_to_hole": 0.25,
     "min_copper_edge_clearance": 0.2,    # reverse-mount LED pads sit 0.247 mm from their own cut-out corners
     "min_silk_clearance": 0.0,

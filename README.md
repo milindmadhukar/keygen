@@ -16,6 +16,11 @@ Bluetooth or USB-C to the host and over Bluetooth or a TRRS cable between halves
   schematics are generated: edit the tables in `tools/gen_schematic.py`, run it, then run
   `tools/check_schematic.py` (KiCad ERC + a netlist check that every connection matches the tables).
   `pcb/keygen-schematic.pdf` is the printable version.
+- PCB pipeline (each step is a script in `tools/`, run in this order):
+  `gen_pcb.py` (place footprints, outline, holes) → `route_pcb.py` (Freerouting, ground left to the
+  pour) → `finish_route.py` (grid maze router for whatever Freerouting leaves; `--include-gnd`,
+  `--pads-to-ground REF.PAD`) → `stitch_gnd.py` / `cleanup_pcb.py` (ground stitching, dangling copper)
+  → `sync_pcb.py` (relink to the schematic). `kicad-cli pcb drc --schematic-parity` is the judge.
 - `lib/` — git submodules: marbastlib (MX hotswap, nice!nano, MSK12C02 footprints) and
   Keebio-Parts (PJ-320A). Clone with `git clone --recursive`.
 - `bom/bom.csv` — bill of materials with Indian and import sources. Edit it, then run

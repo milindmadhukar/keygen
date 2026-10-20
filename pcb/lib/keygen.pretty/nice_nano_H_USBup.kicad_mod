@@ -4,7 +4,7 @@
   (layer "F.Cu")
   (descr "Footprint for nice!nano (nRF52850 pro-micro compatible controller), pro-micro compatible pads only, USB pointing away from PCB"
   )
-  (attr through_hole exclude_from_pos_files exclude_from_bom)
+  (attr through_hole)
   (fp_text reference "REF**"
     (at -9.14 16.24)
     (layer "F.SilkS")
