@@ -93,8 +93,59 @@ def compress(refs):
     return ", ".join(", ".join(r) if len(r) < 3 else f"{r[0]}–{r[-1]}" for r in out)
 
 
+# Manufacturer part numbers for a fab's assembly BOM. Verify stock/alternates in the fab's
+# parts search before ordering; generic parts list a common equivalent.
+MPN = {
+    "1N4148 diode": "1N4148 (DO-35, e.g. onsemi 1N4148)",
+    "SK6812MINI-E LED": "SK6812MINI-E (OPSCO, LCSC C5149201)",
+    "10 µF capacitor (0805)": "CL21A106KAYNNNE (Samsung, 10 µF 25 V X5R 0805)",
+    "100 nF capacitor (0805)": "CL21B104KBCNNNC (Samsung, 100 nF 50 V X7R 0805)",
+    "MSK12C02 power slide switch": "MSK12C02-HB",
+    "6 mm reset button": "6x6x5 mm THT tactile switch (e.g. TS-1102S-B-B, any 6x6x5)",
+    "PJ-320A TRRS jack": "PJ-320A",
+    "JST-PH 2-pin battery connector": "S2B-PH-K-S(LF)(SN) (JST)",
+    "EC11 rotary encoder": "EC11E (Alps EC11 with push switch, 20 mm shaft)",
+    "nRF52840 Pro Micro (nice!nano v2 clone)": "Customer supplied: nice!nano v2-compatible nRF52840 Pro Micro",
+}
+DESCR = {
+    "MX switch": "Kailh MX hotswap socket (CPG151101S11)",
+}
+def fab_instructions(name, refs):
+    side = "TOP" if name.startswith("EC11") or name.startswith("SK6812") and any(int(re.sub(r"\D", "", r)) % 100 > 33 for r in refs) else "BOTTOM"
+    if name.startswith("MX switch"):
+        return "Kailh CPG151101S11 hotswap socket, BOTTOM side. Do NOT fit switches (customer installs)."
+    if name.startswith("SK6812"):
+        under = [r for r in refs if int(re.sub(r"\D", "", r)) % 100 > 33]
+        return (f"Reverse-mount LED, body through the PCB cut-out. Per-key LEDs on BOTTOM; underglow "
+                f"{under[0]}-{under[-1]} on TOP. Match the corner mark to the footprint's pin-1 mark.")
+    if name.startswith("nRF52840"):
+        return "DO NOT FIT: customer solders sockets + controller (BOTTOM side)."
+    if name.startswith("1N4148"):
+        return "THT, BOTTOM side. Polarity: band (cathode) to the square pad."
+    if name.startswith("JST"):
+        return "THT side-entry, BOTTOM side. Opening toward the battery pocket."
+    return f"{side} side."
+
+def export_fab_bom(parts):
+    for side in ("left", "right"):
+        g = group(parts, side)
+        with (OUT / f"BOM-assembly-{side}.csv").open("w", newline="") as f:
+            w = csv.writer(f)
+            w.writerow(["Item Number", "Designator", "Unit Quantity", "Description", "Manufacturer Part Number",
+                        "Footprint", "Value", "Assembly Instructions"])
+            for i, (name, e) in enumerate(g.items(), 1):
+                kind = "MX switch" if name.startswith("MX switch") else name
+                size = re.search(r"([\d.]+u)", name).group(1) if kind == "MX switch" else ""
+                desc = f"Kailh MX hotswap socket for a {size} key" if kind == "MX switch" else name
+                mpn = "CPG151101S11 (Kailh)" if kind == "MX switch" else MPN.get(name, "")
+                value = ("Kailh hotswap socket" if name.startswith("MX switch") else
+                         "JST-PH 2-pin" if name.startswith("JST") else e["value"])
+                w.writerow([i, ",".join(e["refs"]), len(e["refs"]), desc, mpn, e["footprint"], value,
+                            fab_instructions(name, e["refs"])])
+
 def main():
     parts = schematic_parts()
+    export_fab_bom(parts)
     shop = shops()
     OUT.mkdir(exist_ok=True)
     md = ["# Keygen assembly BOM", "",
