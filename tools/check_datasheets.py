@@ -196,7 +196,7 @@ for side, d in SIDES.items():
     ok(pad_net(bt, "2") == "GND", A, f"{side}: battery - (JST pad 2) on GND")
     pp = pads(bt)[plus].GetPosition()
     silk = [t for t in list(board.Drawings()) + list(fp(bt).GraphicalItems())
-            if isinstance(t, pcbnew.PCB_TEXT) and "SilkS" in t.GetLayerName() and "+" in t.GetText()
+            if isinstance(t, pcbnew.PCB_TEXT) and t.GetLayer() in (pcbnew.F_SilkS, pcbnew.B_SilkS) and "+" in t.GetText()
             and mm((t.GetPosition() - pp).EuclideanNorm()) < 6]
     ok(silk, A, f"{side}: '+' printed next to the battery connector's + pad",
        f"{side}: nothing on the silkscreen marks which JST pad is + (pad {plus}); LiPo packs come wired both "
