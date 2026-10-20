@@ -1,0 +1,14 @@
+Part,Qty,References,Value,Footprint,Notes
+JST-PH 2-pin battery connector,1,BT201,LiPo 3.7V ~1000mAh,Connector_JST:JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal,"through-hole side-entry, back side; check battery polarity first"
+10 µF capacitor (0805),1,C201,10uF,Capacitor_SMD:C_0805_2012Metric,"SMD, next to the first LED"
+100 nF capacitor (0805),1,C202,100nF,Capacitor_SMD:C_0805_2012Metric,"SMD, next to the first LED"
+1N4148 diode,34,D201 D202 D203 D204 D205 D206 D207 D208 D209 D210 D211 D212 D213 D214 D215 D216 D217 D218 D219 D220 D221 D222 D223 D224 D225 D226 D227 D228 D229 D230 D231 D232 D233 D234,1N4148,Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal,"through-hole, back side; band (cathode) toward the square pad"
+EC11 rotary encoder,1,ENC201,EC11,keygen:ROT_Alps_EC11E-Switch,"through-hole, front side (right half only)"
+PJ-320A TRRS jack,1,J201,PJ-320A,keygen:TRRS-PJ-320A,"through-hole, back side at the top edge"
+SK6812MINI-E LED,39,LED201 LED202 LED203 LED204 LED205 LED206 LED207 LED208 LED209 LED210 LED211 LED212 LED213 LED214 LED215 LED216 LED217 LED218 LED219 LED220 LED221 LED222 LED223 LED224 LED225 LED226 LED227 LED228 LED229 LED230 LED231 LED232 LED233 LED234 LED235 LED236 LED237 LED238 LED239,SK6812MINI-E,LED_SMD:LED_SK6812MINI-E_3.2x2.8mm_P1.5mm_ReverseMount,"SMD, reverse-mount on the back (per-key) / front (underglow); mind the corner mark"
+"MX switch, 1.25u key",5,SW201 SW208 SW214 SW221 SW232,-,keygen:SW_MX_HS_CPG151101S11_1.25u,Kailh socket on the back; switch + 1.25u keycap
+"MX switch, 1u key",26,SW202 SW203 SW204 SW205 SW206 SW209 SW210 SW211 SW212 SW213 SW215 SW216 SW217 SW218 SW219 SW220 SW222 SW223 SW224 SW225 SW226 SW227 SW228 SW229 SW230 SW231,0,keygen:SW_MX_HS_CPG151101S11_1u,Kailh socket on the back; switch + 1u keycap on top
+"MX switch, 1.5u key (tall thumb)",2,SW233 SW234,Space,keygen:SW_MX_HS_CPG151101S11_1.5u,"Kailh socket on the back; switch + 1.5u keycap, turned 90°"
+MSK12C02 power slide switch,1,SW290,MSK12C02 power,keygen:SW_MSK12C02-HB,"SMD, back side at the top edge, lever out"
+6 mm reset button,1,SW291,Reset,Button_Switch_THT:SW_PUSH_6mm_H5mm,"through-hole, back side"
+nRF52840 Pro Micro (nice!nano v2 clone),1,U201,nRF52840 Pro Micro,keygen:nice_nano_H_USBup,"on the back, socketed (Mill-Max/low-profile)"
