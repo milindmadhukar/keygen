@@ -105,7 +105,7 @@ Per half came out cheaper at Lion Circuits than the combined file (checked 2026-
 | Board size | both halves: {W:.1f} × {H:.1f} mm · one half: {w:.1f} × {h:.1f} mm |
 | Quantity | 5 left + 5 right (two orders) |
 | Surface finish | HASL lead-free (cheapest; fine for hand soldering) |
-| Soldermask / silkscreen | any colour (green + white is cheapest) |
+| Soldermask / silkscreen | **black / white** (the silkscreen artwork is drawn for it; set in the board stackup) |
 | Min track / clearance | 0.15 mm / 0.2 mm (6/8 mil) |
 | Min hole | 0.3 mm (vias); no blind/buried vias |
 | Assembly | none (bare boards) |

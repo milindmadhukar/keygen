@@ -16,14 +16,10 @@ repeating it.
 When the board's look changes, regenerate the images in `docs/` from the current board too:
 
 ```sh
-B="$PWD/pcb/keygen.kicad_pcb"
-kicad-cli pcb render -o hero.png -w 2800 -h 1300 --quality high --floor --perspective \
-  --rotate '-38,0,0' --zoom 1.85 --background transparent "$B"
-kicad-cli pcb render -o top.png -w 2800 -h 1100 --quality basic --side top --zoom 2.5 --background transparent "$B"
-kicad-cli pcb render -o bottom.png -w 2800 -h 1100 --quality basic --side bottom --zoom 2.5 --background transparent "$B"
-# then trim and shrink each one, e.g.:
-magick hero.png -trim +repage -bordercolor none -border 20 -resize 2000x -strip docs/render-hero.png
+python3 tools/render_board.py     # docs/render-hero.png, render-top.png, render-bottom.png
+python3 tools/render_routing.py   # docs/pcb-routing.png (the two-layer routing picture)
 ```
 
-These produce `docs/render-hero.png`, `docs/render-top.png` and `docs/render-bottom.png`,
-and `python3 tools/render_routing.py` writes `docs/pcb-routing.png` (the two-layer routing picture).
+`render_board.py` renders with the board's stackup colours, from a temporary copy whose mask is
+an opaque black: KiCad's named "Black" mask, which the board keeps so the Gerber job file says
+"Black", renders as see-through brown.
