@@ -23,14 +23,15 @@ KINDS = [
     (r"SW_MX_HS_CPG151101S11_1\.5u", "MX switch, 1.5u key (tall thumb)", "Hotswap sockets", "Kailh socket on the back; switch + 1.5u keycap, turned 90°"),
     (r"D_DO-35", "1N4148 diode", "Diodes", "through-hole, back side; band (cathode) toward the square pad"),
     (r"SK6812MINI-E", "SK6812MINI-E LED", "Per-key LEDs", "SMD, reverse-mount on the back; mind the corner mark"),
-    (r"nice_nano|nRF52840", "nRF52840 Pro Micro (nice!nano v2 clone)", "Controller", "on the back, socketed (Mill-Max/low-profile)"),
+    (r"nice_nano|nRF52840", "nRF52840 Pro Micro (nice!nano v2)", "Controller", "on the back, socketed (Mill-Max/low-profile); bridge BOOST"),
     (r"MSK12C02", "MSK12C02 power slide switch", "Power switch", "SMD, back side at the top edge, lever out"),
     (r"SW_PUSH_6mm", "6 mm reset button", "Reset button", "through-hole, back side"),
-    (r"PJ-320A", "PJ-320A TRRS jack", "TRRS jack", "through-hole, back side at the top edge"),
     (r"JST_PH", "JST-PH 2-pin battery connector", "Battery connector", "through-hole side-entry, back side; check battery polarity first"),
     (r"EC11|ROT_Alps", "EC11 rotary encoder", "Rotary encoder", "through-hole, front side (right half only)"),
     (r"10uF", "10 µF capacitor (0805)", "LED decoupling", "SMD, next to the first LED"),
     (r"100nF", "100 nF capacitor (0805)", "LED decoupling", "SMD, next to the first LED"),
+    (r"AO3401A", "AO3401A P-MOSFET (SOT-23)", "Battery switch MOSFET", "SMD, back side, between the controller and the power switch"),
+    (r"^1M$", "1 MΩ resistor (0805)", "Gate resistor", "SMD, back side, below the MOSFET"),
 ]
 SKIP = re.compile(r"^(#|H\d)")          # power flags, mounting holes (not parts)
 
@@ -101,11 +102,12 @@ MPN = {
     "10 µF capacitor (0805)": "CL21A106KAYNNNE (Samsung, 10 µF 25 V X5R 0805)",
     "100 nF capacitor (0805)": "CL21B104KBCNNNC (Samsung, 100 nF 50 V X7R 0805)",
     "MSK12C02 power slide switch": "MSK12C02-HB",
+    "AO3401A P-MOSFET (SOT-23)": "AO3401A (Alpha & Omega, SOT-23)",
+    "1 MΩ resistor (0805)": "0805W8F1004T5E (UNI-ROYAL, 1 MΩ 1% 0805)",
     "6 mm reset button": "6x6x5 mm THT tactile switch (e.g. TS-1102S-B-B, any 6x6x5)",
-    "PJ-320A TRRS jack": "PJ-320A",
     "JST-PH 2-pin battery connector": "S2B-PH-K-S(LF)(SN) (JST)",
     "EC11 rotary encoder": "EC11E (Alps EC11 with push switch, 20 mm shaft)",
-    "nRF52840 Pro Micro (nice!nano v2 clone)": "Customer supplied: nice!nano v2-compatible nRF52840 Pro Micro",
+    "nRF52840 Pro Micro (nice!nano v2)": "Customer supplied: nice!nano v2 nRF52840 Pro Micro",
 }
 DESCR = {
     "MX switch": "Kailh MX hotswap socket (CPG151101S11)",
@@ -177,7 +179,7 @@ def main():
            + ". Not in the schematic as separate parts (the switch footprint stands for socket + switch).",
            "",
            "**Also needed but not on the PCB:** LiPo battery per half (see `bom/bom.csv`), M2 screws/standoffs for "
-           "the 10 mounting holes, TRRS cable, keycaps, knob.", ""]
+           "the 10 mounting holes, keycaps, knob.", ""]
     (OUT / "BOM.md").write_text("\n".join(md))
     print((OUT / "BOM.md").read_text())
 

@@ -923,54 +923,218 @@
       )
       (embedded_fonts no)
     )
-    (symbol "keygen:TRRS_PJ-320A"
-      (pin_names (offset 1.016))
+    (symbol "Transistor_FET:AO3401A"
+      (pin_names (hide yes))
       (exclude_from_sim no)
       (in_bom yes)
       (on_board yes)
-      (property "Reference" "J" (at -1.27 7.62 0) (effects (font (size 1.27 1.27))))
-      (property "Value" "PJ-320A" (at -1.27 -10.16 0) (effects (font (size 1.27 1.27))))
-      (property "Footprint" "keygen:TRRS-PJ-320A"
-        (at 0 0 0)
-        (effects (font (size 1.27 1.27)) (hide yes))
+      (in_pos_files yes)
+      (duplicate_pin_numbers_are_jumpers no)
+      (embedded_fonts no)
+      (property "Reference" "Q"
+        (at 5.08 1.905 0)
+        (show_name no)
+        (do_not_autoplace no)
+        (effects (font (size 1.27 1.27)) (justify left))
       )
-      (property "Datasheet" "" (at 0 0 0) (effects (font (size 1.27 1.27)) (hide yes)))
-      (property "Description" "3.5 mm TRRS jack, pads numbered as Keebio TRRS-PJ-320A (1 sleeve, 2 tip, 3 ring1, 4 ring2)"
-        (at 0 0 0)
-        (effects (font (size 1.27 1.27)) (hide yes))
+      (property "Value" "AO3401A"
+        (at 5.08 0 0)
+        (show_name no)
+        (do_not_autoplace no)
+        (effects (font (size 1.27 1.27)) (justify left))
       )
-      (symbol "TRRS_PJ-320A_0_1"
-        (rectangle
-          (start -5.08 5.08)
-          (end 2.54 -7.62)
+      (property "Footprint" "Package_TO_SOT_SMD:SOT-23"
+        (at 5.08 -1.905 0)
+        (show_name no)
+        (do_not_autoplace no)
+        (hide yes)
+        (effects (font (size 1.27 1.27) (italic yes)) (justify left))
+      )
+      (property "Datasheet" "http://www.aosmd.com/pdfs/datasheet/AO3401A.pdf"
+        (at 5.08 -3.81 0)
+        (show_name no)
+        (do_not_autoplace no)
+        (hide yes)
+        (effects (font (size 1.27 1.27)) (justify left))
+      )
+      (property "Description" "-4.0A Id, -30V Vds, P-Channel MOSFET, SOT-23"
+        (at 0 0 0)
+        (show_name no)
+        (do_not_autoplace no)
+        (hide yes)
+        (effects (font (size 1.27 1.27)))
+      )
+      (property "ki_keywords" "P-Channel MOSFET"
+        (at 0 0 0)
+        (show_name no)
+        (do_not_autoplace no)
+        (hide yes)
+        (effects (font (size 1.27 1.27)))
+      )
+      (property "ki_fp_filters" "SOT?23*"
+        (at 0 0 0)
+        (show_name no)
+        (do_not_autoplace no)
+        (hide yes)
+        (effects (font (size 1.27 1.27)))
+      )
+      (symbol "AO3401A_0_1"
+        (polyline
+          (pts (xy 0.254 1.905) (xy 0.254 -1.905))
           (stroke (width 0.254) (type default))
-          (fill (type background))
+          (fill (type none))
+        )
+        (polyline (pts (xy 0.254 0) (xy -2.54 0)) (stroke (width 0) (type default)) (fill (type none)))
+        (polyline
+          (pts (xy 0.762 2.286) (xy 0.762 1.27))
+          (stroke (width 0.254) (type default))
+          (fill (type none))
+        )
+        (polyline
+          (pts (xy 0.762 1.778) (xy 3.302 1.778) (xy 3.302 -1.778) (xy 0.762 -1.778))
+          (stroke (width 0) (type default))
+          (fill (type none))
+        )
+        (polyline
+          (pts (xy 0.762 0.508) (xy 0.762 -0.508))
+          (stroke (width 0.254) (type default))
+          (fill (type none))
+        )
+        (polyline
+          (pts (xy 0.762 -1.27) (xy 0.762 -2.286))
+          (stroke (width 0.254) (type default))
+          (fill (type none))
+        )
+        (circle (center 1.651 0) (radius 2.794) (stroke (width 0.254) (type default)) (fill (type none)))
+        (polyline
+          (pts (xy 2.286 0) (xy 1.27 0.381) (xy 1.27 -0.381) (xy 2.286 0))
+          (stroke (width 0) (type default))
+          (fill (type outline))
+        )
+        (polyline
+          (pts (xy 2.54 2.54) (xy 2.54 1.778))
+          (stroke (width 0) (type default))
+          (fill (type none))
+        )
+        (circle (center 2.54 1.778) (radius 0.254) (stroke (width 0) (type default)) (fill (type outline)))
+        (circle
+          (center 2.54 -1.778)
+          (radius 0.254)
+          (stroke (width 0) (type default))
+          (fill (type outline))
+        )
+        (polyline
+          (pts (xy 2.54 -2.54) (xy 2.54 0) (xy 0.762 0))
+          (stroke (width 0) (type default))
+          (fill (type none))
+        )
+        (polyline
+          (pts (xy 2.794 -0.508) (xy 2.921 -0.381) (xy 3.683 -0.381) (xy 3.81 -0.254))
+          (stroke (width 0) (type default))
+          (fill (type none))
+        )
+        (polyline
+          (pts (xy 3.302 -0.381) (xy 2.921 0.254) (xy 3.683 0.254) (xy 3.302 -0.381))
+          (stroke (width 0) (type default))
+          (fill (type none))
         )
       )
-      (symbol "TRRS_PJ-320A_1_1"
-        (pin passive line
-          (at 5.08 2.54 180)
+      (symbol "AO3401A_1_1"
+        (pin input line
+          (at -5.08 0 0)
           (length 2.54)
-          (name "T" (effects (font (size 1.27 1.27))))
+          (name "G" (effects (font (size 1.27 1.27))))
+          (number "1" (effects (font (size 1.27 1.27))))
+        )
+        (pin passive line
+          (at 2.54 -5.08 90)
+          (length 2.54)
+          (name "S" (effects (font (size 1.27 1.27))))
           (number "2" (effects (font (size 1.27 1.27))))
         )
         (pin passive line
-          (at 5.08 0 180)
+          (at 2.54 5.08 270)
           (length 2.54)
-          (name "R1" (effects (font (size 1.27 1.27))))
+          (name "D" (effects (font (size 1.27 1.27))))
           (number "3" (effects (font (size 1.27 1.27))))
         )
+      )
+    )
+    (symbol "Device:R"
+      (pin_numbers (hide yes))
+      (pin_names (offset 0))
+      (exclude_from_sim no)
+      (in_bom yes)
+      (on_board yes)
+      (in_pos_files yes)
+      (duplicate_pin_numbers_are_jumpers no)
+      (property "Reference" "R"
+        (at 2.032 0 90)
+        (show_name no)
+        (do_not_autoplace no)
+        (effects (font (size 1.27 1.27)))
+      )
+      (property "Value" "R"
+        (at 0 0 90)
+        (show_name no)
+        (do_not_autoplace no)
+        (effects (font (size 1.27 1.27)))
+      )
+      (property "Footprint" ""
+        (at -1.778 0 90)
+        (show_name no)
+        (do_not_autoplace no)
+        (hide yes)
+        (effects (font (size 1.27 1.27)))
+      )
+      (property "Datasheet" ""
+        (at 0 0 0)
+        (show_name no)
+        (do_not_autoplace no)
+        (hide yes)
+        (effects (font (size 1.27 1.27)))
+      )
+      (property "Description" "Resistor"
+        (at 0 0 0)
+        (show_name no)
+        (do_not_autoplace no)
+        (hide yes)
+        (effects (font (size 1.27 1.27)))
+      )
+      (property "ki_keywords" "R res resistor"
+        (at 0 0 0)
+        (show_name no)
+        (do_not_autoplace no)
+        (hide yes)
+        (effects (font (size 1.27 1.27)))
+      )
+      (property "ki_fp_filters" "R_*"
+        (at 0 0 0)
+        (show_name no)
+        (do_not_autoplace no)
+        (hide yes)
+        (effects (font (size 1.27 1.27)))
+      )
+      (symbol "R_0_1"
+        (rectangle
+          (start -1.016 -2.54)
+          (end 1.016 2.54)
+          (stroke (width 0.254) (type default))
+          (fill (type none))
+        )
+      )
+      (symbol "R_1_1"
         (pin passive line
-          (at 5.08 -2.54 180)
-          (length 2.54)
-          (name "R2" (effects (font (size 1.27 1.27))))
-          (number "4" (effects (font (size 1.27 1.27))))
+          (at 0 3.81 270)
+          (length 1.27)
+          (name "" (effects (font (size 1.27 1.27))))
+          (number "1" (effects (font (size 1.27 1.27))))
         )
         (pin passive line
-          (at 5.08 -5.08 180)
-          (length 2.54)
-          (name "S" (effects (font (size 1.27 1.27))))
-          (number "1" (effects (font (size 1.27 1.27))))
+          (at 0 -3.81 90)
+          (length 1.27)
+          (name "" (effects (font (size 1.27 1.27))))
+          (number "2" (effects (font (size 1.27 1.27))))
         )
       )
       (embedded_fonts no)
@@ -5195,11 +5359,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "3ad3c0d5-3af5-56fc-ab3b-1e27e89c402c")
   )
-  (label "UART_TX"
-    (at 347.98 48.26 180)
-    (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "7a214c71-973e-513b-bbaf-e09d93d18b43")
-  )
+  (no_connect (at 347.98 48.26) (uuid "7a214c71-973e-513b-bbaf-e09d93d18b43"))
   (label "GND"
     (at 347.98 50.8 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
@@ -5210,11 +5370,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "97abb8bc-e1e8-5d1c-b383-2116f7492cda")
   )
-  (label "UART_RX"
-    (at 347.98 55.88 180)
-    (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "24822632-66fb-5063-8b53-ea6ce7136db4")
-  )
+  (no_connect (at 347.98 55.88) (uuid "24822632-66fb-5063-8b53-ea6ce7136db4"))
   (no_connect (at 347.98 58.42) (uuid "5ba3388a-1554-55f5-b802-ab53fc4d5ab4"))
   (label "ROW0"
     (at 347.98 60.96 180)
@@ -5298,7 +5454,7 @@
   )
   (no_connect (at 373.38 71.12) (uuid "1839aa1f-3b6f-5349-a8a1-fbac6c789d93"))
   (no_connect (at 373.38 73.66) (uuid "f42c4da7-0a58-5195-8c5a-1f19b2d15ca4"))
-  (text "UART: tip = P0.08, ring1 = P0.17 on BOTH halves.\nLeft firmware: tx P0.08 / rx P0.17.\nRight firmware: tx P0.17 / rx P0.08 (crossed in software).\nSpare: P0.20, P0.09, P0.10"
+  (text "Spare: P0.08, P0.17 (full speed), P0.20, P0.09, P0.10"
     (exclude_from_sim no)
     (at 386.08 45.72 0)
     (effects (font (size 1.27 1.27)) (justify left top))
@@ -5375,17 +5531,21 @@
       )
     )
   )
-  (label "BAT_RAW"
+  (label "GND"
     (at 365.76 129.54 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "27be11f8-96da-54a6-9b88-a13f481c1c0a")
   )
-  (label "VBAT"
+  (label "BAT_GATE"
     (at 355.6 132.08 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "aeb27d11-6067-5037-9738-462a6db9eef5")
   )
-  (no_connect (at 365.76 134.62) (uuid "f8a8a029-d5f4-57d8-9d2f-a7f572b48dcb"))
+  (label "BAT_RAW"
+    (at 365.76 134.62 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid "f8a8a029-d5f4-57d8-9d2f-a7f572b48dcb")
+  )
   (symbol
     (lib_id "Switch:SW_Push")
     (at 386.08 132.08 0)
@@ -5559,62 +5719,103 @@
     (effects (font (size 1.27 1.27)) (justify left top))
     (uuid "b01fd1e3-5f60-56ce-9a68-35be08166524")
   )
-  (text "TRRS (optional wired split; GND/TX/RX only, never battery power)"
+  (text "BATTERY SWITCH (P-MOSFET; the slide switch only drives the gate)"
     (exclude_from_sim no)
     (at 335.28 170.18 0)
     (effects (font (size 2 2)) (justify left top))
     (uuid "b0c7d6a7-8d37-5bfd-b723-e821de3947ef")
   )
   (symbol
-    (lib_id "keygen:TRRS_PJ-320A")
+    (lib_id "Transistor_FET:AO3401A")
     (at 360.68 185.42 0)
     (unit 1)
     (exclude_from_sim no)
     (in_bom yes)
     (on_board yes)
     (dnp no)
-    (uuid "78423d81-0fb0-5430-8e29-fb96a0ca9896")
-    (property "Reference" "J101" (at 360.68 179.07 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "PJ-320A" (at 360.68 191.77 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "keygen:TRRS-PJ-320A"
+    (uuid "4ab921ef-7f2b-5357-8bed-8fcc3e5d4b1e")
+    (property "Reference" "Q101" (at 360.68 179.07 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "AO3401A" (at 360.68 191.77 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "Package_TO_SOT_SMD:SOT-23"
       (at 360.68 185.42 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 360.68 185.42 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "2" (uuid "5980e5a6-5b8f-57e1-b273-73d3383078a5"))
-    (pin "3" (uuid "d8d17b69-9cf2-54df-be06-67183505c7e2"))
-    (pin "4" (uuid "97a338b0-95aa-593b-a401-acd0acc2348f"))
-    (pin "1" (uuid "03321001-871a-51c8-a9fe-8a83a216f77c"))
+    (pin "1" (uuid "5980e5a6-5b8f-57e1-b273-73d3383078a5"))
+    (pin "2" (uuid "d8d17b69-9cf2-54df-be06-67183505c7e2"))
+    (pin "3" (uuid "97a338b0-95aa-593b-a401-acd0acc2348f"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/857ae29d-aaae-533f-894e-3d0d86c0d5f9"
-          (reference "J101")
+          (reference "Q101")
           (unit 1)
         )
       )
     )
   )
-  (label "UART_TX"
-    (at 365.76 182.88 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
+  (label "BAT_GATE"
+    (at 355.6 185.42 180)
+    (effects (font (size 1.27 1.27)) (justify right bottom))
+    (uuid "03321001-871a-51c8-a9fe-8a83a216f77c")
+  )
+  (label "BAT_RAW"
+    (at 363.22 190.5 270)
+    (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "d746420f-c9ce-580b-a07b-6a3293c66fba")
   )
-  (label "UART_RX"
-    (at 365.76 185.42 0)
+  (label "VBAT"
+    (at 363.22 180.34 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "65ffda5c-c2b6-537f-ac19-3f7ee1a0578c")
   )
-  (no_connect (at 365.76 187.96) (uuid "7f714a2c-0482-5d37-803d-8dd19cf76e17"))
-  (label "GND"
-    (at 365.76 190.5 0)
+  (symbol
+    (lib_id "Device:R")
+    (at 375.92 185.42 0)
+    (unit 1)
+    (exclude_from_sim no)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "deaa1af0-0ea6-5694-b219-c72c693e7aed")
+    (property "Reference" "R101" (at 375.92 179.07 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "1M" (at 375.92 191.77 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "Resistor_SMD:R_0805_2012Metric"
+      (at 375.92 185.42 0)
+      (effects (font (size 1.27 1.27)) (hide yes))
+    )
+    (property "Datasheet" "" (at 375.92 185.42 0) (effects (font (size 1.27 1.27)) (hide yes)))
+    (pin "1" (uuid "7f714a2c-0482-5d37-803d-8dd19cf76e17"))
+    (pin "2" (uuid "9b9f5bf3-9e1f-576b-9eca-0fb4cf2828d9"))
+    (instances
+      (project "keygen"
+        (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/857ae29d-aaae-533f-894e-3d0d86c0d5f9"
+          (reference "R101")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (label "BAT_GATE"
+    (at 375.92 181.61 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "9b9f5bf3-9e1f-576b-9eca-0fb4cf2828d9")
+    (uuid "abf2a24a-7ade-5143-b007-3958ab8a2e33")
+  )
+  (label "BAT_RAW"
+    (at 375.92 189.23 270)
+    (effects (font (size 1.27 1.27)) (justify right bottom))
+    (uuid "66a5ad92-53ed-54f2-a627-f6662946d7e5")
+  )
+  (text "Switch 2-1: gate to GND, on. Switch 2-3: gate to source, off.\nR1 holds the gate off between positions. Leave the switch on while charging:\noff, USB charges the cell through the body diode (~0.35 W at 500 mA)."
+    (exclude_from_sim no)
+    (at 335.28 198.12 0)
+    (effects (font (size 1.27 1.27)) (justify left top))
+    (uuid "997a371f-d3f5-529b-9c3d-2abd0a151b43")
   )
   (text "MOUNTING HOLES (M2)"
     (exclude_from_sim no)
     (at 335.28 259.08 0)
     (effects (font (size 2 2)) (justify left top))
-    (uuid "abf2a24a-7ade-5143-b007-3958ab8a2e33")
+    (uuid "e825c738-9fb3-58b9-bf51-d658423c61df")
   )
   (symbol
     (lib_id "Mechanical:MountingHole")

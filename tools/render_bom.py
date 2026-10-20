@@ -49,7 +49,7 @@ page = f"""<!doctype html>
   <p class="eyebrow">Keygen · bill of materials · generated from bom/bom.csv</p>
   <h1>Bill of materials</h1>
   <p class="lede prose">Everything needed for two keyboards, with spares, and where to get it in India or from abroad. Prices are what the listings showed on 19 Oct 2026, or rough guides where marked with ~. <a href="index.html">Back to the build plan</a>.</p>
-  <div class="note prose"><strong>Buying strategy:</strong> one LCSC or AliExpress order for the SK6812MINI-E LEDs (not stocked in India), StacksKB for sockets, diodes and TRRS jacks, Robu.in or Lamington Road for batteries and small parts, and Lion Circuits (Bengaluru) for the boards. Batteries rarely ship to India from abroad, so buy those locally.</div>
+  <div class="note prose"><strong>Buying strategy:</strong> one LCSC or AliExpress order for the SK6812MINI-E LEDs (not stocked in India), StacksKB for sockets and diodes, Robu.in or Lamington Road for batteries and small parts, and Lion Circuits (Bengaluru) for the boards. Batteries rarely ship to India from abroad, so buy those locally.</div>
   {"".join(body)}
 </div>
 </body>
@@ -66,7 +66,7 @@ lines = ["---", "created: 2026-10-19", "name: 13 - bill of materials", "tags:", 
          "Quantities cover **two keyboards with spares**. Prices are what the listings showed on 2026-10-19; `~` marks a rough guide.", "",
          "> [!tip] Buying strategy",
          "> - **LCSC or AliExpress:** SK6812MINI-E LEDs (not stocked in India)",
-         "> - **StacksKB:** sockets, diodes, TRRS jacks",
+         "> - **StacksKB:** sockets and diodes",
          "> - **Robu.in or Lamington Road:** batteries and small parts",
          "> - **Lion Circuits (Bengaluru):** the boards",
          ">",

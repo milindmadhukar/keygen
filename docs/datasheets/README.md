@@ -9,8 +9,8 @@ here with the page it comes from. All are English, except where noted below.
 | `nice-nano-v2-pinout.png` | nice!nano v2 pinout | [nicekeyboards.com](https://nicekeyboards.com/docs/nice-nano/pinout-schematic) | Pad order, high- and low-frequency pins, P0.13 VCC cut-off, 100 mA charge rate (500 mA with BOOST) |
 | `nice-nano-v2-schematic.png` | nice!nano v2 schematic | same page | Internal pins: P0.13 drives the XC6220 VCC regulator's enable, P0.15 is the LED, P0.00/P0.01 the 32 kHz crystal; BQ24075 charger |
 | `SK6812MINI-E_Opsco_rev02.pdf` | SK6812MINI-E reverse-mount RGB LED | [Adafruit](https://cdn-shop.adafruit.com/product-files/4960/4960_SK6812MINI-E_REV02_EN.pdf) | §4/§5 pinout (1 VDD, 2 DOUT, 3 GND, 4 DIN, viewed from the lens side). §8 VDD 3.7–5.5 V. §9 12 mA per colour. §10 1 mA static, VIH = 0.7 VDD |
-| `MSK12C02-HB_ShouHan.pdf` | MSK12C02-HB power slide switch | [LCSC C431541](https://www.lcsc.com/product-detail/C431541.html) | Pin 2 is common. Rated 50 mA at 12 V DC. **Notes in Chinese**: translated below |
-| `PJ-320A_XKB.pdf` | PJ-320A 3.5 mm TRRS jack | [LCSC C2884926](https://www.lcsc.com/product-detail/C2884926.html) | Drawing and specs are in English; only the title block is Chinese. It does not name which pin is tip or ring |
+| `MSK12C02-HB_ShouHan.pdf` | MSK12C02-HB power slide switch | [LCSC C431541](https://www.lcsc.com/product-detail/C431541.html) | Pin 2 is common. Rated 50 mA at 12 V DC, which is why it only drives the MOSFET's gate. **Notes in Chinese**: translated below |
+| `AO3401A_AOS.pdf` | AO3401A P-channel MOSFET (battery switch) | [Alpha & Omega](https://www.aosmd.com/res/datasheets/AO3401A.pdf) | p. 1: SOT-23 pinout (1 G, 2 S, 3 D), body diode D to S, VGS ±12 V, ID −4 A, RθJA 125 °C/W. p. 2: VGS(th) −0.5 to −1.3 V, RDS(on) < 85 mΩ at VGS = −2.5 V, VSD 0.7 V typ |
 | `Alps_EC11E.pdf` | Alps EC11E rotary encoder | [Alps Alpine](https://tech.alpsalpine.com/cms.media/product_catalog_ec_01_ec11e_en_611f078659.pdf) | Terminal row A C B (C = common, in the middle); switch D/E on the opposite side |
 | `1N4148_Vishay.pdf` | 1N4148 (DO-35) | [Vishay](https://www.vishay.com/docs/81857/1n4148.pdf) | The band marks the cathode |
 | `JST_PH.pdf` | JST PH connector (S2B-PH-K) | [JST](https://www.jst-mfg.com/product/pdf/eng/ePH.pdf) | Pin numbering only. JST defines no battery polarity |
@@ -29,9 +29,10 @@ Facts with no datasheet behind them, from the vendors' own docs and source code:
 - **NFC pins in ZMK.** On ZMK's Zephyr 4.1, `CONFIG_NFCT_PINS_AS_GPIOS` is gone. Use
   `&uicr { nfct-pins-as-gpios; };` ([ZMK blog](https://zmk.dev/blog/2025/12/09/zephyr-4-1)).
   Once written, the setting stays until UICR is erased.
-- **Wired split.** [ZMK split docs](https://zmk.dev/docs/features/split-keyboards): full-duplex
-  UART, one transport per build, experimental. Never plug or unplug a TRRS cable while either half
-  has power.
+- **No wired split.** [ZMK split docs](https://zmk.dev/docs/features/split-keyboards): wired
+  split is one transport per build and experimental, and a TRRS cable must never be plugged or
+  unplugged while either half has power. With a battery in each half that is always, so the board
+  has no TRRS jack.
 - **Antenna.** nicekeyboards publishes no antenna position or keep-out. The renders show bare
   board at the end away from USB-C, so the check keeps the last 6 mm of that end clear.
 
@@ -49,8 +50,3 @@ Facts with no datasheet behind them, from the vendors' own docs and source code:
 - Parts list: A clip (phosphor bronze, nickel/silver plated), B base (LCP, black), C knob
   (high-temperature nylon, black), D spring (stainless steel), E contact spring (beryllium copper,
   silver plated), F cover (phosphor bronze, nickel/white plated).
-
-## PJ-320A specifications (from the drawing)
-
-Rated load 30 V 0.5 A. Contact resistance ≤ 30 mΩ. Insulation resistance ≥ 100 MΩ. Withstanding
-voltage 500 V AC for 1 minute. Insertion/extraction force 3–20 N. Mating cycles: 5000 minimum.

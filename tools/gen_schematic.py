@@ -42,8 +42,6 @@ MCU_TYPES = {"GND": "power_in", "B+": "power_in", "VCC": "power_out", "RST": "in
 # Net on each MCU pad (both halves). Pads not listed get a no-connect flag.
 MCU_NETS = {
     1: "LED_DIN",            # SK6812 data via SPI MOSI (ZMK led_strip)
-    2: "UART_TX",            # TRRS tip   (right firmware swaps TX/RX, see note)
-    5: "UART_RX",            # TRRS ring1
     3: "GND", 4: "GND", 14: "GND",
     13: "VBAT", 15: "RST", 16: "VCC",
     7: "ROW0", 8: "ROW1", 9: "ROW2", 10: "ROW3", 11: "ROW4",
@@ -77,8 +75,9 @@ FP = {
     "led": "LED_SMD:LED_SK6812MINI-E_3.2x2.8mm_P1.5mm_ReverseMount",
     "cap": "Capacitor_SMD:C_0805_2012Metric",
     "enc": "keygen:ROT_Alps_EC11E-Switch",           # marbastlib, origin at the shaft
-    "trrs": "keygen:TRRS-PJ-320A",
     "pwr": "keygen:SW_MSK12C02-HB",
+    "pfet": "Package_TO_SOT_SMD:SOT-23",
+    "res": "Resistor_SMD:R_0805_2012Metric",
     "rst": "Button_Switch_THT:SW_PUSH_6mm_H5mm",
     "bat": "Connector_JST:JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal",
     "hole": "MountingHole:MountingHole_2.2mm_M2",
@@ -114,20 +113,6 @@ def nice_nano_symbol():
             prop("Description", "nRF52840 Pro Micro-format board, nice!nano v2 pinout (24 edge pads)", hide=True),
             body, pinunit, [S("embedded_fonts"), S("no")]]
 
-def trrs_symbol():
-    body = [S("symbol"), "TRRS_PJ-320A_0_1",
-            [S("rectangle"), [S("start"), -5.08, 5.08], [S("end"), 2.54, -7.62],
-             [S("stroke"), [S("width"), 0.254], [S("type"), S("default")]], [S("fill"), [S("type"), S("background")]]]]
-    pu = [S("symbol"), "TRRS_PJ-320A_1_1"]
-    for num, name, y in (("2", "T", 2.54), ("3", "R1", 0), ("4", "R2", -2.54), ("1", "S", -5.08)):
-        pu.append(make_pin("passive", 5.08, y, 180, name, num))
-    return [S("symbol"), "TRRS_PJ-320A", [S("pin_names"), [S("offset"), 1.016]],
-            [S("exclude_from_sim"), S("no")], [S("in_bom"), S("yes")], [S("on_board"), S("yes")],
-            prop("Reference", "J", -1.27, 7.62), prop("Value", "PJ-320A", -1.27, -10.16),
-            prop("Footprint", FP["trrs"], hide=True), prop("Datasheet", "", hide=True),
-            prop("Description", "3.5 mm TRRS jack, pads numbered as Keebio TRRS-PJ-320A (1 sleeve, 2 tip, 3 ring1, 4 ring2)", hide=True),
-            body, pu, [S("embedded_fonts"), S("no")]]
-
 def flatten(child_lib, child, parent_name):
     """Inline an `extends` symbol: the parent's graphics/pins with the child's properties."""
     lib = __import__("sexp").parse(open(child_lib).read())
@@ -143,7 +128,7 @@ def flatten(child_lib, child, parent_name):
     return out
 
 SHAPES = "${KIPRJMOD}/lib/keygen.3dshapes"
-VENDOR3D = {"marbastlib": "${KIPRJMOD}/../lib/marbastlib/3dmodels", "keebio": "${KIPRJMOD}/../lib/Keebio-Parts.pretty/3dmodels"}
+VENDOR3D = {"marbastlib": "${KIPRJMOD}/../lib/marbastlib/3dmodels"}
 PCB_T = 1.6        # board thickness, mm
 
 def model(path, offset=(0, 0, 0), rotate=(0, 0, 0)):
@@ -229,23 +214,21 @@ def keygen_footprints():
         fp = load(marb / lib, name)
         fp[:] = [n if not (isinstance(n, list) and n and n[0] == "model") else vendor_model(n, base) for n in fp]
         save(fp, name)
-    fp = load(ROOT / "lib/Keebio-Parts.pretty", "TRRS-PJ-320A")
-    fp[:] = [n if not (isinstance(n, list) and n and n[0] == "model") else vendor_model(n, VENDOR3D["keebio"]) for n in fp]
-    save(fp, "TRRS-PJ-320A")
 
 def keygen_lib():
     lib = [S("kicad_symbol_lib"), [S("version"), 20241209], [S("generator"), "keygen_gen_schematic"],
-           [S("generator_version"), "9.0"], nice_nano_symbol(), trrs_symbol()]
+           [S("generator_version"), "9.0"], nice_nano_symbol()]
     (PCB / "lib").mkdir(parents=True, exist_ok=True)
     (PCB / "lib/keygen.kicad_sym").write_text(dump(lib) + "\n")
 
 LIBSYMS = {
     "keygen:nice_nano_v2": lambda: nice_nano_symbol(),
-    "keygen:TRRS_PJ-320A": lambda: trrs_symbol(),
     "marbastlib-mx:MX_SW_HS_CPG151101S11": lambda: lib_symbol(MARB / "marbastlib-mx.kicad_sym", "MX_SW_HS_CPG151101S11"),
     "LED:SK6812MINI-E": lambda: flatten(STOCK / "LED.kicad_sym", "SK6812MINI-E", "SK6812"),
     "Device:D": lambda: lib_symbol(STOCK / "Device.kicad_sym", "D"),
     "Device:C": lambda: lib_symbol(STOCK / "Device.kicad_sym", "C"),
+    "Device:R": lambda: lib_symbol(STOCK / "Device.kicad_sym", "R"),
+    "Transistor_FET:AO3401A": lambda: flatten(STOCK / "Transistor_FET.kicad_sym", "AO3401A", "TP0610T"),
     "Device:RotaryEncoder_Switch": lambda: lib_symbol(STOCK / "Device.kicad_sym", "RotaryEncoder_Switch"),
     "Device:Battery_Cell": lambda: lib_symbol(STOCK / "Device.kicad_sym", "Battery_Cell"),
     "Switch:SW_SPDT": lambda: lib_symbol(STOCK / "Switch.kicad_sym", "SW_SPDT"),
@@ -376,10 +359,8 @@ def build(side, root, sheet):
     mnets = {str(k): v for k, v in MCU_NETS.items()}
     if side == "right": mnets.update({str(k): v for k, v in MCU_NETS_RIGHT.items()})
     sh.symbol("keygen:nice_nano_v2", R("U", 1), "nRF52840 Pro Micro", MX, MY, FP["mcu"], nets=mnets)
-    sh.text("UART: tip = P0.08, ring1 = P0.17 on BOTH halves.\nLeft firmware: tx P0.08 / rx P0.17.\n"
-            "Right firmware: tx P0.17 / rx P0.08 (crossed in software).\n"
-            + ("Encoder B on P0.09 (NFC pin): set nfct-pins-as-gpios.\n" if side == "right" else "")
-            + "Spare: " + ("P0.10" if side == "right" else "P0.20, P0.09, P0.10"),
+    sh.text(("Encoder B on P0.09 (NFC pin): set nfct-pins-as-gpios.\n" if side == "right" else "")
+            + "Spare: P0.08, P0.17 (full speed), " + ("P0.10" if side == "right" else "P0.20, P0.09, P0.10"),
             MX + 25.4, MY - 15.24)
 
     # ---- power ---------------------------------------------------------------------
@@ -388,7 +369,7 @@ def build(side, root, sheet):
     sh.symbol("Device:Battery_Cell", R("BT", 1), "LiPo 3.7V ~1000mAh", PX - 20.32, PY, FP["bat"],
               nets={"1": "BAT_RAW", "2": "GND"})
     sh.symbol("Switch:SW_SPDT", R("SW", 90), "MSK12C02 power", PX, PY, FP["pwr"],
-              nets={"1": "BAT_RAW", "2": "VBAT"})
+              nets={"1": "GND", "2": "BAT_GATE", "3": "BAT_RAW"})
     sh.symbol("Switch:SW_Push", R("SW", 91), "Reset", PX + 25.4, PY, FP["rst"], nets={"1": "RST", "2": "GND"})
     sh.symbol("Device:C", R("C", 1), "10uF", PX - 20.32, PY + 22.86, FP["cap"], nets={"1": "VCC", "2": "GND"})
     sh.symbol("Device:C", R("C", 2), "100nF", PX - 7.62, PY + 22.86, FP["cap"], nets={"1": "VCC", "2": "GND"})
@@ -396,11 +377,18 @@ def build(side, root, sheet):
         sh.symbol("power:PWR_FLAG", f"#FLG{base + i + 1}", "PWR_FLAG", PX + 12.7 + i * 12.7, PY + 22.86, nets={"1": net}, in_bom=False)
     sh.text("C1/C2 sit next to the first LED of the chain.", PX - 25.4, PY + 33.02)
 
-    # ---- TRRS ----------------------------------------------------------------------
-    TX, TY = 360.68, 185.42
-    sh.text("TRRS (optional wired split; GND/TX/RX only, never battery power)", TX - 25.4, TY - 15.24, 2)
-    sh.symbol("keygen:TRRS_PJ-320A", R("J", 1), "PJ-320A", TX, TY, FP["trrs"],
-              nets={"1": "GND", "2": "UART_TX", "3": "UART_RX"})
+    # ---- battery load switch ---------------------------------------------------------
+    # The MSK12C02 is rated 50 mA, less than the nice!nano's 500 mA (BOOST) charge current, so it
+    # only drives the gate of a P-MOSFET that carries the battery current. Source on the battery,
+    # drain on B+: the body diode (drain -> source) blocks the battery when the switch is off.
+    QX, QY = 360.68, 185.42
+    sh.text("BATTERY SWITCH (P-MOSFET; the slide switch only drives the gate)", QX - 25.4, QY - 15.24, 2)
+    sh.symbol("Transistor_FET:AO3401A", R("Q", 1), "AO3401A", QX, QY, FP["pfet"],
+              nets={"1": "BAT_GATE", "2": "BAT_RAW", "3": "VBAT"})
+    sh.symbol("Device:R", R("R", 1), "1M", QX + 15.24, QY, FP["res"], nets={"1": "BAT_GATE", "2": "BAT_RAW"})
+    sh.text("Switch 2-1: gate to GND, on. Switch 2-3: gate to source, off.\n"
+            "R1 holds the gate off between positions. Leave the switch on while charging:\n"
+            "off, USB charges the cell through the body diode (~0.35 W at 500 mA).", QX - 25.4, QY + 12.7)
 
     # ---- encoder -------------------------------------------------------------------
     if enc:

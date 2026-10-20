@@ -259,9 +259,11 @@ TOP_EDGE = 0.25 * U               # top of the number-row key next to the contro
 MCU_X = 7.0 * U                   # centre of Redox's removed inner column
 LEFT_PARTS = {
     "U":  dict(x=MCU_X, y=TOP_EDGE + 16.65 - 1.0, back=True),     # USB-C overhangs the edge by 1 mm
-    "J":  dict(x=MCU_X + 9.0 + 1.2 + 3.05, y=TOP_EDGE + 2.0, back=True),   # TRRS, opening up
     "SW90": dict(x=MCU_X + 9.0 + 1.2 + 6.1 + 1.5 + 3.7, y=TOP_EDGE + 1.8, back=True),  # power slide, lever up
     "BT": dict(x=MCU_X + 9.0 + 5.5, y=TOP_EDGE + 23.0, back=True),          # JST-PH battery
+    # battery load switch: P-MOSFET and its gate resistor, between the controller and the slide switch
+    "Q":  dict(x=MCU_X + 12.25, y=TOP_EDGE + 8.0, back=True),
+    "R":  dict(x=MCU_X + 12.25, y=TOP_EDGE + 13.5, back=True),
     # reset: origin is pad 1; on the back the 6.5 mm body mirrors toward -x, so offset by its width
     "SW91": dict(x=MCU_X + 9.0 + 1.5 + 6.5, y=TOP_EDGE + 36.0, back=True),
 }
@@ -321,7 +323,7 @@ def build():
         # controller and friends
         mir = (lambda x: MIRROR_X - x) if side == "right" else (lambda x: x)
         for key, p in LEFT_PARTS.items():
-            ref = f"{key}{base+1}" if key in ("U", "J", "BT") else f"SW{base+int(key[2:])}"
+            ref = f"{key}{base+1}" if key in ("U", "BT", "Q", "R") else f"SW{base+int(key[2:])}"
             x = mir(p["x"])
             B.place(ref, x, p["y"], 0, back=p["back"])
         # decoupling caps next to the first LED of the chain
