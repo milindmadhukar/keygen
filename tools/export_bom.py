@@ -22,7 +22,7 @@ KINDS = [
     (r"SW_MX_HS_CPG151101S11_1\.25u", "MX switch, 1.25u key", "Hotswap sockets", "Kailh socket on the back; switch + 1.25u keycap"),
     (r"SW_MX_HS_CPG151101S11_1\.5u", "MX switch, 1.5u key (tall thumb)", "Hotswap sockets", "Kailh socket on the back; switch + 1.5u keycap, turned 90°"),
     (r"D_DO-35", "1N4148 diode", "Diodes", "through-hole, back side; band (cathode) toward the square pad"),
-    (r"SK6812MINI-E", "SK6812MINI-E LED", "Per-key + underglow LEDs", "SMD, reverse-mount on the back (per-key) / front (underglow); mind the corner mark"),
+    (r"SK6812MINI-E", "SK6812MINI-E LED", "Per-key LEDs", "SMD, reverse-mount on the back; mind the corner mark"),
     (r"nice_nano|nRF52840", "nRF52840 Pro Micro (nice!nano v2 clone)", "Controller", "on the back, socketed (Mill-Max/low-profile)"),
     (r"MSK12C02", "MSK12C02 power slide switch", "Power switch", "SMD, back side at the top edge, lever out"),
     (r"SW_PUSH_6mm", "6 mm reset button", "Reset button", "through-hole, back side"),
@@ -111,13 +111,12 @@ DESCR = {
     "MX switch": "Kailh MX hotswap socket (CPG151101S11)",
 }
 def fab_instructions(name, refs):
-    side = "TOP" if name.startswith("EC11") or name.startswith("SK6812") and any(int(re.sub(r"\D", "", r)) % 100 > 33 for r in refs) else "BOTTOM"
+    side = "TOP" if name.startswith("EC11") else "BOTTOM"
     if name.startswith("MX switch"):
         return "Kailh CPG151101S11 hotswap socket, BOTTOM side. Do NOT fit switches (customer installs)."
     if name.startswith("SK6812"):
-        under = [r for r in refs if int(re.sub(r"\D", "", r)) % 100 > 33]
-        return (f"Reverse-mount LED, body through the PCB cut-out. Per-key LEDs on BOTTOM; underglow "
-                f"{under[0]}-{under[-1]} on TOP. Match the corner mark to the footprint's pin-1 mark.")
+        return ("Reverse-mount LED, BOTTOM side, body through the PCB cut-out. "
+                "Match the corner mark to the footprint's pin-1 mark.")
     if name.startswith("nRF52840"):
         return "DO NOT FIT: customer solders sockets + controller (BOTTOM side)."
     if name.startswith("1N4148"):

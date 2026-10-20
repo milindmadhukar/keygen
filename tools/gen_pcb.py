@@ -253,7 +253,6 @@ def grow(corners, cx, cy, d):
 # --------------------------------------------------------------------------------------
 LED_OFFSET = (0.0, 5.08)          # SK6812MINI-E under the MX LED window (south of centre)
 DIODE_PAD1 = (8.3, 6.6)           # 1N4148 cathode; anode 7.62 mm north of it
-UNDERGLOW_GAPS = [((0, 1), 1), ((0, 1), 4), ((1, 2), 3), ((2, 3), 1), ((2, 3), 4), ((3, 4), 2)]
 
 # Non-key parts on the LEFT half (mm, KLE frame). The right half mirrors these about MIRROR_X.
 TOP_EDGE = 0.25 * U               # top of the number-row key next to the controller ("5")
@@ -302,11 +301,6 @@ def build():
             n = num[enc]
             sx, sy = ENCODER_SHAFT
             B.place(f"D{base+n}", sx + 8.6, sy + 3.0, 0, back=True, extra=90)   # beside S1/S2
-        # underglow LEDs: front side, in the gap between two keys of one column
-        for j, ((r1, r2), c) in enumerate(UNDERGLOW_GAPS):
-            a, b2 = geo[(side, r1, c)], geo[(side, r2, c)]
-            x, y = (a[0] + b2[0]) / 2, (a[1] + b2[1]) / 2
-            B.place(f"LED{base+len(keys)+j+1}", x, y, 0, back=False)
         # controller and friends
         mir = (lambda x: MIRROR_X - x) if side == "right" else (lambda x: x)
         for key, p in LEFT_PARTS.items():

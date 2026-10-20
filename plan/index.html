@@ -153,7 +153,7 @@ flowchart LR
       <tr><td>Controller</td><td>Pro Micro (ATmega32U4)</td><td>nice!nano v2 / SuperMini nRF52840 mounted on the underside under the old inner column, USB-C facing the top edge, plus pads for its 3 extra inner pins</td></tr>
       <tr><td>Switches</td><td>MX/Alps, solder-in</td><td>Kailh MX hotswap sockets</td></tr>
       <tr><td>Diodes</td><td>1N4148, through-hole, dual-sided</td><td>1N4148 through-hole (DO-35) kept</td></tr>
-      <tr><td>RGB</td><td>optional 14 WS2812B underglow via wires</td><td>SK6812MINI-E under every key + 6 underglow per half, on one chain</td></tr>
+      <tr><td>RGB</td><td>optional 14 WS2812B underglow via wires</td><td>SK6812MINI-E under every key, on one chain. No underglow: the battery sits under the PCB and would hide it.</td></tr>
       <tr><td>Link</td><td>TRRS serial</td><td>TRRS kept (wired-split UART) + Bluetooth</td></tr>
       <tr><td>Power</td><td>USB only</td><td>LiPo per half, power slide switch, LED power cut-off</td></tr>
       <tr><td>New</td><td>none</td><td>EC11 knob on the right inner edge. No screen.</td></tr>
@@ -169,7 +169,7 @@ flowchart LR
       <tr><td>nRF52840 module (nice!nano v2 or SuperMini)</td><td class="num">1</td><td class="num">1</td><td><span class="pill th">header</span></td><td>On the back of the PCB, components facing down, socketed with low-profile Mill-Max pins (about 3–4 mm). The case needs that much depth. SuperMini clones use the <code>nice_nano_v2</code> target, but quality varies, so buy a spare.</td></tr>
       <tr><td>MX switch + Kailh hotswap socket</td><td class="num">33</td><td class="num">33</td><td><span class="pill smd">hand-solder</span></td><td>Big pads, easy with an iron.</td></tr>
       <tr><td>1N4148 diode</td><td class="num">33</td><td class="num">34</td><td><span class="pill th">TH</span></td><td>DO-35, as Redox already uses.</td></tr>
-      <tr><td>SK6812MINI-E LED</td><td class="num">39</td><td class="num">39</td><td><span class="pill smd">SMD</span></td><td>Per-key plus 6 underglow. The one unavoidably SMD part. Hand-solder as in the Corne video, or have JLCPCB assemble these.</td></tr>
+      <tr><td>SK6812MINI-E LED</td><td class="num">33</td><td class="num">33</td><td><span class="pill smd">SMD</span></td><td>Per-key only. The one unavoidably SMD part. Hand-solder as in the Corne video, or have JLCPCB assemble these.</td></tr>
       <tr><td>LiPo cell + JST-PH 2-pin</td><td class="num">1</td><td class="num">1</td><td><span class="pill th">TH</span></td><td>1000–2000 mAh flat pouch under the PCB. The Dactyl CC builder uses 18650 cells for 4+ months of battery.</td></tr>
       <tr><td>Slide power switch (SS12D00)</td><td class="num">1</td><td class="num">1</td><td><span class="pill th">TH</span></td><td>In the battery line. The nice!nano has a charger but no switch.</td></tr>
       <tr><td>Reset button 6 mm</td><td class="num">1</td><td class="num">1</td><td><span class="pill th">TH</span></td><td>Reachable through a pinhole in the case. ZMK can also enter the bootloader from a key, so you rarely need it.</td></tr>
@@ -202,7 +202,7 @@ flowchart LR
         <li>Encoder on the peripheral (right) half, supported since Oct 2023</li>
         <li>Caps lock, layer and Bluetooth state shown through the LEDs instead of a screen (see below)</li>
         <li>ZMK Studio for live remapping, which the Dactyl CC builder calls a must-have</li>
-        <li>RGB underglow, with external power cut-off and auto-off when idle</li>
+        <li>RGB lighting (ZMK's <code>rgb_underglow</code> driver runs the per-key chain as one strip), with external power cut-off and auto-off when idle</li>
       </ul>
     </div>
     <div>

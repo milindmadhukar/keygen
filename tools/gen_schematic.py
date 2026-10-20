@@ -69,7 +69,6 @@ KEYS = {
     ],
 }
 ENCODER_POS = {"right": (0, 6)}   # encoder push switch sits in the matrix here
-UNDERGLOW = 6
 
 FP = {
     "mcu": "keygen:nice_nano_H_USBup",
@@ -359,8 +358,8 @@ def build(side, root, sheet):
 
     # ---- LED chain -----------------------------------------------------------------
     LX0, LY0, LDX, LDY, PER = 30.48, 215.9, 38.1, 30.48, 8
-    nled = len(keys) + UNDERGLOW
-    sh.text(f"PER-KEY + UNDERGLOW LEDs  ({len(keys)} per-key, {UNDERGLOW} underglow) - "
+    nled = len(keys)
+    sh.text(f"PER-KEY LEDs  ({nled}, no underglow) - "
             "powered from the controller's switched VCC (P0.13); cap brightness in firmware", LX0 - 15.24, LY0 - 20.32, 2)
     for i in range(nled):
         x, y = LX0 + (i % PER) * LDX, LY0 + (i // PER) * LDY
@@ -368,9 +367,8 @@ def build(side, root, sheet):
         dout = f"LED_D{i+1}" if i < nled - 1 else None
         nets = {"VDD": "VCC", "VSS": "GND", "DIN": din}
         if dout: nets["DOUT"] = dout
-        label = keys[i][2] if i < len(keys) else f"Underglow {i - len(keys) + 1}"
         sh.symbol("LED:SK6812MINI-E", R("LED", i + 1), "SK6812MINI-E", x, y, FP["led"], nets=nets,
-                  fields=[("Position", label)])
+                  fields=[("Position", keys[i][2])])
 
     # ---- controller ----------------------------------------------------------------
     MX, MY = 360.68, 60.96

@@ -2,7 +2,7 @@
 
 A one-off wireless split keyboard built on the [Redox](https://github.com/mattdibi/redox-keyboard)
 layout: 66 QWERTY keys (Redox minus its inner column), a 2×2 + 1.25u thumb cluster per hand,
-one rotary encoder on the right, per-key RGB + underglow and no screen. Two nRF52840
+one rotary encoder on the right, per-key RGB (no underglow) and no screen. Two nRF52840
 controllers (nice!nano v2) are hidden on the PCB underside and run ZMK, connecting over
 Bluetooth or USB-C to the host and over Bluetooth or a TRRS cable between halves.
 
