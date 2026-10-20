@@ -166,7 +166,7 @@ flowchart LR
     <thead><tr><th>Part</th><th>Left</th><th>Right</th><th>Mount</th><th>Notes</th></tr></thead>
     <tbody>
       <tr><td>nRF52840 module (nice!nano v2)</td><td class="num">1</td><td class="num">1</td><td><span class="pill th">header</span></td><td>On the back of the PCB, components facing down, socketed with low-profile Mill-Max pins (about 3–4 mm). The case needs that much depth. Bridge the BOOST jumper for 500 mA charging; clones usually lack it.</td></tr>
-      <tr><td>MX switch + Kailh hotswap socket</td><td class="num">33</td><td class="num">33</td><td><span class="pill smd">hand-solder</span></td><td>Big pads, easy with an iron.</td></tr>
+      <tr><td>Akko V3 Lavender Purple Pro switch + Kailh hotswap socket</td><td class="num">33</td><td class="num">33</td><td><span class="pill smd">hand-solder</span></td><td>Big pads, easy with an iron.</td></tr>
       <tr><td>1N4148 diode</td><td class="num">33</td><td class="num">34</td><td><span class="pill th">TH</span></td><td>DO-35, as Redox already uses.</td></tr>
       <tr><td>SK6812MINI-E LED</td><td class="num">33</td><td class="num">33</td><td><span class="pill smd">SMD</span></td><td>Per-key only. The one unavoidably SMD part. Hand-solder as in the Corne video, or have JLCPCB assemble these.</td></tr>
       <tr><td>LiPo cell + JST-PH 2-pin</td><td class="num">1</td><td class="num">1</td><td><span class="pill th">TH</span></td><td>1000–1500 mAh pouch, at most 5 mm thick (e.g. 503450), lying flat over the hotswap sockets under the inner key columns on a kapton sheet, at least 15 mm from the controller's antenna end. The socketed controller already needs about 7.5 mm below the PCB, so the cell adds no case height.</td></tr>
@@ -176,7 +176,7 @@ flowchart LR
       <tr><td>EC11 rotary encoder + knob</td><td class="num">–</td><td class="num">1</td><td><span class="pill th">TH</span></td><td>Right half only. ZMK has supported encoders on the peripheral half since PR #1841 (Oct 2023). Its push switch goes into the key matrix as one extra position. A 15 mm shaft and knob clear MX keycaps.</td></tr>
     </tbody>
   </table></div>
-  <p class="cap">For two complete keyboards, double the counts. Lion Circuits' minimum is 5 boards per design, so one order of 5 left + 5 right covers both keyboards with spares. Full shopping list with shops: <a href="bom.html">bom.html</a>.</p>
+  <p class="cap">Lion Circuits' minimum is 5 boards per design, so one order of 5 left + 5 right leaves spares. Full shopping list with shops: <a href="bom.html">bom.html</a>.</p>
 
   <h3>Pin budget on the nRF52840 (21 usable GPIO)</h3>
   <div class="tablewrap"><table>
