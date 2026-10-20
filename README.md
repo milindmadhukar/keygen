@@ -21,6 +21,8 @@ Bluetooth or USB-C to the host and over Bluetooth or a TRRS cable between halves
   pour) → `finish_route.py` (grid maze router for whatever Freerouting leaves; `--include-gnd`,
   `--pads-to-ground REF.PAD`) → `stitch_gnd.py` / `cleanup_pcb.py` (ground stitching, dangling copper)
   → `sync_pcb.py` (relink to the schematic). `kicad-cli pcb drc --schematic-parity` is the judge.
+- `fab/` — manufacturing files: `keygen-gerbers.zip` (both halves, one upload), per-half
+  fallbacks, and `ORDER.md` with the order-form settings. Regenerate with `tools/export_fab.py`.
 - `lib/` — git submodules: marbastlib (MX hotswap, nice!nano, MSK12C02 footprints) and
   Keebio-Parts (PJ-320A). Clone with `git clone --recursive`.
 - `bom/bom.csv` — bill of materials with Indian and import sources. Edit it, then run
