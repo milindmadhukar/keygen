@@ -40,11 +40,11 @@ cover; see [The name and the artwork](#the-name-and-the-artwork).
 | | |
 |---|---|
 | Layout | Column-staggered QWERTY, six columns per hand plus an extra bottom row |
-| Keys | 66 (33 per half): 52 × 1u, 10 × 1.25u, 4 × 1.5u. No stabilizers |
+| Keys | 66 (33 per half): 52 × 1u, 10 × 1.25u, 4 × 1.5u |
 | Thumb cluster | 2 × 2 block rotated 30° (two 1u over two 1.5u) plus one 1.25u key per hand |
 | Encoder | Alps EC11 on the right half, in the key matrix (push to mute, turn for volume) |
 | Switches | MX-style in Kailh hotswap sockets (CPG151101S11) |
-| Lighting | 33 SK6812MINI-E reverse-mount RGB LEDs per half, used as the status display. No underglow |
+| Lighting | 33 SK6812MINI-E reverse-mount RGB LEDs per half, used as the status display |
 | Controller | nice!nano v2 (nRF52840, Pro Micro format), one per half, socketed on the underside |
 | Connectivity | Host: USB-C (left half) or Bluetooth, 5 profiles. Halves: Bluetooth split |
 | Power | LiPo pouch per half (≤ 5 mm thick, 1000–1500 mAh), JST-PH connector, slide switch driving a P-MOSFET battery switch. Each half charges from its own USB-C |
@@ -110,20 +110,16 @@ label's mark.
   half's encoder push switch sits in the matrix at row 0 / column 6.
 - **Controller pins:** both halves use the same pin map apart from the encoder. LED data is on a
   full-speed pin. The encoder's B line uses an NFC pin, set up as a GPIO in
-  firmware. The full pin table is in the [build plan](plan/index.html).
+  firmware. P0.08 and P0.17 (full speed) are spare. The full pin table is in the
+  [build plan](plan/index.html).
 - **Power and charging:** each half has its own LiPo and charges through its own controller's
   USB-C; a 1-to-2 USB-C cable charges both from one charger. The nice!nano's BOOST jumper is
-  bridged for 500 mA charging. The halves share no cable, so their batteries are never tied together.
-- **Battery switch:** the MSK12C02 slide switch is rated 50 mA, so it only drives the gate of an
-  AO3401A P-MOSFET that carries the battery current. The MOSFET's source is on the battery and its drain on
-  B+, so its body diode blocks the battery when the switch is off. A 1 MΩ resistor holds the gate
+  bridged for 500 mA charging.
+- **Battery switch:** the MSK12C02 slide switch drives the gate of an AO3401A P-MOSFET, which
+  carries the battery current: source on the battery, drain on B+. A 1 MΩ resistor holds the gate
   off between positions. Leave the switch on while charging.
 - **Battery:** a pouch up to 5 mm thick lies flat over the hotswap sockets under the inner key
-  columns, on a kapton sheet, at least 15 mm from the controller's antenna end. The socketed
-  controller already needs about 7.5 mm below the PCB, so the battery adds no case height.
-- **No TRRS:** a wired link between the halves would need its own ZMK build, could not charge the
-  other half, and must never be hot-plugged while a half is powered. It was removed; the two
-  full-speed pins it used (P0.08, P0.17) are spare.
+  columns, on a kapton sheet, at least 15 mm from the controller's antenna end.
 - **LED power:** the LED rail runs from the controller's switched VCC (P0.13), so firmware can cut
   it completely when the LEDs are off.
 - **Antenna:** each controller's antenna end is kept clear of the ground fill, and the case is
@@ -158,7 +154,7 @@ label's mark.
 
 ## Firmware
 
-Keygen will run [ZMK](https://zmk.dev). QMK was ruled out because it has no usable Bluetooth split.
+Keygen will run [ZMK](https://zmk.dev).
 The firmware is not written yet. [`firmware/README.md`](firmware/README.md) has the planned ZMK
 config layout and what it has to do. In short:
 
