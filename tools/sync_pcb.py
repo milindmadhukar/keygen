@@ -2,6 +2,7 @@
 """Bring the routed PCB back in line with the schematic without touching copper:
   * relink every footprint to its symbol (by reference),
   * copy symbol fields (e.g. each LED's 'Position'),
+  * add the battery "+" marks if the board lacks them (gen_pcb.battery_plus),
   * match 'exclude from BOM / position files' to the symbol,
   * delete redundant vias the maze router left: a via within 0.4 mm of another via on the same
     net, or one whose centre sits inside a same-net through-hole pad (the pad already joins the
@@ -68,6 +69,7 @@ def main():
             fp.SetExcludedFromBOM(False)
         if ref[0] in "HC":                    # hole/cap labels collide with nearby silkscreen
             fp.Reference().SetVisible(False)
+    gen_pcb.battery_plus(b)
     spots = redundant_vias(b)
     pcbnew.SaveBoard(str(PCB), b)
     # delete the redundant vias on the file text (removing through the API corrupts the board)

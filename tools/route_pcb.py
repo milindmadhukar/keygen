@@ -43,9 +43,11 @@ def rule_area(b, pts, name):
     b.Add(z)
 
 def antenna_keepouts(b):
-    """The nRF52840 Pro Micro boards carry their chip antenna at the end opposite USB-C."""
+    """The nRF52840 Pro Micro boards carry their chip antenna at the end opposite USB-C.
+    Adds only the keep-outs the board doesn't already have."""
+    have = {z.GetZoneName() for z in b.Zones() if z.GetIsRuleArea()}
     for fp in b.GetFootprints():
-        if fp.GetReference() in ("U101", "U201"):
+        if fp.GetReference() in ("U101", "U201") and f"antenna-{fp.GetReference()}" not in have:
             c = fp.GetPosition(); cx, cy = pcbnew.ToMM(c.x), pcbnew.ToMM(c.y)
             rule_area(b, [(cx - 10, cy + 8), (cx + 10, cy + 8), (cx + 10, cy + 19), (cx - 10, cy + 19)],
                       f"antenna-{fp.GetReference()}")
@@ -60,6 +62,7 @@ def outlines(b):
     return out
 
 def ground_pours(b):
+    antenna_keepouts(b)                       # boards saved before load_without_zones kept them lost theirs
     for z in [z for z in b.Zones() if not z.GetIsRuleArea()]:
         b.Remove(z)
     for pts in outlines(b):
@@ -196,11 +199,12 @@ def strip_nets(path, drop):
 
 def load_without_zones():
     """Removing filled zones through the Python API corrupts the board object in KiCad 10, so
-    strip them from the file text and load the result instead."""
+    strip them from the file text and load the result instead. Rule areas (the antenna
+    keep-outs) have no fill and stay."""
     sys.path.insert(0, str(Path(__file__).parent))
-    from sexp import parse, dump
+    from sexp import parse, dump, first
     tree = parse(PCB.read_text())
-    tree[:] = [n for n in tree if not (isinstance(n, list) and n and n[0] == "zone")]
+    tree[:] = [n for n in tree if not (isinstance(n, list) and n and n[0] == "zone" and not first(n, "keepout"))]
     tmp = PCB.with_name("keygen-nozones.kicad_pcb")
     tmp.write_text(dump(tree) + "\n")
     pro = tmp.with_suffix(".kicad_pro")                 # design rules live in the project file
