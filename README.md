@@ -43,7 +43,8 @@ cover; see [The name and the artwork](#the-name-and-the-artwork).
 | Keys | 66 (33 per half): 52 × 1u, 10 × 1.25u, 4 × 1.5u |
 | Thumb cluster | 2 × 2 block rotated 30° (two 1u over two 1.5u) plus one 1.25u key per hand |
 | Encoder | Alps EC11 on the right half, in the key matrix (push to mute, turn for volume) |
-| Switches | MX-style in Kailh hotswap sockets (CPG151101S11) |
+| Switches | Akko V3 Lavender Purple Pro (tactile, 5-pin) in Kailh hotswap sockets (CPG151101S11) |
+| Keycaps | Blank DSA PBT, smoke translucent |
 | Lighting | 33 SK6812MINI-E reverse-mount RGB LEDs per half, used as the status display |
 | Controller | nice!nano v2 (nRF52840, Pro Micro format), one per half, socketed on the underside |
 | Connectivity | Host: USB-C (left half) or Bluetooth, 5 profiles. Halves: Bluetooth split |
@@ -130,7 +131,7 @@ label's mark.
 | Part | Left | Right |
 |---|---|---|
 | nRF52840 controller (socketed, underside) | 1 | 1 |
-| MX switch + Kailh hotswap socket | 33 | 33 |
+| Akko V3 Lavender Purple Pro switch + Kailh hotswap socket | 33 | 33 |
 | 1N4148 diode (DO-35) | 33 | 34 |
 | SK6812MINI-E RGB LED | 33 | 33 |
 | 10 µF + 100 nF capacitors (LED rail) | 1 + 1 | 1 + 1 |

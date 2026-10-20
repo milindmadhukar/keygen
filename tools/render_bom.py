@@ -28,12 +28,12 @@ style = head[head.index("<style>"):head.index("</style>") + len("</style>")]
 fonts = "\n".join(l for l in head.splitlines() if "fonts.g" in l)
 body = []
 for name, items in sections:
-    body.append(f"<h2>{html.escape(name)}</h2>\n<div class=\"tablewrap\"><table>\n<thead><tr><th>Part</th><th>Spec</th><th>Per keyboard</th><th>Buy for 2</th><th>India</th><th>Import</th><th>Price</th><th>Status</th></tr></thead><tbody>")
+    body.append(f"<h2>{html.escape(name)}</h2>\n<div class=\"tablewrap\"><table>\n<thead><tr><th>Part</th><th>Spec</th><th>Per keyboard</th><th>Buy</th><th>India</th><th>Import</th><th>Price</th><th>Status</th></tr></thead><tbody>")
     for r in items:
         st = r["status"]
         pill = "ok" if st == "decided" else "flag"
         note = f'<br><span class="muted">{to_html(r["notes"])}</span>' if r["notes"] else ""
-        body.append(f'<tr><td>{to_html(r["part"])}</td><td>{to_html(r["spec"])}{note}</td><td class="num">{to_html(r["per_kb"])}</td><td class="num">{to_html(r["buy_2kb"])}</td><td>{to_html(r["india"])}</td><td>{to_html(r["import"])}</td><td class="num">{to_html(r["price"])}</td><td><span class="pill {pill}">{html.escape(st)}</span></td></tr>')
+        body.append(f'<tr><td>{to_html(r["part"])}</td><td>{to_html(r["spec"])}{note}</td><td class="num">{to_html(r["per_kb"])}</td><td class="num">{to_html(r["buy"])}</td><td>{to_html(r["india"])}</td><td>{to_html(r["import"])}</td><td class="num">{to_html(r["price"])}</td><td><span class="pill {pill}">{html.escape(st)}</span></td></tr>')
     body.append("</tbody></table></div>")
 page = f"""<!doctype html>
 <html lang="en">
@@ -48,8 +48,8 @@ page = f"""<!doctype html>
 <div class="wrap">
   <p class="eyebrow">Keygen · bill of materials · generated from bom/bom.csv</p>
   <h1>Bill of materials</h1>
-  <p class="lede prose">Everything needed for two keyboards, with spares, and where to get it in India or from abroad. Prices are what the listings showed on 19 Oct 2026, or rough guides where marked with ~. <a href="index.html">Back to the build plan</a>.</p>
-  <div class="note prose"><strong>Buying strategy:</strong> one LCSC or AliExpress order for the SK6812MINI-E LEDs (not stocked in India), StacksKB for sockets and diodes, Robu.in or Lamington Road for batteries and small parts, and Lion Circuits (Bengaluru) for the boards. Batteries rarely ship to India from abroad, so buy those locally.</div>
+  <p class="lede prose">Everything needed for the keyboard, with spares, and where to get it in India or from abroad. Prices are what the listings showed on 20 Oct 2026, or rough guides where marked with ~. <a href="index.html">Back to the build plan</a>.</p>
+  <div class="note prose"><strong>Buying strategy:</strong> one LCSC or AliExpress order for the SK6812MINI-E LEDs (not stocked in India) and the 1.25u and 1.5u keycaps, StacksKB for switches and diodes, Meckeys for the 1u keycaps, Robu.in or Lamington Road for batteries and small parts, and Lion Circuits (Bengaluru) for the boards. Batteries rarely ship to India from abroad, so buy those locally.</div>
   {"".join(body)}
 </div>
 </body>
@@ -63,19 +63,20 @@ lines = ["---", "created: 2026-10-19", "name: 13 - bill of materials", "tags:", 
          "# Bill of Materials", "",
          "> [!info] Generated file",
          "> Generated from `~/Code/keygen/bom/bom.csv` by `tools/render_bom.py`. Edit the CSV, not this note. The rendered page is `plan/bom.html`. Design context: [[12 - final design]].", "",
-         "Quantities cover **two keyboards with spares**. Prices are what the listings showed on 2026-10-19; `~` marks a rough guide.", "",
+         "Quantities cover **the keyboard with spares**. Prices are what the listings showed on 2026-10-20; `~` marks a rough guide.", "",
          "> [!tip] Buying strategy",
-         "> - **LCSC or AliExpress:** SK6812MINI-E LEDs (not stocked in India)",
-         "> - **StacksKB:** sockets and diodes",
+         "> - **LCSC or AliExpress:** SK6812MINI-E LEDs (not stocked in India), 1.25u and 1.5u keycaps",
+         "> - **StacksKB:** switches and diodes",
+         "> - **Meckeys:** 1u keycaps",
          "> - **Robu.in or Lamington Road:** batteries and small parts",
          "> - **Lion Circuits (Bengaluru):** the boards",
          ">",
          "> Batteries rarely ship to India from abroad, so buy those locally.", ""]
 for name, items in sections:
-    lines += [f"## {name}", "", "| Part | Spec | Per kb | Buy for 2 | India | Import | Price | Status |", "|---|---|---|---|---|---|---|---|"]
+    lines += [f"## {name}", "", "| Part | Spec | Per kb | Buy | India | Import | Price | Status |", "|---|---|---|---|---|---|---|---|"]
     for r in items:
         spec = md(r["spec"]) + (f"<br>*{md(r['notes'])}*" if r["notes"] else "")
-        lines.append(f"| {md(r['part'])} | {spec} | {md(r['per_kb'])} | {md(r['buy_2kb'])} | {md(r['india'])} | {md(r['import'])} | {md(r['price'])} | {md(r['status'])} |")
+        lines.append(f"| {md(r['part'])} | {spec} | {md(r['per_kb'])} | {md(r['buy'])} | {md(r['india'])} | {md(r['import'])} | {md(r['price'])} | {md(r['status'])} |")
     lines.append("")
 vault = Path.home() / "Documents/Obsidian Vault/01 - Projects/Hardware & Electronics/Keygen Custom Keyboard/13 - bill of materials.md"
 if vault.parent.exists():
