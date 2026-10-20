@@ -66,6 +66,8 @@ def main():
             fp.GetField(name).SetVisible(False)
         if ref.startswith("U"):
             fp.SetExcludedFromBOM(False)
+        if ref[0] in "HC":                    # hole/cap labels collide with nearby silkscreen
+            fp.Reference().SetVisible(False)
     spots = redundant_vias(b)
     pcbnew.SaveBoard(str(PCB), b)
     # delete the redundant vias on the file text (removing through the API corrupts the board)
