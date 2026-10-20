@@ -17,8 +17,9 @@ Bluetooth or USB-C to the host and over Bluetooth or a TRRS cable between halves
   `tools/check_schematic.py` (KiCad ERC + a netlist check that every connection matches the tables).
   `pcb/keygen-schematic.pdf` is the printable version.
 - PCB pipeline (each step is a script in `tools/`, run in this order):
-  `gen_pcb.py` (place footprints, outline, holes) → `route_pcb.py` (Freerouting, ground left to the
-  pour) → `finish_route.py` (grid maze router for whatever Freerouting leaves; `--include-gnd`,
+  `gen_pcb.py` (place footprints, outline, holes) → `trim_outline.py` (bottom edge cut back to the
+  bottom row and thumb keys; on a routed board, reroute what it cuts) → `route_pcb.py` (Freerouting,
+  ground left to the pour) → `finish_route.py` (grid maze router for whatever Freerouting leaves; `--include-gnd`,
   `--pads-to-ground REF.PAD`) → `smooth_route.py` (straighten tracks into clean 0/45/90° runs)
   → `stitch_gnd.py` / `cleanup_pcb.py` (ground stitching, dangling copper)
   → `sync_pcb.py` (relink to the schematic). `kicad-cli pcb drc --schematic-parity` is the judge.
