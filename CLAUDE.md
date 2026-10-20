@@ -11,7 +11,8 @@ Update `README.md` in the same change whenever something fundamental changes. Th
 - the project status checklist, when a milestone is reached
 
 Keep its style: professional, no emojis, and link to the relevant document or file rather than
-repeating it.
+repeating it. Describe only what the board has, as plain facts: no reasons for a choice, and no
+parts or features that were removed or left out. The reasoning lives in the vault notes.
 
 When the board's look changes, regenerate the images in `docs/` from the current board too:
 
