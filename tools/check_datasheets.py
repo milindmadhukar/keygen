@@ -6,7 +6,7 @@ check_schematic.py proves the schematic matches the design tables in gen_schemat
 the tables themselves are right for the parts. This script does, against the PCB file that gets
 fabricated: the controller pinout and its orientation under the board, which nRF52840 pins carry
 which signal (NFC, near-radio, bootloader pins), the battery path through the switch, LED / diode /
-encoder / TRRS / switch pinouts, antenna clearance, and the current budget.
+encoder / switch pinouts, antenna clearance, and the current budget.
 
 Every fact is copied from a PDF in docs/datasheets/ (see the README there) and cited where it is
 used. Prints PASS / WARN / FAIL per check and exits 1 if anything FAILs. WARN is something that
@@ -57,11 +57,9 @@ BOOT_SAMPLED = {"P0.18", "P0.19"}
 NICE_NANO_INTERNAL = {"P0.13": "VCC cut-off", "P0.15": "blue LED", "P0.18": "nRESET",
                       "P0.00": "32 kHz crystal", "P0.01": "32 kHz crystal"}
 
-# How fast each net toggles. LED data is SPI MOSI at 4 MHz (ZMK's ws2812-spi), the split UART runs
-# at 115200 baud or more. ZMK scans the matrix every 1 ms while a key is held: about 1 kHz.
+# How fast each net toggles. LED data is SPI MOSI at 4 MHz (ZMK's ws2812-spi). ZMK scans the matrix every 1 ms while a key is held: about 1 kHz.
 def role(net):
     if net == "LED_DIN": return "fast", "SK6812 data (SPI, 4 MHz)"
-    if net.startswith("UART_"): return "fast", "split UART"
     if re.match(r"ROW\d$", net): return "slow", "matrix row (input, ~1 kHz)"
     if re.match(r"COL\d$", net): return "slow", "matrix column (output, ~1 kHz)"
     if net.startswith("ENC_"): return "slow", "encoder (input, < 1 kHz)"
@@ -70,6 +68,13 @@ def role(net):
 # MSK12C02-HB_ShouHan.pdf (drawing; Chinese notes translated in docs/datasheets/README.md): pin 2 is
 # the common pole, joined to 1 in one position and 3 in the other. Rated 50 mA at 12 V DC.
 MSK_COMMON, MSK_RATED_MA = "2", 50
+# AO3401A_AOS.pdf (p. 1): SOT-23, top view G bottom left (1), S bottom right (2), D top (3). Body diode
+# anode on D, cathode on S. VDS -30 V, VGS +-12 V, ID -4 A, VGS(th) -0.5..-1.3 V, RDS(on) < 85 mOhm at
+# VGS = -2.5 V, VSD up to 1 V, RthJA 125 C/W (steady state, max).
+AO_PINS = {"1": "G", "2": "S", "3": "D"}
+AO_RDS_25V_MOHM, AO_VGS_MAX, AO_VSD_V, AO_RTH_JA = 85, 12, 0.7, 125
+# nice!nano charger (pinout image): 100 mA, or 500 mA with the BOOST jumper bridged. LiPo 3.0-4.2 V.
+CHARGE_MA, BOOST_MA, VBAT_MIN, VBAT_MAX = 100, 500, 3.0, 4.2
 # SK6812MINI-E_Opsco_rev02.pdf §4/§5, seen from the lens side:
 #   1 VDD (top left)      4 DIN (top right)
 #   2 DOUT (bottom left)  3 GND (bottom right, chamfered corner)
@@ -82,9 +87,6 @@ NICE_NANO_VCC = 3.3
 # 1N4148_Vishay.pdf: band = cathode. KiCad's DO-35 footprint puts pad 1 (silk "K") under the band.
 # Alps_EC11E.pdf (mounting hole drawing): A C B in a row, C (common) in the middle; push switch D/E
 # on the opposite side.
-# PJ-320A_XKB.pdf has the contacts but names none of them; tip/ring/sleeve follow the Keebio
-# footprint's own labels. Both halves use the same footprint, so a straight cable matches them anyway.
-TRRS = {"2": "tip", "3": "ring1", "4": "ring2", "1": "sleeve"}
 # JST_PH.pdf: pin 1 / pin 2 only. LiPo packs come wired either way round; check before plugging in.
 
 # --------------------------------------------------------------------------------------
@@ -187,12 +189,19 @@ for side, d in SIDES.items():
     bt, sw, rst, u = f"BT{d}01", f"SW{d}90", f"SW{d}91", f"U{d}01"
     bpins = lib_pins("Device.kicad_sym", "Battery_Cell")       # 1 +, 2 -
     plus = next(n for n, nm in bpins.items() if nm == "+")
-    ok(nodes(side, "VBAT") == {(u, "13"), (sw, MSK_COMMON)}, A,
-       f"{side}: B+ goes only to the power switch's common pin ({MSK_COMMON}, per MSK12C02 drawing)",
-       f"{side}: VBAT = {sorted(nodes(side, 'VBAT'))}")
-    ok(nodes(side, "BAT_RAW") == {(bt, plus), (sw, "1")}, A,
-       f"{side}: battery + (JST pad {plus}) reaches B+ only through the switch (2-1 = on)",
+    q, r = f"Q{d}01", f"R{d}01"
+    qpins = lib_pins("Transistor_FET.kicad_sym", "AO3401A")
+    ok(qpins == AO_PINS and len(pads(q)) == 3, A, f"{side}: AO3401A symbol pins 1 G / 2 S / 3 D match the datasheet's SOT-23",
+       f"{side}: AO3401A symbol pins {qpins}, datasheet {AO_PINS}")
+    ok(nodes(side, "VBAT") == {(u, "13"), (q, "3")}, A,
+       f"{side}: B+ is fed only by the MOSFET's drain", f"{side}: VBAT = {sorted(nodes(side, 'VBAT'))}")
+    ok(nodes(side, "BAT_RAW") == {(bt, plus), (q, "2"), (sw, "3"), (r, "2")}, A,
+       f"{side}: battery + (JST pad {plus}) on the MOSFET's source; the body diode (D -> S) blocks it from B+ when off",
        f"{side}: BAT_RAW = {sorted(nodes(side, 'BAT_RAW'))}")
+    ok(nodes(side, "BAT_GATE") == {(q, "1"), (sw, MSK_COMMON), (r, "1")}, A,
+       f"{side}: gate on the slide switch's common pin ({MSK_COMMON}, per MSK12C02 drawing) and the gate resistor",
+       f"{side}: BAT_GATE = {sorted(nodes(side, 'BAT_GATE'))}")
+    ok(pad_net(sw, "1") == "GND", A, f"{side}: switch 2-1 grounds the gate (on)")
     ok(pad_net(bt, "2") == "GND", A, f"{side}: battery - (JST pad 2) on GND")
     pp = pads(bt)[plus].GetPosition()
     silk = [t for t in list(board.Drawings()) + list(fp(bt).GraphicalItems())
@@ -201,12 +210,10 @@ for side, d in SIDES.items():
     ok(silk, A, f"{side}: '+' printed next to the battery connector's + pad",
        f"{side}: nothing on the silkscreen marks which JST pad is + (pad {plus}); LiPo packs come wired both "
        "ways round and a reversed pack kills the charger", warn=True)
-    ok(pad_net(sw, "3") is None, A, f"{side}: switch pin 3 (off throw) open")
+    ok(pad_net(sw, "3") == "BAT_RAW", A, f"{side}: switch 2-3 ties the gate to the source (off)")
     vcc = {r for r, _ in nodes(side, "VCC")}
     ok(all(re.match(r"(U|LED|C)\d+$", r) for r in vcc), A,
        f"{side}: VCC (switched 3.3 V) feeds only LEDs and their caps", f"{side}: VCC also on {sorted(vcc)}")
-    for rail in ("VBAT", "BAT_RAW", "VCC"):
-        ok(not any(r.startswith("J") for r, _ in nodes(side, rail)), A, f"{side}: {rail} not on the TRRS jack")
     ok(nodes(side, "RST") == {(u, "15"), (rst, "1")} and pad_net(rst, "2") == "GND", A,
        f"{side}: RST pad -> reset button -> GND")
     caps = {fp(f"C{d}0{i}").GetValue(): fp(f"C{d}0{i}") for i in (1, 2)}
@@ -255,7 +262,7 @@ for side, d in SIDES.items():
            "with VCC by the nice!nano's P0.13 switch (ZMK ext-power)")
 
 # --------------------------------------------------------------------------------------
-# 5. Matrix diodes, encoder, TRRS
+# 5. Matrix diodes, encoder
 # --------------------------------------------------------------------------------------
 A = "matrix"
 for side, d in SIDES.items():
@@ -273,24 +280,6 @@ for side, d in SIDES.items():
         mid = sorted(("A", "B", "C"), key=lambda k: mm(e[k].GetPosition().x))[1]
         ok(mid == "C" and net(e["C"]) == "GND", A, f"{side}: EC11 common C is the middle pin and on GND (Alps EC11E)")
         ok({net(e["A"]), net(e["B"])} == {"ENC_A", "ENC_B"}, A, f"{side}: EC11 A/B on ENC_A/ENC_B (inputs with internal pull-ups)")
-
-A = "TRRS / wired split"
-maps = {}
-for side, d in SIDES.items():
-    j = pads(f"J{d}01")
-    maps[side] = {TRRS[k]: net(p) for k, p in j.items()}
-    m = maps[side]
-    ok(m["sleeve"] == "GND", A, f"{side}: sleeve on GND")
-    ok({m["tip"], m["ring1"]} == {"UART_TX", "UART_RX"}, A, f"{side}: tip / ring1 = UART")
-    ok(m["ring2"] is None, A, f"{side}: ring2 unused (no power over the cable)")
-ok(maps["left"] == maps["right"], A,
-   "both halves wire the jack identically: tip = P0.08 and ring1 = P0.17 on both, so the straight TRRS cable joins "
-   "P0.08-P0.08 and P0.17-P0.17. The firmware must cross them: left tx = P0.08 / rx = P0.17, "
-   "right tx = P0.17 / rx = P0.08")
-report("WARN", A, "ZMK's nice!nano board puts its UART on TX P0.06 / RX P0.08 (pro_micro_serial). This board uses "
-       "P0.08 / P0.17 and P0.06 is LED data, so each half's overlay needs its own uart0 pinctrl")
-report("WARN", A, "TX/RX have no series resistors: a powered half drives the unpowered half's RX pin above its "
-       "VDD (nRF52840 abs. max VDD + 0.3 V) through the input clamp diode. Unplug the cable or keep both halves on")
 
 # --------------------------------------------------------------------------------------
 # 6. Antenna
@@ -328,8 +317,16 @@ for side, d in SIDES.items():
 # 7. Current through the power switch
 # --------------------------------------------------------------------------------------
 A = "power"
-report("WARN", "power", f"MSK12C02 is rated {MSK_RATED_MA} mA. Typing on Bluetooth draws a few mA (fine), but the "
-       "nice!nano's charge current and any LED current on battery flow through it. Keep RGB off on battery")
+report("PASS", "power", f"the MSK12C02 (rated {MSK_RATED_MA} mA) only switches the MOSFET gate; battery current, including "
+       f"{BOOST_MA} mA BOOST charging and LED current, flows through the AO3401A (4 A)")
+drop = BOOST_MA * AO_RDS_25V_MOHM / 1000
+ok(VBAT_MIN > 2.5 and VBAT_MAX < AO_VGS_MAX, "power",
+   f"gate to GND gives VGS = -{VBAT_MIN}..-{VBAT_MAX} V: past the -2.5 V rating (RDS(on) < {AO_RDS_25V_MOHM} mOhm, "
+   f"{drop:.0f} mV at {BOOST_MA} mA) and inside +-{AO_VGS_MAX} V")
+heat = AO_VSD_V * BOOST_MA / 1000
+report("WARN", "power", f"switch off with USB plugged in: the charger still fills the cell through the body diode, "
+       f"about {heat:.2f} W at {BOOST_MA} mA, +{heat * AO_RTH_JA:.0f} C on the SOT-23. Leave the switch on while charging")
+report("PASS", "power", f"the 1 MOhm gate resistor costs {VBAT_MAX:.1f} uA at most while on ({VBAT_MAX} V across it)")
 
 # --------------------------------------------------------------------------------------
 order = {"FAIL": 0, "WARN": 1, "PASS": 2}

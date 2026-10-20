@@ -11,14 +11,15 @@ The shopping list with spares and prices is `bom/bom.csv` / `plan/bom.html`.
 | 10 µF capacitor (0805) | 1 | C101 | SMD, next to the first LED |
 | 100 nF capacitor (0805) | 1 | C102 | SMD, next to the first LED |
 | 1N4148 diode | 33 | D101–D133 | through-hole, back side; band (cathode) toward the square pad |
-| PJ-320A TRRS jack | 1 | J101 | through-hole, back side at the top edge |
 | SK6812MINI-E LED | 33 | LED101–LED133 | SMD, reverse-mount on the back; mind the corner mark |
+| AO3401A P-MOSFET (SOT-23) | 1 | Q101 | SMD, back side, between the controller and the power switch |
+| 1 MΩ resistor (0805) | 1 | R101 | SMD, back side, below the MOSFET |
 | MX switch, 1.25u key | 5 | SW101, SW107, SW113, SW120, SW131 | Kailh socket on the back; switch + 1.25u keycap |
 | MX switch, 1u key | 26 | SW102–SW106, SW108–SW112, SW114–SW119, SW121–SW130 | Kailh socket on the back; switch + 1u keycap on top |
 | MX switch, 1.5u key (tall thumb) | 2 | SW132, SW133 | Kailh socket on the back; switch + 1.5u keycap, turned 90° |
 | MSK12C02 power slide switch | 1 | SW190 | SMD, back side at the top edge, lever out |
 | 6 mm reset button | 1 | SW191 | through-hole, back side |
-| nRF52840 Pro Micro (nice!nano v2 clone) | 1 | U101 | on the back, socketed (Mill-Max/low-profile) |
+| nRF52840 Pro Micro (nice!nano v2) | 1 | U101 | on the back, socketed (Mill-Max/low-profile); bridge BOOST |
 
 ## Right half
 
@@ -29,14 +30,15 @@ The shopping list with spares and prices is `bom/bom.csv` / `plan/bom.html`.
 | 100 nF capacitor (0805) | 1 | C202 | SMD, next to the first LED |
 | 1N4148 diode | 34 | D201–D234 | through-hole, back side; band (cathode) toward the square pad |
 | EC11 rotary encoder | 1 | ENC201 | through-hole, front side (right half only) |
-| PJ-320A TRRS jack | 1 | J201 | through-hole, back side at the top edge |
 | SK6812MINI-E LED | 33 | LED201–LED233 | SMD, reverse-mount on the back; mind the corner mark |
+| AO3401A P-MOSFET (SOT-23) | 1 | Q201 | SMD, back side, between the controller and the power switch |
+| 1 MΩ resistor (0805) | 1 | R201 | SMD, back side, below the MOSFET |
 | MX switch, 1.25u key | 5 | SW201, SW208, SW214, SW221, SW232 | Kailh socket on the back; switch + 1.25u keycap |
 | MX switch, 1u key | 26 | SW202–SW206, SW209–SW213, SW215–SW220, SW222–SW231 | Kailh socket on the back; switch + 1u keycap on top |
 | MX switch, 1.5u key (tall thumb) | 2 | SW233, SW234 | Kailh socket on the back; switch + 1.5u keycap, turned 90° |
 | MSK12C02 power slide switch | 1 | SW290 | SMD, back side at the top edge, lever out |
 | 6 mm reset button | 1 | SW291 | through-hole, back side |
-| nRF52840 Pro Micro (nice!nano v2 clone) | 1 | U201 | on the back, socketed (Mill-Max/low-profile) |
+| nRF52840 Pro Micro (nice!nano v2) | 1 | U201 | on the back, socketed (Mill-Max/low-profile); bridge BOOST |
 
 ## Totals
 
@@ -46,16 +48,17 @@ The shopping list with spares and prices is `bom/bom.csv` / `plan/bom.html`.
 | 10 µF capacitor (0805) | 2 | 4 | Robu.in / Lamington Road |
 | 100 nF capacitor (0805) | 2 | 4 | Robu.in / Lamington Road |
 | 1N4148 diode | 67 | 134 | [StacksKB 1N4148 (10-pack)](https://stackskb.com/store/1n4148-through-hole-diode/) |
-| PJ-320A TRRS jack | 2 | 4 | [StacksKB PJ-320A](https://stackskb.com/store/pj-320a-jack/) |
 | SK6812MINI-E LED | 66 | 132 | Not stocked by Indian stores I checked |
+| AO3401A P-MOSFET (SOT-23) | 2 | 4 | Robu.in / Lamington Road |
+| 1 MΩ resistor (0805) | 2 | 4 | Robu.in / Lamington Road |
 | MX switch, 1.25u key | 10 | 20 | Kailh sockets: you own 100 (enough for keyboard 1). Switches: still to choose |
 | MX switch, 1u key | 52 | 104 | Kailh sockets: you own 100 (enough for keyboard 1). Switches: still to choose |
 | MX switch, 1.5u key (tall thumb) | 4 | 8 | Kailh sockets: you own 100 (enough for keyboard 1). Switches: still to choose |
 | MSK12C02 power slide switch | 2 | 4 | Robu.in / AliExpress "MSK12C02" |
 | 6 mm reset button | 2 | 4 | Robu.in / StacksKB |
-| nRF52840 Pro Micro (nice!nano v2 clone) | 2 | 4 | [AliExpress listing](https://www.aliexpress.com/item/1005010435718176.html) |
+| nRF52840 Pro Micro (nice!nano v2) | 2 | 4 | [nice!keyboards resellers](https://nicekeyboards.com/nice-nano/) |
 | EC11 rotary encoder | 1 | 2 | [Probots EC11 20 mm](https://probots.co.in/20-position-360-degree-rotary-encoder-ec11-w-push-button.html) |
 
 **Switches and keycaps:** 66 switches per keyboard. Keycaps per keyboard: 10 × 1.25u, 52 × 1u, 4 × 1.5u. Not in the schematic as separate parts (the switch footprint stands for socket + switch).
 
-**Also needed but not on the PCB:** LiPo battery per half (see `bom/bom.csv`), M2 screws/standoffs for the 10 mounting holes, TRRS cable, keycaps, knob.
+**Also needed but not on the PCB:** LiPo battery per half (see `bom/bom.csv`), M2 screws/standoffs for the 10 mounting holes, keycaps, knob.

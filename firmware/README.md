@@ -21,8 +21,8 @@ firmware/
     └── keygen.zmk.yml
 ```
 
-Each half is built for the `nice_nano_v2` board. Builds come in two variants: Bluetooth split
-(the default) and wired split over the TRRS cable, because ZMK picks one split transport per build.
+Each half is built for the `nice_nano_v2` board, one Bluetooth-split build per half. There is no
+wired split: the board has no cable between the halves.
 
 ## What the firmware has to do
 
@@ -33,15 +33,18 @@ Each half is built for the `nice_nano_v2` board. Builds come in two variants: Bl
 - **Per-key RGB as the status display**, through
   [zmk-rgb-matrix](https://github.com/dima-m711/zmk-rgb-matrix): caps lock, active layer,
   Bluetooth profile, and battery level while Fn is held. The LEDs run from the controller's switched
-  VCC (P0.13), so turn on ZMK's external power control and cap the brightness.
-- **Connectivity:** USB-C plus 5 Bluetooth profiles to the host. Between the halves, Bluetooth or
-  a full-duplex UART over TRRS (the right half swaps TX and RX).
+  VCC (P0.13), so turn on ZMK's external power control and cap the brightness. Even dim, 33 LEDs
+  empty a 1000 mAh cell in about a day, so on battery they light only for status flashes; full
+  effects only while USB is plugged in.
+- **Connectivity:** USB-C on the left half plus 5 Bluetooth profiles to the host; plugging USB in
+  makes it the output. The halves talk over Bluetooth only.
+- **Power:** each half charges from its own USB-C. Bridge the nice!nano's BOOST jumper (500 mA,
+  safe for cells over 500 mAh) before fitting the 1000–1500 mAh batteries.
 - **ZMK Studio** for live remapping.
 
 ## References
 
 - [ZMK split keyboards](https://zmk.dev/docs/features/split-keyboards)
-- [ZMK wired split (PR #2766)](https://github.com/zmkfirmware/zmk/pull/2766)
 - [ZMK encoders](https://zmk.dev/docs/features/encoders)
 - [ZMK lighting](https://zmk.dev/docs/features/lighting)
 - [ZMK Studio](https://zmk.dev/docs/features/studio)

@@ -88,13 +88,13 @@ svg text{font-family:var(--mono)}
 </head>
 <body>
 <div class="wrap">
-  <p class="eyebrow">Keygen · v6 · Redox fork · 19 Oct 2026</p>
+  <p class="eyebrow">Keygen · v7 · Redox fork · 20 Oct 2026</p>
   <h1>A wireless Redox with a knob and per-key RGB</h1>
   <p class="lede prose">Keep Redox's key positions and thumb cluster, then redraw the electronics around two nRF52840 controllers. You get Bluetooth to the computer, Bluetooth between the halves, and a cable for either link when you want one. It's a one-off build, so every feature goes in now. The trackpad and the screen are dropped, and the controllers sit hidden under the board.</p>
 
   <div class="verdict prose">
     <p><strong>Good news:</strong> Redox's thumb cluster is already a 2×2 block, two 1u keys over two 1.5u keys and rotated 30°, plus one 1.25u key. That's the Manuform-style block you wanted, on a flat board.</p>
-    <p><strong>Controller:</strong> one nRF52840 per half (nice!nano v2 or a SuperMini clone, both on the Pro Micro footprint Redox already uses). Firmware is ZMK, the only mature firmware that does Bluetooth split.</p>
+    <p><strong>Controller:</strong> one nRF52840 per half (a genuine nice!nano v2, on the Pro Micro footprint Redox already uses). Firmware is ZMK, the only mature firmware that does Bluetooth split.</p>
     <p><strong>What you reuse:</strong> Redox is MIT-licensed, so the fork is fine. The key coordinates and outline carry over. The copper doesn't: rev1 is a 2018 KiCad 5 board with solder-in switches and no LEDs, so the schematic and routing get redone in KiCad 10. That's the PCB learning you wanted.</p>
   </div>
 
@@ -123,8 +123,8 @@ svg text{font-family:var(--mono)}
   </table></div>
   <p class="cap">Fn layer: vim arrows on <span class="k">H</span> <span class="k">J</span> <span class="k">K</span> <span class="k">L</span> (← ↓ ↑ →), F-keys on the number row, Home/End/PgUp/PgDn, PrtSc and Ins, plus Bluetooth profile switching and the USB/Bluetooth toggle.</p>
 
-  <h2>Bluetooth and wired, both</h2>
-  <p class="prose">There are two separate links, and each can be wireless or wired. Wireless between the halves needs a controller in each half. A single controller with a cable to the other half can't go wireless, so it's two nRF52840s.</p>
+  <h2>Bluetooth, plus a cable to the computer</h2>
+  <p class="prose">The computer link can be wireless or wired; the link between the halves is Bluetooth only. Wireless between the halves needs a controller in each half, so it's two nRF52840s, each with its own battery.</p>
   <pre class="mermaid">
 flowchart LR
   PC["Computer / phone / tablet"]
@@ -132,33 +132,32 @@ flowchart LR
   R["RIGHT half · peripheral<br/>nRF52840 (hidden) · knob"]
   PC <-- "Bluetooth (up to 5 paired devices)" --> L
   PC <-- "USB-C cable" --> L
-  L <-- "Bluetooth split (default)" --> R
-  L <-. "TRRS cable, wired-split firmware" .-> R
+  L <-- "Bluetooth split" --> R
   </pre>
   <div class="tablewrap"><table>
     <thead><tr><th>Link</th><th>Wireless</th><th>Wired</th><th>Switching</th></tr></thead>
     <tbody>
       <tr><td>Keyboard ↔ computer</td><td>Bluetooth, 5 profiles</td><td>USB-C on the left half</td><td><span class="pill ok">live</span> One key toggles USB/Bluetooth, and plugging in USB takes priority.</td></tr>
-      <tr><td>Left ↔ right half</td><td>Bluetooth (BLE split)</td><td>TRRS cable, full-duplex UART</td><td><span class="pill flag">reflash</span> ZMK fixes this at build time, so swapping means dropping a different firmware file on the board.</td></tr>
+      <tr><td>Left ↔ right half</td><td>Bluetooth (BLE split)</td><td>none</td><td>One firmware build per half.</td></tr>
     </tbody>
   </table></div>
-  <div class="note prose"><strong>Limit:</strong> ZMK supports wired split since v0.3 (Aug 2025), but only one split transport per firmware build. It won't switch automatically between cable and Bluetooth. The hardware here supports both. Keep two firmware files and swap with drag-and-drop over USB, which takes about 30 seconds. A community transport called <a href="https://github.com/damex/zmk-feature-split-esb" target="_blank" rel="noopener">zmk-feature-split-esb</a> does mix wired and wireless, but it isn't official.</div>
-  <p class="cap">The TRRS cable carries only ground, TX and RX, never battery power. Each half has its own battery, so the two batteries never get tied together. That also makes plugging the cable in or out safe.</p>
+  <div class="note prose"><strong>Why no TRRS:</strong> a cable between the halves would only replace the Bluetooth split. ZMK runs one split transport per build (runtime switching needs purpose-built hardware), the cable couldn't charge the right half (the nice!nano has no VBUS pin to pass USB power on), and ZMK warns never to plug or unplug a TRRS cable while either half is powered, which with a battery in each half is always. The jack was removed on 20 Oct 2026.</div>
+  <p class="cap"><strong>Charging:</strong> each half charges from its own USB-C; a 1-to-2 USB-C cable does both from one charger. The right half drains far slower than the left, so it rarely needs it. The nice!nano's BOOST jumper is bridged for 500 mA, about 2–3 hours for a 1000 mAh cell instead of about 12.</p>
 
   <h2>Redox rev1 → Keygen: what changes</h2>
   <div class="tablewrap"><table>
     <thead><tr><th>Part</th><th>Redox rev1 (2018)</th><th>Keygen</th></tr></thead>
     <tbody>
       <tr><td>Key positions</td><td>70 keys, 7×5 per half</td><td>66 keys: same positions minus the inner column. Import <code>redox-layout.json</code> with the KB Placer plugin and delete those 4.</td></tr>
-      <tr><td>Controller</td><td>Pro Micro (ATmega32U4)</td><td>nice!nano v2 / SuperMini nRF52840 mounted on the underside under the old inner column, USB-C facing the top edge, plus pads for its 3 extra inner pins</td></tr>
+      <tr><td>Controller</td><td>Pro Micro (ATmega32U4)</td><td>nice!nano v2 mounted on the underside under the old inner column, USB-C facing the top edge, plus pads for its 3 extra inner pins</td></tr>
       <tr><td>Switches</td><td>MX/Alps, solder-in</td><td>Kailh MX hotswap sockets</td></tr>
       <tr><td>Diodes</td><td>1N4148, through-hole, dual-sided</td><td>1N4148 through-hole (DO-35) kept</td></tr>
       <tr><td>RGB</td><td>optional 14 WS2812B underglow via wires</td><td>SK6812MINI-E under every key, on one chain. No underglow: the battery sits under the PCB and would hide it.</td></tr>
-      <tr><td>Link</td><td>TRRS serial</td><td>TRRS kept (wired-split UART) + Bluetooth</td></tr>
+      <tr><td>Link</td><td>TRRS serial</td><td>Bluetooth split; no cable between the halves</td></tr>
       <tr><td>Power</td><td>USB only</td><td>LiPo per half, power slide switch, LED power cut-off</td></tr>
       <tr><td>New</td><td>none</td><td>EC11 knob on the right inner edge. No screen.</td></tr>
       <tr><td>PCB</td><td>one reversible board for both halves</td><td>separate left and right boards, because the halves have different parts</td></tr>
-      <tr><td>Case</td><td>rev1 3D-printed cases</td><td>new closed case with a USB-C slot, power switch and TRRS on the top edge, and a battery pocket. Export the 3D model from KiCad into Fusion, as in the Modular build.</td></tr>
+      <tr><td>Case</td><td>rev1 3D-printed cases</td><td>new closed case with a USB-C slot and power switch on the top edge, and room for the battery. Export the 3D model from KiCad into Fusion, as in the Modular build.</td></tr>
     </tbody>
   </table></div>
 
@@ -166,14 +165,14 @@ flowchart LR
   <div class="tablewrap"><table>
     <thead><tr><th>Part</th><th>Left</th><th>Right</th><th>Mount</th><th>Notes</th></tr></thead>
     <tbody>
-      <tr><td>nRF52840 module (nice!nano v2 or SuperMini)</td><td class="num">1</td><td class="num">1</td><td><span class="pill th">header</span></td><td>On the back of the PCB, components facing down, socketed with low-profile Mill-Max pins (about 3–4 mm). The case needs that much depth. SuperMini clones use the <code>nice_nano_v2</code> target, but quality varies, so buy a spare.</td></tr>
+      <tr><td>nRF52840 module (nice!nano v2)</td><td class="num">1</td><td class="num">1</td><td><span class="pill th">header</span></td><td>On the back of the PCB, components facing down, socketed with low-profile Mill-Max pins (about 3–4 mm). The case needs that much depth. Bridge the BOOST jumper for 500 mA charging; clones usually lack it.</td></tr>
       <tr><td>MX switch + Kailh hotswap socket</td><td class="num">33</td><td class="num">33</td><td><span class="pill smd">hand-solder</span></td><td>Big pads, easy with an iron.</td></tr>
       <tr><td>1N4148 diode</td><td class="num">33</td><td class="num">34</td><td><span class="pill th">TH</span></td><td>DO-35, as Redox already uses.</td></tr>
       <tr><td>SK6812MINI-E LED</td><td class="num">33</td><td class="num">33</td><td><span class="pill smd">SMD</span></td><td>Per-key only. The one unavoidably SMD part. Hand-solder as in the Corne video, or have JLCPCB assemble these.</td></tr>
-      <tr><td>LiPo cell + JST-PH 2-pin</td><td class="num">1</td><td class="num">1</td><td><span class="pill th">TH</span></td><td>1000–2000 mAh flat pouch under the PCB. The Dactyl CC builder uses 18650 cells for 4+ months of battery.</td></tr>
-      <tr><td>Slide power switch (SS12D00)</td><td class="num">1</td><td class="num">1</td><td><span class="pill th">TH</span></td><td>In the battery line. The nice!nano has a charger but no switch.</td></tr>
+      <tr><td>LiPo cell + JST-PH 2-pin</td><td class="num">1</td><td class="num">1</td><td><span class="pill th">TH</span></td><td>1000–1500 mAh pouch, at most 5 mm thick (e.g. 503450), lying flat over the hotswap sockets under the inner key columns on a kapton sheet, at least 15 mm from the controller's antenna end. The socketed controller already needs about 7.5 mm below the PCB, so the cell adds no case height.</td></tr>
+      <tr><td>Battery switch: AO3401A P-MOSFET + 1 MΩ</td><td class="num">1 + 1</td><td class="num">1 + 1</td><td><span class="pill smd">SMD</span></td><td>SOT-23 and 0805 on the back. The slide switch only drives the gate, so the battery current (500 mA when charging with BOOST) never passes through its 50 mA contacts.</td></tr>
+      <tr><td>Slide power switch (MSK12C02)</td><td class="num">1</td><td class="num">1</td><td><span class="pill smd">SMD</span></td><td>Side lever out of the top edge; switches the battery MOSFET's gate. The nice!nano has a charger but no switch.</td></tr>
       <tr><td>Reset button 6 mm</td><td class="num">1</td><td class="num">1</td><td><span class="pill th">TH</span></td><td>Reachable through a pinhole in the case. ZMK can also enter the bootloader from a key, so you rarely need it.</td></tr>
-      <tr><td>TRRS jack PJ-320A</td><td class="num">1</td><td class="num">1</td><td><span class="pill th">TH</span></td><td>On the top edge, next to USB-C. GND/TX/RX only.</td></tr>
       <tr><td>EC11 rotary encoder + knob</td><td class="num">–</td><td class="num">1</td><td><span class="pill th">TH</span></td><td>Right half only. ZMK has supported encoders on the peripheral half since PR #1841 (Oct 2023). Its push switch goes into the key matrix as one extra position. A 15 mm shaft and knob clear MX keycaps.</td></tr>
     </tbody>
   </table></div>
@@ -186,11 +185,10 @@ flowchart LR
       <tr><td>Key matrix, 5 rows × 7 columns</td><td class="num">12</td><td class="num">12</td></tr>
       <tr><td>Encoder A/B (push switch is in the matrix)</td><td class="num">–</td><td class="num">2</td></tr>
       <tr><td>RGB data</td><td class="num">1</td><td class="num">1</td></tr>
-      <tr><td>Wired split UART TX/RX</td><td class="num">2</td><td class="num">2</td></tr>
-      <tr class="total"><td>Total</td><td class="num">15</td><td class="num">17</td></tr>
+      <tr class="total"><td>Total</td><td class="num">13</td><td class="num">15</td></tr>
     </tbody>
   </table></div>
-  <div class="note prose"><strong>Fits on the edge pads.</strong> The Pro Micro edge has 18 GPIO, two of them NFC pins (P0.09, P0.10) that work as GPIO once <code>nfct-pins-as-gpios</code> is set. The left half (15 pins) never needs them. The right half (17) uses one for the encoder's B line. Add the inner pads (P1.01, P1.02, P1.07) to the footprint as spares; they're low-frequency pins, fine for matrix lines but not LED data or UART.</div>
+  <div class="note prose"><strong>Fits on the edge pads.</strong> The Pro Micro edge has 18 GPIO, two of them NFC pins (P0.09, P0.10) that work as GPIO once <code>nfct-pins-as-gpios</code> is set. The left half (13 pins) never needs them. The right half (15) uses one for the encoder's B line. P0.08 and P0.17, full-speed pins, are spare on both halves. Add the inner pads (P1.01, P1.02, P1.07) to the footprint as spares; they're low-frequency pins, fine for matrix lines but not LED data or UART.</div>
 
   <h2>Firmware: ZMK</h2>
   <div class="cols">
@@ -198,7 +196,6 @@ flowchart LR
       <h3>Supported out of the box</h3>
       <ul>
         <li>Bluetooth split, USB + 5 Bluetooth profiles</li>
-        <li>Full-duplex wired split (v0.3+)</li>
         <li>Encoder on the peripheral (right) half, supported since Oct 2023</li>
         <li>Caps lock, layer and Bluetooth state shown through the LEDs instead of a screen (see below)</li>
         <li>ZMK Studio for live remapping, which the Dactyl CC builder calls a must-have</li>
@@ -220,11 +217,11 @@ flowchart LR
   <ol class="steps">
     <li><strong>Fit test.</strong> Print the Redox layout 1:1 from <code>redox-layout.json</code> (keyboard-layout-editor.com renders it). Rest your hand on it and confirm the 2×2 thumb block and the knob position work for your hands. Read the "15 geometries vs hand anatomy" post first if you can.</li>
     <li><strong>Open Redox in KiCad 10.</strong> Clone <a href="https://github.com/mattdibi/redox-keyboard" target="_blank" rel="noopener">mattdibi/redox-keyboard</a> and open <code>redox/pcb/rev1.0/kicad_files</code>. KiCad upgrades the 2018 files. Use it to copy the outline and mounting holes, and to see how Mattia routed the matrix.</li>
-    <li><strong>New schematic, per half.</strong> Use the Scotto KiCad library: hotswap MX + 1N4148 matrix, the SK6812 chain on the controller's switched VCC with a 10 µF + 100 nF capacitor, nice!nano on the back with all 21 pins, encoder (right), TRRS (GND/TX/RX), battery JST, power switch, reset.</li>
+    <li><strong>New schematic, per half.</strong> Use the Scotto KiCad library: hotswap MX + 1N4148 matrix, the SK6812 chain on the controller's switched VCC with a 10 µF + 100 nF capacitor, nice!nano on the back with all 21 pins, encoder (right), battery JST, power switch, reset.</li>
     <li><strong>Place and route.</strong> Place keys from the KLE file with KB Placer, then delete the inner column, put the controller footprint on the back where it was, and put the knob on the right front. Keep ground pour away from the controller's antenna end. Route rows on the front and columns on the back. Run DRC.</li>
     <li><strong>Bring-up board first, optional.</strong> If you'd rather not risk the full order, a small board with 4 keys, the encoder, 4 LEDs and an underside-mounted nice!nano costs a few dollars and tests every circuit.</li>
-    <li><strong>Order and build.</strong> Lion Circuits (Bengaluru), HASL finish, 5 + 5 boards, LED assembly optional. Flash the left and right ZMK UF2 files, plus the wired-split variants.</li>
-    <li><strong>Case and tenting.</strong> Export the board's 3D model into Fusion and design a closed case: depth for the underside controller and battery, slots on the top edge for USB-C, TRRS and the power switch, foam, and weight in the base. For tenting, use screw-in legs like the Corne case, or magnetic phone stands like a wireless Sofle builder on Reddit.</li>
+    <li><strong>Order and build.</strong> Lion Circuits (Bengaluru), HASL finish, 5 + 5 boards, LED assembly optional. Flash the left and right ZMK UF2 files.</li>
+    <li><strong>Case and tenting.</strong> Export the board's 3D model into Fusion and design a closed case: depth for the underside controller and battery, slots on the top edge for USB-C and the power switch, foam, and weight in the base. For tenting, use screw-in legs like the Corne case, or magnetic phone stands like a wireless Sofle builder on Reddit.</li>
   </ol>
 
   <h2>Checklist before ordering</h2>
@@ -234,7 +231,7 @@ flowchart LR
       <tr><td>Footprint includes the nRF52840's extra pins</td><td>The plain Pro Micro footprint leaves you 3 pins short.</td><td>Pin budget</td></tr>
       <tr><td>Pin functions checked</td><td>"Not all pins are created equal." That includes the NFC pins and which pins can drive the LED data line.</td><td>Modular build</td></tr>
       <tr><td>LEDs on the switched VCC</td><td>The controller's P0.13 MOSFET cuts LED power. Otherwise the LEDs drain the battery even when they're off.</td><td>SK6812 idle current</td></tr>
-      <tr><td>No battery power over TRRS</td><td>Tying two batteries together through a jack can short them while you plug the cable in.</td><td>Design choice</td></tr>
+      <tr><td>No cable between the halves</td><td>Each half has its own battery and charger, so nothing ties the two batteries together, and there is no TRRS jack to hot-plug.</td><td>Design choice</td></tr>
       <tr><td>USB-C lines up with the case slot</td><td>The controller is hidden, so the port position is set by the PCB. Check it in the KiCad 3D view against the case before ordering.</td><td>Hidden controller</td></tr>
       <tr><td>Test the LED chain one column at a time</td><td>One bad SK6812 joint kills every LED after it.</td><td>Corne guide</td></tr>
       <tr><td>Socketed controller</td><td>A dead nRF52840 becomes a swap, not a desolder.</td><td>Corne guide</td></tr>
@@ -259,7 +256,7 @@ flowchart LR
   <h2>References</h2>
   <ul class="refs">
     <li><a href="https://github.com/mattdibi/redox-keyboard" target="_blank" rel="noopener">mattdibi/redox-keyboard</a><span class="src">your kora · MIT</span><br><span class="muted">rev1.0 has KiCad 5 sources. rev2.0WHS has only Gerbers and a PDF schematic, so fork rev1.</span></li>
-    <li><a href="https://zmk.dev/docs/features/split-keyboards" target="_blank" rel="noopener">ZMK split keyboards</a> · <a href="https://zmk.dev/docs/config/split" target="_blank" rel="noopener">split config</a> · <a href="https://github.com/zmkfirmware/zmk/pull/2766" target="_blank" rel="noopener">wired split PR #2766</a> · <a href="https://zmk.dev/docs/development/hardware-integration/encoders" target="_blank" rel="noopener">EC11 encoders</a> · <a href="https://zmk.dev/blog/2023/10/05/zmk-sotf-6" target="_blank" rel="noopener">peripheral encoders (SOTF #6)</a> · <a href="https://zmk.dev/docs/features/lighting" target="_blank" rel="noopener">lighting</a></li>
+    <li><a href="https://zmk.dev/docs/features/split-keyboards" target="_blank" rel="noopener">ZMK split keyboards</a> · <a href="https://zmk.dev/docs/config/split" target="_blank" rel="noopener">split config</a> · <a href="https://zmk.dev/docs/development/hardware-integration/encoders" target="_blank" rel="noopener">EC11 encoders</a> · <a href="https://zmk.dev/blog/2023/10/05/zmk-sotf-6" target="_blank" rel="noopener">peripheral encoders (SOTF #6)</a> · <a href="https://zmk.dev/docs/features/lighting" target="_blank" rel="noopener">lighting</a></li>
     <li><a href="https://www.youtube.com/watch?v=8WXpGTIbxlQ" target="_blank" rel="noopener">How to Design Keyboard PCBs with KiCad</a><span class="src">your kora</span><br><span class="muted">Scotto library, Fabrication Toolkit, HASL. Your step 3.</span></li>
     <li><a href="https://www.youtube.com/watch?v=vzDTdLaAzXc" target="_blank" rel="noopener">How to Build a Corne</a><span class="src">your kora</span><blockquote>"…fit everything through hole if possible… the 4 thumb cluster of keys in each hand and the rotary encoders… tenting"</blockquote><span class="muted">Covers SK6812MINI-E soldering, socketing and tenting legs.</span></li>
     <li><a href="https://www.youtube.com/watch?v=KwFWBdfZKnI" target="_blank" rel="noopener">I Built My DREAM Keyboard from Scratch</a> · <a href="https://www.youtube.com/watch?v=CZaAxaHlsBY" target="_blank" rel="noopener">Dungeon Delver</a><span class="src">your kora</span><br><span class="muted">KLE → KB Placer → KiCad → Fusion pipeline, plus the mistakes in the checklist.</span></li>
