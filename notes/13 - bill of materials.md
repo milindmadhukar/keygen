@@ -1,0 +1,85 @@
+---
+created: 2026-10-19
+name: 13 - bill of materials
+tags:
+  - keyboards
+---
+# Bill of Materials
+
+> [!info] Generated file
+> Generated from `~/Code/keygen/bom/bom.csv` by `tools/render_bom.py`. Edit the CSV, not this note. The rendered page is `plan/bom.html`. Design context: [[12 - final design]].
+
+Quantities cover **the keyboard with spares**. Prices are what the listings showed on 2026-10-20; `~` marks a rough guide.
+
+> [!tip] Buying strategy
+> - **LCSC or AliExpress:** SK6812MINI-E LEDs (not stocked in India), 1.25u and 1.5u keycaps
+> - **StacksKB:** switches and diodes
+> - **Meckeys:** 1u keycaps
+> - **Robu.in or Lamington Road:** batteries and small parts
+> - **Lion Circuits (Bengaluru):** the boards
+>
+> Batteries rarely ship to India from abroad, so buy those locally.
+
+## Electronics
+
+| Part | Spec | Per kb | Buy | India | Import | Price | Status |
+|---|---|---|---|---|---|---|---|
+| Controller | nice!nano v2, genuine (ZMK target nice_nano_v2)<br>*2 needed + 1 spare. Bridge the BOOST jumper (500 mA charging, fine for cells over 500 mAh): about 6 h for a 3000 mAh cell instead of about 30 h. Clones usually lack it. Measure USB-C height on arrival (sets case depth).* | 2 | 3 |  | [nice!keyboards resellers](https://nicekeyboards.com/nice-nano/) | ~$25 each | decided |
+| Controller sockets | Low-profile machined round-pin female header, 1×12, plus matching round male pins<br>*Controller sits hidden on the PCB underside; sockets make it swappable. 2 strips per controller.* | 8 strips | 10 strips | Robu.in / Lamington Road: search "machined round female header 2.54" | AliExpress: "Mill-Max low profile socket pro micro" | ~₹30–60 per 1×40 strip | decided |
+| Hotswap sockets | Kailh MX hotswap socket (CPG151101S11)<br>*66 of the 100 owned, with 34 spare.* | 66 | have 100 | Already owned (100) | AliExpress Kailh official store, 100-pack; [Divinikey 100-pack](https://divinikey.com/products/kailh-hot-swap-sockets) | owned | decided |
+| Diodes | 1N4148, through-hole DO-35<br>*34 per half (each encoder's push switch is in the matrix). Cathode toward the row (COL2ROW).* | 68 | 100 | [StacksKB 1N4148 (10-pack)](https://stackskb.com/store/1n4148-through-hole-diode/) | LCSC / AliExpress (100-pack) | ₹15 per 10 (StacksKB), less per 100 | decided |
+| Per-key LEDs | SK6812MINI-E (reverse mount, 3.2×2.8 mm)<br>*33 per-key per half, no underglow (the battery sits under the PCB). The only fiddly SMD part; buy plenty (34 spare), joints fail. Alternative: JLCPCB assembles them.* | 66 | 100 | Not stocked by Indian stores I checked | LCSC (~$0.08 each) / AliExpress "SK6812MINI-E" 100-pack | ~$0.08 each | decided |
+| LED decoupling | 10 µF + 100 nF capacitors, 1206 SMD (C1, C2)<br>*One of each per half, at the LED power switch's output on the LED rail.* | 2 + 2 | 10 + 10 | Robu.in / Lamington Road | LCSC | negligible | decided |
+| Rotary encoder | EC11 with push switch, 20 mm shaft<br>*One per half. Check shaft type (knurled vs D) before buying the knobs.* | 2 | 3 | [Probots EC11 20 mm](https://probots.co.in/20-position-360-degree-rotary-encoder-ec11-w-push-button.html) | AliExpress / LCSC | ₹89 (Probots) | decided |
+| Knob | Aluminium amplifier knob, 17 mm across, 13 mm tall, for a 6 mm D shaft (AliExpress option "D halfshaft 17x13")<br>*Must match the encoder's shaft (knurled or D).* | 2 | 2 | Robu.in / Amazon.in "potentiometer knob aluminium 6mm" | AliExpress | ~₹50–150 | decided |
+| OLED | 0.96 in. 128×64 OLED module, SSD1306, I2C, 4-pin (GND VCC SCL SDA)<br>*One per half, soldered straight into the board on its own header pins. Check the pin order printed on the module: GND, VCC, SCL, SDA. Some modules swap GND and VCC.* | 2 | 3 | Robu.in: search "0.96 inch OLED I2C SSD1306" | AliExpress | ~₹150–250 each | decided |
+
+## Power
+
+| Part | Spec | Per kb | Buy | India | Import | Price | Status |
+|---|---|---|---|---|---|---|---|
+| Battery | 3.7 V LiPo pouch with protection circuit (PCM), 2500–3000 mAh, ≤5 mm thick, at most 60 × 88 mm including the protection board (e.g. 505080, 5 × 50 × 80 mm), JST-PH 2.0 2-pin lead about 100 mm long<br>*Lies in a bay sunk into the case floor, under the outer and middle key columns, held with double-sided tape, its lead end towards the battery connector: 2.5 mm below the solder joints under the PCB and at least 15 mm from the controller's antenna end. Up to 5 mm adds no case height. A 505080 holds about 2500 mAh; listings claiming 4000 mAh at this size are overstated. The connector is about 40 mm from the cell's lead end, so a lead of 60 mm or more reaches it. Check the red wire lands on the PCB's + pad before plugging in.* | 2 | 2 | Robu.in / Lamington Road: search "3.7V 2500mAh 505080 lipo" or "3.7V 3000mAh lipo 5mm" | Avoid: batteries rarely ship to India from abroad | ~₹400–700 each | decided |
+| Battery connector | JST-PH 2-pin, side-entry through-hole (S2B-PH-K-S)<br>*Side entry so the battery lead runs flat under the PCB.* | 2 | 10 | Robu.in "JST PH 2.0 2 pin" | LCSC | negligible | decided |
+| P-channel MOSFETs | AO3401A P-channel MOSFET, SOT-23 (Q101/Q102, Q201/Q202)<br>*Q1 carries the battery current so the 50 mA slide switch only drives its gate (source to the battery, drain to B+). Q2 switches the LEDs' supply from B+.* | 4 | 10 | Robu.in / Lamington Road | LCSC | negligible | decided |
+| Gate resistor | 1 MΩ resistor, 1206 (R101/R201)<br>*Holds the MOSFET off between switch positions.* | 2 | 10 | Robu.in / Lamington Road | LCSC | negligible | decided |
+| LED switch N-MOSFET | AO3400A N-channel MOSFET, SOT-23 (Q103/Q203)<br>*P0.08 drives its gate; it pulls the LED switch's gate low to turn the LEDs on.* | 2 | 10 | Robu.in / Lamington Road | LCSC | negligible | decided |
+| LED switch resistors | 100 kΩ resistor, 1206 (R102/R103, R202/R203)<br>*R2 holds the LED switch off; R3 holds its N-MOSFET off while the controller boots or sleeps.* | 4 | 10 | Robu.in / Lamington Road | LCSC | negligible | decided |
+| Charging cable | USB-C 1-to-2 splitter cable (optional), to charge both halves from one charger<br>*Each half charges through its own USB-C; this just saves a second cable.* | 1 | 1 | Amazon.in | AliExpress | ~₹200–400 | optional |
+| Power switch | MSK12C02 side-actuated SPDT slide switch (SMD, large pads)<br>*Side-actuated so it pokes out of the case edge; the same part most wireless split boards use. Hand-solderable.* | 2 | 10 | Robu.in / AliExpress "MSK12C02" | LCSC / AliExpress | ~₹10–20 each | decided |
+| Reset button | 6×6 mm tactile switch, through-hole, 5 mm tall (SW_PUSH_6mm_H5mm)<br>*On the underside next to the controller; press it through a pinhole in the case floor. ZMK can also enter the bootloader from a key.* | 2 | 10 | Robu.in / StacksKB | LCSC | ~₹2–5 each | decided |
+
+## Fabrication
+
+| Part | Spec | Per kb | Buy | India | Import | Price | Status |
+|---|---|---|---|---|---|---|---|
+| Main PCBs | 2-layer FR4, 1.6 mm, HASL, 1 oz, left and right designs (each half ~17 × 13 cm)<br>*Minimum 5 per design, so 5 left + 5 right. Check their DFM limits (6/6 mil on 1 oz) when routing.* | 2 | 5 + 5 | [Lion Circuits](https://lioncircuits.com/) (Bengaluru, instant quote, 5–6 days, no customs) | JLCPCB as a fallback | from ₹799 for 5 (entry offer; quote for full size) | decided |
+| Switch plate | FR-4 1.6 mm, black mask both sides, no copper, left and right designs (case/plate/gerber/)<br>*Order settings in case/plate/PLATE.md. Minimum 5 per design, so 5 left + 5 right.* | 2 | 5 + 5 | [Lion Circuits](https://lioncircuits.com/), alongside the PCBs | JLCPCB as a fallback | TBD (quote with the PCBs) | decided |
+| LED assembly (optional) | Lion Circuits / JLCPCB assembly of the SK6812MINI-E only<br>*Avoids hand-soldering 66 LEDs; adds cost and lead time.* | — | optional | — | Lion Circuits or JLCPCB | TBD | optional |
+
+## Switches & keycaps
+
+| Part | Spec | Per kb | Buy | India | Import | Price | Status |
+|---|---|---|---|---|---|---|---|
+| Switches | Akko V3 Lavender Purple Pro: tactile, 5-pin, 40 gf operating / 55 gf bump, 3.8 mm travel, clear PC top, POM stem<br>*Light, rounded tactile and not loud. The clear top lets the per-key LEDs through. 24 spare.* | 66 | 90 (2 × 45) | [StacksKB, pack of 45](https://stackskb.com/store/akko-v3-lavender-purple-pro-switch-pack-of-45/) | AKKO official store | ₹1,099 per 45 (₹2,198) | decided |
+| Keycaps | Blank DSA PBT, smoke translucent: 52 × 1u, 10 × 1.25u, 4 × 1.5u<br>*No stabilizers (nothing over 1.5u). Confirm PBT, DSA and the transparent black variant on AliExpress before paying; the two vendors' shades may differ slightly. All-black fallback: [Meckeys Blank DSA modifiers](https://meckeys.com/shop/accessories/keyboard-accessories/keycaps/blank/blank-dsa-modifiers/) in black (₹40 each, out of stock on 20 Oct 2026) with black 1u.* | 66 | 55 × 1u (11 × 5); 10 × 1.25u; 10 × 1.5u | 1u: [Meckeys Blank DSA 1u](https://meckeys.com/shop/accessories/keyboard-accessories/keycaps/blank/blank-dsa-keycaps-1u/), colour Grey Translucent | 1.25u + 1.5u: AliExpress 10-packs, blank PBT DSA, transparent black ([1.25u](https://www.aliexpress.us/item/3256805869245503.html), [1.5u](https://www.aliexpress.us/item/3256805824621950.html)); add to the LED order | ₹100 per 5 (₹1,100) + ~$1–4 per 10-pack | decided |
+
+## Case
+
+| Part | Spec | Per kb | Buy | India | Import | Price | Status |
+|---|---|---|---|---|---|---|---|
+| Case | 3D-printed PETG, gasket-mounted: a bottom shell and a top frame per half (case/bottom/stl/, case/top/stl/)<br>*Each half 177.8 × 143.1 mm; bottom shell 17.0 mm tall, top frame 5.2 mm. The floor gets tenting, weight and feet once tenting is chosen.* | 2 + 2 | 2 + 2 | A 3D printing service | JLC3DP | TBD | decided |
+| Heat-set inserts | M2 × 3 mm brass heat-set inserts, for a 3.2 mm hole<br>*8 per half, in the bottom shell's walls.* | 16 | 25 | Robu.in / StacksKB | AliExpress | TBD | decided |
+| Case screws | M2 × 6 mm socket head (ISO 4762)<br>*Top frame to bottom shell, heads flush in counterbores.* | 16 | 20 | Robu.in / hardware store | AliExpress | TBD | decided |
+| Plate standoffs | M2 × 3.5 mm female-female standoffs (the MX plate-to-PCB height)<br>*Five per half, screwed onto the PCB from below.* | 10 | 15 | StacksKB / Robu.in | AliExpress | TBD | decided |
+| Plate screws | M2 × 4 mm button head (ISO 7380), 3.5 mm head<br>*10 under the PCB into the standoffs, 7 on top of the plate (none at H101, H201, H205).* | 17 | 25 | Robu.in / hardware store | AliExpress | TBD | decided |
+| Gaskets | Poron sheet, 2 mm thick, cut into 12 × 4 mm strips<br>*Two strips per plate tab, 8 tabs per half.* | 32 strips | 1 sheet | Robu.in / StacksKB (keyboard Poron) | AliExpress | TBD | decided |
+| Foam | 0.5 mm PE switch foam sheet; 2.5 mm Poron plate foam; 5 mm EVA or Poron case foam<br>*Cut by laser or by hand from the 1:1 files in case/foam/ (one per layer per half, seen from above).* | — | 1 sheet each, at least 340 × 130 mm (two halves) | StacksKB / Lamington Road | AliExpress | TBD | decided |
+| Weight | Steel plate or washers in the base<br>*Halves slide when you push inward without weight. Keep it away from the controller's antenna end.* | — | — | Lamington Road / hardware store | — | TBD | after tenting |
+| Tenting | Screw-in legs (18 mm front / 40 mm rear) or magnetic phone stands; rubber feet | — | — | Amazon.in / hardware store | — | TBD | after tenting |
+
+## Tools
+
+| Part | Spec | Per kb | Buy | India | Import | Price | Status |
+|---|---|---|---|---|---|---|---|
+| Soldering | Temperature-controlled iron, 0.5–0.6 mm solder, no-clean flux, fine tweezers, solder wick<br>*From the Corne video: 350–370 °C for lead-free, flux makes SK6812s easy.* | — | — | Robu.in / Lamington Road | — | — | check what you have |
+| Testing | Multimeter, Kapton tape, IPA<br>*Test each LED column as you go: one bad joint kills the chain after it.* | — | — | Robu.in / Amazon.in | — | — | check what you have |

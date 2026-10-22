@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Write docs/pcb-routing.png: both halves' copper on a dark board, front tracks red, back tracks
+"""Write assets/pcb-routing.png: both halves' copper on a dark board, front tracks red, back tracks
 blue, pads gold, vias white. Zone fills are left out so the routing shows.
 
     python3 tools/render_routing.py [board.kicad_pcb] [out.png]
@@ -12,7 +12,7 @@ import pcbnew
 
 ROOT = Path(__file__).resolve().parent.parent
 board = sys.argv[1] if len(sys.argv) > 1 else str(ROOT / "pcb/keygen.kicad_pcb")
-out = sys.argv[2] if len(sys.argv) > 2 else str(ROOT / "docs/pcb-routing.png")
+out = sys.argv[2] if len(sys.argv) > 2 else str(ROOT / "assets/pcb-routing.png")
 b = pcbnew.LoadBoard(board)
 mm = pcbnew.ToMM
 poly = pcbnew.SHAPE_POLY_SET(); b.GetBoardPolygonOutlines(poly, False)

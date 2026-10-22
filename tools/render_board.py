@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Write docs/render-hero.png, docs/render-top.png and docs/render-bottom.png from the board.
+"""Write assets/render-hero.png, assets/render-top.png and assets/render-bottom.png from the board.
 
 KiCad's named "Black" soldermask (what the stackup says, so the Gerber job file and fab read
 "Black") renders see-through brown, so the renders use a copy of the board with an opaque
@@ -25,7 +25,7 @@ def main():
     TMP.write_text(text)
     try:
         for name, args in VIEWS.items():
-            raw = ROOT / f"docs/_{name}.png"; out = ROOT / f"docs/render-{name}.png"
+            raw = ROOT / f"assets/_{name}.png"; out = ROOT / f"assets/render-{name}.png"
             subprocess.run(["kicad-cli", "pcb", "render", "-o", str(raw), *args, "--background", "transparent",
                             "--use-board-stackup-colors", str(TMP)], check=True, capture_output=True)
             subprocess.run(["magick", str(raw), "-trim", "+repage", "-bordercolor", "none", "-border", "20",
