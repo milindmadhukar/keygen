@@ -33,8 +33,8 @@ Everything sits on the **back** of the PCB except the switches, the encoder and 
 4. **Case.** The four STLs in [`case/bottom/stl/`](case/bottom/stl/) and
    [`case/top/stl/`](case/top/stl/), printed in PETG.
 5. **Foam.** Cut per half from the 1:1 files in [`case/foam/dxf/`](case/foam/dxf/) (laser) or
-   [`case/foam/svg/`](case/foam/svg/) (printed at 100 % as a template): a 0.5 mm PE switch foam, a
-   2.5 mm Poron plate foam and a 5 mm case foam, each the right way up as drawn.
+   [`case/foam/svg/`](case/foam/svg/) (printed at 100 % as a template): a 2 mm EVA plate foam and a
+   5 mm EVA case foam, each the right way up as drawn. The Poron switch pads come ready to stick.
 6. **Parts.** Everything else, with quantities, spares and sources, is in the
    [parts list](plan/bom.html) ([`bom/bom.csv`](bom/bom.csv)).
 
@@ -46,7 +46,7 @@ Fasteners per half:
 | M2 × 4 mm button-head screw | 5 + 4 (left), 5 + 3 (right) | Standoffs from below; plate from above |
 | M2 × 3 mm brass heat-set insert | 8 | Bottom shell walls |
 | M2 × 6 mm socket-head screw | 8 | Top frame to bottom shell |
-| Poron strip, 12 × 4 × 2 mm | 16 | Two per plate tab |
+| Poron strip, 12 × 4 × 2 mm, cut from 80 × 4 × 2 mm strips | 16 | Two per plate tab |
 
 ## 2. Tools
 
@@ -93,10 +93,11 @@ pad, solder the other pads, then touch up the first.
 
 ### Step 5: Controller
 
-1. Bridge the nice!nano's **BOOST** jumper (500 mA charging).
+1. Before soldering, check the SuperMini with the multimeter: **B+** (pad 13), **GND** and **VCC**
+   (pad 16).
 2. Fit the low-profile machined socket strips to the PCB footprint **U101 / U201** and the matching
-   round pins to the nice!nano.
-3. Seat the nice!nano with its **chip and USB-C facing away from the PCB**. Seated the other way,
+   round pins to the controller.
+3. Seat the controller with its **chip and USB-C facing away from the PCB**. Seated the other way,
    the pinout is mirrored and the battery lands on a GPIO.
 4. Solder the socket strips with the controller seated in them, so the pins line up, then lift it
    out and check every joint.
@@ -105,10 +106,15 @@ pad, solder the other pads, then touch up the first.
 ### Step 6: Bring-up
 
 1. Flash the firmware (see [Flashing](#flashing)) and check that the half shows up over USB.
-2. **Battery polarity.** JST-PH packs come wired both ways round. With the multimeter, confirm the
+2. **Protection board.** Check the cell has one: the controller has no over-discharge cut-off. Fit
+   a DW01A module to a cell without one.
+3. **Battery polarity.** JST-PH packs come wired both ways round. With the multimeter, confirm the
    red wire lands on the PCB's **+** pad before plugging in. Swap the crimps if it does not.
-3. Plug the battery in and check that the slide switch turns the half on and off. Leave the switch
-   on while charging. Unplug the battery again before the next step.
+4. Plug the battery in and check that the slide switch turns the half on and off. Leave the switch
+   on while charging.
+5. **Charge current.** With the multimeter in series with the battery and USB plugged in, confirm
+   about 100 mA. An empty 2500 mAh cell takes roughly a day. Unplug the battery again before the
+   next step.
 
 ### Step 7: LEDs, one column at a time
 
@@ -148,10 +154,11 @@ pad, solder the other pads, then touch up the first.
 Screw the five M2 × 3.5 mm standoffs onto the PCB at **H101–H105 / H201–H205**, with M2 × 4
 button-head screws from below.
 
-### Step 12: Switch foam and plate foam
+### Step 12: Switch pads and plate foam
 
-1. Lay the 0.5 mm PE switch foam on the PCB, its holes over the pins, pads and LED windows.
-2. Lay the 2.5 mm Poron plate foam over it.
+1. Stick a 0.5 mm Poron ring switch pad on the PCB under each switch position (33), its open middle
+   over the LED window.
+2. Lay the 2 mm EVA plate foam over them.
 
 ### Step 13: Plate and OLED
 
@@ -184,15 +191,15 @@ Press the 8 M2 heat-set inserts into the holes on top of the bottom shell's wall
 
 ### Step 17: Case foam
 
-Lay the 5 mm case foam on the floor of the bottom shell, round the battery in its bay.
+Lay the 5 mm EVA case foam on the floor of the bottom shell, round the battery in its bay.
 
 ### Step 18: Plate-and-PCB unit
 
-1. Put a Poron strip on each of the 8 gasket ledges.
+1. Cut the Poron strips into 12 mm pieces and put one on each of the 8 gasket ledges.
 2. Plug the battery lead into **BT101 / BT201**.
 3. Lower the plate-and-PCB unit onto the strips, with the USB-C over its slot and the slide switch
    in its opening.
-4. Put a second Poron strip on top of each plate tab.
+4. Put a second piece on top of each plate tab.
 
 ### Step 19: Top frame
 

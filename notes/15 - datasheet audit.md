@@ -35,17 +35,17 @@ To prove the test catches real mistakes, I fed it deliberately broken copies of 
 - **NFC pins P0.09/P0.10** stay NFC antenna pads until UICR.NFCPINS is cleared. With ZMK's Zephyr 4.1, the old `CONFIG_NFCT_PINS_AS_GPIOS` is gone; use devicetree `&uicr { nfct-pins-as-gpios; };`. Once written, the setting sticks until UICR is erased. When driven to different levels, the two pins leak 1–10 µA between each other.
 - **Absolute maximum on any I/O is VDD + 0.3 V.** Every signal on a pin comes from inside the half, at 3.3 V.
 
-### nice!nano v2
-- Pinout verified pad by pad against the official image. **Mounted on the underside, the component side (chip, USB-C) must face away from the PCB.** That's what the footprint assumes. Soldered the other way, the columns swap and battery + lands on a GPIO.
+### nice!nano v2 pinout (the SuperMini)
+- The nRF52840 SuperMini is a nice!nano v2 clone with the same 24-pin header, so the footprint follows the nice!nano v2. Pinout verified pad by pad against the official image. **Mounted on the underside, the component side (chip, USB-C) must face away from the PCB.** That's what the footprint assumes. Soldered the other way, the columns swap and battery + lands on a GPIO.
 - P0.13 *low* cuts VCC on the v2. The "high" wording in the docs is for v1. VCC (pad 16) powers the OLED, so the firmware holds P0.13 high with a gpio-hog. Battery voltage is read internally (VDDH), so it uses no pin.
-- Charging is **100 mA** by default; bridging the BOOST jumper gives 500 mA, only for batteries over 500 mAh. The charger is a BQ24075.
+- The SuperMini charges at about **100 mA** and has no BOOST jumper: roughly a day for an empty 2500 mAh cell. It has no over-discharge cut-off, so the cell carries its own protection board. Check B+ (pad 13), GND and VCC (pad 16) and the charge current on each board before soldering it.
 - No VCC current limit is published, and no antenna position or keep-out. The renders show bare board at the end away from USB-C, so the audit keeps the last 6 mm clear.
 
 ### Parts
 - **SK6812MINI-E:** the datasheet numbers the pins 1 VDD, 2 DOUT, 3 GND, 4 DIN. KiCad's symbol uses 1 VSS, 2 DIN, 3 VDD, 4 DOUT. They still line up physically: the reverse-mount footprint is the datasheet's lens-side view mirrored, which is correct because the lens faces the board. The chamfered corner is GND. When ordering assembly, check the fab's placement preview against that.
   - VDD is rated 3.7–5.5 V. The LEDs get the battery's 3.0–4.2 V through the LED power switch, inside spec until the cell runs low. VIH = 0.7 × VDD: 2.94 V at a full cell, against the nRF52840's VOH ≥ VDD − 0.4 V = 2.9 V at 0.5 mA (p. 157). The LED input draws microamps, so P0.06 sits near 3.3 V, but the datasheet margin is thin.
   - 12 mA per colour, so 33 LEDs at full white ≈ 1.2 A per half. Each LED also draws 1 mA even when dark (≈ 33 mA per half), which is why the LEDs sit behind their own power switch.
-- **MSK12C02-HB power switch:** pin ② is common, and the pins are *not* evenly spaced (③ 1.5 mm ② 3 mm ①). Rated **50 mA at 12 V DC**. So it only drives the gate of an AO3401A P-MOSFET, which carries the battery current, including 500 mA BOOST charging.
+- **MSK12C02-HB power switch:** pin ② is common, and the pins are *not* evenly spaced (③ 1.5 mm ② 3 mm ①). Rated **50 mA at 12 V DC**. So it only drives the gate of an AO3401A P-MOSFET, which carries the battery current, including the charge current.
 - **EC11:** A C B in a row with C (common) in the middle, and the push switch on the other side. Swapping A and B only reverses the rotation direction, which firmware can fix.
 - **AO3401A:** SOT-23 pins 1 G, 2 S, 3 D, matching KiCad's symbol. RDS(on) < 85 mΩ at VGS = −2.5 V, so the battery's −3.0 to −4.2 V gate drive turns it fully on (about 43 mV drop at 500 mA). Its body diode runs drain to source: with the source on the battery and the drain on B+, it blocks the battery when the switch is off. With the switch off and USB in, the charger still fills the cell through that diode, about 0.35 W.
 - **AO3400A:** SOT-23 pins 1 G, 2 S, 3 D, like the AO3401A. VGS(th) 0.65–1.45 V, so P0.08's 3.3 V turns it fully on (RDS(on) < 48 mΩ at VGS = 2.5 V). It pulls the LED switch's gate low, so that AO3401A sees −3.0 to −4.2 V, as the battery switch does.

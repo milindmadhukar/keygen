@@ -2,7 +2,7 @@
 """Render the case and the switch plate into assets/:
 
 render-case.png           the board in its case
-render-case-exploded.png  bottom shell, case foam, PCB, switch foam, plate foam, plate and top frame lifted
+render-case-exploded.png  bottom shell, case foam, PCB, plate foam, plate and top frame lifted
                           apart (no switches or keycaps)
 render-case-parts.png     the printed parts alone: each bottom shell with its top frame above it
 render-case-bottom.png    the case from below: floor, reset pinholes, USB-C and switch openings
@@ -27,7 +27,7 @@ PCB = ROOT / "pcb/keygen.kicad_pcb"
 PLATE = ROOT / "pcb/plate/keygen-plate.kicad_pcb"
 TMP = ROOT / "pcb/_render_case.kicad_pcb"      # beside the real board so ${KIPRJMOD} models resolve
 CASE = ROOT / "case"
-EXPLODE = {"bottom": -45.0, "foam/case": -22.0, "foam/switch": 9.0, "foam/plate": 18.0, "plate": 30.0,
+EXPLODE = {"bottom": -45.0, "foam/case": -22.0, "foam/plate": 18.0, "plate": 30.0,
            "top": 55.0}                                   # mm, for the exploded view
 PARTS_LIFT = 30.0                                         # top frame above its shell, parts view
 SWITCHES_AND_CAPS = re.compile(r'\t\t\(model "[^"]*(?:SW_Cherry_MX_PCB|Keycap_)[^"]*"\n(?:\t\t\t[^\n]*\n)*\t\t\)\n')

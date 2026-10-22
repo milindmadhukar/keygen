@@ -3,7 +3,7 @@ JST-PH 2-pin battery connector,1,BT201,LiPo 3.7V 3000mAh,Connector_JST:JST_PH_S2
 10 µF capacitor (1206),1,C201,10uF,Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder,"SMD, back side, beside the LED power switch"
 100 nF capacitor (1206),1,C202,100nF,Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder,"SMD, back side, beside the LED power switch"
 1N4148 diode,34,D201 D202 D203 D204 D205 D206 D207 D208 D209 D210 D211 D212 D213 D214 D215 D216 D217 D218 D219 D220 D221 D222 D223 D224 D225 D226 D227 D228 D229 D230 D231 D232 D233 D234,1N4148,Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal,"through-hole, back side; band (cathode) toward the square pad"
-EC11 rotary encoder,1,ENC201,EC11,keygen:ROT_Alps_EC11E-Switch,"through-hole, front side (right half only)"
+EC11 rotary encoder,1,ENC201,EC11,keygen:ROT_Alps_EC11E-Switch,"through-hole, front side, 20 mm D shaft"
 OLED 0.96in I2C,1,J201,OLED 0.96in I2C,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical,
 SK6812MINI-E LED,33,LED201 LED202 LED203 LED204 LED205 LED206 LED207 LED208 LED209 LED210 LED211 LED212 LED213 LED214 LED215 LED216 LED217 LED218 LED219 LED220 LED221 LED222 LED223 LED224 LED225 LED226 LED227 LED228 LED229 LED230 LED231 LED232 LED233,SK6812MINI-E,LED_SMD:LED_SK6812MINI-E_3.2x2.8mm_P1.5mm_ReverseMount,"SMD, reverse-mount on the back; mind the corner mark"
 AO3401A P-MOSFET (SOT-23),2,Q201 Q202,AO3401A,Package_TO_SOT_SMD:SOT-23,"SMD, back side: Q1 between the controller and the power switch, Q2 in the LED power switch"
@@ -15,4 +15,4 @@ AO3400A N-MOSFET (SOT-23),1,Q203,AO3400A,Package_TO_SOT_SMD:SOT-23,"SMD, back si
 "MX switch, 1.5u key (tall thumb)",2,SW233 SW234,Space,keygen:SW_MX_HS_CPG151101S11_1.5u,"Kailh socket on the back; switch + 1.5u keycap, turned 90°"
 MSK12C02 power slide switch,1,SW290,MSK12C02 power,keygen:SW_MSK12C02-HB,"SMD, back side at the top edge, lever out"
 6 mm reset button,1,SW291,Reset,Button_Switch_THT:SW_PUSH_6mm_H5mm,"through-hole, back side"
-nRF52840 Pro Micro (nice!nano v2),1,U201,nRF52840 Pro Micro,keygen:nice_nano_H_USBup,"on the back, socketed (Mill-Max/low-profile); bridge BOOST"
+nRF52840 SuperMini (nice!nano v2 clone),1,U201,nRF52840 Pro Micro,keygen:nice_nano_H_USBup,"on the back, socketed (Mill-Max/low-profile); check B+, GND and VCC first"

@@ -44,10 +44,10 @@ Each half is **5 rows × 7 columns, COL2ROW**: each switch connects to its colum
 - The datasheet's VDD range is 3.7–5.5 V; the cell supplies 3.0–4.2 V and sits near 4.2 V on USB power, when the LEDs light. See [[12 - final design#Schematic]].
 
 ### Rotary encoders
-**Alps EC11** on each half, through-hole on the front, below the controller, mirrored: shafts at (167.0, 129.0) left and (256.5, 129.0) right, in board coordinates. Each takes a 17 × 13 mm knurled aluminium knob, whose edge sits 4.5 mm below the OLED, 5.7 mm from the thumb cluster's top key and 9.1 mm from the G/H column. On both halves A is on P0.10 (pad 23) and B on P0.09 (pad 24), both NFC pins used as GPIO. Each push switch is in its half's matrix at row 0 / column 6, with its own 1N4148 (D107, D207) on the back beside the encoder.
+**EC11** with a push switch and a 20 mm D shaft on each half, through-hole on the front, below the controller, mirrored: shafts at (167.0, 129.0) left and (256.5, 129.0) right, in board coordinates. Each takes a 17 × 13 mm knurled aluminium knob, whose edge sits 4.5 mm below the OLED, 5.7 mm from the thumb cluster's top key and 9.1 mm from the G/H column. On both halves A is on P0.10 (pad 23) and B on P0.09 (pad 24), both NFC pins used as GPIO. Each push switch is in its half's matrix at row 0 / column 6, with its own 1N4148 (D107, D207) on the back beside the encoder.
 
 ### OLED
-A generic **0.96 in. 128×64 SSD1306 I2C module** per half (J101 / J201), on a 1×4 2.54 mm header footprint, pin order GND, VCC, SCL, SDA. SDA is on P0.17 (pad 5), SCL on P0.20 (pad 6), and power on the nice!nano's switched 3.3 V VCC (pad 16). The module's own header pins solder straight into the board on their 2.5 mm spacer, over the lower (antenna) end of the controller, above the knob: right x 245–272.5, y 88–116; left x 151–178.5, y 88–116. Details: [[12 - final design#OLED]].
+A generic **0.96 in. 128×64 SSD1306 I2C module** per half (J101 / J201), on a 1×4 2.54 mm header footprint, pin order GND, VCC, SCL, SDA. SDA is on P0.17 (pad 5), SCL on P0.20 (pad 6), and power on the controller's switched 3.3 V VCC (pad 16). The module's own header pins solder straight into the board on their 2.5 mm spacer, over the lower (antenna) end of the controller, above the knob: right x 245–272.5, y 88–116; left x 151–178.5, y 88–116. Details: [[12 - final design#OLED]].
 
 ### Power
 - **Battery:** JST-PH 2-pin side-entry connector (BT101/BT201) on the back. A "+" on the silkscreen marks the + pad.

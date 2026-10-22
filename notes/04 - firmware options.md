@@ -39,7 +39,7 @@ name: 04 - firmware options
 - **Layers and macros** cover host-specific shortcuts.
 
 ## Related notes
-- [[03 - microcontroller selection]] — the nice!nano
+- [[03 - microcontroller selection]] — the nRF52840 SuperMini
 - [[06 - split architecture]] — how the halves connect
 - [[10 - assembly & build guide]] — flashing during the build
 

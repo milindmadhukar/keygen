@@ -48,8 +48,8 @@ page = f"""<!doctype html>
 <div class="wrap">
   <p class="eyebrow">Keygen · bill of materials · generated from bom/bom.csv</p>
   <h1>Bill of materials</h1>
-  <p class="lede prose">Everything needed for the keyboard, with spares, and where to get it in India or from abroad. Prices are what the listings showed on 20 Oct 2026, or rough guides where marked with ~. <a href="index.html">Back to the build plan</a>.</p>
-  <div class="note prose"><strong>Buying strategy:</strong> one LCSC or AliExpress order for the SK6812MINI-E LEDs (not stocked in India) and the 1.25u and 1.5u keycaps, StacksKB for switches and diodes, Meckeys for the 1u keycaps, Robu.in or Lamington Road for batteries and small parts, and Lion Circuits (Bengaluru) for the boards. Batteries rarely ship to India from abroad, so buy those locally.</div>
+  <p class="lede prose">Everything needed for the keyboard, with spares, and where to get it in India or from abroad. Prices are what the listings showed on 20–22 Oct 2026, or rough guides where marked with ~. <a href="index.html">Back to the build plan</a>.</p>
+  <div class="note prose"><strong>Buying strategy:</strong> one AliExpress order, shipped to Australia and brought to India by hand, for the SK6812MINI-E LEDs (not stocked in India), the controllers, the batteries, the knobs, the switch pads, the gaskets and the 1.25u and 1.5u keycaps; StacksKB for switches and diodes, Meckeys for the 1u keycaps, Robu.in for the encoders and small parts, Amazon.in for the EVA foam, and Lion Circuits (Bengaluru) for the boards. The shopping checklist (<code>bom/CHECKLIST.md</code>) has the exact listings.</div>
   {"".join(body)}
 </div>
 </body>
@@ -63,15 +63,16 @@ lines = ["---", "created: 2026-10-19", "name: 13 - bill of materials", "tags:", 
          "# Bill of Materials", "",
          "> [!info] Generated file",
          "> Generated from `~/Code/keygen/bom/bom.csv` by `tools/render_bom.py`. Edit the CSV, not this note. The rendered page is `plan/bom.html`. Design context: [[12 - final design]].", "",
-         "Quantities cover **the keyboard with spares**. Prices are what the listings showed on 2026-10-20; `~` marks a rough guide.", "",
+         "Quantities cover **the keyboard with spares**. Prices are what the listings showed on 2026-10-20 to 2026-10-22; `~` marks a rough guide.", "",
          "> [!tip] Buying strategy",
-         "> - **LCSC or AliExpress:** SK6812MINI-E LEDs (not stocked in India), 1.25u and 1.5u keycaps",
+         "> - **AliExpress** (shipped to Australia, brought to India by hand): SK6812MINI-E LEDs (not stocked in India), controllers, batteries, knobs, switch pads, gaskets, 1.25u and 1.5u keycaps",
          "> - **StacksKB:** switches and diodes",
          "> - **Meckeys:** 1u keycaps",
-         "> - **Robu.in or Lamington Road:** batteries and small parts",
+         "> - **Robu.in:** encoders and small parts",
+         "> - **Amazon.in:** EVA foam",
          "> - **Lion Circuits (Bengaluru):** the boards",
          ">",
-         "> Batteries rarely ship to India from abroad, so buy those locally.", ""]
+         "> The exact listings are in `bom/CHECKLIST.md` in the repo.", ""]
 for name, items in sections:
     lines += [f"## {name}", "", "| Part | Spec | Per kb | Buy | India | Import | Price | Status |", "|---|---|---|---|---|---|---|---|"]
     for r in items:

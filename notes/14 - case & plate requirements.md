@@ -19,7 +19,7 @@ All the ports are on the **top edge** of each half, next to the controller, so o
 
 | Opening | Where | Size / notes |
 |---|---|---|
-| **USB-C** | Top wall, at the controller | The nice!nano (18 mm wide) hangs **under** the PCB on sockets, and its USB-C end reaches ~1 mm past the PCB edge; the edge is slanted, so one corner reaches ~1.6 mm. The case has an **open slot 20 mm wide** from the floor up to the PCB's underside, which clears the whole controller end and any cable overmould. |
+| **USB-C** | Top wall, at the controller | The controller (18 mm wide) hangs **under** the PCB on sockets, and its USB-C end reaches ~1 mm past the PCB edge; the edge is slanted, so one corner reaches ~1.6 mm. The case has an **open slot 20 mm wide** from the floor up to the PCB's underside, which clears the whole controller end and any cable overmould. |
 | **Power switch** (MSK12C02, side-actuated) | Top wall, near the USB-C | The lever pokes out past the PCB edge, at the PCB's underside. A **9 × 3.4 mm slot** at the lever. The wall is thinned to **1.5 mm** from 10 mm before the USB-C to the corner past the switch, so a fingernail reaches the lever. |
 | **Reset pinhole** | Case **floor**, under the reset button | The 6 × 6 mm, 5 mm-tall button sits on the PCB underside. You press it with a **paperclip** through a **Ø 2 mm hole**, countersunk outside, with a guide tube (Ø 5 mm) up to 1 mm under the button. ZMK can also enter the bootloader from a key combo. |
 | **Rotary encoder knob** (both halves, mirrored) | Top: through the switch plate | The EC11 body is ~12 × 12 mm and 4.5 mm tall on the PCB top, so the plate has a **13 × 13 mm cut-out** around it; above it only the 7 mm bushing (to 11.5 mm) passes through a 9 mm hole in the top frame's deck, under the knob, whose underside is 2.9 mm above the deck. The knob is Ø 17 mm, its edge 4.5 mm below the OLED, 5.7 mm from the thumb cluster's top key and 9.1 mm from the G/H column. Shafts at (167.0, 129.0) left and (256.5, 129.0) right, in board coordinates (KiCad mm). |
@@ -27,8 +27,8 @@ All the ports are on the **top edge** of each half, next to the controller, so o
 
 ## Inside the case (under the PCB)
 
-- **Tallest part: the controller on sockets.** About 4.5 mm of low-profile socket plus the nice!nano's 3.2 mm (mid-mount USB-C), so about **7.5 mm below the PCB**. Measure the real one before fixing the cavity depth.
-- **Battery** (decided 2026-10-20, capacity raised 2026-10-22, bay 2026-10-22): LiPo pouch **≤ 5 mm thick, 2500–3000 mAh, at most 60 × 88 mm** including the protection board (e.g. 505080, 80 × 50 × 5 mm). It lies in a **bay sunk 1 mm into the case floor**, long side across the board, under the outer and middle key columns, held with double-sided tape. Measure the actual cell before printing.
+- **Tallest part: the controller on sockets.** About 4.5 mm of low-profile socket plus the controller's 3.2 mm (mid-mount USB-C), so about **7.5 mm below the PCB**. Measure the real one before fixing the cavity depth.
+- **Battery** (decided 2026-10-23): a **505080 LiPo pouch, 80 × 50 × 5 mm, about 2500 mAh**, with a protection board. The bay takes a cell **≤ 5 mm thick and at most 60 × 88 mm** including the protection board. It lies in a **bay sunk 1 mm into the case floor**, long side across the board, under the outer and middle key columns, held with double-sided tape. Measure the actual cell before printing.
   - Bay: the cell plus 1.5 mm each side, 63 × 91 mm. Cell position (same coordinates as the table below): left half x 16.7–104.7, y 6.4–66.4; right half x 57.9–145.9, y 6.4–66.4. `tools/case_geometry.py` places it, as near the battery connector as the rules below allow.
   - Keep it **≥ 15 mm from the controller's antenna end** (no foil near the antenna) and ≥ 3 mm from the controller, the JST-PH connector, the slide switch, the reset button, the encoder and the OLED header pins. It has 10 mm.
   - The lead end faces the side-entry JST-PH next to the controller, about 40 mm away, so a lead of 60 mm or more reaches it.
@@ -62,7 +62,7 @@ All the ports are on the **top edge** of each half, next to the controller, so o
 - **Tenting.**
   - Screw-in legs (Corne style: 18 mm front / 40 mm rear) or magnetic phone stands; not chosen yet. The case floor is flat until then.
   - The angled stand you wanted.
-- **Rubber feet** and **foam layers** (case foam, PE switch foam) for a thocky sound. See [[07 - switch & keycap selection]].
+- **Rubber feet** and **foam** (EVA case foam, Poron switch pads) for a thocky sound. See [[07 - switch & keycap selection]].
 - **Keycaps.** Blank DSA PBT, smoke translucent: 52 × 1u, 10 × 1.25u, 4 × 1.5u. Switches: Akko V3 Lavender Purple Pro.
 
 ## Positions (from the PCB)

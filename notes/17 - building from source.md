@@ -117,10 +117,10 @@ case/
 ├── top/     stl/  step/                top frames (print the STL)
 ├── plate/   gerber/  dxf/  step/  pdf/ switch plates: Gerbers to order, CNC/laser cut files, solids, 1:1 paper print
 │   └── PLATE.md                        plate order-form settings
-└── foam/    dxf/  svg/  step/          switch, plate and case foam: 1:1 cut files, solids
+└── foam/    dxf/  svg/  step/          plate and case foam: 1:1 cut files, solids
 ```
 
-Every file is named `keygen-{left,right}-<part>` (the foam `keygen-{left,right}-{switch,plate,case}-foam`,
+Every file is named `keygen-{left,right}-<part>` (the foam `keygen-{left,right}-{plate,case}-foam`,
 the plate Gerbers `keygen-plate-{left,right}-gerbers.zip`).
 
 ## Related notes

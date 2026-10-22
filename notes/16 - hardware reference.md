@@ -23,16 +23,18 @@ updated: 2026-10-22T19:00
 - **OLED:** a generic 0.96 in. SSD1306 module per half, its own header pins soldered into the board
   (pin order GND, VCC, SCL, SDA), standing in a window in the plate. It sits over the controller's
   lower end with its header along its bottom edge, and the firmware turns the image 180°. It runs
-  from the nice!nano's switched 3.3 V output (VCC), which the firmware keeps on through P0.13.
+  from the controller's switched 3.3 V output (VCC), which the firmware keeps on through P0.13.
 - **Power and charging:** each half has its own LiPo and charges through its own controller's
-  USB-C; a 1-to-2 USB-C cable charges both from one charger. The nice!nano's BOOST jumper is
-  bridged for 500 mA charging.
+  USB-C at about 100 mA, roughly a day for an empty cell; a 1-to-2 USB-C cable charges both from
+  one charger.
 - **Battery switch:** the MSK12C02 slide switch drives the gate of an AO3401A P-MOSFET, which
   carries the battery current: source on the battery, drain on B+. A 1 MΩ resistor holds the gate
   off between positions. Leave the switch on while charging.
-- **Battery:** a pouch up to 60 × 88 × 5 mm lies in a bay sunk 1 mm into the case floor, under the
-  outer and middle key columns, its lead end towards the battery connector. It sits 2.5 mm below the
-  solder joints on the PCB's underside and at least 15 mm from the controller's antenna end.
+- **Battery:** a 505080 LiPo pouch (5 × 50 × 80 mm, about 2500 mAh) with a protection board, as
+  the controller has no over-discharge cut-off. It lies in a bay sunk 1 mm into the case floor,
+  which takes up to 60 × 88 × 5 mm, under the outer and middle key columns, its lead end towards
+  the battery connector. It sits 2.5 mm below the solder joints on the PCB's underside and at least
+  15 mm from the controller's antenna end.
 - **LED power:** the LEDs run from the battery (B+) through an AO3401A P-MOSFET, whose gate an
   AO3400A N-MOSFET on P0.08 pulls low to turn them on. 100 kΩ resistors hold both MOSFETs off, and
   a 10 µF + 100 nF pair sits at the switch's output.
@@ -50,12 +52,12 @@ References and soldering notes for every part are in `fab/BOM.md`.
 | 1N4148 diode (DO-35) | 34 | 34 |
 | SK6812MINI-E RGB LED | 33 | 33 |
 | 10 µF + 100 nF capacitors, 1206 (LED rail) | 1 + 1 | 1 + 1 |
-| LiPo battery + JST-PH connector | 1 | 1 |
+| 505080 LiPo battery + JST-PH connector | 1 | 1 |
 | MSK12C02 power slide switch | 1 | 1 |
 | AO3401A P-MOSFET + 1 MΩ gate resistor, 1206 (battery switch) | 1 + 1 | 1 + 1 |
 | AO3401A P-MOSFET, AO3400A N-MOSFET, 2 × 100 kΩ, 1206 (LED power switch) | 1 + 1 + 2 | 1 + 1 + 2 |
 | 6 mm reset button | 1 | 1 |
-| EC11 encoder + knob | 1 | 1 |
+| EC11 encoder (20 mm D shaft) + knob | 1 | 1 |
 | 0.96 in. SSD1306 OLED module, I2C | 1 | 1 |
 
 ## PCB
@@ -75,8 +77,8 @@ References and soldering notes for every part are in `fab/BOM.md`.
 ## Plate and case
 
 - **Gasket mount:** the plate and PCB are tied together by M2 × 3.5 mm standoffs and touch the
-  case only through Poron strips (12 × 4 × 2 mm), one above and one below each of the plate's 8 tabs
-  per half. Closing the case squeezes each strip by 0.4 mm.
+  case only through Poron strips (12 × 4 × 2 mm, cut from 80 × 4 × 2 mm strips), one above and
+  one below each of the plate's 8 tabs per half. Closing the case squeezes each strip by 0.4 mm.
 - **Plate:** FR-4 1.6 mm with black mask and no copper. 14 × 14 mm cut-outs following each key's
   rotation, a 13 × 13 mm encoder cut-out and a 28.5 × 29 mm OLED window per half, and the PCB's M2
   holes. Plate screws go in at H102–H105 and H202–H204; the standoffs at H101, H201 and H205 are
@@ -88,12 +90,13 @@ References and soldering notes for every part are in `fab/BOM.md`.
   everywhere but the keycaps (0.6 mm clear of each), the OLED window and the encoder. The
   OLED window opens out towards the thumbs; the glass sits 3.5 mm below the deck top. The encoder
   bushing passes through a 9 mm hole under the knob, whose underside is 2.9 mm above the deck.
-- **Foam:** three layers per half, cut from the files in `case/foam/` (DXF or SVG).
-  - PE switch foam, 0.5 mm, on the PCB under the switches, with a hole for every pin, pad, LED
-    window and standoff, and for the encoder and the OLED header.
-  - Poron plate foam, 2.5 mm, on the PE foam under the plate, with the plate's switch, encoder and
-    OLED cut-outs (switches 14.4 mm) and holes for the pads and standoffs.
-  - Case foam, 5 mm EVA or Poron, on the case floor round the battery bay, the controller, the
+- **Foam:** per half, switch pads and two foam layers cut from the files in `case/foam/` (DXF or
+  SVG).
+  - Poron ring switch pads, 0.5 mm, one stuck on the PCB under each switch, their open middle
+    keeping the LED window clear.
+  - EVA plate foam, 2 mm, on the switch pads under the plate, with the plate's switch, encoder and
+    OLED cut-outs (switches 14.4 mm) and holes for the pads and standoffs. Up to 2.8 mm fits.
+  - EVA case foam, 5 mm, on the case floor round the battery bay, the controller, the
     battery connector, the slide switch, the reset tube and the encoder and OLED pins. It sits
     2.0 mm below the parts under the PCB.
 - **Openings:** an open 20 mm USB-C slot and a 9 × 3.4 mm power switch slot on the top edge, with

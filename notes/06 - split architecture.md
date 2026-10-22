@@ -27,8 +27,8 @@ name: 06 - split architecture
 
 ## Power per half
 
-- **LiPo pouch** with a protection circuit, a JST-PH connector, and a slide switch driving a P-MOSFET. Capacity, size and placement: [[12 - final design#Power]].
-- **Charging:** each half charges from its own USB-C through the nice!nano's charger (500 mA with BOOST bridged). A **1-to-2 USB-C cable** charges both from one charger.
+- **LiPo pouch** with a protection board (the controller has no over-discharge cut-off), a JST-PH connector, and a slide switch driving a P-MOSFET. Capacity, size and placement: [[12 - final design#Power]].
+- **Charging:** each half charges from its own USB-C through the controller's charger, at about 100 mA: roughly a day for a 2500 mAh cell from empty. A **1-to-2 USB-C cable** charges both from one charger.
 - **Drain:** the right half (peripheral) uses far less than the left (central), so it charges less often.
 
 ### RGB and the battery

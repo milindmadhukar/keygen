@@ -22,7 +22,7 @@ Designed and generated from the PCB; tenting, base weight and rubber feet are st
 - **Shape:** flat, following the PCB outline 7.5 mm out, with sharp corners. Each half is 177.8 × 143.1 mm and 22.2 mm tall (bottom shell 17.0 mm, top frame 5.2 mm).
 - **Gasket mount:** the plate and PCB are one unit, tied together by M2 standoffs, and touch the case only through the gaskets.
   - The plate has **8 tabs per half**, 12 × 5 mm, spread round its edge and kept clear of the USB-C and power switch.
-  - Each tab sits between two **Poron strips, 12 × 4 × 2 mm**: one on a ledge in the bottom shell, one under the top frame. Closing the case squeezes each strip by 0.4 mm. That is 16 strips per half.
+  - Each tab sits between two **Poron strips, 12 × 4 × 2 mm**, cut from 80 × 4 × 2 mm strips: one on a ledge in the bottom shell, one under the top frame. Closing the case squeezes each strip by 0.4 mm. That is 16 strips per half.
   - The PCB and plate edges keep 1.0 mm from the walls, and the controller 1.5 mm from the floor, so the unit floats.
 - **Closing the case:** 8 **M2 × 6 socket-head screws** per half go down through the top frame into **M2 heat-set inserts** in the bottom shell's walls. The heads sit flush in counterbores. No insert or screw is within 15 mm of the controller's antenna end.
 - **Top frame deck:** inside the rim, the top frame carries a deck level with it (6.6 to 8.6 mm above the PCB, 3.6 mm over the plate top) that covers the plate everywhere but the keycaps, keeping 0.6 mm clear of each; webs under 1 mm are dropped.
@@ -43,16 +43,16 @@ Heights above the PCB's top surface:
 | Upper gasket strip, under the frame | 5.0 mm | 6.6 mm |
 | Top frame rim | 3.4 mm | 8.6 mm |
 | Top frame deck, over the plate | 6.6 mm | 8.6 mm |
-| PE switch foam, on the PCB | 0 | 0.5 mm |
-| Poron plate foam | 0.5 mm | 3.0 mm |
-| Case foam, on the floor | −10.6 mm | −5.6 mm |
+| Poron ring switch pads, on the PCB | 0 | 0.5 mm |
+| EVA plate foam | 0.5 mm | 2.5 mm |
+| EVA case foam, on the floor | −10.6 mm | −5.6 mm |
 | Knob underside | 11.5 mm | |
 
 So the PCB top is 13.6 mm above the desk and the plate top 18.6 mm. Keycap tops are about 33 mm, before tenting and feet.
 
 ## Openings
 
-- **USB-C:** an open slot 20 mm wide from the floor up to the PCB's underside. That covers the whole nice!nano end, which overhangs the slanted top edge, and any cable overmould.
+- **USB-C:** an open slot 20 mm wide from the floor up to the PCB's underside. That covers the whole controller end, which overhangs the slanted top edge, and any cable overmould.
 - **Power switch:** a 9 × 3.4 mm slot at the lever, through the 1.5 mm wall.
 - **Reset:** a 2 mm pinhole through the floor, countersunk outside, with a guide tube up to 1 mm under the button so a paperclip finds it. The reset buttons mirror between the halves, and so do the pinholes.
 - **Through the plate:** on each half a 13 × 13 mm encoder cut-out and a 28.5 × 29 mm OLED window, with the OLED glass about level with the plate top.
@@ -63,9 +63,9 @@ Exact sizes and positions: [[14 - case & plate requirements]].
 ## Sound
 
 - **Gaskets:** the Poron strips on the tabs carry the whole plate and PCB, which is what gives the soft, deep sound.
-- **Case floor foam:** 5 mm EVA or Poron, round the battery bay, the controller, the battery connector, the slide switch, the reset tube and the encoder and OLED pins, 1 mm clear of each and 0.5 mm from the walls. Its top is 2.0 mm below the parts under the PCB, 0.5 mm with the stack pressed down.
-- **Between plate and PCB:** the gap is 3.4 mm. A 0.5 mm PE foam sheet goes on the PCB under the switches, holed for every pin, pad, LED window and standoff and for the encoder and OLED header. Then 2.5 mm Poron plate foam, with 14.4 mm switch cut-outs, the plate's encoder and OLED cut-outs and holes for the pads and standoffs.
-- **Cut files:** `gen_case.py` writes each layer per half as 1:1 DXF and SVG, seen from above, to `case/foam/dxf/` and `case/foam/svg/` in the repo, for a laser or a printed template. No strip is narrower than 1.5 mm. The fit check covers the foam too.
+- **Case floor foam:** 5 mm EVA, round the battery bay, the controller, the battery connector, the slide switch, the reset tube and the encoder and OLED pins, 1 mm clear of each and 0.5 mm from the walls. Its top is 2.0 mm below the parts under the PCB, 0.5 mm with the stack pressed down.
+- **Between plate and PCB:** the gap is 3.4 mm. A 0.5 mm Poron ring switch pad is stuck on the PCB under each switch, its open middle keeping the LED window clear. Then 2 mm EVA plate foam, with 14.4 mm switch cut-outs, the plate's encoder and OLED cut-outs and holes for the pads and standoffs. Plate foam up to 2.8 mm thick fits.
+- **Cut files:** `gen_case.py` writes the plate foam and the case foam per half as 1:1 DXF and SVG, seen from above, to `case/foam/dxf/` and `case/foam/svg/` in the repo, for a laser or a printed template. No strip is narrower than 1.5 mm. The fit check covers the foam too.
 - PETG is light and resonant on its own, so the foam and the gaskets do most of the work.
 
 ## Still to add: tenting, weight and feet
@@ -79,7 +79,7 @@ Plate on its standoffs on the PCB, the OLED module in through its window, switch
 ## Related notes
 - [[14 - case & plate requirements]]: openings, clearances, plate and positions
 - [[12 - final design]]: the design as a whole
-- [[07 - switch & keycap selection]]: switch foam and keycaps
+- [[07 - switch & keycap selection]]: switch pads and keycaps
 - [[10 - assembly & build guide]]: build steps
 
 ## Resources

@@ -9,7 +9,7 @@ name: Keygen Custom Keyboard
 > [!success] Current design
 > **[[12 - final design]]**: a flat wireless Redox-based split with 66 QWERTY keys, a knob and an OLED status screen on each half, per-key RGB, and hidden nRF52840s running ZMK. Parts and shops: **[[13 - bill of materials]]**. Case and plate checklist: **[[14 - case & plate requirements]]**. PCB checked against the part datasheets: **[[15 - datasheet audit]]**. Build plan repo: [milindmadhukar/keygen](https://github.com/milindmadhukar/keygen).
 
-Keygen is a one-off split ergonomic keyboard built from scratch: a custom two-layer PCB designed in KiCad 10, a nice!nano v2 per half, Bluetooth between the halves and to the computer (or USB-C on the left half), a LiPo per half, ZMK firmware, and a 3D-printed tented case. The PCB is routed and DRC clean, the manufacturing files are exported, and the ZMK config builds; ordering, assembly and the case come next.
+Keygen is a one-off split ergonomic keyboard built from scratch: a custom two-layer PCB designed in KiCad 10, an nRF52840 SuperMini (a nice!nano v2 clone) per half, Bluetooth between the halves and to the computer (or USB-C on the left half), a LiPo per half, ZMK firmware, and a 3D-printed tented case. The PCB is routed and DRC clean, the manufacturing files are exported, and the ZMK config builds; ordering, assembly and the case come next.
 
 ## Notes
 

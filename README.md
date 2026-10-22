@@ -28,18 +28,18 @@ silkscreen artwork come from Martin Garrix's track *Keygen* (STMPD RCRDS); see
 | Layout | Column-staggered QWERTY, six columns per hand plus an extra bottom row |
 | Keys | 66 (33 per half): 52 × 1u, 10 × 1.25u, 4 × 1.5u |
 | Thumb cluster | 2 × 2 block rotated 30° (two 1u over two 1.5u) plus one 1.25u key per hand |
-| Encoders | Alps EC11 on each half with a 17 mm knurled aluminium knob, in the key matrix. Left: scroll wheel, press for middle click. Right: volume, press to mute |
+| Encoders | EC11 with a 20 mm D shaft on each half, with a 17 mm aluminium D-shaft knob, in the key matrix. Left: scroll wheel, press for middle click. Right: volume, press to mute |
 | Displays | 0.96 in. 128 × 64 SSD1306 OLED per half (I2C), showing ZMK's status screen |
 | Switches | Akko V3 Lavender Purple Pro (tactile, 5-pin) in Kailh hotswap sockets (CPG151101S11) |
 | Keycaps | Blank DSA PBT, smoke translucent |
 | Lighting | 33 SK6812MINI-E reverse-mount RGB LEDs per half, powered from the battery through a MOSFET switch, on while that half has USB power |
-| Controller | nice!nano v2 (nRF52840, Pro Micro format), one per half, socketed on the underside |
+| Controller | nRF52840 SuperMini (nice!nano v2 clone, Pro Micro format), one per half, socketed on the underside |
 | Connectivity | Host: USB-C (left half) or Bluetooth, 5 profiles. Halves: Bluetooth split |
-| Power | LiPo pouch per half (≤ 5 mm thick, 2500–3000 mAh), JST-PH connector, slide switch driving a P-MOSFET battery switch. Each half charges from its own USB-C |
+| Power | 505080 LiPo pouch per half (5 × 50 × 80 mm, about 2500 mAh) with a protection board, JST-PH connector, slide switch driving a P-MOSFET battery switch. Each half charges from its own USB-C |
 | PCB | 2 layers, FR-4 1.6 mm, 1 oz copper, HASL, black soldermask with white silkscreen. One half is 162.7 × 125.9 mm |
 | Switch plate | FR-4 1.6 mm, black soldermask, no copper, with eight gasket tabs per half |
 | Case | 3D-printed PETG, gasket-mounted: a bottom shell and a top frame per half, 177.8 × 143.1 × 22.2 mm. The top frame covers the plate round the keycaps, the OLED and the knob |
-| Foam | PE switch foam (0.5 mm) and Poron plate foam (2.5 mm) between the PCB and the plate, case foam (5 mm) on the case floor |
+| Foam | Poron ring switch pads (0.5 mm) and EVA plate foam (2 mm) between the PCB and the plate, EVA case foam (5 mm) on the case floor |
 | Firmware | [ZMK](https://zmk.dev) `main` (Zephyr 4.1): QWERTY base with Nav, Fn and System layers, ZMK Studio |
 
 ## Gallery
@@ -48,7 +48,7 @@ silkscreen artwork come from Martin Garrix's track *Keygen* (STMPD RCRDS); see
 
 ![Keygen in its case](assets/render-case.png)
 
-**Case layers.** Bottom shell, case foam, PCB, PE switch foam, Poron plate foam, plate and top frame.
+**Case layers.** Bottom shell, case foam, PCB, switch pads, plate foam, plate and top frame.
 
 ![Keygen case, exploded](assets/render-case-exploded.png)
 
@@ -82,7 +82,7 @@ Renders of the case parts, the plate and the routing are in [`assets/`](assets/)
 
 ## Firmware
 
-Keygen runs [ZMK](https://zmk.dev), one build per half on the nice!nano v2, with the left half as
+Keygen runs [ZMK](https://zmk.dev), one build per half on the nice!nano v2 target, with the left half as
 the central. The configuration builds; it has not yet run on the boards. GitHub Actions builds the
 UF2s on every push that changes `firmware/`. The keymap, the build and the flashing steps are in
 [`firmware/README.md`](firmware/README.md).

@@ -52,7 +52,7 @@ The thocky, creamy sound comes from the switch and the build together:
 
 - **Switch:** nylon bottom housing and a POM stem.
 - **Keycaps:** thick PBT.
-- **Foam:** a 0.5 mm PE sheet on the PCB plus Poron plate foam up to 2.5 mm between the PCB and the plate, and 5 mm EVA or Poron in the case floor. The plate floats on Poron gaskets. See [[09 - case design#Sound]].
+- **Foam:** a 0.5 mm Poron ring switch pad on the PCB under each switch, 2 mm EVA plate foam between the pads and the plate, and 5 mm EVA in the case floor. The plate floats on Poron gaskets. See [[09 - case design#Sound]].
 
 ## Related Notes
 - [[02 - layout design]] for key sizes and positions
