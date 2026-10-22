@@ -69,8 +69,9 @@ left out).
 ![Keygen case, exploded](docs/render-case-exploded.png)
 
 **Case parts.** The four printed parts: each bottom shell, with its top frame above it. The shells
-have the gasket ledges, the heat-set insert holes, the USB-C and power switch openings and the reset
-guide tube; the frames have the matching gasket pockets and counterbored screw holes.
+have the battery bays, the gasket ledges, the heat-set insert holes, the USB-C and power switch
+openings and the reset guide tube; the frames have the matching gasket pockets and counterbored
+screw holes.
 
 ![Keygen case parts](docs/render-case-parts.png)
 
@@ -175,8 +176,9 @@ so it can be regenerated after any change (see [Building from source](#building-
 - **Battery switch:** the MSK12C02 slide switch drives the gate of an AO3401A P-MOSFET, which
   carries the battery current: source on the battery, drain on B+. A 1 MΩ resistor holds the gate
   off between positions. Leave the switch on while charging.
-- **Battery:** a pouch up to 5 mm thick lies flat over the hotswap sockets under the outer and
-  middle key columns, on a kapton sheet, at least 15 mm from the controller's antenna end.
+- **Battery:** a pouch up to 60 × 88 × 5 mm lies in a bay sunk 1 mm into the case floor, under the
+  outer and middle key columns, its lead end towards the battery connector. It sits 2.5 mm below the
+  solder joints on the PCB's underside and at least 15 mm from the controller's antenna end.
 - **LED power:** the LEDs run from the battery (B+) through an AO3401A P-MOSFET, whose gate an
   AO3400A N-MOSFET on P0.08 pulls low to turn them on. 100 kΩ resistors hold both MOSFETs off, and
   a 10 µF + 100 nF pair sits at the switch's output.
@@ -215,8 +217,9 @@ so it can be regenerated after any change (see [Building from source](#building-
   the wall thinned to 1.5 mm in front of them, and a 2 mm reset pinhole in the floor with a guide
   tube up to the button.
 - **Fit check:** [`tools/gen_case.py`](tools/gen_case.py) checks every case part against the PCB,
-  the plate, the controller, the reset button and the keycaps at the bottom of their travel, and
-  finds no overlaps.
+  the plate, the controller, the reset button, the battery and the keycaps at the bottom of their
+  travel, and a 5.5 mm cell against the parts under the PCB with the stack pressed 1.5 mm down onto
+  its gaskets. It finds no overlaps.
 
 ### PCB
 

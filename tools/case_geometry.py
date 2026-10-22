@@ -6,8 +6,9 @@ the PCB. Coordinates are KiCad board mm (x right, y down); z is mm above the PCB
 
 The stack, bottom to top:
 
-  case floor        BOTTOM_Z .. CAVITY_Z
-  cavity            the socketed controller hangs CONTROLLER_DEPTH below the PCB
+  case floor        BOTTOM_Z .. CAVITY_Z, with the battery bay sunk BAY_DEPTH into it
+  cavity            the socketed controller hangs CONTROLLER_DEPTH below the PCB; the LiPo lies
+                    in its bay on the floor, clear of the solder joints above it
   PCB               -PCB_T .. 0
   plate             PLATE_BOT .. PLATE_TOP (MX: plate top 5 mm above the PCB)
   gasket tabs       on the plate edge, between two Poron strips: the lower one on the bottom
@@ -75,6 +76,13 @@ ANTENNA_LEN = 12.0             # chip antenna end of the nice!nano
 ANTENNA_KEEP = 15.0            # no metal (inserts, screws) this close to it
 SCREW_HEAD_D = 3.5             # M2 button head (ISO 7380) on top of the plate
 HEAD_CLEAR = 0.3               # head to switch top housing
+BATTERY_W, BATTERY_L, BATTERY_T = 60.0, 88.0, 5.0   # the largest cell bom.csv allows, protection board included
+BATTERY_GROWTH = 0.5           # pouch thickness tolerance and swelling with age
+BATTERY_CLEAR = 1.5            # cell to the bay wall, each side
+BAY_DEPTH = 1.0                # the bay is sunk this far into the floor
+UNDERSIDE_H = 2.0              # hotswap sockets (1.85 mm) and DO-35 diodes (1.75 mm body) under the PCB
+TALL_CLEAR = 3.0               # cell to the controller, battery connector, buttons, encoder and OLED pins
+TALL_REFS = ("U", "BT", "ENC", "J")   # and the slide switch and reset button (SWx90, SWx91)
 
 
 # ---------------------------------------------------------------- 2D helpers
@@ -105,6 +113,11 @@ def local(p, cx, cy, rot):
     """p in the frame of a key at (cx, cy) rotated rot degrees clockwise."""
     a = math.radians(rot); dx, dy = p[0] - cx, p[1] - cy
     return dx * math.cos(a) + dy * math.sin(a), -dx * math.sin(a) + dy * math.cos(a)
+
+
+def rects_dist(a, b):
+    """Gap between two axis-aligned rectangles (x0, y0, x1, y1); 0 if they touch or overlap."""
+    return math.hypot(max(b[0] - a[2], a[0] - b[2], 0), max(b[1] - a[3], a[1] - b[3], 0))
 
 
 def square_dist(p, key, size):
@@ -138,7 +151,8 @@ def _pads_centre(fp):
 
 @functools.lru_cache(maxsize=None)
 def halves():
-    """{'left'|'right': dict(side, outline, edges, keys, holes, enc, oled, usb, lever, reset, antenna)}"""
+    """{'left'|'right': dict(side, outline, edges, keys, holes, enc, oled, usb, lever, reset, antenna,
+    battery_jack, tall)}"""
     b = pcbnew.LoadBoard(str(PCB))
     polys = pcbnew.SHAPE_POLY_SET(); b.GetBoardPolygonOutlines(polys, False)
     out = {}
@@ -147,7 +161,7 @@ def halves():
         poly = [(MM(o.CPoint(j).x), MM(o.CPoint(j).y)) for j in range(o.PointCount())]
         side = "left" if sum(p[0] for p in poly) / len(poly) < 211 else "right"
         out[side] = dict(side=side, outline=poly, edges=[Edge(poly[k], poly[(k + 1) % len(poly)], poly) for k in range(len(poly))],
-                         holes={}, enc=[])
+                         holes={}, enc=[], tall=[])
     geo = G.key_geometry()
     for side, h in out.items():
         h["keys"] = []
@@ -158,6 +172,10 @@ def halves():
         ref = fp.GetReference(); p = fp.GetPosition(); x, y = MM(p.x), MM(p.y)
         h = next((h for h in out.values() if inside((x, y), h["outline"])), None)
         if h is None: continue
+        if ref.rstrip("0123456789") in TALL_REFS or ref.startswith("SW") and ref[-2:] in ("90", "91"):
+            bb = fp.GetBoundingBox(False)
+            h["tall"].append((MM(bb.GetLeft()), MM(bb.GetTop()), MM(bb.GetRight()), MM(bb.GetBottom())))
+        if ref.startswith("BT"): h["battery_jack"] = _pads_centre(fp)
         if ref.startswith("H"): h["holes"][ref] = (x, y)
         elif ref.startswith("ENC"): h["enc"].append((x, y))
         elif ref[0] == "J":                     # OLED header: the module stands above its pins
@@ -285,6 +303,72 @@ def case_screws(h, tab_list):
     return out
 
 
+def _rect_in_cavity(h, r):
+    """The rectangle lies inside the bottom shell's cavity (the outline grown by WALL_IN)."""
+    x0, y0, x1, y1 = r
+    pts = [(x, y) for x in _steps(x0, x1) for y in (y0, y1)] + [(x, y) for y in _steps(y0, y1) for x in (x0, x1)]
+    if any(not inside(p, h["outline"]) and poly_dist(p, h["outline"]) > WALL_IN for p in pts):
+        return False
+    return not any(x0 + WALL_IN < x < x1 - WALL_IN and y0 + WALL_IN < y < y1 - WALL_IN for x, y in h["outline"])
+
+
+def _steps(a, b, step=2.0):
+    n = max(1, math.ceil((b - a) / step))
+    return [a + (b - a) * i / n for i in range(n + 1)]
+
+
+def _bay_if_fits(h, cell):
+    """The bay round the cell, if the cell keeps clear of the antenna end and the tall parts and the
+    bay fits the cavity; else None."""
+    if rects_dist(cell, h["antenna"]) < ANTENNA_KEEP or any(rects_dist(cell, t) < TALL_CLEAR for t in h["tall"]):
+        return None
+    bay = (cell[0] - BATTERY_CLEAR, cell[1] - BATTERY_CLEAR, cell[2] + BATTERY_CLEAR, cell[3] + BATTERY_CLEAR)
+    return bay if _rect_in_cavity(h, bay) else None
+
+
+@functools.lru_cache(maxsize=None)
+def _battery(side):
+    h = halves()[side]
+    if side == "right":
+        left = _battery("left")
+        x0, y0, x1, y1 = left["cell"]
+        cell = (2 * h["mirror_x"] - x1, y0, 2 * h["mirror_x"] - x0, y1)
+        bay = _bay_if_fits(h, cell)
+        if bay is None: raise SystemExit("right: the left half's battery place, mirrored, does not fit")
+        return dict(cell=cell, bay=bay, lead_end=_mirror(h, left["lead_end"]))
+    xs = [p[0] for p in h["outline"]]; ys = [p[1] for p in h["outline"]]
+    jack = h["battery_jack"]
+    cands = []
+    for w, l in ((BATTERY_L, BATTERY_W), (BATTERY_W, BATTERY_L)):       # long side along x, then along y
+        for x0 in range(int(min(xs)), int(max(xs) - w) + 1):
+            for y0 in range(int(min(ys)), int(max(ys) - l) + 1):
+                cell = (x0, y0, x0 + w, y0 + l)
+                # the protection board and lead are on one short end; put the end nearest the connector there
+                ends = ([(x0, y0 + l / 2), (x0 + w, y0 + l / 2)] if w > l else [(x0 + w / 2, y0), (x0 + w / 2, y0 + l)])
+                end = min(ends, key=lambda e: math.dist(e, jack))
+                cands.append((math.dist(end, jack), cell, end))
+    for _, cell, end in sorted(cands, key=lambda c: c[0]):
+        bay = _bay_if_fits(h, cell)
+        if bay is not None:
+            return dict(cell=cell, bay=bay, lead_end=end)
+    raise SystemExit(f"{side}: no room for a {BATTERY_W:g} x {BATTERY_L:g} mm battery")
+
+
+def battery(h):
+    """The LiPo's place on the floor: dict(cell, bay, lead_end), rectangles as (x0, y0, x1, y1). It goes
+    as near the battery connector as it can while keeping ANTENNA_KEEP from the antenna end and
+    TALL_CLEAR from the tall parts under the PCB; the right half's is the left's, mirrored."""
+    return _battery(h["side"])
+
+
+def battery_heights():
+    """(cell top above the bay floor's z, gap to the parts under the PCB, gap with the stack pressed
+    down by FLOAT_GAP), all for a cell grown by BATTERY_GROWTH."""
+    top = CAVITY_Z - BAY_DEPTH + BATTERY_T + BATTERY_GROWTH
+    gap = -PCB_T - UNDERSIDE_H - top
+    return top, gap, gap - FLOAT_GAP
+
+
 def standoffs(h):
     """{hole ref: 'screwed' | 'post'}. A plate screw goes in only where its head clears the switch
     top housings and the encoder; elsewhere the standoff is screwed from below and its top bears on
@@ -305,5 +389,13 @@ if __name__ == "__main__":
         print(f"  tabs: " + ", ".join(f"({c['centre'][0]:.1f},{c['centre'][1]:.1f})" for c in t))
         print(f"  case screws: " + ", ".join(f"({x:.1f},{y:.1f})" for x, y in case_screws(h, t)))
         print(f"  standoffs: " + ", ".join(f"{r} {k} ({room:.2f} mm)" for r, (k, room) in sorted(standoffs(h).items())))
+        bt = battery(h); x0, y0, x1, y1 = bt["cell"]
+        print(f"  battery: {x1 - x0:g} x {y1 - y0:g} mm cell at ({x0:.1f},{y0:.1f})..({x1:.1f},{y1:.1f}), "
+              f"lead end {math.dist(bt['lead_end'], h['battery_jack']):.1f} mm from the connector, "
+              f"{rects_dist(bt['cell'], h['antenna']):.1f} mm from the antenna end, "
+              f"{min(rects_dist(bt['cell'], t) for t in h['tall']):.1f} mm from the nearest tall part")
     print(f"stack: floor {BOTTOM_Z:.1f}, cavity {CAVITY_Z:.1f}, ledge {LEDGE_Z:.1f}, split {SPLIT_Z:.1f}, "
           f"plate {PLATE_BOT:.1f}..{PLATE_TOP:.1f}, ceiling {CEIL_Z:.1f}, top {TOP_Z:.1f}")
+    top, gap, pressed = battery_heights()
+    print(f"battery: bay floor {CAVITY_Z - BAY_DEPTH:.1f}, cell top {top:.1f} ({BATTERY_T:g} + {BATTERY_GROWTH:g} mm), "
+          f"{gap:.1f} mm under the solder joints, {pressed:.1f} mm with the stack pressed down {FLOAT_GAP:g} mm")
