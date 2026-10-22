@@ -1139,6 +1139,143 @@
       )
       (embedded_fonts no)
     )
+    (symbol "Transistor_FET:AO3400A"
+      (pin_names (offset 0) (hide yes))
+      (exclude_from_sim no)
+      (in_bom yes)
+      (on_board yes)
+      (in_pos_files yes)
+      (duplicate_pin_numbers_are_jumpers no)
+      (embedded_fonts no)
+      (property "Reference" "Q"
+        (at 5.08 1.905 0)
+        (show_name no)
+        (do_not_autoplace no)
+        (effects (font (size 1.27 1.27)) (justify left))
+      )
+      (property "Value" "AO3400A"
+        (at 5.08 0 0)
+        (show_name no)
+        (do_not_autoplace no)
+        (effects (font (size 1.27 1.27)) (justify left))
+      )
+      (property "Footprint" "Package_TO_SOT_SMD:SOT-23"
+        (at 5.08 -1.905 0)
+        (show_name no)
+        (do_not_autoplace no)
+        (hide yes)
+        (effects (font (size 1.27 1.27) (italic yes)) (justify left))
+      )
+      (property "Datasheet" "http://www.aosmd.com/pdfs/datasheet/AO3400A.pdf"
+        (at 5.08 -3.81 0)
+        (show_name no)
+        (do_not_autoplace no)
+        (hide yes)
+        (effects (font (size 1.27 1.27)) (justify left))
+      )
+      (property "Description" "30V Vds, 5.7A Id, N-Channel MOSFET, SOT-23"
+        (at 0 0 0)
+        (show_name no)
+        (do_not_autoplace no)
+        (hide yes)
+        (effects (font (size 1.27 1.27)))
+      )
+      (property "ki_keywords" "N-Channel MOSFET"
+        (at 0 0 0)
+        (show_name no)
+        (do_not_autoplace no)
+        (hide yes)
+        (effects (font (size 1.27 1.27)))
+      )
+      (property "ki_fp_filters" "SOT?23*"
+        (at 0 0 0)
+        (show_name no)
+        (do_not_autoplace no)
+        (hide yes)
+        (effects (font (size 1.27 1.27)))
+      )
+      (symbol "AO3400A_0_1"
+        (polyline
+          (pts (xy 0.254 1.905) (xy 0.254 -1.905))
+          (stroke (width 0.254) (type default))
+          (fill (type none))
+        )
+        (polyline (pts (xy 0.254 0) (xy -2.54 0)) (stroke (width 0) (type default)) (fill (type none)))
+        (polyline
+          (pts (xy 0.762 2.286) (xy 0.762 1.27))
+          (stroke (width 0.254) (type default))
+          (fill (type none))
+        )
+        (polyline
+          (pts (xy 0.762 0.508) (xy 0.762 -0.508))
+          (stroke (width 0.254) (type default))
+          (fill (type none))
+        )
+        (polyline
+          (pts (xy 0.762 -1.27) (xy 0.762 -2.286))
+          (stroke (width 0.254) (type default))
+          (fill (type none))
+        )
+        (polyline
+          (pts (xy 0.762 -1.778) (xy 3.302 -1.778) (xy 3.302 1.778) (xy 0.762 1.778))
+          (stroke (width 0) (type default))
+          (fill (type none))
+        )
+        (polyline
+          (pts (xy 1.016 0) (xy 2.032 0.381) (xy 2.032 -0.381) (xy 1.016 0))
+          (stroke (width 0) (type default))
+          (fill (type outline))
+        )
+        (circle (center 1.651 0) (radius 2.794) (stroke (width 0.254) (type default)) (fill (type none)))
+        (polyline
+          (pts (xy 2.54 2.54) (xy 2.54 1.778))
+          (stroke (width 0) (type default))
+          (fill (type none))
+        )
+        (circle (center 2.54 1.778) (radius 0.254) (stroke (width 0) (type default)) (fill (type outline)))
+        (circle
+          (center 2.54 -1.778)
+          (radius 0.254)
+          (stroke (width 0) (type default))
+          (fill (type outline))
+        )
+        (polyline
+          (pts (xy 2.54 -2.54) (xy 2.54 0) (xy 0.762 0))
+          (stroke (width 0) (type default))
+          (fill (type none))
+        )
+        (polyline
+          (pts (xy 2.921 0.381) (xy 3.683 0.381))
+          (stroke (width 0) (type default))
+          (fill (type none))
+        )
+        (polyline
+          (pts (xy 3.302 0.381) (xy 2.921 -0.254) (xy 3.683 -0.254) (xy 3.302 0.381))
+          (stroke (width 0) (type default))
+          (fill (type none))
+        )
+      )
+      (symbol "AO3400A_1_1"
+        (pin input line
+          (at -5.08 0 0)
+          (length 2.54)
+          (name "G" (effects (font (size 1.27 1.27))))
+          (number "1" (effects (font (size 1.27 1.27))))
+        )
+        (pin passive line
+          (at 2.54 -5.08 90)
+          (length 2.54)
+          (name "S" (effects (font (size 1.27 1.27))))
+          (number "2" (effects (font (size 1.27 1.27))))
+        )
+        (pin passive line
+          (at 2.54 5.08 270)
+          (length 2.54)
+          (name "D" (effects (font (size 1.27 1.27))))
+          (number "3" (effects (font (size 1.27 1.27))))
+        )
+      )
+    )
     (symbol "Mechanical:MountingHole"
       (pin_names (offset 1.016))
       (exclude_from_sim no)
@@ -3647,7 +3784,7 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "05a04030-8ae6-54f0-84d0-f96c2bfad499")
   )
-  (text "PER-KEY LEDs  (33, no underglow) - powered from the controller's switched VCC (P0.13); cap brightness in firmware"
+  (text "PER-KEY LEDs  (33) - powered from the battery through the LED power switch (Q2, LED_VDD)"
     (exclude_from_sim no)
     (at 15.24 195.58 0)
     (effects (font (size 2 2)) (justify left top))
@@ -3693,7 +3830,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "a6b1bcc1-c6d3-5e79-afbd-a4fbf00db492")
   )
-  (label "VCC"
+  (label "LED_VDD"
     (at 30.48 208.28 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "a409858f-d692-5745-ae34-519c56ea43e3")
@@ -3743,7 +3880,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "bf6aa3ba-959d-5850-9fd0-f972c9443bb1")
   )
-  (label "VCC"
+  (label "LED_VDD"
     (at 68.58 208.28 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "d0f22e1c-f3b8-597e-aef4-de3543b292c6")
@@ -3793,7 +3930,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "d2f632c4-6b45-5d17-b0d1-1c3c1558a4b2")
   )
-  (label "VCC"
+  (label "LED_VDD"
     (at 106.68 208.28 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "253e1d4a-d8c2-51c0-83c8-9774ae302f83")
@@ -3843,7 +3980,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "48c33ce4-96d0-5cbb-82d7-c1affe2a240c")
   )
-  (label "VCC"
+  (label "LED_VDD"
     (at 144.78 208.28 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "6b374e09-ac61-5930-a83f-69b254f92615")
@@ -3893,7 +4030,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "dba6b557-2f93-59f1-8409-33ae9a993317")
   )
-  (label "VCC"
+  (label "LED_VDD"
     (at 182.88 208.28 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "dcf6505e-2425-580d-990b-35aa6fd5bf79")
@@ -3943,7 +4080,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "a8bd1cfd-c85a-5ad2-b6d5-fe411f0e68a9")
   )
-  (label "VCC"
+  (label "LED_VDD"
     (at 220.98 208.28 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "a6b77f4f-0b63-5c68-9951-39181c68d69f")
@@ -3993,7 +4130,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "3d0519a7-f0f4-5d62-a84e-31fc8270bea6")
   )
-  (label "VCC"
+  (label "LED_VDD"
     (at 259.08 208.28 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "f02c3924-8661-5b11-b15e-9ac86c025a90")
@@ -4043,7 +4180,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "e1ef207c-db54-5947-b790-e1a6189cf4e9")
   )
-  (label "VCC"
+  (label "LED_VDD"
     (at 297.18 208.28 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "6c9e8204-677e-5151-9fdc-5561f3336c78")
@@ -4093,7 +4230,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "795aa779-9168-5deb-b535-14f70d5d4d94")
   )
-  (label "VCC"
+  (label "LED_VDD"
     (at 30.48 238.76 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "4480378e-ab81-5c67-8ca4-cf5d04f32c1a")
@@ -4143,7 +4280,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "b6178519-8c47-55dd-9fff-b35aa1ab0f95")
   )
-  (label "VCC"
+  (label "LED_VDD"
     (at 68.58 238.76 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "79eb7d9f-009e-5eab-88e4-f5bc49afc70c")
@@ -4193,7 +4330,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "fc62e303-0339-5082-9473-06830a9a8a6b")
   )
-  (label "VCC"
+  (label "LED_VDD"
     (at 106.68 238.76 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "ec32c384-d1f9-59cf-a2ac-42c458ffcfb1")
@@ -4243,7 +4380,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "676c87e2-12ce-5943-99e5-bbf5d5cf26f5")
   )
-  (label "VCC"
+  (label "LED_VDD"
     (at 144.78 238.76 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "8446cc03-1053-5eec-9eae-0203f9b2c413")
@@ -4293,7 +4430,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "4a3a1bca-c774-5c1b-a38e-fa024a52cd8d")
   )
-  (label "VCC"
+  (label "LED_VDD"
     (at 182.88 238.76 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "7355bf49-402e-5161-aef7-b5b50c2afa5e")
@@ -4343,7 +4480,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "03b3fea7-038e-54a3-add7-a4226ad0ec54")
   )
-  (label "VCC"
+  (label "LED_VDD"
     (at 220.98 238.76 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "55e5fcd1-99d6-5530-9330-950b616fd195")
@@ -4393,7 +4530,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "28df885d-f5f7-542c-a293-088dfb5d6235")
   )
-  (label "VCC"
+  (label "LED_VDD"
     (at 259.08 238.76 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "e0e8f2f8-e5f5-52df-92bb-ab380d883375")
@@ -4443,7 +4580,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "b2653810-7017-546c-98d4-ee521ff802de")
   )
-  (label "VCC"
+  (label "LED_VDD"
     (at 297.18 238.76 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "6447dee4-b061-5b78-aa10-ca643561e317")
@@ -4493,7 +4630,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "4355218f-33fe-51cc-b8de-181eaf83ab5a")
   )
-  (label "VCC"
+  (label "LED_VDD"
     (at 30.48 269.24 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "39701f9c-22e4-5e40-9e74-e468a0f8a56e")
@@ -4543,7 +4680,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "7eb31a59-d758-5354-a356-fc90e13fa392")
   )
-  (label "VCC"
+  (label "LED_VDD"
     (at 68.58 269.24 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "97571254-f316-50c9-a494-8beb1130cfd5")
@@ -4593,7 +4730,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "c75919c7-23ad-568a-aab3-b2c0755ddef4")
   )
-  (label "VCC"
+  (label "LED_VDD"
     (at 106.68 269.24 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "49036715-4326-5602-bd9f-d8ca02b3406d")
@@ -4643,7 +4780,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "452eb1b2-35bb-5f4a-ae66-bff18b63f333")
   )
-  (label "VCC"
+  (label "LED_VDD"
     (at 144.78 269.24 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "92dd2537-4137-509d-971c-5ff3a77dc1a9")
@@ -4693,7 +4830,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "6e38b2a5-9311-5d17-a9b8-03c8aee7832c")
   )
-  (label "VCC"
+  (label "LED_VDD"
     (at 182.88 269.24 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "e223c237-c2ba-5dfa-a7d5-e0b74598f6bb")
@@ -4743,7 +4880,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "023bebb9-5fd1-52f3-8e92-f62bdbb9a95b")
   )
-  (label "VCC"
+  (label "LED_VDD"
     (at 220.98 269.24 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "c4476bab-94f7-58f6-8718-0caf6f62feef")
@@ -4793,7 +4930,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "4875f2b1-d9fd-51ab-b878-0f7a83a32027")
   )
-  (label "VCC"
+  (label "LED_VDD"
     (at 259.08 269.24 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "358a7f9f-f4a4-5f9c-81dc-8ba6c386aa80")
@@ -4843,7 +4980,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "7b331a26-9c4a-59c7-9173-aaa4d3dc66be")
   )
-  (label "VCC"
+  (label "LED_VDD"
     (at 297.18 269.24 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "86dc05a4-943f-5bfd-b634-4df2a9c8cf03")
@@ -4893,7 +5030,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "8f0ba56d-55b4-567b-98af-9860135ab2f1")
   )
-  (label "VCC"
+  (label "LED_VDD"
     (at 30.48 299.72 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "4bf758a8-4827-51be-bbdd-a5af344a4a69")
@@ -4943,7 +5080,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "90b353ad-efac-5c07-be8f-06c2341c4137")
   )
-  (label "VCC"
+  (label "LED_VDD"
     (at 68.58 299.72 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "831b4d64-c4e9-5f95-bc8a-2be4b636ef6a")
@@ -4993,7 +5130,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "44f33f50-99ea-5356-a2e6-c8ece343ddd9")
   )
-  (label "VCC"
+  (label "LED_VDD"
     (at 106.68 299.72 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "b10b18b6-7fe7-5466-b3f9-f85939a03ba3")
@@ -5043,7 +5180,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "c3939f3d-f469-56c1-b7d2-589553bc73eb")
   )
-  (label "VCC"
+  (label "LED_VDD"
     (at 144.78 299.72 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "d620c747-caf2-5088-884a-38e6df1351af")
@@ -5093,7 +5230,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "8d521a2a-d5aa-59c5-876a-94344a41eac5")
   )
-  (label "VCC"
+  (label "LED_VDD"
     (at 182.88 299.72 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "e5e6a0fd-4066-5a5c-b5f9-f5a692b29bd9")
@@ -5143,7 +5280,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "c680f410-e1b8-50b6-b71e-c11009374524")
   )
-  (label "VCC"
+  (label "LED_VDD"
     (at 220.98 299.72 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "73f79beb-b6aa-594e-ac51-f631c3af9cd7")
@@ -5193,7 +5330,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "42a502f8-2cb9-5efa-90e0-bbf05b4f5818")
   )
-  (label "VCC"
+  (label "LED_VDD"
     (at 259.08 299.72 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "8de5e425-efad-5e1c-97be-23b5682197fb")
@@ -5243,7 +5380,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "dfb0fdb0-1015-5592-8c28-27db00e09715")
   )
-  (label "VCC"
+  (label "LED_VDD"
     (at 297.18 299.72 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "909488e9-84e8-56dd-9e54-6b50fdb06297")
@@ -5293,7 +5430,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "d8cef92c-ec15-5c77-b5b5-60dd0aa47e47")
   )
-  (label "VCC"
+  (label "LED_VDD"
     (at 30.48 330.2 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "fcad073e-6071-5618-9188-11e4e62e0630")
@@ -5359,7 +5496,11 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "3ad3c0d5-3af5-56fc-ab3b-1e27e89c402c")
   )
-  (no_connect (at 347.98 48.26) (uuid "7a214c71-973e-513b-bbaf-e09d93d18b43"))
+  (label "LED_EN"
+    (at 347.98 48.26 180)
+    (effects (font (size 1.27 1.27)) (justify right bottom))
+    (uuid "7a214c71-973e-513b-bbaf-e09d93d18b43")
+  )
   (label "GND"
     (at 347.98 50.8 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
@@ -5417,11 +5558,7 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "96289b3b-8ea0-5384-b259-4e19f1fdd387")
   )
-  (label "VCC"
-    (at 373.38 53.34 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "bcbecf97-70d9-5908-b9f9-5d370a8df2fe")
-  )
+  (no_connect (at 373.38 53.34) (uuid "bcbecf97-70d9-5908-b9f9-5d370a8df2fe"))
   (label "COL6"
     (at 373.38 55.88 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
@@ -5454,7 +5591,7 @@
   )
   (no_connect (at 373.38 71.12) (uuid "1839aa1f-3b6f-5349-a8a1-fbac6c789d93"))
   (no_connect (at 373.38 73.66) (uuid "f42c4da7-0a58-5195-8c5a-1f19b2d15ca4"))
-  (text "Spare: P0.08, P0.17 (full speed), P0.20, P0.09, P0.10"
+  (text "P0.08: LED power switch. VCC (pad 16) unused.\nSpare: P0.17 (full speed), P0.20, P0.09, P0.10"
     (exclude_from_sim no)
     (at 386.08 45.72 0)
     (effects (font (size 1.27 1.27)) (justify left top))
@@ -5476,7 +5613,7 @@
     (dnp no)
     (uuid "6d7ddace-386a-550f-b9ca-e859a39a4ae2")
     (property "Reference" "BT101" (at 340.36 125.73 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "LiPo 3.7V ~1000mAh" (at 340.36 138.43 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "LiPo 3.7V 3000mAh" (at 340.36 138.43 0) (effects (font (size 1.27 1.27))))
     (property "Footprint" "Connector_JST:JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal"
       (at 340.36 132.08 0)
       (effects (font (size 1.27 1.27)) (hide yes))
@@ -5594,7 +5731,7 @@
     (uuid "2c45344a-17e7-5d76-bca4-4e5e34355258")
     (property "Reference" "C101" (at 340.36 148.59 0) (effects (font (size 1.27 1.27))))
     (property "Value" "10uF" (at 340.36 161.29 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+    (property "Footprint" "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder"
       (at 340.36 154.94 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
@@ -5610,7 +5747,7 @@
       )
     )
   )
-  (label "VCC"
+  (label "LED_VDD"
     (at 340.36 151.13 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "4d5c7060-5624-5de0-a61a-d88431481903")
@@ -5631,7 +5768,7 @@
     (uuid "e5823612-9117-5cec-b212-31e915634706")
     (property "Reference" "C102" (at 353.06 148.59 0) (effects (font (size 1.27 1.27))))
     (property "Value" "100nF" (at 353.06 161.29 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+    (property "Footprint" "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder"
       (at 353.06 154.94 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
@@ -5647,7 +5784,7 @@
       )
     )
   )
-  (label "VCC"
+  (label "LED_VDD"
     (at 353.06 151.13 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid "04bdff5c-4236-56c6-a4b6-8290c6c040db")
@@ -5713,17 +5850,45 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "9110f6fd-6208-527d-8e79-f56bf6a16fef")
   )
-  (text "C1/C2 sit next to the first LED of the chain."
+  (symbol
+    (lib_id "power:PWR_FLAG")
+    (at 398.78 154.94 0)
+    (unit 1)
+    (exclude_from_sim no)
+    (in_bom no)
+    (on_board no)
+    (dnp no)
+    (uuid "41bb85bc-e544-58f5-a925-6756895183de")
+    (property "Reference" "#FLG103" (at 398.78 148.59 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "PWR_FLAG" (at 398.78 161.29 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "" (at 398.78 154.94 0) (effects (font (size 1.27 1.27)) (hide yes)))
+    (property "Datasheet" "" (at 398.78 154.94 0) (effects (font (size 1.27 1.27)) (hide yes)))
+    (pin "1" (uuid "b01fd1e3-5f60-56ce-9a68-35be08166524"))
+    (instances
+      (project "keygen"
+        (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/857ae29d-aaae-533f-894e-3d0d86c0d5f9"
+          (reference "#FLG103")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (label "LED_VDD"
+    (at 398.78 154.94 270)
+    (effects (font (size 1.27 1.27)) (justify right bottom))
+    (uuid "b0c7d6a7-8d37-5bfd-b723-e821de3947ef")
+  )
+  (text "C1/C2 sit at the LED power switch's output."
     (exclude_from_sim no)
     (at 335.28 165.1 0)
     (effects (font (size 1.27 1.27)) (justify left top))
-    (uuid "b01fd1e3-5f60-56ce-9a68-35be08166524")
+    (uuid "5980e5a6-5b8f-57e1-b273-73d3383078a5")
   )
   (text "BATTERY SWITCH (P-MOSFET; the slide switch only drives the gate)"
     (exclude_from_sim no)
     (at 335.28 170.18 0)
     (effects (font (size 2 2)) (justify left top))
-    (uuid "b0c7d6a7-8d37-5bfd-b723-e821de3947ef")
+    (uuid "d8d17b69-9cf2-54df-be06-67183505c7e2")
   )
   (symbol
     (lib_id "Transistor_FET:AO3401A")
@@ -5741,9 +5906,9 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 360.68 185.42 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "5980e5a6-5b8f-57e1-b273-73d3383078a5"))
-    (pin "2" (uuid "d8d17b69-9cf2-54df-be06-67183505c7e2"))
-    (pin "3" (uuid "97a338b0-95aa-593b-a401-acd0acc2348f"))
+    (pin "1" (uuid "97a338b0-95aa-593b-a401-acd0acc2348f"))
+    (pin "2" (uuid "03321001-871a-51c8-a9fe-8a83a216f77c"))
+    (pin "3" (uuid "d746420f-c9ce-580b-a07b-6a3293c66fba"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/857ae29d-aaae-533f-894e-3d0d86c0d5f9"
@@ -5756,17 +5921,17 @@
   (label "BAT_GATE"
     (at 355.6 185.42 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "03321001-871a-51c8-a9fe-8a83a216f77c")
+    (uuid "65ffda5c-c2b6-537f-ac19-3f7ee1a0578c")
   )
   (label "BAT_RAW"
     (at 363.22 190.5 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "d746420f-c9ce-580b-a07b-6a3293c66fba")
+    (uuid "7f714a2c-0482-5d37-803d-8dd19cf76e17")
   )
   (label "VBAT"
     (at 363.22 180.34 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "65ffda5c-c2b6-537f-ac19-3f7ee1a0578c")
+    (uuid "9b9f5bf3-9e1f-576b-9eca-0fb4cf2828d9")
   )
   (symbol
     (lib_id "Device:R")
@@ -5779,13 +5944,13 @@
     (uuid "deaa1af0-0ea6-5694-b219-c72c693e7aed")
     (property "Reference" "R101" (at 375.92 179.07 0) (effects (font (size 1.27 1.27))))
     (property "Value" "1M" (at 375.92 191.77 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "Resistor_SMD:R_0805_2012Metric"
+    (property "Footprint" "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder"
       (at 375.92 185.42 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 375.92 185.42 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "7f714a2c-0482-5d37-803d-8dd19cf76e17"))
-    (pin "2" (uuid "9b9f5bf3-9e1f-576b-9eca-0fb4cf2828d9"))
+    (pin "1" (uuid "abf2a24a-7ade-5143-b007-3958ab8a2e33"))
+    (pin "2" (uuid "66a5ad92-53ed-54f2-a627-f6662946d7e5"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/857ae29d-aaae-533f-894e-3d0d86c0d5f9"
@@ -5798,24 +5963,190 @@
   (label "BAT_GATE"
     (at 375.92 181.61 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "abf2a24a-7ade-5143-b007-3958ab8a2e33")
+    (uuid "997a371f-d3f5-529b-9c3d-2abd0a151b43")
   )
   (label "BAT_RAW"
     (at 375.92 189.23 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "66a5ad92-53ed-54f2-a627-f6662946d7e5")
+    (uuid "e825c738-9fb3-58b9-bf51-d658423c61df")
   )
   (text "Switch 2-1: gate to GND, on. Switch 2-3: gate to source, off.\nR1 holds the gate off between positions. Leave the switch on while charging:\noff, USB charges the cell through the body diode (~0.35 W at 500 mA)."
     (exclude_from_sim no)
     (at 335.28 198.12 0)
     (effects (font (size 1.27 1.27)) (justify left top))
-    (uuid "997a371f-d3f5-529b-9c3d-2abd0a151b43")
+    (uuid "60ecbebe-0258-5282-800b-337c88a466df")
+  )
+  (text "LED POWER SWITCH (P0.08 high = LEDs on)"
+    (exclude_from_sim no)
+    (at 434.34 116.84 0)
+    (effects (font (size 2 2)) (justify left top))
+    (uuid "417a7dde-7845-5fc2-8e6b-bd216146c98d")
+  )
+  (symbol
+    (lib_id "Transistor_FET:AO3401A")
+    (at 459.74 132.08 0)
+    (unit 1)
+    (exclude_from_sim no)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "a057538c-52a1-50c8-91d5-4f7284406bae")
+    (property "Reference" "Q102" (at 459.74 125.73 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "AO3401A" (at 459.74 138.43 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "Package_TO_SOT_SMD:SOT-23"
+      (at 459.74 132.08 0)
+      (effects (font (size 1.27 1.27)) (hide yes))
+    )
+    (property "Datasheet" "" (at 459.74 132.08 0) (effects (font (size 1.27 1.27)) (hide yes)))
+    (pin "1" (uuid "266cb959-d168-5bd7-b429-7f98bec38693"))
+    (pin "2" (uuid "a27e9881-a8a5-512d-8c30-f4934106907f"))
+    (pin "3" (uuid "01cbe275-b986-58db-b5ae-8850740367e6"))
+    (instances
+      (project "keygen"
+        (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/857ae29d-aaae-533f-894e-3d0d86c0d5f9"
+          (reference "Q102")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (label "LED_GATE"
+    (at 454.66 132.08 180)
+    (effects (font (size 1.27 1.27)) (justify right bottom))
+    (uuid "fe2ac7ad-1f69-56b0-aa9e-1d182411cf02")
+  )
+  (label "VBAT"
+    (at 462.28 137.16 270)
+    (effects (font (size 1.27 1.27)) (justify right bottom))
+    (uuid "f3ae8ce2-c620-5bee-965e-50b50810bb5a")
+  )
+  (label "LED_VDD"
+    (at 462.28 127 90)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid "8f5e0aff-7d8b-52aa-9178-d959e658d09c")
+  )
+  (symbol
+    (lib_id "Device:R")
+    (at 480.06 132.08 0)
+    (unit 1)
+    (exclude_from_sim no)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "51859424-549e-57a3-8f74-51ae6512a5e3")
+    (property "Reference" "R102" (at 480.06 125.73 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "100k" (at 480.06 138.43 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder"
+      (at 480.06 132.08 0)
+      (effects (font (size 1.27 1.27)) (hide yes))
+    )
+    (property "Datasheet" "" (at 480.06 132.08 0) (effects (font (size 1.27 1.27)) (hide yes)))
+    (pin "1" (uuid "0be819da-1cd3-5046-bb25-fbe29295f76f"))
+    (pin "2" (uuid "e7b7f5a1-aadf-5792-8a67-94f6a444c014"))
+    (instances
+      (project "keygen"
+        (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/857ae29d-aaae-533f-894e-3d0d86c0d5f9"
+          (reference "R102")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (label "LED_GATE"
+    (at 480.06 128.27 90)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid "c8909129-55a5-5816-a2f6-598fce4fba0b")
+  )
+  (label "VBAT"
+    (at 480.06 135.89 270)
+    (effects (font (size 1.27 1.27)) (justify right bottom))
+    (uuid "1442fe25-1d36-52a1-b895-760ba8c1659f")
+  )
+  (symbol
+    (lib_id "Transistor_FET:AO3400A")
+    (at 459.74 157.48 0)
+    (unit 1)
+    (exclude_from_sim no)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "f5fd7524-c14d-5a19-9f03-16722e6e5e98")
+    (property "Reference" "Q103" (at 459.74 151.13 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "AO3400A" (at 459.74 163.83 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "Package_TO_SOT_SMD:SOT-23"
+      (at 459.74 157.48 0)
+      (effects (font (size 1.27 1.27)) (hide yes))
+    )
+    (property "Datasheet" "" (at 459.74 157.48 0) (effects (font (size 1.27 1.27)) (hide yes)))
+    (pin "1" (uuid "429f300b-8fdf-57d6-843f-49c33ea03149"))
+    (pin "2" (uuid "37dd1faa-0984-55a2-a543-f98c623f615d"))
+    (pin "3" (uuid "02ce1c5c-33f8-5b84-9447-534338790f8b"))
+    (instances
+      (project "keygen"
+        (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/857ae29d-aaae-533f-894e-3d0d86c0d5f9"
+          (reference "Q103")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (label "LED_EN"
+    (at 454.66 157.48 180)
+    (effects (font (size 1.27 1.27)) (justify right bottom))
+    (uuid "18b24b42-345b-5926-8302-350e9f6b6396")
+  )
+  (label "GND"
+    (at 462.28 162.56 270)
+    (effects (font (size 1.27 1.27)) (justify right bottom))
+    (uuid "54b34306-3f48-576a-84a1-c27574f6fbe7")
+  )
+  (label "LED_GATE"
+    (at 462.28 152.4 90)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid "341c9e1b-6c53-5e8e-9bd8-468ef4fac481")
+  )
+  (symbol
+    (lib_id "Device:R")
+    (at 480.06 157.48 0)
+    (unit 1)
+    (exclude_from_sim no)
+    (in_bom yes)
+    (on_board yes)
+    (dnp no)
+    (uuid "3e8d11dd-1f91-51d4-b7a1-da210807a5ed")
+    (property "Reference" "R103" (at 480.06 151.13 0) (effects (font (size 1.27 1.27))))
+    (property "Value" "100k" (at 480.06 163.83 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder"
+      (at 480.06 157.48 0)
+      (effects (font (size 1.27 1.27)) (hide yes))
+    )
+    (property "Datasheet" "" (at 480.06 157.48 0) (effects (font (size 1.27 1.27)) (hide yes)))
+    (pin "1" (uuid "0c4b4d81-ff86-5a83-9bac-a8b21dea7645"))
+    (pin "2" (uuid "f72f2cc9-1841-5dae-bebd-91e59729ea42"))
+    (instances
+      (project "keygen"
+        (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/857ae29d-aaae-533f-894e-3d0d86c0d5f9"
+          (reference "R103")
+          (unit 1)
+        )
+      )
+    )
+  )
+  (label "LED_EN"
+    (at 480.06 153.67 90)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid "e53cf1ff-2a57-5f49-a542-3699083e6445")
+  )
+  (label "GND"
+    (at 480.06 161.29 270)
+    (effects (font (size 1.27 1.27)) (justify right bottom))
+    (uuid "67ce1779-00a1-51dc-8c13-e9579a0b01da")
   )
   (text "MOUNTING HOLES (M2)"
     (exclude_from_sim no)
     (at 335.28 259.08 0)
     (effects (font (size 2 2)) (justify left top))
-    (uuid "e825c738-9fb3-58b9-bf51-d658423c61df")
+    (uuid "dde9e7f5-10a9-58a2-879b-324bd8454d07")
   )
   (symbol
     (lib_id "Mechanical:MountingHole")

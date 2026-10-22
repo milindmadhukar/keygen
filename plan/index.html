@@ -170,7 +170,9 @@ flowchart LR
       <tr><td>1N4148 diode</td><td class="num">33</td><td class="num">34</td><td><span class="pill th">TH</span></td><td>DO-35, as Redox already uses.</td></tr>
       <tr><td>SK6812MINI-E LED</td><td class="num">33</td><td class="num">33</td><td><span class="pill smd">SMD</span></td><td>Per-key only. The one unavoidably SMD part. Hand-solder as in the Corne video, or have JLCPCB assemble these.</td></tr>
       <tr><td>LiPo cell + JST-PH 2-pin</td><td class="num">1</td><td class="num">1</td><td><span class="pill th">TH</span></td><td>2500–3000 mAh pouch, at most 5 mm thick and 60 × 88 mm (e.g. 505080), lying flat over the hotswap sockets under the outer and middle key columns on a kapton sheet, at least 15 mm from the controller's antenna end. The socketed controller already needs about 7.5 mm below the PCB, so the cell adds no case height.</td></tr>
-      <tr><td>Battery switch: AO3401A P-MOSFET + 1 MΩ</td><td class="num">1 + 1</td><td class="num">1 + 1</td><td><span class="pill smd">SMD</span></td><td>SOT-23 and 0805 on the back. The slide switch only drives the gate, so the battery current (500 mA when charging with BOOST) never passes through its 50 mA contacts.</td></tr>
+      <tr><td>Battery switch: AO3401A P-MOSFET + 1 MΩ</td><td class="num">1 + 1</td><td class="num">1 + 1</td><td><span class="pill smd">SMD</span></td><td>SOT-23 and 1206 on the back. The slide switch only drives the gate, so the battery current (500 mA when charging with BOOST) never passes through its 50 mA contacts.</td></tr>
+      <tr><td>LED power switch: AO3401A P-MOSFET, AO3400A N-MOSFET, 2 × 100 kΩ</td><td class="num">1 + 1 + 2</td><td class="num">1 + 1 + 2</td><td><span class="pill smd">SMD</span></td><td>SOT-23 and 1206 on the back, between the battery connector and the board edge. Feeds the LEDs from the battery (B+), inside their 3.7–5.5 V rating; P0.08 turns it on.</td></tr>
+      <tr><td>LED rail capacitors: 10 µF + 100 nF</td><td class="num">1 + 1</td><td class="num">1 + 1</td><td><span class="pill smd">SMD</span></td><td>1206 on the back, at the LED power switch's output.</td></tr>
       <tr><td>Slide power switch (MSK12C02)</td><td class="num">1</td><td class="num">1</td><td><span class="pill smd">SMD</span></td><td>Side lever out of the top edge; switches the battery MOSFET's gate. The nice!nano has a charger but no switch.</td></tr>
       <tr><td>Reset button 6 mm</td><td class="num">1</td><td class="num">1</td><td><span class="pill th">TH</span></td><td>Reachable through a pinhole in the case. ZMK can also enter the bootloader from a key, so you rarely need it.</td></tr>
       <tr><td>EC11 rotary encoder + knob</td><td class="num">–</td><td class="num">1</td><td><span class="pill th">TH</span></td><td>Right half only. ZMK has supported encoders on the peripheral half since PR #1841 (Oct 2023). Its push switch goes into the key matrix as one extra position. A 15 mm shaft and knob clear MX keycaps.</td></tr>
@@ -185,10 +187,11 @@ flowchart LR
       <tr><td>Key matrix, 5 rows × 7 columns</td><td class="num">12</td><td class="num">12</td></tr>
       <tr><td>Encoder A/B (push switch is in the matrix)</td><td class="num">–</td><td class="num">2</td></tr>
       <tr><td>RGB data</td><td class="num">1</td><td class="num">1</td></tr>
-      <tr class="total"><td>Total</td><td class="num">13</td><td class="num">15</td></tr>
+      <tr><td>LED power switch</td><td class="num">1</td><td class="num">1</td></tr>
+      <tr class="total"><td>Total</td><td class="num">14</td><td class="num">16</td></tr>
     </tbody>
   </table></div>
-  <div class="note prose"><strong>Fits on the edge pads.</strong> The Pro Micro edge has 18 GPIO, two of them NFC pins (P0.09, P0.10) that work as GPIO once <code>nfct-pins-as-gpios</code> is set. The left half (13 pins) never needs them. The right half (15) uses one for the encoder's B line. P0.08 and P0.17, full-speed pins, are spare on both halves. Add the inner pads (P1.01, P1.02, P1.07) to the footprint as spares; they're low-frequency pins, fine for matrix lines but not LED data or UART.</div>
+  <div class="note prose"><strong>Fits on the edge pads.</strong> The Pro Micro edge has 18 GPIO, two of them NFC pins (P0.09, P0.10) that work as GPIO once <code>nfct-pins-as-gpios</code> is set. The left half (14 pins) never needs them. The right half (16) uses one for the encoder's B line. P0.08 drives the LED power switch; P0.17, a full-speed pin, is spare on both halves. Add the inner pads (P1.01, P1.02, P1.07) to the footprint as spares; they're low-frequency pins, fine for matrix lines but not LED data or UART.</div>
 
   <h2>Firmware: ZMK</h2>
   <div class="cols">
@@ -217,7 +220,7 @@ flowchart LR
   <ol class="steps">
     <li><strong>Fit test.</strong> Print the Redox layout 1:1 from <code>redox-layout.json</code> (keyboard-layout-editor.com renders it). Rest your hand on it and confirm the 2×2 thumb block and the knob position work for your hands. Read the "15 geometries vs hand anatomy" post first if you can.</li>
     <li><strong>Open Redox in KiCad 10.</strong> Clone <a href="https://github.com/mattdibi/redox-keyboard" target="_blank" rel="noopener">mattdibi/redox-keyboard</a> and open <code>redox/pcb/rev1.0/kicad_files</code>. KiCad upgrades the 2018 files. Use it to copy the outline and mounting holes, and to see how Mattia routed the matrix.</li>
-    <li><strong>New schematic, per half.</strong> Use the Scotto KiCad library: hotswap MX + 1N4148 matrix, the SK6812 chain on the controller's switched VCC with a 10 µF + 100 nF capacitor, nice!nano on the back with all 21 pins, encoder (right), battery JST, power switch, reset.</li>
+    <li><strong>New schematic, per half.</strong> Use the Scotto KiCad library: hotswap MX + 1N4148 matrix, the SK6812 chain on the battery through a P-MOSFET LED power switch (driven from P0.08 through an N-MOSFET) with a 10 µF + 100 nF capacitor, nice!nano on the back with all 21 pins, encoder (right), battery JST, power switch, reset.</li>
     <li><strong>Place and route.</strong> Place keys from the KLE file with KB Placer, then delete the inner column, put the controller footprint on the back where it was, and put the knob on the right front. Keep ground pour away from the controller's antenna end. Route rows on the front and columns on the back. Run DRC.</li>
     <li><strong>Bring-up board first, optional.</strong> If you'd rather not risk the full order, a small board with 4 keys, the encoder, 4 LEDs and an underside-mounted nice!nano costs a few dollars and tests every circuit.</li>
     <li><strong>Order and build.</strong> Lion Circuits (Bengaluru), HASL finish, 5 + 5 boards, LED assembly optional. Flash the left and right ZMK UF2 files.</li>
@@ -230,7 +233,7 @@ flowchart LR
     <tbody>
       <tr><td>Footprint includes the nRF52840's extra pins</td><td>The plain Pro Micro footprint leaves you 3 pins short.</td><td>Pin budget</td></tr>
       <tr><td>Pin functions checked</td><td>"Not all pins are created equal." That includes the NFC pins and which pins can drive the LED data line.</td><td>Modular build</td></tr>
-      <tr><td>LEDs on the switched VCC</td><td>The controller's P0.13 MOSFET cuts LED power. Otherwise the LEDs drain the battery even when they're off.</td><td>SK6812 idle current</td></tr>
+      <tr><td>LEDs behind their own power switch</td><td>P0.08 turns the LED power switch off with the LEDs. Otherwise they drain the battery (1 mA each) even when dark.</td><td>SK6812 idle current</td></tr>
       <tr><td>No cable between the halves</td><td>Each half has its own battery and charger, so nothing ties the two batteries together, and there is no TRRS jack to hot-plug.</td><td>Design choice</td></tr>
       <tr><td>USB-C lines up with the case slot</td><td>The controller is hidden, so the port position is set by the PCB. Check it in the KiCad 3D view against the case before ordering.</td><td>Hidden controller</td></tr>
       <tr><td>Test the LED chain one column at a time</td><td>One bad SK6812 joint kills every LED after it.</td><td>Corne guide</td></tr>

@@ -257,17 +257,25 @@ DIODE_PAD1 = (8.3, 6.6)           # 1N4148 cathode; anode 7.62 mm north of it
 # Non-key parts on the LEFT half (mm, KLE frame). The right half mirrors these about MIRROR_X.
 TOP_EDGE = 0.25 * U               # top of the number-row key next to the controller ("5")
 MCU_X = 7.0 * U                   # centre of Redox's removed inner column
+# Keys are references without the half's 100/200 base; rot is clockwise degrees.
 LEFT_PARTS = {
-    "U":  dict(x=MCU_X, y=TOP_EDGE + 16.65 - 1.0, back=True),     # USB-C overhangs the edge by 1 mm
+    "U1":  dict(x=MCU_X, y=TOP_EDGE + 16.65 - 1.0, back=True),     # USB-C overhangs the edge by 1 mm
     "SW90": dict(x=MCU_X + 9.0 + 1.2 + 6.1 + 1.5 + 3.7, y=TOP_EDGE + 1.8, back=True),  # power slide, lever up
-    "BT": dict(x=MCU_X + 9.0 + 5.5, y=TOP_EDGE + 23.0, back=True),          # JST-PH battery
+    "BT1": dict(x=MCU_X + 9.0 + 5.5, y=TOP_EDGE + 23.0, back=True),          # JST-PH battery
     # battery load switch: P-MOSFET and its gate resistor, between the controller and the slide switch
-    "Q":  dict(x=MCU_X + 12.25, y=TOP_EDGE + 8.0, back=True),
-    "R":  dict(x=MCU_X + 12.25, y=TOP_EDGE + 13.5, back=True),
+    "Q1":  dict(x=MCU_X + 12.25, y=TOP_EDGE + 8.0, back=True),
+    "R1":  dict(x=MCU_X + 12.25, y=TOP_EDGE + 13.5, back=True),
+    # LED power switch and the LED rail's capacitors: two columns between the battery connector
+    # and the board edge, clear of mounting hole H103/H202 and the reset button
+    "Q2":  dict(x=MCU_X + 21.25, y=TOP_EDGE + 14.75, back=True),
+    "R2":  dict(x=MCU_X + 21.25, y=TOP_EDGE + 19.75, back=True, rot=90),
+    "Q3":  dict(x=MCU_X + 21.25, y=TOP_EDGE + 24.75, back=True),
+    "R3":  dict(x=MCU_X + 21.25, y=TOP_EDGE + 29.5, back=True, rot=90),
+    "C1":  dict(x=MCU_X + 25.25, y=TOP_EDGE + 18.25, back=True, rot=90),
+    "C2":  dict(x=MCU_X + 25.25, y=TOP_EDGE + 24.25, back=True, rot=90),
     # reset: origin is pad 1; on the back the 6.5 mm body mirrors toward -x, so offset by its width
     "SW91": dict(x=MCU_X + 9.0 + 1.5 + 6.5, y=TOP_EDGE + 36.0, back=True),
 }
-CAP_NEAR_LED1 = [(-6.5, 4.6), (-3.0, 4.6)]   # C1/C2 relative to the first LED, back side
 BAT_PLUS = (3.5, 0.0)                        # "+" beside the battery connector's pad 1, outside its outline
 ENCODER_SHAFT = (12.5 * U, TOP_EDGE + 16.65 * 2 + 15.0)   # right half, front, below the controller
 ENC_ORIGIN_TO_SHAFT = (0.0, 0.0)                          # marbastlib EC11: origin at the shaft
@@ -323,15 +331,8 @@ def build():
         # controller and friends
         mir = (lambda x: MIRROR_X - x) if side == "right" else (lambda x: x)
         for key, p in LEFT_PARTS.items():
-            ref = f"{key}{base+1}" if key in ("U", "BT", "Q", "R") else f"SW{base+int(key[2:])}"
-            x = mir(p["x"])
-            B.place(ref, x, p["y"], 0, back=p["back"])
-        # decoupling caps next to the first LED of the chain
-        k0 = keys[0]
-        cx, cy, rr, *_ = geo[(side, k0[0], k0[1])]
-        for i, (dx, dy) in enumerate(CAP_NEAR_LED1):
-            ox, oy = rot((LED_OFFSET[0] + dx, LED_OFFSET[1] + dy), rr)
-            B.place(f"C{base+i+1}", cx + ox, cy + oy, rr, back=True)
+            prefix, n = re.match(r"([A-Z]+)(\d+)$", key).groups()
+            B.place(f"{prefix}{base + int(n)}", mir(p["x"]), p["y"], p.get("rot", 0), back=p["back"])
         if enc:
             sx, sy = ENCODER_SHAFT
             B.place(f"ENC{base+1}", sx - ENC_ORIGIN_TO_SHAFT[0], sy - ENC_ORIGIN_TO_SHAFT[1], 0, back=False)

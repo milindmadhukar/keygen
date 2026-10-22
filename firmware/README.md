@@ -20,7 +20,7 @@ firmware/
     ├── keygen_left.overlay
     ├── keygen_right.overlay        column offset, encoder, NFC pins as GPIO
     ├── keygen_right.conf           encoder driver
-    ├── boards/nice_nano_nrf52840_zmk.overlay   33-LED SK6812 chain on P0.06
+    ├── boards/nice_nano_nrf52840_zmk.overlay   33-LED SK6812 chain on P0.06, LED power switch on P0.08
     └── Kconfig.*, keygen.zmk.yml
 ```
 
@@ -96,7 +96,7 @@ python3 tools/render_keymap.py   # docs/keymap-*.svg, with keymap-drawer through
 |---|---|
 | Matrix | 5 rows × 7 columns per half, COL2ROW; the right half's columns are offset by 7 |
 | Encoder | EC11 on the right half, A on P0.20, B on P0.09 (NFC pin as GPIO); press at row 0 / column 6 |
-| LEDs | 33 SK6812MINI-E per half on P0.06, as ZMK underglow, brightness capped at 40 %. They light only while that half has USB power, turn off when idle, and VCC (P0.13) is switched off with them |
+| LEDs | 33 SK6812MINI-E per half on P0.06, as ZMK underglow, brightness capped at 40 %. They light only while that half has USB power and turn off when idle; ZMK's ext-power switches their supply with them through the board's LED power switch on P0.08 |
 | Host | USB-C on the left half or Bluetooth, 5 profiles; USB is used while plugged in |
 | Split | Bluetooth, left half central |
 | Battery | Both halves report their level to the host |

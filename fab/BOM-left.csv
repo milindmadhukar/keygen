@@ -1,11 +1,13 @@
 Part,Qty,References,Value,Footprint,Notes
-JST-PH 2-pin battery connector,1,BT101,LiPo 3.7V ~1000mAh,Connector_JST:JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal,"through-hole side-entry, back side; check battery polarity first"
-10 µF capacitor (0805),1,C101,10uF,Capacitor_SMD:C_0805_2012Metric,"SMD, next to the first LED"
-100 nF capacitor (0805),1,C102,100nF,Capacitor_SMD:C_0805_2012Metric,"SMD, next to the first LED"
+JST-PH 2-pin battery connector,1,BT101,LiPo 3.7V 3000mAh,Connector_JST:JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal,"through-hole side-entry, back side; check battery polarity first"
+10 µF capacitor (1206),1,C101,10uF,Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder,"SMD, back side, beside the LED power switch"
+100 nF capacitor (1206),1,C102,100nF,Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder,"SMD, back side, beside the LED power switch"
 1N4148 diode,33,D101 D102 D103 D104 D105 D106 D107 D108 D109 D110 D111 D112 D113 D114 D115 D116 D117 D118 D119 D120 D121 D122 D123 D124 D125 D126 D127 D128 D129 D130 D131 D132 D133,1N4148,Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal,"through-hole, back side; band (cathode) toward the square pad"
 SK6812MINI-E LED,33,LED101 LED102 LED103 LED104 LED105 LED106 LED107 LED108 LED109 LED110 LED111 LED112 LED113 LED114 LED115 LED116 LED117 LED118 LED119 LED120 LED121 LED122 LED123 LED124 LED125 LED126 LED127 LED128 LED129 LED130 LED131 LED132 LED133,SK6812MINI-E,LED_SMD:LED_SK6812MINI-E_3.2x2.8mm_P1.5mm_ReverseMount,"SMD, reverse-mount on the back; mind the corner mark"
-AO3401A P-MOSFET (SOT-23),1,Q101,AO3401A,Package_TO_SOT_SMD:SOT-23,"SMD, back side, between the controller and the power switch"
-1 MΩ resistor (0805),1,R101,1M,Resistor_SMD:R_0805_2012Metric,"SMD, back side, below the MOSFET"
+AO3401A P-MOSFET (SOT-23),2,Q101 Q102,AO3401A,Package_TO_SOT_SMD:SOT-23,"SMD, back side: Q1 between the controller and the power switch, Q2 in the LED power switch"
+AO3400A N-MOSFET (SOT-23),1,Q103,AO3400A,Package_TO_SOT_SMD:SOT-23,"SMD, back side, in the LED power switch"
+1 MΩ resistor (1206),1,R101,1M,Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder,"SMD, back side, below the battery MOSFET"
+100 kΩ resistor (1206),2,R102 R103,100k,Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder,"SMD, back side, in the LED power switch"
 "MX switch, 1.25u key",5,SW101 SW107 SW113 SW120 SW131,=,keygen:SW_MX_HS_CPG151101S11_1.25u,Kailh socket on the back; switch + 1.25u keycap
 "MX switch, 1u key",26,SW102 SW103 SW104 SW105 SW106 SW108 SW109 SW110 SW111 SW112 SW114 SW115 SW116 SW117 SW118 SW119 SW121 SW122 SW123 SW124 SW125 SW126 SW127 SW128 SW129 SW130,1,keygen:SW_MX_HS_CPG151101S11_1u,Kailh socket on the back; switch + 1u keycap on top
 "MX switch, 1.5u key (tall thumb)",2,SW132 SW133,Bksp,keygen:SW_MX_HS_CPG151101S11_1.5u,"Kailh socket on the back; switch + 1.5u keycap, turned 90°"
