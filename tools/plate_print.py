@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Write docs/plate-print.pdf: the switch plate at 1:1 on A4, one half per page, for printing
+"""Write case/plate/pdf/keygen-plate-print.pdf: the switch plate at 1:1 on A4, one half per page, for printing
 on paper to get a feel for the layout. Each page shows the plate outline (= PCB outline), the
 14 x 14 mm switch cut-outs, keycap footprints with legends, M2 holes, the encoder cut-out and
 knob, and the OLED window. Positions come from pcb/keygen.kicad_pcb and the key tables, so re-run
@@ -17,7 +17,7 @@ import gen_pcb as G
 import gen_schematic as g
 
 ROOT = Path(__file__).resolve().parent.parent
-OUT = ROOT / "docs/plate-print.pdf"
+OUT = ROOT / "case/plate/pdf/keygen-plate-print.pdf"
 PT = 72 / 25.4                     # points per mm
 A4 = (297.0, 210.0)                # landscape, mm
 CUTOUT = 14.0                      # MX plate cut-out
@@ -146,7 +146,7 @@ def main():
         mid = sum(p[0] for p in o) / len(o)
         halves["left" if mid < 200 else "right"] = o
     inside = lambda pt, o: min(p[0] for p in o) <= pt[0] <= max(p[0] for p in o) and min(p[1] for p in o) <= pt[1] <= max(p[1] for p in o)
-    OUT.parent.mkdir(exist_ok=True)
+    OUT.parent.mkdir(parents=True, exist_ok=True)
     surf = cairo.PDFSurface(str(OUT), A4[0] * PT, A4[1] * PT)
     cr = cairo.Context(surf); cr.scale(PT, PT)
     for side in ("left", "right"):

@@ -53,25 +53,27 @@ cover; see [The name and the artwork](#the-name-and-the-artwork).
 | Power | LiPo pouch per half (≤ 5 mm thick, 2500–3000 mAh), JST-PH connector, slide switch driving a P-MOSFET battery switch. Each half charges from its own USB-C |
 | PCB | 2 layers, FR-4 1.6 mm, 1 oz copper, HASL, black soldermask with white silkscreen. One half is 162.7 × 125.9 mm |
 | Switch plate | FR-4 1.6 mm, black soldermask, no copper, with eight gasket tabs per half |
-| Case | 3D-printed PETG, gasket-mounted: a bottom shell and a top frame per half, 177.8 × 143.1 × 22.2 mm |
+| Case | 3D-printed PETG, gasket-mounted: a bottom shell and a top frame per half, 177.8 × 143.1 × 22.2 mm. The top frame covers the plate round the keycaps, the OLED and the knob |
+| Foam | PE switch foam (0.5 mm) and Poron plate foam (2.5 mm) between the PCB and the plate, case foam (5 mm) on the case floor |
 | Firmware | [ZMK](https://zmk.dev) `main` (Zephyr 4.1): QWERTY base with Nav, Fn and System layers, ZMK Studio |
 
 ## Gallery
 
 **In the case.** The plate and PCB float on Poron gaskets between the bottom shell and the top frame.
-Each half has a knob and an OLED above its thumb cluster.
+The top frame's deck, level with its rim, covers the plate everywhere but the keycaps. Each half has
+a knob and an OLED above its thumb cluster.
 
 ![Keygen in its case](docs/render-case.png)
 
-**Case layers.** Bottom shell, PCB, plate with its gasket tabs, and top frame (switches and keycaps
-left out).
+**Case layers.** Bottom shell, case foam, PCB, PE switch foam, Poron plate foam, plate with its
+gasket tabs, and top frame (switches and keycaps left out).
 
 ![Keygen case, exploded](docs/render-case-exploded.png)
 
 **Case parts.** The four printed parts: each bottom shell, with its top frame above it. The shells
 have the battery bays, the gasket ledges, the heat-set insert holes, the USB-C and power switch
-openings and the reset guide tube; the frames have the matching gasket pockets and counterbored
-screw holes.
+openings and the reset guide tube; the frames have the matching gasket pockets, counterbored
+screw holes, and a deck round the keycaps with an OLED window and a hole for the encoder.
 
 ![Keygen case parts](docs/render-case-parts.png)
 
@@ -127,11 +129,11 @@ label's mark.
 | [Schematic (PDF)](pcb/keygen-schematic.pdf) | Printable schematic: a top sheet with left (refs 1xx) and right (refs 2xx) sub-sheets |
 | [KiCad project](pcb/keygen.kicad_pro) | Schematic and PCB, KiCad 10. Both halves are in one board file as two separate outlines |
 | [Ordering notes](fab/ORDER.md) | Fab order-form settings and what to check in the DFM report |
-| [Plate ordering notes](fab/PLATE.md) | Order-form settings for the FR-4 switch plates |
+| [Plate ordering notes](case/plate/PLATE.md) | Order-form settings for the FR-4 switch plates |
 | [Assembly BOM](fab/BOM.md) | Every part's references per half, with quantities and soldering notes |
 | [Parts and sources](plan/bom.html) | Shopping list with Indian and import sources (from [`bom/bom.csv`](bom/bom.csv)) |
 | [Datasheets](docs/datasheets/README.md) | Every part's datasheet, with the page each design fact comes from |
-| [Plate print](docs/plate-print.pdf) | The switch plate at 1:1 on A4, one half per page, for a fit test on paper |
+| [Plate print](case/plate/pdf/keygen-plate-print.pdf) | The switch plate at 1:1 on A4, one half per page, for a fit test on paper |
 | [Firmware](firmware/README.md) | ZMK configuration: keymap, hardware support, building and flashing |
 
 ### Generated files
@@ -142,19 +144,31 @@ so it can be regenerated after any change (see [Building from source](#building-
 | File | What it is | Made by |
 |---|---|---|
 | [`fab/keygen-left-gerbers.zip`](fab/keygen-left-gerbers.zip), [`fab/keygen-right-gerbers.zip`](fab/keygen-right-gerbers.zip) | PCB Gerbers and drill files, one order per half ([`keygen-gerbers.zip`](fab/keygen-gerbers.zip) has both) | `export_fab.py` |
-| [`fab/keygen-plate-left-gerbers.zip`](fab/keygen-plate-left-gerbers.zip), [`fab/keygen-plate-right-gerbers.zip`](fab/keygen-plate-right-gerbers.zip) | Switch plate Gerbers, one order per half | `gen_plate.py` |
-| [`fab/ORDER.md`](fab/ORDER.md), [`fab/PLATE.md`](fab/PLATE.md) | Order-form settings for the PCBs and the plates | `export_fab.py`, `gen_plate.py` |
+| [`fab/ORDER.md`](fab/ORDER.md) | Order-form settings for the PCBs | `export_fab.py` |
 | [`fab/BOM.md`](fab/BOM.md), `fab/BOM-*.csv` | Assembly BOMs per half | `export_bom.py` |
 | [`pcb/plate/keygen-plate.kicad_pcb`](pcb/plate/keygen-plate.kicad_pcb) | The switch plate as a KiCad board, both halves | `gen_plate.py` |
-| [`case/keygen-{left,right}-{bottom,top}.stl`](case/) | The four case parts, to print | `gen_case.py` |
-| [`case/*.step`](case/) | The same parts for CAD, the plates as solids, and [`keygen-case.step`](case/keygen-case.step) with all six in place | `gen_case.py` |
+| [`case/`](case/) | Everything outside the PCB, one folder per part and one folder per file type inside it (below) | `gen_case.py`, `gen_plate.py`, `plate_print.py` |
 | [`pcb/keygen-schematic.pdf`](pcb/keygen-schematic.pdf) | Printable schematic | `kicad-cli sch export pdf` |
-| [`docs/plate-print.pdf`](docs/plate-print.pdf) | The plate at 1:1 on A4, for a paper fit test | `plate_print.py` |
 | [`pcb/lib/keygen.3dshapes/`](pcb/lib/keygen.3dshapes/) | 3D models for KiCad's 3D view: knob, OLED module, keycaps, controller | `gen_models.py`, `gen_schematic.py` |
 | `docs/render-*.png` | The board, case and plate renders above | `render_board.py`, `render_case.py` |
 | [`docs/pcb-routing.png`](docs/pcb-routing.png) | Both copper layers | `render_routing.py` |
 | `docs/keymap-*.svg` | One picture per keymap layer | `render_keymap.py` |
 | [`firmware/boards/shields/keygen/keygen-layouts.dtsi`](firmware/boards/shields/keygen/keygen-layouts.dtsi) | ZMK matrix transform and physical layout | `gen_zmk_layout.py` |
+
+The [`case/`](case/) folder:
+
+```
+case/
+├── keygen-case.step                    every part in place, for CAD
+├── bottom/  stl/  step/                bottom shells (print the STL)
+├── top/     stl/  step/                top frames (print the STL)
+├── plate/   gerber/  step/  pdf/       switch plates: Gerbers to order, solids, 1:1 paper print
+│   └── PLATE.md                        plate order-form settings
+└── foam/    dxf/  svg/                 switch, plate and case foam, 1:1 cut files
+```
+
+Every file is named `keygen-{left,right}-<part>` (the foam `keygen-{left,right}-{switch,plate,case}-foam`,
+the plate Gerbers `keygen-plate-{left,right}-gerbers.zip`).
 
 ## Hardware
 
@@ -213,13 +227,28 @@ so it can be regenerated after any change (see [Building from source](#building-
 - **Case:** the bottom shell and top frame are screwed together with 8 M2 × 6 screws per half into
   heat-set inserts, none within 15 mm of the controller's antenna end. The PCB top sits 13.6 mm
   above the desk and the plate top 18.6 mm.
+- **Top frame deck:** level with the frame's rim, 3.6 mm above the plate top, covering the plate
+  everywhere but the keycaps (0.6 mm clear of each), the OLED window and the encoder. The
+  OLED window opens out towards the thumbs; the glass sits 3.5 mm below the deck top. The encoder
+  bushing passes through a 9 mm hole under the knob, whose underside is 2.9 mm above the deck.
+- **Foam:** three layers per half, cut from the files in [`case/foam/`](case/foam/) (DXF or SVG).
+  - PE switch foam, 0.5 mm, on the PCB under the switches, with a hole for every pin, pad, LED
+    window and standoff, and for the encoder and the OLED header.
+  - Poron plate foam, 2.5 mm, on the PE foam under the plate, with the plate's switch, encoder and
+    OLED cut-outs (switches 14.4 mm) and holes for the pads and standoffs.
+  - Case foam, 5 mm EVA or Poron, on the case floor round the battery bay, the controller, the
+    battery connector, the slide switch, the reset tube and the encoder and OLED pins. It sits
+    2.0 mm below the parts under the PCB.
+  - The PE and plate foam go onto the PCB before the plate, and the case foam into the bottom shell
+    before the plate-and-PCB unit.
 - **Openings:** an open 20 mm USB-C slot and a 9 × 3.4 mm power switch slot on the top edge, with
   the wall thinned to 1.5 mm in front of them, and a 2 mm reset pinhole in the floor with a guide
   tube up to the button.
 - **Fit check:** [`tools/gen_case.py`](tools/gen_case.py) checks every case part against the PCB,
-  the plate, the controller, the reset button, the battery and the keycaps at the bottom of their
-  travel, and a 5.5 mm cell against the parts under the PCB with the stack pressed 1.5 mm down onto
-  its gaskets. It finds no overlaps.
+  the plate, the controller, the reset button, the battery, the OLED, the encoder, the knob, the
+  plate screw heads and the keycaps at the bottom of their travel; each foam layer against the
+  parts beside it; and a 5.5 mm cell and the case foam against the parts under the PCB with the
+  stack pressed 1.5 mm down onto its gaskets. It finds no overlaps.
 
 ### PCB
 
@@ -266,7 +295,7 @@ keygen/
 ├── pcb/            KiCad 10 project: schematic (generated), PCB, plate, project footprints and 3D models
 ├── tools/          Python scripts that generate, route, check and export the design
 ├── fab/            Gerbers per half and combined (PCB and plate), assembly BOMs, ordering notes
-├── case/           3D-printed case parts: STL to print, STEP for CAD
+├── case/           Case, plate and foam: one folder per part, one folder per file type (below)
 ├── bom/            Bill of materials with sources (bom.csv)
 ├── plan/           Build plan and parts list as HTML
 ├── docs/           Renders, keymap pictures, plate print and part datasheets
@@ -282,12 +311,13 @@ keygen/
 - Python 3 with `numpy` and `pycairo`
 - Java 17 or newer and [Freerouting 2.5.0](https://github.com/freerouting/freerouting/releases),
   saved as `tools/freerouting-2.5.0.jar` (not checked in)
-- For the case: [build123d](https://build123d.readthedocs.io/) in a virtual environment that can
-  also see KiCad's `pcbnew`:
+- For the case: [build123d](https://build123d.readthedocs.io/) and
+  [shapely](https://shapely.readthedocs.io/) in a virtual environment that can also see KiCad's
+  `pcbnew`:
 
   ```sh
   uv venv ~/.venvs/keygen-cad --python /usr/bin/python3 --system-site-packages
-  uv pip install --python ~/.venvs/keygen-cad/bin/python build123d
+  uv pip install --python ~/.venvs/keygen-cad/bin/python build123d shapely
   ```
 
 ```sh
@@ -332,8 +362,8 @@ Both follow the PCB, through the shared geometry in
 [`tools/case_geometry.py`](tools/case_geometry.py), so rerun them after any PCB change.
 
 ```sh
-python3 tools/gen_plate.py                        # pcb/plate/, fab/keygen-plate-*-gerbers.zip, fab/PLATE.md
-~/.venvs/keygen-cad/bin/python tools/gen_case.py  # case/: STL and STEP per part, plus the fit check
+python3 tools/gen_plate.py                        # pcb/plate/, case/plate/gerber/, case/plate/PLATE.md
+~/.venvs/keygen-cad/bin/python tools/gen_case.py  # case/{bottom,top}/, case/plate/step/, case/foam/, the fit check
 python3 tools/render_case.py                      # docs/render-case*.png, docs/render-plate.png
 ~/.venvs/keygen-cad/bin/python tools/gen_models.py  # pcb/lib/keygen.3dshapes/: the knob and OLED 3D models
 ```
@@ -344,7 +374,7 @@ python3 tools/render_case.py                      # docs/render-case*.png, docs/
 python3 tools/export_fab.py      # fab/: Gerbers, drill files, ORDER.md
 python3 tools/export_bom.py      # fab/: assembly BOMs from the schematic
 python3 tools/render_bom.py      # plan/bom.html from bom/bom.csv
-python3 tools/plate_print.py     # docs/plate-print.pdf
+python3 tools/plate_print.py     # case/plate/pdf/keygen-plate-print.pdf
 kicad-cli sch export pdf -o pcb/keygen-schematic.pdf pcb/keygen.kicad_sch
 python3 tools/render_board.py    # docs/render-*.png: 3D renders with the black mask
 python3 tools/render_routing.py  # docs/pcb-routing.png
@@ -359,10 +389,12 @@ everything is hand-soldered. [`fab/ORDER.md`](fab/ORDER.md) has the order-form s
 points to raise with the fab: the reverse-mount LED cut-outs must be milled, and the LED pads sit
 close to them.
 
-The switch plates are ordered the same way, from `fab/keygen-plate-left-gerbers.zip` and
-`fab/keygen-plate-right-gerbers.zip`; [`fab/PLATE.md`](fab/PLATE.md) has the settings. The four
-case parts in [`case/`](case/) go to a 3D printing service as STL files. The fasteners, gaskets and
-foam are in the [parts list](plan/bom.html).
+The switch plates are ordered the same way, from the two zips in
+[`case/plate/gerber/`](case/plate/gerber/); [`case/plate/PLATE.md`](case/plate/PLATE.md) has the
+settings. The four case parts in [`case/bottom/stl/`](case/bottom/stl/) and
+[`case/top/stl/`](case/top/stl/) go to a 3D printing service. The foam is cut by laser or by hand
+from the 1:1 files in [`case/foam/dxf/`](case/foam/dxf/) or [`case/foam/svg/`](case/foam/svg/). The fasteners, gaskets and
+foam sheets are in the [parts list](plan/bom.html).
 
 ## Project status
 

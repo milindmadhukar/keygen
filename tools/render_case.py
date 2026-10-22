@@ -2,12 +2,13 @@
 """Render the case and the switch plate into docs/:
 
 render-case.png           the board in its case
-render-case-exploded.png  bottom shell, PCB, plate and top frame lifted apart (no switches or keycaps)
+render-case-exploded.png  bottom shell, case foam, PCB, switch foam, plate foam, plate and top frame lifted
+                          apart (no switches or keycaps)
 render-case-parts.png     the printed parts alone: each bottom shell with its top frame above it
 render-case-bottom.png    the case from below: floor, reset pinholes, USB-C and switch openings
 render-plate.png          the FR-4 switch plates, top view
 
-The case views attach the parts from case/ (run gen_case.py first) to a copy of the board as 3D
+The case views attach the parts from case/*/step/ (run gen_case.py first) to a copy of the board as 3D
 models, with the same opaque black mask as render_board.py. KiCad only renders a board, so the
 case-only views use a scratch board made of 1 mm squares hidden inside the case walls.
 
@@ -26,7 +27,8 @@ PCB = ROOT / "pcb/keygen.kicad_pcb"
 PLATE = ROOT / "pcb/plate/keygen-plate.kicad_pcb"
 TMP = ROOT / "pcb/_render_case.kicad_pcb"      # beside the real board so ${KIPRJMOD} models resolve
 CASE = ROOT / "case"
-EXPLODE = {"bottom": -45.0, "plate": 25.0, "top": 50.0}   # mm, for the exploded view
+EXPLODE = {"bottom": -45.0, "foam/case": -22.0, "foam/switch": 9.0, "foam/plate": 18.0, "plate": 30.0,
+           "top": 55.0}                                   # mm, for the exploded view
 PARTS_LIFT = 30.0                                         # top frame above its shell, parts view
 SWITCHES_AND_CAPS = re.compile(r'\t\t\(model "[^"]*(?:SW_Cherry_MX_PCB|Keycap_)[^"]*"\n(?:\t\t\t[^\n]*\n)*\t\t\)\n')
 OPAQUE_MASK = (r'(\(type "(?:Top|Bottom) Solder Mask"\)\s*\(color )"Black"', r'\1"#0E0E10F5"')
@@ -44,10 +46,14 @@ CASE_VIEWS = {
 
 
 def case_footprint(lifts, parts=("bottom", "plate", "top")):
+    """A footprint carrying the case parts as 3D models; a part is "bottom", "plate", "top" or
+    "foam/<layer>"."""
     models = []
     for side in ("left", "right"):
         for part in parts:
-            models.append(f'(model "{CASE}/keygen-{side}-{part}.step" (offset (xyz 0 0 {lifts.get(part, 0.0)})) '
+            d, _, name = part.rpartition("/")
+            path = CASE / (d or part) / "step" / f"keygen-{side}-{name}{'-foam' if d else ''}.step"
+            models.append(f'(model "{path}" (offset (xyz 0 0 {lifts.get(part, 0.0)})) '
                           f'(scale (xyz 1 1 1)) (rotate (xyz 0 0 0)))')
     return (f'(footprint "keygen:case" (layer "F.Cu") (uuid "{uuid.uuid4()}") (at 0 0)\n'
             f'(property "Reference" "CASE1" (at 0 0 0) (layer "F.Fab") (hide yes) (uuid "{uuid.uuid4()}") '
@@ -92,7 +98,8 @@ def main():
         for name, args in BOARD_VIEWS.items():
             exploded = name.endswith("exploded")
             board = SWITCHES_AND_CAPS.sub("", base) if exploded else base
-            TMP.write_text(board[:-1] + case_footprint(EXPLODE if exploded else {}) + ")\n")
+            parts = list(EXPLODE) if exploded else ["bottom", "plate", "top"]
+            TMP.write_text(board[:-1] + case_footprint(EXPLODE if exploded else {}, parts) + ")\n")
             render(TMP, name, args)
         empty = hidden_board()
         for name, args in CASE_VIEWS.items():

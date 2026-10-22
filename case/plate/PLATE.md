@@ -1,7 +1,7 @@
 # Ordering the Keygen switch plates
 
 The plate is a plain FR-4 board with no copper. Place **two orders**, like the PCB:
-`keygen-plate-left-gerbers.zip` and `keygen-plate-right-gerbers.zip`, 5 of each.
+`gerber/keygen-plate-left-gerbers.zip` and `gerber/keygen-plate-right-gerbers.zip`, 5 of each.
 
 | Setting | Value |
 |---|---|

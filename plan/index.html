@@ -157,7 +157,7 @@ flowchart LR
       <tr><td>Power</td><td>USB only</td><td>LiPo per half, power slide switch, LED power cut-off</td></tr>
       <tr><td>New</td><td>none</td><td>An EC11 knob and a 0.96 in. SSD1306 OLED on each half's inner edge.</td></tr>
       <tr><td>PCB</td><td>one reversible board for both halves</td><td>separate left and right boards, because the halves have different parts</td></tr>
-      <tr><td>Case</td><td>rev1 3D-printed cases</td><td>closed, gasket-mounted PETG case: a bottom shell and a top frame per half, with a USB-C slot and power switch slot on the top edge and a battery bay in the floor. The FR-4 switch plate floats on Poron gaskets. Both are generated from the PCB by <code>tools/gen_case.py</code> and <code>tools/gen_plate.py</code>.</td></tr>
+      <tr><td>Case</td><td>rev1 3D-printed cases</td><td>closed, gasket-mounted PETG case: a bottom shell and a top frame per half, with a USB-C slot and power switch slot on the top edge and a battery bay in the floor. The top frame's deck covers the plate round the keycaps, the OLED and the knob. The FR-4 switch plate floats on Poron gaskets, with PE switch foam and Poron plate foam under it and case foam on the floor, cut from <code>case/foam/</code>. Both are generated from the PCB by <code>tools/gen_case.py</code> and <code>tools/gen_plate.py</code>.</td></tr>
     </tbody>
   </table></div>
 
@@ -226,7 +226,7 @@ flowchart LR
     <li><strong>Place and route.</strong> Place keys from the KLE file with KB Placer, then delete the inner column, put the controller footprint on the back where it was, and put a knob and an OLED header on each half's front. Keep ground pour away from the controller's antenna end. Route rows on the front and columns on the back. Run DRC.</li>
     <li><strong>Bring-up board first, optional.</strong> If you'd rather not risk the full order, a small board with 4 keys, the encoder, 4 LEDs and an underside-mounted nice!nano costs a few dollars and tests every circuit.</li>
     <li><strong>Order and build.</strong> Lion Circuits (Bengaluru), HASL finish, 5 + 5 boards, LED assembly optional. Flash the left and right ZMK UF2 files.</li>
-    <li><strong>Case and tenting.</strong> Order the FR-4 plates with the PCBs (<code>fab/PLATE.md</code>) and print the case parts in <code>case/</code>. Build the plate and PCB into one unit on M2 standoffs, then close it into the case on its Poron gaskets with foam and weight in the base. For tenting, use screw-in legs like the Corne case, or magnetic phone stands like a wireless Sofle builder on Reddit.</li>
+    <li><strong>Case and tenting.</strong> Order the FR-4 plates with the PCBs (<code>case/plate/PLATE.md</code>) and print the case parts in <code>case/bottom/stl/</code> and <code>case/top/stl/</code>. Cut the three foam layers from <code>case/foam/dxf/</code> (or <code>svg/</code>). Lay the PE switch foam and then the Poron plate foam on the PCB, build the plate and PCB into one unit on M2 standoffs, put the case foam on the floor of the bottom shell round the battery, then close the unit into the case on its Poron gaskets with weight in the base. For tenting, use screw-in legs like the Corne case, or magnetic phone stands like a wireless Sofle builder on Reddit.</li>
   </ol>
 
   <h2>Checklist before ordering</h2>
