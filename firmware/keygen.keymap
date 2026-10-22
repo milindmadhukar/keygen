@@ -1,15 +1,19 @@
 /*
  * Keygen keymap. Key positions come from boards/shields/keygen/keygen-layouts.dtsi:
- *   number row (13, encoder press in the middle), top, home, bottom (12 each), extra row (8),
+ *   number row (14, the two encoder presses in the middle), top, home, bottom (12 each), extra row (8),
  *   thumb 1u row (4), thumb bottom row (6: 1.25u, 1.5u rest, 1.5u centre per half).
  *
  * Layers: BASE, NAV (hold left 1.25u), FN (hold right 1.25u), SYS (hold both).
+ *
+ * Knobs: the left one is a scroll wheel on every layer (with Super held it walks Hyprland's
+ * workspaces), and pressing it is a middle click. The right one is volume / page / brightness.
  */
 
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/outputs.h>
+#include <dt-bindings/zmk/pointing.h>
 #include <dt-bindings/zmk/rgb.h>
 
 #define BASE 0
@@ -27,6 +31,14 @@
             tapping-term-ms = <200>;
             bindings = <&kp>, <&kp>;
         };
+
+        /* the left knob: one scroll step per detent */
+        scroll_encoder: scroll_encoder {
+            compatible = "zmk,behavior-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            bindings = <&msc SCRL_DOWN>, <&msc SCRL_UP>;
+            tap-ms = <30>;
+        };
     };
 
     conditional_layers {
@@ -42,7 +54,7 @@
 
         base_layer {
             display-name = "Base";
-// |   =  |  1  |  2  |  3  |  4  |  5  |        | MUTE |        |  6  |  7  |  8  |  9  |  0  |   -  |
+// |   =  |  1  |  2  |  3  |  4  |  5  |  MCLK  | MUTE |        |  6  |  7  |  8  |  9  |  0  |   -  |
 // | Tab  |  Q  |  W  |  E  |  R  |  T  |                          |  Y  |  U  |  I  |  O  |  P  |   \  |
 // |Esc/Ct|  A  |  S  |  D  |  F  |  G  |                          |  H  |  J  |  K  |  L  |  ;  |   '  |
 // | Shft |  Z  |  X  |  C  |  V  |  B  |                          |  N  |  M  |  ,  |  .  |  /  | Shft |
@@ -50,7 +62,7 @@
 //                        | Ctrl | Alt |                    | Alt  | Ctrl |
 //                 | NAV  | Bksp |Super|                    |Enter |Space |  FN  |
             bindings = <
-    &kp EQUAL  &kp N1 &kp N2 &kp N3 &kp N4 &kp N5    &kp C_MUTE    &kp N6 &kp N7 &kp N8    &kp N9  &kp N0   &kp MINUS
+    &kp EQUAL  &kp N1 &kp N2 &kp N3 &kp N4 &kp N5    &mkp MCLK &kp C_MUTE    &kp N6 &kp N7 &kp N8    &kp N9  &kp N0   &kp MINUS
     &kp TAB    &kp Q  &kp W  &kp E  &kp R  &kp T                   &kp Y  &kp U  &kp I     &kp O   &kp P    &kp BSLH
     &esc_ctrl LCTRL ESC &kp A &kp S &kp D &kp F &kp G              &kp H  &kp J  &kp K     &kp L   &kp SEMI &kp SQT
     &kp LSHFT  &kp Z  &kp X  &kp C  &kp V  &kp B                   &kp N  &kp M  &kp COMMA &kp DOT &kp FSLH &kp RSHFT
@@ -59,14 +71,14 @@
                    &mo NAV   &kp BSPC  &kp LGUI                    &kp RET  &kp SPACE &mo FN
             >;
 
-            sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN>;
+            sensor-bindings = <&scroll_encoder &inc_dec_kp C_VOL_UP C_VOL_DN>;
         };
 
         nav_layer {
             display-name = "Nav";
 // Right hand: HJKL arrows, Y U I O = Home PgDn PgUp End. Left home row: plain Super Alt Ctrl Shift.
             bindings = <
-    &trans &trans &trans &trans  &trans  &trans    &trans    &trans    &trans    &trans    &trans    &trans &trans
+    &trans &trans &trans &trans  &trans  &trans    &trans &trans    &trans    &trans    &trans    &trans    &trans &trans
     &trans &trans &trans &trans  &trans  &trans              &kp HOME  &kp PG_DN &kp PG_UP &kp END   &trans &trans
     &trans &kp LGUI &kp LALT &kp LCTRL &kp LSHFT &trans      &kp LEFT  &kp DOWN  &kp UP    &kp RIGHT &trans &trans
     &trans &trans &trans &trans  &trans  &trans              &trans    &trans    &trans    &trans    &trans &trans
@@ -75,7 +87,7 @@
                   &trans &trans  &trans                      &trans    &trans    &trans
             >;
 
-            sensor-bindings = <&inc_dec_kp PG_DN PG_UP>;
+            sensor-bindings = <&scroll_encoder &inc_dec_kp PG_DN PG_UP>;
         };
 
         fn_layer {
@@ -83,7 +95,7 @@
 // Number row: F1-F10, F11 on =, F12 on -. Numpad under the right hand (0 and . on the [ ] keys).
 // Bksp = Del, CapsW = Caps Lock, Q = PrtSc, W = Ins, S D F = prev / play-pause / next.
             bindings = <
-    &kp F11 &kp F1 &kp F2 &kp F3 &kp F4 &kp F5    &kp C_PP    &kp F6 &kp F7 &kp F8 &kp F9 &kp F10 &kp F12
+    &kp F11 &kp F1 &kp F2 &kp F3 &kp F4 &kp F5    &trans &kp C_PP    &kp F6 &kp F7 &kp F8 &kp F9 &kp F10 &kp F12
     &trans  &kp PSCRN &kp INS &trans &trans &trans            &trans &kp N7 &kp N8 &kp N9 &trans  &trans
     &trans  &trans &kp C_PREV &kp C_PP &kp C_NEXT &trans      &trans &kp N4 &kp N5 &kp N6 &trans  &trans
     &trans  &trans &trans &trans &trans &trans                &trans &kp N1 &kp N2 &kp N3 &trans  &trans
@@ -92,7 +104,7 @@
                   &trans  &kp DEL &trans                      &trans &trans &trans
             >;
 
-            sensor-bindings = <&inc_dec_kp C_BRI_UP C_BRI_DN>;
+            sensor-bindings = <&scroll_encoder &inc_dec_kp C_BRI_UP C_BRI_DN>;
         };
 
         sys_layer {
@@ -101,7 +113,7 @@
 // A S D F G = RGB on-off / effect / hue / brighter / dimmer. Esc = ZMK Studio unlock.
 // T / Y reset, B / N bootloader, each on its own half.
             bindings = <
-    &bt BT_CLR &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4    &trans    &trans &trans &trans &trans &trans &trans
+    &bt BT_CLR &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4    &trans &trans    &trans &trans &trans &trans &trans &trans
     &trans &out OUT_USB &out OUT_BLE &out OUT_TOG &trans &sys_reset                         &sys_reset &trans &trans &trans &trans &trans
     &studio_unlock &rgb_ug RGB_TOG &rgb_ug RGB_EFF &rgb_ug RGB_HUI &rgb_ug RGB_BRI &rgb_ug RGB_BRD    &trans &trans &trans &trans &trans &trans
     &trans &trans &trans &trans &trans &bootloader                                          &bootloader &trans &trans &trans &trans &trans

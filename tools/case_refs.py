@@ -11,7 +11,8 @@ import pcbnew
 ROOT = Path(__file__).resolve().parent.parent
 NOTE = Path.home() / "Documents/Obsidian Vault/01 - Projects/Hardware & Electronics/Keygen Custom Keyboard/14 - case & plate requirements.md"
 WHAT = {"U": "Controller (underside), USB-C at the top edge", "SW90": "Power slide switch (underside), lever out of the top edge", "SW91": "Reset button (underside) -> floor pinhole",
-        "BT": "Battery JST-PH connector (underside)", "ENC": "Rotary encoder shaft (top)", "H": "M2 mounting hole"}
+        "BT": "Battery JST-PH connector (underside)", "ENC": "Rotary encoder shaft (top)", "H": "M2 mounting hole",
+        "J": "OLED header pin 1 (top); the module stands above the header"}
 
 def describe(ref):
     for k, v in WHAT.items():

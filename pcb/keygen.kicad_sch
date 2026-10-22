@@ -16,7 +16,7 @@
     (exclude_from_sim no)
     (at 38.1 30.48 0)
     (effects (font (size 2 2)) (justify left top))
-    (uuid "4fb82bfe-0c0f-5a87-a28a-b69bf4dfb641")
+    (uuid "78c3586a-b6a0-54d5-b51a-161cfeddc031")
   )
   (sheet
     (at 38.1 50.8)

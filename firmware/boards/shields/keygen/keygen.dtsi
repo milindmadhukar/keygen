@@ -35,10 +35,19 @@
             ;
     };
 
-    /* EC11 on the right half only; its push switch is in the matrix at row 0 / column 6 */
+    /* An EC11 on each half, on the same pins; each push switch is in its half's matrix at
+     * row 0 / column 6. Each half's overlay enables its own. */
+    left_encoder: encoder_left {
+        compatible = "alps,ec11";
+        a-gpios = <&gpio0 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;   /* ENC_A, pad 23 (NFC2) */
+        b-gpios = <&gpio0 9  (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;   /* ENC_B, pad 24 (NFC1) */
+        steps = <80>;
+        status = "disabled";
+    };
+
     right_encoder: encoder_right {
         compatible = "alps,ec11";
-        a-gpios = <&gpio0 20 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;   /* ENC_A, pad 6 */
+        a-gpios = <&gpio0 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;   /* ENC_A, pad 23 (NFC2) */
         b-gpios = <&gpio0 9  (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;   /* ENC_B, pad 24 (NFC1) */
         steps = <80>;
         status = "disabled";
@@ -46,7 +55,12 @@
 
     sensors: sensors {
         compatible = "zmk,keymap-sensors";
-        sensors = <&right_encoder>;
+        sensors = <&left_encoder &right_encoder>;
         triggers-per-rotation = <20>;
     };
+};
+
+/* Both encoder lines are on the NFC pins */
+&uicr {
+    nfct-pins-as-gpios;
 };

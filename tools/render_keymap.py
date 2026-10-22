@@ -16,8 +16,9 @@ LAYOUT = ROOT / "firmware/boards/shields/keygen/keygen-layouts.dtsi"
 DOCS = ROOT / "docs"
 DRAWER = ["uvx", "--from", "keymap-drawer==0.23.0", "keymap"]
 
-ENCODER_KEY = 6                                         # key position of the encoder press
-KNOB = {"Base": "volume", "Nav": "page", "Fn": "bright"}   # what turning the knob does
+# key positions of the encoder presses, and what turning each knob does per layer
+KNOBS = {6: {"Base": "scroll", "Nav": "scroll", "Fn": "scroll"},
+         7: {"Base": "volume", "Nav": "page", "Fn": "bright"}}
 
 LABELS = {
     "&esc_ctrl LCTRL ESC": {"t": "Esc", "h": "Ctrl"},
@@ -27,7 +28,7 @@ LABELS = {
     "&kp CAPS": "Caps Lock", "&caps_word": "Caps Word",
     "&kp LEFT": "←", "&kp DOWN": "↓", "&kp UP": "↑", "&kp RIGHT": "→",
     "&kp HOME": "Home", "&kp END": "End", "&kp PG_UP": "PgUp", "&kp PG_DN": "PgDn",
-    "&kp C_MUTE": "Mute", "&kp C_PP": "Play", "&kp C_PREV": "Prev", "&kp C_NEXT": "Next",
+    "&kp C_MUTE": "Mute", "&mkp MCLK": "Middle click", "&kp C_PP": "Play", "&kp C_PREV": "Prev", "&kp C_NEXT": "Next",
     "&studio_unlock": "Studio unlock", "&bootloader": "Boot loader", "&sys_reset": "Reset",
     "&out OUT_USB": "USB", "&out OUT_BLE": "BLE", "&out OUT_TOG": "USB/BLE",
     "&bt BT_CLR": "BT clear", **{f"&bt BT_SEL {i}": f"BT {i + 1}" for i in range(5)},
@@ -49,12 +50,13 @@ def main():
         cfg.write_text(yaml.safe_dump(CONFIG, allow_unicode=True))
         keymap = yaml.safe_load(run("-c", cfg, "parse", "-z", KEYMAP))
 
-        for name, keys in keymap["layers"].items():           # label the encoder press as the knob
-            key = keys[ENCODER_KEY]
-            key = key if isinstance(key, dict) else {"t": key}
-            if name in KNOB:
-                key["s"] = f"↻ {KNOB[name]}"
-            keys[ENCODER_KEY] = key
+        for name, keys in keymap["layers"].items():           # label each encoder press as its knob
+            for pos, turn in KNOBS.items():
+                key = keys[pos]
+                key = key if isinstance(key, dict) else {"t": key}
+                if name in turn:
+                    key["s"] = f"↻ {turn[name]}"
+                keys[pos] = key
         km.write_text(yaml.safe_dump(keymap, allow_unicode=True, sort_keys=False))
 
         for name in keymap["layers"]:

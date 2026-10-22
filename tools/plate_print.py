@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Write docs/plate-print.pdf: the switch plate at 1:1 on A4, one half per page, for printing
 on paper to get a feel for the layout. Each page shows the plate outline (= PCB outline), the
-14 x 14 mm switch cut-outs, keycap footprints with legends, M2 holes, and on the right half the
-encoder cut-out and knob. Positions come from pcb/keygen.kicad_pcb and the key tables, so re-run
+14 x 14 mm switch cut-outs, keycap footprints with legends, M2 holes, the encoder cut-out and
+knob, and the OLED window. Positions come from pcb/keygen.kicad_pcb and the key tables, so re-run
 it after any PCB change. Print at 100 % ("Actual size", not "Fit to page") and check the 100 mm
 ruler on the sheet."""
 import math, sys
@@ -12,6 +12,7 @@ import cairo
 import pcbnew
 
 sys.path.insert(0, str(Path(__file__).parent))
+import case_geometry as C
 import gen_pcb as G
 import gen_schematic as g
 
@@ -81,7 +82,7 @@ def ruler(cr, x, y):
     text(cr, "100 mm: measure this; if it isn't exactly 100 mm, reprint at 100 % / Actual size", x + 104, y - 0.5, 2.6, centre=False)
 
 
-def page(cr, side, outline, holes, enc):
+def page(cr, side, outline, holes, enc, oled):
     xs = [p[0] for p in outline]; ys = [p[1] for p in outline]
     ox = (A4[0] - (max(xs) - min(xs))) / 2 - min(xs)
     oy = (A4[1] - 14 - (max(ys) - min(ys))) / 2 - min(ys)   # leave the bottom strip for the ruler
@@ -115,6 +116,13 @@ def page(cr, side, outline, holes, enc):
         cr.move_to(x - 2, y); cr.line_to(x + 2, y); cr.move_to(x, y - 2); cr.line_to(x, y + 2)
         cr.set_line_width(0.1); cr.stroke()
 
+    x0, y0, x1, y1 = oled                   # OLED module (dashed) and its plate window
+    cr.rectangle(x0 - C.OLED_CLEAR, y0 - C.OLED_CLEAR, x1 - x0 + 2 * C.OLED_CLEAR, y1 - y0 + 2 * C.OLED_CLEAR)
+    cr.set_source_rgb(0, 0, 0); cr.set_line_width(0.3); cr.stroke()
+    cr.rectangle(x0, y0, x1 - x0, y1 - y0)
+    cr.set_dash([1.2, 0.8]); cr.set_source_rgb(0.2, 0.3, 0.8); cr.set_line_width(0.3); cr.stroke(); cr.set_dash([])
+    cr.set_source_rgb(0.2, 0.3, 0.8); text(cr, "OLED", (x0 + x1) / 2, (y0 + y1) / 2, 2.6)
+
     for x, y in enc:
         cr.rectangle(x - ENC_CUTOUT / 2, y - ENC_CUTOUT / 2, ENC_CUTOUT, ENC_CUTOUT)
         cr.set_source_rgb(0, 0, 0); cr.set_line_width(0.3); cr.stroke()
@@ -127,7 +135,7 @@ def page(cr, side, outline, holes, enc):
     w, h = max(xs) - min(xs), max(ys) - min(ys)
     text(cr, f"Keygen switch plate, {side} half, top view, 1:1  ({w:.1f} × {h:.1f} mm)", 12, 12, 4, centre=False, bold=True)
     text(cr, "Black squares: 14 × 14 mm switch cut-outs.  Grey: keycap footprints.  Crosses: M2 holes."
-         + ("  Blue dashed: encoder knob; square: its plate cut-out." if enc else ""), 12, 17, 2.6, centre=False)
+         + ("  Blue dashed: encoder knob and OLED module; black: their plate cut-outs." if enc else ""), 12, 17, 2.6, centre=False)
     ruler(cr, 12, A4[1] - 10)
 
 
@@ -143,7 +151,7 @@ def main():
     cr = cairo.Context(surf); cr.scale(PT, PT)
     for side in ("left", "right"):
         o = halves[side]
-        page(cr, side, o, [h for h in holes if inside(h, o)], [e for e in enc if inside(e, o)])
+        page(cr, side, o, [h for h in holes if inside(h, o)], [e for e in enc if inside(e, o)], C.halves()[side]["oled"])
         cr.show_page()
     surf.finish()
     print(f"wrote {OUT.relative_to(ROOT)}")

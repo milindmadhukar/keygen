@@ -64,6 +64,7 @@ def role(net):
     if re.match(r"COL\d$", net): return "slow", "matrix column (output, ~1 kHz)"
     if net.startswith("ENC_"): return "slow", "encoder (input, < 1 kHz)"
     if net == "LED_EN": return "slow", "LED power switch (output, changes when the LEDs turn on or off)"
+    if net in ("OLED_SDA", "OLED_SCL"): return "fast", "OLED I2C (400 kHz)"
     return None, net
 
 # MSK12C02-HB_ShouHan.pdf (drawing; Chinese notes translated in docs/datasheets/README.md): pin 2 is
@@ -153,8 +154,14 @@ for side, d in SIDES.items():
        f"{side}: pad 1 (P0.06) lands where the nice!nano's P0.06 is, with the controller under the board "
        "component side (chip, USB-C) facing AWAY from the PCB",
        f"{side}: pinout is mirrored for a controller mounted on the {'back' if back else 'front'}")
-    ok(pad_net(f"U{d}01", "13") == "VBAT" and pad_net(f"U{d}01", "16") is None, A,
-       f"{side}: B+ (pad 13) on VBAT; VCC (pad 16) unused, the LEDs run from the battery")
+    ok(pad_net(f"U{d}01", "13") == "VBAT" and pad_net(f"U{d}01", "16") == "VCC", A,
+       f"{side}: B+ (pad 13) on VBAT, the LEDs run from the battery; VCC (pad 16, the switched 3.3 V) powers the OLED")
+    # nice!nano schematic: P0.13 drives VCC's cut-off switch (low = off); the firmware's gpio-hog holds it high
+    oled = pads(f"J{d}01")
+    want = {"1": "GND", "2": "VCC", "3": "OLED_SCL", "4": "OLED_SDA"}
+    ok({n: net(p) for n, p in oled.items()} == want, A,
+       f"{side}: OLED header J{d}01 is GND, VCC, SCL, SDA (the usual 0.96 in. module's order), SCL on P0.20, SDA on P0.17",
+       f"{side}: OLED header J{d}01 pins {({n: net(p) for n, p in oled.items()})}")
     gnd = [n for n in ("3", "4", "14") if pad_net(f"U{d}01", n) != "GND"]
     ok(not gnd, A, f"{side}: all three GND pads (3, 4, 14) on GND", f"{side}: GND pads {gnd} not on GND")
 

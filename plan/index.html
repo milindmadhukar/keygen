@@ -89,7 +89,7 @@ svg text{font-family:var(--mono)}
 <body>
 <div class="wrap">
   <p class="eyebrow">Keygen · v7 · Redox fork · 20 Oct 2026</p>
-  <h1>A wireless Redox with a knob and per-key RGB</h1>
+  <h1>A wireless Redox with two knobs, two OLEDs and per-key RGB</h1>
   <p class="lede prose">Keep Redox's key positions and thumb cluster, then redraw the electronics around two nRF52840 controllers. You get Bluetooth to the computer, Bluetooth between the halves, and a cable for either link when you want one. It's a one-off build, so every feature goes in now. The trackpad and the screen are dropped, and the controllers sit hidden under the board.</p>
 
   <div class="verdict prose">
@@ -100,7 +100,7 @@ svg text{font-family:var(--mono)}
 
   <h2>The layout</h2>
   <p class="prose">This is drawn from Redox's own layout file (<code>redox-layout.json</code>), so the positions are the real ones, minus Redox's inner column (a 1u and a 1.5u key on each half). That column had no QWERTY job, so removing it leaves 66 keys and frees the inner edge. QWERTY is untouched. <span class="k">[</span> <span class="k">]</span> sit on the right bottom row, where the Kinesis Advantage puts them.</p>
-  <div class="figure" role="img" aria-label="Redox layout without the inner column, QWERTY legends, a rotary knob on the right inner edge, and both controllers hidden underneath with USB-C at the top edge">
+  <div class="figure" role="img" aria-label="Redox layout without the inner column, QWERTY legends, a rotary knob and an OLED on each half's inner edge, and both controllers hidden underneath with USB-C at the top edge">
     <svg id="full" viewBox="0 0 960 400"></svg>
   </div>
   <div class="legend">
@@ -110,7 +110,7 @@ svg text{font-family:var(--mono)}
     <span><span class="sw" style="background:var(--part);border-color:var(--part-edge)"></span>Knob</span>
     <span><span class="sw" style="background:transparent;border-color:var(--part-edge);border-style:dashed"></span>Under the board</span>
   </div>
-  <p class="cap">The knob sits where the right inner column used to be, with about 5 mm clearance to the H/Y column and the thumb block. Reach it with your right index finger or a lifted thumb. The left half's inner edge is left empty on purpose, as room to work with later. Each controller is mounted on the underside, beneath the old inner column, so nothing electronic shows. Only its USB-C port reaches the case's top edge.</p>
+  <p class="cap">Each half has a knob where the inner column used to be, its edge 8.1 mm from the nearest keycap, and a 0.96 in. OLED above it, standing in a window in the plate over the controller's lower end. Reach a knob with your index finger or a lifted thumb. Each controller is mounted on the underside, beneath the old inner column. Only its USB-C port reaches the case's top edge.</p>
 
   <div class="tablewrap"><table>
     <thead><tr><th>Thumb key</th><th>Left</th><th>Right</th><th>Reach</th></tr></thead>
@@ -128,8 +128,8 @@ svg text{font-family:var(--mono)}
   <pre class="mermaid">
 flowchart LR
   PC["Computer / phone / tablet"]
-  L["LEFT half · central<br/>nRF52840 (hidden) · USB-C"]
-  R["RIGHT half · peripheral<br/>nRF52840 (hidden) · knob"]
+  L["LEFT half · central<br/>nRF52840 (hidden) · USB-C · knob · OLED"]
+  R["RIGHT half · peripheral<br/>nRF52840 (hidden) · knob · OLED"]
   PC <-- "Bluetooth (up to 5 paired devices)" --> L
   PC <-- "USB-C cable" --> L
   L <-- "Bluetooth split" --> R
@@ -155,9 +155,9 @@ flowchart LR
       <tr><td>RGB</td><td>optional 14 WS2812B underglow via wires</td><td>SK6812MINI-E under every key, on one chain. No underglow: the battery sits under the PCB and would hide it.</td></tr>
       <tr><td>Link</td><td>TRRS serial</td><td>Bluetooth split; no cable between the halves</td></tr>
       <tr><td>Power</td><td>USB only</td><td>LiPo per half, power slide switch, LED power cut-off</td></tr>
-      <tr><td>New</td><td>none</td><td>EC11 knob on the right inner edge. No screen.</td></tr>
+      <tr><td>New</td><td>none</td><td>An EC11 knob and a 0.96 in. SSD1306 OLED on each half's inner edge.</td></tr>
       <tr><td>PCB</td><td>one reversible board for both halves</td><td>separate left and right boards, because the halves have different parts</td></tr>
-      <tr><td>Case</td><td>rev1 3D-printed cases</td><td>new closed case with a USB-C slot and power switch on the top edge, and room for the battery. Export the 3D model from KiCad into Fusion, as in the Modular build.</td></tr>
+      <tr><td>Case</td><td>rev1 3D-printed cases</td><td>closed, gasket-mounted PETG case: a bottom shell and a top frame per half, with a USB-C slot and power switch slot on the top edge and room for the battery. The FR-4 switch plate floats on Poron gaskets. Both are generated from the PCB by <code>tools/gen_case.py</code> and <code>tools/gen_plate.py</code>.</td></tr>
     </tbody>
   </table></div>
 
@@ -175,7 +175,8 @@ flowchart LR
       <tr><td>LED rail capacitors: 10 µF + 100 nF</td><td class="num">1 + 1</td><td class="num">1 + 1</td><td><span class="pill smd">SMD</span></td><td>1206 on the back, at the LED power switch's output.</td></tr>
       <tr><td>Slide power switch (MSK12C02)</td><td class="num">1</td><td class="num">1</td><td><span class="pill smd">SMD</span></td><td>Side lever out of the top edge; switches the battery MOSFET's gate. The nice!nano has a charger but no switch.</td></tr>
       <tr><td>Reset button 6 mm</td><td class="num">1</td><td class="num">1</td><td><span class="pill th">TH</span></td><td>Reachable through a pinhole in the case. ZMK can also enter the bootloader from a key, so you rarely need it.</td></tr>
-      <tr><td>EC11 rotary encoder + knob</td><td class="num">–</td><td class="num">1</td><td><span class="pill th">TH</span></td><td>Right half only. ZMK has supported encoders on the peripheral half since PR #1841 (Oct 2023). Its push switch goes into the key matrix as one extra position. A 15 mm shaft and knob clear MX keycaps.</td></tr>
+      <tr><td>EC11 rotary encoder + knob</td><td class="num">1</td><td class="num">1</td><td><span class="pill th">TH</span></td><td>One per half. ZMK has supported encoders on the peripheral half since PR #1841 (Oct 2023). Each push switch goes into its half's key matrix as one extra position. A 20 mm shaft puts the 19 mm knob just above the keycaps.</td></tr>
+      <tr><td>0.96 in. OLED, SSD1306, I2C</td><td class="num">1</td><td class="num">1</td><td><span class="pill th">TH</span></td><td>A generic 128 × 64 module, its own header pins soldered straight into the board (GND, VCC, SCL, SDA; check the module's order). Powered from the nice!nano's 3.3 V output, which the firmware keeps on.</td></tr>
     </tbody>
   </table></div>
   <p class="cap">Lion Circuits' minimum is 5 boards per design, so one order of 5 left + 5 right leaves spares. Full shopping list with shops: <a href="bom.html">bom.html</a>.</p>
@@ -185,13 +186,14 @@ flowchart LR
     <thead><tr><th>Function</th><th>Left</th><th>Right</th></tr></thead>
     <tbody>
       <tr><td>Key matrix, 5 rows × 7 columns</td><td class="num">12</td><td class="num">12</td></tr>
-      <tr><td>Encoder A/B (push switch is in the matrix)</td><td class="num">–</td><td class="num">2</td></tr>
+      <tr><td>Encoder A/B (push switch is in the matrix)</td><td class="num">2</td><td class="num">2</td></tr>
+      <tr><td>OLED I2C (SDA, SCL)</td><td class="num">2</td><td class="num">2</td></tr>
       <tr><td>RGB data</td><td class="num">1</td><td class="num">1</td></tr>
       <tr><td>LED power switch</td><td class="num">1</td><td class="num">1</td></tr>
-      <tr class="total"><td>Total</td><td class="num">14</td><td class="num">16</td></tr>
+      <tr class="total"><td>Total</td><td class="num">18</td><td class="num">18</td></tr>
     </tbody>
   </table></div>
-  <div class="note prose"><strong>Fits on the edge pads.</strong> The Pro Micro edge has 18 GPIO, two of them NFC pins (P0.09, P0.10) that work as GPIO once <code>nfct-pins-as-gpios</code> is set. The left half (14 pins) never needs them. The right half (16) uses one for the encoder's B line. P0.08 drives the LED power switch; P0.17, a full-speed pin, is spare on both halves. Add the inner pads (P1.01, P1.02, P1.07) to the footprint as spares; they're low-frequency pins, fine for matrix lines but not LED data or UART.</div>
+  <div class="note prose"><strong>Every edge pad in use.</strong> The Pro Micro edge has 18 GPIO, and both halves use all of them with the same map. The encoder takes the two NFC pins (P0.10 for A, P0.09 for B), which work as GPIO once <code>nfct-pins-as-gpios</code> is set; an encoder is slow enough for them. The OLED's I2C is on P0.17 (SDA) and P0.20 (SCL), both full-speed. P0.06 carries LED data and P0.08 drives the LED power switch. The inner pads (P1.01, P1.02, P1.07) stay unused.</div>
 
   <h2>Firmware: ZMK</h2>
   <div class="cols">
@@ -199,8 +201,8 @@ flowchart LR
       <h3>Supported out of the box</h3>
       <ul>
         <li>Bluetooth split, USB + 5 Bluetooth profiles</li>
-        <li>Encoder on the peripheral (right) half, supported since Oct 2023</li>
-        <li>Caps lock, layer and Bluetooth state shown through the LEDs instead of a screen (see below)</li>
+        <li>An encoder on each half; peripheral encoders are supported since Oct 2023</li>
+        <li>ZMK's status screen on each half's OLED: output, Bluetooth profile, layer and battery</li>
         <li>ZMK Studio for live remapping, which the Dactyl CC builder calls a must-have</li>
         <li>RGB lighting (ZMK's <code>rgb_underglow</code> driver runs the per-key chain as one strip), with external power cut-off and auto-off when idle</li>
       </ul>
@@ -209,9 +211,9 @@ flowchart LR
       <h3>Needs community modules or care</h3>
       <ul>
         <li><strong>Per-key RGB effects:</strong> official ZMK treats all LEDs as one underglow strip. For per-key or reactive effects use <a href="https://github.com/dima-m711/zmk-rgb-matrix" target="_blank" rel="noopener">zmk-rgb-matrix</a> or <a href="https://github.com/jagonmo/zmk-pro-rgb" target="_blank" rel="noopener">zmk-pro-rgb</a>.</li>
-        <li><strong>Per-key indicators:</strong> lighting specific keys for status (layer colour, which Bluetooth profile is active, battery level while Fn is held) uses the indicator overlays in <a href="https://github.com/dima-m711/zmk-rgb-matrix" target="_blank" rel="noopener">zmk-rgb-matrix</a>. This replaces the screen.</li>
+        <li><strong>Per-key indicators:</strong> lighting specific keys for status (layer colour, which Bluetooth profile is active, battery level while Fn is held) uses the indicator overlays in <a href="https://github.com/dima-m711/zmk-rgb-matrix" target="_blank" rel="noopener">zmk-rgb-matrix</a>.</li>
         <li><strong>Battery and RGB:</strong> per-key RGB drains a battery in hours, not weeks. Plan to light it only when USB is plugged in.</li>
-        <li><strong>Encoder on the right half:</strong> a 2024 Redox builder on Reddit reported it unsupported, but ZMK merged peripheral encoders in 2023. Define the encoder in the shared <code>.dtsi</code>, which is the step people usually miss.</li>
+        <li><strong>Encoders on both halves:</strong> define both in the shared <code>.dtsi</code>, disabled, and enable each in its half's overlay; the keymap's sensor bindings list them left then right.</li>
       </ul>
     </div>
   </div>
@@ -221,10 +223,10 @@ flowchart LR
     <li><strong>Fit test.</strong> Print the Redox layout 1:1 from <code>redox-layout.json</code> (keyboard-layout-editor.com renders it). Rest your hand on it and confirm the 2×2 thumb block and the knob position work for your hands. Read the "15 geometries vs hand anatomy" post first if you can.</li>
     <li><strong>Open Redox in KiCad 10.</strong> Clone <a href="https://github.com/mattdibi/redox-keyboard" target="_blank" rel="noopener">mattdibi/redox-keyboard</a> and open <code>redox/pcb/rev1.0/kicad_files</code>. KiCad upgrades the 2018 files. Use it to copy the outline and mounting holes, and to see how Mattia routed the matrix.</li>
     <li><strong>New schematic, per half.</strong> Use the Scotto KiCad library: hotswap MX + 1N4148 matrix, the SK6812 chain on the battery through a P-MOSFET LED power switch (driven from P0.08 through an N-MOSFET) with a 10 µF + 100 nF capacitor, nice!nano on the back with all 21 pins, encoder (right), battery JST, power switch, reset.</li>
-    <li><strong>Place and route.</strong> Place keys from the KLE file with KB Placer, then delete the inner column, put the controller footprint on the back where it was, and put the knob on the right front. Keep ground pour away from the controller's antenna end. Route rows on the front and columns on the back. Run DRC.</li>
+    <li><strong>Place and route.</strong> Place keys from the KLE file with KB Placer, then delete the inner column, put the controller footprint on the back where it was, and put a knob and an OLED header on each half's front. Keep ground pour away from the controller's antenna end. Route rows on the front and columns on the back. Run DRC.</li>
     <li><strong>Bring-up board first, optional.</strong> If you'd rather not risk the full order, a small board with 4 keys, the encoder, 4 LEDs and an underside-mounted nice!nano costs a few dollars and tests every circuit.</li>
     <li><strong>Order and build.</strong> Lion Circuits (Bengaluru), HASL finish, 5 + 5 boards, LED assembly optional. Flash the left and right ZMK UF2 files.</li>
-    <li><strong>Case and tenting.</strong> Export the board's 3D model into Fusion and design a closed case: depth for the underside controller and battery, slots on the top edge for USB-C and the power switch, foam, and weight in the base. For tenting, use screw-in legs like the Corne case, or magnetic phone stands like a wireless Sofle builder on Reddit.</li>
+    <li><strong>Case and tenting.</strong> Order the FR-4 plates with the PCBs (<code>fab/PLATE.md</code>) and print the case parts in <code>case/</code>. Build the plate and PCB into one unit on M2 standoffs, then close it into the case on its Poron gaskets with foam and weight in the base. For tenting, use screw-in legs like the Corne case, or magnetic phone stands like a wireless Sofle builder on Reddit.</li>
   </ol>
 
   <h2>Checklist before ordering</h2>
@@ -314,19 +316,20 @@ function under(x,y,P){const w=0.95,h=1.75,[px,py]=at(x,y);
   [[x-0.12,y-0.2],[x+w+0.12,y-0.2],[x+w+0.12,y+h],[x-0.12,y+h]].forEach(p=>P.push(at(...p)))}
 under(6.53,0.1,ptsL);
 under(11.95+GAP,0.1,ptsR);
-// knob (EC11 + ~19 mm knob) in the freed right inner column, clear of H/Y and the thumbs
-{const kx=12.25+GAP, ky=2.55, r=0.5; const [cx,cy]=at(kx,ky);
+// an OLED over each controller's lower end, and a knob (EC11 + ~19 mm knob) below it, mirrored
+part(6.73,0.40,1.44,1.47,"OLED",true,ptsL);
+part(11.25+GAP,0.40,1.44,1.47,"OLED",true,ptsR);
+for(const [kx,P] of [[7.57,ptsL],[11.85+GAP,ptsR]]){const ky=2.34, r=0.5; const [cx,cy]=at(kx,ky);
  el("circle",{cx,cy,r:r*U,fill:"var(--part)",stroke:"var(--part-edge)","stroke-width":1.5},g);
  el("circle",{cx,cy,r:r*U-7,fill:"var(--cap)",stroke:"var(--part-edge)","stroke-width":1},g);
  el("line",{x1:cx,y1:cy-r*U+9,x2:cx,y2:cy-r*U+17,stroke:"var(--legend)","stroke-width":2},g);
- for(let i=0;i<12;i++){const a=i*Math.PI/6;ptsR.push(at(kx+(r+0.15)*Math.cos(a),ky+(r+0.15)*Math.sin(a)))}}
+ for(let i=0;i<12;i++){const a=i*Math.PI/6;P.push(at(kx+(r+0.15)*Math.cos(a),ky+(r+0.15)*Math.sin(a)))}}
 function hull(pts){pts=pts.slice().sort((a,b)=>a[0]-b[0]||a[1]-b[1]);const cr=(o,a,b)=>(a[0]-o[0])*(b[1]-o[1])-(a[1]-o[1])*(b[0]-o[0]);const lo=[],up=[];for(const p of pts){while(lo.length>=2&&cr(lo[lo.length-2],lo[lo.length-1],p)<=0)lo.pop();lo.push(p)}for(const p of pts.reverse()){while(up.length>=2&&cr(up[up.length-2],up[up.length-1],p)<=0)up.pop();up.push(p)}return lo.slice(0,-1).concat(up.slice(0,-1))}
 for(const [P,grp] of [[ptsL,pcbL],[ptsR,pcbR]]){const h=hull(P);el("path",{d:"M"+h.map(p=>p.map(v=>v.toFixed(1)).join(" ")).join(" L ")+" Z",fill:"var(--pcb)",stroke:"var(--pcb-edge)","stroke-width":1.5,"stroke-linejoin":"round"},grp)}
 const lab=(x,y,t,a="middle")=>{const [px,py]=at(x,y);el("text",{x:px,y:py,"text-anchor":a,"font-size":11,fill:"var(--muted)"},svg).textContent=t};
 lab(3.8,7.9,"LEFT · central · USB-C + Bluetooth to host");
 lab(15.6+GAP,7.9,"RIGHT · peripheral");
 
-lab(7.0,2.55,"free","middle");lab(7.0,2.85,"space","middle");
 lab(7.0,-0.45,"USB-C","middle");lab(12.42+GAP,-0.45,"USB-C","middle");
 </script>
 <script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>

@@ -273,12 +273,32 @@ LEFT_PARTS = {
     "R3":  dict(x=MCU_X + 21.25, y=TOP_EDGE + 29.5, back=True, rot=90),
     "C1":  dict(x=MCU_X + 25.25, y=TOP_EDGE + 18.25, back=True, rot=90),
     "C2":  dict(x=MCU_X + 25.25, y=TOP_EDGE + 24.25, back=True, rot=90),
-    # reset: origin is pad 1; on the back the 6.5 mm body mirrors toward -x, so offset by its width
-    "SW91": dict(x=MCU_X + 9.0 + 1.5 + 6.5, y=TOP_EDGE + 36.0, back=True),
+    # reset: x is the body's centre, so the two halves' buttons mirror; its origin (pad 1) sits
+    # 3.25 mm off the centre, toward +x on both halves once flipped to the back
+    "SW91": dict(x=MCU_X + 20.25, y=TOP_EDGE + 36.0, back=True, body_dx=-3.25),
 }
 BAT_PLUS = (3.5, 0.0)                        # "+" beside the battery connector's pad 1, outside its outline
-ENCODER_SHAFT = (12.5 * U, TOP_EDGE + 16.65 * 2 + 15.0)   # right half, front, below the controller
+# Encoders: one per half, mirrored. The right half's shaft, on the front below the controller, with
+# the knob's edge 8.1 mm from the nearest keycap.
+ENCODER_SHAFT = (230.5, 49.0)
 ENC_ORIGIN_TO_SHAFT = (0.0, 0.0)                          # marbastlib EC11: origin at the shaft
+ENC_DIODE = (9.0, -7.0 + 3.81)    # its diode on the back, from the shaft (right half): origin is pad 1, pad 2 north
+# OLED: a 0.96 in. module (27.5 x 28 mm) over the controller's lower end, its header along its bottom
+# edge so the text reads upside down (turned in firmware). Right half: module centre, and pin 1 (GND)
+# relative to it. Pins run toward -x on both halves, since the modules themselves don't mirror.
+OLED_CENTRE = (232.75, 26.0)
+OLED_PIN1 = (3.81, 12.7)
+OLED_PIN_TURN = 90                # turns the 1x4 header so its pins run from pin 1 toward -x
+
+
+OLED_MODEL = "${KIPRJMOD}/lib/keygen.3dshapes/OLED_096_I2C.step"   # tools/gen_models.py
+
+
+def oled_model(fp):
+    """Add the OLED module's 3D model to its header footprint (the stock header has only the pins)."""
+    if any(m.m_Filename == OLED_MODEL for m in fp.Models()): return
+    m = pcbnew.FP_3DMODEL(); m.m_Filename = OLED_MODEL
+    fp.Models().push_back(m)
 
 
 def battery_plus(b):
@@ -323,25 +343,27 @@ def build():
             dx, dy = rot(east, ro)
             B.place(f"D{base+n}", cx + dx, cy + dy, ro, back=True, extra=90)
             outline_pts += grow(corners, cx, cy, 0.6)
+        # right-half positions, mirrored for the left
+        rmir = (lambda x: x) if side == "right" else (lambda x: MIRROR_X - x)
+        sx, sy = rmir(ENCODER_SHAFT[0]), ENCODER_SHAFT[1]
+        sgn = 1 if side == "right" else -1
         if enc:
-            # encoder diode: next to the encoder's switch pins
-            n = num[enc]
-            sx, sy = ENCODER_SHAFT
-            B.place(f"D{base+n}", sx + 8.6, sy + 3.0, 0, back=True, extra=90)   # beside S1/S2
+            # encoder diode: beside the encoder's switch pins
+            B.place(f"D{base+num[enc]}", sx + sgn * ENC_DIODE[0], sy + ENC_DIODE[1], 0, back=True, extra=90)
         # controller and friends
         mir = (lambda x: MIRROR_X - x) if side == "right" else (lambda x: x)
         for key, p in LEFT_PARTS.items():
             prefix, n = re.match(r"([A-Z]+)(\d+)$", key).groups()
-            B.place(f"{prefix}{base + int(n)}", mir(p["x"]), p["y"], p.get("rot", 0), back=p["back"])
+            B.place(f"{prefix}{base + int(n)}", mir(p["x"]) - p.get("body_dx", 0), p["y"], p.get("rot", 0), back=p["back"])
         if enc:
-            sx, sy = ENCODER_SHAFT
             B.place(f"ENC{base+1}", sx - ENC_ORIGIN_TO_SHAFT[0], sy - ENC_ORIGIN_TO_SHAFT[1], 0, back=False)
+        ox, oy = rmir(OLED_CENTRE[0]), OLED_CENTRE[1]
+        oled_model(B.place(f"J{base+1}", ox + OLED_PIN1[0], oy + OLED_PIN1[1], 0, back=False, extra=OLED_PIN_TURN))
         # outline: keys + controller ear
         ear_x0, ear_x1 = mir(MCU_X - 9.5), mir(MCU_X + 9.0 + 1.2 + 6.1 + 1.5 + 7.4 + 1.0)
         ear_y1 = TOP_EDGE + 16.65 * 2 + 15.0
         outline_pts += [(ear_x0, TOP_EDGE), (ear_x1, TOP_EDGE), (ear_x1, ear_y1), (ear_x0, ear_y1)]
         if enc:
-            sx, sy = ENCODER_SHAFT
             outline_pts += [(sx - 10, sy + 9), (sx + 10, sy + 9)]
         B.outline(outline_pts)
         B.mounting_holes(convex_hull(outline_pts), side)
