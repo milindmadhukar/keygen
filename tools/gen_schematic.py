@@ -42,8 +42,9 @@ MCU_TYPES = {"GND": "power_in", "B+": "power_in", "VCC": "power_out", "RST": "in
 # Net on each MCU pad (both halves). Pads not listed get a no-connect flag.
 MCU_NETS = {
     1: "LED_DIN",            # SK6812 data via SPI MOSI (ZMK led_strip)
+    2: "LED_EN",             # P0.08: LED power switch (ZMK ext-power), high = LEDs powered
     3: "GND", 4: "GND", 14: "GND",
-    13: "VBAT", 15: "RST", 16: "VCC",
+    13: "VBAT", 15: "RST",
     7: "ROW0", 8: "ROW1", 9: "ROW2", 10: "ROW3", 11: "ROW4",
     12: "COL0", 22: "COL1", 21: "COL2", 20: "COL3", 19: "COL4", 18: "COL5", 17: "COL6",
 }
@@ -73,11 +74,11 @@ FP = {
     "sw": "keygen:SW_MX_HS_CPG151101S11_{}u",      # marbastlib + switch outline (see keygen_footprints)
     "diode": "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal",
     "led": "LED_SMD:LED_SK6812MINI-E_3.2x2.8mm_P1.5mm_ReverseMount",
-    "cap": "Capacitor_SMD:C_0805_2012Metric",
+    "cap": "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder",
     "enc": "keygen:ROT_Alps_EC11E-Switch",           # marbastlib, origin at the shaft
     "pwr": "keygen:SW_MSK12C02-HB",
-    "pfet": "Package_TO_SOT_SMD:SOT-23",
-    "res": "Resistor_SMD:R_0805_2012Metric",
+    "fet": "Package_TO_SOT_SMD:SOT-23",
+    "res": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
     "rst": "Button_Switch_THT:SW_PUSH_6mm_H5mm",
     "bat": "Connector_JST:JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal",
     "hole": "MountingHole:MountingHole_2.2mm_M2",
@@ -229,6 +230,7 @@ LIBSYMS = {
     "Device:C": lambda: lib_symbol(STOCK / "Device.kicad_sym", "C"),
     "Device:R": lambda: lib_symbol(STOCK / "Device.kicad_sym", "R"),
     "Transistor_FET:AO3401A": lambda: flatten(STOCK / "Transistor_FET.kicad_sym", "AO3401A", "TP0610T"),
+    "Transistor_FET:AO3400A": lambda: flatten(STOCK / "Transistor_FET.kicad_sym", "AO3400A", "Q_NMOS_GSD"),
     "Device:RotaryEncoder_Switch": lambda: lib_symbol(STOCK / "Device.kicad_sym", "RotaryEncoder_Switch"),
     "Device:Battery_Cell": lambda: lib_symbol(STOCK / "Device.kicad_sym", "Battery_Cell"),
     "Switch:SW_SPDT": lambda: lib_symbol(STOCK / "Switch.kicad_sym", "SW_SPDT"),
@@ -342,13 +344,13 @@ def build(side, root, sheet):
     # ---- LED chain -----------------------------------------------------------------
     LX0, LY0, LDX, LDY, PER = 30.48, 215.9, 38.1, 30.48, 8
     nled = len(keys)
-    sh.text(f"PER-KEY LEDs  ({nled}, no underglow) - "
-            "powered from the controller's switched VCC (P0.13); cap brightness in firmware", LX0 - 15.24, LY0 - 20.32, 2)
+    sh.text(f"PER-KEY LEDs  ({nled}) - powered from the battery through the LED power switch (Q2, LED_VDD)",
+            LX0 - 15.24, LY0 - 20.32, 2)
     for i in range(nled):
         x, y = LX0 + (i % PER) * LDX, LY0 + (i // PER) * LDY
         din = "LED_DIN" if i == 0 else f"LED_D{i}"
         dout = f"LED_D{i+1}" if i < nled - 1 else None
-        nets = {"VDD": "VCC", "VSS": "GND", "DIN": din}
+        nets = {"VDD": "LED_VDD", "VSS": "GND", "DIN": din}
         if dout: nets["DOUT"] = dout
         sh.symbol("LED:SK6812MINI-E", R("LED", i + 1), "SK6812MINI-E", x, y, FP["led"], nets=nets,
                   fields=[("Position", keys[i][2])])
@@ -360,22 +362,23 @@ def build(side, root, sheet):
     if side == "right": mnets.update({str(k): v for k, v in MCU_NETS_RIGHT.items()})
     sh.symbol("keygen:nice_nano_v2", R("U", 1), "nRF52840 Pro Micro", MX, MY, FP["mcu"], nets=mnets)
     sh.text(("Encoder B on P0.09 (NFC pin): set nfct-pins-as-gpios.\n" if side == "right" else "")
-            + "Spare: P0.08, P0.17 (full speed), " + ("P0.10" if side == "right" else "P0.20, P0.09, P0.10"),
+            + "P0.08: LED power switch. VCC (pad 16) unused.\n"
+            + "Spare: P0.17 (full speed), " + ("P0.10" if side == "right" else "P0.20, P0.09, P0.10"),
             MX + 25.4, MY - 15.24)
 
     # ---- power ---------------------------------------------------------------------
     PX, PY = 360.68, 132.08
     sh.text("POWER", PX - 25.4, PY - 17.78, 2)
-    sh.symbol("Device:Battery_Cell", R("BT", 1), "LiPo 3.7V ~1000mAh", PX - 20.32, PY, FP["bat"],
+    sh.symbol("Device:Battery_Cell", R("BT", 1), "LiPo 3.7V 3000mAh", PX - 20.32, PY, FP["bat"],
               nets={"1": "BAT_RAW", "2": "GND"})
     sh.symbol("Switch:SW_SPDT", R("SW", 90), "MSK12C02 power", PX, PY, FP["pwr"],
               nets={"1": "GND", "2": "BAT_GATE", "3": "BAT_RAW"})
     sh.symbol("Switch:SW_Push", R("SW", 91), "Reset", PX + 25.4, PY, FP["rst"], nets={"1": "RST", "2": "GND"})
-    sh.symbol("Device:C", R("C", 1), "10uF", PX - 20.32, PY + 22.86, FP["cap"], nets={"1": "VCC", "2": "GND"})
-    sh.symbol("Device:C", R("C", 2), "100nF", PX - 7.62, PY + 22.86, FP["cap"], nets={"1": "VCC", "2": "GND"})
-    for i, net in enumerate(("GND", "VBAT")):
+    sh.symbol("Device:C", R("C", 1), "10uF", PX - 20.32, PY + 22.86, FP["cap"], nets={"1": "LED_VDD", "2": "GND"})
+    sh.symbol("Device:C", R("C", 2), "100nF", PX - 7.62, PY + 22.86, FP["cap"], nets={"1": "LED_VDD", "2": "GND"})
+    for i, net in enumerate(("GND", "VBAT", "LED_VDD")):
         sh.symbol("power:PWR_FLAG", f"#FLG{base + i + 1}", "PWR_FLAG", PX + 12.7 + i * 12.7, PY + 22.86, nets={"1": net}, in_bom=False)
-    sh.text("C1/C2 sit next to the first LED of the chain.", PX - 25.4, PY + 33.02)
+    sh.text("C1/C2 sit at the LED power switch's output.", PX - 25.4, PY + 33.02)
 
     # ---- battery load switch ---------------------------------------------------------
     # The MSK12C02 is rated 50 mA, less than the nice!nano's 500 mA (BOOST) charge current, so it
@@ -383,12 +386,26 @@ def build(side, root, sheet):
     # drain on B+: the body diode (drain -> source) blocks the battery when the switch is off.
     QX, QY = 360.68, 185.42
     sh.text("BATTERY SWITCH (P-MOSFET; the slide switch only drives the gate)", QX - 25.4, QY - 15.24, 2)
-    sh.symbol("Transistor_FET:AO3401A", R("Q", 1), "AO3401A", QX, QY, FP["pfet"],
+    sh.symbol("Transistor_FET:AO3401A", R("Q", 1), "AO3401A", QX, QY, FP["fet"],
               nets={"1": "BAT_GATE", "2": "BAT_RAW", "3": "VBAT"})
     sh.symbol("Device:R", R("R", 1), "1M", QX + 15.24, QY, FP["res"], nets={"1": "BAT_GATE", "2": "BAT_RAW"})
     sh.text("Switch 2-1: gate to GND, on. Switch 2-3: gate to source, off.\n"
             "R1 holds the gate off between positions. Leave the switch on while charging:\n"
             "off, USB charges the cell through the body diode (~0.35 W at 500 mA).", QX - 25.4, QY + 12.7)
+
+    # ---- LED power switch ------------------------------------------------------------
+    # The LEDs run from the battery (B+, after Q1), inside the SK6812MINI-E's 3.7-5.5 V for most of
+    # the charge, through a high-side P-MOSFET. P0.08 can't hold Q2's gate at the source (up to
+    # 4.2 V), so it drives an N-MOSFET that pulls the gate down. R2 holds Q2 off, R3 holds Q3 off
+    # while the controller boots or sleeps.
+    LX, LY = 459.74, 132.08
+    sh.text("LED POWER SWITCH (P0.08 high = LEDs on)", LX - 25.4, LY - 15.24, 2)
+    sh.symbol("Transistor_FET:AO3401A", R("Q", 2), "AO3401A", LX, LY, FP["fet"],
+              nets={"1": "LED_GATE", "2": "VBAT", "3": "LED_VDD"})
+    sh.symbol("Device:R", R("R", 2), "100k", LX + 20.32, LY, FP["res"], nets={"1": "LED_GATE", "2": "VBAT"})
+    sh.symbol("Transistor_FET:AO3400A", R("Q", 3), "AO3400A", LX, LY + 25.4, FP["fet"],
+              nets={"1": "LED_EN", "2": "GND", "3": "LED_GATE"})
+    sh.symbol("Device:R", R("R", 3), "100k", LX + 20.32, LY + 25.4, FP["res"], nets={"1": "LED_EN", "2": "GND"})
 
     # ---- encoder -------------------------------------------------------------------
     if enc:

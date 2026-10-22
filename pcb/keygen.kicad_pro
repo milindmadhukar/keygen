@@ -323,7 +323,7 @@
       },
       {
         "netclass": "Power",
-        "pattern": "*/VCC"
+        "pattern": "*/LED_VDD"
       },
       {
         "netclass": "Power",

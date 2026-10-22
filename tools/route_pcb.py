@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parent.parent
 PCB = ROOT / "pcb/keygen.kicad_pcb"
 DSN, SES = PCB.with_suffix(".dsn"), PCB.with_suffix(".ses")
 JAR = ROOT / "tools/freerouting-2.5.0.jar"
-POWER = ("GND", "VCC", "VBAT", "BAT_RAW")
+POWER = ("GND", "LED_VDD", "VBAT", "BAT_RAW")
 mm = pcbnew.FromMM
 
 def netclasses(b):

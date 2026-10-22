@@ -1,4 +1,7 @@
-/* Per-key SK6812MINI-E chain: 33 per half, data on P0.06 (pad 1), driven as one strip */
+/*
+ * Per-key SK6812MINI-E chain: 33 per half, data on P0.06 (pad 1), driven as one strip. The chain
+ * runs from the battery through the board's LED power switch (Q2/Q3), which P0.08 (pad 2) turns on.
+ */
 
 #include <dt-bindings/led/led.h>
 
@@ -45,4 +48,10 @@
     chosen {
         zmk,underglow = &led_strip;
     };
+};
+
+/* ext-power drives the LED power switch on P0.08. P0.13 still switches the nice!nano's own 3.3 V
+ * output, which nothing on the board uses, off with it. */
+&{/EXT_POWER} {
+    control-gpios = <&gpio0 8 GPIO_ACTIVE_HIGH>, <&gpio0 13 GPIO_ACTIVE_HIGH>;
 };

@@ -8,12 +8,14 @@ The shopping list with spares and prices is `bom/bom.csv` / `plan/bom.html`.
 | Part | Qty | References | Solder notes |
 |---|---|---|---|
 | JST-PH 2-pin battery connector | 1 | BT101 | through-hole side-entry, back side; check battery polarity first |
-| 10 µF capacitor (0805) | 1 | C101 | SMD, next to the first LED |
-| 100 nF capacitor (0805) | 1 | C102 | SMD, next to the first LED |
+| 10 µF capacitor (1206) | 1 | C101 | SMD, back side, beside the LED power switch |
+| 100 nF capacitor (1206) | 1 | C102 | SMD, back side, beside the LED power switch |
 | 1N4148 diode | 33 | D101–D133 | through-hole, back side; band (cathode) toward the square pad |
 | SK6812MINI-E LED | 33 | LED101–LED133 | SMD, reverse-mount on the back; mind the corner mark |
-| AO3401A P-MOSFET (SOT-23) | 1 | Q101 | SMD, back side, between the controller and the power switch |
-| 1 MΩ resistor (0805) | 1 | R101 | SMD, back side, below the MOSFET |
+| AO3401A P-MOSFET (SOT-23) | 2 | Q101, Q102 | SMD, back side: Q1 between the controller and the power switch, Q2 in the LED power switch |
+| AO3400A N-MOSFET (SOT-23) | 1 | Q103 | SMD, back side, in the LED power switch |
+| 1 MΩ resistor (1206) | 1 | R101 | SMD, back side, below the battery MOSFET |
+| 100 kΩ resistor (1206) | 2 | R102, R103 | SMD, back side, in the LED power switch |
 | MX switch, 1.25u key | 5 | SW101, SW107, SW113, SW120, SW131 | Kailh socket on the back; switch + 1.25u keycap |
 | MX switch, 1u key | 26 | SW102–SW106, SW108–SW112, SW114–SW119, SW121–SW130 | Kailh socket on the back; switch + 1u keycap on top |
 | MX switch, 1.5u key (tall thumb) | 2 | SW132, SW133 | Kailh socket on the back; switch + 1.5u keycap, turned 90° |
@@ -26,13 +28,15 @@ The shopping list with spares and prices is `bom/bom.csv` / `plan/bom.html`.
 | Part | Qty | References | Solder notes |
 |---|---|---|---|
 | JST-PH 2-pin battery connector | 1 | BT201 | through-hole side-entry, back side; check battery polarity first |
-| 10 µF capacitor (0805) | 1 | C201 | SMD, next to the first LED |
-| 100 nF capacitor (0805) | 1 | C202 | SMD, next to the first LED |
+| 10 µF capacitor (1206) | 1 | C201 | SMD, back side, beside the LED power switch |
+| 100 nF capacitor (1206) | 1 | C202 | SMD, back side, beside the LED power switch |
 | 1N4148 diode | 34 | D201–D234 | through-hole, back side; band (cathode) toward the square pad |
 | EC11 rotary encoder | 1 | ENC201 | through-hole, front side (right half only) |
 | SK6812MINI-E LED | 33 | LED201–LED233 | SMD, reverse-mount on the back; mind the corner mark |
-| AO3401A P-MOSFET (SOT-23) | 1 | Q201 | SMD, back side, between the controller and the power switch |
-| 1 MΩ resistor (0805) | 1 | R201 | SMD, back side, below the MOSFET |
+| AO3401A P-MOSFET (SOT-23) | 2 | Q201, Q202 | SMD, back side: Q1 between the controller and the power switch, Q2 in the LED power switch |
+| AO3400A N-MOSFET (SOT-23) | 1 | Q203 | SMD, back side, in the LED power switch |
+| 1 MΩ resistor (1206) | 1 | R201 | SMD, back side, below the battery MOSFET |
+| 100 kΩ resistor (1206) | 2 | R202, R203 | SMD, back side, in the LED power switch |
 | MX switch, 1.25u key | 5 | SW201, SW208, SW214, SW221, SW232 | Kailh socket on the back; switch + 1.25u keycap |
 | MX switch, 1u key | 26 | SW202–SW206, SW209–SW213, SW215–SW220, SW222–SW231 | Kailh socket on the back; switch + 1u keycap on top |
 | MX switch, 1.5u key (tall thumb) | 2 | SW233, SW234 | Kailh socket on the back; switch + 1.5u keycap, turned 90° |
@@ -45,12 +49,14 @@ The shopping list with spares and prices is `bom/bom.csv` / `plan/bom.html`.
 | Part | 1 keyboard | 2 keyboards | Where to buy |
 |---|---|---|---|
 | JST-PH 2-pin battery connector | 2 | 4 | Robu.in "JST PH 2.0 2 pin" |
-| 10 µF capacitor (0805) | 2 | 4 | Robu.in / Lamington Road |
-| 100 nF capacitor (0805) | 2 | 4 | Robu.in / Lamington Road |
+| 10 µF capacitor (1206) | 2 | 4 | Robu.in / Lamington Road |
+| 100 nF capacitor (1206) | 2 | 4 | Robu.in / Lamington Road |
 | 1N4148 diode | 67 | 134 | [StacksKB 1N4148 (10-pack)](https://stackskb.com/store/1n4148-through-hole-diode/) |
 | SK6812MINI-E LED | 66 | 132 | Not stocked by Indian stores I checked |
-| AO3401A P-MOSFET (SOT-23) | 2 | 4 | Robu.in / Lamington Road |
-| 1 MΩ resistor (0805) | 2 | 4 | Robu.in / Lamington Road |
+| AO3401A P-MOSFET (SOT-23) | 4 | 8 | Robu.in / Lamington Road |
+| AO3400A N-MOSFET (SOT-23) | 2 | 4 | Robu.in / Lamington Road |
+| 1 MΩ resistor (1206) | 2 | 4 | Robu.in / Lamington Road |
+| 100 kΩ resistor (1206) | 4 | 8 | Robu.in / Lamington Road |
 | MX switch, 1.25u key | 10 | 20 | Kailh sockets: you own 100 (enough for keyboard 1). Switches: still to choose |
 | MX switch, 1u key | 52 | 104 | Kailh sockets: you own 100 (enough for keyboard 1). Switches: still to choose |
 | MX switch, 1.5u key (tall thumb) | 4 | 8 | Kailh sockets: you own 100 (enough for keyboard 1). Switches: still to choose |

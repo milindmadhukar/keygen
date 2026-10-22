@@ -1,14 +1,16 @@
 Item Number,Designator,Unit Quantity,Description,Manufacturer Part Number,Footprint,Value,Assembly Instructions
 1,BT101,1,JST-PH 2-pin battery connector,S2B-PH-K-S(LF)(SN) (JST),Connector_JST:JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal,JST-PH 2-pin,"THT side-entry, BOTTOM side. Opening toward the battery pocket."
-2,C101,1,10 µF capacitor (0805),"CL21A106KAYNNNE (Samsung, 10 µF 25 V X5R 0805)",Capacitor_SMD:C_0805_2012Metric,10uF,BOTTOM side.
-3,C102,1,100 nF capacitor (0805),"CL21B104KBCNNNC (Samsung, 100 nF 50 V X7R 0805)",Capacitor_SMD:C_0805_2012Metric,100nF,BOTTOM side.
+2,C101,1,10 µF capacitor (1206),"CL31A106KBHNNNE (Samsung, 10 µF 50 V X5R 1206)",Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder,10uF,BOTTOM side.
+3,C102,1,100 nF capacitor (1206),"CL31B104KBCNNNC (Samsung, 100 nF 50 V X7R 1206)",Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder,100nF,BOTTOM side.
 4,"D101,D102,D103,D104,D105,D106,D107,D108,D109,D110,D111,D112,D113,D114,D115,D116,D117,D118,D119,D120,D121,D122,D123,D124,D125,D126,D127,D128,D129,D130,D131,D132,D133",33,1N4148 diode,"1N4148 (DO-35, e.g. onsemi 1N4148)",Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal,1N4148,"THT, BOTTOM side. Polarity: band (cathode) to the square pad."
 5,"LED101,LED102,LED103,LED104,LED105,LED106,LED107,LED108,LED109,LED110,LED111,LED112,LED113,LED114,LED115,LED116,LED117,LED118,LED119,LED120,LED121,LED122,LED123,LED124,LED125,LED126,LED127,LED128,LED129,LED130,LED131,LED132,LED133",33,SK6812MINI-E LED,"SK6812MINI-E (OPSCO, LCSC C5149201)",LED_SMD:LED_SK6812MINI-E_3.2x2.8mm_P1.5mm_ReverseMount,SK6812MINI-E,"Reverse-mount LED, BOTTOM side, body through the PCB cut-out. Match the corner mark to the footprint's pin-1 mark."
-6,Q101,1,AO3401A P-MOSFET (SOT-23),"AO3401A (Alpha & Omega, SOT-23)",Package_TO_SOT_SMD:SOT-23,AO3401A,BOTTOM side.
-7,R101,1,1 MΩ resistor (0805),"0805W8F1004T5E (UNI-ROYAL, 1 MΩ 1% 0805)",Resistor_SMD:R_0805_2012Metric,1M,BOTTOM side.
-8,"SW101,SW107,SW113,SW120,SW131",5,Kailh MX hotswap socket for a 1.25u key,CPG151101S11 (Kailh),keygen:SW_MX_HS_CPG151101S11_1.25u,Kailh hotswap socket,"Kailh CPG151101S11 hotswap socket, BOTTOM side. Do NOT fit switches (customer installs)."
-9,"SW102,SW103,SW104,SW105,SW106,SW108,SW109,SW110,SW111,SW112,SW114,SW115,SW116,SW117,SW118,SW119,SW121,SW122,SW123,SW124,SW125,SW126,SW127,SW128,SW129,SW130",26,Kailh MX hotswap socket for a 1u key,CPG151101S11 (Kailh),keygen:SW_MX_HS_CPG151101S11_1u,Kailh hotswap socket,"Kailh CPG151101S11 hotswap socket, BOTTOM side. Do NOT fit switches (customer installs)."
-10,"SW132,SW133",2,Kailh MX hotswap socket for a 1.5u key,CPG151101S11 (Kailh),keygen:SW_MX_HS_CPG151101S11_1.5u,Kailh hotswap socket,"Kailh CPG151101S11 hotswap socket, BOTTOM side. Do NOT fit switches (customer installs)."
-11,SW190,1,MSK12C02 power slide switch,MSK12C02-HB,keygen:SW_MSK12C02-HB,MSK12C02 power,BOTTOM side.
-12,SW191,1,6 mm reset button,"6x6x5 mm THT tactile switch (e.g. TS-1102S-B-B, any 6x6x5)",Button_Switch_THT:SW_PUSH_6mm_H5mm,Reset,BOTTOM side.
-13,U101,1,nRF52840 Pro Micro (nice!nano v2),Customer supplied: nice!nano v2 nRF52840 Pro Micro,keygen:nice_nano_H_USBup,nRF52840 Pro Micro,DO NOT FIT: customer solders sockets + controller (BOTTOM side).
+6,"Q101,Q102",2,AO3401A P-MOSFET (SOT-23),"AO3401A (Alpha & Omega, SOT-23)",Package_TO_SOT_SMD:SOT-23,AO3401A,BOTTOM side.
+7,Q103,1,AO3400A N-MOSFET (SOT-23),"AO3400A (Alpha & Omega, SOT-23)",Package_TO_SOT_SMD:SOT-23,AO3400A,BOTTOM side.
+8,R101,1,1 MΩ resistor (1206),"1206W4F1004T5E (UNI-ROYAL, 1 MΩ 1% 1206)",Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder,1M,BOTTOM side.
+9,"R102,R103",2,100 kΩ resistor (1206),"1206W4F1003T5E (UNI-ROYAL, 100 kΩ 1% 1206)",Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder,100k,BOTTOM side.
+10,"SW101,SW107,SW113,SW120,SW131",5,Kailh MX hotswap socket for a 1.25u key,CPG151101S11 (Kailh),keygen:SW_MX_HS_CPG151101S11_1.25u,Kailh hotswap socket,"Kailh CPG151101S11 hotswap socket, BOTTOM side. Do NOT fit switches (customer installs)."
+11,"SW102,SW103,SW104,SW105,SW106,SW108,SW109,SW110,SW111,SW112,SW114,SW115,SW116,SW117,SW118,SW119,SW121,SW122,SW123,SW124,SW125,SW126,SW127,SW128,SW129,SW130",26,Kailh MX hotswap socket for a 1u key,CPG151101S11 (Kailh),keygen:SW_MX_HS_CPG151101S11_1u,Kailh hotswap socket,"Kailh CPG151101S11 hotswap socket, BOTTOM side. Do NOT fit switches (customer installs)."
+12,"SW132,SW133",2,Kailh MX hotswap socket for a 1.5u key,CPG151101S11 (Kailh),keygen:SW_MX_HS_CPG151101S11_1.5u,Kailh hotswap socket,"Kailh CPG151101S11 hotswap socket, BOTTOM side. Do NOT fit switches (customer installs)."
+13,SW190,1,MSK12C02 power slide switch,MSK12C02-HB,keygen:SW_MSK12C02-HB,MSK12C02 power,BOTTOM side.
+14,SW191,1,6 mm reset button,"6x6x5 mm THT tactile switch (e.g. TS-1102S-B-B, any 6x6x5)",Button_Switch_THT:SW_PUSH_6mm_H5mm,Reset,BOTTOM side.
+15,U101,1,nRF52840 Pro Micro (nice!nano v2),Customer supplied: nice!nano v2 nRF52840 Pro Micro,keygen:nice_nano_H_USBup,nRF52840 Pro Micro,DO NOT FIT: customer solders sockets + controller (BOTTOM side).

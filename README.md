@@ -45,7 +45,7 @@ cover; see [The name and the artwork](#the-name-and-the-artwork).
 | Encoder | Alps EC11 on the right half, in the key matrix (push to mute, turn for volume) |
 | Switches | Akko V3 Lavender Purple Pro (tactile, 5-pin) in Kailh hotswap sockets (CPG151101S11) |
 | Keycaps | Blank DSA PBT, smoke translucent |
-| Lighting | 33 SK6812MINI-E reverse-mount RGB LEDs per half, on while that half has USB power |
+| Lighting | 33 SK6812MINI-E reverse-mount RGB LEDs per half, powered from the battery through a MOSFET switch, on while that half has USB power |
 | Controller | nice!nano v2 (nRF52840, Pro Micro format), one per half, socketed on the underside |
 | Connectivity | Host: USB-C (left half) or Bluetooth, 5 profiles. Halves: Bluetooth split |
 | Power | LiPo pouch per half (≤ 5 mm thick, 2500–3000 mAh), JST-PH connector, slide switch driving a P-MOSFET battery switch. Each half charges from its own USB-C |
@@ -111,7 +111,7 @@ label's mark.
   half's encoder push switch sits in the matrix at row 0 / column 6.
 - **Controller pins:** both halves use the same pin map apart from the encoder. LED data is on a
   full-speed pin. The encoder's B line uses an NFC pin, set up as a GPIO in
-  firmware. P0.08 and P0.17 (full speed) are spare. The full pin table is in the
+  firmware. P0.08 drives the LED power switch, and P0.17 (full speed) is spare. The full pin table is in the
   [build plan](plan/index.html).
 - **Power and charging:** each half has its own LiPo and charges through its own controller's
   USB-C; a 1-to-2 USB-C cable charges both from one charger. The nice!nano's BOOST jumper is
@@ -121,8 +121,9 @@ label's mark.
   off between positions. Leave the switch on while charging.
 - **Battery:** a pouch up to 5 mm thick lies flat over the hotswap sockets under the outer and
   middle key columns, on a kapton sheet, at least 15 mm from the controller's antenna end.
-- **LED power:** the LED rail runs from the controller's switched VCC (P0.13), so firmware can cut
-  it completely when the LEDs are off.
+- **LED power:** the LEDs run from the battery (B+) through an AO3401A P-MOSFET, whose gate an
+  AO3400A N-MOSFET on P0.08 pulls low to turn them on. 100 kΩ resistors hold both MOSFETs off, and
+  a 10 µF + 100 nF pair sits at the switch's output. The controller's own 3.3 V output is unused.
 - **Antenna:** each controller's antenna end is kept clear of the ground fill, and the case is
   plastic.
 
@@ -134,10 +135,11 @@ label's mark.
 | Akko V3 Lavender Purple Pro switch + Kailh hotswap socket | 33 | 33 |
 | 1N4148 diode (DO-35) | 33 | 34 |
 | SK6812MINI-E RGB LED | 33 | 33 |
-| 10 µF + 100 nF capacitors (LED rail) | 1 + 1 | 1 + 1 |
+| 10 µF + 100 nF capacitors, 1206 (LED rail) | 1 + 1 | 1 + 1 |
 | LiPo battery + JST-PH connector | 1 | 1 |
 | MSK12C02 power slide switch | 1 | 1 |
-| AO3401A P-MOSFET + 1 MΩ gate resistor (battery switch) | 1 + 1 | 1 + 1 |
+| AO3401A P-MOSFET + 1 MΩ gate resistor, 1206 (battery switch) | 1 + 1 | 1 + 1 |
+| AO3401A P-MOSFET, AO3400A N-MOSFET, 2 × 100 kΩ, 1206 (LED power switch) | 1 + 1 + 2 | 1 + 1 + 2 |
 | 6 mm reset button | 1 | 1 |
 | EC11 encoder + knob | – | 1 |
 
@@ -165,7 +167,7 @@ and the build and flash steps. In short:
 - QWERTY base layer; Nav (HJKL arrows), Fn (F-keys, numpad, media) and System (Bluetooth, output,
   LEDs, bootloader) layers on the two 1.25u thumb keys
 - Encoder on the right half: volume, press to mute
-- The per-key LEDs light only while that half has USB power, and their VCC is switched off with them
+- The per-key LEDs light only while that half has USB power, and their power switch (P0.08) turns off with them
 
 ![Keygen base layer](docs/keymap-base.svg)
 

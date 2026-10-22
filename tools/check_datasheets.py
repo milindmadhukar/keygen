@@ -63,6 +63,7 @@ def role(net):
     if re.match(r"ROW\d$", net): return "slow", "matrix row (input, ~1 kHz)"
     if re.match(r"COL\d$", net): return "slow", "matrix column (output, ~1 kHz)"
     if net.startswith("ENC_"): return "slow", "encoder (input, < 1 kHz)"
+    if net == "LED_EN": return "slow", "LED power switch (output, changes when the LEDs turn on or off)"
     return None, net
 
 # MSK12C02-HB_ShouHan.pdf (drawing; Chinese notes translated in docs/datasheets/README.md): pin 2 is
@@ -73,6 +74,12 @@ MSK_COMMON, MSK_RATED_MA = "2", 50
 # VGS = -2.5 V, VSD up to 1 V, RthJA 125 C/W (steady state, max).
 AO_PINS = {"1": "G", "2": "S", "3": "D"}
 AO_RDS_25V_MOHM, AO_VGS_MAX, AO_VSD_V, AO_RTH_JA = 85, 12, 0.7, 125
+# AO3400A_AOS.pdf (p. 1): SOT-23 with the same pinout (1 G, 2 S, 3 D), VDS 30 V, VGS +-12 V, ID 5.7 A.
+# p. 2: VGS(th) 0.65-1.45 V, RDS(on) < 48 mOhm at VGS = 2.5 V.
+AON_VTH_MAX = 1.45
+# nRF52840_PS_v1.1.pdf, GPIO electrical specification (p. 157): VOH >= VDD - 0.4 V at 0.5 mA
+# (standard drive). The nice!nano runs the nRF52840 at 3.3 V.
+NRF_VDD, NRF_VOH_DROP = 3.3, 0.4
 # nice!nano charger (pinout image): 100 mA, or 500 mA with the BOOST jumper bridged. LiPo 3.0-4.2 V.
 CHARGE_MA, BOOST_MA, VBAT_MIN, VBAT_MAX = 100, 500, 3.0, 4.2
 # SK6812MINI-E_Opsco_rev02.pdf §4/§5, seen from the lens side:
@@ -83,7 +90,6 @@ CHARGE_MA, BOOST_MA, VBAT_MIN, VBAT_MAX = 100, 500, 3.0, 4.2
 # §8: VDD 3.7-5.5 V. §9: 12 mA per colour. §10: 1 mA static per LED, VIH = 0.7 VDD.
 SK_LENS_CW = ["VDD", "DIN", "VSS", "DOUT"]
 SK_VDD_MIN, SK_MA_PER_LED, SK_STATIC_MA = 3.7, 3 * 12, 1.0
-NICE_NANO_VCC = 3.3
 # 1N4148_Vishay.pdf: band = cathode. KiCad's DO-35 footprint puts pad 1 (silk "K") under the band.
 # Alps_EC11E.pdf (mounting hole drawing): A C B in a row, C (common) in the middle; push switch D/E
 # on the opposite side.
@@ -147,8 +153,8 @@ for side, d in SIDES.items():
        f"{side}: pad 1 (P0.06) lands where the nice!nano's P0.06 is, with the controller under the board "
        "component side (chip, USB-C) facing AWAY from the PCB",
        f"{side}: pinout is mirrored for a controller mounted on the {'back' if back else 'front'}")
-    ok(pad_net(f"U{d}01", "13") == "VBAT" and pad_net(f"U{d}01", "16") == "VCC", A,
-       f"{side}: B+ (pad 13) on VBAT, VCC (pad 16) on the LED rail")
+    ok(pad_net(f"U{d}01", "13") == "VBAT" and pad_net(f"U{d}01", "16") is None, A,
+       f"{side}: B+ (pad 13) on VBAT; VCC (pad 16) unused, the LEDs run from the battery")
     gnd = [n for n in ("3", "4", "14") if pad_net(f"U{d}01", n) != "GND"]
     ok(not gnd, A, f"{side}: all three GND pads (3, 4, 14) on GND", f"{side}: GND pads {gnd} not on GND")
 
@@ -193,8 +199,6 @@ for side, d in SIDES.items():
     qpins = lib_pins("Transistor_FET.kicad_sym", "AO3401A")
     ok(qpins == AO_PINS and len(pads(q)) == 3, A, f"{side}: AO3401A symbol pins 1 G / 2 S / 3 D match the datasheet's SOT-23",
        f"{side}: AO3401A symbol pins {qpins}, datasheet {AO_PINS}")
-    ok(nodes(side, "VBAT") == {(u, "13"), (q, "3")}, A,
-       f"{side}: B+ is fed only by the MOSFET's drain", f"{side}: VBAT = {sorted(nodes(side, 'VBAT'))}")
     ok(nodes(side, "BAT_RAW") == {(bt, plus), (q, "2"), (sw, "3"), (r, "2")}, A,
        f"{side}: battery + (JST pad {plus}) on the MOSFET's source; the body diode (D -> S) blocks it from B+ when off",
        f"{side}: BAT_RAW = {sorted(nodes(side, 'BAT_RAW'))}")
@@ -211,15 +215,30 @@ for side, d in SIDES.items():
        f"{side}: nothing on the silkscreen marks which JST pad is + (pad {plus}); LiPo packs come wired both "
        "ways round and a reversed pack kills the charger", warn=True)
     ok(pad_net(sw, "3") == "BAT_RAW", A, f"{side}: switch 2-3 ties the gate to the source (off)")
-    vcc = {r for r, _ in nodes(side, "VCC")}
-    ok(all(re.match(r"(U|LED|C)\d+$", r) for r in vcc), A,
-       f"{side}: VCC (switched 3.3 V) feeds only LEDs and their caps", f"{side}: VCC also on {sorted(vcc)}")
+    q2, r2, q3, r3 = f"Q{d}02", f"R{d}02", f"Q{d}03", f"R{d}03"
+    npins = lib_pins("Transistor_FET.kicad_sym", "AO3400A")
+    ok(npins == AO_PINS and len(pads(q3)) == 3, A, f"{side}: AO3400A symbol pins 1 G / 2 S / 3 D match the datasheet's SOT-23",
+       f"{side}: AO3400A symbol pins {npins}, datasheet {AO_PINS}")
+    ok(nodes(side, "VBAT") == {(u, "13"), (q, "3"), (q2, "2"), (r2, "2")}, A,
+       f"{side}: B+ is fed only by the battery MOSFET's drain (Q{d}01 pin 3) and feeds the controller, the LED switch's "
+       f"source (Q{d}02 pin 2) and its gate pull-up",
+       f"{side}: VBAT = {sorted(nodes(side, 'VBAT'))}")
+    rail = {r for r, _ in nodes(side, "LED_VDD")}
+    ok(nodes(side, "LED_VDD") - {(r, p) for r, p in nodes(side, "LED_VDD") if r.startswith("LED")}
+       == {(q2, "3"), (f"C{d}01", "1"), (f"C{d}02", "1")} and all(re.match(r"(LED|C|Q)\d+$", r) for r in rail), A,
+       f"{side}: LED_VDD is fed only by the P-MOSFET's drain (Q{d}02 pin 3), with the 10 uF + 100 nF",
+       f"{side}: LED_VDD = {sorted(rail)}")
+    ok(nodes(side, "LED_GATE") == {(q2, "1"), (r2, "1"), (q3, "3")}, A,
+       f"{side}: Q{d}02's gate: pulled up to its source by R{d}02, pulled down by Q{d}03's drain",
+       f"{side}: LED_GATE = {sorted(nodes(side, 'LED_GATE'))}")
+    ok(nodes(side, "LED_EN") == {(u, "2"), (q3, "1"), (r3, "1")} and pad_net(q3, "2") == "GND" and pad_net(r3, "2") == "GND", A,
+       f"{side}: P0.08 (pad 2) drives Q{d}03's gate, R{d}03 holds it low; Q{d}03's source on GND",
+       f"{side}: LED_EN = {sorted(nodes(side, 'LED_EN'))}")
     ok(nodes(side, "RST") == {(u, "15"), (rst, "1")} and pad_net(rst, "2") == "GND", A,
        f"{side}: RST pad -> reset button -> GND")
     caps = {fp(f"C{d}0{i}").GetValue(): fp(f"C{d}0{i}") for i in (1, 2)}
-    led1 = fp(f"LED{d}01")
-    far = [v for v, cp in caps.items() if mm((cp.GetPosition() - led1.GetPosition()).EuclideanNorm()) > 10]
-    ok(not far, A, f"{side}: 10 uF + 100 nF within 10 mm of the first LED", f"{side}: caps {far} far from LED{d}01")
+    far = [v for v, cp in caps.items() if mm((cp.GetPosition() - fp(q2).GetPosition()).EuclideanNorm()) > 12]
+    ok(not far, A, f"{side}: 10 uF + 100 nF within 12 mm of the LED switch's output", f"{side}: caps {far} far from Q{d}02")
 
 # --------------------------------------------------------------------------------------
 # 4. LEDs: physical pinout against the datasheet, chain order
@@ -245,21 +264,26 @@ for side, d in SIDES.items():
     chain = [pad_net(f"LED{d}01", "2")]
     for i in range(1, len(leds) + 1):
         P = {skpins[k]: net(p) for k, p in pads(f"LED{d}{i:02d}").items()}
-        if P["VDD"] != "VCC" or P["VSS"] != "GND": bad.append(f"LED{d}{i:02d} power")
+        if P["VDD"] != "LED_VDD" or P["VSS"] != "GND": bad.append(f"LED{d}{i:02d} power")
         if P["DIN"] != chain[-1]: bad.append(f"LED{d}{i:02d} DIN")
         chain.append(P["DOUT"])
-    ok(chain[0] == "LED_DIN" and not bad, A, f"{side}: one chain from P0.06 through all {len(leds)} LEDs, all on VCC/GND",
+    ok(chain[0] == "LED_DIN" and not bad, A, f"{side}: one chain from P0.06 through all {len(leds)} LEDs, all on LED_VDD/GND",
        f"{side}: chain problems {bad}")
     ok(chain[-1] is None, A, f"{side}: last DOUT left open")
 
     n = len(leds)
-    report("WARN", A, f"{side}: SK6812MINI-E is specified for VDD {SK_VDD_MIN}-5.5 V; the nice!nano's VCC is "
-           f"{NICE_NANO_VCC} V (below spec: works in most builds, blue/white dimmer). Data at 3.3 V is fine: "
-           f"VIH = 0.7 x VDD = {0.7 * NICE_NANO_VCC:.2f} V")
-    report("WARN", A, f"{side}: {n} LEDs x {SK_MA_PER_LED} mA = {n * SK_MA_PER_LED / 1000:.1f} A at full white; the "
-           "nice!nano publishes no current limit for VCC. Cap brightness in firmware (CONFIG_ZMK_RGB_UNDERGLOW_BRT_MAX)")
+    report("PASS", A, f"{side}: LEDs run from the battery: {SK_VDD_MIN}-{VBAT_MAX} V is inside the SK6812MINI-E's "
+           f"{SK_VDD_MIN}-5.5 V. The firmware lights them only on USB power, when the cell sits near {VBAT_MAX} V")
+    report("WARN", A, f"{side}: once the cell drops below {SK_VDD_MIN} V the LEDs are under spec: blue and "
+           "white dim first")
+    vih, voh = 0.7 * VBAT_MAX, NRF_VDD - NRF_VOH_DROP
+    report("WARN", A, f"{side}: LED data at a full cell: VIH = 0.7 x {VBAT_MAX} V = {vih:.2f} V; the nRF52840 guarantees "
+           f"VOH >= {voh:.1f} V at 0.5 mA. The LED input draws microamps, so P0.06 sits near {NRF_VDD} V, but the "
+           "datasheet margin is thin")
+    report("PASS", A, f"{side}: {n} LEDs x {SK_MA_PER_LED} mA = {n * SK_MA_PER_LED / 1000:.1f} A at full white is within "
+           "the AO3401A's 4 A; firmware caps brightness (CONFIG_ZMK_RGB_UNDERGLOW_BRT_MAX)")
     report("PASS", A, f"{side}: idle drain {n * SK_STATIC_MA:.0f} mA ({n} x {SK_STATIC_MA:.0f} mA static) is cut "
-           "with VCC by the nice!nano's P0.13 switch (ZMK ext-power)")
+           f"by the LED switch (P0.08, ZMK ext-power); R{d}03 keeps it off while the controller boots or sleeps")
 
 # --------------------------------------------------------------------------------------
 # 5. Matrix diodes, encoder
@@ -327,6 +351,11 @@ heat = AO_VSD_V * BOOST_MA / 1000
 report("WARN", "power", f"switch off with USB plugged in: the charger still fills the cell through the body diode, "
        f"about {heat:.2f} W at {BOOST_MA} mA, +{heat * AO_RTH_JA:.0f} C on the SOT-23. Leave the switch on while charging")
 report("PASS", "power", f"the 1 MOhm gate resistor costs {VBAT_MAX:.1f} uA at most while on ({VBAT_MAX} V across it)")
+ok(NRF_VDD > AON_VTH_MAX * 2, "power", f"P0.08 high ({NRF_VDD} V) is over twice the AO3400A's {AON_VTH_MAX} V maximum "
+   "threshold, so the N-MOSFET turns fully on")
+ok(VBAT_MIN > 2.5 and VBAT_MAX < AO_VGS_MAX, "power",
+   f"the LED switch's gate pulled to GND gives VGS = -{VBAT_MIN}..-{VBAT_MAX} V: past the AO3401A's -2.5 V rating")
+report("PASS", "power", f"the 100 kOhm LED-switch pull-up costs {VBAT_MAX / 100 * 1000:.0f} uA only while the LEDs are on")
 
 # --------------------------------------------------------------------------------------
 order = {"FAIL": 0, "WARN": 1, "PASS": 2}

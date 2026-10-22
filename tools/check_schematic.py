@@ -93,14 +93,17 @@ for side in ("left", "right"):
         L = f"LED{i}"
         # KiCad stock SK6812MINI-E numbering (mirrored datasheet view for reverse mount)
         pins = {nm: net_of(L, num) for num, nm in (("1", "VSS"), ("2", "DIN"), ("3", "VDD"), ("4", "DOUT"))}
-        check(pins["VDD"] == "VCC" and pins["VSS"] == "GND", f"{side} {L} power {pins}")
+        check(pins["VDD"] == "LED_VDD" and pins["VSS"] == "GND", f"{side} {L} power {pins}")
         want_in = "LED_DIN" if i == 1 else net_of(f"LED{i-1}", "4")
         check(pins["DIN"] == want_in and want_in, f"{side} {L} DIN {pins['DIN']} not fed by previous LED ({want_in})")
     check(("U1", "1") in nets["LED_DIN"], f"{side} LED_DIN not driven by U1 pad 1")
 
     expect = {
-        "GND": {("U1", "3"), ("U1", "4"), ("U1", "14"), ("BT1", "2"), ("SW91", "2"), ("C1", "2"), ("C2", "2"), ("SW90", "1")},
-        "VBAT": {("U1", "13"), ("Q1", "3")},
+        "GND": {("U1", "3"), ("U1", "4"), ("U1", "14"), ("BT1", "2"), ("SW91", "2"), ("C1", "2"), ("C2", "2"), ("SW90", "1"),
+                ("Q3", "2"), ("R3", "2")},
+        "VBAT": {("U1", "13"), ("Q1", "3"), ("Q2", "2"), ("R2", "2")},
+        "LED_GATE": {("Q2", "1"), ("R2", "1"), ("Q3", "3")},
+        "LED_EN": {("U1", "2"), ("Q3", "1"), ("R3", "1")},
         "BAT_RAW": {("BT1", "1"), ("Q1", "2"), ("SW90", "3"), ("R1", "2")},
         "BAT_GATE": {("Q1", "1"), ("SW90", "2"), ("R1", "1")},
         "RST": {("U1", "15"), ("SW91", "1")},
@@ -113,7 +116,10 @@ for side in ("left", "right"):
         have = {p for p in nets.get(net, set()) if not p[0].startswith("#")}
         if net == "GND": have = {p for p in have if not p[0].startswith("LED")}
         check(have == want, f"{side} {net}: extra {sorted(have - want)} missing {sorted(want - have)}")
-    check(len([p for p in nets["VCC"] if p[0].startswith("LED")]) == nled, f"{side} VCC LED count")
+    check(len([p for p in nets["LED_VDD"] if p[0].startswith("LED")]) == nled, f"{side} LED_VDD LED count")
+    check({p for p in nets["LED_VDD"] if not p[0].startswith(("LED", "#"))} == {("Q2", "3"), ("C1", "1"), ("C2", "1")},
+          f"{side} LED_VDD: fed only by Q2's drain, with C1/C2")
+    check("VCC" not in nets, f"{side} VCC (pad 16) should be unused")
     for ref, fp in fps.items():
         check(ref.startswith("#") or fp, f"{side} {ref} has no footprint")
     print(f"{side}: {len(fps)} parts, {len(nets)} nets checked")
