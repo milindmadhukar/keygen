@@ -278,11 +278,11 @@ LEFT_PARTS = {
     "SW91": dict(x=MCU_X + 20.25, y=TOP_EDGE + 36.0, back=True, body_dx=-3.25),
 }
 BAT_PLUS = (3.5, 0.0)                        # "+" beside the battery connector's pad 1, outside its outline
-# Encoders: one per half, mirrored. The right half's shaft, on the front below the controller, with
-# the knob's edge 8.1 mm from the nearest keycap.
-ENCODER_SHAFT = (230.5, 49.0)
+# Encoders: one per half, mirrored. The right half's shaft, on the front below the controller and its
+# OLED: a 17 mm knob clears the OLED by 4.5 mm, the thumb cluster's top key by 5.7 mm and H by 9.1 mm.
+ENCODER_SHAFT = (230.5, 53.0)
 ENC_ORIGIN_TO_SHAFT = (0.0, 0.0)                          # marbastlib EC11: origin at the shaft
-ENC_DIODE = (9.0, -7.0 + 3.81)    # its diode on the back, from the shaft (right half): origin is pad 1, pad 2 north
+ENC_DIODE = (9.0, -11.0 + 3.81)   # its diode on the back, from the shaft (right half): origin is pad 1, pad 2 north
 # OLED: a 0.96 in. module (27.5 x 28 mm) over the controller's lower end, its header along its bottom
 # edge so the text reads upside down (turned in firmware). Right half: module centre, and pin 1 (GND)
 # relative to it. Pins run toward -x on both halves, since the modules themselves don't mirror.

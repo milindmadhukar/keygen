@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Write the 3D models KiCad's 3D view and the renders use for parts without a stock model:
 
-pcb/lib/keygen.3dshapes/Knob_19mm.step     the encoder knob
+pcb/lib/keygen.3dshapes/Knob_17mm.step     the encoder knob
 pcb/lib/keygen.3dshapes/OLED_096_I2C.step  the 0.96 in. 128x64 OLED module
 
 Shapes for the 3D view, not manufacturing data. Needs build123d (see the README):
@@ -17,11 +17,12 @@ SHAPES = ROOT / "pcb/lib/keygen.3dshapes"
 BOTTOM = (Align.CENTER, Align.CENTER, Align.MIN)
 
 # ---------------------------------------------------------------- knob
-# An aluminium knob, 19 mm across and 14 mm tall, knurled round its lower part, with an indicator
-# groove on top and a bore for the EC11's 6 mm D-shaft. Origin: shaft centre at the bottom face;
-# the encoder footprint lifts it to just above the EC11's bushing (11 mm above the PCB).
-D, H = 19.0, 14.0
-KNURL_N, KNURL_H, KNURL_R = 40, 10.0, 0.45     # grooves round the side, from the bottom up
+# An aluminium knob, 17 mm across and 13 mm tall (a "D halfshaft 17x13" amplifier knob), knurled
+# round its lower part, with an indicator groove on top and a bore for the EC11's 6 mm D-shaft.
+# Origin: shaft centre at the bottom face; the encoder footprint lifts it to just above the EC11's
+# bushing (11 mm above the PCB).
+D, H = 17.0, 13.0
+KNURL_N, KNURL_H, KNURL_R = 36, 9.0, 0.45      # grooves round the side, from the bottom up
 BORE_D, BORE_DEPTH, FLAT = 6.0, 12.0, 4.5      # EC11 D-shaft: 6 mm, 4.5 mm across the flat
 
 
@@ -67,11 +68,11 @@ def oled():
 
 def main():
     k = knob(); k.color = Color(0xB9BDC4); k.label = "knob"
-    export_step(k, str(SHAPES / "Knob_19mm.step"))
+    export_step(k, str(SHAPES / "Knob_17mm.step"))
     from build123d import Compound
     o = Compound(children=oled()); o.label = "oled"
     export_step(o, str(SHAPES / "OLED_096_I2C.step"))
-    for name, s in (("Knob_19mm", k), ("OLED_096_I2C", o)):
+    for name, s in (("Knob_17mm", k), ("OLED_096_I2C", o)):
         bb = s.bounding_box()
         print(f"wrote pcb/lib/keygen.3dshapes/{name}.step: {bb.size.X:.1f} x {bb.size.Y:.1f} x {bb.size.Z:.1f} mm")
 

@@ -43,7 +43,7 @@ cover; see [The name and the artwork](#the-name-and-the-artwork).
 | Layout | Column-staggered QWERTY, six columns per hand plus an extra bottom row |
 | Keys | 66 (33 per half): 52 × 1u, 10 × 1.25u, 4 × 1.5u |
 | Thumb cluster | 2 × 2 block rotated 30° (two 1u over two 1.5u) plus one 1.25u key per hand |
-| Encoders | Alps EC11 on each half with a 19 mm knurled aluminium knob, in the key matrix. Left: scroll wheel, press for middle click. Right: volume, press to mute |
+| Encoders | Alps EC11 on each half with a 17 mm knurled aluminium knob, in the key matrix. Left: scroll wheel, press for middle click. Right: volume, press to mute |
 | Displays | 0.96 in. 128 × 64 SSD1306 OLED per half (I2C), showing ZMK's status screen |
 | Switches | Akko V3 Lavender Purple Pro (tactile, 5-pin) in Kailh hotswap sockets (CPG151101S11) |
 | Keycaps | Blank DSA PBT, smoke translucent |

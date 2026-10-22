@@ -162,11 +162,11 @@ path.combo { stroke: #7f7f7f; }
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
 <text x="0" y="0" class="key tap">F5</text>
 </g>
-<g transform="translate(400, 144)" class="key trans keypos-6">
+<g transform="translate(400, 156)" class="key trans keypos-6">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key trans"/>
 <text x="0" y="-24" class="key trans shifted"><tspan style="font-size: 88%">↻ scroll</tspan></text>
 </g>
-<g transform="translate(664, 144)" class="key keypos-7">
+<g transform="translate(664, 156)" class="key keypos-7">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
 <text x="0" y="0" class="key tap">Play</text>
 <text x="0" y="-24" class="key shifted"><tspan style="font-size: 88%">↻ bright</tspan></text>
