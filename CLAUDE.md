@@ -31,11 +31,8 @@ an opaque black: KiCad's named "Black" mask, which the board keeps so the Gerber
 
 - `assets/`: images only (renders, keymap pictures), written by the `tools/render_*.py` scripts.
 - `docs/`: Markdown documentation and the part datasheets.
-- `notes/`: a tracked copy of the Obsidian vault folder
-  `~/Documents/Obsidian Vault/01 - Projects/Hardware & Electronics/Keygen Custom Keyboard/`. The
-  vault is the original: edit a note there, then copy the folder over and commit it in both repos
-  (the vault is its own git repo; commit only this folder there):
-
-  ```sh
-  rsync -a --delete --exclude .claude "$HOME/Documents/Obsidian Vault/01 - Projects/Hardware & Electronics/Keygen Custom Keyboard/" notes/
-  ```
+- `notes/`: the Keygen design notes (Obsidian Markdown). Edit them here; the vault folder
+  `~/Documents/Obsidian Vault/01 - Projects/Hardware & Electronics/Keygen Custom Keyboard/` is a
+  copy. `tools/sync_notes.sh` mirrors `notes/` into it, run by the `.githooks/` post-commit (when
+  a commit on `main` touches `notes/`) and post-merge hooks. In a fresh clone, turn the hooks on
+  with `git config core.hooksPath .githooks`. The vault's obsidian-git commits the copy itself.
