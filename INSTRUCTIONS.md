@@ -27,7 +27,9 @@ Everything sits on the **back** of the PCB except the switches, the encoder and 
    [`fab/keygen-right-gerbers.zip`](fab/keygen-right-gerbers.zip), bare boards, black mask. The
    order-form settings and what to check in the DFM report are in [`fab/ORDER.md`](fab/ORDER.md).
 3. **Switch plates.** The two zips in [`case/plate/gerber/`](case/plate/gerber/), with the settings
-   in [`case/plate/PLATE.md`](case/plate/PLATE.md).
+   in [`case/plate/PLATE.md`](case/plate/PLATE.md). Or have them CNC- or laser-cut from 1.5–1.6 mm
+   sheet with the DXFs in [`case/plate/dxf/`](case/plate/dxf/), cutting the fit test first, as
+   [`PLATE.md`](case/plate/PLATE.md#cutting-the-plates-from-sheet-cnc-router-or-laser) describes.
 4. **Case.** The four STLs in [`case/bottom/stl/`](case/bottom/stl/) and
    [`case/top/stl/`](case/top/stl/), printed in PETG.
 5. **Foam.** Cut per half from the 1:1 files in [`case/foam/dxf/`](case/foam/dxf/) (laser) or

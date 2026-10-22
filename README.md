@@ -74,7 +74,7 @@ Renders of the case parts, the plate and the routing are in [`assets/`](assets/)
 | [Schematic (PDF)](pcb/keygen-schematic.pdf) | A top sheet with left (refs 1xx) and right (refs 2xx) sub-sheets |
 | [KiCad project](pcb/keygen.kicad_pro) | Schematic and PCB, KiCad 10. Both halves are in one board file as two separate outlines |
 | [Ordering notes](fab/ORDER.md) | PCB order-form settings and what to check in the DFM report |
-| [Plate ordering notes](case/plate/PLATE.md) | Order-form settings for the FR-4 switch plates |
+| [Plate ordering notes](case/plate/PLATE.md) | Order-form settings for the FR-4 switch plates, and the DXFs for cutting them from sheet |
 | [Assembly BOM](fab/BOM.md) | Every part's references per half, with quantities and soldering notes |
 | [Parts and sources](plan/bom.html) | Shopping list with Indian and import sources (from [`bom/bom.csv`](bom/bom.csv)) |
 | [Datasheets](docs/datasheets/README.md) | Every part's datasheet, with the page each design fact comes from |

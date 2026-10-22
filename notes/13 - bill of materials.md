@@ -53,7 +53,7 @@ Quantities cover **the keyboard with spares**. Prices are what the listings show
 | Part | Spec | Per kb | Buy | India | Import | Price | Status |
 |---|---|---|---|---|---|---|---|
 | Main PCBs | 2-layer FR4, 1.6 mm, HASL, 1 oz, left and right designs (each half ~17 × 13 cm)<br>*Minimum 5 per design, so 5 left + 5 right. Check their DFM limits (6/6 mil on 1 oz) when routing.* | 2 | 5 + 5 | [Lion Circuits](https://lioncircuits.com/) (Bengaluru, instant quote, 5–6 days, no customs) | JLCPCB as a fallback | from ₹799 for 5 (entry offer; quote for full size) | decided |
-| Switch plate | FR-4 1.6 mm, black mask both sides, no copper, left and right designs (case/plate/gerber/)<br>*Order settings in case/plate/PLATE.md. Minimum 5 per design, so 5 left + 5 right.* | 2 | 5 + 5 | [Lion Circuits](https://lioncircuits.com/), alongside the PCBs | JLCPCB as a fallback | TBD (quote with the PCBs) | decided |
+| Switch plate | FR-4 1.6 mm, black mask both sides, no copper, left and right designs (case/plate/gerber/)<br>*Order settings in case/plate/PLATE.md. Minimum 5 per design, so 5 left + 5 right. Or CNC- or laser-cut from 1.5–1.6 mm sheet with case/plate/dxf/.* | 2 | 5 + 5 | [Lion Circuits](https://lioncircuits.com/), alongside the PCBs | JLCPCB as a fallback | TBD (quote with the PCBs) | decided |
 | LED assembly (optional) | Lion Circuits / JLCPCB assembly of the SK6812MINI-E only<br>*Avoids hand-soldering 66 LEDs; adds cost and lead time.* | — | optional | — | Lion Circuits or JLCPCB | TBD | optional |
 
 ## Switches & keycaps

@@ -78,7 +78,7 @@ for name, items in sections:
         spec = md(r["spec"]) + (f"<br>*{md(r['notes'])}*" if r["notes"] else "")
         lines.append(f"| {md(r['part'])} | {spec} | {md(r['per_kb'])} | {md(r['buy'])} | {md(r['india'])} | {md(r['import'])} | {md(r['price'])} | {md(r['status'])} |")
     lines.append("")
-vault = Path.home() / "Documents/Obsidian Vault/01 - Projects/Hardware & Electronics/Keygen Custom Keyboard/13 - bill of materials.md"
-if vault.parent.exists():
-    vault.write_text("\n".join(lines))
-print(f"rendered {len(rows)} rows -> plan/bom.html" + (f" and {vault.name}" if vault.parent.exists() else ""))
+# notes/ is the source; tools/sync_notes.sh mirrors it into the vault
+note = ROOT / "notes" / "13 - bill of materials.md"
+note.write_text("\n".join(lines))
+print(f"rendered {len(rows)} rows -> plan/bom.html and notes/{note.name}")
