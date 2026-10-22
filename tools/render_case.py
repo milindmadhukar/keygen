@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render the case and the switch plate into docs/:
+"""Render the case and the switch plate into assets/:
 
 render-case.png           the board in its case
 render-case-exploded.png  bottom shell, case foam, PCB, switch foam, plate foam, plate and top frame lifted
@@ -62,7 +62,7 @@ def case_footprint(lifts, parts=("bottom", "plate", "top")):
 
 
 def render(board, name, args):
-    raw = ROOT / f"docs/_{name}.png"; out = ROOT / f"docs/render-{name}.png"
+    raw = ROOT / f"assets/_{name}.png"; out = ROOT / f"assets/render-{name}.png"
     subprocess.run(["kicad-cli", "pcb", "render", "-o", str(raw), *args, "--background", "transparent",
                     "--use-board-stackup-colors", str(board)], check=True, capture_output=True)
     subprocess.run(["magick", str(raw), "-trim", "+repage", "-bordercolor", "none", "-border", "20",

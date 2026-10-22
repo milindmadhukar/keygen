@@ -38,12 +38,12 @@ drawn from it and from the physical layout, so the thumb keys and the knobs sit 
 the board. A held layer key is shown in red; blank keys fall through to the layer below.
 
 ```sh
-python3 tools/render_keymap.py   # docs/keymap-*.svg, with keymap-drawer through uvx
+python3 tools/render_keymap.py   # assets/keymap-*.svg, with keymap-drawer through uvx
 ```
 
 ### Base
 
-![Base layer](../docs/keymap-base.svg)
+![Base layer](../assets/keymap-base.svg)
 
 - `Esc`: tap for Esc, hold for Ctrl.
 - `Caps Word`: capitals until the end of the word.
@@ -54,7 +54,7 @@ python3 tools/render_keymap.py   # docs/keymap-*.svg, with keymap-drawer through
 
 ### NAV (hold the left 1.25u)
 
-![Nav layer](../docs/keymap-nav.svg)
+![Nav layer](../assets/keymap-nav.svg)
 
 | Keys | Do |
 |---|---|
@@ -65,7 +65,7 @@ python3 tools/render_keymap.py   # docs/keymap-*.svg, with keymap-drawer through
 
 ### FN (hold the right 1.25u)
 
-![Fn layer](../docs/keymap-fn.svg)
+![Fn layer](../assets/keymap-fn.svg)
 
 | Keys | Do |
 |---|---|
@@ -80,7 +80,7 @@ python3 tools/render_keymap.py   # docs/keymap-*.svg, with keymap-drawer through
 
 ### SYS (hold both 1.25u keys)
 
-![System layer](../docs/keymap-system.svg)
+![System layer](../assets/keymap-system.svg)
 
 | Keys | Do |
 |---|---|
