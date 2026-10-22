@@ -22,9 +22,11 @@
         };
     };
 
+    /* the module has its own pull-ups; the internal ones keep the bus up on a module without them */
     i2c0_default: i2c0_default {
         group1 {
             psels = <NRF_PSEL(TWIM_SDA, 0, 17)>, <NRF_PSEL(TWIM_SCL, 0, 20)>;
+            bias-pull-up;
         };
     };
 
@@ -40,6 +42,11 @@
     compatible = "nordic,nrf-twim";
     status = "okay";
     clock-frequency = <I2C_BITRATE_FAST>;
+
+    /* The SSD1306 takes no repeated start inside a write, so TWIM merges the control byte and the
+     * data into one transfer. The default 16-byte buffer fails every frame write with -ENOSPC;
+     * this holds the control byte plus a full 128 x 64 / 8 = 1024-byte frame. */
+    zephyr,concat-buf-size = <1025>;
 
     pinctrl-0 = <&i2c0_default>;
     pinctrl-1 = <&i2c0_sleep>;
