@@ -69,7 +69,7 @@ Both follow the PCB, through the shared geometry in
 `tools/case_geometry.py`, so rerun them after any PCB change.
 
 ```sh
-python3 tools/gen_plate.py                          # pcb/plate/, case/plate/gerber/, case/plate/PLATE.md
+python3 tools/gen_plate.py                          # pcb/plate/, case/plate/{gerber,dxf}/, case/plate/PLATE.md
 ~/.venvs/keygen-cad/bin/python tools/gen_case.py    # case/{bottom,top}/, case/plate/step/, case/foam/, the fit check
 python3 tools/render_case.py                        # assets/render-case*.png, assets/render-plate.png
 ~/.venvs/keygen-cad/bin/python tools/gen_models.py  # pcb/lib/keygen.3dshapes/: the knob and OLED 3D models
@@ -80,7 +80,7 @@ python3 tools/render_case.py                        # assets/render-case*.png, a
 ```sh
 python3 tools/export_fab.py      # fab/: Gerbers, drill files, ORDER.md
 python3 tools/export_bom.py      # fab/: assembly BOMs from the schematic
-python3 tools/render_bom.py      # plan/bom.html from bom/bom.csv
+python3 tools/render_bom.py      # plan/bom.html and notes/13 from bom/bom.csv
 python3 tools/plate_print.py     # case/plate/pdf/keygen-plate-print.pdf
 kicad-cli sch export pdf -o pcb/keygen-schematic.pdf pcb/keygen.kicad_sch
 python3 tools/render_board.py    # assets/render-{hero,top,bottom}.png: 3D renders with the black mask
@@ -115,7 +115,7 @@ case/
 ├── keygen-case.step                    every part in place, for CAD
 ├── bottom/  stl/  step/                bottom shells (print the STL)
 ├── top/     stl/  step/                top frames (print the STL)
-├── plate/   gerber/  step/  pdf/       switch plates: Gerbers to order, solids, 1:1 paper print
+├── plate/   gerber/  dxf/  step/  pdf/ switch plates: Gerbers to order, CNC/laser cut files, solids, 1:1 paper print
 │   └── PLATE.md                        plate order-form settings
 └── foam/    dxf/  svg/  step/          switch, plate and case foam: 1:1 cut files, solids
 ```
