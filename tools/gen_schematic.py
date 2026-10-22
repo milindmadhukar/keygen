@@ -211,6 +211,14 @@ def keygen_footprints():
     fp = load(marb / "marbastlib-xp-promicroish.pretty", "nice_nano_H_USBup")
     fp[:] = [n for n in fp if not (isinstance(n, list) and n and n[0] == "model")]
     fp[:] = [[S("attr"), S("through_hole")] if isinstance(n, list) and n and n[0] == "attr" else n for n in fp]
+    # the USB end crosses the board's sloped top edge: the outline and the connector box stop at a
+    # straight line 0.3 mm inside it, with "USB" in the shortened box and "topside" just under it
+    for n in find(fp, "fp_rect") + find(fp, "fp_line"):
+        for k in ("start", "end"):
+            if first(n, "layer")[1] == "F.SilkS" and first(n, k)[2] == "-17.78": first(n, k)[2] = -16.5
+    for n in find(fp, "fp_text"):
+        if first(n, "layer")[1] == "F.SilkS" and n[2] in ("USB", "topside"):
+            first(n, "at")[2] = {"USB": -14.75, "topside": -12.65}[n[2]]
     fp.append(model(f"{SHAPES}/nRF52840_ProMicro.wrl")); save(fp, "nice_nano_H_USBup")
 
     for lib, name, base in (("marbastlib-various.pretty", "SW_MSK12C02-HB", VENDOR3D["marbastlib"]),
