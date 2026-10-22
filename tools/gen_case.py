@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """The 3D-printed case: a bottom shell and a top frame per half, gasket-mounted.
 
-case/keygen-{left,right}-bottom.{step,stl}   floor, walls, gasket ledges, heat-set insert holes
+case/keygen-{left,right}-bottom.{step,stl}   floor, battery bay, walls, gasket ledges, heat-set insert holes
 case/keygen-{left,right}-top.{step,stl}      frame round the plate, gasket pockets, screw holes
 case/keygen-{left,right}-plate.step          the plate, for the fit check (it is made from the Gerbers)
 case/keygen-case.step                        all six parts in place
@@ -10,7 +10,8 @@ The plate and PCB, tied together by standoffs, float on the plate's gasket tabs.
 between two Poron strips: one on a ledge in the bottom shell, one under the top frame. The two
 parts are screwed together through the walls (M2 x 6 into M2 heat-set inserts). The bottom shell
 has an open slot under the USB-C, a slot for the power switch lever (with the wall thinned in
-front of both), and a guided pinhole under the reset button. The floor is flat.
+front of both), and a guided pinhole under the reset button. The LiPo lies in a bay sunk into the
+floor, clear of the solder joints above it. The underside is flat.
 
 Geometry and the stack come from case_geometry.py, so rerun this after any PCB change. Needs
 build123d next to KiCad's pcbnew; see the README:
@@ -104,6 +105,9 @@ def build(h):
     # power switch lever
     cuts.append(edge_box(e, s_lev - LEVER_SLOT_W / 2, s_lev + LEVER_SLOT_W / 2, -2.0, C.WALL_OUT + 3.0,
                          -C.PCB_T - LEVER_SLOT_H, -C.PCB_T))
+    bx0, by0, bx1, by1 = C.battery(h)["bay"]          # battery bay, sunk into the floor
+    (bcx, bcy) = xy(((bx0 + bx1) / 2, (by0 + by1) / 2))
+    cuts.append(Pos(bcx, bcy, C.CAVITY_Z - C.BAY_DEPTH) * Box(bx1 - bx0, by1 - by0, C.BAY_DEPTH + 1, align=Z))
     for c in cuts:
         bottom -= c
     # reset: a guide tube from the floor up to just under the button, and the pinhole through both
@@ -148,8 +152,9 @@ CAP_SKIRT = 7.5                        # keycap skirt bottom above the plate at 
 
 
 def fit_check(h, bottom, top, plt):
-    """Volumes (mm3) where a case part overlaps the board, the plate, the parts under the PCB or a
-    keycap at the bottom of its travel. All should be 0."""
+    """Volumes (mm3) where a case part overlaps the board, the plate, the parts under the PCB, the
+    battery or a keycap at the bottom of its travel, and where the battery meets the solder joints
+    under the PCB with the stack pressed down. All should be 0."""
     pcb = Pos(0, 0, -C.PCB_T) * extrude(face(h["outline"]), C.PCB_T, dir=UP)
     x0, y0, x1, y1 = h["controller"]
     (cx, cy) = xy(((x0 + x1) / 2, (y0 + y1) / 2))
@@ -165,12 +170,23 @@ def fit_check(h, bottom, top, plt):
     x0, y0, x1, y1 = h["oled"]
     (ox, oy) = xy(((x0 + x1) / 2, (y0 + y1) / 2))
     oled = Pos(ox, oy, C.OLED_Z[0]) * Box(x1 - x0, y1 - y0, C.OLED_Z[1] - C.OLED_Z[0], align=Z)
+    x0, y0, x1, y1 = C.battery(h)["cell"]
+    (bx, by) = xy(((x0 + x1) / 2, (y0 + y1) / 2))
+    cell = lambda lift: Pos(bx, by, C.CAVITY_Z - C.BAY_DEPTH + lift) * Box(
+        x1 - x0, y1 - y0, C.BATTERY_T + C.BATTERY_GROWTH, align=Z)
+    battery = cell(0.0)
     out = {}
     for name, part in (("bottom", bottom), ("top", top)):
         for what, solid in (("pcb", pcb), ("plate", plt), ("controller", controller), ("reset button", button),
-                            ("keycaps", caps), ("oled", oled)):
+                            ("keycaps", caps), ("oled", oled), ("battery", battery)):
             v = (part & solid).volume
             if v > 1e-3: out[f"{name} x {what}"] = v
+    # the battery against the sockets, diodes and the tall parts under the PCB, the stack pressed down
+    underside = Pos(0, 0, -C.PCB_T - C.UNDERSIDE_H) * extrude(face(h["outline"]), C.UNDERSIDE_H, dir=UP)
+    pressed = cell(C.FLOAT_GAP)
+    for what, solid in (("parts under the pcb", underside), ("controller", controller), ("reset button", button)):
+        v = (pressed & solid).volume
+        if v > 1e-3: out[f"battery x {what}"] = v
     return out
 
 
@@ -191,6 +207,9 @@ def main():
             part.label = f"{side} {name}"
             parts.append(part)
         print(f"{side}: {n_tabs} gasket tabs, {n_screws} case screws")
+        top_z, gap, pressed = C.battery_heights()
+        print(f"{side} battery: {C.BATTERY_L:g} x {C.BATTERY_W:g} x {C.BATTERY_T:g} mm (+{C.BATTERY_GROWTH:g}) in the "
+              f"floor bay, {gap:.1f} mm under the solder joints, {pressed:.1f} mm with the stack pressed down")
         clash = fit_check(h, bottom, top, plt)
         print(f"{side} fit check: " + (", ".join(f"{k} {v:.2f} mm3" for k, v in clash.items()) or "no overlaps"))
     export_step(Compound(children=parts), str(OUT / "keygen-case.step"))
