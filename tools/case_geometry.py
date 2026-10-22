@@ -13,7 +13,11 @@ The stack, bottom to top:
   plate             PLATE_BOT .. PLATE_TOP (MX: plate top 5 mm above the PCB)
   gasket tabs       on the plate edge, between two Poron strips: the lower one on the bottom
                     shell's ledge (LEDGE_Z), the upper one under the top frame (CEIL_Z)
-  top frame         SPLIT_Z .. TOP_Z
+  top frame         SPLIT_Z .. TOP_Z round the edge; inside it a deck, CEIL_Z .. TOP_Z, covers the
+                    plate everywhere but the keycaps, the OLED and the encoder
+
+The foam: a PE sheet on the PCB under the switches, Poron plate foam between it and the plate,
+and case foam on the floor round the battery bay (PE_Z, PLATE_FOAM_Z, CASE_FOAM_Z).
 
 The plate and PCB are tied together by M2 standoffs and float on the tabs; nothing screws the
 PCB to the case. The bottom shell and the top frame are screwed together through the walls,
@@ -84,6 +88,31 @@ UNDERSIDE_H = 2.0              # hotswap sockets (1.85 mm) and DO-35 diodes (1.7
 TALL_CLEAR = 3.0               # cell to the controller, battery connector, buttons, encoder and OLED pins
 TALL_REFS = ("U", "BT", "ENC", "J")   # and the slide switch and reset button (SWx90, SWx91)
 
+# ---------------------------------------------------------------- top frame deck (mm)
+CAP_CLEAR = 0.6                # keycap to its window in the deck, each side
+ENC_BODY, ENC_BODY_H = 12.5, 4.5         # EC11E body on the PCB (datasheet: 11.7 x 12.5, 4.5 tall)
+ENC_BUSHING_D, ENC_BUSHING_TOP = 7.0, 11.5   # the bushing above it, up to where the knob starts
+ENC_HOLE_D = 9.0               # deck hole round the bushing; the knob hides it
+KNOB_D, KNOB_H = 17.0, 13.0    # knob, its underside at ENC_BUSHING_TOP (gen_models.py)
+OLED_GLASS = (26.7, 19.3, 1.4) # glass on the module, 2.0 mm in from the edge away from the header
+OLED_ACTIVE = (21.7, 10.9)     # active area, 1.0 mm off the glass centre away from the header
+OLED_MARGIN = 1.0              # deck window past the active area at the deck's underside
+OLED_VIEW = 50.0               # degrees from vertical, from the thumb side: the window shows all of
+                               # the active area at this angle
+SCREW_HEAD_H = 1.1             # M2 button head (ISO 7380) on the plate
+STANDOFF_D = 4.0               # M2 hex standoff, across the corners
+
+# ---------------------------------------------------------------- foam (mm)
+PE_T = 0.5                     # PE switch foam on the PCB
+PLATE_FOAM_T = 2.5             # Poron plate foam on the PE, under the plate
+CASE_FOAM_T = 5.0              # EVA or Poron case foam on the floor
+PE_Z = (0.0, PE_T)
+PLATE_FOAM_Z = (PE_T, PE_T + PLATE_FOAM_T)
+FOAM_SWITCH_CUT = 14.4         # plate foam cut-out per switch
+FOAM_HOLE_CLEAR = 0.3          # foam to pins, pads, LED windows and standoffs, each side
+FOAM_PART_CLEAR = 1.0          # case foam to the parts under the PCB and the reset tube, each side
+FOAM_WALL_CLEAR = 0.5          # case foam to the case wall
+
 
 # ---------------------------------------------------------------- 2D helpers
 def inside(p, poly):
@@ -151,8 +180,9 @@ def _pads_centre(fp):
 
 @functools.lru_cache(maxsize=None)
 def halves():
-    """{'left'|'right': dict(side, outline, edges, keys, holes, enc, oled, usb, lever, reset, antenna,
-    battery_jack, tall)}"""
+    """{'left'|'right': dict(side, outline, edges, windows, keys, holes, drills, enc, oled, header, usb,
+    lever, reset, antenna, battery_jack, tall)}. windows are the board's internal cut-outs (the LED
+    windows); drills are the drilled pads as (x, y, w, h, round)."""
     b = pcbnew.LoadBoard(str(PCB))
     polys = pcbnew.SHAPE_POLY_SET(); b.GetBoardPolygonOutlines(polys, False)
     out = {}
@@ -161,7 +191,9 @@ def halves():
         poly = [(MM(o.CPoint(j).x), MM(o.CPoint(j).y)) for j in range(o.PointCount())]
         side = "left" if sum(p[0] for p in poly) / len(poly) < 211 else "right"
         out[side] = dict(side=side, outline=poly, edges=[Edge(poly[k], poly[(k + 1) % len(poly)], poly) for k in range(len(poly))],
-                         holes={}, enc=[], tall=[])
+                         holes={}, enc=[], tall=[], drills=[],
+                         windows=[[(MM(polys.Hole(i, j).CPoint(k).x), MM(polys.Hole(i, j).CPoint(k).y))
+                                   for k in range(polys.Hole(i, j).PointCount())] for j in range(polys.HoleCount(i))])
     geo = G.key_geometry()
     for side, h in out.items():
         h["keys"] = []
@@ -176,12 +208,19 @@ def halves():
             bb = fp.GetBoundingBox(False)
             h["tall"].append((MM(bb.GetLeft()), MM(bb.GetTop()), MM(bb.GetRight()), MM(bb.GetBottom())))
         if ref.startswith("BT"): h["battery_jack"] = _pads_centre(fp)
+        for pad in fp.Pads():                   # every drilled pad: (x, y, w, h, round), what the foam clears
+            if pad.GetDrillSize().x > 0:
+                bb = pad.GetBoundingBox(); q = pad.GetPosition()
+                w, hh = max(MM(bb.GetWidth()), MM(pad.GetDrillSize().x)), max(MM(bb.GetHeight()), MM(pad.GetDrillSize().y))
+                h["drills"].append((MM(q.x), MM(q.y), w, hh, pad.GetShape() == pcbnew.PAD_SHAPE_CIRCLE))
         if ref.startswith("H"): h["holes"][ref] = (x, y)
         elif ref.startswith("ENC"): h["enc"].append((x, y))
         elif ref[0] == "J":                     # OLED header: the module stands above its pins
             pins = [(MM(p.GetPosition().x), MM(p.GetPosition().y)) for p in fp.Pads()]
             cx = sum(q[0] for q in pins) / len(pins); py = pins[0][1]
             h["oled"] = (cx - OLED_W / 2, py + OLED_HDR_IN - OLED_H, cx + OLED_W / 2, py + OLED_HDR_IN)
+            bb = fp.GetBoundingBox(False)
+            h["header"] = (MM(bb.GetLeft()), MM(bb.GetTop()), MM(bb.GetRight()), MM(bb.GetBottom()))
         elif ref[0] == "U":
             bb = fp.GetBoundingBox(False)
             x0, y0, x1, y1 = MM(bb.GetLeft()), MM(bb.GetTop()), MM(bb.GetRight()), MM(bb.GetBottom())
@@ -369,6 +408,35 @@ def battery_heights():
     return top, gap, gap - FLOAT_GAP
 
 
+def oled_glass(h):
+    """The OLED's glass and its active area, as (x0, y0, x1, y1) in board mm. The module's header
+    runs along its bottom (larger y) edge; the glass sits toward the top edge."""
+    x0, y0, x1, y1 = h["oled"]
+    cx, gw, gh = (x0 + x1) / 2, OLED_GLASS[0], OLED_GLASS[1]
+    glass = (cx - gw / 2, y0 + 2.0, cx + gw / 2, y0 + 2.0 + gh)
+    ay = glass[1] + gh / 2 - 1.0
+    aw, ah = OLED_ACTIVE
+    return glass, (cx - aw / 2, ay - ah / 2, cx + aw / 2, ay + ah / 2)
+
+
+def oled_window(h, z):
+    """The deck's OLED window at height z, (x0, y0, x1, y1): the active area plus OLED_MARGIN at the
+    deck's underside, opening at 45 degrees on three sides and on the thumb side far enough that a
+    line of sight OLED_VIEW degrees from vertical reaches the whole active area."""
+    _, (x0, y0, x1, y1) = oled_glass(h)
+    glass_top = OLED_Z[1]
+    side = OLED_MARGIN + (z - CEIL_Z)
+    south = max(OLED_MARGIN, (z - glass_top) * math.tan(math.radians(OLED_VIEW)) + 0.5)
+    return (x0 - side, y0 - side, x1 + side, y1 + south)
+
+
+def deck_clearances(h):
+    """{what: mm} for the deck: glass below its top, knob above it, and the plate screw heads below it."""
+    return {"OLED glass below the deck top": TOP_Z - OLED_Z[1],
+            "knob above the deck top": ENC_BUSHING_TOP - TOP_Z,
+            "plate screw heads below the deck": CEIL_Z - PLATE_TOP - SCREW_HEAD_H}
+
+
 def standoffs(h):
     """{hole ref: 'screwed' | 'post'}. A plate screw goes in only where its head clears the switch
     top housings and the encoder; elsewhere the standoff is screwed from below and its top bears on
@@ -396,6 +464,7 @@ if __name__ == "__main__":
               f"{min(rects_dist(bt['cell'], t) for t in h['tall']):.1f} mm from the nearest tall part")
     print(f"stack: floor {BOTTOM_Z:.1f}, cavity {CAVITY_Z:.1f}, ledge {LEDGE_Z:.1f}, split {SPLIT_Z:.1f}, "
           f"plate {PLATE_BOT:.1f}..{PLATE_TOP:.1f}, ceiling {CEIL_Z:.1f}, top {TOP_Z:.1f}")
+    for k, v in deck_clearances(halves()["left"]).items(): print(f"deck: {k} {v:.1f} mm")
     top, gap, pressed = battery_heights()
     print(f"battery: bay floor {CAVITY_Z - BAY_DEPTH:.1f}, cell top {top:.1f} ({BATTERY_T:g} + {BATTERY_GROWTH:g} mm), "
           f"{gap:.1f} mm under the solder joints, {pressed:.1f} mm with the stack pressed down {FLOAT_GAP:g} mm")
