@@ -77,6 +77,7 @@ Renders of the case parts, the plate and the routing are in [`assets/`](assets/)
 | [Plate ordering notes](case/plate/PLATE.md) | Order-form settings for the FR-4 switch plates, and the DXFs for cutting them from sheet |
 | [Assembly BOM](fab/BOM.md) | Every part's references per half, with quantities and soldering notes |
 | [Parts and sources](plan/bom.html) | Shopping list with Indian and import sources (from [`bom/bom.csv`](bom/bom.csv)) |
+| [Shopping checklist](bom/CHECKLIST.md) | What to buy, from which store, with links and prices, to tick off |
 | [Datasheets](docs/datasheets/README.md) | Every part's datasheet, with the page each design fact comes from |
 
 ## Firmware
@@ -97,7 +98,7 @@ keygen/
 ├── tools/          Python scripts that generate, route, check and export the design
 ├── fab/            Gerbers per half and combined, assembly BOMs, ordering notes
 ├── case/           Case, plate and foam: one folder per part, one folder per file type
-├── bom/            Bill of materials with sources (bom.csv)
+├── bom/            Bill of materials with sources (bom.csv) and the shopping checklist
 ├── plan/           Build plan and parts list as HTML
 ├── docs/           Part datasheets
 ├── assets/         Renders and keymap pictures
