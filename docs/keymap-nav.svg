@@ -156,11 +156,11 @@ path.combo { stroke: #7f7f7f; }
 <g transform="translate(322, 42)" class="key trans keypos-5">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key trans"/>
 </g>
-<g transform="translate(400, 144)" class="key trans keypos-6">
+<g transform="translate(400, 156)" class="key trans keypos-6">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key trans"/>
 <text x="0" y="-24" class="key trans shifted"><tspan style="font-size: 88%">↻ scroll</tspan></text>
 </g>
-<g transform="translate(664, 144)" class="key trans keypos-7">
+<g transform="translate(664, 156)" class="key trans keypos-7">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key trans"/>
 <text x="0" y="-24" class="key trans shifted">↻ page</text>
 </g>

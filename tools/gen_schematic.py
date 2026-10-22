@@ -218,7 +218,11 @@ def keygen_footprints():
         fp = load(marb / lib, name)
         fp[:] = [n if not (isinstance(n, list) and n and n[0] == "model") else vendor_model(n, base) for n in fp]
         if name.startswith("ROT_"):         # the knob (tools/gen_models.py), just above the EC11's bushing
-            fp.append(model(f"{SHAPES}/Knob_19mm.step", offset=(0, 0, 11.5)))
+            fp.append(model(f"{SHAPES}/Knob_17mm.step", offset=(0, 0, 11.5)))
+            # the common pin C sits 2.5 mm between A and B, which leaves no room for thermal spokes
+            # sideways: connect it to the ground pour solid
+            for pad in find(fp, "pad"):
+                if pad[1] == "C": pad.append([S("zone_connect"), 2])
         save(fp, name)
 
 def keygen_lib():

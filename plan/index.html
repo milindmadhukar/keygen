@@ -110,7 +110,7 @@ svg text{font-family:var(--mono)}
     <span><span class="sw" style="background:var(--part);border-color:var(--part-edge)"></span>Knob</span>
     <span><span class="sw" style="background:transparent;border-color:var(--part-edge);border-style:dashed"></span>Under the board</span>
   </div>
-  <p class="cap">Each half has a knob where the inner column used to be, its edge 8.1 mm from the nearest keycap, and a 0.96 in. OLED above it, standing in a window in the plate over the controller's lower end. Reach a knob with your index finger or a lifted thumb. Each controller is mounted on the underside, beneath the old inner column. Only its USB-C port reaches the case's top edge.</p>
+  <p class="cap">Each half has a knob where the inner column used to be, its edge 4.5 mm below the OLED, 5.7 mm from the thumb cluster's top key and 9.1 mm from the G/H column, and a 0.96 in. OLED above it, standing in a window in the plate over the controller's lower end. Reach a knob with your index finger or a lifted thumb. Each controller is mounted on the underside, beneath the old inner column. Only its USB-C port reaches the case's top edge.</p>
 
   <div class="tablewrap"><table>
     <thead><tr><th>Thumb key</th><th>Left</th><th>Right</th><th>Reach</th></tr></thead>
@@ -175,7 +175,7 @@ flowchart LR
       <tr><td>LED rail capacitors: 10 µF + 100 nF</td><td class="num">1 + 1</td><td class="num">1 + 1</td><td><span class="pill smd">SMD</span></td><td>1206 on the back, at the LED power switch's output.</td></tr>
       <tr><td>Slide power switch (MSK12C02)</td><td class="num">1</td><td class="num">1</td><td><span class="pill smd">SMD</span></td><td>Side lever out of the top edge; switches the battery MOSFET's gate. The nice!nano has a charger but no switch.</td></tr>
       <tr><td>Reset button 6 mm</td><td class="num">1</td><td class="num">1</td><td><span class="pill th">TH</span></td><td>Reachable through a pinhole in the case. ZMK can also enter the bootloader from a key, so you rarely need it.</td></tr>
-      <tr><td>EC11 rotary encoder + knob</td><td class="num">1</td><td class="num">1</td><td><span class="pill th">TH</span></td><td>One per half. ZMK has supported encoders on the peripheral half since PR #1841 (Oct 2023). Each push switch goes into its half's key matrix as one extra position. A 20 mm shaft puts the 19 mm knob just above the keycaps.</td></tr>
+      <tr><td>EC11 rotary encoder + knob</td><td class="num">1</td><td class="num">1</td><td><span class="pill th">TH</span></td><td>One per half. ZMK has supported encoders on the peripheral half since PR #1841 (Oct 2023). Each push switch goes into its half's key matrix as one extra position. A 20 mm shaft puts a 17 × 13 mm knob a few millimetres above the keycaps.</td></tr>
       <tr><td>0.96 in. OLED, SSD1306, I2C</td><td class="num">1</td><td class="num">1</td><td><span class="pill th">TH</span></td><td>A generic 128 × 64 module, its own header pins soldered straight into the board (GND, VCC, SCL, SDA; check the module's order). Powered from the nice!nano's 3.3 V output, which the firmware keeps on.</td></tr>
     </tbody>
   </table></div>
@@ -316,10 +316,10 @@ function under(x,y,P){const w=0.95,h=1.75,[px,py]=at(x,y);
   [[x-0.12,y-0.2],[x+w+0.12,y-0.2],[x+w+0.12,y+h],[x-0.12,y+h]].forEach(p=>P.push(at(...p)))}
 under(6.53,0.1,ptsL);
 under(11.95+GAP,0.1,ptsR);
-// an OLED over each controller's lower end, and a knob (EC11 + ~19 mm knob) below it, mirrored
+// an OLED over each controller's lower end, and a knob (EC11 + 17 mm knob) below it, mirrored
 part(6.73,0.40,1.44,1.47,"OLED",true,ptsL);
 part(11.25+GAP,0.40,1.44,1.47,"OLED",true,ptsR);
-for(const [kx,P] of [[7.57,ptsL],[11.85+GAP,ptsR]]){const ky=2.34, r=0.5; const [cx,cy]=at(kx,ky);
+for(const [kx,P] of [[7.57,ptsL],[11.85+GAP,ptsR]]){const ky=2.55, r=0.45; const [cx,cy]=at(kx,ky);
  el("circle",{cx,cy,r:r*U,fill:"var(--part)",stroke:"var(--part-edge)","stroke-width":1.5},g);
  el("circle",{cx,cy,r:r*U-7,fill:"var(--cap)",stroke:"var(--part-edge)","stroke-width":1},g);
  el("line",{x1:cx,y1:cy-r*U+9,x2:cx,y2:cy-r*U+17,stroke:"var(--legend)","stroke-width":2},g);
