@@ -5,7 +5,7 @@ name: 11 - learning resources & references
 ---
 
 > [!success] References
-> The sources Keygen is built on: the Redox layout, ZMK and its RGB module, the nice!nano, KiCad and its libraries, the parts' shops, and the builds and videos that shaped the design. Build plan repo: [milindmadhukar/keygen](https://github.com/milindmadhukar/keygen). See also [[12 - final design#Sources]].
+> The sources Keygen is built on: the Redox layout, ZMK and its RGB module, the nice!nano v2 pinout, KiCad and its libraries, the parts' shops, and the builds and videos that shaped the design. Build plan repo: [milindmadhukar/keygen](https://github.com/milindmadhukar/keygen). See also [[12 - final design#Sources]].
 
 ## Design basis
 
@@ -26,7 +26,7 @@ name: 11 - learning resources & references
 
 ## Controller
 
-- [nice!nano v2](https://nicekeyboards.com/nice-nano/): docs, pinout and resellers. One per half, BOOST jumper bridged.
+- [nice!nano v2](https://nicekeyboards.com/nice-nano/): docs and pinout, which the nRF52840 SuperMini shares. One SuperMini per half.
 - [GOLEM: Pro Micro pinout](https://golem.hu/article/pro-micro-pinout/): the footprint format it uses
 
 ## PCB
@@ -43,10 +43,12 @@ name: 11 - learning resources & references
 
 The full list with prices is in [[13 - bill of materials]].
 
-- [nice!keyboards resellers](https://nicekeyboards.com/nice-nano/): controllers
+- [nRF52840 SuperMini, A+A+A Store](https://www.aliexpress.com/item/1005007383270623.html) (AliExpress): controllers
 - [StacksKB](https://stackskb.com/store/1n4148-through-hole-diode/): 1N4148 diodes
-- [Probots EC11](https://probots.co.in/20-position-360-degree-rotary-encoder-ec11-w-push-button.html): the encoders
-- Robu.in and Lamington Road: LiPo cells, JST-PH, MOSFETs, passives, slide switches
+- [Hongyan EC11, Robu.in](https://robu.in/product/hongyan-ec11h-7ce20p1zd20-rotary-encoder-with-push-button-switch-vertical-plug-in-5-pin/): the encoders
+- [Easylander 505080](https://www.aliexpress.com/item/1005002973787972.html) (AliExpress): LiPo cells
+- Robu.in: JST-PH, MOSFETs, passives, slide switches
+- AliExpress: Poron switch pads and gasket strips; Amazon.in: EVA foam
 - Meckeys: 1u DSA keycaps; AliExpress: 1.25u and 1.5u
 
 ## Builds that shaped the design

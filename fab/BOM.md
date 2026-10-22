@@ -11,7 +11,7 @@ The shopping list with spares and prices is `bom/bom.csv` / `plan/bom.html`.
 | 10 µF capacitor (1206) | 1 | C101 | SMD, back side, beside the LED power switch |
 | 100 nF capacitor (1206) | 1 | C102 | SMD, back side, beside the LED power switch |
 | 1N4148 diode | 34 | D101–D134 | through-hole, back side; band (cathode) toward the square pad |
-| EC11 rotary encoder | 1 | ENC101 | through-hole, front side (right half only) |
+| EC11 rotary encoder | 1 | ENC101 | through-hole, front side, 20 mm D shaft |
 | OLED 0.96in I2C | 1 | J101 |  |
 | SK6812MINI-E LED | 33 | LED101–LED133 | SMD, reverse-mount on the back; mind the corner mark |
 | AO3401A P-MOSFET (SOT-23) | 2 | Q101, Q102 | SMD, back side: Q1 between the controller and the power switch, Q2 in the LED power switch |
@@ -23,7 +23,7 @@ The shopping list with spares and prices is `bom/bom.csv` / `plan/bom.html`.
 | MX switch, 1.5u key (tall thumb) | 2 | SW133, SW134 | Kailh socket on the back; switch + 1.5u keycap, turned 90° |
 | MSK12C02 power slide switch | 1 | SW190 | SMD, back side at the top edge, lever out |
 | 6 mm reset button | 1 | SW191 | through-hole, back side |
-| nRF52840 Pro Micro (nice!nano v2) | 1 | U101 | on the back, socketed (Mill-Max/low-profile); bridge BOOST |
+| nRF52840 SuperMini (nice!nano v2 clone) | 1 | U101 | on the back, socketed (Mill-Max/low-profile); check B+, GND and VCC first |
 
 ## Right half
 
@@ -33,7 +33,7 @@ The shopping list with spares and prices is `bom/bom.csv` / `plan/bom.html`.
 | 10 µF capacitor (1206) | 1 | C201 | SMD, back side, beside the LED power switch |
 | 100 nF capacitor (1206) | 1 | C202 | SMD, back side, beside the LED power switch |
 | 1N4148 diode | 34 | D201–D234 | through-hole, back side; band (cathode) toward the square pad |
-| EC11 rotary encoder | 1 | ENC201 | through-hole, front side (right half only) |
+| EC11 rotary encoder | 1 | ENC201 | through-hole, front side, 20 mm D shaft |
 | OLED 0.96in I2C | 1 | J201 |  |
 | SK6812MINI-E LED | 33 | LED201–LED233 | SMD, reverse-mount on the back; mind the corner mark |
 | AO3401A P-MOSFET (SOT-23) | 2 | Q201, Q202 | SMD, back side: Q1 between the controller and the power switch, Q2 in the LED power switch |
@@ -45,7 +45,7 @@ The shopping list with spares and prices is `bom/bom.csv` / `plan/bom.html`.
 | MX switch, 1.5u key (tall thumb) | 2 | SW233, SW234 | Kailh socket on the back; switch + 1.5u keycap, turned 90° |
 | MSK12C02 power slide switch | 1 | SW290 | SMD, back side at the top edge, lever out |
 | 6 mm reset button | 1 | SW291 | through-hole, back side |
-| nRF52840 Pro Micro (nice!nano v2) | 1 | U201 | on the back, socketed (Mill-Max/low-profile); bridge BOOST |
+| nRF52840 SuperMini (nice!nano v2 clone) | 1 | U201 | on the back, socketed (Mill-Max/low-profile); check B+, GND and VCC first |
 
 ## Totals
 
@@ -55,7 +55,7 @@ The shopping list with spares and prices is `bom/bom.csv` / `plan/bom.html`.
 | 10 µF capacitor (1206) | 2 | 4 | Robu.in / Lamington Road |
 | 100 nF capacitor (1206) | 2 | 4 | Robu.in / Lamington Road |
 | 1N4148 diode | 68 | 136 | [StacksKB 1N4148 (10-pack)](https://stackskb.com/store/1n4148-through-hole-diode/) |
-| EC11 rotary encoder | 2 | 4 | [Probots EC11 20 mm](https://probots.co.in/20-position-360-degree-rotary-encoder-ec11-w-push-button.html) |
+| EC11 rotary encoder | 2 | 4 | [Robu.in, Hongyan EC11](https://robu.in/product/hongyan-ec11h-7ce20p1zd20-rotary-encoder-with-push-button-switch-vertical-plug-in-5-pin/) |
 | OLED 0.96in I2C | 2 | 4 |  |
 | SK6812MINI-E LED | 66 | 132 | Not stocked by Indian stores I checked |
 | AO3401A P-MOSFET (SOT-23) | 4 | 8 | Robu.in / Lamington Road |
@@ -67,7 +67,7 @@ The shopping list with spares and prices is `bom/bom.csv` / `plan/bom.html`.
 | MX switch, 1.5u key (tall thumb) | 4 | 8 | Kailh sockets: you own 100 (enough for keyboard 1). Switches: still to choose |
 | MSK12C02 power slide switch | 2 | 4 | Robu.in / AliExpress "MSK12C02" |
 | 6 mm reset button | 2 | 4 | Robu.in / StacksKB |
-| nRF52840 Pro Micro (nice!nano v2) | 2 | 4 | [nice!keyboards resellers](https://nicekeyboards.com/nice-nano/) |
+| nRF52840 SuperMini (nice!nano v2 clone) | 2 | 4 | [AliExpress, A+A+A Store](https://www.aliexpress.com/item/1005007383270623.html) |
 
 **Switches and keycaps:** 66 switches per keyboard. Keycaps per keyboard: 10 × 1.25u, 52 × 1u, 4 × 1.5u. Not in the schematic as separate parts (the switch footprint stands for socket + switch).
 

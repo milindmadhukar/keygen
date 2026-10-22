@@ -5,7 +5,7 @@ case/bottom/{stl,step}/keygen-{left,right}-bottom.*   floor, battery bay, walls,
 case/top/{stl,step}/keygen-{left,right}-top.*         frame round the plate and a deck over it, gasket
                                                       pockets, screw holes
 case/plate/step/keygen-{left,right}-plate.step        the plate, for the fit check (it is made from the Gerbers)
-case/foam/{dxf,svg}/keygen-{left,right}-{switch,plate,case}-foam.*   the three foam layers, to cut
+case/foam/{dxf,svg}/keygen-{left,right}-{plate,case}-foam.*   the two foam layers, to cut
 case/foam/step/keygen-{left,right}-*-foam.step        the same layers as solids, in place
 case/keygen-case.step                                 all six parts in place
 
@@ -20,10 +20,11 @@ The top frame's deck is level with its rim and covers the plate everywhere but t
 OLED (a window that opens towards the thumbs) and the encoder (a hole round its bushing, under the
 knob).
 
-The foam, from the top: PE switch foam on the PCB, holed for every pin, pad, LED window and
-standoff; Poron plate foam on top of it, cut round the switches, the encoder, the OLED and the
-standoffs; and case foam on the floor round the battery bay, the controller, the tall parts under
-the PCB and the reset tube. They are written as 1:1 DXF and SVG, seen from above.
+The foam, from the top: EVA plate foam under the plate, cut round the switches, the encoder, the
+OLED and the standoffs, resting on the Poron ring switch pads stuck on the PCB under each switch
+(the 0.5 mm PE_Z layer; they come ready-made, so it has no file); and EVA case foam on the floor
+round the battery bay, the controller, the tall parts under the PCB and the reset tube. They are
+written as 1:1 DXF and SVG, seen from above.
 
 Geometry and the stack come from case_geometry.py, so rerun this after any PCB change. Needs
 build123d next to KiCad's pcbnew; see the README:
@@ -60,7 +61,7 @@ RESET_HOLE_D, RESET_TUBE_D = 2.0, 5.0  # paperclip hole, and the guide tube roun
 RESET_BUTTON_H = 5.0                   # 6 mm tact switch, 5 mm tall, on the PCB underside
 EPS = 0.01
 CASE_COLOUR, PLATE_COLOUR = Color(0x2E2E33), Color(0x111113)
-FOAM_COLOURS = {"switch": Color(0xE4E6E8), "plate": Color(0x8C6E7A), "case": Color(0x6B7078)}
+FOAM_COLOURS = {"plate": Color(0x8C6E7A), "case": Color(0x6B7078)}
 
 xy = lambda p: (p[0], -p[1])           # KiCad y points down; the CAD model's y points up
 Z = (Align.CENTER, Align.CENTER, Align.MIN)
@@ -198,7 +199,7 @@ def deck(h):
 
 
 def foams(h):
-    """The three foam layers in plan: {'switch' | 'plate' | 'case': face}."""
+    """The two foam layers in plan: {'plate' | 'case': face}."""
     clear = C.FOAM_HOLE_CLEAR
     grown = lambda r, g: (r[0] - g, r[1] - g, r[2] + g, r[3] + g)
     pads = [cut_circle((x, y), max(w, hh) + 2 * clear) if rnd else cut_rect((x - w / 2 - clear, y - hh / 2 - clear,
@@ -206,15 +207,10 @@ def foams(h):
             for x, y, w, hh, rnd in h["drills"]]
     standoffs = [cut_circle(p, C.STANDOFF_D + 2 * clear + 1.0) for p in h["holes"].values()]
     encoders = [cut_square(p, C.ENC_CUTOUT + 2 * clear) for p in h["enc"]]
-    header = cut_rect(grown(h["header"], clear))
     board = (SPoly(h["outline"]), face(h["outline"]))
 
-    # PE, on the PCB under the switches: holed for every drilled pad, LED window and standoff, and the
-    # encoder body and OLED header, which stand on the PCB
-    leds = [cut_poly(SPoly(w).buffer(clear, join_style="mitre")) for w in h["windows"]]
-    pe = board_less(board, pads + standoffs + encoders + [header] + leds)
-
-    # Poron, between the PE and the plate: the plate's cut-outs, a little larger, and the pads
+    # plate foam, on the switch pads under the plate: the plate's cut-outs, a little larger, and the
+    # drilled pads
     plate_foam = board_less(board, [cut_square((k["x"], k["y"]), C.FOAM_SWITCH_CUT, k["rot"]) for k in h["keys"]]
                             + pads + standoffs + encoders + [cut_rect(grown(h["oled"], C.OLED_CLEAR + clear))])
 
@@ -225,7 +221,7 @@ def foams(h):
              cut_circle(h["reset"], RESET_TUBE_D + 2 * C.FOAM_PART_CLEAR)]
     under += [cut_rect(grown(t, C.FOAM_PART_CLEAR)) for t in h["tall"]]
     case_foam = board_less(cavity, under)
-    return {"switch": pe, "plate": plate_foam, "case": case_foam}
+    return {"plate": plate_foam, "case": case_foam}
 
 
 # A cut is (shapely polygon, build123d face) of the same shape: shapely finds the strips to drop, and
@@ -261,9 +257,8 @@ def board_less(base, cuts, strip=1.5):
     return max(f.faces(), key=lambda x: x.area)
 
 
-FOAM_Z = {"switch": C.PE_Z, "plate": C.PLATE_FOAM_Z, "case": (C.CAVITY_Z, C.CAVITY_Z + C.CASE_FOAM_T)}
-FOAM_NAMES = {"switch": f"PE switch foam, {C.PE_T:g} mm", "plate": f"Poron plate foam, {C.PLATE_FOAM_T:g} mm",
-              "case": f"case foam, {C.CASE_FOAM_T:g} mm"}
+FOAM_Z = {"plate": C.PLATE_FOAM_Z, "case": (C.CAVITY_Z, C.CAVITY_Z + C.CASE_FOAM_T)}
+FOAM_NAMES = {"plate": f"EVA plate foam, {C.PLATE_FOAM_T:g} mm", "case": f"EVA case foam, {C.CASE_FOAM_T:g} mm"}
 
 
 def foam_solids(h):
@@ -363,8 +358,6 @@ def fit_check(h, bottom, top, plt, foam):
         check(name, part, (("pcb", pcb), ("plate", plt), ("controller", controller), ("reset button", button),
                            ("keycaps", caps), ("oled", oled), ("battery", battery), ("encoder", encoder),
                            ("knob", knob), ("plate screw heads", heads)))
-    check("switch foam", foam["switch"], (("encoder", encoder), ("oled header", header), ("standoffs", standoffs),
-                                          ("plate", plt)))
     check("plate foam", foam["plate"], (("switches", switches), ("encoder", encoder), ("oled", oled),
                                         ("oled header", header), ("standoffs", standoffs), ("plate", plt)))
     check("case foam", foam["case"], (("bottom", bottom), ("controller", controller), ("reset button", button),

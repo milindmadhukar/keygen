@@ -16,8 +16,8 @@ The stack, bottom to top:
   top frame         SPLIT_Z .. TOP_Z round the edge; inside it a deck, CEIL_Z .. TOP_Z, covers the
                     plate everywhere but the keycaps, the OLED and the encoder
 
-The foam: a PE sheet on the PCB under the switches, Poron plate foam between it and the plate,
-and case foam on the floor round the battery bay (PE_Z, PLATE_FOAM_Z, CASE_FOAM_Z).
+The foam: Poron ring switch pads on the PCB under the switches, EVA plate foam between them and
+the plate, and EVA case foam on the floor round the battery bay (PE_Z, PLATE_FOAM_Z, CASE_FOAM_Z).
 
 The plate and PCB are tied together by M2 standoffs and float on the tabs; nothing screws the
 PCB to the case. The bottom shell and the top frame are screwed together through the walls,
@@ -103,9 +103,9 @@ SCREW_HEAD_H = 1.1             # M2 button head (ISO 7380) on the plate
 STANDOFF_D = 4.0               # M2 hex standoff, across the corners
 
 # ---------------------------------------------------------------- foam (mm)
-PE_T = 0.5                     # PE switch foam on the PCB
-PLATE_FOAM_T = 2.5             # Poron plate foam on the PE, under the plate
-CASE_FOAM_T = 5.0              # EVA or Poron case foam on the floor
+PE_T = 0.5                     # Poron ring switch pads on the PCB, one per switch
+PLATE_FOAM_T = 2.0             # EVA plate foam on the switch pads, under the plate (2.8 at most)
+CASE_FOAM_T = 5.0              # EVA case foam on the floor
 PE_Z = (0.0, PE_T)
 PLATE_FOAM_Z = (PE_T, PE_T + PLATE_FOAM_T)
 FOAM_SWITCH_CUT = 14.4         # plate foam cut-out per switch

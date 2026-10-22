@@ -75,7 +75,7 @@ Every 2×2 key is at most one step from where the thumb rests. That keeps the wh
 
 ### Knobs
 
-Each half has an Alps EC11 encoder with a 17 × 13 mm knurled aluminium knob (a "D halfshaft 17x13" amplifier knob) on its inner edge, mirrored: the right shaft is at (256.5, 129.0) and the left at (167.0, 129.0) in board coordinates (KiCad mm). On both halves the knob's edge sits 4.5 mm below the OLED, 5.7 mm from the thumb cluster's top key and 9.1 mm from the G/H column, close enough to reach with the thumb.
+Each half has an EC11 encoder (push switch, 20 mm D shaft) with a 17 × 13 mm knurled aluminium knob (a "D halfshaft 17x13" amplifier knob) on its inner edge, mirrored: the right shaft is at (256.5, 129.0) and the left at (167.0, 129.0) in board coordinates (KiCad mm). On both halves the knob's edge sits 4.5 mm below the OLED, 5.7 mm from the thumb cluster's top key and 9.1 mm from the G/H column, close enough to reach with the thumb.
 
 | Layer | Left knob | Right knob |
 |---|---|---|
@@ -110,7 +110,7 @@ Per-key indicators need the community module [zmk-rgb-matrix](https://github.com
 
 ### Controllers
 
-- **One per half: a genuine nice!nano v2** (decided 2026-10-20), with its **BOOST** jumper bridged for 500 mA charging: about 6 h for a 3000 mAh cell instead of about 30 h.
+- **One per half: an nRF52840 SuperMini** (decided 2026-10-23), a nice!nano v2 clone with the same 24-pin Pro Micro header and pinout, built in ZMK as the nice!nano v2. It charges at about 100 mA (no BOOST jumper): roughly a day for an empty 2500 mAh cell. Before soldering, check B+ (pad 13), GND and VCC (pad 16) with a multimeter, and confirm the charge current.
 - **Hidden:** mounted on the PCB underside near the inner edge, socketed with low-profile Mill-Max pins (adds about 3–4 mm of case depth). USB-C faces the top edge and reaches out through a slot in the case.
 - **Why two:** each half runs on its own battery and radio. More on the controller: [[03 - microcontroller selection]].
 
@@ -145,7 +145,7 @@ The matrix is COL2ROW: each switch connects to its column, and the diode cathode
 
 - **Module:** a generic 0.96 in. 128×64 **SSD1306 I2C** module per half (address 0x3C), J101 / J201. Its own pull-ups and regulator are used, with the controller's internal pull-ups on as well. The firmware gives the I2C (TWIM) driver a 1025-byte buffer so a whole 1024-byte frame goes out in one transfer, as the SSD1306 needs.
 - **Footprint:** a 1×4 2.54 mm header, pin order **GND, VCC, SCL, SDA**. Check the module's printed order before soldering; some swap GND and VCC.
-- **Wiring:** SDA on P0.17 (pad 5), SCL on P0.20 (pad 6), both full-speed pins. Power comes from the nice!nano's VCC (pad 16), its switched 3.3 V output, which P0.13 turns on. The firmware holds P0.13 high with a gpio-hog, so the OLED stays powered on battery.
+- **Wiring:** SDA on P0.17 (pad 5), SCL on P0.20 (pad 6), both full-speed pins. Power comes from the controller's VCC (pad 16), its switched 3.3 V output, which P0.13 turns on. The firmware holds P0.13 high with a gpio-hog, so the OLED stays powered on battery.
 - **Mounting:** the module's own header pins solder straight into the board, on their 2.5 mm plastic spacer, so the glass sits about level with the plate top (~5 mm above the PCB), in a 28.5 × 29 mm plate window. The module is 27.5 × 28 mm.
 - **Position:** over the lower (antenna) end of each controller, in the free area above the knob. Right module x 245–272.5, y 88–116; left x 151–178.5, y 88–116 (board coordinates). The header runs along the module's bottom edge, so the firmware draws the text turned 180°. Sitting over the antenna end costs some Bluetooth range, as with a display over a nice!nano on a Corne.
 
@@ -161,7 +161,7 @@ Everything lives in **one KiCad project**, `pcb/keygen.kicad_pro`:
 - **Datasheet audit:** `tools/check_datasheets.py` checks the routed PCB against each part's datasheet (`docs/datasheets/`): 0 fail, 8 warnings as of 2026-10-22. Findings and learnings: [[15 - datasheet audit]].
 
 > [!note] LED supply
-> The LEDs run from the battery (B+, 3.0–4.2 V) through a high-side **AO3401A P-MOSFET** (Q2). An **AO3400A N-MOSFET** (Q3), driven from P0.08, pulls Q2's gate low to turn them on. A 100 kΩ resistor from Q2's gate to its source (R2) and one from Q3's gate to GND (R3) hold both off while the controller boots or sleeps. The SK6812MINI-E is rated for **VDD 3.7–5.5 V**: the cell is inside that until it runs low, and the LEDs light only on USB power, when it sits near 4.2 V. The 10 µF + 100 nF capacitors sit at Q2's output. The nice!nano's switched 3.3 V VCC output powers only the OLED. All the resistors and capacitors are 1206, for hand soldering.
+> The LEDs run from the battery (B+, 3.0–4.2 V) through a high-side **AO3401A P-MOSFET** (Q2). An **AO3400A N-MOSFET** (Q3), driven from P0.08, pulls Q2's gate low to turn them on. A 100 kΩ resistor from Q2's gate to its source (R2) and one from Q3's gate to GND (R3) hold both off while the controller boots or sleeps. The SK6812MINI-E is rated for **VDD 3.7–5.5 V**: the cell is inside that until it runs low, and the LEDs light only on USB power, when it sits near 4.2 V. The 10 µF + 100 nF capacitors sit at Q2's output. The controller's switched 3.3 V VCC output powers only the OLED. All the resistors and capacitors are 1206, for hand soldering.
 
 ### Connectivity
 
@@ -175,11 +175,11 @@ The left half is the ZMK central. Plugging USB-C into it is the wired mode, and 
 
 ### Power
 
-- **LiPo pouch per half: ≤ 5 mm thick, 2500–3000 mAh, at most 60 × 88 mm including the protection board** (e.g. 505080, 5 × 50 × 80 mm), with a protection circuit (decided 2026-10-20; capacity raised from 1000–1500 mAh on 2026-10-22). Thickness is the limit, not area: a 6 mm cell would raise the case. A 505080 holds about 2500 mAh; 4000 mAh claims at this size are overstated, and a 506090 (5 × 60 × 90 mm) is at the limit in length and thickness.
+- **LiPo pouch per half: 505080 (5 × 50 × 80 mm), about 2500 mAh**, on a JST-PH 2.0 lead, with a protection board (decided 2026-10-23). It is listed as 3000 mAh; a 505080 holds about 2500. The controller has no over-discharge cut-off, so a cell sold without a protection board gets a DW01A module. The bay takes a cell up to 5 mm thick and 60 × 88 mm including the protection board; a thicker cell would raise the case.
   - **Where:** in a bay sunk 1 mm into the case floor, under the outer and middle key columns (1–4, Q–R, A–F on the left; mirrored on the right), long side across the board, held with double-sided tape. Its lead end faces the JST-PH connector, about 40 mm away. The cell keeps at least 15 mm from the controller's antenna end and 10 mm from the controller, connector, buttons, encoder and OLED pins. `tools/case_geometry.py` places it and `tools/gen_case.py` checks it. Positions: [[14 - case & plate requirements]].
   - **Height:** the socketed controller already needs about 7.5 mm below the PCB, so the case floor is 9.0 mm below the PCB's underside and the bay 10.0 mm. A 5 mm cell, allowed 0.5 mm more for tolerance and swelling, leaves 2.5 mm to the sockets and diodes above it, and 1.0 mm with the floating stack pressed 1.5 mm down. Up to 5 mm adds nothing. In the case: PCB top 13.6 mm above the desk, plate top 18.6 mm, keycap tops about 33 mm before tenting.
-- **Charging:** each half charges from its own USB-C; a 1-to-2 USB-C cable charges both from one charger. The right half (peripheral) drains far slower, so it rarely needs it. Expect several months on the left and longer on the right at 2500–3000 mAh with the LEDs off.
-- **Battery switch** (decided 2026-10-20): the MSK12C02 slide switch (rated 50 mA) only drives the gate of an **AO3401A P-MOSFET** that carries the battery current, so 500 mA BOOST charging and LED current never pass through its contacts. Source on the battery, drain on B+, so the body diode blocks the battery when off. A 1 MΩ resistor holds the gate off between positions. Leave the switch on while charging: switched off with USB in, the cell still charges through the body diode and the MOSFET warms (~0.35 W). The nice!nano has a charger but no switch.
+- **Charging:** each half charges from its own USB-C at about 100 mA, roughly a day from empty; a 1-to-2 USB-C cable charges both from one charger. The right half (peripheral) drains far slower, so it rarely needs it. Expect several months on the left and longer on the right at 2500 mAh with the LEDs off.
+- **Battery switch** (decided 2026-10-20): the MSK12C02 slide switch (rated 50 mA) only drives the gate of an **AO3401A P-MOSFET** that carries the battery current, so charging and LED current never pass through its contacts. Source on the battery, drain on B+, so the body diode blocks the battery when off. A 1 MΩ resistor holds the gate off between positions. Leave the switch on while charging: switched off with USB in, the cell still charges through the body diode and the MOSFET warms (~0.35 W). The controller has a charger but no switch.
 - **LEDs powered from the battery through the LED power switch** (Q2/Q3, P0.08; see [[#Schematic]]). ZMK's external power control turns it off when the LEDs are off. That matters because each SK6812 draws about 1 mA even when dark, roughly 40 mA per half around the clock. Brightness is capped in firmware to hold the strip's current down.
 - Per-key RGB drains a battery in about a day even when dim, so on battery it lights only for status flashes; full effects only when USB is plugged in.
 
@@ -192,12 +192,12 @@ The left half is the ZMK central. Plugging USB-C into it is the wired mode, and 
 | 1N4148 diode (DO-35) | 34 | 34 | TH |
 | SK6812MINI-E (per-key) | 33 | 33 | SMD (hand-solder or JLC assembly) |
 | 10 µF + 100 nF capacitors, 1206 (LED rail) | 1 + 1 | 1 + 1 | SMD |
-| LiPo + JST-PH 2-pin | 1 | 1 | TH |
+| 505080 LiPo + JST-PH 2-pin | 1 | 1 | TH |
 | MSK12C02 slide switch | 1 | 1 | SMD |
 | AO3401A P-MOSFET + 1 MΩ resistor, 1206 (battery switch) | 1 + 1 | 1 + 1 | SMD |
 | AO3401A P-MOSFET, AO3400A N-MOSFET, 2 × 100 kΩ, 1206 (LED power switch) | 1 + 1 + 2 | 1 + 1 + 2 | SMD |
 | 6 mm reset button (pinhole in case) | 1 | 1 | TH |
-| EC11 encoder + 17 mm knob | 1 | 1 | TH |
+| EC11 encoder (D shaft) + 17 mm knob | 1 | 1 | TH |
 | 0.96 in. SSD1306 I2C OLED module, 128×64 (J101 / J201) | 1 | 1 | TH (module's own header) |
 
 Each half has 34 diodes: 33 for the keys and one for its encoder's push switch, which sits in the key matrix. 3D models of the knob and the OLED module (`pcb/lib/keygen.3dshapes/Knob_17mm.step`, `OLED_096_I2C.step`) are made by `tools/gen_models.py`. Keygen is a single build. Lion Circuits' minimum is 5 per design, so order **5 left + 5 right** boards and keep the rest as spares. Full shopping list: [[13 - bill of materials]].
@@ -286,7 +286,7 @@ See [[05 - pcb design]].
 - **Switch plate: 1.6 mm FR-4** with black mask and no copper, from the PCB fab. It is tied to the PCB by M2 standoffs, and its 8 tabs per half float between Poron strips clamped by the case. Each half's plate has a 13 × 13 mm encoder cut-out and a 28.5 × 29 mm OLED window.
 - An open **USB-C slot** and a **power switch slot** on the top edge, with the wall thinned in front of them, and a guided **reset pinhole** in the floor. The reset buttons mirror between the halves (left origin at x 182.85), and so do the pinholes.
 - 7.5 mm under the PCB for the socketed controller, plus 1.5 mm to float; the ≤ 5 mm battery fits within it.
-- Foam layers for a thocky sound.
+- Foam for a thocky sound: a 0.5 mm Poron ring switch pad under each switch, 2 mm EVA plate foam and 5 mm EVA case foam.
 - **Weight in the base**: halves slide when you push inward. The Wolf builder's one regret was weight.
 - **Tenting** with screw-in legs (Corne style, 18 mm front / 40 mm rear) or magnetic phone stands; not chosen yet.
 
@@ -297,7 +297,7 @@ The case and plate are generated from the PCB by `tools/gen_case.py` and `tools/
 1. **Fit test:** print `case/plate/pdf/keygen-plate-print.pdf` at 1:1 and check the 2×2 thumbs and the knob spots with your real hand.
 2. Schematic per half, generated and ERC clean. **Done.**
 3. Place and route, DRC clean. **Done.**
-4. **Optional bring-up board:** 4 keys, encoder, OLED, 4 LEDs and an underside nice!nano, to prove every circuit cheaply.
+4. **Optional bring-up board:** 4 keys, encoder, OLED, 4 LEDs and an underside controller, to prove every circuit cheaply.
 5. Lion Circuits order (5 left + 5 right), assembly, flash the ZMK left/right UF2s.
 6. Case, foam, weight, tenting.
 

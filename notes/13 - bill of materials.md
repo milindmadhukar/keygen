@@ -9,36 +9,37 @@ tags:
 > [!info] Generated file
 > Generated from `~/Code/keygen/bom/bom.csv` by `tools/render_bom.py`. Edit the CSV, not this note. The rendered page is `plan/bom.html`. Design context: [[12 - final design]].
 
-Quantities cover **the keyboard with spares**. Prices are what the listings showed on 2026-10-20; `~` marks a rough guide.
+Quantities cover **the keyboard with spares**. Prices are what the listings showed on 2026-10-20 to 2026-10-22; `~` marks a rough guide.
 
 > [!tip] Buying strategy
-> - **LCSC or AliExpress:** SK6812MINI-E LEDs (not stocked in India), 1.25u and 1.5u keycaps
+> - **AliExpress** (shipped to Australia, brought to India by hand): SK6812MINI-E LEDs (not stocked in India), controllers, batteries, knobs, switch pads, gaskets, 1.25u and 1.5u keycaps
 > - **StacksKB:** switches and diodes
 > - **Meckeys:** 1u keycaps
-> - **Robu.in or Lamington Road:** batteries and small parts
+> - **Robu.in:** encoders and small parts
+> - **Amazon.in:** EVA foam
 > - **Lion Circuits (Bengaluru):** the boards
 >
-> Batteries rarely ship to India from abroad, so buy those locally.
+> The exact listings are in `bom/CHECKLIST.md` in the repo.
 
 ## Electronics
 
 | Part | Spec | Per kb | Buy | India | Import | Price | Status |
 |---|---|---|---|---|---|---|---|
-| Controller | nice!nano v2, genuine (ZMK target nice_nano_v2)<br>*2 needed + 1 spare. Bridge the BOOST jumper (500 mA charging, fine for cells over 500 mAh): about 6 h for a 3000 mAh cell instead of about 30 h. Clones usually lack it. Measure USB-C height on arrival (sets case depth).* | 2 | 3 |  | [nice!keyboards resellers](https://nicekeyboards.com/nice-nano/) | ~$25 each | decided |
+| Controller | nRF52840 SuperMini, a nice!nano v2 clone: same 24-pin Pro Micro header and pinout (ZMK board nice_nano//zmk)<br>*2 needed + 3 spare. Charges at about 100 mA (no BOOST jumper): roughly a day for an empty 2500 mAh cell. Before soldering, check B+ (pad 13), GND and VCC (pad 16) with a multimeter, and confirm the charge current. Measure USB-C height on arrival (sets case depth).* | 2 | 5 (pack of 5) |  | [AliExpress, A+A+A Store](https://www.aliexpress.com/item/1005007383270623.html) | AU$23.10 per 5 | decided |
 | Controller sockets | Low-profile machined round-pin female header, 1×12, plus matching round male pins<br>*Controller sits hidden on the PCB underside; sockets make it swappable. 2 strips per controller.* | 8 strips | 10 strips | Robu.in / Lamington Road: search "machined round female header 2.54" | AliExpress: "Mill-Max low profile socket pro micro" | ~₹30–60 per 1×40 strip | decided |
 | Hotswap sockets | Kailh MX hotswap socket (CPG151101S11)<br>*66 of the 100 owned, with 34 spare.* | 66 | have 100 | Already owned (100) | AliExpress Kailh official store, 100-pack; [Divinikey 100-pack](https://divinikey.com/products/kailh-hot-swap-sockets) | owned | decided |
 | Diodes | 1N4148, through-hole DO-35<br>*34 per half (each encoder's push switch is in the matrix). Cathode toward the row (COL2ROW).* | 68 | 100 | [StacksKB 1N4148 (10-pack)](https://stackskb.com/store/1n4148-through-hole-diode/) | LCSC / AliExpress (100-pack) | ₹15 per 10 (StacksKB), less per 100 | decided |
 | Per-key LEDs | SK6812MINI-E (reverse mount, 3.2×2.8 mm)<br>*33 per-key per half, no underglow (the battery sits under the PCB). The only fiddly SMD part; buy plenty (34 spare), joints fail. Alternative: JLCPCB assembles them.* | 66 | 100 | Not stocked by Indian stores I checked | LCSC (~$0.08 each) / AliExpress "SK6812MINI-E" 100-pack | ~$0.08 each | decided |
 | LED decoupling | 10 µF + 100 nF capacitors, 1206 SMD (C1, C2)<br>*One of each per half, at the LED power switch's output on the LED rail.* | 2 + 2 | 10 + 10 | Robu.in / Lamington Road | LCSC | negligible | decided |
-| Rotary encoder | EC11 with push switch, 20 mm shaft<br>*One per half. Check shaft type (knurled vs D) before buying the knobs.* | 2 | 3 | [Probots EC11 20 mm](https://probots.co.in/20-position-360-degree-rotary-encoder-ec11-w-push-button.html) | AliExpress / LCSC | ₹89 (Probots) | decided |
-| Knob | Aluminium amplifier knob, 17 mm across, 13 mm tall, for a 6 mm D shaft (AliExpress option "D halfshaft 17x13")<br>*Must match the encoder's shaft (knurled or D).* | 2 | 2 | Robu.in / Amazon.in "potentiometer knob aluminium 6mm" | AliExpress | ~₹50–150 | decided |
+| Rotary encoder | EC11 with push switch, 20 mm D shaft (half shaft)<br>*One per half. The D shaft matches the knob's 6 mm D bore.* | 2 | 3 | [Robu.in, Hongyan EC11](https://robu.in/product/hongyan-ec11h-7ce20p1zd20-rotary-encoder-with-push-button-switch-vertical-plug-in-5-pin/) | AliExpress / LCSC | ₹58 each (₹174) | decided |
+| Knob | Aluminium amplifier knob, 17 mm across, 13 mm tall, for a 6 mm D shaft (AliExpress option "D halfshaft 17x13")<br>*Fits the encoder's 6 mm D shaft.* | 2 | 2 | Robu.in / Amazon.in "potentiometer knob aluminium 6mm" | AliExpress | ~₹50–150 | decided |
 | OLED | 0.96 in. 128×64 OLED module, SSD1306, I2C, 4-pin (GND VCC SCL SDA)<br>*One per half, soldered straight into the board on its own header pins. Check the pin order printed on the module: GND, VCC, SCL, SDA. Some modules swap GND and VCC.* | 2 | 3 | Robu.in: search "0.96 inch OLED I2C SSD1306" | AliExpress | ~₹150–250 each | decided |
 
 ## Power
 
 | Part | Spec | Per kb | Buy | India | Import | Price | Status |
 |---|---|---|---|---|---|---|---|
-| Battery | 3.7 V LiPo pouch with protection circuit (PCM), 2500–3000 mAh, ≤5 mm thick, at most 60 × 88 mm including the protection board (e.g. 505080, 5 × 50 × 80 mm), JST-PH 2.0 2-pin lead about 100 mm long<br>*Lies in a bay sunk into the case floor, under the outer and middle key columns, held with double-sided tape, its lead end towards the battery connector: 2.5 mm below the solder joints under the PCB and at least 15 mm from the controller's antenna end. Up to 5 mm adds no case height. A 505080 holds about 2500 mAh; listings claiming 4000 mAh at this size are overstated. The connector is about 40 mm from the cell's lead end, so a lead of 60 mm or more reaches it. Check the red wire lands on the PCB's + pad before plugging in.* | 2 | 2 | Robu.in / Lamington Road: search "3.7V 2500mAh 505080 lipo" or "3.7V 3000mAh lipo 5mm" | Avoid: batteries rarely ship to India from abroad | ~₹400–700 each | decided |
+| Battery | 3.7 V LiPo pouch 505080 (5 × 50 × 80 mm), about 2500 mAh (listed 3000 mAh), JST-PH 2.0 2-pin lead, with a protection board<br>*The controller has no over-discharge cut-off, so the cell needs a protection board: ask the seller, and add a DW01A module to a cell without one. Lies in a bay sunk into the case floor, under the outer and middle key columns, held with double-sided tape, its lead end towards the battery connector: 2.5 mm below the solder joints under the PCB and at least 15 mm from the controller's antenna end. The connector is about 40 mm from the cell's lead end, so a lead of 60 mm or more reaches it. Check the red wire lands on the PCB's + pad before plugging in. Flown to India in hand luggage, connectors taped.* | 2 | 2 |  | [AliExpress, Easylander 505080](https://www.aliexpress.com/item/1005002973787972.html) | AU$14.44 for 2 + AU$7.05 shipping | decided |
 | Battery connector | JST-PH 2-pin, side-entry through-hole (S2B-PH-K-S)<br>*Side entry so the battery lead runs flat under the PCB.* | 2 | 10 | Robu.in "JST PH 2.0 2 pin" | LCSC | negligible | decided |
 | P-channel MOSFETs | AO3401A P-channel MOSFET, SOT-23 (Q101/Q102, Q201/Q202)<br>*Q1 carries the battery current so the 50 mA slide switch only drives its gate (source to the battery, drain to B+). Q2 switches the LEDs' supply from B+.* | 4 | 10 | Robu.in / Lamington Road | LCSC | negligible | decided |
 | Gate resistor | 1 MΩ resistor, 1206 (R101/R201)<br>*Holds the MOSFET off between switch positions.* | 2 | 10 | Robu.in / Lamington Road | LCSC | negligible | decided |
@@ -72,8 +73,10 @@ Quantities cover **the keyboard with spares**. Prices are what the listings show
 | Case screws | M2 × 6 mm socket head (ISO 4762)<br>*Top frame to bottom shell, heads flush in counterbores.* | 16 | 20 | Robu.in / hardware store | AliExpress | TBD | decided |
 | Plate standoffs | M2 × 3.5 mm female-female standoffs (the MX plate-to-PCB height)<br>*Five per half, screwed onto the PCB from below.* | 10 | 15 | StacksKB / Robu.in | AliExpress | TBD | decided |
 | Plate screws | M2 × 4 mm button head (ISO 7380), 3.5 mm head<br>*10 under the PCB into the standoffs, 7 on top of the plate (none at H101, H201, H205).* | 17 | 25 | Robu.in / hardware store | AliExpress | TBD | decided |
-| Gaskets | Poron sheet, 2 mm thick, cut into 12 × 4 mm strips<br>*Two strips per plate tab, 8 tabs per half.* | 32 strips | 1 sheet | Robu.in / StacksKB (keyboard Poron) | AliExpress | TBD | decided |
-| Foam | 0.5 mm PE switch foam sheet; 2.5 mm Poron plate foam; 5 mm EVA or Poron case foam<br>*Cut by laser or by hand from the 1:1 files in case/foam/ (one per layer per half, seen from above).* | — | 1 sheet each, at least 340 × 130 mm (two halves) | StacksKB / Lamington Road | AliExpress | TBD | decided |
+| Gaskets | Poron strip, 80 × 4 × 2 mm, cut into 12 mm pieces (12 × 4 × 2 mm)<br>*Two pieces per plate tab, 8 tabs per half. Six pieces per strip.* | 32 pieces | 1 pack of 20 strips |  | [AliExpress, gasket Poron strip](https://www.aliexpress.com/item/1005004800667967.html), option 80x4x2MM | AU$7.00 per 20 | decided |
+| Switch pads | Poron ring switch pads, 0.5 mm, open middle<br>*One per switch, stuck on the PCB under it; the open middle keeps the LED window clear.* | 66 | 1 pack of 120 |  | [AliExpress, CHENJ 3C Digital Store](https://www.aliexpress.com/item/1005006310350571.html) | AU$3.89 per 120 | decided |
+| Plate foam | EVA foam sheet, 2 mm, A4, black<br>*Cut by laser or by hand from the 1:1 plate-foam files in case/foam/ (one per half, seen from above). Rests on the switch pads under the plate; no thicker than 2.8 mm, or it lifts the plate.* | 2 sheets | 2 (pack of 10) | [Amazon.in, pack of 10](https://www.amazon.in/dp/B0H4D6P874) | AliExpress | ₹140 per 10 | decided |
+| Case foam | EVA foam sheet, 5 mm, A4, black<br>*Cut by laser or by hand from the 1:1 case-foam files in case/foam/ (one per half, seen from above).* | 2 sheets | 2 (pack of 5) | [Amazon.in, pack of 5](https://www.amazon.in/dp/B0D2NJD4DK) | AliExpress | ₹249 per 5 | decided |
 | Weight | Steel plate or washers in the base<br>*Halves slide when you push inward without weight. Keep it away from the controller's antenna end.* | — | — | Lamington Road / hardware store | — | TBD | after tenting |
 | Tenting | Screw-in legs (18 mm front / 40 mm rear) or magnetic phone stands; rubber feet | — | — | Amazon.in / hardware store | — | TBD | after tenting |
 

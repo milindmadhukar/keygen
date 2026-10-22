@@ -35,11 +35,11 @@ From `fab/BOM.md` (left 1xx, right 2xx):
 | MSK12C02 power slide switch, SW190/SW290 | 1 | back | top edge, lever out |
 | JST-PH 2-pin side-entry, BT101/BT201 | 1 | back | battery connector; + marked on the silkscreen |
 | 6 mm reset button, SW191/SW291 | 1 | back | labelled GENERATE |
-| nice!nano v2, U101/U201 | 1 | back | socketed; BOOST bridged |
+| nRF52840 SuperMini, U101/U201 | 1 | back | socketed; check B+, GND and VCC first |
 | SK6812MINI-E LED | 33 | back | reverse-mount through the board cut-out |
 | 1N4148 diode (DO-35) | 34 | back | band (cathode) toward the square pad; D107/D207 is the encoder's, beside it |
 | Kailh MX hotswap socket | 33 | back | |
-| EC11 encoder, ENC101/ENC201 | 1 | front | 17 mm knob on the shaft |
+| EC11 encoder, ENC101/ENC201 | 1 | front | 17 mm knob on the D shaft |
 | MX switch + keycap | 33 | front | 1.5u thumb switches turned 90° |
 | 0.96 in. SSD1306 I2C OLED module, J101/J201 | 1 | front | the module's own header pins; goes in after the plate, through its window |
 
@@ -56,15 +56,17 @@ From `fab/BOM.md` (left 1xx, right 2xx):
 - These are the small SMD parts; doing them first keeps the board flat on the mat.
 
 ### 3. Controller
-- Bridge the nice!nano's **BOOST** jumper (500 mA charging).
-- Solder the low-profile machined socket strips to the PCB, and the matching round pins to the nice!nano.
+- Before soldering, check the SuperMini with a multimeter: B+ (pad 13), GND and VCC (pad 16).
+- Solder the low-profile machined socket strips to the PCB, and the matching round pins to the controller.
 - Seat the controller with its **chip and USB-C facing away from the PCB**. The footprint assumes this. Seated the other way, the pinout is mirrored and battery + lands on a GPIO ([[15 - datasheet audit]]).
 - Check the USB-C end lines up with the board's top edge.
 
 ### 4. Bring-up
 - Flash the firmware (see [[#Flashing]]) and check the half enumerates over USB.
 - **Battery polarity:** JST-PH packs come wired both ways round. With a multimeter, confirm the red wire lands on the PCB's **+** pad before plugging in. Swap the crimps if it doesn't.
+- **Protection board:** check the cell has one; the controller has no over-discharge cut-off. Add a DW01A module to a cell without one.
 - Plug the battery in, then check the slide switch turns the half on and off. Leave the switch **on** while charging.
+- **Charge current:** with the multimeter in series with the battery, confirm about 100 mA on USB. An empty 2500 mAh cell takes roughly a day.
 
 ### 5. LEDs, one column at a time
 - SK6812MINI-E, reverse-mount on the back, lit side through the cut-out. **Mind the corner mark**.
@@ -95,15 +97,15 @@ From `fab/BOM.md` (left 1xx, right 2xx):
 The case is gasket-mounted: the plate and PCB become one unit that floats on Poron strips. Design: [[09 - case design]].
 - Press the 8 M2 heat-set inserts into the holes on top of the bottom shell's walls (about 200–230 °C), flush, and let them cool. [Heat-set insert guide](https://www.youtube.com/watch?v=cyof7fYFcuQ)
 - Screw the five M2 × 3.5 mm standoffs onto the PCB from below with M2 × 4 screws.
-- Cut the foam from the files in `case/foam/dxf/` or `case/foam/svg/` (DXF for a laser, SVG printed at 100 % as a template): per half a PE switch foam, a Poron plate foam and a case foam, each the right way up as drawn.
-- Lay the 0.5 mm PE foam on the PCB, its holes over the pins, pads and LED windows, then the 2.5 mm plate foam over it.
+- Cut the foam from the files in `case/foam/dxf/` or `case/foam/svg/` (DXF for a laser, SVG printed at 100 % as a template): per half a 2 mm EVA plate foam and a 5 mm EVA case foam, each the right way up as drawn.
+- Stick a 0.5 mm Poron ring switch pad on the PCB under each switch, its open middle over the LED window, then lay the plate foam over them.
 - Plate onto the standoffs, with M2 × 4 button-head screws at H102–H105 (left) and H202–H204 (right). H101, H201 and H205 get no screw on top.
 - **OLED module (J101/J201):** check its printed pin order matches the footprint's GND, VCC, SCL, SDA (some modules swap GND and VCC). Pass its header pins down through the plate's OLED window into the board, with the module resting on its 2.5 mm plastic spacer, and solder them from the back. Power the half and check the status screen appears.
 
 ### 11. Switches, then into the case
 - Check each switch's pins are straight, then press it through the plate into its socket, with a hand under the PCB behind the socket. The 1.5u thumb switches are turned 90°.
 - Case foam onto the floor of the bottom shell, round the battery in its bay.
-- Poron strips (12 × 4 × 2 mm) on the 8 ledges, then the plate-and-PCB unit onto them with the USB-C over its slot, then a strip on top of each tab.
+- Poron strips (12 × 4 × 2 mm, cut from 80 × 4 × 2 mm strips) on the 8 ledges, then the plate-and-PCB unit onto them with the USB-C over its slot, then a strip on top of each tab.
 - Top frame on, and the 8 M2 × 6 screws in evenly: snug, not tight, so the gaskets stay soft.
 - Fit the keycaps (52 × 1u, 10 × 1.25u, 4 × 1.5u) and push a knob onto each encoder shaft.
 - Final test: every key on every layer, both encoders, both OLEDs, the LEDs on USB, and Bluetooth between the halves on battery.
@@ -129,7 +131,7 @@ Key testers: [keyboard-test.space](https://keyboard-test.space), [keyboardchecke
 
 **1206 and SOT-23:** pre-tin one pad, place with tweezers while reflowing it, solder the rest, then touch up the first.
 
-**Controller sockets:** solder the socket strips with the nice!nano seated in them, so the pins line up, then lift it out to check every joint. [Mill-Max socket guide](https://golem.hu/guide/mill-max/)
+**Controller sockets:** solder the socket strips with the controller seated in them, so the pins line up, then lift it out to check every joint. [Mill-Max socket guide](https://golem.hu/guide/mill-max/)
 
 ## Troubleshooting
 
