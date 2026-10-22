@@ -29,7 +29,6 @@ GERBERS = PLATE_DIR / "gerber"
 DXF = PLATE_DIR / "dxf"
 BIT_D = 3.175                  # largest router bit the DXF dogbones fit (1/8 in.); any smaller bit works
 HOLE_D = 2.2                   # M2 clearance, drilled
-FIT_SIZES = (13.90, 13.95, 14.00, 14.05, 14.10)
 N = pcbnew.FromMM
 V = lambda p: pcbnew.VECTOR2I(N(p[0]), N(p[1]))
 
@@ -118,7 +117,7 @@ def build(sides, path):
 def dogbone_rect(cx, cy, w, h, rot):
     """Closed polyline [(x, y, bulge)] of a w x h rectangle rotated `rot` degrees, each corner relieved
     by a dogbone: a half circle of radius BIT_D / 2 through the corner, so a router bit of BIT_D or less
-    cuts it square. Sides are the nominal size; the cutter offset is the shop's CAM setting."""
+    cuts it square."""
     a, r = math.radians(rot), BIT_D / 2
     w_ = lambda lx, ly: (cx + lx * math.cos(a) - ly * math.sin(a), cy + lx * math.sin(a) + ly * math.cos(a))
     corners = [(w / 2, -h / 2), (w / 2, h / 2), (-w / 2, h / 2), (-w / 2, -h / 2)]
@@ -179,17 +178,6 @@ def plate_dxf(h, path):
               [("DRILL", x, y, HOLE_D / 2) for x, y in h["holes"].values()])
 
 
-def fit_test_dxf(path):
-    """A strip of switch cut-outs from FIT_SIZES[0] to FIT_SIZES[-1], the n-th marked by n drilled holes
-    below it, to set the cutter offset (and check the switch clips) before cutting the plates."""
-    pitch, n = 19.05, len(FIT_SIZES)
-    cuts = [polyline(dogbone_rect(pitch * i, 0, s, s, 0)) for i, s in enumerate(FIT_SIZES)]
-    x0, x1, y0, y1 = -pitch / 2 - 2, pitch * (n - 0.5) + 2, -pitch / 2 - 2, pitch / 2 + 7
-    outline = [(x0, -y0, 0.0), (x1, -y0, 0.0), (x1, -y1, 0.0), (x0, -y1, 0.0)]
-    marks = [("DRILL", pitch * i + 4.0 * (j - i / 2), pitch / 2 + 2.5, HOLE_D / 2) for i in range(n) for j in range(i + 1)]
-    write_dxf(path, {"CUTOUTS": cuts, "OUTLINE": [outline]}, marks)
-
-
 def drc(path):
     r = subprocess.run(["kicad-cli", "pcb", "drc", "--units", "mm", "--severity-error", "-o", "/dev/stdout",
                         str(path.resolve())], capture_output=True, text=True)
@@ -214,8 +202,7 @@ def main():
     hs = C.halves()
     for side in ("left", "right"):
         plate_dxf(hs[side], DXF / f"keygen-plate-{side}.dxf")
-    fit_test_dxf(DXF / "keygen-plate-fit-test.dxf")
-    print("wrote case/plate/dxf/ (both halves and the fit test)")
+    print("wrote case/plate/dxf/")
     cut = sum(len(h["keys"]) for h in hs.values())
     w, hh = sizes["left"]
     (PLATE_DIR / "PLATE.md").write_text(f"""# Ordering the Keygen switch plates
@@ -257,14 +244,8 @@ seen from above, one closed outline per contour, on three layers:
 
 - Sheet: {C.PLATE_T:g} mm (1.5 mm also fits; the MX clips are made for it), at least
   {w + 8:.0f} × {hh + 8:.0f} mm per half.
-- The lines are the finished size. The cutter offset (tool radius, or the laser's kerf) is set in
-  the shop's CAM, not drawn in: the 14.0 mm switch cut-outs must come out 14.0 mm, to about 0.05 mm.
 - Each cut-out corner has a dogbone (a half circle through the corner) for a router bit of
   {BIT_D:g} mm (1/8 in.) or smaller, so the switches sit square. A laser cuts them as drawn.
-- Cut `dxf/keygen-plate-fit-test.dxf` first: five cut-outs from {FIT_SIZES[0]:.2f} to {FIT_SIZES[-1]:.2f} mm, the
-  first marked by one hole below it, the second by two, and so on. A switch should press in with
-  a click and not rattle in the 14.00 mm one (three holes); if a neighbour fits better, change the
-  offset by the difference before cutting the plates.
 """)
     print("wrote case/plate/PLATE.md")
 
