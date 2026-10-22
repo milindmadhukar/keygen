@@ -1,0 +1,23 @@
+if SHIELD_KEYGEN_LEFT
+
+config ZMK_KEYBOARD_NAME
+    default "Keygen"
+
+config ZMK_SPLIT_ROLE_CENTRAL
+    default y
+
+# report the right half's battery to the host as well
+config ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_FETCHING
+    default y
+
+config ZMK_SPLIT_BLE_CENTRAL_BATTERY_LEVEL_PROXY
+    default y
+
+endif
+
+if SHIELD_KEYGEN_LEFT || SHIELD_KEYGEN_RIGHT
+
+config ZMK_SPLIT
+    default y
+
+endif

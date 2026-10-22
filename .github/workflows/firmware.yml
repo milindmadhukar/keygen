@@ -1,0 +1,17 @@
+name: Firmware
+
+on:
+  push:
+    paths: ["firmware/**", ".github/workflows/firmware.yml"]
+  pull_request:
+    paths: ["firmware/**", ".github/workflows/firmware.yml"]
+  workflow_dispatch:
+
+jobs:
+  build:
+    # same ZMK commit as firmware/west.yml
+    uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@4dd95d7840eb3d5a3f59bb29fbf1ab054715ef85
+    with:
+      config_path: firmware
+      build_matrix_path: firmware/build.yaml
+      archive_name: keygen-firmware
