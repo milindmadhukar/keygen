@@ -6,8 +6,7 @@ case/top/{stl,step}/keygen-{left,right}-top.*         frame round the plate and 
                                                       pockets, screw holes
 case/plate/step/keygen-{left,right}-plate.step        the plate, for the fit check (it is made from the Gerbers)
 case/foam/{dxf,svg}/keygen-{left,right}-{switch,plate,case}-foam.*   the three foam layers, to cut
-case/foam/step/keygen-{left,right}-*-foam.step        the same layers as solids, in place, for render_case.py
-                                                      (not checked in: the PE layer's holes make it large)
+case/foam/step/keygen-{left,right}-*-foam.step        the same layers as solids, in place
 case/keygen-case.step                                 all six parts in place
 
 The plate and PCB, tied together by standoffs, float on the plate's gasket tabs. Each tab sits

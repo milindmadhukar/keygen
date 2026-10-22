@@ -12,4 +12,3 @@ pcb/*.ses
 pcb/fp-info-cache
 .history/
 firmware/out/
-case/foam/step/
