@@ -3,6 +3,8 @@
   * relink every footprint to its symbol (by reference),
   * copy symbol fields (e.g. each LED's 'Position'),
   * add the battery "+" marks if the board lacks them (gen_pcb.battery_plus),
+  * redraw the silkscreen and other graphics of any footprint from the project library (keygen)
+    that no longer matches its library copy; a footprint whose pads changed is refused,
   * match 'exclude from BOM / position files' to the symbol,
   * delete redundant vias the maze router left: a via within 0.4 mm of another via on the same
     net, or one whose centre sits inside a same-net through-hole pad (the pad already joins the
@@ -52,6 +54,43 @@ def redundant_vias(b):
     return [(pcbnew.ToMM(c.x), pcbnew.ToMM(c.y)) for c in drop]
 
 
+GRAPHICS = ("fp_line", "fp_rect", "fp_circle", "fp_arc", "fp_poly", "fp_curve", "fp_text", "fp_text_box")
+
+
+def library_graphics(b):
+    """Each keygen footprint that no longer matches its library copy: {reference: the library
+    copy's graphics (lines, legend text), as the file writes them for this footprint's position,
+    side and rotation}. Laid out by pcbnew on a scratch board, because swapping graphics through
+    the API corrupts the board. A footprint whose pads changed is refused."""
+    import tempfile
+    scratch, refs = pcbnew.BOARD(), []
+    for fp in b.GetFootprints():
+        fid = fp.GetFPID()
+        if fid.GetLibNickname().wx_str() != "keygen": continue
+        lib = pcbnew.FootprintLoad(str(gen_pcb.FP_DIRS["keygen"]), fid.GetLibItemName().wx_str())
+        lib.SetAttributes(fp.GetAttributes())  # the schematic sets these (BOM, position files)
+        if not fp.FootprintNeedsUpdate(lib): continue
+        scratch.Add(lib); lib.thisown = False   # the scratch board owns it now
+        lib.SetReference(fp.GetReference())
+        pos = fp.GetPosition()
+        lib.SetPosition(pos)
+        if fp.IsFlipped(): lib.Flip(pos, pcbnew.FLIP_DIRECTION_LEFT_RIGHT)
+        lib.SetOrientation(fp.GetOrientation())
+        pads = lambda f: sorted((p.GetNumber(), p.GetPosition().x, p.GetPosition().y, p.GetSize().x, p.GetSize().y) for p in f.Pads())
+        if pads(fp) != pads(lib): raise RuntimeError(f"{fp.GetReference()}: library pads differ; regenerate the board")
+        refs.append(fp.GetReference())
+    if not refs: return {}
+    with tempfile.TemporaryDirectory() as d:
+        out = Path(d) / "scratch.kicad_pcb"
+        pcbnew.SaveBoard(str(out), scratch)
+        tree = parse(out.read_text())
+    return {reference(f): [n for n in f if isinstance(n, list) and n and n[0] in GRAPHICS] for f in find(tree, "footprint")}
+
+
+def reference(fp):
+    return next(p[2] for p in find(fp, "property") if p[1] == "Reference")
+
+
 def main():
     comps = gen_pcb.read_netlist()
     fields = netlist_fields()
@@ -70,6 +109,7 @@ def main():
         if ref[0] in "HC":                    # hole/cap labels collide with nearby silkscreen
             fp.Reference().SetVisible(False)
     gen_pcb.battery_plus(b)
+    fresh = library_graphics(b)
     spots = redundant_vias(b)
     pcbnew.SaveBoard(str(PCB), b)
     # delete the redundant vias on the file text (removing through the API corrupts the board)
@@ -77,8 +117,15 @@ def main():
     n0 = len(tree)
     tree[:] = [n for n in tree if not (isinstance(n, list) and n and n[0] == "via" and
                any(abs(float(first(n, "at")[1]) - x) < 0.001 and abs(float(first(n, "at")[2]) - y) < 0.001 for x, y in spots))]
+    # and swap in the library's graphics for footprints that went stale, likewise on the text
+    for fp in find(tree, "footprint"):
+        if reference(fp) not in fresh: continue
+        at = next(i for i, n in enumerate(fp) if isinstance(n, list) and n and n[0] in GRAPHICS)
+        fp[:] = [n for n in fp if not (isinstance(n, list) and n and n[0] in GRAPHICS)]
+        fp[at:at] = fresh[reference(fp)]
     PCB.write_text(dump(tree) + "\n")
-    print(f"relinked {relinked} footprints, removed {n0 - len(tree)} redundant vias")
+    print(f"relinked {relinked} footprints, redrew {len(fresh)} from the library"
+          + (f" ({', '.join(fresh)})" if fresh else "") + f", removed {n0 - len(tree)} redundant vias")
 
 
 if __name__ == "__main__":

@@ -14,7 +14,8 @@ script draws those pieces on the free board between each controller and its thum
   everywhere else      stars, on both faces, wherever the board is free
 
 It also writes a board stackup with black mask, white silkscreen and HASL, which is what
-kicad-cli's renders and the Gerber job file pick up.
+kicad-cli's renders and the Gerber job file pick up. Before drawing, it moves any footprint label
+(a reference, a diode's K) that crosses the edge, a pad or other silkscreen to the nearest clear spot.
 
     python3 tools/silkscreen_art.py [board.kicad_pcb]
 
@@ -443,6 +444,78 @@ def artwork(b):
     return art
 
 
+# ---------------------------------------------------------------- the footprints' own silkscreen
+
+SILK_EDGE, LABEL_CLEAR = 0.25, 0.15       # mm: a moved label's margin to the edge, and to pads and silk
+SLIVER = 0.001                            # mm^2: less overlap than this is rounding, as DRC sees it
+
+def shape_poly(it, d=0.0):
+    ps = empty(); it.TransformShapeToPolygon(ps, it.GetLayer(), N(d), N(0.005), pcbnew.ERROR_OUTSIDE); return ps
+
+def label_clear(t, board, edge=0.0, clear=0.0):
+    """True if text t sits edge mm inside the board and clear mm off every solder mask opening and
+    hole on its side, and off all other silkscreen: footprints' (its own included) and the board's."""
+    silk = t.GetLayer()
+    mask = pcbnew.F_Mask if silk == pcbnew.F_SilkS else pcbnew.B_Mask
+    me = shape_poly(t)
+    def over(ps):
+        x = copy(me); x.BooleanIntersection(ps); return area(x) > SLIVER
+    if area(minus(me, grow(board, -edge))) > SLIVER: return False
+    box = t.GetBoundingBox(); box.Inflate(N(10))
+    mine = t.m_Uuid.AsString()
+    for fp in t.GetBoard().GetFootprints():
+        if not box.Intersects(fp.GetBoundingBox()): continue
+        for p in fp.Pads():
+            ps = empty()
+            if p.IsOnLayer(mask): p.TransformShapeToPolygon(ps, mask, N(clear), N(0.005), pcbnew.ERROR_OUTSIDE)
+            if p.GetDrillSizeX() > 0: p.TransformHoleToPolygon(ps, N(clear), N(0.005), pcbnew.ERROR_OUTSIDE)
+            if ps.OutlineCount() and over(ps): return False
+        for it in list(fp.GraphicalItems()) + [fp.Reference(), fp.Value()]:
+            if it.GetLayer() == silk and it.m_Uuid.AsString() != mine and (not hasattr(it, "IsVisible") or it.IsVisible()):
+                if over(shape_poly(it, clear)): return False
+    return not any(d.GetLayer() == silk and over(shape_poly(d, clear)) for d in t.GetBoard().GetDrawings())
+
+def label_spots(t, fp):
+    """Where a misplaced label may go, nearest its old spot first: mirrored through its nearest pad
+    (a diode's K swaps to the band's other side) or beside its footprint on any side, either way
+    round; failing those, anywhere on a 0.25 mm grid within 5 mm of the footprint, nearest it first."""
+    pos0, ang0 = t.GetPosition(), t.GetTextAngleDegrees()
+    dist = lambda c: math.hypot(c[0].x - pos0.x, c[0].y - pos0.y)
+    pad = min((p.GetPosition() for p in fp.Pads()), key=lambda v: dist((v,)))
+    near = [(pcbnew.VECTOR2I(2 * pad.x - pos0.x, 2 * pad.y - pos0.y), ang0)]
+    fb, gap = fp.GetBoundingBox(False), N(0.4)
+    cx, cy = fb.GetCenter().x, fb.GetCenter().y
+    for ang in (ang0, ang0 + 90):
+        t.SetTextAngleDegrees(ang)
+        w, h = t.GetBoundingBox().GetWidth(), t.GetBoundingBox().GetHeight()
+        near += [(pcbnew.VECTOR2I(cx, fb.GetTop() - gap - h // 2), ang),
+                 (pcbnew.VECTOR2I(cx, fb.GetBottom() + gap + h // 2), ang),
+                 (pcbnew.VECTOR2I(fb.GetLeft() - gap - w // 2, cy), ang),
+                 (pcbnew.VECTOR2I(fb.GetRight() + gap + w // 2, cy), ang)]
+    grid = [(pcbnew.VECTOR2I(cx + N(i / 4), cy + N(j / 4)), ang)
+            for i in range(-20, 21) for j in range(-20, 21) for ang in (ang0, ang0 + 90)]
+    t.SetTextAngleDegrees(ang0)
+    return sorted(near, key=dist) + sorted(grid, key=lambda c: math.hypot(c[0].x - cx, c[0].y - cy))
+
+def place_labels(b, board):
+    """Move each visible footprint text that crosses the edge, a mask opening or other silkscreen
+    to the first spot from label_spots that is SILK_EDGE inside the edge and LABEL_CLEAR off the rest."""
+    moved, stuck = [], []
+    for fp in b.GetFootprints():
+        for t in [fp.Reference()] + [g for g in fp.GraphicalItems() if isinstance(g, pcbnew.PCB_TEXT)]:
+            if t.GetLayer() not in (pcbnew.F_SilkS, pcbnew.B_SilkS) or not t.IsVisible() or label_clear(t, board):
+                continue
+            pos0, ang0 = t.GetPosition(), t.GetTextAngleDegrees()
+            for pos, ang in label_spots(t, fp):
+                t.SetTextAngleDegrees(ang); t.SetPosition(pos)
+                if label_clear(t, board, SILK_EDGE, LABEL_CLEAR):
+                    moved.append(f"{fp.GetReference()} {t.GetText()}"); break
+            else:
+                t.SetTextAngleDegrees(ang0); t.SetPosition(pos0)
+                stuck.append(f"{fp.GetReference()} {t.GetText()}")
+    return moved, stuck
+
+
 # ---------------------------------------------------------------- board I/O
 
 STACKUP = """(stackup
@@ -478,6 +551,11 @@ def main():
     removed = strip_old_and_set_stackup()
     b = pcbnew.LoadBoard(str(PCB))
     board = pcbnew.SHAPE_POLY_SET(); b.GetBoardPolygonOutlines(board, False)
+    edge = empty()                         # the outer edge only: the LED cut-outs are holes in board
+    for i in range(board.OutlineCount()): edge.AddOutline(board.Outline(i))
+    moved, stuck = place_labels(b, edge)
+    print(f"footprint labels: moved {len(moved)}" + (f" ({', '.join(moved)})" if moved else ""))
+    if stuck: print(f"no clear spot for: {', '.join(stuck)}")
     inside = grow(board, -EDGE_CLEAR)
     group = pcbnew.PCB_GROUP(b); group.SetName(GROUP); b.Add(group)
     count = 0

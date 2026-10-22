@@ -223,8 +223,8 @@ so it can be regenerated after any change (see [Building from source](#building-
 
 ### PCB
 
-- **Routed and DRC clean.** DRC with schematic parity shows 0 errors, 0 unconnected items and 0
-  parity issues. Only cosmetic silkscreen warnings remain.
+- **Routed and DRC clean.** DRC with schematic parity shows 0 errors, 0 warnings, 0 unconnected
+  items and 0 parity issues.
 - **Rules:** 0.25 mm signal and 0.4 mm power traces, 0.2 mm clearance, 0.15 mm minimum track,
   0.2 mm copper-to-edge. That is within Lion Circuits' 6/6 mil capability.
 - **Routing:** Freerouting does most of the signal routing, then a custom grid maze router
@@ -316,8 +316,8 @@ Run these in order. Each step is a script in `tools/`.
 | 4 | `finish_route.py` | Grid maze router for whatever Freerouting leaves (`--include-gnd`, `--pads-to-ground REF.PAD`) |
 | 5 | `smooth_route.py` | Straightens tracks into 0/45/90° runs |
 | 6 | `stitch_gnd.py`, `cleanup_pcb.py` | Ground stitching vias; removes dangling copper |
-| 7 | `sync_pcb.py` | Relinks footprints to the schematic |
-| 8 | `silkscreen_art.py` | Black-mask stackup and the silkscreen artwork; rerunnable, replaces its previous output (about 2 minutes) |
+| 7 | `sync_pcb.py` | Relinks footprints to the schematic; redraws any `keygen` library footprint whose graphics changed in the library |
+| 8 | `silkscreen_art.py` | Moves footprint labels off the edge, pads and other silkscreen, then the black-mask stackup and the silkscreen artwork; rerunnable, replaces its previous output (about 2 minutes) |
 
 Then check the result. `kicad-cli pcb drc --schematic-parity` is the judge; pass it an absolute path.
 
