@@ -11,3 +11,4 @@ pcb/*.dsn
 pcb/*.ses
 pcb/fp-info-cache
 .history/
+firmware/out/

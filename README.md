@@ -10,7 +10,7 @@
 ![Keygen, both halves with switches and keycaps](docs/render-hero.png)
 
 Keygen is a one-off build: 66 keys over two column-staggered halves, a 2 × 2 thumb cluster, a rotary encoder
-on the right half, and per-key RGB that doubles as the status display. Each half has its own
+on the right half, and per-key RGB lighting. Each half has its own
 nRF52840 controller hidden on the PCB underside. The keyboard reaches the host over Bluetooth or
 USB-C, and the halves talk to each other over Bluetooth.
 
@@ -45,12 +45,12 @@ cover; see [The name and the artwork](#the-name-and-the-artwork).
 | Encoder | Alps EC11 on the right half, in the key matrix (push to mute, turn for volume) |
 | Switches | Akko V3 Lavender Purple Pro (tactile, 5-pin) in Kailh hotswap sockets (CPG151101S11) |
 | Keycaps | Blank DSA PBT, smoke translucent |
-| Lighting | 33 SK6812MINI-E reverse-mount RGB LEDs per half, used as the status display |
+| Lighting | 33 SK6812MINI-E reverse-mount RGB LEDs per half, on while that half has USB power |
 | Controller | nice!nano v2 (nRF52840, Pro Micro format), one per half, socketed on the underside |
 | Connectivity | Host: USB-C (left half) or Bluetooth, 5 profiles. Halves: Bluetooth split |
 | Power | LiPo pouch per half (≤ 5 mm thick, 2500–3000 mAh), JST-PH connector, slide switch driving a P-MOSFET battery switch. Each half charges from its own USB-C |
 | PCB | 2 layers, FR-4 1.6 mm, 1 oz copper, HASL, black soldermask with white silkscreen. One half is 162.7 × 125.9 mm |
-| Firmware | [ZMK](https://zmk.dev) with [zmk-rgb-matrix](https://github.com/dima-m711/zmk-rgb-matrix) for per-key indicators |
+| Firmware | [ZMK](https://zmk.dev) `main` (Zephyr 4.1): QWERTY base with Nav, Fn and System layers, ZMK Studio |
 
 ## Gallery
 
@@ -101,7 +101,7 @@ label's mark.
 | [Parts and sources](plan/bom.html) | Shopping list with Indian and import sources (from [`bom/bom.csv`](bom/bom.csv)) |
 | [Datasheets](docs/datasheets/README.md) | Every part's datasheet, with the page each design fact comes from |
 | [Plate print](docs/plate-print.pdf) | The switch plate at 1:1 on A4, one half per page, for a fit test on paper |
-| [Firmware](firmware/README.md) | ZMK configuration plan and requirements |
+| [Firmware](firmware/README.md) | ZMK configuration: keymap, hardware support, building and flashing |
 
 ## Hardware
 
@@ -155,14 +155,26 @@ label's mark.
 
 ## Firmware
 
-Keygen will run [ZMK](https://zmk.dev).
-The firmware is not written yet. [`firmware/README.md`](firmware/README.md) has the planned ZMK
-config layout and what it has to do. In short:
+Keygen runs [ZMK](https://zmk.dev). The configuration in [`firmware/`](firmware/) builds for both
+halves; it has not yet run on the boards. [`firmware/README.md`](firmware/README.md) has the keymap
+and the build and flash steps. In short:
 
-- Bluetooth split, one build per half; plugging USB-C into the left half switches the host link to USB
-- USB-C plus 5 Bluetooth profiles, and ZMK Studio for live remapping
-- Per-key RGB status: caps lock, active layer, Bluetooth profile, and battery level while Fn is held
+- One build per half on the nice!nano v2 (`nice_nano//zmk`); the halves talk over Bluetooth, the
+  left half is the central
+- USB-C on the left half plus 5 Bluetooth profiles to the host, and ZMK Studio for live remapping
+- QWERTY base layer; Nav (HJKL arrows), Fn (F-keys, numpad, media) and System (Bluetooth, output,
+  LEDs, bootloader) layers on the two 1.25u thumb keys
 - Encoder on the right half: volume, press to mute
+- The per-key LEDs light only while that half has USB power, and their VCC is switched off with them
+
+![Keygen base layer](docs/keymap-base.svg)
+
+```sh
+python3 tools/gen_zmk_layout.py   # firmware/boards/shields/keygen/keygen-layouts.dtsi
+firmware/build.sh                 # UF2s in firmware/out/, built in ZMK's Docker image
+```
+
+GitHub Actions builds the same UF2s on every push that changes `firmware/`.
 
 ## Repository layout
 
@@ -173,8 +185,8 @@ keygen/
 ├── fab/            Gerbers per half and combined, assembly BOMs, ordering notes
 ├── bom/            Bill of materials with sources (bom.csv)
 ├── plan/           Build plan and parts list as HTML
-├── docs/           Renders, plate print and part datasheets
-├── firmware/       ZMK configuration (planned)
+├── docs/           Renders, keymap pictures, plate print and part datasheets
+├── firmware/       ZMK configuration: shield, keymap, builds
 └── lib/            Git submodules: marbastlib and Keebio-Parts footprint libraries
 ```
 
@@ -232,6 +244,7 @@ python3 tools/render_bom.py      # plan/bom.html from bom/bom.csv
 python3 tools/plate_print.py     # docs/plate-print.pdf
 python3 tools/render_board.py    # docs/render-*.png: 3D renders with the black mask
 python3 tools/render_routing.py  # docs/pcb-routing.png
+python3 tools/render_keymap.py   # docs/keymap-*.svg: one picture per keymap layer
 ```
 
 ## Ordering and assembly

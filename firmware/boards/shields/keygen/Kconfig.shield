@@ -1,0 +1,5 @@
+config SHIELD_KEYGEN_LEFT
+    def_bool $(shields_list_contains,keygen_left)
+
+config SHIELD_KEYGEN_RIGHT
+    def_bool $(shields_list_contains,keygen_right)

@@ -1,0 +1,12 @@
+# Firmware builds for GitHub Actions (.github/workflows/firmware.yml) and firmware/build.sh.
+# Flash keygen_left to the left half and keygen_right to the right; settings_reset clears pairings.
+---
+include:
+  - board: nice_nano//zmk
+    shield: keygen_left
+    snippet: studio-rpc-usb-uart
+    cmake-args: -DCONFIG_ZMK_STUDIO=y
+  - board: nice_nano//zmk
+    shield: keygen_right
+  - board: nice_nano//zmk
+    shield: settings_reset
