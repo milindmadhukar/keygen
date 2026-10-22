@@ -48,7 +48,7 @@ cover; see [The name and the artwork](#the-name-and-the-artwork).
 | Lighting | 33 SK6812MINI-E reverse-mount RGB LEDs per half, used as the status display |
 | Controller | nice!nano v2 (nRF52840, Pro Micro format), one per half, socketed on the underside |
 | Connectivity | Host: USB-C (left half) or Bluetooth, 5 profiles. Halves: Bluetooth split |
-| Power | LiPo pouch per half (≤ 5 mm thick, 1000–1500 mAh), JST-PH connector, slide switch driving a P-MOSFET battery switch. Each half charges from its own USB-C |
+| Power | LiPo pouch per half (≤ 5 mm thick, 2500–3000 mAh), JST-PH connector, slide switch driving a P-MOSFET battery switch. Each half charges from its own USB-C |
 | PCB | 2 layers, FR-4 1.6 mm, 1 oz copper, HASL, black soldermask with white silkscreen. One half is 162.7 × 125.9 mm |
 | Firmware | [ZMK](https://zmk.dev) with [zmk-rgb-matrix](https://github.com/dima-m711/zmk-rgb-matrix) for per-key indicators |
 
@@ -119,8 +119,8 @@ label's mark.
 - **Battery switch:** the MSK12C02 slide switch drives the gate of an AO3401A P-MOSFET, which
   carries the battery current: source on the battery, drain on B+. A 1 MΩ resistor holds the gate
   off between positions. Leave the switch on while charging.
-- **Battery:** a pouch up to 5 mm thick lies flat over the hotswap sockets under the inner key
-  columns, on a kapton sheet, at least 15 mm from the controller's antenna end.
+- **Battery:** a pouch up to 5 mm thick lies flat over the hotswap sockets under the outer and
+  middle key columns, on a kapton sheet, at least 15 mm from the controller's antenna end.
 - **LED power:** the LED rail runs from the controller's switched VCC (P0.13), so firmware can cut
   it completely when the LEDs are off.
 - **Antenna:** each controller's antenna end is kept clear of the ground fill, and the case is
