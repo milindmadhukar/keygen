@@ -37,11 +37,5 @@ seen from above, one closed outline per contour, on three layers:
 
 - Sheet: 1.6 mm (1.5 mm also fits; the MX clips are made for it), at least
   180 × 139 mm per half.
-- The lines are the finished size. The cutter offset (tool radius, or the laser's kerf) is set in
-  the shop's CAM, not drawn in: the 14.0 mm switch cut-outs must come out 14.0 mm, to about 0.05 mm.
 - Each cut-out corner has a dogbone (a half circle through the corner) for a router bit of
   3.175 mm (1/8 in.) or smaller, so the switches sit square. A laser cuts them as drawn.
-- Cut `dxf/keygen-plate-fit-test.dxf` first: five cut-outs from 13.90 to 14.10 mm, the
-  first marked by one hole below it, the second by two, and so on. A switch should press in with
-  a click and not rattle in the 14.00 mm one (three holes); if a neighbour fits better, change the
-  offset by the difference before cutting the plates.
