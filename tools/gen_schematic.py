@@ -44,11 +44,13 @@ MCU_NETS = {
     1: "LED_DIN",            # SK6812 data via SPI MOSI (ZMK led_strip)
     2: "LED_EN",             # P0.08: LED power switch (ZMK ext-power), high = LEDs powered
     3: "GND", 4: "GND", 14: "GND",
+    5: "OLED_SDA", 6: "OLED_SCL",   # P0.17, P0.20: the OLED's I2C (both full speed)
     13: "VBAT", 15: "RST",
+    16: "VCC",               # switched 3.3 V (P0.13, held on in firmware): powers the OLED
+    23: "ENC_A", 24: "ENC_B",       # P0.10, P0.09 (NFC pins: nfct-pins-as-gpios)
     7: "ROW0", 8: "ROW1", 9: "ROW2", 10: "ROW3", 11: "ROW4",
     12: "COL0", 22: "COL1", 21: "COL2", 20: "COL3", 19: "COL4", 18: "COL5", 17: "COL6",
 }
-MCU_NETS_RIGHT = {6: "ENC_A", 24: "ENC_B"}   # P0.20, P0.09 (NFC pin: nfct-pins-as-gpios)
 
 # (row, col, legend, keycap width). Columns run outer (0) -> inner (6) on both halves.
 KEYS = {
@@ -67,7 +69,7 @@ KEYS = {
         (4, 0, "]", 1), (4, 1, "[", 1), (4, 2, "Down", 1), (4, 3, "Up", 1), (4, 4, "Fn", 1.25), (4, 5, "Space", 1.5), (4, 6, "Enter", 1.5),
     ],
 }
-ENCODER_POS = {"right": (0, 6)}   # encoder push switch sits in the matrix here
+ENCODER_POS = {"left": (0, 6), "right": (0, 6)}   # each encoder's push switch sits in the matrix here
 
 FP = {
     "mcu": "keygen:nice_nano_H_USBup",
@@ -82,6 +84,7 @@ FP = {
     "rst": "Button_Switch_THT:SW_PUSH_6mm_H5mm",
     "bat": "Connector_JST:JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal",
     "hole": "MountingHole:MountingHole_2.2mm_M2",
+    "oled": "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical",   # the OLED's own pins solder in
 }
 
 # --------------------------------------------------------------------------------------
@@ -214,6 +217,8 @@ def keygen_footprints():
                             ("marbastlib-various.pretty", "ROT_Alps_EC11E-Switch", VENDOR3D["marbastlib"])):
         fp = load(marb / lib, name)
         fp[:] = [n if not (isinstance(n, list) and n and n[0] == "model") else vendor_model(n, base) for n in fp]
+        if name.startswith("ROT_"):         # the knob (tools/gen_models.py), just above the EC11's bushing
+            fp.append(model(f"{SHAPES}/Knob_19mm.step", offset=(0, 0, 11.5)))
         save(fp, name)
 
 def keygen_lib():
@@ -237,6 +242,7 @@ LIBSYMS = {
     "Switch:SW_Push": lambda: lib_symbol(STOCK / "Switch.kicad_sym", "SW_Push"),
     "power:PWR_FLAG": lambda: lib_symbol(STOCK / "power.kicad_sym", "PWR_FLAG"),
     "Mechanical:MountingHole": lambda: lib_symbol(STOCK / "Mechanical.kicad_sym", "MountingHole"),
+    "Connector_Generic:Conn_01x04": lambda: lib_symbol(STOCK / "Connector_Generic.kicad_sym", "Conn_01x04"),
 }
 _cache = {}
 def libsym(lib_id):
@@ -359,11 +365,10 @@ def build(side, root, sheet):
     MX, MY = 360.68, 60.96
     sh.text("CONTROLLER  (mounted on the PCB underside, USB-C to the top edge)", MX - 25.4, MY - 30.48, 2)
     mnets = {str(k): v for k, v in MCU_NETS.items()}
-    if side == "right": mnets.update({str(k): v for k, v in MCU_NETS_RIGHT.items()})
     sh.symbol("keygen:nice_nano_v2", R("U", 1), "nRF52840 Pro Micro", MX, MY, FP["mcu"], nets=mnets)
-    sh.text(("Encoder B on P0.09 (NFC pin): set nfct-pins-as-gpios.\n" if side == "right" else "")
-            + "P0.08: LED power switch. VCC (pad 16) unused.\n"
-            + "Spare: P0.17 (full speed), " + ("P0.10" if side == "right" else "P0.20, P0.09, P0.10"),
+    sh.text("Encoder A/B on P0.10/P0.09 (NFC pins): set nfct-pins-as-gpios.\n"
+            "P0.08: LED power switch. P0.17/P0.20: OLED SDA/SCL.\n"
+            "VCC (pad 16, switched by P0.13): OLED power; firmware holds P0.13 high.",
             MX + 25.4, MY - 15.24)
 
     # ---- power ---------------------------------------------------------------------
@@ -414,6 +419,15 @@ def build(side, root, sheet):
                 f"ROW{enc[0]}/COL{enc[1]}", EX - 25.4, EY - 15.24, 2)
         sh.symbol("Device:RotaryEncoder_Switch", R("ENC", 1), "EC11", EX, EY, FP["enc"],
                   nets={"A": "ENC_A", "B": "ENC_B", "C": "GND", "S1": f"COL{enc[1]}", "S2": f"K{enc[0]}{enc[1]}"})
+
+    # ---- OLED ----------------------------------------------------------------------
+    # A generic 0.96" 128x64 SSD1306 module (I2C, pull-ups and regulator on the module), its own
+    # header pins soldered straight into the board. Pin order as printed on the usual modules.
+    OX, OY = 459.74, 228.6
+    sh.text("OLED (0.96 in. 128x64 SSD1306, I2C address 0x3C) - check the module's pin order: GND VCC SCL SDA",
+            OX - 25.4, OY - 15.24, 2)
+    sh.symbol("Connector_Generic:Conn_01x04", R("J", 1), "OLED 0.96in I2C", OX, OY, FP["oled"],
+              nets={"1": "GND", "2": "VCC", "3": "OLED_SCL", "4": "OLED_SDA"})
 
     # ---- mounting holes (placed on the PCB by gen_pcb.py) ----------------------------
     HX, HY = 360.68, 271.78

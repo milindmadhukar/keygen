@@ -10,15 +10,17 @@ The shopping list with spares and prices is `bom/bom.csv` / `plan/bom.html`.
 | JST-PH 2-pin battery connector | 1 | BT101 | through-hole side-entry, back side; check battery polarity first |
 | 10 µF capacitor (1206) | 1 | C101 | SMD, back side, beside the LED power switch |
 | 100 nF capacitor (1206) | 1 | C102 | SMD, back side, beside the LED power switch |
-| 1N4148 diode | 33 | D101–D133 | through-hole, back side; band (cathode) toward the square pad |
+| 1N4148 diode | 34 | D101–D134 | through-hole, back side; band (cathode) toward the square pad |
+| EC11 rotary encoder | 1 | ENC101 | through-hole, front side (right half only) |
+| OLED 0.96in I2C | 1 | J101 |  |
 | SK6812MINI-E LED | 33 | LED101–LED133 | SMD, reverse-mount on the back; mind the corner mark |
 | AO3401A P-MOSFET (SOT-23) | 2 | Q101, Q102 | SMD, back side: Q1 between the controller and the power switch, Q2 in the LED power switch |
 | AO3400A N-MOSFET (SOT-23) | 1 | Q103 | SMD, back side, in the LED power switch |
 | 1 MΩ resistor (1206) | 1 | R101 | SMD, back side, below the battery MOSFET |
 | 100 kΩ resistor (1206) | 2 | R102, R103 | SMD, back side, in the LED power switch |
-| MX switch, 1.25u key | 5 | SW101, SW107, SW113, SW120, SW131 | Kailh socket on the back; switch + 1.25u keycap |
-| MX switch, 1u key | 26 | SW102–SW106, SW108–SW112, SW114–SW119, SW121–SW130 | Kailh socket on the back; switch + 1u keycap on top |
-| MX switch, 1.5u key (tall thumb) | 2 | SW132, SW133 | Kailh socket on the back; switch + 1.5u keycap, turned 90° |
+| MX switch, 1.25u key | 5 | SW101, SW108, SW114, SW121, SW132 | Kailh socket on the back; switch + 1.25u keycap |
+| MX switch, 1u key | 26 | SW102–SW106, SW109–SW113, SW115–SW120, SW122–SW131 | Kailh socket on the back; switch + 1u keycap on top |
+| MX switch, 1.5u key (tall thumb) | 2 | SW133, SW134 | Kailh socket on the back; switch + 1.5u keycap, turned 90° |
 | MSK12C02 power slide switch | 1 | SW190 | SMD, back side at the top edge, lever out |
 | 6 mm reset button | 1 | SW191 | through-hole, back side |
 | nRF52840 Pro Micro (nice!nano v2) | 1 | U101 | on the back, socketed (Mill-Max/low-profile); bridge BOOST |
@@ -32,6 +34,7 @@ The shopping list with spares and prices is `bom/bom.csv` / `plan/bom.html`.
 | 100 nF capacitor (1206) | 1 | C202 | SMD, back side, beside the LED power switch |
 | 1N4148 diode | 34 | D201–D234 | through-hole, back side; band (cathode) toward the square pad |
 | EC11 rotary encoder | 1 | ENC201 | through-hole, front side (right half only) |
+| OLED 0.96in I2C | 1 | J201 |  |
 | SK6812MINI-E LED | 33 | LED201–LED233 | SMD, reverse-mount on the back; mind the corner mark |
 | AO3401A P-MOSFET (SOT-23) | 2 | Q201, Q202 | SMD, back side: Q1 between the controller and the power switch, Q2 in the LED power switch |
 | AO3400A N-MOSFET (SOT-23) | 1 | Q203 | SMD, back side, in the LED power switch |
@@ -51,7 +54,9 @@ The shopping list with spares and prices is `bom/bom.csv` / `plan/bom.html`.
 | JST-PH 2-pin battery connector | 2 | 4 | Robu.in "JST PH 2.0 2 pin" |
 | 10 µF capacitor (1206) | 2 | 4 | Robu.in / Lamington Road |
 | 100 nF capacitor (1206) | 2 | 4 | Robu.in / Lamington Road |
-| 1N4148 diode | 67 | 134 | [StacksKB 1N4148 (10-pack)](https://stackskb.com/store/1n4148-through-hole-diode/) |
+| 1N4148 diode | 68 | 136 | [StacksKB 1N4148 (10-pack)](https://stackskb.com/store/1n4148-through-hole-diode/) |
+| EC11 rotary encoder | 2 | 4 | [Probots EC11 20 mm](https://probots.co.in/20-position-360-degree-rotary-encoder-ec11-w-push-button.html) |
+| OLED 0.96in I2C | 2 | 4 |  |
 | SK6812MINI-E LED | 66 | 132 | Not stocked by Indian stores I checked |
 | AO3401A P-MOSFET (SOT-23) | 4 | 8 | Robu.in / Lamington Road |
 | AO3400A N-MOSFET (SOT-23) | 2 | 4 | Robu.in / Lamington Road |
@@ -63,7 +68,6 @@ The shopping list with spares and prices is `bom/bom.csv` / `plan/bom.html`.
 | MSK12C02 power slide switch | 2 | 4 | Robu.in / AliExpress "MSK12C02" |
 | 6 mm reset button | 2 | 4 | Robu.in / StacksKB |
 | nRF52840 Pro Micro (nice!nano v2) | 2 | 4 | [nice!keyboards resellers](https://nicekeyboards.com/nice-nano/) |
-| EC11 rotary encoder | 1 | 2 | [Probots EC11 20 mm](https://probots.co.in/20-position-360-degree-rotary-encoder-ec11-w-push-button.html) |
 
 **Switches and keycaps:** 66 switches per keyboard. Keycaps per keyboard: 10 × 1.25u, 52 × 1u, 4 × 1.5u. Not in the schematic as separate parts (the switch footprint stands for socket + switch).
 

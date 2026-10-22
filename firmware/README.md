@@ -11,16 +11,16 @@ the boards.
 firmware/
 ├── build.yaml                      builds: keygen_left (with ZMK Studio), keygen_right, settings_reset
 ├── west.yml                        ZMK version
-├── keygen.conf                     sleep, battery reporting, LEDs
-├── keygen.keymap                   the four layers below and the encoder bindings
+├── keygen.conf                     sleep, battery reporting, LEDs, encoders, OLED, mouse scroll
+├── keygen.keymap                   the four layers below and the knob bindings
 ├── build.sh                        local build in ZMK's Docker image
 └── boards/shields/keygen/
-    ├── keygen.dtsi                 5 × 7 matrix (COL2ROW), encoder, physical layout
+    ├── keygen.dtsi                 5 × 7 matrix (COL2ROW), both encoders, NFC pins as GPIO
     ├── keygen-layouts.dtsi         matrix transform and physical layout, from tools/gen_zmk_layout.py
-    ├── keygen_left.overlay
-    ├── keygen_right.overlay        column offset, encoder, NFC pins as GPIO
-    ├── keygen_right.conf           encoder driver
-    ├── boards/nice_nano_nrf52840_zmk.overlay   33-LED SK6812 chain on P0.06, LED power switch on P0.08
+    ├── keygen_left.overlay         left encoder
+    ├── keygen_right.overlay        column offset, right encoder
+    ├── boards/nice_nano_nrf52840_zmk.overlay   LED chain on P0.06 and its power switch on P0.08,
+    │                                           OLED on I2C (P0.17/P0.20), P0.13 held on for its power
     └── Kconfig.*, keygen.zmk.yml
 ```
 
@@ -34,7 +34,7 @@ python3 tools/gen_zmk_layout.py
 ## Keymap
 
 The keycaps are blank. Key positions follow [`keygen.keymap`](keygen.keymap); the pictures are
-drawn from it and from the physical layout, so the thumb keys and the knob sit where they are on
+drawn from it and from the physical layout, so the thumb keys and the knobs sit where they are on
 the board. A held layer key is shown in red; blank keys fall through to the layer below.
 
 ```sh
@@ -48,7 +48,9 @@ python3 tools/render_keymap.py   # docs/keymap-*.svg, with keymap-drawer through
 - `Esc`: tap for Esc, hold for Ctrl.
 - `Caps Word`: capitals until the end of the word.
 - The two 1.25u thumb keys hold the NAV and FN layers. Holding both gives SYS.
-- Encoder (the key marked ↻): volume; press to mute.
+- Left knob (the left key marked ↻): a scroll wheel on every layer; press for a middle click. With
+  Super held, turning it walks Hyprland's workspaces (Super + mouse wheel).
+- Right knob: volume; press to mute.
 
 ### NAV (hold the left 1.25u)
 
@@ -59,7 +61,7 @@ python3 tools/render_keymap.py   # docs/keymap-*.svg, with keymap-drawer through
 | `H` `J` `K` `L` | ← ↓ ↑ → |
 | `Y` `U` `I` `O` | Home, Page Down, Page Up, End |
 | `A` `S` `D` `F` | Super, Alt, Ctrl, Shift |
-| Encoder | Page Down / Page Up |
+| Right knob | Page Down / Page Up |
 
 ### FN (hold the right 1.25u)
 
@@ -74,7 +76,7 @@ python3 tools/render_keymap.py   # docs/keymap-*.svg, with keymap-drawer through
 | `Caps Word` | Caps Lock |
 | `Q` `W` | Print Screen, Insert |
 | `S` `D` `F` | Previous, play/pause, next track |
-| Encoder, encoder press | Screen brightness, play/pause |
+| Right knob, its press | Screen brightness, play/pause |
 
 ### SYS (hold both 1.25u keys)
 
@@ -95,8 +97,10 @@ python3 tools/render_keymap.py   # docs/keymap-*.svg, with keymap-drawer through
 | | |
 |---|---|
 | Matrix | 5 rows × 7 columns per half, COL2ROW; the right half's columns are offset by 7 |
-| Encoder | EC11 on the right half, A on P0.20, B on P0.09 (NFC pin as GPIO); press at row 0 / column 6 |
-| LEDs | 33 SK6812MINI-E per half on P0.06, as ZMK underglow, brightness capped at 40 %. They light only while that half has USB power and turn off when idle; ZMK's ext-power switches their supply with them through the board's LED power switch on P0.08 |
+| Encoders | EC11 on each half, A on P0.10, B on P0.09 (NFC pins as GPIO); each press at row 0 / column 6 |
+| OLED | 0.96 in. 128 × 64 SSD1306 per half on I2C (SDA P0.17, SCL P0.20, address 0x3C), mounted upside down so the image is turned 180°. ZMK's status screen: output, Bluetooth profile, layer and battery on the left; the right half's battery and link on the right. Blanks when idle. Powered from the nice!nano's 3.3 V output, which P0.13 keeps on |
+| Mouse | Scroll only, for the left knob (ZMK pointing) |
+| LEDs | 33 SK6812MINI-E per half on P0.06, as ZMK underglow, brightness capped at 40 %. They light only while that half has USB power and turn off when idle; ZMK's ext-power switches their supply with them through the board's LED power switch on P0.08, and nothing else |
 | Host | USB-C on the left half or Bluetooth, 5 profiles; USB is used while plugged in |
 | Split | Bluetooth, left half central |
 | Battery | Both halves report their level to the host |

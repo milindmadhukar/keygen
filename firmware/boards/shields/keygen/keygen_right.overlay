@@ -7,8 +7,3 @@
 &right_encoder {
     status = "okay";
 };
-
-/* ENC_B is on P0.09, an NFC pin */
-&uicr {
-    nfct-pins-as-gpios;
-};

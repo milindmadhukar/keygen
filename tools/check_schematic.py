@@ -75,7 +75,7 @@ for side in ("left", "right"):
             check(len(nets[mid]) == 2, f"{side} {mid} has {len(nets[mid])} nodes")
             check(fps[sw].endswith(f"_{'%g' % w}u"), f"{side} {sw} footprint {fps[sw]} not {w}u")
 
-    pads = {**g.MCU_NETS, **(g.MCU_NETS_RIGHT if side == "right" else {})}
+    pads = g.MCU_NETS
     for pad, net in pads.items():
         check(net_of("U1", str(pad)) == net, f"{side} U1 pad {pad} on {net_of('U1', str(pad))}, want {net}")
     for pad in set(g.MCU_PINS) - set(pads):
@@ -100,7 +100,10 @@ for side in ("left", "right"):
 
     expect = {
         "GND": {("U1", "3"), ("U1", "4"), ("U1", "14"), ("BT1", "2"), ("SW91", "2"), ("C1", "2"), ("C2", "2"), ("SW90", "1"),
-                ("Q3", "2"), ("R3", "2")},
+                ("Q3", "2"), ("R3", "2"), ("J1", "1")},
+        "VCC": {("U1", "16"), ("J1", "2")},
+        "OLED_SCL": {("U1", "6"), ("J1", "3")},
+        "OLED_SDA": {("U1", "5"), ("J1", "4")},
         "VBAT": {("U1", "13"), ("Q1", "3"), ("Q2", "2"), ("R2", "2")},
         "LED_GATE": {("Q2", "1"), ("R2", "1"), ("Q3", "3")},
         "LED_EN": {("U1", "2"), ("Q3", "1"), ("R3", "1")},
@@ -110,7 +113,7 @@ for side in ("left", "right"):
     }
     if enc:
         expect["GND"].add(("ENC1", "C"))
-        expect["ENC_A"] = {("U1", "6"), ("ENC1", "A")}
+        expect["ENC_A"] = {("U1", "23"), ("ENC1", "A")}
         expect["ENC_B"] = {("U1", "24"), ("ENC1", "B")}
     for net, want in expect.items():
         have = {p for p in nets.get(net, set()) if not p[0].startswith("#")}
@@ -119,7 +122,6 @@ for side in ("left", "right"):
     check(len([p for p in nets["LED_VDD"] if p[0].startswith("LED")]) == nled, f"{side} LED_VDD LED count")
     check({p for p in nets["LED_VDD"] if not p[0].startswith(("LED", "#"))} == {("Q2", "3"), ("C1", "1"), ("C2", "1")},
           f"{side} LED_VDD: fed only by Q2's drain, with C1/C2")
-    check("VCC" not in nets, f"{side} VCC (pad 16) should be unused")
     for ref, fp in fps.items():
         check(ref.startswith("#") or fp, f"{side} {ref} has no footprint")
     print(f"{side}: {len(fps)} parts, {len(nets)} nets checked")
