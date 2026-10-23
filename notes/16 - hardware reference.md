@@ -83,8 +83,10 @@ References and soldering notes for every part are in `fab/BOM.md`.
   rotation, a 13 × 13 mm encoder cut-out and a 28.5 × 29 mm OLED window per half, and the PCB's M2
   holes. Plate screws go in at H102–H105 and H202–H204; the standoffs at H101, H201 and H205 are
   screwed from below only.
-- **Case:** the bottom shell and top frame are screwed together with 8 M2 × 6 screws per half into
-  heat-set inserts, none within 15 mm of the controller's antenna end. The PCB top sits 13.6 mm
+- **Case:** the bottom shell and top frame are screwed together from below with 8 M2 × 16 screws
+  per half, up through the walls into heat-set inserts in blind holes in the top frame's underside,
+  none within 15 mm of the controller's antenna end. The heads sit 2 mm up in counterbores in the
+  floor; the top frame has no holes on top. The PCB top sits 13.6 mm
   above the desk and the plate top 18.6 mm.
 - **Top frame deck:** level with the frame's rim, 3.6 mm above the plate top, covering the plate
   everywhere but the keycaps (0.6 mm clear of each), the OLED window and the encoder. The
@@ -108,10 +110,11 @@ References and soldering notes for every part are in `fab/BOM.md`.
   parts beside it; and a 5.5 mm cell and the case foam against the parts under the PCB with the
   stack pressed 1.5 mm down onto its gaskets. It finds no overlaps.
 
-- **Printed parts:** the bottom shells have the battery bays, the gasket ledges, the heat-set
-  insert holes, the USB-C and power switch openings and the reset guide tube; the top frames have the
-  matching gasket pockets, counterbored screw holes, and a deck round the keycaps with an OLED
-  window and a hole for the encoder. The floor is flat, with the reset pinhole.
+- **Printed parts:** the bottom shells have the battery bays, the gasket ledges, the counterbored
+  screw holes, the USB-C and power switch openings and the reset guide tube; the top frames have the
+  matching gasket pockets, blind heat-set insert holes in their underside, and a deck round the
+  keycaps with an OLED window and a hole for the encoder. The floor is flat, with the reset pinhole
+  and the screw counterbores.
 
 ## Silkscreen artwork
 

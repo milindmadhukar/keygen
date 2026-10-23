@@ -44,8 +44,8 @@ Fasteners per half:
 |---|---|---|
 | M2 × 3.5 mm female-female standoff | 5 | Between the PCB and the plate |
 | M2 × 4 mm button-head screw | 5 + 4 (left), 5 + 3 (right) | Standoffs from below; plate from above |
-| M2 × 3 mm brass heat-set insert | 8 | Bottom shell walls |
-| M2 × 6 mm socket-head screw | 8 | Top frame to bottom shell |
+| M2 × 3 mm brass heat-set insert | 8 | Top frame underside |
+| M2 × 16 mm socket-head screw | 8 | Bottom shell to top frame, from below |
 | Poron strip, 12 × 4 × 2 mm, cut from 80 × 4 × 2 mm strips | 16 | Two per plate tab |
 
 ## 2. Tools
@@ -58,7 +58,7 @@ Fasteners per half:
 - Isopropyl alcohol (90 % or more) for flux residue
 - A magnifier for the LED and SOT-23 joints
 - A USB-C cable
-- A Phillips screwdriver for the M2 screws, and an iron tip or heat-set tool for the inserts
+- A Phillips screwdriver for the M2 screws, a 1.5 mm hex key for the case screws, and an iron tip or heat-set tool for the inserts
 - Double-sided tape for the battery
 
 ## 3. Solder the board
@@ -180,8 +180,9 @@ button-head screws from below.
 
 ### Step 15: Heat-set inserts
 
-Press the 8 M2 heat-set inserts into the holes on top of the bottom shell's walls at about
-200–230 °C, flush with the surface, and let them cool.
+Lay the top frame deck-down and press the 8 M2 heat-set inserts into the blind holes in its
+underside at about 200–230 °C, flush with the surface and no deeper (1.4 mm of frame covers each
+hole), and let them cool.
 
 ### Step 16: Battery
 
@@ -203,8 +204,9 @@ Lay the 5 mm EVA case foam on the floor of the bottom shell, round the battery i
 
 ### Step 19: Top frame
 
-Fit the top frame and drive the 8 M2 × 6 screws in evenly, a little at a time: snug, not tight, so
-the gaskets stay soft.
+Fit the top frame. Holding the two parts together, turn the half over onto a soft cloth and drive
+the 8 M2 × 16 screws up through the floor's counterbores evenly, a little at a time: snug, not
+tight, so the gaskets stay soft.
 
 ### Step 20: Keycaps, knob and final test
 

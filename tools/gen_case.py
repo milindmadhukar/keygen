@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """The 3D-printed case: a bottom shell and a top frame per half, gasket-mounted.
 
-case/bottom/{stl,step}/keygen-{left,right}-bottom.*   floor, battery bay, walls, gasket ledges, insert holes
+case/bottom/{stl,step}/keygen-{left,right}-bottom.*   floor, battery bay, walls, gasket ledges, counterbored
+                                                      screw holes
 case/top/{stl,step}/keygen-{left,right}-top.*         frame round the plate and a deck over it, gasket
-                                                      pockets, screw holes
+                                                      pockets, insert holes
 case/plate/step/keygen-{left,right}-plate.step        the plate, for the fit check (it is made from the Gerbers)
 case/foam/{dxf,svg}/keygen-{left,right}-{plate,case}-foam.*   the two foam layers, to cut
 case/foam/step/keygen-{left,right}-*-foam.step        the same layers as solids, in place
@@ -11,7 +12,9 @@ case/keygen-case.step                                 all six parts in place
 
 The plate and PCB, tied together by standoffs, float on the plate's gasket tabs. Each tab sits
 between two Poron strips: one on a ledge in the bottom shell, one under the top frame. The two
-parts are screwed together through the walls (M2 x 6 into M2 heat-set inserts). The bottom shell
+parts are screwed together from below, up through the walls (M2 x 16 into M2 heat-set inserts in
+blind holes in the top frame's underside), so the top has no holes and the screw heads sit in
+counterbores, below the flat underside. The bottom shell
 has an open slot under the USB-C, a slot for the power switch lever (with the wall thinned in
 front of both), and a guided pinhole under the reset button. The LiPo lies in a bay sunk into the
 floor, clear of the solder joints above it. The underside is flat.
@@ -52,9 +55,13 @@ def out_path(part, ext, side, name=None):
     p = OUT / part / ext / f"keygen-{side}-{name or part}.{ext}"
     p.parent.mkdir(parents=True, exist_ok=True)
     return p
-INSERT_D, INSERT_DEPTH = 3.2, 5.0      # hole for an M2 x 3 heat-set insert, with room for the melt
+INSERT_D, INSERT_L = 3.2, 3.0          # M2 x 3 heat-set insert and its hole, in the top frame's underside
+INSERT_DEPTH = INSERT_L + 0.8          # blind, with room for the melt; the rest of the frame stays solid above it
 SCREW_D = 2.4                          # M2 clearance
-CBORE_D, CBORE_DEPTH = 4.4, 2.2        # M2 x 6 socket head, flush with the top
+SCREW_L = 16.0                         # M2 x 16 socket head (ISO 4762), from below
+CBORE_D, HEAD_H = 4.4, 2.0             # its counterbore in the floor, and its head height
+CBORE_CHAMFER = 0.6
+CBORE_TOP = C.SPLIT_Z + INSERT_L - SCREW_L   # the head's seat: the screw ends level with the insert's top
 USB_SLOT_W = C.NANO_W + 2.0            # the whole nice!nano end, which overhangs the slanted edge
 LEVER_SLOT_W, LEVER_SLOT_H = 9.0, 3.4
 RESET_HOLE_D, RESET_TUBE_D = 2.0, 5.0  # paperclip hole, and the guide tube round it
@@ -148,7 +155,8 @@ def build(h):
         cuts.append(edge_box(t["edge"], t["s"] - C.TAB_W / 2 - C.POCKET_CLEAR, t["s"] + C.TAB_W / 2 + C.POCKET_CLEAR,
                              -2.0, C.TAB_D + C.POCKET_CLEAR, C.LEDGE_Z, C.SPLIT_Z + 1))
     for p in screws:
-        cuts.append(cylinder(p, INSERT_D, C.SPLIT_Z - INSERT_DEPTH, C.SPLIT_Z + 1))
+        cuts.append(cylinder(p, SCREW_D, C.BOTTOM_Z - 1, C.SPLIT_Z + 1))
+        cuts.append(cylinder(p, CBORE_D, C.BOTTOM_Z - 1, CBORE_TOP))
     # USB-C: open slot down through the floor edge, along the controller's USB direction
     ax0, ay0, ax1, ay1 = h["antenna"]
     u = (h["usb"][0] - (ax0 + ax1) / 2, h["usb"][1] - (ay0 + ay1) / 2)
@@ -162,6 +170,9 @@ def build(h):
     cuts.append(Pos(bcx, bcy, C.CAVITY_Z - C.BAY_DEPTH) * Box(bx1 - bx0, by1 - by0, C.BAY_DEPTH + 1, align=Z))
     for c in cuts:
         bottom -= c
+    for p in screws:                                 # chamfer the counterbores' mouths, like the reset pinhole's
+        x, y = xy(p)
+        bottom -= Pos(x, y, C.BOTTOM_Z - EPS) * Cone(CBORE_D / 2 + CBORE_CHAMFER, CBORE_D / 2, CBORE_CHAMFER + EPS, align=Z)
     # reset: a guide tube from the floor up to just under the button, and the pinhole through both
     tube_top = -C.PCB_T - RESET_BUTTON_H - 1.0
     bottom += cylinder(h["reset"], RESET_TUBE_D, C.CAVITY_Z - EPS, tube_top)
@@ -180,11 +191,10 @@ def build(h):
         cuts.append(edge_box(t["edge"], t["s"] - C.TAB_W / 2 - C.POCKET_CLEAR, t["s"] + C.TAB_W / 2 + C.POCKET_CLEAR,
                              -2.0, C.TAB_D + C.POCKET_CLEAR, C.SPLIT_Z - 1, C.CEIL_Z))
     for p in screws:
-        cuts.append(cylinder(p, SCREW_D, C.SPLIT_Z - 1, C.TOP_Z + 1))
-        cuts.append(cylinder(p, CBORE_D, C.TOP_Z - CBORE_DEPTH, C.TOP_Z + 1))
+        cuts.append(cylinder(p, INSERT_D, C.SPLIT_Z - 1, C.SPLIT_Z + INSERT_DEPTH))
     for c in cuts:
         top -= c
-    return bottom, top, plate(h, tab_list), len(tab_list), len(screws)
+    return bottom, top, plate(h, tab_list), len(tab_list), screws
 
 
 def deck(h):
@@ -292,6 +302,20 @@ def plate(h, tab_list):
     return p
 
 
+def screw_walls(bottom, top, screws):
+    """The case screws whose holes break out of the walls: a 0.8 mm skin round each counterbore (above its chamfer),
+    clearance hole and insert hole, and over each insert hole up to the deck top, should be solid."""
+    out = []
+    for i, p in enumerate(screws):
+        skin = [(bottom, cylinder(p, CBORE_D + 1.6, C.BOTTOM_Z + CBORE_CHAMFER, CBORE_TOP + 0.8) - cylinder(p, CBORE_D, C.BOTTOM_Z, CBORE_TOP)
+                 - cylinder(p, SCREW_D, CBORE_TOP, C.SPLIT_Z)),
+                (bottom, cylinder(p, SCREW_D + 1.6, CBORE_TOP, C.SPLIT_Z) - cylinder(p, SCREW_D, CBORE_TOP, C.SPLIT_Z)),
+                (top, cylinder(p, INSERT_D + 1.6, C.SPLIT_Z, C.TOP_Z) - cylinder(p, INSERT_D, C.SPLIT_Z, C.SPLIT_Z + INSERT_DEPTH))]
+        if any(abs((part & s).volume - s.volume) > 1e-3 for part, s in skin):
+            out.append(i)
+    return out
+
+
 KEY_TRAVEL = 4.0
 CAP_SKIRT = 7.5                        # keycap skirt bottom above the plate at rest (DSA on MX, about)
 
@@ -375,7 +399,7 @@ def main():
     OUT.mkdir(exist_ok=True)
     parts = []
     for side, h in C.halves().items():
-        bottom, top, plt, n_tabs, n_screws = build(h)
+        bottom, top, plt, n_tabs, screws = build(h)
         for name, part in (("bottom", bottom), ("top", top), ("plate", plt)):
             part.color = PLATE_COLOUR if name == "plate" else CASE_COLOUR
             export_step(part, str(out_path(name, "step", side)))
@@ -393,7 +417,11 @@ def main():
         for name, f in foam.items():
             f.color = FOAM_COLOURS[name]; f.label = f"{side} {name} foam"
             export_step(f, str(out_path("foam", "step", side, f"{name}-foam")))
-        print(f"{side}: {n_tabs} gasket tabs, {n_screws} case screws")
+        print(f"{side}: {n_tabs} gasket tabs, {len(screws)} case screws (M2 x {SCREW_L:g} from below, heads "
+              f"{CBORE_TOP - HEAD_H - C.BOTTOM_Z:.1f} mm up in the floor, {C.TOP_Z - C.SPLIT_Z - INSERT_DEPTH:.1f} mm "
+              f"of frame over the inserts)")
+        broken = screw_walls(bottom, top, screws)
+        print(f"{side} screw walls: " + (f"thin round screws {broken}" if broken else "solid round every screw"))
         for k, v in C.deck_clearances(h).items():
             print(f"{side} deck: {k} {v:.1f} mm")
         top_z, gap, pressed = C.battery_heights()
