@@ -8,6 +8,9 @@ case/top/{stl,step}/keygen-{left,right}-top.*         frame round the plate and 
 case/plate/step/keygen-{left,right}-plate.step        the plate, for the fit check (it is made from the Gerbers)
 case/foam/{dxf,svg}/keygen-{left,right}-{plate,case}-foam.*   the two foam layers, to cut
 case/foam/step/keygen-{left,right}-*-foam.step        the same layers as solids, in place
+case/foam/step/keygen-{left,right}-switch-pads.step   the switch pads, one ring per switch, in place
+case/foam/step/keygen-{left,right}-{lower,upper}-gaskets.step   the gasket strips under and over the
+                                                      plate tabs, in place and squeezed as when closed
 case/keygen-case.step                                 all six parts in place
 
 The plate and PCB, tied together by standoffs, float on the plate's gasket tabs. Each tab sits
@@ -25,7 +28,8 @@ knob).
 
 The foam, from the top: EVA plate foam under the plate, cut round the switches, the encoder, the
 OLED and the standoffs, resting on the Poron ring switch pads stuck on the PCB under each switch
-(the 0.5 mm PE_Z layer; they come ready-made, so it has no file); and EVA case foam on the floor
+(the 0.5 mm PE_Z layer: a square ring round each switch, its corner clipped where it meets a
+standoff; they come ready-made, so they have a STEP but no cut file); and EVA case foam on the floor
 round the battery bay, the controller, the tall parts under the PCB and the reset tube. They are
 written as 1:1 DXF and SVG, seen from above.
 
@@ -38,7 +42,7 @@ import math, sys
 from pathlib import Path
 
 from build123d import (Align, Box, Circle, Color, Compound, Cone, Cylinder, ExportDXF, ExportSVG, Face, Kind, Polygon, Pos,
-                       Rectangle, Rot, Unit, Wire, export_step, export_stl, extrude, loft, offset)
+                       Rectangle, RectangleRounded, Rot, Unit, Wire, export_step, export_stl, extrude, loft, offset)
 
 from shapely import Point, Polygon as SPoly, box, unary_union
 from shapely.affinity import rotate
@@ -68,7 +72,8 @@ RESET_HOLE_D, RESET_TUBE_D = 2.0, 5.0  # paperclip hole, and the guide tube roun
 RESET_BUTTON_H = 5.0                   # 6 mm tact switch, 5 mm tall, on the PCB underside
 EPS = 0.01
 CASE_COLOUR, PLATE_COLOUR = Color(0x2E2E33), Color(0x111113)
-FOAM_COLOURS = {"plate": Color(0x8C6E7A), "case": Color(0x6B7078)}
+FOAM_COLOURS = {"plate": Color(0x3A3B40), "case": Color(0x4A4C52)}   # both black EVA, two greys to tell them apart
+PAD_COLOUR = Color(0x6A6C73)                                          # black Poron rings, lighter to show on the PCB
 
 xy = lambda p: (p[0], -p[1])           # KiCad y points down; the CAD model's y points up
 Z = (Align.CENTER, Align.CENTER, Align.MIN)
@@ -194,7 +199,7 @@ def build(h):
         cuts.append(cylinder(p, INSERT_D, C.SPLIT_Z - 1, C.SPLIT_Z + INSERT_DEPTH))
     for c in cuts:
         top -= c
-    return bottom, top, plate(h, tab_list), len(tab_list), screws
+    return bottom, top, plate(h, tab_list), tab_list, screws
 
 
 def deck(h):
@@ -232,6 +237,37 @@ def foams(h):
     under += [cut_rect(grown(t, C.FOAM_PART_CLEAR)) for t in h["tall"]]
     case_foam = board_less(cavity, under)
     return {"plate": plate_foam, "case": case_foam}
+
+
+def switch_pads(h):
+    """The Poron ring switch pads, one per switch on the PCB, as solids in place, and the number
+    whose corner is clipped round a standoff (by the plate foam's standoff hole)."""
+    s, b = C.SWITCH_PAD, C.SWITCH_PAD_BAND
+    ring = RectangleRounded(s, s, C.SWITCH_PAD_R) - Rectangle(s - 2 * b, s - 2 * b)
+    nw, nd = C.SWITCH_PAD_NOTCH
+    for sign in (1, -1):
+        ring -= Pos(0, sign * (s / 2 - b)) * Rectangle(nw, 2 * nd)
+    hole = C.STANDOFF_D + 2 * C.FOAM_HOLE_CLEAR + 1.0
+    pads, clipped = [], 0
+    for k in h["keys"]:
+        x, y = xy((k["x"], k["y"]))
+        f = Pos(x, y) * Rot(0, 0, -k["rot"]) * ring
+        near = [q for q in h["holes"].values() if sq((k["x"], k["y"]), s, k["rot"]).intersects(circ(q, hole))]
+        for q in near:
+            f -= Pos(*xy(q)) * Circle(hole / 2)
+        clipped += bool(near)
+        pads.append(Pos(0, 0, C.PE_Z[0]) * extrude(f, C.PE_Z[1] - C.PE_Z[0], dir=UP))
+    return Compound(children=pads), clipped
+
+
+def gaskets(tab_list):
+    """The Poron gasket strips, squeezed as when the case is closed: {'lower': on the ledges under
+    the plate tabs, 'upper': on the tabs under the top frame}, each a compound of strips."""
+    out0 = (C.TAB_D - C.GASKET_W) / 2
+    strip = lambda t, z0, z1: edge_box(t["edge"], t["s"] - C.GASKET_L / 2, t["s"] + C.GASKET_L / 2,
+                                       out0, out0 + C.GASKET_W, z0, z1)
+    return {"lower": Compound(children=[strip(t, C.LEDGE_Z, C.PLATE_BOT) for t in tab_list]),
+            "upper": Compound(children=[strip(t, C.PLATE_TOP, C.CEIL_Z) for t in tab_list])}
 
 
 # A cut is (shapely polygon, build123d face) of the same shape: shapely finds the strips to drop, and
@@ -384,6 +420,10 @@ def fit_check(h, bottom, top, plt, foam):
                            ("knob", knob), ("plate screw heads", heads)))
     check("plate foam", foam["plate"], (("switches", switches), ("encoder", encoder), ("oled", oled),
                                         ("oled header", header), ("standoffs", standoffs), ("plate", plt)))
+    check("switch pads", foam["pads"], (("switches", switches), ("encoder", encoder), ("oled header", header),
+                                         ("standoffs", standoffs), ("plate foam", foam["plate"])))
+    for g in ("lower gaskets", "upper gaskets"):
+        check(g, foam[g], (("bottom", bottom), ("top", top), ("plate", plt), ("pcb", pcb)))
     check("case foam", foam["case"], (("bottom", bottom), ("controller", controller), ("reset button", button),
                                       ("battery", battery), ("tall parts under the pcb", tall)))
     # the battery and the case foam against the sockets, diodes and the tall parts under the PCB, the stack pressed down
@@ -399,7 +439,7 @@ def main():
     OUT.mkdir(exist_ok=True)
     parts = []
     for side, h in C.halves().items():
-        bottom, top, plt, n_tabs, screws = build(h)
+        bottom, top, plt, tab_list, screws = build(h)
         for name, part in (("bottom", bottom), ("top", top), ("plate", plt)):
             part.color = PLATE_COLOUR if name == "plate" else CASE_COLOUR
             export_step(part, str(out_path(name, "step", side)))
@@ -417,7 +457,19 @@ def main():
         for name, f in foam.items():
             f.color = FOAM_COLOURS[name]; f.label = f"{side} {name} foam"
             export_step(f, str(out_path("foam", "step", side, f"{name}-foam")))
-        print(f"{side}: {n_tabs} gasket tabs, {len(screws)} case screws (M2 x {SCREW_L:g} from below, heads "
+        pads, clipped = switch_pads(h)
+        pads.color = PAD_COLOUR; pads.label = f"{side} switch pads"
+        export_step(pads, str(out_path("foam", "step", side, "switch-pads")))
+        print(f"keygen-{side}-switch-pads: {len(h['keys'])} Poron rings, {C.SWITCH_PAD:g} mm, "
+              f"{clipped} clipped round a standoff, z {C.PE_Z[0]:.1f}..{C.PE_Z[1]:.1f}")
+        foam["pads"] = pads
+        for name, g in gaskets(tab_list).items():
+            g.color = PAD_COLOUR; g.label = f"{side} {name} gaskets"
+            export_step(g, str(out_path("foam", "step", side, f"{name}-gaskets")))
+            foam[f"{name} gaskets"] = g
+        print(f"keygen-{side}-gaskets: {len(tab_list)} Poron strips {C.GASKET_L:g} x {C.GASKET_W:g} x {C.GASKET_T:g} mm "
+              f"under the tabs and {len(tab_list)} over them, squeezed to {C.GASKET_T - C.GASKET_SQUEEZE:g} mm")
+        print(f"{side}: {len(tab_list)} gasket tabs, {len(screws)} case screws (M2 x {SCREW_L:g} from below, heads "
               f"{CBORE_TOP - HEAD_H - C.BOTTOM_Z:.1f} mm up in the floor, {C.TOP_Z - C.SPLIT_Z - INSERT_DEPTH:.1f} mm "
               f"of frame over the inserts)")
         broken = screw_walls(bottom, top, screws)

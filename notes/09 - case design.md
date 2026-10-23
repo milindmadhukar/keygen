@@ -64,8 +64,8 @@ Exact sizes and positions: [[14 - case & plate requirements]].
 
 - **Gaskets:** the Poron strips on the tabs carry the whole plate and PCB, which is what gives the soft, deep sound.
 - **Case floor foam:** 5 mm EVA, round the battery bay, the controller, the battery connector, the slide switch, the reset tube and the encoder and OLED pins, 1 mm clear of each and 0.5 mm from the walls. Its top is 2.0 mm below the parts under the PCB, 0.5 mm with the stack pressed down.
-- **Between plate and PCB:** the gap is 3.4 mm. A 0.5 mm Poron ring switch pad is stuck on the PCB under each switch, its open middle keeping the LED window clear. Then 2 mm EVA plate foam, with 14.4 mm switch cut-outs, the plate's encoder and OLED cut-outs and holes for the pads and standoffs. Plate foam up to 2.8 mm thick fits.
-- **Cut files:** `gen_case.py` writes the plate foam and the case foam per half as 1:1 DXF and SVG, seen from above, to `case/foam/dxf/` and `case/foam/svg/` in the repo, for a laser or a printed template. No strip is narrower than 1.5 mm. The fit check covers the foam too.
+- **Between plate and PCB:** the gap is 3.4 mm. A 0.5 mm Poron ring switch pad is stuck on the PCB round each switch: a square ring about 18 mm across with a 14.2 mm open middle, notched on the clip sides, which keeps the pins and the LED window clear. Seven rings per half have a corner snipped off round a standoff. Then 2 mm EVA plate foam, with 14.4 mm switch cut-outs, the plate's encoder and OLED cut-outs and holes for the pads and standoffs. Plate foam up to 2.8 mm thick fits.
+- **Cut files:** the switch pads come ready-made; `gen_case.py` models them in place in `case/foam/step/`. It writes the plate foam and the case foam per half as 1:1 DXF and SVG, seen from above, to `case/foam/dxf/` and `case/foam/svg/` in the repo, for a laser or a printed template. No strip is narrower than 1.5 mm. The fit check covers the foam too.
 - PETG is light and resonant on its own, so the foam and the gaskets do most of the work.
 
 ## Still to add: tenting, weight and feet

@@ -48,7 +48,8 @@ silkscreen artwork come from Martin Garrix's track *Keygen* (STMPD RCRDS); see
 
 ![Keygen in its case](assets/render-case.png)
 
-**Case layers.** Bottom shell, case foam, PCB, switch pads, plate foam, plate and top frame.
+**Case layers.** Bottom shell, case foam, PCB, switch pads, plate foam, gasket strips under and
+over the plate tabs, plate and top frame.
 
 ![Keygen case, exploded](assets/render-case-exploded.png)
 
