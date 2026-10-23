@@ -49,7 +49,7 @@ The full list with prices is in [[13 - bill of materials]].
 - [Easylander 505080](https://www.aliexpress.com/item/1005002973787972.html) (AliExpress): LiPo cells
 - Robu.in: JST-PH, MOSFETs, passives, slide switches
 - AliExpress: Poron switch pads and gasket strips; Amazon.in: EVA foam
-- Meckeys: 1u DSA keycaps; AliExpress: 1.25u and 1.5u
+- [SZElectronic Store](https://www.aliexpress.com/item/1005008827240220.html) (AliExpress): blank DSA keycaps, every size
 
 ## Builds that shaped the design
 

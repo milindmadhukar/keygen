@@ -12,9 +12,8 @@ tags:
 Quantities cover **the keyboard with spares**. Prices are what the listings showed on 2026-10-20 to 2026-10-22; `~` marks a rough guide.
 
 > [!tip] Buying strategy
-> - **AliExpress** (shipped to Australia, brought to India by hand): SK6812MINI-E LEDs (not stocked in India), controllers, batteries, knobs, switch pads, gaskets, 1.25u and 1.5u keycaps
+> - **AliExpress** (shipped to Australia, brought to India by hand): SK6812MINI-E LEDs (not stocked in India), controllers, batteries, knobs, switch pads, gaskets, keycaps
 > - **StacksKB:** switches and diodes
-> - **Meckeys:** 1u keycaps
 > - **Robu.in:** encoders and small parts
 > - **Amazon.in:** EVA foam
 > - **Lion Circuits (Bengaluru):** the boards
@@ -62,7 +61,7 @@ Quantities cover **the keyboard with spares**. Prices are what the listings show
 | Part | Spec | Per kb | Buy | India | Import | Price | Status |
 |---|---|---|---|---|---|---|---|
 | Switches | Akko V3 Lavender Purple Pro: tactile, 5-pin, 40 gf operating / 55 gf bump, 3.8 mm travel, clear PC top, POM stem<br>*Light, rounded tactile and not loud. The clear top lets the per-key LEDs through. 24 spare.* | 66 | 90 (2 × 45) | [StacksKB, pack of 45](https://stackskb.com/store/akko-v3-lavender-purple-pro-switch-pack-of-45/) | AKKO official store | ₹1,099 per 45 (₹2,198) | decided |
-| Keycaps | Blank DSA PBT, smoke translucent: 52 × 1u, 10 × 1.25u, 4 × 1.5u<br>*No stabilizers (nothing over 1.5u). Confirm PBT, DSA and the transparent black variant on AliExpress before paying; the two vendors' shades may differ slightly. All-black fallback: [Meckeys Blank DSA modifiers](https://meckeys.com/shop/accessories/keyboard-accessories/keycaps/blank/blank-dsa-modifiers/) in black (₹40 each, out of stock on 20 Oct 2026) with black 1u.* | 66 | 55 × 1u (11 × 5); 10 × 1.25u; 10 × 1.5u | 1u: [Meckeys Blank DSA 1u](https://meckeys.com/shop/accessories/keyboard-accessories/keycaps/blank/blank-dsa-keycaps-1u/), colour Grey Translucent | 1.25u + 1.5u: AliExpress 10-packs, blank PBT DSA, transparent black ([1.25u](https://www.aliexpress.us/item/3256805869245503.html), [1.5u](https://www.aliexpress.us/item/3256805824621950.html)); add to the LED order | ₹100 per 5 (₹1,100) + ~$1–4 per 10-pack | decided |
+| Keycaps | Blank DSA PBT, smoke translucent (LBlack / Clear Black), 50 × 1u, plus 2 × 1u accents in mixed colours, 10 × 1.25u, 4 × 1.5u<br>*No stabilizers (nothing over 1.5u). One seller, so the smoke shade matches across sizes. The 1.5u listing is titled "1.5U Height" but its caps are 1.5u wide; check on arrival.* | 66 | 60 × 1u (50 + 10 mixed); 10 × 1.25u; 10 × 1.5u | — | AliExpress, SZElectronic Store, all in one order to Australia: [1u, 50pcs LBlack + 10pcs Mix](https://www.aliexpress.com/item/1005008827240220.html), [1.25u, 10pcs LBlack](https://www.aliexpress.com/item/1005008827506189.html), [1.5u, Clear Black](https://www.aliexpress.com/item/1005009077100804.html) | AU$10.40 + AU$3.98 + AU$4.80 + AU$4.72 (AU$23.90) | in cart |
 
 ## Case
 
