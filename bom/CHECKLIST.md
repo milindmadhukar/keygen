@@ -37,7 +37,7 @@ about ₹23,000 with a steel plate, ₹29,000 with FR-4 (at about ₹55 per AU$)
 | [ ] | Reset button, 6 × 6 × 5 mm | 10 | Robu.in (in cart) | [tact switch](https://robu.in/product/kfc-a06-5-0-tact-switch-4pin6x6x5/) | ₹13 | |
 | [ ] | Case, PETG: 2 bottom shells + 2 top frames | 4 parts | Robu.in | [3D printing service](https://robu.in/product/3d-printing-service1/) | ~₹2,000–3,000 (estimate) | Stage 2. Upload `case/{bottom,top}/stl/`. About 250–315 g of PETG. Shop around: services vary a lot per gram |
 | [ ] | Heat-set inserts M2, 3 mm long, 3.5 mm OD, pack of 100 | 16 | AliExpress → Australia (in cart) | [brass heat insert nut](https://www.aliexpress.com/item/1005006798286851.html) | AU$5.19 | Size for the case's 3.2 mm holes. 84 left for other projects |
-| [ ] | Case screws M2 × 6, socket head | 20 | Amazon.in | [SS, 25 pcs](https://www.amazon.in/dp/B0CM9M7HTR) | ₹370 | Or the hardware store, with the standoffs |
+| [ ] | Case screws M2 × 16, socket head | 20 | Amazon.in / hardware store | | | The M2 × 6 pack linked before is the wrong length now; find M2 × 16 |
 | [ ] | Plate standoffs M2 × 3.5 mm, female-female | 15 | Hardware store | | ~₹300 with the screws (estimate) | The length sets the plate height for MX. If 3.5 mm is not stocked, file 4 mm ones down; not 5 mm |
 | [ ] | Plate screws M2 × 4, button head | 25 | Hardware store | | | |
 | [ ] | Switch pads, Poron ring, pack of 120 | 66 | AliExpress → Australia (in cart) | [CHENJ 3C Digital Store](https://www.aliexpress.com/item/1005006310350571.html) | AU$3.89 | Open middle, so the LED window stays clear. In place of the PE switch-foam sheet |

@@ -17,7 +17,7 @@ name: 10 - assembly & build guide
 - Isopropyl alcohol (90 %+) for flux residue
 - Magnifier for the LED and SOT-23 joints
 - USB-C cable; a 1-to-2 USB-C cable for charging both halves
-- Phillips screwdriver for the M2 screws; iron tip or heat-set tool for the inserts
+- Phillips screwdriver for the M2 screws, 1.5 mm hex key for the case screws; iron tip or heat-set tool for the inserts
 
 [GOLEM tools guide](https://golem.hu/guide/tools/)
 
@@ -95,7 +95,7 @@ From `fab/BOM.md` (left 1xx, right 2xx):
 
 ### Case assembly
 The case is gasket-mounted: the plate and PCB become one unit that floats on Poron strips. Design: [[09 - case design]].
-- Press the 8 M2 heat-set inserts into the holes on top of the bottom shell's walls (about 200–230 °C), flush, and let them cool. [Heat-set insert guide](https://www.youtube.com/watch?v=cyof7fYFcuQ)
+- Lay the top frame deck-down and press the 8 M2 heat-set inserts into the holes in its underside (about 200–230 °C), flush and no deeper, and let them cool. 1.4 mm of frame covers each hole. [Heat-set insert guide](https://www.youtube.com/watch?v=cyof7fYFcuQ)
 - Screw the five M2 × 3.5 mm standoffs onto the PCB from below with M2 × 4 screws.
 - Cut the foam from the files in `case/foam/dxf/` or `case/foam/svg/` (DXF for a laser, SVG printed at 100 % as a template): per half a 2 mm EVA plate foam and a 5 mm EVA case foam, each the right way up as drawn.
 - Stick a 0.5 mm Poron ring switch pad on the PCB under each switch, its open middle over the LED window, then lay the plate foam over them.
@@ -106,7 +106,7 @@ The case is gasket-mounted: the plate and PCB become one unit that floats on Por
 - Check each switch's pins are straight, then press it through the plate into its socket, with a hand under the PCB behind the socket. The 1.5u thumb switches are turned 90°.
 - Case foam onto the floor of the bottom shell, round the battery in its bay.
 - Poron strips (12 × 4 × 2 mm, cut from 80 × 4 × 2 mm strips) on the 8 ledges, then the plate-and-PCB unit onto them with the USB-C over its slot, then a strip on top of each tab.
-- Top frame on, and the 8 M2 × 6 screws in evenly: snug, not tight, so the gaskets stay soft.
+- Top frame on. Holding the two parts together, turn the half over onto a soft cloth and drive the 8 M2 × 16 screws up through the floor evenly: snug, not tight, so the gaskets stay soft.
 - Fit the keycaps (52 × 1u, 10 × 1.25u, 4 × 1.5u) and push a knob onto each encoder shaft.
 - Final test: every key on every layer, both encoders, both OLEDs, the LEDs on USB, and Bluetooth between the halves on battery.
 

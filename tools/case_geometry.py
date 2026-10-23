@@ -20,8 +20,8 @@ The foam: Poron ring switch pads on the PCB under the switches, EVA plate foam b
 the plate, and EVA case foam on the floor round the battery bay (PE_Z, PLATE_FOAM_Z, CASE_FOAM_Z).
 
 The plate and PCB are tied together by M2 standoffs and float on the tabs; nothing screws the
-PCB to the case. The bottom shell and the top frame are screwed together through the walls,
-into heat-set inserts.
+PCB to the case. The bottom shell and the top frame are screwed together from below, up through
+the walls into heat-set inserts in the top frame.
 
     python3 tools/case_geometry.py      # print the tabs, case screws and plate standoffs
 """

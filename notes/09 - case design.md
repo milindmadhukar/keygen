@@ -24,7 +24,7 @@ Designed and generated from the PCB; tenting, base weight and rubber feet are st
   - The plate has **8 tabs per half**, 12 × 5 mm, spread round its edge and kept clear of the USB-C and power switch.
   - Each tab sits between two **Poron strips, 12 × 4 × 2 mm**, cut from 80 × 4 × 2 mm strips: one on a ledge in the bottom shell, one under the top frame. Closing the case squeezes each strip by 0.4 mm. That is 16 strips per half.
   - The PCB and plate edges keep 1.0 mm from the walls, and the controller 1.5 mm from the floor, so the unit floats.
-- **Closing the case:** 8 **M2 × 6 socket-head screws** per half go down through the top frame into **M2 heat-set inserts** in the bottom shell's walls. The heads sit flush in counterbores. No insert or screw is within 15 mm of the controller's antenna end.
+- **Closing the case:** 8 **M2 × 16 socket-head screws** per half go up from the underside, through the bottom shell's walls, into **M2 × 3 heat-set inserts** in blind holes in the top frame's underside. The top frame has no screw holes on top: 1.4 mm of frame covers each insert. The heads sit 2 mm up inside counterbores in the floor. No insert or screw is within 15 mm of the controller's antenna end.
 - **Top frame deck:** inside the rim, the top frame carries a deck level with it (6.6 to 8.6 mm above the PCB, 3.6 mm over the plate top) that covers the plate everywhere but the keycaps, keeping 0.6 mm clear of each; webs under 1 mm are dropped.
 - **Walls:** 6.5 mm thick, thinned to 1.5 mm across the USB-C and power switch out to the corner. The floor is 3.0 mm, and 2.0 mm under the battery bay.
 

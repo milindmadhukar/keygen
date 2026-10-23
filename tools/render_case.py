@@ -5,7 +5,8 @@ render-case.png           the board in its case
 render-case-exploded.png  bottom shell, case foam, PCB, plate foam, plate and top frame lifted
                           apart (no switches or keycaps)
 render-case-parts.png     the printed parts alone: each bottom shell with its top frame above it
-render-case-bottom.png    the case from below: floor, reset pinholes, USB-C and switch openings
+render-case-bottom.png    the case from below: floor, case screw counterbores, reset pinholes, USB-C and
+                          switch openings
 render-plate.png          the FR-4 switch plates, top view
 
 The case views attach the parts from case/*/step/ (run gen_case.py first) to a copy of the board as 3D
@@ -41,7 +42,7 @@ BOARD_VIEWS = {
 CASE_VIEWS = {
     "case-parts": ["-w", "2800", "-h", "1600", "--quality", "basic", "--perspective",
                    "--rotate", "-45,0,0", "--zoom", "1.4"],
-    "case-bottom": ["-w", "2800", "-h", "1300", "--quality", "basic", "--side", "bottom", "--zoom", "2.3"],
+    "case-bottom": ["-w", "2800", "-h", "1300", "--quality", "basic", "--side", "bottom", "--zoom", "2.1"],
 }
 
 

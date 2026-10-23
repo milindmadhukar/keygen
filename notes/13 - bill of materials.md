@@ -69,8 +69,8 @@ Quantities cover **the keyboard with spares**. Prices are what the listings show
 | Part | Spec | Per kb | Buy | India | Import | Price | Status |
 |---|---|---|---|---|---|---|---|
 | Case | 3D-printed PETG, gasket-mounted: a bottom shell and a top frame per half (case/bottom/stl/, case/top/stl/)<br>*Each half 177.8 × 143.1 mm; bottom shell 17.0 mm tall, top frame 5.2 mm. The floor gets tenting, weight and feet once tenting is chosen.* | 2 + 2 | 2 + 2 | A 3D printing service | JLC3DP | TBD | decided |
-| Heat-set inserts | M2 × 3 mm brass heat-set inserts, for a 3.2 mm hole<br>*8 per half, in the bottom shell's walls.* | 16 | 25 | Robu.in / StacksKB | AliExpress | TBD | decided |
-| Case screws | M2 × 6 mm socket head (ISO 4762)<br>*Top frame to bottom shell, heads flush in counterbores.* | 16 | 20 | Robu.in / hardware store | AliExpress | TBD | decided |
+| Heat-set inserts | M2 × 3 mm brass heat-set inserts, for a 3.2 mm hole<br>*8 per half, in blind holes in the top frame's underside.* | 16 | 25 | Robu.in / StacksKB | AliExpress | TBD | decided |
+| Case screws | M2 × 16 mm socket head (ISO 4762)<br>*Bottom shell to top frame, from below, heads in counterbores in the floor.* | 16 | 20 | Robu.in / hardware store | AliExpress | TBD | decided |
 | Plate standoffs | M2 × 3.5 mm female-female standoffs (the MX plate-to-PCB height)<br>*Five per half, screwed onto the PCB from below.* | 10 | 15 | StacksKB / Robu.in | AliExpress | TBD | decided |
 | Plate screws | M2 × 4 mm button head (ISO 7380), 3.5 mm head<br>*10 under the PCB into the standoffs, 7 on top of the plate (none at H101, H201, H205).* | 17 | 25 | Robu.in / hardware store | AliExpress | TBD | decided |
 | Gaskets | Poron strip, 80 × 4 × 2 mm, cut into 12 mm pieces (12 × 4 × 2 mm)<br>*Two pieces per plate tab, 8 tabs per half. Six pieces per strip.* | 32 pieces | 1 pack of 20 strips |  | [AliExpress, gasket Poron strip](https://www.aliexpress.com/item/1005004800667967.html), option 80x4x2MM | AU$7.00 per 20 | decided |
