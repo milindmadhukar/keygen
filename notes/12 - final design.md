@@ -207,7 +207,7 @@ Each half has 34 diodes: 33 for the keys and one for its encoder's push switch, 
 
 **4 × 1.5u**, **10 × 1.25u** (8 outer column + 2 thumb), **52 × 1u**. Nothing is wider than 1.5u, so **no stabilizers** are needed. Uniform-profile caps are easiest because the thumb keys are rotated.
 
-- **Keycaps** (decided 2026-10-20): blank **DSA PBT in smoke translucent**, so the per-key status LEDs show through. 1u from Meckeys (Grey Translucent); 1.25u and 1.5u from AliExpress (transparent black).
+- **Keycaps** (decided 2026-10-20): blank **DSA PBT in smoke translucent**, so the per-key status LEDs show through. All sizes from one AliExpress seller (SZElectronic Store) in its translucent black, with two mixed-colour 1u accents.
 - **Switches** (decided 2026-10-20): **Akko V3 Lavender Purple Pro**, a light tactile with a clear top.
 - Sources and reasons: [[07 - switch & keycap selection]], [[13 - bill of materials]].
 
