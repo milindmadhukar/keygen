@@ -32,9 +32,12 @@ FP_DIRS = {
 }
 
 # --------------------------------------------------------------------------------------
-# Redox KLE (img/redox-layout.json from mattdibi/redox-keyboard, MIT), legends stripped
+# Redox KLE (img/redox-layout.json from mattdibi/redox-keyboard, MIT), legends stripped. The 2x2
+# thumb block's tall keys are 1.25u (Redox: 1.5u), bottom edge unchanged, the 1u pair above them
+# moved down to meet them. The right 1.25u thumb key is the exact mirror of the left one (Redox has it
+# 1.9 mm off).
 # --------------------------------------------------------------------------------------
-KLE = [[{"x":3.5},"",{"x":10.5},""],[{"y":-0.875,"x":2.5},"",{"x":1},"",{"x":8.5},"",{"x":1},""],[{"y":-0.875,"x":5.5},"",{"x":6.5},""],[{"y":-0.875,"x":0.25,"w":1.25},"","",{"x":14.5},"",{"w":1.25},""],[{"y":-0.625,"x":6.5},"",{"x":4.5},""],[{"y":-0.75,"x":3.5},"",{"x":10.5},""],[{"y":-0.875,"x":2.5},"",{"x":1},"",{"x":8.5},"",{"x":1},""],[{"y":-0.875,"x":5.5},"",{"x":6.5},""],[{"y":-0.875,"x":0.25,"w":1.25},"","",{"x":14.5},"",{"w":1.25},""],[{"y":-0.625,"x":6.5,"h":1.5},"",{"x":4.5,"h":1.5},""],[{"y":-0.75,"x":3.5},"",{"x":10.5},""],[{"y":-0.875,"x":2.5},"",{"x":1},"",{"x":8.5},"",{"x":1},""],[{"y":-0.875,"x":5.5},"",{"x":6.5},""],[{"y":-0.875,"x":0.25,"w":1.25},"","",{"x":14.5},"",{"w":1.25},""],[{"y":-0.375,"x":3.5},"",{"x":10.5},""],[{"y":-0.875,"x":2.5},"",{"x":1},"",{"x":8.5},"",{"x":1},""],[{"y":-0.875,"x":5.5},"",{"x":6.5},""],[{"y":-0.875,"x":0.25,"w":1.25},"","",{"x":14.5},"",{"w":1.25},""],[{"y":-0.375,"x":3.5},"",{"x":10.5},""],[{"y":-0.875,"x":2.5},"",{"x":12.5},""],[{"y":-0.75,"x":0.5},"","",{"x":14.5},"",""],[{"r":15,"y":-2.625,"x":5.75,"w":1.25},""],[{"r":30,"rx":6.5,"ry":4.25,"y":-1},"",""],[{"h":1.5},"",{"h":1.5},""],[{"r":-30,"rx":13,"y":-1,"x":-2},"",""],[{"x":-2,"h":1.5},"",{"h":1.5},""],[{"r":-15,"rx":0,"ry":0,"y":7.75,"x":11.75,"w":1.25},""]]
+KLE = [[{"x":3.5},"",{"x":10.5},""],[{"y":-0.875,"x":2.5},"",{"x":1},"",{"x":8.5},"",{"x":1},""],[{"y":-0.875,"x":5.5},"",{"x":6.5},""],[{"y":-0.875,"x":0.25,"w":1.25},"","",{"x":14.5},"",{"w":1.25},""],[{"y":-0.625,"x":6.5},"",{"x":4.5},""],[{"y":-0.75,"x":3.5},"",{"x":10.5},""],[{"y":-0.875,"x":2.5},"",{"x":1},"",{"x":8.5},"",{"x":1},""],[{"y":-0.875,"x":5.5},"",{"x":6.5},""],[{"y":-0.875,"x":0.25,"w":1.25},"","",{"x":14.5},"",{"w":1.25},""],[{"y":-0.625,"x":6.5,"h":1.5},"",{"x":4.5,"h":1.5},""],[{"y":-0.75,"x":3.5},"",{"x":10.5},""],[{"y":-0.875,"x":2.5},"",{"x":1},"",{"x":8.5},"",{"x":1},""],[{"y":-0.875,"x":5.5},"",{"x":6.5},""],[{"y":-0.875,"x":0.25,"w":1.25},"","",{"x":14.5},"",{"w":1.25},""],[{"y":-0.375,"x":3.5},"",{"x":10.5},""],[{"y":-0.875,"x":2.5},"",{"x":1},"",{"x":8.5},"",{"x":1},""],[{"y":-0.875,"x":5.5},"",{"x":6.5},""],[{"y":-0.875,"x":0.25,"w":1.25},"","",{"x":14.5},"",{"w":1.25},""],[{"y":-0.375,"x":3.5},"",{"x":10.5},""],[{"y":-0.875,"x":2.5},"",{"x":12.5},""],[{"y":-0.75,"x":0.5},"","",{"x":14.5},"",""],[{"r":15,"y":-2.625,"x":5.75,"w":1.25},""],[{"r":30,"rx":6.5,"ry":4.25,"y":-0.75},"",""],[{"h":1.25},"",{"h":1.25},""],[{"r":-30,"rx":13,"y":-0.75,"x":-2},"",""],[{"x":-2,"h":1.25},"",{"h":1.25},""],[{"r":-15,"rx":19.5,"ry":0,"y":2.75,"x":-7,"w":1.25},""]]
 
 def parse_kle(rows):
     keys, c, cl = [], dict(x=0, y=0, w=1, h=1, r=0, rx=0, ry=0), dict(x=0, y=0)
@@ -169,6 +172,13 @@ class Board:
 HOLES_PER_HALF = 5
 HOLE_KEEPOUT = 3.5      # mm from hole centre to any pad, hole or LED cut-out
 EDGE_KEEPOUT = 4.0      # mm from hole centre to the board edge
+# The inner top holes move below the reset switches to clear the OLED modules when those modules
+# move 3 mm away from the keycaps. Coordinates are in the KLE frame, before OFF is added.
+OLED_SIDE_HOLE = (183.0 - OFF[0], 127.0 - OFF[1])
+HOLE_OVERRIDES = {
+    "left": {3: OLED_SIDE_HOLE},
+    "right": {2: (MIRROR_X - OLED_SIDE_HOLE[0], OLED_SIDE_HOLE[1])},
+}
 
 def _mounting_holes(self, hull, side):
     """Pick M2 hole spots where nothing else is, spread across the half (farthest-point)."""
@@ -220,6 +230,11 @@ def _mounting_holes(self, hull, side):
     while len(chosen) < HOLES_PER_HALF:
         chosen.append(max(cands, key=lambda p: min(math.hypot(p[0] - q[0], p[1] - q[1]) for q in chosen)))
     for i, (x, y) in enumerate(chosen, 1):
+        x, y = HOLE_OVERRIDES.get(side, {}).get(i, (x, y))
+        if not (inside(x, y) and edge_dist(x, y) >= EDGE_KEEPOUT and
+                all(math.hypot(x - ox, y - oy) >= HOLE_KEEPOUT + r for ox, oy, r in obst) and
+                clear_of_switches(x, y) and clear_of_boxes(x, y)):
+            raise RuntimeError(f"{side}: fixed mounting hole H{(100 if side == 'left' else 200) + i} is obstructed")
         fp = pcbnew.FootprintLoad("/usr/share/kicad/footprints/MountingHole.pretty", "MountingHole_2.2mm_M2")
         fp.SetFPID(pcbnew.LIB_ID("MountingHole", "MountingHole_2.2mm_M2"))
         fp.SetReference(f"H{(100 if side == 'left' else 200) + i}"); fp.SetValue("M2")
@@ -279,14 +294,14 @@ LEFT_PARTS = {
 }
 BAT_PLUS = (3.5, 0.0)                        # "+" beside the battery connector's pad 1, outside its outline
 # Encoders: one per half, mirrored. The right half's shaft, on the front below the controller and its
-# OLED: a 17 mm knob clears the OLED by 4.5 mm, the thumb cluster's top key by 5.7 mm and H by 9.1 mm.
-ENCODER_SHAFT = (230.5, 53.0)
+# OLED: a 17 mm knob clears the OLED by 10 mm, the thumb cluster's top keycap by 5.7 mm and H by 9.1 mm.
+ENCODER_SHAFT = (230.5, 58.5)
 ENC_ORIGIN_TO_SHAFT = (0.0, 0.0)                          # marbastlib EC11: origin at the shaft
 ENC_DIODE = (9.0, -11.0 + 3.81)   # its diode on the back, from the shaft (right half): origin is pad 1, pad 2 north
 # OLED: a 0.96 in. module (27.5 x 28 mm) over the controller's lower end, its header along its bottom
 # edge so the text reads upside down (turned in firmware). Right half: module centre, and pin 1 (GND)
 # relative to it. Pins run toward -x on both halves, since the modules themselves don't mirror.
-OLED_CENTRE = (232.75, 26.0)
+OLED_CENTRE = (229.75, 26.0)  # 3 mm toward each half's inner edge, away from the nearest keycaps
 OLED_PIN1 = (3.81, 12.7)
 OLED_PIN_TURN = 90                # turns the 1x4 header so its pins run from pin 1 toward -x
 
@@ -331,7 +346,7 @@ def build():
         for (r, c) in [(r, c) for r, c, *_ in keys]:
             cx, cy, rr, w, h, corners = geo[(side, r, c)]
             n = num[(r, c)]
-            # Redox's big thumb keys are tall (1 x 1.5u): turn the 1.5u footprint, its keycap
+            # The big thumb keys are tall (1 x 1.25u): turn the 1.25u footprint, its keycap
             # and the LED/diode pattern a quarter turn so they follow the key.
             ro = rr + (90 if h > w else 0)
             span = max(w, h)

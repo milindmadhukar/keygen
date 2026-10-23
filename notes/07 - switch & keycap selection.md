@@ -6,7 +6,7 @@ name: 07 - switch & keycap selection
 
 > [!success] Decision (2026-10-20)
 > - **Switch: Akko V3 Lavender Purple Pro** (tactile, 5-pin), in **Kailh MX hotswap** sockets. 2 × 45 from [StacksKB](https://stackskb.com/store/akko-v3-lavender-purple-pro-switch-pack-of-45/) at ₹1,099 a pack: 66 used, 24 spare.
-> - **Keycaps: blank DSA PBT, smoke translucent.** 52 × 1u, 10 × 1.25u and 4 × 1.5u, all from one AliExpress seller.
+> - **Keycaps: blank DSA PBT, smoke translucent.** 52 × 1u and 14 × 1.25u, all from one AliExpress seller.
 > - See [[12 - final design#Keycaps]] and [[13 - bill of materials]].
 
 ## Switches
@@ -41,12 +41,11 @@ name: 07 - switch & keycap selection
 | Size | Qty | Source |
 |---|---|---|
 | 1u | 52 | [SZElectronic Store](https://www.aliexpress.com/item/1005008827240220.html), a 50-pack in LBlack and a 10-pack of mixed colours (2 accent keys, 8 spares) |
-| 1.25u | 10 (8 outer column + 2 thumb) | [SZElectronic Store](https://www.aliexpress.com/item/1005008827506189.html), 10-pack in LBlack |
-| 1.5u | 4 (tall thumbs) | [SZElectronic Store](https://www.aliexpress.com/item/1005009077100804.html), 10-pack in Clear Black |
+| 1.25u | 14 (8 outer column, 2 thumb, 4 tall thumb) | [SZElectronic Store](https://www.aliexpress.com/item/1005008827506189.html), 20-pack in LBlack |
 
 All from SZElectronic Store on AliExpress, ordered with the LEDs, so the smoke shade matches across sizes.
 
-Every key is 1.5u or smaller and sits on its switch alone.
+Every key is 1.25u or smaller and sits on its switch alone.
 
 ## Sound
 

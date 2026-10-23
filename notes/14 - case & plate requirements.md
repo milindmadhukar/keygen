@@ -22,8 +22,8 @@ All the ports are on the **top edge** of each half, next to the controller, so o
 | **USB-C** | Top wall, at the controller | The controller (18 mm wide) hangs **under** the PCB on sockets, and its USB-C end reaches ~1 mm past the PCB edge; the edge is slanted, so one corner reaches ~1.6 mm. The case has an **open slot 20 mm wide** from the floor up to the PCB's underside, which clears the whole controller end and any cable overmould. |
 | **Power switch** (MSK12C02, side-actuated) | Top wall, near the USB-C | The lever pokes out past the PCB edge, at the PCB's underside. A **9 × 3.4 mm slot** at the lever. The wall is thinned to **1.5 mm** from 10 mm before the USB-C to the corner past the switch, so a fingernail reaches the lever. |
 | **Reset pinhole** | Case **floor**, under the reset button | The 6 × 6 mm, 5 mm-tall button sits on the PCB underside. You press it with a **paperclip** through a **Ø 2 mm hole**, countersunk outside, with a guide tube (Ø 5 mm) up to 1 mm under the button. ZMK can also enter the bootloader from a key combo. |
-| **Rotary encoder knob** (both halves, mirrored) | Top: through the switch plate | The EC11 body is ~12 × 12 mm and 4.5 mm tall on the PCB top, so the plate has a **13 × 13 mm cut-out** around it; above it only the 7 mm bushing (to 11.5 mm) passes through a 9 mm hole in the top frame's deck, under the knob, whose underside is 2.9 mm above the deck. The knob is Ø 17 mm, its edge 4.5 mm below the OLED, 5.7 mm from the thumb cluster's top key and 9.1 mm from the G/H column. Shafts at (167.0, 129.0) left and (256.5, 129.0) right, in board coordinates (KiCad mm). |
-| **OLED window** (both halves) | Top: through the switch plate, above the knob | The 27.5 × 28 mm SSD1306 module stands on its own header pins and 2.5 mm spacer, so its glass sits about level with the plate top (~5 mm above the PCB). The plate has a **28.5 × 29 mm window**, and the top frame's deck a window round the active area, opening towards the thumbs; the glass sits 3.5 mm below the deck top. Module at x 151–178.5, y 88–116 (left) and x 245–272.5, y 88–116 (right), in board coordinates, over the controller's antenna end. `tools/gen_case.py` checks the case against the modules. |
+| **Rotary encoder knob** (both halves, mirrored) | Top: through the switch plate | The EC11 body is ~12 × 12 mm and 4.5 mm tall on the PCB top, so the plate has a **13 × 13 mm cut-out** around it; above it only the 7 mm bushing (to 11.5 mm) passes through a 9 mm hole in the top frame's deck, under the knob, whose underside is 2.9 mm above the deck. The knob is Ø 17 mm, its edge 10 mm below the OLED, 5.7 mm from the thumb cluster's top key and 9.1 mm from the G/H column. Shafts at (167.0, 134.5) left and (256.5, 134.5) right, in board coordinates (KiCad mm). |
+| **OLED window** (both halves) | Top: through the switch plate, above the knob | The 27.5 × 28 mm SSD1306 module stands on its own header pins and 2.5 mm spacer, so its glass sits about level with the plate top (~5 mm above the PCB). The plate has a **28.5 × 29 mm window**, and the top frame's deck a window round the active area, opening towards the thumbs; the glass sits 3.5 mm below the deck top. Module at x 154–181.5, y 88–116 (left) and x 242–269.5, y 88–116 (right), in board coordinates, over the controller's antenna end and 4.6 mm from the nearest keycaps. `tools/gen_case.py` checks the case against the modules. |
 
 ## Inside the case (under the PCB)
 
@@ -43,8 +43,8 @@ All the ports are on the **top edge** of each half, next to the controller, so o
 - **FR-4, 1.6 mm**, black mask, no copper, made by the PCB fab from `case/plate/gerber/keygen-plate-{left,right}-gerbers.zip` (settings in `case/plate/PLATE.md`). MX clips are made for 1.5 mm and take 1.6 mm.
 - **14.0 × 14.0 mm** square cut-out per switch, with 0.5 mm corner radii from the fab's router bit.
   - Thumb keys follow the PCB rotation (±15° / ±30°).
-  - The four tall 1.5u thumb switches per half are turned 90°, but the cut-out is square so that doesn't matter.
-- **No stabilizer cut-outs.** Nothing is wider than 1.5u.
+  - The two tall 1.25u thumb switches per half are turned 90°, but the cut-out is square so that doesn't matter.
+- **No stabilizer cut-outs.** Nothing is wider than 1.25u.
 - **Plate-to-PCB gap.** The plate top sits 5.0 mm above the PCB top (MX standard), so the gap is 3.4 mm. **M2 × 3.5 mm female-female standoffs** at all five holes per half, screwed from below with M2 × 4 screws.
 - **Plate screws** (M2 × 4 button head, Ø 3.5 mm head) only where the head clears the switch top housings (15.6 mm square) by 0.3 mm: H102–H105 and H202–H204. At H101, H201 and H205 there is 1.65–1.98 mm of room, so those standoffs are screwed from below only and their top bears on the plate.
 - **Mounting holes** line up with the PCB's M2 holes (table below), 2.2 mm.
@@ -63,43 +63,43 @@ All the ports are on the **top edge** of each half, next to the controller, so o
   - Screw-in legs (Corne style: 18 mm front / 40 mm rear) or magnetic phone stands; not chosen yet. The case floor is flat until then.
   - The angled stand you wanted.
 - **Rubber feet** and **foam** (EVA case foam, Poron switch pads) for a thocky sound. See [[07 - switch & keycap selection]].
-- **Keycaps.** Blank DSA PBT, smoke translucent: 52 × 1u, 10 × 1.25u, 4 × 1.5u. Switches: Akko V3 Lavender Purple Pro.
+- **Keycaps.** Blank DSA PBT, smoke translucent: 52 × 1u, 14 × 1.25u. Switches: Akko V3 Lavender Purple Pro.
 
 ## Positions (from the PCB)
 
 Measured from the top-left corner of each half's bounding box, looking at the switch side. The y axis points down, toward the thumbs.
 
 <!-- case-refs:start -->
-**Left half**: board outline 162.6 × 125.8 mm (bounding box)
+**Left half**: board outline 160.2 × 126.0 mm (bounding box)
 
 | Ref | What | x | y |
 |---|---|---|---|
 | BT101 | Battery JST-PH connector (underside) | 143.6 | 28.2 |
-| ENC101 | Rotary encoder shaft (top) | 136.7 | 53.4 |
+| ENC101 | Rotary encoder shaft (top) | 136.7 | 58.9 |
 | H101 | M2 mounting hole | 84.0 | 60.0 |
 | H102 | M2 mounting hole | 4.5 | 85.5 |
-| H103 | M2 mounting hole | 152.0 | 13.5 |
-| H104 | M2 mounting hole | 136.0 | 121.0 |
+| H103 | M2 mounting hole | 152.7 | 51.4 |
+| H104 | M2 mounting hole | 136.1 | 121.3 |
 | H105 | M2 mounting hole | 23.5 | 8.5 |
-| J101 | OLED header pin 1 (top); the module stands above the header | 138.2 | 39.1 |
+| J101 | OLED header pin 1 (top); the module stands above the header | 141.2 | 39.1 |
 | SW190 | Power slide switch (underside), lever out of the top edge | 150.6 | 7.0 |
 | SW191 | Reset button (underside) -> floor pinhole | 152.6 | 41.2 |
 | U101 | Controller (underside), USB-C at the top edge | 129.1 | 20.8 |
 
-**Right half**: board outline 162.6 × 125.8 mm (bounding box)
+**Right half**: board outline 160.2 × 126.0 mm (bounding box)
 
 | Ref | What | x | y |
 |---|---|---|---|
-| BT201 | Battery JST-PH connector (underside) | 19.1 | 28.2 |
-| ENC201 | Rotary encoder shaft (top) | 26.0 | 53.4 |
-| H201 | M2 mounting hole | 84.5 | 57.5 |
-| H202 | M2 mounting hole | 11.0 | 13.0 |
-| H203 | M2 mounting hole | 27.5 | 118.5 |
-| H204 | M2 mounting hole | 158.0 | 85.5 |
-| H205 | M2 mounting hole | 140.5 | 9.0 |
-| J201 | OLED header pin 1 (top); the module stands above the header | 32.0 | 39.1 |
-| SW290 | Power slide switch (underside), lever out of the top edge | 12.1 | 7.0 |
-| SW291 | Reset button (underside) -> floor pinhole | 16.6 | 41.2 |
-| U201 | Controller (underside), USB-C at the top edge | 33.6 | 20.8 |
+| BT201 | Battery JST-PH connector (underside) | 16.7 | 28.2 |
+| ENC201 | Rotary encoder shaft (top) | 23.6 | 58.9 |
+| H201 | M2 mounting hole | 82.1 | 57.5 |
+| H202 | M2 mounting hole | 7.5 | 51.4 |
+| H203 | M2 mounting hole | 34.4 | 115.4 |
+| H204 | M2 mounting hole | 155.6 | 85.5 |
+| H205 | M2 mounting hole | 138.1 | 9.0 |
+| J201 | OLED header pin 1 (top); the module stands above the header | 26.6 | 39.1 |
+| SW290 | Power slide switch (underside), lever out of the top edge | 9.7 | 7.0 |
+| SW291 | Reset button (underside) -> floor pinhole | 14.2 | 41.2 |
+| U201 | Controller (underside), USB-C at the top edge | 31.2 | 20.8 |
 
 <!-- case-refs:end -->

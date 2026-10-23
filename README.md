@@ -27,8 +27,8 @@ silkscreen artwork come from Martin Garrix's track *Keygen* (STMPD RCRDS); see
 | | |
 |---|---|
 | Layout | Column-staggered QWERTY, six columns per hand plus an extra bottom row |
-| Keys | 66 (33 per half): 52 × 1u, 10 × 1.25u, 4 × 1.5u |
-| Thumb cluster | 2 × 2 block rotated 30° (two 1u over two 1.5u) plus one 1.25u key per hand |
+| Keys | 66 (33 per half): 52 × 1u, 14 × 1.25u |
+| Thumb cluster | 2 × 2 block rotated 30° (two 1u over two 1.25u) plus one 1.25u key per hand |
 | Encoders | EC11 with a 20 mm D shaft on each half, with a 17 mm aluminium D-shaft knob, in the key matrix. Left: scroll wheel, press for middle click. Right: volume, press to mute |
 | Displays | 0.96 in. 128 × 64 SSD1306 OLED per half (I2C), showing ZMK's status screen |
 | Switches | Akko V3 Lavender Purple Pro (tactile, 5-pin) in Kailh hotswap sockets (CPG151101S11) |
@@ -37,7 +37,7 @@ silkscreen artwork come from Martin Garrix's track *Keygen* (STMPD RCRDS); see
 | Controller | nRF52840 SuperMini (nice!nano v2 clone, Pro Micro format), one per half, socketed on the underside |
 | Connectivity | Host: USB-C (left half) or Bluetooth, 5 profiles. Halves: Bluetooth split |
 | Power | 505080 LiPo pouch per half (5 × 50 × 80 mm, about 2500 mAh) with a protection board, JST-PH connector, slide switch driving a P-MOSFET battery switch. Each half charges from its own USB-C |
-| PCB | 2 layers, FR-4 1.6 mm, 1 oz copper, HASL, black soldermask with white silkscreen. One half is 162.7 × 125.9 mm |
+| PCB | 2 layers, FR-4 1.6 mm, 1 oz copper, HASL, black soldermask with white silkscreen. One half is 160.2 × 126.0 mm |
 | Switch plate | FR-4 1.6 mm, black soldermask, no copper, with eight gasket tabs per half |
 | Case | 3D-printed PETG, gasket-mounted: a bottom shell and a top frame per half, 177.8 × 143.1 × 22.2 mm. The top frame covers the plate round the keycaps, the OLED and the knob |
 | Foam | Poron ring switch pads (0.5 mm) and EVA plate foam (2 mm) between the PCB and the plate, EVA case foam (5 mm) on the case floor |

@@ -16,7 +16,7 @@ A custom split ergonomic keyboard built from scratch, covering the full hardware
 ### Physical layout
 - **Two separate halves**, positioned and tented independently
 - **Column-staggered** keys, six columns per hand plus an extra bottom row
-- **Thumb cluster** per hand: a 2×2 block (two 1u over two 1.5u, rotated 30°) plus one 1.25u key
+- **Thumb cluster** per hand: a 2×2 block (two 1u over two 1.25u, rotated 30°) plus one 1.25u key
 - **Hotswap sockets** (Kailh MX), so switches change without soldering
 
 ### Electronics

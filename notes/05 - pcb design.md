@@ -13,7 +13,7 @@ name: 05 - pcb design
 |---|---|
 | Tool | KiCad 10, with its `pcbnew` Python module and `kicad-cli` |
 | Project | `pcb/keygen.kicad_pro`: top sheet plus `left` (refs 1xx) and `right` (refs 2xx) sub-sheets |
-| Outline | One half is 162.7 × 125.9 mm. The bottom edge is cut back to the bottom row and thumb keys |
+| Outline | One half is 160.2 × 126.0 mm. The bottom edge runs along the bottom row, flat, then along the thumb keys at 30° |
 | Stackup | 2 layers, FR-4 1.6 mm, 1 oz copper, HASL, black soldermask, white silkscreen |
 | Footprints | marbastlib (MX hotswap, EC11, nice!nano) and Keebio-Parts, as git submodules in `lib/` |
 | Mounting | 5 M2 holes per half, placed where nothing else is |
@@ -44,10 +44,10 @@ Each half is **5 rows × 7 columns, COL2ROW**: each switch connects to its colum
 - The datasheet's VDD range is 3.7–5.5 V; the cell supplies 3.0–4.2 V and sits near 4.2 V on USB power, when the LEDs light. See [[12 - final design#Schematic]].
 
 ### Rotary encoders
-**EC11** with a push switch and a 20 mm D shaft on each half, through-hole on the front, below the controller, mirrored: shafts at (167.0, 129.0) left and (256.5, 129.0) right, in board coordinates. Each takes a 17 × 13 mm knurled aluminium knob, whose edge sits 4.5 mm below the OLED, 5.7 mm from the thumb cluster's top key and 9.1 mm from the G/H column. On both halves A is on P0.10 (pad 23) and B on P0.09 (pad 24), both NFC pins used as GPIO. Each push switch is in its half's matrix at row 0 / column 6, with its own 1N4148 (D107, D207) on the back beside the encoder.
+**EC11** with a push switch and a 20 mm D shaft on each half, through-hole on the front, below the controller, mirrored: shafts at (167.0, 134.5) left and (256.5, 134.5) right, in board coordinates. Each takes a 17 × 13 mm knurled aluminium knob, whose edge sits 10 mm below the OLED, 5.7 mm from the thumb cluster's top key and 9.1 mm from the G/H column. On both halves A is on P0.10 (pad 23) and B on P0.09 (pad 24), both NFC pins used as GPIO. Each push switch is in its half's matrix at row 0 / column 6, with its own 1N4148 (D107, D207) on the back beside the encoder.
 
 ### OLED
-A generic **0.96 in. 128×64 SSD1306 I2C module** per half (J101 / J201), on a 1×4 2.54 mm header footprint, pin order GND, VCC, SCL, SDA. SDA is on P0.17 (pad 5), SCL on P0.20 (pad 6), and power on the controller's switched 3.3 V VCC (pad 16). The module's own header pins solder straight into the board on their 2.5 mm spacer, over the lower (antenna) end of the controller, above the knob: right x 245–272.5, y 88–116; left x 151–178.5, y 88–116. Details: [[12 - final design#OLED]].
+A generic **0.96 in. 128×64 SSD1306 I2C module** per half (J101 / J201), on a 1×4 2.54 mm header footprint, pin order GND, VCC, SCL, SDA. SDA is on P0.17 (pad 5), SCL on P0.20 (pad 6), and power on the controller's switched 3.3 V VCC (pad 16). The module's own header pins solder straight into the board on their 2.5 mm spacer, over the lower (antenna) end of the controller, above the knob: right x 242–269.5, y 88–116; left x 154–181.5, y 88–116. Its nearest keycap gap is 4.6 mm on either half. Details: [[12 - final design#OLED]].
 
 ### Power
 - **Battery:** JST-PH 2-pin side-entry connector (BT101/BT201) on the back. A "+" on the silkscreen marks the + pad.
@@ -59,7 +59,7 @@ A generic **0.96 in. 128×64 SSD1306 I2C module** per half (J101 / J201), on a 1
 The board is generated and routed by the scripts in `tools/` of the repo, so every step reruns:
 
 1. `gen_pcb.py` places every footprint from the schematic using Redox's KLE positions, draws the outline and picks the mounting holes.
-2. `trim_outline.py` cuts the bottom edge back to the bottom row and thumb keys.
+2. `trim_outline.py` runs the bottom edge along the bottom row and the thumb keys.
 3. `route_pcb.py` routes signals with **Freerouting** (about 85%), leaving ground to the fill.
 4. `finish_route.py`, a custom grid maze router, finishes what Freerouting leaves.
 5. `smooth_route.py` straightens tracks into 0/45/90° runs.

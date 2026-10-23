@@ -48,7 +48,7 @@ Run these in order. Each step is a script in `tools/`.
 | Step | Script | What it does |
 |---|---|---|
 | 1 | `gen_pcb.py` | Places every footprint from the schematic, draws the outline, picks mounting holes |
-| 2 | `trim_outline.py` | Cuts the bottom edge back to the bottom row and thumb keys (on a routed board, reroute whatever it cuts) |
+| 2 | `trim_outline.py` | Runs the bottom edge along the bottom row and the thumb keys (on a routed board, reroute whatever it cuts) |
 | 3 | `route_pcb.py` | Routes signals with Freerouting, leaving ground to the fill |
 | 4 | `finish_route.py` | Grid maze router for whatever Freerouting leaves (`--include-gnd`, `--pads-to-ground REF.PAD`) |
 | 5 | `smooth_route.py` | Straightens tracks into 0/45/90° runs |

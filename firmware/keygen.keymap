@@ -1,7 +1,7 @@
 /*
  * Keygen keymap. Key positions come from boards/shields/keygen/keygen-layouts.dtsi:
  *   number row (14, the two encoder presses in the middle), top, home, bottom (12 each), extra row (8),
- *   thumb 1u row (4), thumb bottom row (6: 1.25u, 1.5u rest, 1.5u centre per half).
+ *   thumb 1u row (4), thumb bottom row (6: 1.25u, 1.25u rest, 1.25u centre per half).
  *
  * Layers: BASE, NAV (hold left 1.25u), FN (hold right 1.25u), SYS (hold both).
  *

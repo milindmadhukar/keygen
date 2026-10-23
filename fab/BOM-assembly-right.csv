@@ -10,9 +10,8 @@ Item Number,Designator,Unit Quantity,Description,Manufacturer Part Number,Footpr
 9,Q203,1,AO3400A N-MOSFET (SOT-23),"AO3400A (Alpha & Omega, SOT-23)",Package_TO_SOT_SMD:SOT-23,AO3400A,BOTTOM side.
 10,R201,1,1 MΩ resistor (1206),"1206W4F1004T5E (UNI-ROYAL, 1 MΩ 1% 1206)",Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder,1M,BOTTOM side.
 11,"R202,R203",2,100 kΩ resistor (1206),"1206W4F1003T5E (UNI-ROYAL, 100 kΩ 1% 1206)",Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder,100k,BOTTOM side.
-12,"SW201,SW208,SW214,SW221,SW232",5,Kailh MX hotswap socket for a 1.25u key,CPG151101S11 (Kailh),keygen:SW_MX_HS_CPG151101S11_1.25u,Kailh hotswap socket,"Kailh CPG151101S11 hotswap socket, BOTTOM side. Do NOT fit switches (customer installs)."
+12,"SW201,SW208,SW214,SW221,SW232,SW233,SW234",7,Kailh MX hotswap socket for a 1.25u key,CPG151101S11 (Kailh),keygen:SW_MX_HS_CPG151101S11_1.25u,Kailh hotswap socket,"Kailh CPG151101S11 hotswap socket, BOTTOM side. Do NOT fit switches (customer installs)."
 13,"SW202,SW203,SW204,SW205,SW206,SW209,SW210,SW211,SW212,SW213,SW215,SW216,SW217,SW218,SW219,SW220,SW222,SW223,SW224,SW225,SW226,SW227,SW228,SW229,SW230,SW231",26,Kailh MX hotswap socket for a 1u key,CPG151101S11 (Kailh),keygen:SW_MX_HS_CPG151101S11_1u,Kailh hotswap socket,"Kailh CPG151101S11 hotswap socket, BOTTOM side. Do NOT fit switches (customer installs)."
-14,"SW233,SW234",2,Kailh MX hotswap socket for a 1.5u key,CPG151101S11 (Kailh),keygen:SW_MX_HS_CPG151101S11_1.5u,Kailh hotswap socket,"Kailh CPG151101S11 hotswap socket, BOTTOM side. Do NOT fit switches (customer installs)."
-15,SW290,1,MSK12C02 power slide switch,MSK12C02-HB,keygen:SW_MSK12C02-HB,MSK12C02 power,BOTTOM side.
-16,SW291,1,6 mm reset button,"6x6x5 mm THT tactile switch (e.g. TS-1102S-B-B, any 6x6x5)",Button_Switch_THT:SW_PUSH_6mm_H5mm,Reset,BOTTOM side.
-17,U201,1,nRF52840 SuperMini (nice!nano v2 clone),Customer supplied: nRF52840 SuperMini (nice!nano v2 clone),keygen:nice_nano_H_USBup,nRF52840 Pro Micro,DO NOT FIT: customer solders sockets + controller (BOTTOM side).
+14,SW290,1,MSK12C02 power slide switch,MSK12C02-HB,keygen:SW_MSK12C02-HB,MSK12C02 power,BOTTOM side.
+15,SW291,1,6 mm reset button,"6x6x5 mm THT tactile switch (e.g. TS-1102S-B-B, any 6x6x5)",Button_Switch_THT:SW_PUSH_6mm_H5mm,Reset,BOTTOM side.
+16,U201,1,nRF52840 SuperMini (nice!nano v2 clone),Customer supplied: nRF52840 SuperMini (nice!nano v2 clone),keygen:nice_nano_H_USBup,nRF52840 Pro Micro,DO NOT FIT: customer solders sockets + controller (BOTTOM side).

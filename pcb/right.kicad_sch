@@ -1630,7 +1630,7 @@
     (exclude_from_sim no)
     (at 15.24 30.48 0)
     (effects (font (size 2 2)) (justify left top))
-    (uuid "e5a18b0c-b9e0-5834-8ef9-a71bc94c9e05")
+    (uuid "2d1d29f6-df3b-5e5f-ab0f-ea01ec3d86db")
   )
   (symbol
     (lib_id "marbastlib-mx:MX_SW_HS_CPG151101S11")
@@ -1648,8 +1648,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 30.48 50.8 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "7ee682d5-4394-5d48-8a52-69427832a5bc"))
-    (pin "2" (uuid "ea901b40-df7e-54fa-98ac-02d67571276e"))
+    (pin "1" (uuid "87c62770-e943-5876-ad21-04ebffb268e7"))
+    (pin "2" (uuid "a882673c-fe95-5876-b75c-3239aa454851"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -1662,12 +1662,12 @@
   (label "COL0"
     (at 27.94 48.26 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "7f87edaf-7e16-5f70-9f75-aab5de10ba1c")
+    (uuid "f7376ba9-6210-571b-b7dc-4641d9da5df6")
   )
   (label "K00"
     (at 33.02 53.34 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "8942ff84-1164-5045-a000-309b35466113")
+    (uuid "e5a18b0c-b9e0-5834-8ef9-a71bc94c9e05")
   )
   (symbol
     (lib_id "Device:D")
@@ -1685,8 +1685,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 30.48 60.96 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "0b240d61-b1d7-5490-a350-13c9adfb4a5f"))
-    (pin "2" (uuid "1ce1aca3-2e96-5ba7-bf27-d970c1a8d3a9"))
+    (pin "1" (uuid "7ee682d5-4394-5d48-8a52-69427832a5bc"))
+    (pin "2" (uuid "ea901b40-df7e-54fa-98ac-02d67571276e"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -1699,12 +1699,12 @@
   (label "ROW0"
     (at 26.67 60.96 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "9e4d1ded-7966-5e44-82e4-5e2cec0e6242")
+    (uuid "7f87edaf-7e16-5f70-9f75-aab5de10ba1c")
   )
   (label "K00"
     (at 34.29 60.96 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "94c16690-bfef-5c8f-86bc-11e9c27b08cc")
+    (uuid "8942ff84-1164-5045-a000-309b35466113")
   )
   (symbol
     (lib_id "marbastlib-mx:MX_SW_HS_CPG151101S11")
@@ -1722,8 +1722,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 71.12 50.8 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "ff5c7789-3bbd-587c-b4ce-e00ee9cdd461"))
-    (pin "2" (uuid "deba0f87-e74a-5b4b-b0e6-5f0a6f1b402d"))
+    (pin "1" (uuid "0b240d61-b1d7-5490-a350-13c9adfb4a5f"))
+    (pin "2" (uuid "1ce1aca3-2e96-5ba7-bf27-d970c1a8d3a9"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -1736,12 +1736,12 @@
   (label "COL1"
     (at 68.58 48.26 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "fbed4d67-5f12-59c1-b934-618f6a6fc328")
+    (uuid "9e4d1ded-7966-5e44-82e4-5e2cec0e6242")
   )
   (label "K01"
     (at 73.66 53.34 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "66b30b24-51db-542f-be87-3c7c82bf1d34")
+    (uuid "94c16690-bfef-5c8f-86bc-11e9c27b08cc")
   )
   (symbol
     (lib_id "Device:D")
@@ -1759,8 +1759,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 71.12 60.96 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "d3b383e0-9a51-5c90-bfcd-fbc23a6886e7"))
-    (pin "2" (uuid "43ce2886-8b9f-59a1-9df3-1227cdeec5fb"))
+    (pin "1" (uuid "ff5c7789-3bbd-587c-b4ce-e00ee9cdd461"))
+    (pin "2" (uuid "deba0f87-e74a-5b4b-b0e6-5f0a6f1b402d"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -1773,12 +1773,12 @@
   (label "ROW0"
     (at 67.31 60.96 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "56e6d62a-280c-5635-a561-b857cdda290f")
+    (uuid "fbed4d67-5f12-59c1-b934-618f6a6fc328")
   )
   (label "K01"
     (at 74.93 60.96 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "86be4a51-f76e-57c9-8a7c-cac1122c570e")
+    (uuid "66b30b24-51db-542f-be87-3c7c82bf1d34")
   )
   (symbol
     (lib_id "marbastlib-mx:MX_SW_HS_CPG151101S11")
@@ -1796,8 +1796,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 111.76 50.8 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "384153e1-f906-52dd-aa6f-e038007b9043"))
-    (pin "2" (uuid "6ad92581-5aac-5745-91ac-ab2a0871f119"))
+    (pin "1" (uuid "d3b383e0-9a51-5c90-bfcd-fbc23a6886e7"))
+    (pin "2" (uuid "43ce2886-8b9f-59a1-9df3-1227cdeec5fb"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -1810,12 +1810,12 @@
   (label "COL2"
     (at 109.22 48.26 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "a6ebfe3a-74a8-57e9-8bb6-24ddd93276f6")
+    (uuid "56e6d62a-280c-5635-a561-b857cdda290f")
   )
   (label "K02"
     (at 114.3 53.34 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "16dbb6ee-e922-5826-a20c-94f0e8e83a3c")
+    (uuid "86be4a51-f76e-57c9-8a7c-cac1122c570e")
   )
   (symbol
     (lib_id "Device:D")
@@ -1833,8 +1833,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 111.76 60.96 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "0d53c6fc-cf4a-52bb-82cf-7e2e02dcb334"))
-    (pin "2" (uuid "0bb40d7e-59fc-50f0-9504-4ad45cccfcea"))
+    (pin "1" (uuid "384153e1-f906-52dd-aa6f-e038007b9043"))
+    (pin "2" (uuid "6ad92581-5aac-5745-91ac-ab2a0871f119"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -1847,12 +1847,12 @@
   (label "ROW0"
     (at 107.95 60.96 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "e585e206-b877-549f-81b6-19b9cc2a253b")
+    (uuid "a6ebfe3a-74a8-57e9-8bb6-24ddd93276f6")
   )
   (label "K02"
     (at 115.57 60.96 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "6c838b6b-82c1-5a83-aeed-c25de9151d14")
+    (uuid "16dbb6ee-e922-5826-a20c-94f0e8e83a3c")
   )
   (symbol
     (lib_id "marbastlib-mx:MX_SW_HS_CPG151101S11")
@@ -1870,8 +1870,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 152.4 50.8 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "dc961d23-885e-5b0e-9848-0efab7f5fd54"))
-    (pin "2" (uuid "a41eea19-0647-5b2f-b925-9ecd1f976495"))
+    (pin "1" (uuid "0d53c6fc-cf4a-52bb-82cf-7e2e02dcb334"))
+    (pin "2" (uuid "0bb40d7e-59fc-50f0-9504-4ad45cccfcea"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -1884,12 +1884,12 @@
   (label "COL3"
     (at 149.86 48.26 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "cb83a8ab-9ee1-59a9-8078-9981e7349c7e")
+    (uuid "e585e206-b877-549f-81b6-19b9cc2a253b")
   )
   (label "K03"
     (at 154.94 53.34 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "999a9f1d-e38d-5619-b998-c7f6f0c01a4c")
+    (uuid "6c838b6b-82c1-5a83-aeed-c25de9151d14")
   )
   (symbol
     (lib_id "Device:D")
@@ -1907,8 +1907,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 152.4 60.96 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "35e760e4-ccc1-5271-87e9-7b1e425691cc"))
-    (pin "2" (uuid "65e138fe-2ea6-54bb-9238-66062d986d23"))
+    (pin "1" (uuid "dc961d23-885e-5b0e-9848-0efab7f5fd54"))
+    (pin "2" (uuid "a41eea19-0647-5b2f-b925-9ecd1f976495"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -1921,12 +1921,12 @@
   (label "ROW0"
     (at 148.59 60.96 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "1920a49e-6ea8-505b-9131-57100b412f05")
+    (uuid "cb83a8ab-9ee1-59a9-8078-9981e7349c7e")
   )
   (label "K03"
     (at 156.21 60.96 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "5d3091a5-55f6-5374-bbd5-84627347b35e")
+    (uuid "999a9f1d-e38d-5619-b998-c7f6f0c01a4c")
   )
   (symbol
     (lib_id "marbastlib-mx:MX_SW_HS_CPG151101S11")
@@ -1944,8 +1944,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 193.04 50.8 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "64d9abd3-6071-5d50-9fe9-a1cefb0ed68e"))
-    (pin "2" (uuid "18519783-f3b7-5b0a-bb19-64b5465b4133"))
+    (pin "1" (uuid "35e760e4-ccc1-5271-87e9-7b1e425691cc"))
+    (pin "2" (uuid "65e138fe-2ea6-54bb-9238-66062d986d23"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -1958,12 +1958,12 @@
   (label "COL4"
     (at 190.5 48.26 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "6486dabd-e71c-531f-9680-fc74bacb3a4c")
+    (uuid "1920a49e-6ea8-505b-9131-57100b412f05")
   )
   (label "K04"
     (at 195.58 53.34 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "6a60f809-dc1e-599a-b718-90535a9cf321")
+    (uuid "5d3091a5-55f6-5374-bbd5-84627347b35e")
   )
   (symbol
     (lib_id "Device:D")
@@ -1981,8 +1981,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 193.04 60.96 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "4d7589f0-e092-51f8-a9f7-924fafd108ef"))
-    (pin "2" (uuid "16d05081-b433-5978-8f2a-442d58d7c04b"))
+    (pin "1" (uuid "64d9abd3-6071-5d50-9fe9-a1cefb0ed68e"))
+    (pin "2" (uuid "18519783-f3b7-5b0a-bb19-64b5465b4133"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -1995,12 +1995,12 @@
   (label "ROW0"
     (at 189.23 60.96 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "885d1133-5b48-5229-8295-7588043cb5e7")
+    (uuid "6486dabd-e71c-531f-9680-fc74bacb3a4c")
   )
   (label "K04"
     (at 196.85 60.96 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "f505a037-047c-5eb1-b088-06722d6c466f")
+    (uuid "6a60f809-dc1e-599a-b718-90535a9cf321")
   )
   (symbol
     (lib_id "marbastlib-mx:MX_SW_HS_CPG151101S11")
@@ -2018,8 +2018,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 233.68 50.8 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "c0940f03-364d-5790-8583-0f4636f5d1f0"))
-    (pin "2" (uuid "8482c383-c111-53d1-9a54-5d34000d8963"))
+    (pin "1" (uuid "4d7589f0-e092-51f8-a9f7-924fafd108ef"))
+    (pin "2" (uuid "16d05081-b433-5978-8f2a-442d58d7c04b"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -2032,12 +2032,12 @@
   (label "COL5"
     (at 231.14 48.26 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "48d9fffa-3d75-5462-be6e-35684bb45eb5")
+    (uuid "885d1133-5b48-5229-8295-7588043cb5e7")
   )
   (label "K05"
     (at 236.22 53.34 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "f773af2c-3235-5046-b26d-407faf4ffbd9")
+    (uuid "f505a037-047c-5eb1-b088-06722d6c466f")
   )
   (symbol
     (lib_id "Device:D")
@@ -2055,8 +2055,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 233.68 60.96 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "6c3f721b-8e46-5535-a938-36962460a671"))
-    (pin "2" (uuid "e2ebe32f-8320-504e-8936-2f1835a28f75"))
+    (pin "1" (uuid "c0940f03-364d-5790-8583-0f4636f5d1f0"))
+    (pin "2" (uuid "8482c383-c111-53d1-9a54-5d34000d8963"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -2069,18 +2069,18 @@
   (label "ROW0"
     (at 229.87 60.96 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "3a31d278-94b1-55a7-a1ee-0ff48c48a296")
+    (uuid "48d9fffa-3d75-5462-be6e-35684bb45eb5")
   )
   (label "K05"
     (at 237.49 60.96 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "1fc0cb2c-e850-5f4f-b987-62ba0ad5b077")
+    (uuid "f773af2c-3235-5046-b26d-407faf4ffbd9")
   )
   (text "Encoder S1/S2 (see ENC201)"
     (exclude_from_sim no)
     (at 264.16 48.26 0)
     (effects (font (size 1.27 1.27)) (justify left top))
-    (uuid "8a9732e8-d233-5864-87e4-2877604022dd")
+    (uuid "6c3f721b-8e46-5535-a938-36962460a671")
   )
   (symbol
     (lib_id "Device:D")
@@ -2098,8 +2098,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 274.32 60.96 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "3a57a158-a173-5bb8-adf0-03fcba7769b8"))
-    (pin "2" (uuid "e482629a-cffc-55bd-bcf8-98f80061082c"))
+    (pin "1" (uuid "e2ebe32f-8320-504e-8936-2f1835a28f75"))
+    (pin "2" (uuid "3a31d278-94b1-55a7-a1ee-0ff48c48a296"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -2112,12 +2112,12 @@
   (label "ROW0"
     (at 270.51 60.96 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "9cf24f3c-b025-5eac-8b83-595ba7f056ca")
+    (uuid "1fc0cb2c-e850-5f4f-b987-62ba0ad5b077")
   )
   (label "K06"
     (at 278.13 60.96 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "4b0eabd2-d5e8-5141-b922-34529cb021f6")
+    (uuid "8a9732e8-d233-5864-87e4-2877604022dd")
   )
   (symbol
     (lib_id "marbastlib-mx:MX_SW_HS_CPG151101S11")
@@ -2135,8 +2135,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 30.48 78.74 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "9be07d0a-99fd-586c-99e1-087709689c10"))
-    (pin "2" (uuid "635b3bc3-a02c-5e66-9b8b-f91c25fd7770"))
+    (pin "1" (uuid "3a57a158-a173-5bb8-adf0-03fcba7769b8"))
+    (pin "2" (uuid "e482629a-cffc-55bd-bcf8-98f80061082c"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -2149,12 +2149,12 @@
   (label "COL0"
     (at 27.94 76.2 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "937e1a2f-424a-525d-9428-2b1024ed821a")
+    (uuid "9cf24f3c-b025-5eac-8b83-595ba7f056ca")
   )
   (label "K10"
     (at 33.02 81.28 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "37045bb1-65c0-5a4a-b0b1-1f8ef4cfd3bd")
+    (uuid "4b0eabd2-d5e8-5141-b922-34529cb021f6")
   )
   (symbol
     (lib_id "Device:D")
@@ -2172,8 +2172,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 30.48 88.9 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "7c17ad05-acf0-53c2-8fed-1e22b8d77d81"))
-    (pin "2" (uuid "1c4f9adc-b847-5b4a-97e9-65ae0129ff8c"))
+    (pin "1" (uuid "9be07d0a-99fd-586c-99e1-087709689c10"))
+    (pin "2" (uuid "635b3bc3-a02c-5e66-9b8b-f91c25fd7770"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -2186,12 +2186,12 @@
   (label "ROW1"
     (at 26.67 88.9 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "ea48b518-1202-5da6-a00f-f88abcf35f2c")
+    (uuid "937e1a2f-424a-525d-9428-2b1024ed821a")
   )
   (label "K10"
     (at 34.29 88.9 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "6109beae-90c2-56f2-8809-4dae3f7104e2")
+    (uuid "37045bb1-65c0-5a4a-b0b1-1f8ef4cfd3bd")
   )
   (symbol
     (lib_id "marbastlib-mx:MX_SW_HS_CPG151101S11")
@@ -2209,8 +2209,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 71.12 78.74 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "f1437420-f99a-542a-9142-5f0d2ede0ead"))
-    (pin "2" (uuid "f478790a-c5fd-5e81-9eee-8b942dfad344"))
+    (pin "1" (uuid "7c17ad05-acf0-53c2-8fed-1e22b8d77d81"))
+    (pin "2" (uuid "1c4f9adc-b847-5b4a-97e9-65ae0129ff8c"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -2223,12 +2223,12 @@
   (label "COL1"
     (at 68.58 76.2 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "3044862d-bb1d-513a-bbce-24fb96282791")
+    (uuid "ea48b518-1202-5da6-a00f-f88abcf35f2c")
   )
   (label "K11"
     (at 73.66 81.28 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "f868941a-8da0-5b95-97b4-299a705c937d")
+    (uuid "6109beae-90c2-56f2-8809-4dae3f7104e2")
   )
   (symbol
     (lib_id "Device:D")
@@ -2246,8 +2246,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 71.12 88.9 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "656bd5e2-a30e-59c5-9929-fa481f55fc77"))
-    (pin "2" (uuid "6cc95609-ea21-5b36-babf-330ab5188a31"))
+    (pin "1" (uuid "f1437420-f99a-542a-9142-5f0d2ede0ead"))
+    (pin "2" (uuid "f478790a-c5fd-5e81-9eee-8b942dfad344"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -2260,12 +2260,12 @@
   (label "ROW1"
     (at 67.31 88.9 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "a57d89c7-af2f-59b4-8773-b5bc449644b1")
+    (uuid "3044862d-bb1d-513a-bbce-24fb96282791")
   )
   (label "K11"
     (at 74.93 88.9 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "7f008efd-4a1e-596a-a3e7-6b6a33fc274e")
+    (uuid "f868941a-8da0-5b95-97b4-299a705c937d")
   )
   (symbol
     (lib_id "marbastlib-mx:MX_SW_HS_CPG151101S11")
@@ -2283,8 +2283,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 111.76 78.74 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "33d8cead-f89b-57cf-b214-433622e4d153"))
-    (pin "2" (uuid "5bb62ed4-2bc8-5ef2-b6cb-bb83c8f266d4"))
+    (pin "1" (uuid "656bd5e2-a30e-59c5-9929-fa481f55fc77"))
+    (pin "2" (uuid "6cc95609-ea21-5b36-babf-330ab5188a31"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -2297,12 +2297,12 @@
   (label "COL2"
     (at 109.22 76.2 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "6c5fb612-40e0-5af5-a4b5-70095fb084ec")
+    (uuid "a57d89c7-af2f-59b4-8773-b5bc449644b1")
   )
   (label "K12"
     (at 114.3 81.28 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "33aea307-4462-5c8e-b8c4-924c05a223c8")
+    (uuid "7f008efd-4a1e-596a-a3e7-6b6a33fc274e")
   )
   (symbol
     (lib_id "Device:D")
@@ -2320,8 +2320,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 111.76 88.9 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "fa7c95ba-55a6-510f-ab10-c7dea706c5bc"))
-    (pin "2" (uuid "0fa6993e-65a1-57f9-88a5-c15c1c81bc95"))
+    (pin "1" (uuid "33d8cead-f89b-57cf-b214-433622e4d153"))
+    (pin "2" (uuid "5bb62ed4-2bc8-5ef2-b6cb-bb83c8f266d4"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -2334,12 +2334,12 @@
   (label "ROW1"
     (at 107.95 88.9 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "93affddd-244e-504c-9252-b9835ebd2b0e")
+    (uuid "6c5fb612-40e0-5af5-a4b5-70095fb084ec")
   )
   (label "K12"
     (at 115.57 88.9 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "c342611f-b476-5880-8223-587e85ba250d")
+    (uuid "33aea307-4462-5c8e-b8c4-924c05a223c8")
   )
   (symbol
     (lib_id "marbastlib-mx:MX_SW_HS_CPG151101S11")
@@ -2357,8 +2357,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 152.4 78.74 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "38a2df65-de5c-56e6-aa51-fc4d9be450df"))
-    (pin "2" (uuid "765371f0-1663-5725-8423-dfe44a2df838"))
+    (pin "1" (uuid "fa7c95ba-55a6-510f-ab10-c7dea706c5bc"))
+    (pin "2" (uuid "0fa6993e-65a1-57f9-88a5-c15c1c81bc95"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -2371,12 +2371,12 @@
   (label "COL3"
     (at 149.86 76.2 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "7f1531cb-7ceb-5995-86f1-2b68639be610")
+    (uuid "93affddd-244e-504c-9252-b9835ebd2b0e")
   )
   (label "K13"
     (at 154.94 81.28 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "2e5e2d0b-87f0-52ce-856d-d2efafd1edd6")
+    (uuid "c342611f-b476-5880-8223-587e85ba250d")
   )
   (symbol
     (lib_id "Device:D")
@@ -2394,8 +2394,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 152.4 88.9 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "8e78f1ec-fecc-5222-855f-67dcc127ea77"))
-    (pin "2" (uuid "9c08fe0c-94c6-5350-8fe8-1eb8704bb441"))
+    (pin "1" (uuid "38a2df65-de5c-56e6-aa51-fc4d9be450df"))
+    (pin "2" (uuid "765371f0-1663-5725-8423-dfe44a2df838"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -2408,12 +2408,12 @@
   (label "ROW1"
     (at 148.59 88.9 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "4a09a009-8d4e-5771-9060-be5519fa4946")
+    (uuid "7f1531cb-7ceb-5995-86f1-2b68639be610")
   )
   (label "K13"
     (at 156.21 88.9 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "e798ed59-48c5-5e61-90c2-75c4c85ac61f")
+    (uuid "2e5e2d0b-87f0-52ce-856d-d2efafd1edd6")
   )
   (symbol
     (lib_id "marbastlib-mx:MX_SW_HS_CPG151101S11")
@@ -2431,8 +2431,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 193.04 78.74 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "dc233ad0-edf6-559f-ab9e-945f93fc9c62"))
-    (pin "2" (uuid "2b1eb919-3ba1-59f5-a47b-e56993deda33"))
+    (pin "1" (uuid "8e78f1ec-fecc-5222-855f-67dcc127ea77"))
+    (pin "2" (uuid "9c08fe0c-94c6-5350-8fe8-1eb8704bb441"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -2445,12 +2445,12 @@
   (label "COL4"
     (at 190.5 76.2 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "085eadb5-0306-5d97-bbc5-b48c6c6d5cdd")
+    (uuid "4a09a009-8d4e-5771-9060-be5519fa4946")
   )
   (label "K14"
     (at 195.58 81.28 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "3331c7cb-90e2-5437-bf7c-da0ddba0e5c0")
+    (uuid "e798ed59-48c5-5e61-90c2-75c4c85ac61f")
   )
   (symbol
     (lib_id "Device:D")
@@ -2468,8 +2468,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 193.04 88.9 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "f5a26e6e-4f1e-5efa-92f9-01341c11e287"))
-    (pin "2" (uuid "9a7829fa-7368-51be-8b3b-83c1bca7f12e"))
+    (pin "1" (uuid "dc233ad0-edf6-559f-ab9e-945f93fc9c62"))
+    (pin "2" (uuid "2b1eb919-3ba1-59f5-a47b-e56993deda33"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -2482,12 +2482,12 @@
   (label "ROW1"
     (at 189.23 88.9 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "db954328-c883-5c39-953d-d4b68f8d67cd")
+    (uuid "085eadb5-0306-5d97-bbc5-b48c6c6d5cdd")
   )
   (label "K14"
     (at 196.85 88.9 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "bba95817-6304-57b1-99c6-4c4383cb8e5e")
+    (uuid "3331c7cb-90e2-5437-bf7c-da0ddba0e5c0")
   )
   (symbol
     (lib_id "marbastlib-mx:MX_SW_HS_CPG151101S11")
@@ -2505,8 +2505,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 233.68 78.74 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "7c8967c7-f337-5f2a-bc5e-8ca11bb3f1cd"))
-    (pin "2" (uuid "6974fa70-6a1d-535e-a276-8ff4bf5279f3"))
+    (pin "1" (uuid "f5a26e6e-4f1e-5efa-92f9-01341c11e287"))
+    (pin "2" (uuid "9a7829fa-7368-51be-8b3b-83c1bca7f12e"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -2519,12 +2519,12 @@
   (label "COL5"
     (at 231.14 76.2 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "202f9e22-317a-5892-98ec-319b5e2850e9")
+    (uuid "db954328-c883-5c39-953d-d4b68f8d67cd")
   )
   (label "K15"
     (at 236.22 81.28 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "97ba6581-5bd1-55d5-9fd4-f0b897eed5a9")
+    (uuid "bba95817-6304-57b1-99c6-4c4383cb8e5e")
   )
   (symbol
     (lib_id "Device:D")
@@ -2542,8 +2542,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 233.68 88.9 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "3e874cb8-1d75-536a-827f-8214e1de75e8"))
-    (pin "2" (uuid "c5491101-c43d-50b9-9d3d-5381aee47f9b"))
+    (pin "1" (uuid "7c8967c7-f337-5f2a-bc5e-8ca11bb3f1cd"))
+    (pin "2" (uuid "6974fa70-6a1d-535e-a276-8ff4bf5279f3"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -2556,12 +2556,12 @@
   (label "ROW1"
     (at 229.87 88.9 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "bb406163-cdf8-51bd-924f-c2afe0ca7d5f")
+    (uuid "202f9e22-317a-5892-98ec-319b5e2850e9")
   )
   (label "K15"
     (at 237.49 88.9 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "617d80fa-c202-5f9e-aa07-ddee7a3c00f7")
+    (uuid "97ba6581-5bd1-55d5-9fd4-f0b897eed5a9")
   )
   (symbol
     (lib_id "marbastlib-mx:MX_SW_HS_CPG151101S11")
@@ -2579,8 +2579,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 30.48 106.68 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "9d864ebc-3a61-52eb-8f31-4296d07c5d85"))
-    (pin "2" (uuid "cb2a96fb-38f0-5df3-b1e0-95767d920a34"))
+    (pin "1" (uuid "3e874cb8-1d75-536a-827f-8214e1de75e8"))
+    (pin "2" (uuid "c5491101-c43d-50b9-9d3d-5381aee47f9b"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -2593,12 +2593,12 @@
   (label "COL0"
     (at 27.94 104.14 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "7a334e64-d55e-597e-8103-80a633496c66")
+    (uuid "bb406163-cdf8-51bd-924f-c2afe0ca7d5f")
   )
   (label "K20"
     (at 33.02 109.22 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "12e66574-9496-5482-98c6-049b415e4db5")
+    (uuid "617d80fa-c202-5f9e-aa07-ddee7a3c00f7")
   )
   (symbol
     (lib_id "Device:D")
@@ -2616,8 +2616,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 30.48 116.84 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "321b9bea-17da-545b-aae2-97d7e23e3ef8"))
-    (pin "2" (uuid "fb91f2fb-ef17-50aa-98a6-323306b65595"))
+    (pin "1" (uuid "9d864ebc-3a61-52eb-8f31-4296d07c5d85"))
+    (pin "2" (uuid "cb2a96fb-38f0-5df3-b1e0-95767d920a34"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -2630,12 +2630,12 @@
   (label "ROW2"
     (at 26.67 116.84 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "7cfa4fba-337a-50b2-837d-92a78e9b8fcb")
+    (uuid "7a334e64-d55e-597e-8103-80a633496c66")
   )
   (label "K20"
     (at 34.29 116.84 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "9d605fa2-5bce-5464-9fb3-ef7788dc3552")
+    (uuid "12e66574-9496-5482-98c6-049b415e4db5")
   )
   (symbol
     (lib_id "marbastlib-mx:MX_SW_HS_CPG151101S11")
@@ -2653,8 +2653,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 71.12 106.68 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "3f082348-cf6f-5def-8263-f6da97f8a729"))
-    (pin "2" (uuid "b6a5fa65-9c26-50e0-a729-62ceb8c3a128"))
+    (pin "1" (uuid "321b9bea-17da-545b-aae2-97d7e23e3ef8"))
+    (pin "2" (uuid "fb91f2fb-ef17-50aa-98a6-323306b65595"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -2667,12 +2667,12 @@
   (label "COL1"
     (at 68.58 104.14 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "a46770c0-d7b8-5d49-ab95-5000cde600c0")
+    (uuid "7cfa4fba-337a-50b2-837d-92a78e9b8fcb")
   )
   (label "K21"
     (at 73.66 109.22 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "9f8f23cf-e3e4-5153-be4a-8bd3d01e6c34")
+    (uuid "9d605fa2-5bce-5464-9fb3-ef7788dc3552")
   )
   (symbol
     (lib_id "Device:D")
@@ -2690,8 +2690,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 71.12 116.84 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "580e4403-8862-5479-aaf6-beadb9884ad1"))
-    (pin "2" (uuid "cae43fb3-9273-510f-8974-a35870269ca2"))
+    (pin "1" (uuid "3f082348-cf6f-5def-8263-f6da97f8a729"))
+    (pin "2" (uuid "b6a5fa65-9c26-50e0-a729-62ceb8c3a128"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -2704,12 +2704,12 @@
   (label "ROW2"
     (at 67.31 116.84 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "19bb4c99-a7b8-5dc2-b551-ddcfe64de859")
+    (uuid "a46770c0-d7b8-5d49-ab95-5000cde600c0")
   )
   (label "K21"
     (at 74.93 116.84 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "fd3e07cc-46aa-595e-a534-9288af61f9d6")
+    (uuid "9f8f23cf-e3e4-5153-be4a-8bd3d01e6c34")
   )
   (symbol
     (lib_id "marbastlib-mx:MX_SW_HS_CPG151101S11")
@@ -2727,8 +2727,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 111.76 106.68 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "63e71d71-b9e0-5c4e-befe-99c136d7ee41"))
-    (pin "2" (uuid "36f4e50d-be23-5e25-95b5-4db87bc77ad7"))
+    (pin "1" (uuid "580e4403-8862-5479-aaf6-beadb9884ad1"))
+    (pin "2" (uuid "cae43fb3-9273-510f-8974-a35870269ca2"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -2741,12 +2741,12 @@
   (label "COL2"
     (at 109.22 104.14 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "c5891038-7fb4-5703-8ed6-148cc0a9242a")
+    (uuid "19bb4c99-a7b8-5dc2-b551-ddcfe64de859")
   )
   (label "K22"
     (at 114.3 109.22 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "abea9bf0-d673-5cb1-9a6c-f51755edfa64")
+    (uuid "fd3e07cc-46aa-595e-a534-9288af61f9d6")
   )
   (symbol
     (lib_id "Device:D")
@@ -2764,8 +2764,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 111.76 116.84 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "ad7e7939-2fb6-5046-8f6d-a94935a7ff68"))
-    (pin "2" (uuid "15f932d5-2204-597a-a978-4f4d55ef1e82"))
+    (pin "1" (uuid "63e71d71-b9e0-5c4e-befe-99c136d7ee41"))
+    (pin "2" (uuid "36f4e50d-be23-5e25-95b5-4db87bc77ad7"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -2778,12 +2778,12 @@
   (label "ROW2"
     (at 107.95 116.84 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "371fbefa-8e6e-52ef-bd97-25a3fa80537d")
+    (uuid "c5891038-7fb4-5703-8ed6-148cc0a9242a")
   )
   (label "K22"
     (at 115.57 116.84 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "7223347e-32c7-5579-89c0-475151713f1e")
+    (uuid "abea9bf0-d673-5cb1-9a6c-f51755edfa64")
   )
   (symbol
     (lib_id "marbastlib-mx:MX_SW_HS_CPG151101S11")
@@ -2801,8 +2801,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 152.4 106.68 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "85c90de9-f141-5d03-9536-b23b4469250e"))
-    (pin "2" (uuid "cfe8fcbe-b933-54ed-af30-be5f9561bfdb"))
+    (pin "1" (uuid "ad7e7939-2fb6-5046-8f6d-a94935a7ff68"))
+    (pin "2" (uuid "15f932d5-2204-597a-a978-4f4d55ef1e82"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -2815,12 +2815,12 @@
   (label "COL3"
     (at 149.86 104.14 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "a6eacb90-c4eb-547f-a22f-b4f123de1c95")
+    (uuid "371fbefa-8e6e-52ef-bd97-25a3fa80537d")
   )
   (label "K23"
     (at 154.94 109.22 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "a6db1c80-32aa-5f59-bbe7-44f3218c0a33")
+    (uuid "7223347e-32c7-5579-89c0-475151713f1e")
   )
   (symbol
     (lib_id "Device:D")
@@ -2838,8 +2838,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 152.4 116.84 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "29f6ef1b-2603-5124-937b-9fa2cf356ccb"))
-    (pin "2" (uuid "2df90bdc-e169-540c-94c0-531f7a613db5"))
+    (pin "1" (uuid "85c90de9-f141-5d03-9536-b23b4469250e"))
+    (pin "2" (uuid "cfe8fcbe-b933-54ed-af30-be5f9561bfdb"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -2852,12 +2852,12 @@
   (label "ROW2"
     (at 148.59 116.84 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "452b65c7-208f-5464-830c-4071a7d87703")
+    (uuid "a6eacb90-c4eb-547f-a22f-b4f123de1c95")
   )
   (label "K23"
     (at 156.21 116.84 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "6dd376ba-e6b2-5ee6-820c-18cde2b88e37")
+    (uuid "a6db1c80-32aa-5f59-bbe7-44f3218c0a33")
   )
   (symbol
     (lib_id "marbastlib-mx:MX_SW_HS_CPG151101S11")
@@ -2875,8 +2875,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 193.04 106.68 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "099ecba9-a1e9-5f63-ba74-e522c6c47133"))
-    (pin "2" (uuid "e94cba9d-e91a-51d9-9fae-a634500ff633"))
+    (pin "1" (uuid "29f6ef1b-2603-5124-937b-9fa2cf356ccb"))
+    (pin "2" (uuid "2df90bdc-e169-540c-94c0-531f7a613db5"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -2889,12 +2889,12 @@
   (label "COL4"
     (at 190.5 104.14 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "01f8dab7-a3e8-5622-9576-91b131d11c63")
+    (uuid "452b65c7-208f-5464-830c-4071a7d87703")
   )
   (label "K24"
     (at 195.58 109.22 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "bf304a76-5692-5b3f-a42e-d84da57d4d3e")
+    (uuid "6dd376ba-e6b2-5ee6-820c-18cde2b88e37")
   )
   (symbol
     (lib_id "Device:D")
@@ -2912,8 +2912,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 193.04 116.84 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "d929a07b-d475-5fc0-baad-79c586fa6d94"))
-    (pin "2" (uuid "3a3d6f3d-4d75-550e-bf66-d18d189bb50a"))
+    (pin "1" (uuid "099ecba9-a1e9-5f63-ba74-e522c6c47133"))
+    (pin "2" (uuid "e94cba9d-e91a-51d9-9fae-a634500ff633"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -2926,12 +2926,12 @@
   (label "ROW2"
     (at 189.23 116.84 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "451e0e2f-a592-53f4-8007-c8c157d07ec3")
+    (uuid "01f8dab7-a3e8-5622-9576-91b131d11c63")
   )
   (label "K24"
     (at 196.85 116.84 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "d18fd777-c5f5-5825-9ac4-eb0eeb072795")
+    (uuid "bf304a76-5692-5b3f-a42e-d84da57d4d3e")
   )
   (symbol
     (lib_id "marbastlib-mx:MX_SW_HS_CPG151101S11")
@@ -2949,8 +2949,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 233.68 106.68 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "33cc1c9c-9732-5065-aca4-06a79fe199b7"))
-    (pin "2" (uuid "17fb3141-3983-5785-a691-04803ea6fe0d"))
+    (pin "1" (uuid "d929a07b-d475-5fc0-baad-79c586fa6d94"))
+    (pin "2" (uuid "3a3d6f3d-4d75-550e-bf66-d18d189bb50a"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -2963,12 +2963,12 @@
   (label "COL5"
     (at 231.14 104.14 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "dc1d8a23-297f-5e98-9ab6-dda8a62f1fc8")
+    (uuid "451e0e2f-a592-53f4-8007-c8c157d07ec3")
   )
   (label "K25"
     (at 236.22 109.22 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "8d6e1eff-d6f5-5f04-bc6b-8f8263a50028")
+    (uuid "d18fd777-c5f5-5825-9ac4-eb0eeb072795")
   )
   (symbol
     (lib_id "Device:D")
@@ -2986,8 +2986,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 233.68 116.84 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "1465ff68-6673-5923-8ba5-6576ac614945"))
-    (pin "2" (uuid "2d0a2f9c-b5eb-5d7c-830d-b4e1dea7f680"))
+    (pin "1" (uuid "33cc1c9c-9732-5065-aca4-06a79fe199b7"))
+    (pin "2" (uuid "17fb3141-3983-5785-a691-04803ea6fe0d"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -3000,12 +3000,12 @@
   (label "ROW2"
     (at 229.87 116.84 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "46da6c8b-f439-5de7-8a3f-04bb53c6033e")
+    (uuid "dc1d8a23-297f-5e98-9ab6-dda8a62f1fc8")
   )
   (label "K25"
     (at 237.49 116.84 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "e9cdf5df-d181-591c-9478-c6a11fed4d2a")
+    (uuid "8d6e1eff-d6f5-5f04-bc6b-8f8263a50028")
   )
   (symbol
     (lib_id "marbastlib-mx:MX_SW_HS_CPG151101S11")
@@ -3023,8 +3023,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 274.32 106.68 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "9faf2c60-f957-5fe9-94a3-dc4599851754"))
-    (pin "2" (uuid "348c9143-9973-539c-b5c1-23c20ee9ad72"))
+    (pin "1" (uuid "1465ff68-6673-5923-8ba5-6576ac614945"))
+    (pin "2" (uuid "2d0a2f9c-b5eb-5d7c-830d-b4e1dea7f680"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -3037,12 +3037,12 @@
   (label "COL6"
     (at 271.78 104.14 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "ebf337b9-b1be-53e9-8f10-037708bcdcc1")
+    (uuid "46da6c8b-f439-5de7-8a3f-04bb53c6033e")
   )
   (label "K26"
     (at 276.86 109.22 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "a13e955a-e664-5456-9dc8-9c399f41b943")
+    (uuid "e9cdf5df-d181-591c-9478-c6a11fed4d2a")
   )
   (symbol
     (lib_id "Device:D")
@@ -3060,8 +3060,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 274.32 116.84 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "2fa58b0d-9846-59a1-8a0f-ac1982fc89d8"))
-    (pin "2" (uuid "d771ec14-1f56-589a-9393-e71fb9a9f2bc"))
+    (pin "1" (uuid "9faf2c60-f957-5fe9-94a3-dc4599851754"))
+    (pin "2" (uuid "348c9143-9973-539c-b5c1-23c20ee9ad72"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -3074,12 +3074,12 @@
   (label "ROW2"
     (at 270.51 116.84 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "0a7634ee-865d-573e-90f8-be710cffaca6")
+    (uuid "ebf337b9-b1be-53e9-8f10-037708bcdcc1")
   )
   (label "K26"
     (at 278.13 116.84 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "6a3931be-7ae4-58a3-80e1-128a5729f146")
+    (uuid "a13e955a-e664-5456-9dc8-9c399f41b943")
   )
   (symbol
     (lib_id "marbastlib-mx:MX_SW_HS_CPG151101S11")
@@ -3097,8 +3097,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 30.48 134.62 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "1460727d-7154-584d-b99e-9724a76c26b2"))
-    (pin "2" (uuid "28fe7823-5a2b-502e-94ec-6e3ffa6bb488"))
+    (pin "1" (uuid "2fa58b0d-9846-59a1-8a0f-ac1982fc89d8"))
+    (pin "2" (uuid "d771ec14-1f56-589a-9393-e71fb9a9f2bc"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -3111,12 +3111,12 @@
   (label "COL0"
     (at 27.94 132.08 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "e0211026-a05a-5bad-92d0-39b6df7baaaa")
+    (uuid "0a7634ee-865d-573e-90f8-be710cffaca6")
   )
   (label "K30"
     (at 33.02 137.16 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "6d84f0fb-2527-5da9-940d-868acef0134e")
+    (uuid "6a3931be-7ae4-58a3-80e1-128a5729f146")
   )
   (symbol
     (lib_id "Device:D")
@@ -3134,8 +3134,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 30.48 144.78 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "5b4cecf5-ecae-5d3c-9973-eeecd8299ef3"))
-    (pin "2" (uuid "10703568-1765-53d0-9ff5-ed7c08cade91"))
+    (pin "1" (uuid "1460727d-7154-584d-b99e-9724a76c26b2"))
+    (pin "2" (uuid "28fe7823-5a2b-502e-94ec-6e3ffa6bb488"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -3148,12 +3148,12 @@
   (label "ROW3"
     (at 26.67 144.78 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "882986e2-7b62-58bc-aa13-a614450a24e8")
+    (uuid "e0211026-a05a-5bad-92d0-39b6df7baaaa")
   )
   (label "K30"
     (at 34.29 144.78 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "404281f8-fcc7-5b0c-a811-c3b082dd6d6a")
+    (uuid "6d84f0fb-2527-5da9-940d-868acef0134e")
   )
   (symbol
     (lib_id "marbastlib-mx:MX_SW_HS_CPG151101S11")
@@ -3171,8 +3171,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 71.12 134.62 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "99aab8a1-066d-5f05-a309-16404f5cc1d1"))
-    (pin "2" (uuid "05df55fa-439f-5dd6-b32f-9172eb761be4"))
+    (pin "1" (uuid "5b4cecf5-ecae-5d3c-9973-eeecd8299ef3"))
+    (pin "2" (uuid "10703568-1765-53d0-9ff5-ed7c08cade91"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -3185,12 +3185,12 @@
   (label "COL1"
     (at 68.58 132.08 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "4d64aa59-7d90-5a6b-b76d-52f250b687bb")
+    (uuid "882986e2-7b62-58bc-aa13-a614450a24e8")
   )
   (label "K31"
     (at 73.66 137.16 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "51d283a4-e3b3-5129-81b6-df25a3a3541d")
+    (uuid "404281f8-fcc7-5b0c-a811-c3b082dd6d6a")
   )
   (symbol
     (lib_id "Device:D")
@@ -3208,8 +3208,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 71.12 144.78 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "6ae43c4a-9f75-51e9-995f-bb2b35774f0b"))
-    (pin "2" (uuid "b0f0adc9-90f6-56dd-90f5-230403636476"))
+    (pin "1" (uuid "99aab8a1-066d-5f05-a309-16404f5cc1d1"))
+    (pin "2" (uuid "05df55fa-439f-5dd6-b32f-9172eb761be4"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -3222,12 +3222,12 @@
   (label "ROW3"
     (at 67.31 144.78 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "ba4cf829-00e1-5e50-8761-12e2223b84a2")
+    (uuid "4d64aa59-7d90-5a6b-b76d-52f250b687bb")
   )
   (label "K31"
     (at 74.93 144.78 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "912fbe7b-880c-5c21-b842-75434d5c0647")
+    (uuid "51d283a4-e3b3-5129-81b6-df25a3a3541d")
   )
   (symbol
     (lib_id "marbastlib-mx:MX_SW_HS_CPG151101S11")
@@ -3245,8 +3245,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 111.76 134.62 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "45758d7a-6386-5f5a-8aa4-a552ad793747"))
-    (pin "2" (uuid "ed80a66b-3e01-58af-9fd8-9b23b66b5617"))
+    (pin "1" (uuid "6ae43c4a-9f75-51e9-995f-bb2b35774f0b"))
+    (pin "2" (uuid "b0f0adc9-90f6-56dd-90f5-230403636476"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -3259,12 +3259,12 @@
   (label "COL2"
     (at 109.22 132.08 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "e835e38a-9300-5018-ad6b-d68f87cc6aab")
+    (uuid "ba4cf829-00e1-5e50-8761-12e2223b84a2")
   )
   (label "K32"
     (at 114.3 137.16 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "f93d1c02-1553-5762-918e-b316a2c05d54")
+    (uuid "912fbe7b-880c-5c21-b842-75434d5c0647")
   )
   (symbol
     (lib_id "Device:D")
@@ -3282,8 +3282,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 111.76 144.78 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "d6f9b833-8ed1-5457-87ea-f4a478a2c4e6"))
-    (pin "2" (uuid "1221d742-776d-5cc3-b089-165aa58e6162"))
+    (pin "1" (uuid "45758d7a-6386-5f5a-8aa4-a552ad793747"))
+    (pin "2" (uuid "ed80a66b-3e01-58af-9fd8-9b23b66b5617"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -3296,12 +3296,12 @@
   (label "ROW3"
     (at 107.95 144.78 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "95058570-5c64-50d3-925a-c7ba148d505c")
+    (uuid "e835e38a-9300-5018-ad6b-d68f87cc6aab")
   )
   (label "K32"
     (at 115.57 144.78 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "23e99b38-799f-5bfa-a753-2d0af2989bfb")
+    (uuid "f93d1c02-1553-5762-918e-b316a2c05d54")
   )
   (symbol
     (lib_id "marbastlib-mx:MX_SW_HS_CPG151101S11")
@@ -3319,8 +3319,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 152.4 134.62 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "7a78a14c-80e4-5e60-a546-a1f4bf1636c4"))
-    (pin "2" (uuid "63891afd-c2f4-5f06-90c0-ef7b15a416bc"))
+    (pin "1" (uuid "d6f9b833-8ed1-5457-87ea-f4a478a2c4e6"))
+    (pin "2" (uuid "1221d742-776d-5cc3-b089-165aa58e6162"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -3333,12 +3333,12 @@
   (label "COL3"
     (at 149.86 132.08 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "d921a732-f3fa-523e-be9f-f9b4e144b28f")
+    (uuid "95058570-5c64-50d3-925a-c7ba148d505c")
   )
   (label "K33"
     (at 154.94 137.16 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "55270516-5d69-538e-b914-5425da0ece5b")
+    (uuid "23e99b38-799f-5bfa-a753-2d0af2989bfb")
   )
   (symbol
     (lib_id "Device:D")
@@ -3356,8 +3356,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 152.4 144.78 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "1a71dec7-0b1b-5aff-995e-abce17ddc957"))
-    (pin "2" (uuid "c4c84c32-df65-585a-bae6-09dc5cd186ef"))
+    (pin "1" (uuid "7a78a14c-80e4-5e60-a546-a1f4bf1636c4"))
+    (pin "2" (uuid "63891afd-c2f4-5f06-90c0-ef7b15a416bc"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -3370,12 +3370,12 @@
   (label "ROW3"
     (at 148.59 144.78 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "9dda661d-b0f2-5d63-aabb-2ff8cbdaa326")
+    (uuid "d921a732-f3fa-523e-be9f-f9b4e144b28f")
   )
   (label "K33"
     (at 156.21 144.78 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "9f07e1d8-a148-591e-a29c-b5eecb609e61")
+    (uuid "55270516-5d69-538e-b914-5425da0ece5b")
   )
   (symbol
     (lib_id "marbastlib-mx:MX_SW_HS_CPG151101S11")
@@ -3393,8 +3393,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 193.04 134.62 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "fda6c78f-22a4-54b1-aacc-2151352ad8a9"))
-    (pin "2" (uuid "4441417a-59a2-5549-990e-474b7b16e3dd"))
+    (pin "1" (uuid "1a71dec7-0b1b-5aff-995e-abce17ddc957"))
+    (pin "2" (uuid "c4c84c32-df65-585a-bae6-09dc5cd186ef"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -3407,12 +3407,12 @@
   (label "COL4"
     (at 190.5 132.08 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "e088d037-ab24-59d3-bddf-b065d870e629")
+    (uuid "9dda661d-b0f2-5d63-aabb-2ff8cbdaa326")
   )
   (label "K34"
     (at 195.58 137.16 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "8f94d980-08fb-55b6-bb0f-8f45f59e2996")
+    (uuid "9f07e1d8-a148-591e-a29c-b5eecb609e61")
   )
   (symbol
     (lib_id "Device:D")
@@ -3430,8 +3430,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 193.04 144.78 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "3ad69a66-098f-56f5-ad42-2259190d3037"))
-    (pin "2" (uuid "43ca9cda-9bba-5a03-81c4-7fde3c68a756"))
+    (pin "1" (uuid "fda6c78f-22a4-54b1-aacc-2151352ad8a9"))
+    (pin "2" (uuid "4441417a-59a2-5549-990e-474b7b16e3dd"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -3444,12 +3444,12 @@
   (label "ROW3"
     (at 189.23 144.78 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "4563d892-52e4-579b-8d28-d2ad3698f097")
+    (uuid "e088d037-ab24-59d3-bddf-b065d870e629")
   )
   (label "K34"
     (at 196.85 144.78 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "46ccbd47-fd7a-5c39-94ac-8c94784c2df9")
+    (uuid "8f94d980-08fb-55b6-bb0f-8f45f59e2996")
   )
   (symbol
     (lib_id "marbastlib-mx:MX_SW_HS_CPG151101S11")
@@ -3467,8 +3467,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 233.68 134.62 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "cabf7318-e9f9-5092-831f-0805dd48dc6a"))
-    (pin "2" (uuid "cbf06456-da97-521d-8aea-383931a08469"))
+    (pin "1" (uuid "3ad69a66-098f-56f5-ad42-2259190d3037"))
+    (pin "2" (uuid "43ca9cda-9bba-5a03-81c4-7fde3c68a756"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -3481,12 +3481,12 @@
   (label "COL5"
     (at 231.14 132.08 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "5aa87b35-1c39-501f-ae7c-ea8ca771382b")
+    (uuid "4563d892-52e4-579b-8d28-d2ad3698f097")
   )
   (label "K35"
     (at 236.22 137.16 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "5787c806-2703-5d2b-ba23-b152ae046256")
+    (uuid "46ccbd47-fd7a-5c39-94ac-8c94784c2df9")
   )
   (symbol
     (lib_id "Device:D")
@@ -3504,8 +3504,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 233.68 144.78 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "ae9d0cf4-6b8a-5a5a-a6d9-1526b48949dd"))
-    (pin "2" (uuid "1d80855c-b6be-50b7-aebf-76bf49e30e1d"))
+    (pin "1" (uuid "cabf7318-e9f9-5092-831f-0805dd48dc6a"))
+    (pin "2" (uuid "cbf06456-da97-521d-8aea-383931a08469"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -3518,12 +3518,12 @@
   (label "ROW3"
     (at 229.87 144.78 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "3f1e4e9a-0863-596b-9406-dafae8f3f22e")
+    (uuid "5aa87b35-1c39-501f-ae7c-ea8ca771382b")
   )
   (label "K35"
     (at 237.49 144.78 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "76518713-b18a-5265-8253-47b972c56855")
+    (uuid "5787c806-2703-5d2b-ba23-b152ae046256")
   )
   (symbol
     (lib_id "marbastlib-mx:MX_SW_HS_CPG151101S11")
@@ -3541,8 +3541,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 274.32 134.62 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "be477de6-b2b6-5178-a90e-9df384f5e393"))
-    (pin "2" (uuid "d30bea56-99c1-5404-94a1-10ebba7419ee"))
+    (pin "1" (uuid "ae9d0cf4-6b8a-5a5a-a6d9-1526b48949dd"))
+    (pin "2" (uuid "1d80855c-b6be-50b7-aebf-76bf49e30e1d"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -3555,12 +3555,12 @@
   (label "COL6"
     (at 271.78 132.08 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "a58a216b-b8f2-5fa0-8ff7-282beaaeb3b8")
+    (uuid "3f1e4e9a-0863-596b-9406-dafae8f3f22e")
   )
   (label "K36"
     (at 276.86 137.16 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "afbdc7ae-2789-5d43-8efc-7cc59463a140")
+    (uuid "76518713-b18a-5265-8253-47b972c56855")
   )
   (symbol
     (lib_id "Device:D")
@@ -3578,8 +3578,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 274.32 144.78 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "26007ef4-6f92-5267-8f5f-4db513a38f33"))
-    (pin "2" (uuid "a35297d3-ce71-5dca-8f28-3f422a22861c"))
+    (pin "1" (uuid "be477de6-b2b6-5178-a90e-9df384f5e393"))
+    (pin "2" (uuid "d30bea56-99c1-5404-94a1-10ebba7419ee"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -3592,12 +3592,12 @@
   (label "ROW3"
     (at 270.51 144.78 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "7e9b46f1-c2ef-5403-afc2-744b8f3bdf46")
+    (uuid "a58a216b-b8f2-5fa0-8ff7-282beaaeb3b8")
   )
   (label "K36"
     (at 278.13 144.78 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "ae1c9654-6642-5d10-a1f8-ff2321c7f067")
+    (uuid "afbdc7ae-2789-5d43-8efc-7cc59463a140")
   )
   (symbol
     (lib_id "marbastlib-mx:MX_SW_HS_CPG151101S11")
@@ -3615,8 +3615,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 30.48 162.56 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "a2ea8550-c186-5c4c-9d35-dbf764bd6deb"))
-    (pin "2" (uuid "c6735625-d11d-5a8a-9423-4074acbd13e1"))
+    (pin "1" (uuid "26007ef4-6f92-5267-8f5f-4db513a38f33"))
+    (pin "2" (uuid "a35297d3-ce71-5dca-8f28-3f422a22861c"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -3629,12 +3629,12 @@
   (label "COL0"
     (at 27.94 160.02 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "db044486-987b-5617-97fa-8103557934c4")
+    (uuid "7e9b46f1-c2ef-5403-afc2-744b8f3bdf46")
   )
   (label "K40"
     (at 33.02 165.1 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "25e91afc-c606-5b9c-b077-19d4326ccf46")
+    (uuid "ae1c9654-6642-5d10-a1f8-ff2321c7f067")
   )
   (symbol
     (lib_id "Device:D")
@@ -3652,8 +3652,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 30.48 172.72 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "2554fc13-3b3b-5065-b14a-58d313fa02e7"))
-    (pin "2" (uuid "6d8f68e2-7d5d-5685-b9d6-2e3efa8ff956"))
+    (pin "1" (uuid "a2ea8550-c186-5c4c-9d35-dbf764bd6deb"))
+    (pin "2" (uuid "c6735625-d11d-5a8a-9423-4074acbd13e1"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -3666,12 +3666,12 @@
   (label "ROW4"
     (at 26.67 172.72 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "320ce59e-acd0-5c75-8dca-8c59cf45727f")
+    (uuid "db044486-987b-5617-97fa-8103557934c4")
   )
   (label "K40"
     (at 34.29 172.72 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "f57b5371-8fbc-5f7b-8256-ca6ca089ca0f")
+    (uuid "25e91afc-c606-5b9c-b077-19d4326ccf46")
   )
   (symbol
     (lib_id "marbastlib-mx:MX_SW_HS_CPG151101S11")
@@ -3689,8 +3689,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 71.12 162.56 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "345e932b-c92a-54c1-a765-9bcbfd8b74b4"))
-    (pin "2" (uuid "d6f4be4e-f77e-53c8-8fb5-ae08d912a4d5"))
+    (pin "1" (uuid "2554fc13-3b3b-5065-b14a-58d313fa02e7"))
+    (pin "2" (uuid "6d8f68e2-7d5d-5685-b9d6-2e3efa8ff956"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -3703,12 +3703,12 @@
   (label "COL1"
     (at 68.58 160.02 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "3e4ec725-1bce-550d-8256-c59a1c92b749")
+    (uuid "320ce59e-acd0-5c75-8dca-8c59cf45727f")
   )
   (label "K41"
     (at 73.66 165.1 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "0acc82b0-38d1-5e0f-a08a-ae75e162da0c")
+    (uuid "f57b5371-8fbc-5f7b-8256-ca6ca089ca0f")
   )
   (symbol
     (lib_id "Device:D")
@@ -3726,8 +3726,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 71.12 172.72 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "31a57849-b5f4-5f0a-9b1c-4b026da6c564"))
-    (pin "2" (uuid "7d540566-2a2a-56de-b52c-33cae71ded56"))
+    (pin "1" (uuid "345e932b-c92a-54c1-a765-9bcbfd8b74b4"))
+    (pin "2" (uuid "d6f4be4e-f77e-53c8-8fb5-ae08d912a4d5"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -3740,12 +3740,12 @@
   (label "ROW4"
     (at 67.31 172.72 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "ccdb2ba5-4f93-520b-befa-1d5f6ae3b5f2")
+    (uuid "3e4ec725-1bce-550d-8256-c59a1c92b749")
   )
   (label "K41"
     (at 74.93 172.72 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "cb2281e6-7788-573a-abd6-7af2e0e6ffd3")
+    (uuid "0acc82b0-38d1-5e0f-a08a-ae75e162da0c")
   )
   (symbol
     (lib_id "marbastlib-mx:MX_SW_HS_CPG151101S11")
@@ -3763,8 +3763,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 111.76 162.56 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "233fe068-b224-54a8-88ad-312e41f3a35b"))
-    (pin "2" (uuid "23371413-a6ad-5efc-ba8d-639887f858c7"))
+    (pin "1" (uuid "31a57849-b5f4-5f0a-9b1c-4b026da6c564"))
+    (pin "2" (uuid "7d540566-2a2a-56de-b52c-33cae71ded56"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -3777,12 +3777,12 @@
   (label "COL2"
     (at 109.22 160.02 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "2857bdff-c80c-54d3-9ea9-f4a0c3c46fff")
+    (uuid "ccdb2ba5-4f93-520b-befa-1d5f6ae3b5f2")
   )
   (label "K42"
     (at 114.3 165.1 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "33e2b7f6-8d84-5426-a928-ab7cad4aa19e")
+    (uuid "cb2281e6-7788-573a-abd6-7af2e0e6ffd3")
   )
   (symbol
     (lib_id "Device:D")
@@ -3800,8 +3800,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 111.76 172.72 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "bc021aaf-4cef-5160-bda1-4405cd6a7a2f"))
-    (pin "2" (uuid "556e4272-1fac-5f63-885b-2f2d68800a75"))
+    (pin "1" (uuid "233fe068-b224-54a8-88ad-312e41f3a35b"))
+    (pin "2" (uuid "23371413-a6ad-5efc-ba8d-639887f858c7"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -3814,12 +3814,12 @@
   (label "ROW4"
     (at 107.95 172.72 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "47aa0501-020b-5f02-8a8e-2f72a2284684")
+    (uuid "2857bdff-c80c-54d3-9ea9-f4a0c3c46fff")
   )
   (label "K42"
     (at 115.57 172.72 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "2aa63c25-5bd8-5988-8fef-5ec6cdce6ea4")
+    (uuid "33e2b7f6-8d84-5426-a928-ab7cad4aa19e")
   )
   (symbol
     (lib_id "marbastlib-mx:MX_SW_HS_CPG151101S11")
@@ -3837,8 +3837,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 152.4 162.56 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "96092119-6f4f-5961-abd0-fa541b9555c2"))
-    (pin "2" (uuid "2eefba53-00ce-5e15-aa60-59770adb5a0f"))
+    (pin "1" (uuid "bc021aaf-4cef-5160-bda1-4405cd6a7a2f"))
+    (pin "2" (uuid "556e4272-1fac-5f63-885b-2f2d68800a75"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -3851,12 +3851,12 @@
   (label "COL3"
     (at 149.86 160.02 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "e3863eda-5a3d-5763-bfb0-4f900942e0a0")
+    (uuid "47aa0501-020b-5f02-8a8e-2f72a2284684")
   )
   (label "K43"
     (at 154.94 165.1 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "4ef718cc-edab-55fc-a219-d3374545b74d")
+    (uuid "2aa63c25-5bd8-5988-8fef-5ec6cdce6ea4")
   )
   (symbol
     (lib_id "Device:D")
@@ -3874,8 +3874,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 152.4 172.72 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "41e52996-28fb-595d-9a08-a5f220137814"))
-    (pin "2" (uuid "31a88fe4-1fa1-5d86-b4c5-d56973708efd"))
+    (pin "1" (uuid "96092119-6f4f-5961-abd0-fa541b9555c2"))
+    (pin "2" (uuid "2eefba53-00ce-5e15-aa60-59770adb5a0f"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -3888,12 +3888,12 @@
   (label "ROW4"
     (at 148.59 172.72 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "c63bf2f6-c750-5add-bb8c-718bc839255a")
+    (uuid "e3863eda-5a3d-5763-bfb0-4f900942e0a0")
   )
   (label "K43"
     (at 156.21 172.72 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "f0afa16f-45d9-5e68-9e2d-b418843817c8")
+    (uuid "4ef718cc-edab-55fc-a219-d3374545b74d")
   )
   (symbol
     (lib_id "marbastlib-mx:MX_SW_HS_CPG151101S11")
@@ -3911,8 +3911,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 193.04 162.56 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "70504d05-73c1-5f23-b5db-aaa8482cb8bb"))
-    (pin "2" (uuid "71f39529-711b-58dc-bbd3-986c69dbca80"))
+    (pin "1" (uuid "41e52996-28fb-595d-9a08-a5f220137814"))
+    (pin "2" (uuid "31a88fe4-1fa1-5d86-b4c5-d56973708efd"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -3925,12 +3925,12 @@
   (label "COL4"
     (at 190.5 160.02 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "e445349f-73c1-58a9-9805-c727f34beaca")
+    (uuid "c63bf2f6-c750-5add-bb8c-718bc839255a")
   )
   (label "K44"
     (at 195.58 165.1 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "cb95a0cd-f0fc-5c99-a408-bd6ca17432fa")
+    (uuid "f0afa16f-45d9-5e68-9e2d-b418843817c8")
   )
   (symbol
     (lib_id "Device:D")
@@ -3948,8 +3948,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 193.04 172.72 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "1089a0f9-0664-5e05-aefa-ea8cb960dc6a"))
-    (pin "2" (uuid "38033915-3858-5b33-b186-87954a259070"))
+    (pin "1" (uuid "70504d05-73c1-5f23-b5db-aaa8482cb8bb"))
+    (pin "2" (uuid "71f39529-711b-58dc-bbd3-986c69dbca80"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -3962,12 +3962,12 @@
   (label "ROW4"
     (at 189.23 172.72 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "6c5d302d-1598-59fe-847f-9c499bf90a4d")
+    (uuid "e445349f-73c1-58a9-9805-c727f34beaca")
   )
   (label "K44"
     (at 196.85 172.72 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "b7a458d6-8642-5dcd-a04c-8b02d2c5ed1c")
+    (uuid "cb95a0cd-f0fc-5c99-a408-bd6ca17432fa")
   )
   (symbol
     (lib_id "marbastlib-mx:MX_SW_HS_CPG151101S11")
@@ -3980,13 +3980,13 @@
     (uuid "2a8265ca-d7e1-5883-8c6e-201f2032f192")
     (property "Reference" "SW233" (at 233.68 156.21 0) (effects (font (size 1.27 1.27))))
     (property "Value" "Space" (at 233.68 168.91 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "keygen:SW_MX_HS_CPG151101S11_1.5u"
+    (property "Footprint" "keygen:SW_MX_HS_CPG151101S11_1.25u"
       (at 233.68 162.56 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 233.68 162.56 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "d4f5d7e2-7fd6-52cf-aebb-fee8eeca1c65"))
-    (pin "2" (uuid "49b4c6ff-8116-565d-8976-ed4915cfbc48"))
+    (pin "1" (uuid "1089a0f9-0664-5e05-aefa-ea8cb960dc6a"))
+    (pin "2" (uuid "38033915-3858-5b33-b186-87954a259070"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -3999,12 +3999,12 @@
   (label "COL5"
     (at 231.14 160.02 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "2b113ee5-5c73-5f89-8a3d-267f77c0a182")
+    (uuid "6c5d302d-1598-59fe-847f-9c499bf90a4d")
   )
   (label "K45"
     (at 236.22 165.1 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "f87605bd-cecf-5aa5-ad00-bee2257e8a4b")
+    (uuid "b7a458d6-8642-5dcd-a04c-8b02d2c5ed1c")
   )
   (symbol
     (lib_id "Device:D")
@@ -4022,8 +4022,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 233.68 172.72 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "ba5b57e4-9eb6-59e7-9c64-7b476030517d"))
-    (pin "2" (uuid "ab65a31f-3ca0-553b-8313-73102745a206"))
+    (pin "1" (uuid "d4f5d7e2-7fd6-52cf-aebb-fee8eeca1c65"))
+    (pin "2" (uuid "49b4c6ff-8116-565d-8976-ed4915cfbc48"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -4036,12 +4036,12 @@
   (label "ROW4"
     (at 229.87 172.72 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "1b9f78e7-7345-5832-bacc-ca9f82716286")
+    (uuid "2b113ee5-5c73-5f89-8a3d-267f77c0a182")
   )
   (label "K45"
     (at 237.49 172.72 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "88b089f9-2e1c-5975-8c15-b4c80be09858")
+    (uuid "f87605bd-cecf-5aa5-ad00-bee2257e8a4b")
   )
   (symbol
     (lib_id "marbastlib-mx:MX_SW_HS_CPG151101S11")
@@ -4054,13 +4054,13 @@
     (uuid "f1a48b0b-0a70-5cb4-bf73-d92b87679ae5")
     (property "Reference" "SW234" (at 274.32 156.21 0) (effects (font (size 1.27 1.27))))
     (property "Value" "Enter" (at 274.32 168.91 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "keygen:SW_MX_HS_CPG151101S11_1.5u"
+    (property "Footprint" "keygen:SW_MX_HS_CPG151101S11_1.25u"
       (at 274.32 162.56 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 274.32 162.56 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "890a858f-67c0-5ebf-b0b1-2e850528b965"))
-    (pin "2" (uuid "2614386b-1657-5e67-b908-62dfde141fa4"))
+    (pin "1" (uuid "ba5b57e4-9eb6-59e7-9c64-7b476030517d"))
+    (pin "2" (uuid "ab65a31f-3ca0-553b-8313-73102745a206"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -4073,12 +4073,12 @@
   (label "COL6"
     (at 271.78 160.02 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "d3bb3b78-658f-5998-b538-11c72b766be3")
+    (uuid "1b9f78e7-7345-5832-bacc-ca9f82716286")
   )
   (label "K46"
     (at 276.86 165.1 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "17d07331-377a-5f06-88ad-789c87c052e5")
+    (uuid "88b089f9-2e1c-5975-8c15-b4c80be09858")
   )
   (symbol
     (lib_id "Device:D")
@@ -4096,8 +4096,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 274.32 172.72 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "2b797752-1097-5510-ac96-c9599083639e"))
-    (pin "2" (uuid "f3493a87-caef-5f69-ba03-24110837fc00"))
+    (pin "1" (uuid "890a858f-67c0-5ebf-b0b1-2e850528b965"))
+    (pin "2" (uuid "2614386b-1657-5e67-b908-62dfde141fa4"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -4110,18 +4110,18 @@
   (label "ROW4"
     (at 270.51 172.72 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "8dfa7c4d-8b2c-56f3-990c-e62b107ae923")
+    (uuid "d3bb3b78-658f-5998-b538-11c72b766be3")
   )
   (label "K46"
     (at 278.13 172.72 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "faab2c16-fa78-5901-a94c-eb705f926947")
+    (uuid "17d07331-377a-5f06-88ad-789c87c052e5")
   )
   (text "PER-KEY LEDs  (33) - powered from the battery through the LED power switch (Q2, LED_VDD)"
     (exclude_from_sim no)
     (at 15.24 195.58 0)
     (effects (font (size 2 2)) (justify left top))
-    (uuid "c95651eb-fe04-5d23-993d-3dfc0795e213")
+    (uuid "2b797752-1097-5510-ac96-c9599083639e")
   )
   (symbol
     (lib_id "LED:SK6812MINI-E")
@@ -4140,10 +4140,10 @@
     )
     (property "Datasheet" "" (at 30.48 215.9 0) (effects (font (size 1.27 1.27)) (hide yes)))
     (property "Position" "-" (at 30.48 215.9 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "10e0b930-b608-5939-b46c-972f9a2b8f28"))
-    (pin "2" (uuid "6606c1b5-4ad9-563e-8e88-b8059bbd4b1e"))
-    (pin "3" (uuid "011c29ba-9429-57b1-a2b9-982dd53526bf"))
-    (pin "4" (uuid "c69f363e-cb37-53e1-90a4-0c9137439e7a"))
+    (pin "1" (uuid "f3493a87-caef-5f69-ba03-24110837fc00"))
+    (pin "2" (uuid "8dfa7c4d-8b2c-56f3-990c-e62b107ae923"))
+    (pin "3" (uuid "faab2c16-fa78-5901-a94c-eb705f926947"))
+    (pin "4" (uuid "c95651eb-fe04-5d23-993d-3dfc0795e213"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -4156,22 +4156,22 @@
   (label "GND"
     (at 30.48 223.52 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "a32e9252-b361-57b7-b07c-0627a05c2a99")
+    (uuid "10e0b930-b608-5939-b46c-972f9a2b8f28")
   )
   (label "LED_DIN"
     (at 22.86 215.9 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "f7935229-ec24-58c3-85ca-849313c419a4")
+    (uuid "6606c1b5-4ad9-563e-8e88-b8059bbd4b1e")
   )
   (label "LED_VDD"
     (at 30.48 208.28 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "18113ebc-7612-5e51-a827-de003ca84b27")
+    (uuid "011c29ba-9429-57b1-a2b9-982dd53526bf")
   )
   (label "LED_D1"
     (at 38.1 215.9 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "e45c3463-13b2-5720-a343-08250871993a")
+    (uuid "c69f363e-cb37-53e1-90a4-0c9137439e7a")
   )
   (symbol
     (lib_id "LED:SK6812MINI-E")
@@ -4190,10 +4190,10 @@
     )
     (property "Datasheet" "" (at 68.58 215.9 0) (effects (font (size 1.27 1.27)) (hide yes)))
     (property "Position" "0" (at 68.58 215.9 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "820b030b-5aca-5ffd-b92e-d1695761d081"))
-    (pin "2" (uuid "ba443477-f0bd-5610-abf6-184a1ac07c26"))
-    (pin "3" (uuid "995180a0-cd0c-5c65-bbb1-529a7a19c91c"))
-    (pin "4" (uuid "285b6d4f-8dec-52fa-8d0f-ffb7b864682c"))
+    (pin "1" (uuid "a32e9252-b361-57b7-b07c-0627a05c2a99"))
+    (pin "2" (uuid "f7935229-ec24-58c3-85ca-849313c419a4"))
+    (pin "3" (uuid "18113ebc-7612-5e51-a827-de003ca84b27"))
+    (pin "4" (uuid "e45c3463-13b2-5720-a343-08250871993a"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -4206,22 +4206,22 @@
   (label "GND"
     (at 68.58 223.52 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "55933170-b6ae-5356-90b3-87b08905a958")
+    (uuid "820b030b-5aca-5ffd-b92e-d1695761d081")
   )
   (label "LED_D1"
     (at 60.96 215.9 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "1aa92a15-c139-5126-9340-d5875be03faf")
+    (uuid "ba443477-f0bd-5610-abf6-184a1ac07c26")
   )
   (label "LED_VDD"
     (at 68.58 208.28 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "b8799b6d-2799-52ba-9557-d36f0124dfe7")
+    (uuid "995180a0-cd0c-5c65-bbb1-529a7a19c91c")
   )
   (label "LED_D2"
     (at 76.2 215.9 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "c074e1f1-e614-52dd-9234-d85e97d4bfa7")
+    (uuid "285b6d4f-8dec-52fa-8d0f-ffb7b864682c")
   )
   (symbol
     (lib_id "LED:SK6812MINI-E")
@@ -4240,10 +4240,10 @@
     )
     (property "Datasheet" "" (at 106.68 215.9 0) (effects (font (size 1.27 1.27)) (hide yes)))
     (property "Position" "9" (at 106.68 215.9 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "6a2c731c-96d1-5e39-8c22-28a37a523acc"))
-    (pin "2" (uuid "5a908d46-d9aa-527c-88ab-ab32434c42c0"))
-    (pin "3" (uuid "2022537b-0422-55a6-b270-5e277128953e"))
-    (pin "4" (uuid "7fe203e4-5914-56c3-98ac-fee25aa36770"))
+    (pin "1" (uuid "55933170-b6ae-5356-90b3-87b08905a958"))
+    (pin "2" (uuid "1aa92a15-c139-5126-9340-d5875be03faf"))
+    (pin "3" (uuid "b8799b6d-2799-52ba-9557-d36f0124dfe7"))
+    (pin "4" (uuid "c074e1f1-e614-52dd-9234-d85e97d4bfa7"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -4256,22 +4256,22 @@
   (label "GND"
     (at 106.68 223.52 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "8319e688-f087-5453-ae65-6d84f7f0820f")
+    (uuid "6a2c731c-96d1-5e39-8c22-28a37a523acc")
   )
   (label "LED_D2"
     (at 99.06 215.9 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "7d77eb9f-8a9a-5783-bb4c-dc9c93895e68")
+    (uuid "5a908d46-d9aa-527c-88ab-ab32434c42c0")
   )
   (label "LED_VDD"
     (at 106.68 208.28 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "71fe9d93-ec41-5323-9e27-034276285162")
+    (uuid "2022537b-0422-55a6-b270-5e277128953e")
   )
   (label "LED_D3"
     (at 114.3 215.9 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "37e5e7c1-04d5-5664-bff6-7b3842b537e8")
+    (uuid "7fe203e4-5914-56c3-98ac-fee25aa36770")
   )
   (symbol
     (lib_id "LED:SK6812MINI-E")
@@ -4290,10 +4290,10 @@
     )
     (property "Datasheet" "" (at 144.78 215.9 0) (effects (font (size 1.27 1.27)) (hide yes)))
     (property "Position" "8" (at 144.78 215.9 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "1ecd57eb-b47f-5908-8646-cea4fcf3a459"))
-    (pin "2" (uuid "42d6f954-99f4-5027-bf46-19bfcff966ae"))
-    (pin "3" (uuid "2181d76b-98e7-51f5-a352-f315ff8e60a5"))
-    (pin "4" (uuid "8ee43d23-eefb-513b-80eb-96792ae5560f"))
+    (pin "1" (uuid "8319e688-f087-5453-ae65-6d84f7f0820f"))
+    (pin "2" (uuid "7d77eb9f-8a9a-5783-bb4c-dc9c93895e68"))
+    (pin "3" (uuid "71fe9d93-ec41-5323-9e27-034276285162"))
+    (pin "4" (uuid "37e5e7c1-04d5-5664-bff6-7b3842b537e8"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -4306,22 +4306,22 @@
   (label "GND"
     (at 144.78 223.52 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "7833690f-aa71-5d68-b1b4-a2f4f4128674")
+    (uuid "1ecd57eb-b47f-5908-8646-cea4fcf3a459")
   )
   (label "LED_D3"
     (at 137.16 215.9 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "61fe3c81-9059-53bf-86ad-804801d1f8ec")
+    (uuid "42d6f954-99f4-5027-bf46-19bfcff966ae")
   )
   (label "LED_VDD"
     (at 144.78 208.28 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "f06da7f1-af57-5676-b172-002a35b8d8cd")
+    (uuid "2181d76b-98e7-51f5-a352-f315ff8e60a5")
   )
   (label "LED_D4"
     (at 152.4 215.9 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "9f8c2b54-e0da-517e-b59a-b8724ac7d3ac")
+    (uuid "8ee43d23-eefb-513b-80eb-96792ae5560f")
   )
   (symbol
     (lib_id "LED:SK6812MINI-E")
@@ -4340,10 +4340,10 @@
     )
     (property "Datasheet" "" (at 182.88 215.9 0) (effects (font (size 1.27 1.27)) (hide yes)))
     (property "Position" "7" (at 182.88 215.9 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "857d51f7-f5d4-547e-938f-6de568cb7749"))
-    (pin "2" (uuid "7f1cabdb-bd17-5642-8405-c9bb329a28e4"))
-    (pin "3" (uuid "7e91699c-f8bb-5f45-947a-775c21870aff"))
-    (pin "4" (uuid "c069167b-eee7-590e-8145-01dc700bfa25"))
+    (pin "1" (uuid "7833690f-aa71-5d68-b1b4-a2f4f4128674"))
+    (pin "2" (uuid "61fe3c81-9059-53bf-86ad-804801d1f8ec"))
+    (pin "3" (uuid "f06da7f1-af57-5676-b172-002a35b8d8cd"))
+    (pin "4" (uuid "9f8c2b54-e0da-517e-b59a-b8724ac7d3ac"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -4356,22 +4356,22 @@
   (label "GND"
     (at 182.88 223.52 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "5c4ad154-d9d8-5fb6-b852-5c71553d416b")
+    (uuid "857d51f7-f5d4-547e-938f-6de568cb7749")
   )
   (label "LED_D4"
     (at 175.26 215.9 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "f89d31ac-56e5-56a5-993c-766a77e766f6")
+    (uuid "7f1cabdb-bd17-5642-8405-c9bb329a28e4")
   )
   (label "LED_VDD"
     (at 182.88 208.28 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "2e47b84e-ed35-53ba-b445-c712839a0687")
+    (uuid "7e91699c-f8bb-5f45-947a-775c21870aff")
   )
   (label "LED_D5"
     (at 190.5 215.9 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "e4532dbd-e1d9-574a-8645-f43524a06c5a")
+    (uuid "c069167b-eee7-590e-8145-01dc700bfa25")
   )
   (symbol
     (lib_id "LED:SK6812MINI-E")
@@ -4390,10 +4390,10 @@
     )
     (property "Datasheet" "" (at 220.98 215.9 0) (effects (font (size 1.27 1.27)) (hide yes)))
     (property "Position" "6" (at 220.98 215.9 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "5d4198cd-33ae-559d-9331-0eabe1014cc3"))
-    (pin "2" (uuid "46912c0b-96a3-56e7-affc-f9ceaaadc2c2"))
-    (pin "3" (uuid "5dc04f6b-a292-5d5b-b8f9-3767aad7ba1f"))
-    (pin "4" (uuid "18aeec3c-a4a5-51f1-9987-632592eef434"))
+    (pin "1" (uuid "5c4ad154-d9d8-5fb6-b852-5c71553d416b"))
+    (pin "2" (uuid "f89d31ac-56e5-56a5-993c-766a77e766f6"))
+    (pin "3" (uuid "2e47b84e-ed35-53ba-b445-c712839a0687"))
+    (pin "4" (uuid "e4532dbd-e1d9-574a-8645-f43524a06c5a"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -4406,22 +4406,22 @@
   (label "GND"
     (at 220.98 223.52 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "620ce179-3446-557d-8fc6-bebfae08edff")
+    (uuid "5d4198cd-33ae-559d-9331-0eabe1014cc3")
   )
   (label "LED_D5"
     (at 213.36 215.9 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "56fdbda4-39c7-54bc-b19d-7723d6a8b5f6")
+    (uuid "46912c0b-96a3-56e7-affc-f9ceaaadc2c2")
   )
   (label "LED_VDD"
     (at 220.98 208.28 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "3d775c79-42c8-5250-8529-efc65b1facc5")
+    (uuid "5dc04f6b-a292-5d5b-b8f9-3767aad7ba1f")
   )
   (label "LED_D6"
     (at 228.6 215.9 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "e7b00a3c-d090-5f76-a136-030f030a5d3b")
+    (uuid "18aeec3c-a4a5-51f1-9987-632592eef434")
   )
   (symbol
     (lib_id "LED:SK6812MINI-E")
@@ -4440,10 +4440,10 @@
     )
     (property "Datasheet" "" (at 259.08 215.9 0) (effects (font (size 1.27 1.27)) (hide yes)))
     (property "Position" "\\" (at 259.08 215.9 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "16a1edb3-0a4e-5e61-b9dc-42b14820456f"))
-    (pin "2" (uuid "34170038-3c73-5025-a4eb-7491f0977db0"))
-    (pin "3" (uuid "3ca1e4d7-5503-527f-84f9-54c70744bd0d"))
-    (pin "4" (uuid "61a78f75-baa1-5813-bdbe-449704b5eee1"))
+    (pin "1" (uuid "620ce179-3446-557d-8fc6-bebfae08edff"))
+    (pin "2" (uuid "56fdbda4-39c7-54bc-b19d-7723d6a8b5f6"))
+    (pin "3" (uuid "3d775c79-42c8-5250-8529-efc65b1facc5"))
+    (pin "4" (uuid "e7b00a3c-d090-5f76-a136-030f030a5d3b"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -4456,22 +4456,22 @@
   (label "GND"
     (at 259.08 223.52 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "28218f12-6d49-59c5-8b56-d4ad3b6aea73")
+    (uuid "16a1edb3-0a4e-5e61-b9dc-42b14820456f")
   )
   (label "LED_D6"
     (at 251.46 215.9 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "636309b3-4a33-55f2-b52c-2b43e5067a0b")
+    (uuid "34170038-3c73-5025-a4eb-7491f0977db0")
   )
   (label "LED_VDD"
     (at 259.08 208.28 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "86746203-937d-52fa-9de7-f85906e2a162")
+    (uuid "3ca1e4d7-5503-527f-84f9-54c70744bd0d")
   )
   (label "LED_D7"
     (at 266.7 215.9 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "383a5dd2-fc83-5e7f-8ab6-42c75610cea1")
+    (uuid "61a78f75-baa1-5813-bdbe-449704b5eee1")
   )
   (symbol
     (lib_id "LED:SK6812MINI-E")
@@ -4490,10 +4490,10 @@
     )
     (property "Datasheet" "" (at 297.18 215.9 0) (effects (font (size 1.27 1.27)) (hide yes)))
     (property "Position" "P" (at 297.18 215.9 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "7f965f6a-8af2-55fa-a7f8-adbcb2de83d0"))
-    (pin "2" (uuid "e0f83adb-3d6b-5596-a49e-53aa9386dfc8"))
-    (pin "3" (uuid "48bafa8c-d888-5c19-9c44-5423d589a99d"))
-    (pin "4" (uuid "69fd0a49-eb08-5750-b994-eaff16f117b5"))
+    (pin "1" (uuid "28218f12-6d49-59c5-8b56-d4ad3b6aea73"))
+    (pin "2" (uuid "636309b3-4a33-55f2-b52c-2b43e5067a0b"))
+    (pin "3" (uuid "86746203-937d-52fa-9de7-f85906e2a162"))
+    (pin "4" (uuid "383a5dd2-fc83-5e7f-8ab6-42c75610cea1"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -4506,22 +4506,22 @@
   (label "GND"
     (at 297.18 223.52 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "0918e1ad-d6dd-5521-a193-2c4e21ee8ece")
+    (uuid "7f965f6a-8af2-55fa-a7f8-adbcb2de83d0")
   )
   (label "LED_D7"
     (at 289.56 215.9 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "91a20a0a-23ad-5575-8c3d-cd842867614a")
+    (uuid "e0f83adb-3d6b-5596-a49e-53aa9386dfc8")
   )
   (label "LED_VDD"
     (at 297.18 208.28 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "8c4b2fcd-b5df-548d-894a-497fd75c31d9")
+    (uuid "48bafa8c-d888-5c19-9c44-5423d589a99d")
   )
   (label "LED_D8"
     (at 304.8 215.9 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "1e5eb577-5b7a-52ac-b094-2da8381fbe6c")
+    (uuid "69fd0a49-eb08-5750-b994-eaff16f117b5")
   )
   (symbol
     (lib_id "LED:SK6812MINI-E")
@@ -4540,10 +4540,10 @@
     )
     (property "Datasheet" "" (at 30.48 246.38 0) (effects (font (size 1.27 1.27)) (hide yes)))
     (property "Position" "O" (at 30.48 246.38 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "ffa9f67f-e341-5239-9831-6ae36a5cc056"))
-    (pin "2" (uuid "8f40a159-c2b8-5cd7-8720-30c1d91a40ed"))
-    (pin "3" (uuid "3c2fb5c2-0596-592c-8af4-ff022df68430"))
-    (pin "4" (uuid "cbf06901-53ef-5731-9722-b9601662cd92"))
+    (pin "1" (uuid "0918e1ad-d6dd-5521-a193-2c4e21ee8ece"))
+    (pin "2" (uuid "91a20a0a-23ad-5575-8c3d-cd842867614a"))
+    (pin "3" (uuid "8c4b2fcd-b5df-548d-894a-497fd75c31d9"))
+    (pin "4" (uuid "1e5eb577-5b7a-52ac-b094-2da8381fbe6c"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -4556,22 +4556,22 @@
   (label "GND"
     (at 30.48 254 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "e54a220b-4c7f-518a-81cd-7ad39262586f")
+    (uuid "ffa9f67f-e341-5239-9831-6ae36a5cc056")
   )
   (label "LED_D8"
     (at 22.86 246.38 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "418fb4a9-095b-516c-926d-4cb05577cb6a")
+    (uuid "8f40a159-c2b8-5cd7-8720-30c1d91a40ed")
   )
   (label "LED_VDD"
     (at 30.48 238.76 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "4b43e084-c00f-5fbc-b0a0-0699e6705886")
+    (uuid "3c2fb5c2-0596-592c-8af4-ff022df68430")
   )
   (label "LED_D9"
     (at 38.1 246.38 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "d7a00120-d839-5b87-b1fb-9891bf49c26a")
+    (uuid "cbf06901-53ef-5731-9722-b9601662cd92")
   )
   (symbol
     (lib_id "LED:SK6812MINI-E")
@@ -4590,10 +4590,10 @@
     )
     (property "Datasheet" "" (at 68.58 246.38 0) (effects (font (size 1.27 1.27)) (hide yes)))
     (property "Position" "I" (at 68.58 246.38 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "51bb2a84-8a2e-57a0-a869-2402537a5e14"))
-    (pin "2" (uuid "6e371974-7ca8-5b4a-8fd6-95e25bc95bfb"))
-    (pin "3" (uuid "65aaaebf-232a-5a9e-a01a-19bcc3125fec"))
-    (pin "4" (uuid "2067195e-20e4-572e-8e7d-d69ce6fa5c7c"))
+    (pin "1" (uuid "e54a220b-4c7f-518a-81cd-7ad39262586f"))
+    (pin "2" (uuid "418fb4a9-095b-516c-926d-4cb05577cb6a"))
+    (pin "3" (uuid "4b43e084-c00f-5fbc-b0a0-0699e6705886"))
+    (pin "4" (uuid "d7a00120-d839-5b87-b1fb-9891bf49c26a"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -4606,22 +4606,22 @@
   (label "GND"
     (at 68.58 254 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "841316b9-76f3-5205-b029-6377d2858446")
+    (uuid "51bb2a84-8a2e-57a0-a869-2402537a5e14")
   )
   (label "LED_D9"
     (at 60.96 246.38 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "7100a0e2-4333-544e-abd3-8a5e9c8169bd")
+    (uuid "6e371974-7ca8-5b4a-8fd6-95e25bc95bfb")
   )
   (label "LED_VDD"
     (at 68.58 238.76 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "dc55b698-466d-5ab0-b06b-04814ec4da86")
+    (uuid "65aaaebf-232a-5a9e-a01a-19bcc3125fec")
   )
   (label "LED_D10"
     (at 76.2 246.38 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "e2583d45-0d17-5dc7-ae11-4611a776d907")
+    (uuid "2067195e-20e4-572e-8e7d-d69ce6fa5c7c")
   )
   (symbol
     (lib_id "LED:SK6812MINI-E")
@@ -4640,10 +4640,10 @@
     )
     (property "Datasheet" "" (at 106.68 246.38 0) (effects (font (size 1.27 1.27)) (hide yes)))
     (property "Position" "U" (at 106.68 246.38 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "bc14bf1c-f987-5f42-9581-50e53838c160"))
-    (pin "2" (uuid "a29b3e8a-03e9-5a1d-9b1b-09f0ea494c6f"))
-    (pin "3" (uuid "b04e20e2-5240-5756-8e2d-d465626800e8"))
-    (pin "4" (uuid "fa70c8a4-e104-5e87-8a5d-eda885b010ea"))
+    (pin "1" (uuid "841316b9-76f3-5205-b029-6377d2858446"))
+    (pin "2" (uuid "7100a0e2-4333-544e-abd3-8a5e9c8169bd"))
+    (pin "3" (uuid "dc55b698-466d-5ab0-b06b-04814ec4da86"))
+    (pin "4" (uuid "e2583d45-0d17-5dc7-ae11-4611a776d907"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -4656,22 +4656,22 @@
   (label "GND"
     (at 106.68 254 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "d89e84a0-be49-5d84-80d2-76c0b178c668")
+    (uuid "bc14bf1c-f987-5f42-9581-50e53838c160")
   )
   (label "LED_D10"
     (at 99.06 246.38 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "ea26548f-40b4-5a8e-806d-58359bd67aea")
+    (uuid "a29b3e8a-03e9-5a1d-9b1b-09f0ea494c6f")
   )
   (label "LED_VDD"
     (at 106.68 238.76 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "7c3e4a8d-78c0-525a-8d85-b06c84069533")
+    (uuid "b04e20e2-5240-5756-8e2d-d465626800e8")
   )
   (label "LED_D11"
     (at 114.3 246.38 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "08761461-4df5-5c4b-8030-1bcf903cc980")
+    (uuid "fa70c8a4-e104-5e87-8a5d-eda885b010ea")
   )
   (symbol
     (lib_id "LED:SK6812MINI-E")
@@ -4690,10 +4690,10 @@
     )
     (property "Datasheet" "" (at 144.78 246.38 0) (effects (font (size 1.27 1.27)) (hide yes)))
     (property "Position" "Y" (at 144.78 246.38 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "58537a6a-f408-5064-afea-e577bc4348ef"))
-    (pin "2" (uuid "9ca2506b-0a06-5334-b842-3995a0782c3a"))
-    (pin "3" (uuid "9a941f91-e689-5323-9282-bfa94639b20b"))
-    (pin "4" (uuid "ef9fab15-fc13-5aa5-8b79-64e6260496c6"))
+    (pin "1" (uuid "d89e84a0-be49-5d84-80d2-76c0b178c668"))
+    (pin "2" (uuid "ea26548f-40b4-5a8e-806d-58359bd67aea"))
+    (pin "3" (uuid "7c3e4a8d-78c0-525a-8d85-b06c84069533"))
+    (pin "4" (uuid "08761461-4df5-5c4b-8030-1bcf903cc980"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -4706,22 +4706,22 @@
   (label "GND"
     (at 144.78 254 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "90efccf8-12af-5e85-89a7-b26e0338544b")
+    (uuid "58537a6a-f408-5064-afea-e577bc4348ef")
   )
   (label "LED_D11"
     (at 137.16 246.38 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "4f643aa2-cb26-53ae-a12e-64659ce66cd7")
+    (uuid "9ca2506b-0a06-5334-b842-3995a0782c3a")
   )
   (label "LED_VDD"
     (at 144.78 238.76 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "175682b8-b67d-5f6c-ac40-0231106656f8")
+    (uuid "9a941f91-e689-5323-9282-bfa94639b20b")
   )
   (label "LED_D12"
     (at 152.4 246.38 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "a5f51436-e24e-52d7-92d6-23087ffadf2b")
+    (uuid "ef9fab15-fc13-5aa5-8b79-64e6260496c6")
   )
   (symbol
     (lib_id "LED:SK6812MINI-E")
@@ -4740,10 +4740,10 @@
     )
     (property "Datasheet" "" (at 182.88 246.38 0) (effects (font (size 1.27 1.27)) (hide yes)))
     (property "Position" "'" (at 182.88 246.38 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "a0bb3a4d-924f-5489-9fdd-8e41835211a8"))
-    (pin "2" (uuid "89e0e62b-b8a0-5952-a612-3099ec0719ca"))
-    (pin "3" (uuid "8a7b239f-7d68-5649-b176-224cba26d558"))
-    (pin "4" (uuid "96708e35-12f6-5030-8143-c922fdcf2869"))
+    (pin "1" (uuid "90efccf8-12af-5e85-89a7-b26e0338544b"))
+    (pin "2" (uuid "4f643aa2-cb26-53ae-a12e-64659ce66cd7"))
+    (pin "3" (uuid "175682b8-b67d-5f6c-ac40-0231106656f8"))
+    (pin "4" (uuid "a5f51436-e24e-52d7-92d6-23087ffadf2b"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -4756,22 +4756,22 @@
   (label "GND"
     (at 182.88 254 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "16a2570d-dddf-5c3d-a91d-53cd5ee1b407")
+    (uuid "a0bb3a4d-924f-5489-9fdd-8e41835211a8")
   )
   (label "LED_D12"
     (at 175.26 246.38 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "4db60061-a7ff-51b3-a766-b295a4d502d0")
+    (uuid "89e0e62b-b8a0-5952-a612-3099ec0719ca")
   )
   (label "LED_VDD"
     (at 182.88 238.76 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "bd7e5d43-60e9-5f81-bf1e-67d56337b3a5")
+    (uuid "8a7b239f-7d68-5649-b176-224cba26d558")
   )
   (label "LED_D13"
     (at 190.5 246.38 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "b38743e8-443e-534c-8697-c052ae81cf9c")
+    (uuid "96708e35-12f6-5030-8143-c922fdcf2869")
   )
   (symbol
     (lib_id "LED:SK6812MINI-E")
@@ -4790,10 +4790,10 @@
     )
     (property "Datasheet" "" (at 220.98 246.38 0) (effects (font (size 1.27 1.27)) (hide yes)))
     (property "Position" ";" (at 220.98 246.38 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "f6ca49e2-ca8a-5b97-ac2d-4973be6a50ba"))
-    (pin "2" (uuid "81fae016-1dc7-52fa-8b19-3148790c60e1"))
-    (pin "3" (uuid "419900f2-e1c6-5892-bbb3-288adee21379"))
-    (pin "4" (uuid "88c5a103-3235-5e2b-98ec-b7990402c943"))
+    (pin "1" (uuid "16a2570d-dddf-5c3d-a91d-53cd5ee1b407"))
+    (pin "2" (uuid "4db60061-a7ff-51b3-a766-b295a4d502d0"))
+    (pin "3" (uuid "bd7e5d43-60e9-5f81-bf1e-67d56337b3a5"))
+    (pin "4" (uuid "b38743e8-443e-534c-8697-c052ae81cf9c"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -4806,22 +4806,22 @@
   (label "GND"
     (at 220.98 254 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "abfe9368-a58c-55be-aefd-dff76f34d869")
+    (uuid "f6ca49e2-ca8a-5b97-ac2d-4973be6a50ba")
   )
   (label "LED_D13"
     (at 213.36 246.38 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "b88106f7-1eb9-589a-aded-131885755245")
+    (uuid "81fae016-1dc7-52fa-8b19-3148790c60e1")
   )
   (label "LED_VDD"
     (at 220.98 238.76 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "809facce-1564-5da2-8623-825e8169b14b")
+    (uuid "419900f2-e1c6-5892-bbb3-288adee21379")
   )
   (label "LED_D14"
     (at 228.6 246.38 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "1bc35e3c-685c-5cb3-9da1-61d090d9de74")
+    (uuid "88c5a103-3235-5e2b-98ec-b7990402c943")
   )
   (symbol
     (lib_id "LED:SK6812MINI-E")
@@ -4840,10 +4840,10 @@
     )
     (property "Datasheet" "" (at 259.08 246.38 0) (effects (font (size 1.27 1.27)) (hide yes)))
     (property "Position" "L" (at 259.08 246.38 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "7e7d5657-c649-5996-9ed4-b99b8d23f1d7"))
-    (pin "2" (uuid "e25cc900-35ca-5249-977d-c8cb2139766f"))
-    (pin "3" (uuid "fcc79124-a556-566b-824a-6f91958ae917"))
-    (pin "4" (uuid "612bcbe9-6f32-5ac6-9b73-c26ab0a6d057"))
+    (pin "1" (uuid "abfe9368-a58c-55be-aefd-dff76f34d869"))
+    (pin "2" (uuid "b88106f7-1eb9-589a-aded-131885755245"))
+    (pin "3" (uuid "809facce-1564-5da2-8623-825e8169b14b"))
+    (pin "4" (uuid "1bc35e3c-685c-5cb3-9da1-61d090d9de74"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -4856,22 +4856,22 @@
   (label "GND"
     (at 259.08 254 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "a2c66a05-9ec5-56c4-b878-5371b1862341")
+    (uuid "7e7d5657-c649-5996-9ed4-b99b8d23f1d7")
   )
   (label "LED_D14"
     (at 251.46 246.38 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "374cdfc1-ac3b-5fc0-94f2-8c8c602408d4")
+    (uuid "e25cc900-35ca-5249-977d-c8cb2139766f")
   )
   (label "LED_VDD"
     (at 259.08 238.76 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "b62e0815-4d37-5d7d-bc24-05635f96fb21")
+    (uuid "fcc79124-a556-566b-824a-6f91958ae917")
   )
   (label "LED_D15"
     (at 266.7 246.38 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "a40c4e1c-119a-54ac-8594-8d11187c7e32")
+    (uuid "612bcbe9-6f32-5ac6-9b73-c26ab0a6d057")
   )
   (symbol
     (lib_id "LED:SK6812MINI-E")
@@ -4890,10 +4890,10 @@
     )
     (property "Datasheet" "" (at 297.18 246.38 0) (effects (font (size 1.27 1.27)) (hide yes)))
     (property "Position" "K" (at 297.18 246.38 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "99154c87-3745-5fba-a88f-6fb2c94e974b"))
-    (pin "2" (uuid "39db83ee-42dc-5ba8-801e-0ed44fb78df9"))
-    (pin "3" (uuid "0219e448-1591-5ec4-9e27-ae9234d9d618"))
-    (pin "4" (uuid "6aa67a21-8b36-5d50-8eb7-80e1c5213511"))
+    (pin "1" (uuid "a2c66a05-9ec5-56c4-b878-5371b1862341"))
+    (pin "2" (uuid "374cdfc1-ac3b-5fc0-94f2-8c8c602408d4"))
+    (pin "3" (uuid "b62e0815-4d37-5d7d-bc24-05635f96fb21"))
+    (pin "4" (uuid "a40c4e1c-119a-54ac-8594-8d11187c7e32"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -4906,22 +4906,22 @@
   (label "GND"
     (at 297.18 254 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "2d2c60b9-f56c-56bc-81cf-e57add66d66d")
+    (uuid "99154c87-3745-5fba-a88f-6fb2c94e974b")
   )
   (label "LED_D15"
     (at 289.56 246.38 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "f2d85a54-f458-55e6-9bf2-74a8982738e2")
+    (uuid "39db83ee-42dc-5ba8-801e-0ed44fb78df9")
   )
   (label "LED_VDD"
     (at 297.18 238.76 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "24c741bb-a5de-5612-8208-a3d6c0e9c9ac")
+    (uuid "0219e448-1591-5ec4-9e27-ae9234d9d618")
   )
   (label "LED_D16"
     (at 304.8 246.38 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "f0fadacd-ff19-58ce-884d-89ad277f971a")
+    (uuid "6aa67a21-8b36-5d50-8eb7-80e1c5213511")
   )
   (symbol
     (lib_id "LED:SK6812MINI-E")
@@ -4940,10 +4940,10 @@
     )
     (property "Datasheet" "" (at 30.48 276.86 0) (effects (font (size 1.27 1.27)) (hide yes)))
     (property "Position" "J" (at 30.48 276.86 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "42eacdfa-a363-569d-8748-e64d54937aa2"))
-    (pin "2" (uuid "a7249012-c480-5010-9486-45d75bedfa34"))
-    (pin "3" (uuid "21309255-7c6e-58a6-8940-37e688089891"))
-    (pin "4" (uuid "a8d691a5-5ce9-5764-bd4e-4b8764f41e1b"))
+    (pin "1" (uuid "2d2c60b9-f56c-56bc-81cf-e57add66d66d"))
+    (pin "2" (uuid "f2d85a54-f458-55e6-9bf2-74a8982738e2"))
+    (pin "3" (uuid "24c741bb-a5de-5612-8208-a3d6c0e9c9ac"))
+    (pin "4" (uuid "f0fadacd-ff19-58ce-884d-89ad277f971a"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -4956,22 +4956,22 @@
   (label "GND"
     (at 30.48 284.48 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "57d00ef4-1eb1-5abb-aa6d-123df609c61f")
+    (uuid "42eacdfa-a363-569d-8748-e64d54937aa2")
   )
   (label "LED_D16"
     (at 22.86 276.86 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "18e45fc9-d8ac-528d-bc39-1a2aebffca60")
+    (uuid "a7249012-c480-5010-9486-45d75bedfa34")
   )
   (label "LED_VDD"
     (at 30.48 269.24 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "928bf32f-8d63-5ae2-9689-aa0d67f8532f")
+    (uuid "21309255-7c6e-58a6-8940-37e688089891")
   )
   (label "LED_D17"
     (at 38.1 276.86 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "59276bd6-9b19-5601-91ab-8666a34e0fef")
+    (uuid "a8d691a5-5ce9-5764-bd4e-4b8764f41e1b")
   )
   (symbol
     (lib_id "LED:SK6812MINI-E")
@@ -4990,10 +4990,10 @@
     )
     (property "Datasheet" "" (at 68.58 276.86 0) (effects (font (size 1.27 1.27)) (hide yes)))
     (property "Position" "H" (at 68.58 276.86 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "1e053374-8938-506d-93c3-b1f0a083710b"))
-    (pin "2" (uuid "15582df8-16f3-5a2e-90f2-41f8e2933a4a"))
-    (pin "3" (uuid "f963791c-d4e5-510d-bb50-b185c458bb11"))
-    (pin "4" (uuid "4175e362-8a60-5559-9ce5-886f43d45bbb"))
+    (pin "1" (uuid "57d00ef4-1eb1-5abb-aa6d-123df609c61f"))
+    (pin "2" (uuid "18e45fc9-d8ac-528d-bc39-1a2aebffca60"))
+    (pin "3" (uuid "928bf32f-8d63-5ae2-9689-aa0d67f8532f"))
+    (pin "4" (uuid "59276bd6-9b19-5601-91ab-8666a34e0fef"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -5006,22 +5006,22 @@
   (label "GND"
     (at 68.58 284.48 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "c9d7694c-4120-543e-8217-36f74446160d")
+    (uuid "1e053374-8938-506d-93c3-b1f0a083710b")
   )
   (label "LED_D17"
     (at 60.96 276.86 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "25335a73-d923-5bfa-baf6-2d5e17ad956b")
+    (uuid "15582df8-16f3-5a2e-90f2-41f8e2933a4a")
   )
   (label "LED_VDD"
     (at 68.58 269.24 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "f0733335-d0d9-5c40-ac71-d0bb78c44d82")
+    (uuid "f963791c-d4e5-510d-bb50-b185c458bb11")
   )
   (label "LED_D18"
     (at 76.2 276.86 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "78897ce1-3dbd-5397-b85d-060a77e380de")
+    (uuid "4175e362-8a60-5559-9ce5-886f43d45bbb")
   )
   (symbol
     (lib_id "LED:SK6812MINI-E")
@@ -5040,10 +5040,10 @@
     )
     (property "Datasheet" "" (at 106.68 276.86 0) (effects (font (size 1.27 1.27)) (hide yes)))
     (property "Position" "Alt" (at 106.68 276.86 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "37e10af2-9a60-5640-89cc-746a9b3b6c84"))
-    (pin "2" (uuid "2ffda904-bb95-53f8-b7ac-ab7223b87f14"))
-    (pin "3" (uuid "6c807b06-b75b-5268-b4a4-03440ea74884"))
-    (pin "4" (uuid "1d0bc270-a53e-5fc2-8355-7df8307da069"))
+    (pin "1" (uuid "c9d7694c-4120-543e-8217-36f74446160d"))
+    (pin "2" (uuid "25335a73-d923-5bfa-baf6-2d5e17ad956b"))
+    (pin "3" (uuid "f0733335-d0d9-5c40-ac71-d0bb78c44d82"))
+    (pin "4" (uuid "78897ce1-3dbd-5397-b85d-060a77e380de"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -5056,22 +5056,22 @@
   (label "GND"
     (at 106.68 284.48 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "d93e4d26-65ae-5c34-b897-cdb67d7daffa")
+    (uuid "37e10af2-9a60-5640-89cc-746a9b3b6c84")
   )
   (label "LED_D18"
     (at 99.06 276.86 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "2d392a80-95f2-553f-b300-9d505659f520")
+    (uuid "2ffda904-bb95-53f8-b7ac-ab7223b87f14")
   )
   (label "LED_VDD"
     (at 106.68 269.24 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "10d016b9-939e-596d-bf3b-355a02b077d8")
+    (uuid "6c807b06-b75b-5268-b4a4-03440ea74884")
   )
   (label "LED_D19"
     (at 114.3 276.86 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "53b7991f-6154-588e-9ec8-4a0197e7f739")
+    (uuid "1d0bc270-a53e-5fc2-8355-7df8307da069")
   )
   (symbol
     (lib_id "LED:SK6812MINI-E")
@@ -5090,10 +5090,10 @@
     )
     (property "Datasheet" "" (at 144.78 276.86 0) (effects (font (size 1.27 1.27)) (hide yes)))
     (property "Position" "Shift" (at 144.78 276.86 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "7d8a7d12-15d9-5d11-a83a-e8b5a1765e78"))
-    (pin "2" (uuid "4304bc28-4669-5afb-8555-715ad6190865"))
-    (pin "3" (uuid "4b1594e0-f68a-5c82-ba3c-2c66411290e2"))
-    (pin "4" (uuid "f6967d9b-530b-5b87-8691-496bab282a35"))
+    (pin "1" (uuid "d93e4d26-65ae-5c34-b897-cdb67d7daffa"))
+    (pin "2" (uuid "2d392a80-95f2-553f-b300-9d505659f520"))
+    (pin "3" (uuid "10d016b9-939e-596d-bf3b-355a02b077d8"))
+    (pin "4" (uuid "53b7991f-6154-588e-9ec8-4a0197e7f739"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -5106,22 +5106,22 @@
   (label "GND"
     (at 144.78 284.48 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "5ccd1654-8112-5cce-97ba-79efcc2f8a38")
+    (uuid "7d8a7d12-15d9-5d11-a83a-e8b5a1765e78")
   )
   (label "LED_D19"
     (at 137.16 276.86 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "6fce6466-95ed-5d32-b528-7bd5661b458a")
+    (uuid "4304bc28-4669-5afb-8555-715ad6190865")
   )
   (label "LED_VDD"
     (at 144.78 269.24 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "a15512d2-6b7a-5dea-978c-6ee7c38402cb")
+    (uuid "4b1594e0-f68a-5c82-ba3c-2c66411290e2")
   )
   (label "LED_D20"
     (at 152.4 276.86 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "ff9b5157-0e9b-5683-a9fe-640efed12847")
+    (uuid "f6967d9b-530b-5b87-8691-496bab282a35")
   )
   (symbol
     (lib_id "LED:SK6812MINI-E")
@@ -5140,10 +5140,10 @@
     )
     (property "Datasheet" "" (at 182.88 276.86 0) (effects (font (size 1.27 1.27)) (hide yes)))
     (property "Position" "/" (at 182.88 276.86 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "6ed4082d-e47b-55f0-8d3e-d7f115eb4ee2"))
-    (pin "2" (uuid "693180ca-e049-506c-942e-b0af59d8ae29"))
-    (pin "3" (uuid "cfb01a82-42d2-58e0-9c8c-cd4cdb7fcb2c"))
-    (pin "4" (uuid "dce07d9e-d9b0-591a-8461-af97d4fc2ab3"))
+    (pin "1" (uuid "5ccd1654-8112-5cce-97ba-79efcc2f8a38"))
+    (pin "2" (uuid "6fce6466-95ed-5d32-b528-7bd5661b458a"))
+    (pin "3" (uuid "a15512d2-6b7a-5dea-978c-6ee7c38402cb"))
+    (pin "4" (uuid "ff9b5157-0e9b-5683-a9fe-640efed12847"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -5156,22 +5156,22 @@
   (label "GND"
     (at 182.88 284.48 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "7b1588e7-2d76-570c-a43c-a47c2870d022")
+    (uuid "6ed4082d-e47b-55f0-8d3e-d7f115eb4ee2")
   )
   (label "LED_D20"
     (at 175.26 276.86 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "38c4e937-934c-5f18-a43b-afc7d3ed016b")
+    (uuid "693180ca-e049-506c-942e-b0af59d8ae29")
   )
   (label "LED_VDD"
     (at 182.88 269.24 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "ac12675a-ec61-575d-a997-04fa1cb05372")
+    (uuid "cfb01a82-42d2-58e0-9c8c-cd4cdb7fcb2c")
   )
   (label "LED_D21"
     (at 190.5 276.86 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "16846fda-7a74-5f9f-93f7-4d53e210a574")
+    (uuid "dce07d9e-d9b0-591a-8461-af97d4fc2ab3")
   )
   (symbol
     (lib_id "LED:SK6812MINI-E")
@@ -5190,10 +5190,10 @@
     )
     (property "Datasheet" "" (at 220.98 276.86 0) (effects (font (size 1.27 1.27)) (hide yes)))
     (property "Position" "." (at 220.98 276.86 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "1daee7cd-9088-5457-95c1-aae6aade7e71"))
-    (pin "2" (uuid "c15ffc27-69f4-5e0c-9acf-4532cb82e832"))
-    (pin "3" (uuid "e61f188c-4366-5f63-97e4-4967bac21ecf"))
-    (pin "4" (uuid "48bd100f-be5e-556b-8edd-180d65504c66"))
+    (pin "1" (uuid "7b1588e7-2d76-570c-a43c-a47c2870d022"))
+    (pin "2" (uuid "38c4e937-934c-5f18-a43b-afc7d3ed016b"))
+    (pin "3" (uuid "ac12675a-ec61-575d-a997-04fa1cb05372"))
+    (pin "4" (uuid "16846fda-7a74-5f9f-93f7-4d53e210a574"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -5206,22 +5206,22 @@
   (label "GND"
     (at 220.98 284.48 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "2a2084b7-e293-54c9-898e-22ed7e1f859f")
+    (uuid "1daee7cd-9088-5457-95c1-aae6aade7e71")
   )
   (label "LED_D21"
     (at 213.36 276.86 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "f5de8fe1-efe3-5d36-82bc-8b3cdd241c03")
+    (uuid "c15ffc27-69f4-5e0c-9acf-4532cb82e832")
   )
   (label "LED_VDD"
     (at 220.98 269.24 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "8291bc3e-064b-5a0c-8196-943e873b392a")
+    (uuid "e61f188c-4366-5f63-97e4-4967bac21ecf")
   )
   (label "LED_D22"
     (at 228.6 276.86 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "be696502-38a6-5c64-9abd-b9bea112ce32")
+    (uuid "48bd100f-be5e-556b-8edd-180d65504c66")
   )
   (symbol
     (lib_id "LED:SK6812MINI-E")
@@ -5240,10 +5240,10 @@
     )
     (property "Datasheet" "" (at 259.08 276.86 0) (effects (font (size 1.27 1.27)) (hide yes)))
     (property "Position" "," (at 259.08 276.86 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "960c1e35-9023-5b2b-acc5-28278c7b7443"))
-    (pin "2" (uuid "98508ec1-4493-541d-822b-24cade971933"))
-    (pin "3" (uuid "219b7268-24ef-502e-9d6e-fbd1c2976d6b"))
-    (pin "4" (uuid "0e70cfb8-3695-501a-b237-71e25aa9226c"))
+    (pin "1" (uuid "2a2084b7-e293-54c9-898e-22ed7e1f859f"))
+    (pin "2" (uuid "f5de8fe1-efe3-5d36-82bc-8b3cdd241c03"))
+    (pin "3" (uuid "8291bc3e-064b-5a0c-8196-943e873b392a"))
+    (pin "4" (uuid "be696502-38a6-5c64-9abd-b9bea112ce32"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -5256,22 +5256,22 @@
   (label "GND"
     (at 259.08 284.48 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "c4031e8a-9a92-5de5-82c1-b9186b8a2646")
+    (uuid "960c1e35-9023-5b2b-acc5-28278c7b7443")
   )
   (label "LED_D22"
     (at 251.46 276.86 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "6d843a11-eb18-5b28-b843-421e38aa346a")
+    (uuid "98508ec1-4493-541d-822b-24cade971933")
   )
   (label "LED_VDD"
     (at 259.08 269.24 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "a8e3627c-6a22-5259-bcb8-52acafebfb56")
+    (uuid "219b7268-24ef-502e-9d6e-fbd1c2976d6b")
   )
   (label "LED_D23"
     (at 266.7 276.86 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "b689585e-2d97-54c2-9315-a3f9a4ebd004")
+    (uuid "0e70cfb8-3695-501a-b237-71e25aa9226c")
   )
   (symbol
     (lib_id "LED:SK6812MINI-E")
@@ -5290,10 +5290,10 @@
     )
     (property "Datasheet" "" (at 297.18 276.86 0) (effects (font (size 1.27 1.27)) (hide yes)))
     (property "Position" "M" (at 297.18 276.86 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "9a036b88-99bd-5899-80e0-46ccd349d489"))
-    (pin "2" (uuid "dde8422a-efd2-5f31-b934-b650d667d3d6"))
-    (pin "3" (uuid "9534e5df-2798-5611-aff9-3eabb1e3c903"))
-    (pin "4" (uuid "48a87c2f-deaf-5543-894f-b71d25c82f02"))
+    (pin "1" (uuid "c4031e8a-9a92-5de5-82c1-b9186b8a2646"))
+    (pin "2" (uuid "6d843a11-eb18-5b28-b843-421e38aa346a"))
+    (pin "3" (uuid "a8e3627c-6a22-5259-bcb8-52acafebfb56"))
+    (pin "4" (uuid "b689585e-2d97-54c2-9315-a3f9a4ebd004"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -5306,22 +5306,22 @@
   (label "GND"
     (at 297.18 284.48 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "e9349301-df26-575b-88fd-92dae8ab0474")
+    (uuid "9a036b88-99bd-5899-80e0-46ccd349d489")
   )
   (label "LED_D23"
     (at 289.56 276.86 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "542f5e0f-09ee-5359-bb96-6c273e393bf1")
+    (uuid "dde8422a-efd2-5f31-b934-b650d667d3d6")
   )
   (label "LED_VDD"
     (at 297.18 269.24 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "d4d5067d-19ff-5e58-9dba-4b708a0432a7")
+    (uuid "9534e5df-2798-5611-aff9-3eabb1e3c903")
   )
   (label "LED_D24"
     (at 304.8 276.86 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "2f116e69-b603-5b51-8cd9-7b21fcb5db91")
+    (uuid "48a87c2f-deaf-5543-894f-b71d25c82f02")
   )
   (symbol
     (lib_id "LED:SK6812MINI-E")
@@ -5340,10 +5340,10 @@
     )
     (property "Datasheet" "" (at 30.48 307.34 0) (effects (font (size 1.27 1.27)) (hide yes)))
     (property "Position" "N" (at 30.48 307.34 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "c83c29fd-0650-576a-8488-a7e7c8998908"))
-    (pin "2" (uuid "ee9e11ab-7854-5dee-9322-6432120b7f1a"))
-    (pin "3" (uuid "8f8c7ba8-2c6c-5569-8422-d381508a3daa"))
-    (pin "4" (uuid "f5fa5f5c-9a40-507e-bc68-8eb2f9471d85"))
+    (pin "1" (uuid "e9349301-df26-575b-88fd-92dae8ab0474"))
+    (pin "2" (uuid "542f5e0f-09ee-5359-bb96-6c273e393bf1"))
+    (pin "3" (uuid "d4d5067d-19ff-5e58-9dba-4b708a0432a7"))
+    (pin "4" (uuid "2f116e69-b603-5b51-8cd9-7b21fcb5db91"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -5356,22 +5356,22 @@
   (label "GND"
     (at 30.48 314.96 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "355f6674-1704-5dc7-8e5c-93cbeefada68")
+    (uuid "c83c29fd-0650-576a-8488-a7e7c8998908")
   )
   (label "LED_D24"
     (at 22.86 307.34 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "88d323a3-715f-504b-a865-1f50cca521bf")
+    (uuid "ee9e11ab-7854-5dee-9322-6432120b7f1a")
   )
   (label "LED_VDD"
     (at 30.48 299.72 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "54c20705-adb5-52e3-adfe-e7ab67ec03c0")
+    (uuid "8f8c7ba8-2c6c-5569-8422-d381508a3daa")
   )
   (label "LED_D25"
     (at 38.1 307.34 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "5f62bff7-0b59-5936-8391-d135b6f839c8")
+    (uuid "f5fa5f5c-9a40-507e-bc68-8eb2f9471d85")
   )
   (symbol
     (lib_id "LED:SK6812MINI-E")
@@ -5390,10 +5390,10 @@
     )
     (property "Datasheet" "" (at 68.58 307.34 0) (effects (font (size 1.27 1.27)) (hide yes)))
     (property "Position" "Ctrl" (at 68.58 307.34 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "70af0179-32c0-59bd-8b32-cb6c133cf01b"))
-    (pin "2" (uuid "583cbc47-7d19-5374-8bd3-116fc18f4a8a"))
-    (pin "3" (uuid "f26f6c4f-7e5b-5304-9110-2d790e712246"))
-    (pin "4" (uuid "be4f3322-7c02-57df-bde2-2792c73452bc"))
+    (pin "1" (uuid "355f6674-1704-5dc7-8e5c-93cbeefada68"))
+    (pin "2" (uuid "88d323a3-715f-504b-a865-1f50cca521bf"))
+    (pin "3" (uuid "54c20705-adb5-52e3-adfe-e7ab67ec03c0"))
+    (pin "4" (uuid "5f62bff7-0b59-5936-8391-d135b6f839c8"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -5406,22 +5406,22 @@
   (label "GND"
     (at 68.58 314.96 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "7c87e674-c294-530e-bfb3-bb2330e34325")
+    (uuid "70af0179-32c0-59bd-8b32-cb6c133cf01b")
   )
   (label "LED_D25"
     (at 60.96 307.34 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "604c6363-6c40-554f-bfc8-03e6262f571b")
+    (uuid "583cbc47-7d19-5374-8bd3-116fc18f4a8a")
   )
   (label "LED_VDD"
     (at 68.58 299.72 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "a5e8a279-779a-57e3-9155-e1b91c52d1b6")
+    (uuid "f26f6c4f-7e5b-5304-9110-2d790e712246")
   )
   (label "LED_D26"
     (at 76.2 307.34 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "9055e7e8-863e-5d98-8b6d-914409037e06")
+    (uuid "be4f3322-7c02-57df-bde2-2792c73452bc")
   )
   (symbol
     (lib_id "LED:SK6812MINI-E")
@@ -5440,10 +5440,10 @@
     )
     (property "Datasheet" "" (at 106.68 307.34 0) (effects (font (size 1.27 1.27)) (hide yes)))
     (property "Position" "]" (at 106.68 307.34 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "fc335161-c593-509f-9ee0-e0a3946f17c0"))
-    (pin "2" (uuid "a666be13-b413-52fa-9c3d-71085311660f"))
-    (pin "3" (uuid "fb86b4fb-f726-5513-a3fd-2b78eefb3122"))
-    (pin "4" (uuid "09fa184e-7301-5bb4-bbfa-27e03e42c516"))
+    (pin "1" (uuid "7c87e674-c294-530e-bfb3-bb2330e34325"))
+    (pin "2" (uuid "604c6363-6c40-554f-bfc8-03e6262f571b"))
+    (pin "3" (uuid "a5e8a279-779a-57e3-9155-e1b91c52d1b6"))
+    (pin "4" (uuid "9055e7e8-863e-5d98-8b6d-914409037e06"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -5456,22 +5456,22 @@
   (label "GND"
     (at 106.68 314.96 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "60ab0c43-c40c-5a4a-8178-3452b4cae27d")
+    (uuid "fc335161-c593-509f-9ee0-e0a3946f17c0")
   )
   (label "LED_D26"
     (at 99.06 307.34 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "77339cc5-acb3-5aa5-980e-eea5538d96b1")
+    (uuid "a666be13-b413-52fa-9c3d-71085311660f")
   )
   (label "LED_VDD"
     (at 106.68 299.72 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "d2b0c599-62df-507d-9b68-efa4ce257058")
+    (uuid "fb86b4fb-f726-5513-a3fd-2b78eefb3122")
   )
   (label "LED_D27"
     (at 114.3 307.34 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "2183c0d3-60e4-57fd-ad40-4188b95d66cf")
+    (uuid "09fa184e-7301-5bb4-bbfa-27e03e42c516")
   )
   (symbol
     (lib_id "LED:SK6812MINI-E")
@@ -5490,10 +5490,10 @@
     )
     (property "Datasheet" "" (at 144.78 307.34 0) (effects (font (size 1.27 1.27)) (hide yes)))
     (property "Position" "[" (at 144.78 307.34 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "b90356ab-dc9b-5118-8939-6de6451a1b2a"))
-    (pin "2" (uuid "b1841c7a-5d40-5444-802f-70df91ba628d"))
-    (pin "3" (uuid "84773492-bf39-5c64-a9c3-b6bb33c699e4"))
-    (pin "4" (uuid "dee1582e-4ec9-52ff-a50e-4f9f329b8740"))
+    (pin "1" (uuid "60ab0c43-c40c-5a4a-8178-3452b4cae27d"))
+    (pin "2" (uuid "77339cc5-acb3-5aa5-980e-eea5538d96b1"))
+    (pin "3" (uuid "d2b0c599-62df-507d-9b68-efa4ce257058"))
+    (pin "4" (uuid "2183c0d3-60e4-57fd-ad40-4188b95d66cf"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -5506,22 +5506,22 @@
   (label "GND"
     (at 144.78 314.96 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "b90fa079-f319-5b28-8d58-f0cef699b684")
+    (uuid "b90356ab-dc9b-5118-8939-6de6451a1b2a")
   )
   (label "LED_D27"
     (at 137.16 307.34 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "08e548c1-efe7-5fc5-baba-9ddc9c71e2f0")
+    (uuid "b1841c7a-5d40-5444-802f-70df91ba628d")
   )
   (label "LED_VDD"
     (at 144.78 299.72 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "bcb332b1-c6fb-5043-b63e-283bc0bec491")
+    (uuid "84773492-bf39-5c64-a9c3-b6bb33c699e4")
   )
   (label "LED_D28"
     (at 152.4 307.34 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "3bf322d4-2866-50b9-983d-7eea72a5a539")
+    (uuid "dee1582e-4ec9-52ff-a50e-4f9f329b8740")
   )
   (symbol
     (lib_id "LED:SK6812MINI-E")
@@ -5540,10 +5540,10 @@
     )
     (property "Datasheet" "" (at 182.88 307.34 0) (effects (font (size 1.27 1.27)) (hide yes)))
     (property "Position" "Down" (at 182.88 307.34 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "730250c9-da3f-5cbe-b699-0966ea74458e"))
-    (pin "2" (uuid "bcae0b81-8999-580b-a4cf-5780d17b7a98"))
-    (pin "3" (uuid "fad50207-b04e-5284-b455-0075fbff882d"))
-    (pin "4" (uuid "fe11aca1-56a5-5b36-a0e2-8a7bdfa7b5ac"))
+    (pin "1" (uuid "b90fa079-f319-5b28-8d58-f0cef699b684"))
+    (pin "2" (uuid "08e548c1-efe7-5fc5-baba-9ddc9c71e2f0"))
+    (pin "3" (uuid "bcb332b1-c6fb-5043-b63e-283bc0bec491"))
+    (pin "4" (uuid "3bf322d4-2866-50b9-983d-7eea72a5a539"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -5556,22 +5556,22 @@
   (label "GND"
     (at 182.88 314.96 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "df18d3c6-ff11-5591-84f5-7d4b016f838d")
+    (uuid "730250c9-da3f-5cbe-b699-0966ea74458e")
   )
   (label "LED_D28"
     (at 175.26 307.34 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "4fbd96a6-9051-5a46-9dcd-382d3ce21c9f")
+    (uuid "bcae0b81-8999-580b-a4cf-5780d17b7a98")
   )
   (label "LED_VDD"
     (at 182.88 299.72 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "6766b124-80ef-5f1f-bb57-0acfb1e71a41")
+    (uuid "fad50207-b04e-5284-b455-0075fbff882d")
   )
   (label "LED_D29"
     (at 190.5 307.34 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "75692e02-aa35-57d3-b119-e36655f7de57")
+    (uuid "fe11aca1-56a5-5b36-a0e2-8a7bdfa7b5ac")
   )
   (symbol
     (lib_id "LED:SK6812MINI-E")
@@ -5590,10 +5590,10 @@
     )
     (property "Datasheet" "" (at 220.98 307.34 0) (effects (font (size 1.27 1.27)) (hide yes)))
     (property "Position" "Up" (at 220.98 307.34 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "e10d1889-f441-5deb-a3c9-1eeab9cd0120"))
-    (pin "2" (uuid "4bc02100-3afa-500b-b246-9ce5c70c0b58"))
-    (pin "3" (uuid "0e287f25-3fe5-5a5c-9b08-0352d6e977e4"))
-    (pin "4" (uuid "668e2ab7-f682-5c6c-9251-b2fb801c1785"))
+    (pin "1" (uuid "df18d3c6-ff11-5591-84f5-7d4b016f838d"))
+    (pin "2" (uuid "4fbd96a6-9051-5a46-9dcd-382d3ce21c9f"))
+    (pin "3" (uuid "6766b124-80ef-5f1f-bb57-0acfb1e71a41"))
+    (pin "4" (uuid "75692e02-aa35-57d3-b119-e36655f7de57"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -5606,22 +5606,22 @@
   (label "GND"
     (at 220.98 314.96 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "78def036-6761-536a-beb0-94e5c81acbf7")
+    (uuid "e10d1889-f441-5deb-a3c9-1eeab9cd0120")
   )
   (label "LED_D29"
     (at 213.36 307.34 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "c65d8354-0854-507b-b64e-1a9cc1687134")
+    (uuid "4bc02100-3afa-500b-b246-9ce5c70c0b58")
   )
   (label "LED_VDD"
     (at 220.98 299.72 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "f4bf8e61-6b20-5f53-84da-cb7cfdb17fca")
+    (uuid "0e287f25-3fe5-5a5c-9b08-0352d6e977e4")
   )
   (label "LED_D30"
     (at 228.6 307.34 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "ce4768d2-379d-5433-b6e4-4bb1fc41374c")
+    (uuid "668e2ab7-f682-5c6c-9251-b2fb801c1785")
   )
   (symbol
     (lib_id "LED:SK6812MINI-E")
@@ -5640,10 +5640,10 @@
     )
     (property "Datasheet" "" (at 259.08 307.34 0) (effects (font (size 1.27 1.27)) (hide yes)))
     (property "Position" "Fn" (at 259.08 307.34 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "98e79606-3716-5d82-a386-1a84f9b0397d"))
-    (pin "2" (uuid "23bd0905-5b4b-5777-9b08-79ceb7ca78ff"))
-    (pin "3" (uuid "3566c8c6-4c4b-5e32-a7d3-9289511b3777"))
-    (pin "4" (uuid "9e1e5d9b-d5d4-5a35-8aee-3b87741e0a85"))
+    (pin "1" (uuid "78def036-6761-536a-beb0-94e5c81acbf7"))
+    (pin "2" (uuid "c65d8354-0854-507b-b64e-1a9cc1687134"))
+    (pin "3" (uuid "f4bf8e61-6b20-5f53-84da-cb7cfdb17fca"))
+    (pin "4" (uuid "ce4768d2-379d-5433-b6e4-4bb1fc41374c"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -5656,22 +5656,22 @@
   (label "GND"
     (at 259.08 314.96 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "fb777395-4396-59ba-99d5-f7d7650dd645")
+    (uuid "98e79606-3716-5d82-a386-1a84f9b0397d")
   )
   (label "LED_D30"
     (at 251.46 307.34 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "6fd815fe-c0ec-5bd4-a351-e90c100e7667")
+    (uuid "23bd0905-5b4b-5777-9b08-79ceb7ca78ff")
   )
   (label "LED_VDD"
     (at 259.08 299.72 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "6ed7e8e8-a73a-5444-abc0-6c011957195f")
+    (uuid "3566c8c6-4c4b-5e32-a7d3-9289511b3777")
   )
   (label "LED_D31"
     (at 266.7 307.34 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "3d35442a-624e-52ab-b30d-65f22904fe6b")
+    (uuid "9e1e5d9b-d5d4-5a35-8aee-3b87741e0a85")
   )
   (symbol
     (lib_id "LED:SK6812MINI-E")
@@ -5690,10 +5690,10 @@
     )
     (property "Datasheet" "" (at 297.18 307.34 0) (effects (font (size 1.27 1.27)) (hide yes)))
     (property "Position" "Space" (at 297.18 307.34 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "b1474e86-2b2a-52aa-ab2a-063ad3c4d7d8"))
-    (pin "2" (uuid "3143bff3-15b7-5bd7-a291-54634afa4bf7"))
-    (pin "3" (uuid "1775c910-5069-5193-8d1d-9686befedd10"))
-    (pin "4" (uuid "0fce5c90-9be1-5b2b-b0aa-2a78e7d05a24"))
+    (pin "1" (uuid "fb777395-4396-59ba-99d5-f7d7650dd645"))
+    (pin "2" (uuid "6fd815fe-c0ec-5bd4-a351-e90c100e7667"))
+    (pin "3" (uuid "6ed7e8e8-a73a-5444-abc0-6c011957195f"))
+    (pin "4" (uuid "3d35442a-624e-52ab-b30d-65f22904fe6b"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -5706,22 +5706,22 @@
   (label "GND"
     (at 297.18 314.96 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "bfd68517-c245-571d-8a9c-fb628f682c98")
+    (uuid "b1474e86-2b2a-52aa-ab2a-063ad3c4d7d8")
   )
   (label "LED_D31"
     (at 289.56 307.34 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "07c14651-3edf-56c2-aa58-e51369b62a12")
+    (uuid "3143bff3-15b7-5bd7-a291-54634afa4bf7")
   )
   (label "LED_VDD"
     (at 297.18 299.72 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "3083272d-679c-52d9-affc-ebc2f3ba8732")
+    (uuid "1775c910-5069-5193-8d1d-9686befedd10")
   )
   (label "LED_D32"
     (at 304.8 307.34 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "75f002a1-2e73-5f4f-9b77-b46f532f246e")
+    (uuid "0fce5c90-9be1-5b2b-b0aa-2a78e7d05a24")
   )
   (symbol
     (lib_id "LED:SK6812MINI-E")
@@ -5740,10 +5740,10 @@
     )
     (property "Datasheet" "" (at 30.48 337.82 0) (effects (font (size 1.27 1.27)) (hide yes)))
     (property "Position" "Enter" (at 30.48 337.82 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "4962473f-9c17-5cfd-a5d7-e2de94080eb9"))
-    (pin "2" (uuid "f21f7393-83c9-53f2-a94b-6983c467f70e"))
-    (pin "3" (uuid "d047de6d-53b1-5de3-a1d1-6521de189eb8"))
-    (pin "4" (uuid "5c884603-1b7f-528b-bbae-bb7b9831e4a9"))
+    (pin "1" (uuid "bfd68517-c245-571d-8a9c-fb628f682c98"))
+    (pin "2" (uuid "07c14651-3edf-56c2-aa58-e51369b62a12"))
+    (pin "3" (uuid "3083272d-679c-52d9-affc-ebc2f3ba8732"))
+    (pin "4" (uuid "75f002a1-2e73-5f4f-9b77-b46f532f246e"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -5756,24 +5756,24 @@
   (label "GND"
     (at 30.48 345.44 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "13cbb499-8a96-579a-8ccb-516ea49e53bc")
+    (uuid "4962473f-9c17-5cfd-a5d7-e2de94080eb9")
   )
   (label "LED_D32"
     (at 22.86 337.82 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "475c5989-2e1e-5b6b-88e2-a5b4ad22ce7d")
+    (uuid "f21f7393-83c9-53f2-a94b-6983c467f70e")
   )
   (label "LED_VDD"
     (at 30.48 330.2 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "e15c771b-1b09-581a-8998-c1524f04e7a1")
+    (uuid "d047de6d-53b1-5de3-a1d1-6521de189eb8")
   )
-  (no_connect (at 38.1 337.82) (uuid "3eff2790-486c-53be-8efa-381a5d0b8908"))
+  (no_connect (at 38.1 337.82) (uuid "5c884603-1b7f-528b-bbae-bb7b9831e4a9"))
   (text "CONTROLLER  (mounted on the PCB underside, USB-C to the top edge)"
     (exclude_from_sim no)
     (at 335.28 30.48 0)
     (effects (font (size 2 2)) (justify left top))
-    (uuid "634a2607-9a68-5949-9c47-7418c09e9022")
+    (uuid "13cbb499-8a96-579a-8ccb-516ea49e53bc")
   )
   (symbol
     (lib_id "keygen:nice_nano_v2")
@@ -5791,30 +5791,30 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 360.68 60.96 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "329e2acd-1c93-5d94-99fc-253f65a584cc"))
-    (pin "2" (uuid "b2b63663-5a5d-5987-b4e9-6da937c61325"))
-    (pin "3" (uuid "8ed2c3ff-162d-5ce6-8143-524addaf3f3a"))
-    (pin "4" (uuid "031dccd5-00c5-5a18-a82b-1dcdf05a6901"))
-    (pin "5" (uuid "232d5898-55bb-5332-9f01-45963a152956"))
-    (pin "6" (uuid "6d37af97-63e7-5a9b-872c-4a953c4586b6"))
-    (pin "7" (uuid "6d107deb-ba9a-5990-ae70-d611400d677c"))
-    (pin "8" (uuid "5077e16a-2d86-5d76-b78c-e058e19414bd"))
-    (pin "9" (uuid "44befcad-2914-5e17-8079-d082dfe0010a"))
-    (pin "10" (uuid "f1fa2bcf-db46-5114-a25e-0f524fc1ece6"))
-    (pin "11" (uuid "50835822-f21b-5949-85a4-65e5fe0eb55c"))
-    (pin "12" (uuid "e348516c-2617-5b7f-b5fb-6e79e0d607cb"))
-    (pin "13" (uuid "94bffe70-afed-567f-bb61-8c2013125195"))
-    (pin "14" (uuid "0d854368-2065-54d3-83af-9a7e4b8318f3"))
-    (pin "15" (uuid "92c55df8-7ae4-5421-ad4b-fc1991098583"))
-    (pin "16" (uuid "e1014f2f-e97c-577f-b835-003da88a5a3a"))
-    (pin "17" (uuid "f9d0f507-ef01-53ec-b7bf-5de2d94fcf4a"))
-    (pin "18" (uuid "61abface-bed7-5965-82be-56d158fc7342"))
-    (pin "19" (uuid "17bf9293-45b1-51e1-a4a4-67558df01254"))
-    (pin "20" (uuid "328ed360-e5e6-5749-a88c-b0c61200c313"))
-    (pin "21" (uuid "e9860cfd-7476-5790-9153-551d56186700"))
-    (pin "22" (uuid "17075078-d991-586a-bfa0-68f743019a87"))
-    (pin "23" (uuid "7e739948-68e4-5863-bdc7-503c3de8427a"))
-    (pin "24" (uuid "1f05ce1e-3e72-5ac4-a244-f952b52643db"))
+    (pin "1" (uuid "475c5989-2e1e-5b6b-88e2-a5b4ad22ce7d"))
+    (pin "2" (uuid "e15c771b-1b09-581a-8998-c1524f04e7a1"))
+    (pin "3" (uuid "3eff2790-486c-53be-8efa-381a5d0b8908"))
+    (pin "4" (uuid "634a2607-9a68-5949-9c47-7418c09e9022"))
+    (pin "5" (uuid "329e2acd-1c93-5d94-99fc-253f65a584cc"))
+    (pin "6" (uuid "b2b63663-5a5d-5987-b4e9-6da937c61325"))
+    (pin "7" (uuid "8ed2c3ff-162d-5ce6-8143-524addaf3f3a"))
+    (pin "8" (uuid "031dccd5-00c5-5a18-a82b-1dcdf05a6901"))
+    (pin "9" (uuid "232d5898-55bb-5332-9f01-45963a152956"))
+    (pin "10" (uuid "6d37af97-63e7-5a9b-872c-4a953c4586b6"))
+    (pin "11" (uuid "6d107deb-ba9a-5990-ae70-d611400d677c"))
+    (pin "12" (uuid "5077e16a-2d86-5d76-b78c-e058e19414bd"))
+    (pin "13" (uuid "44befcad-2914-5e17-8079-d082dfe0010a"))
+    (pin "14" (uuid "f1fa2bcf-db46-5114-a25e-0f524fc1ece6"))
+    (pin "15" (uuid "50835822-f21b-5949-85a4-65e5fe0eb55c"))
+    (pin "16" (uuid "e348516c-2617-5b7f-b5fb-6e79e0d607cb"))
+    (pin "17" (uuid "94bffe70-afed-567f-bb61-8c2013125195"))
+    (pin "18" (uuid "0d854368-2065-54d3-83af-9a7e4b8318f3"))
+    (pin "19" (uuid "92c55df8-7ae4-5421-ad4b-fc1991098583"))
+    (pin "20" (uuid "e1014f2f-e97c-577f-b835-003da88a5a3a"))
+    (pin "21" (uuid "f9d0f507-ef01-53ec-b7bf-5de2d94fcf4a"))
+    (pin "22" (uuid "61abface-bed7-5965-82be-56d158fc7342"))
+    (pin "23" (uuid "17bf9293-45b1-51e1-a4a4-67558df01254"))
+    (pin "24" (uuid "328ed360-e5e6-5749-a88c-b0c61200c313"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -5827,134 +5827,134 @@
   (label "LED_DIN"
     (at 347.98 45.72 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "a4333ee6-5758-50d3-9b68-185f825797cb")
+    (uuid "e9860cfd-7476-5790-9153-551d56186700")
   )
   (label "LED_EN"
     (at 347.98 48.26 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "52160d0c-46ef-57d4-b051-9fb8dd5613c3")
+    (uuid "17075078-d991-586a-bfa0-68f743019a87")
   )
   (label "GND"
     (at 347.98 50.8 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "2e9531b1-3b4f-5418-b05b-71bd5fb6784e")
+    (uuid "7e739948-68e4-5863-bdc7-503c3de8427a")
   )
   (label "GND"
     (at 347.98 53.34 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "c0404fc4-8d3f-5057-bd25-5f5ae065b47e")
+    (uuid "1f05ce1e-3e72-5ac4-a244-f952b52643db")
   )
   (label "OLED_SDA"
     (at 347.98 55.88 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "fabd847b-eb2b-5e8e-a62f-283da3435f59")
+    (uuid "a4333ee6-5758-50d3-9b68-185f825797cb")
   )
   (label "OLED_SCL"
     (at 347.98 58.42 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "36d352a4-dc15-5eeb-a211-a418028a2fcf")
+    (uuid "52160d0c-46ef-57d4-b051-9fb8dd5613c3")
   )
   (label "ROW0"
     (at 347.98 60.96 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "46de0da3-ea8c-5129-8f7d-654a4bb3e594")
+    (uuid "2e9531b1-3b4f-5418-b05b-71bd5fb6784e")
   )
   (label "ROW1"
     (at 347.98 63.5 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "b6d68312-5981-51a5-ab74-b6ccd3eea016")
+    (uuid "c0404fc4-8d3f-5057-bd25-5f5ae065b47e")
   )
   (label "ROW2"
     (at 347.98 66.04 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "7bc27b6c-6e1a-58e0-8e85-260eeabeae30")
+    (uuid "fabd847b-eb2b-5e8e-a62f-283da3435f59")
   )
   (label "ROW3"
     (at 347.98 68.58 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "aa6c4cb0-e6bd-5831-ba31-561408c9cb9e")
+    (uuid "36d352a4-dc15-5eeb-a211-a418028a2fcf")
   )
   (label "ROW4"
     (at 347.98 71.12 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "1a3e9b1b-103b-596d-b155-bcf0065f4bc7")
+    (uuid "46de0da3-ea8c-5129-8f7d-654a4bb3e594")
   )
   (label "COL0"
     (at 347.98 73.66 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "03ad2b00-7a32-5859-8bd4-4fab27d3125e")
+    (uuid "b6d68312-5981-51a5-ab74-b6ccd3eea016")
   )
   (label "VBAT"
     (at 373.38 45.72 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "b6cf134b-c2f0-5007-a80d-7dfc02e5c2e6")
+    (uuid "7bc27b6c-6e1a-58e0-8e85-260eeabeae30")
   )
   (label "GND"
     (at 373.38 48.26 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "1996cab0-bb7c-547f-b360-56477aa50fb4")
+    (uuid "aa6c4cb0-e6bd-5831-ba31-561408c9cb9e")
   )
   (label "RST"
     (at 373.38 50.8 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "13c918e7-4553-547d-bc36-16eda3892ae1")
+    (uuid "1a3e9b1b-103b-596d-b155-bcf0065f4bc7")
   )
   (label "VCC"
     (at 373.38 53.34 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "c172da2e-fa95-5adc-ae9e-36bac54384b5")
+    (uuid "03ad2b00-7a32-5859-8bd4-4fab27d3125e")
   )
   (label "COL6"
     (at 373.38 55.88 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "bf6f0d73-efad-520f-ba6b-69b1a3a4601a")
+    (uuid "b6cf134b-c2f0-5007-a80d-7dfc02e5c2e6")
   )
   (label "COL5"
     (at 373.38 58.42 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "389240b5-07d9-514d-a9a9-295da173995a")
+    (uuid "1996cab0-bb7c-547f-b360-56477aa50fb4")
   )
   (label "COL4"
     (at 373.38 60.96 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "8b989937-6e3b-5850-a75e-17cc2548327d")
+    (uuid "13c918e7-4553-547d-bc36-16eda3892ae1")
   )
   (label "COL3"
     (at 373.38 63.5 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "0fac0279-1095-54a2-8bd9-4b20d35e2518")
+    (uuid "c172da2e-fa95-5adc-ae9e-36bac54384b5")
   )
   (label "COL2"
     (at 373.38 66.04 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "e30bfdab-2d5b-56d9-af29-f56cac6aad3e")
+    (uuid "bf6f0d73-efad-520f-ba6b-69b1a3a4601a")
   )
   (label "COL1"
     (at 373.38 68.58 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "ca712e93-8b1f-5e6f-9fc2-69222e9ab34f")
+    (uuid "389240b5-07d9-514d-a9a9-295da173995a")
   )
   (label "ENC_A"
     (at 373.38 71.12 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "7cec01de-008d-550a-8364-5bff4c2de44e")
+    (uuid "8b989937-6e3b-5850-a75e-17cc2548327d")
   )
   (label "ENC_B"
     (at 373.38 73.66 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "cf39d12a-0fe5-5ee3-b576-25a027d881a3")
+    (uuid "0fac0279-1095-54a2-8bd9-4b20d35e2518")
   )
   (text "Encoder A/B on P0.10/P0.09 (NFC pins): set nfct-pins-as-gpios.\nP0.08: LED power switch. P0.17/P0.20: OLED SDA/SCL.\nVCC (pad 16, switched by P0.13): OLED power; firmware holds P0.13 high."
     (exclude_from_sim no)
     (at 386.08 45.72 0)
     (effects (font (size 1.27 1.27)) (justify left top))
-    (uuid "79fc6921-c660-55b8-9b06-5ae8983e7313")
+    (uuid "e30bfdab-2d5b-56d9-af29-f56cac6aad3e")
   )
   (text "POWER"
     (exclude_from_sim no)
     (at 335.28 114.3 0)
     (effects (font (size 2 2)) (justify left top))
-    (uuid "8bd7af6b-3c22-5bb3-93af-53082684e05a")
+    (uuid "ca712e93-8b1f-5e6f-9fc2-69222e9ab34f")
   )
   (symbol
     (lib_id "Device:Battery_Cell")
@@ -5972,8 +5972,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 340.36 132.08 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "b10ce02c-8f20-5739-9677-a8cf85f560a6"))
-    (pin "2" (uuid "3e3884ef-48d6-5532-a834-31acfc0d5f76"))
+    (pin "1" (uuid "7cec01de-008d-550a-8364-5bff4c2de44e"))
+    (pin "2" (uuid "cf39d12a-0fe5-5ee3-b576-25a027d881a3"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -5986,12 +5986,12 @@
   (label "BAT_RAW"
     (at 340.36 127 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "7bae11bc-f09f-58f4-a3e0-69088f0b5bbb")
+    (uuid "79fc6921-c660-55b8-9b06-5ae8983e7313")
   )
   (label "GND"
     (at 340.36 134.62 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "3afcf7e4-7cc4-5fb9-ab3f-6f07c6f609a5")
+    (uuid "8bd7af6b-3c22-5bb3-93af-53082684e05a")
   )
   (symbol
     (lib_id "Switch:SW_SPDT")
@@ -6009,9 +6009,9 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 360.68 132.08 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "22fd6051-fb00-5874-b1eb-488ab313fdf9"))
-    (pin "2" (uuid "5df68f58-ac8f-562d-918c-9038d8dd9642"))
-    (pin "3" (uuid "ac2b9afe-2965-5ef4-b4e3-e033ce9e81c9"))
+    (pin "1" (uuid "b10ce02c-8f20-5739-9677-a8cf85f560a6"))
+    (pin "2" (uuid "3e3884ef-48d6-5532-a834-31acfc0d5f76"))
+    (pin "3" (uuid "7bae11bc-f09f-58f4-a3e0-69088f0b5bbb"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -6024,17 +6024,17 @@
   (label "GND"
     (at 365.76 129.54 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "4145bb83-df5b-5a87-a624-9caf72252b51")
+    (uuid "3afcf7e4-7cc4-5fb9-ab3f-6f07c6f609a5")
   )
   (label "BAT_GATE"
     (at 355.6 132.08 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "e49b3e3c-62fc-5373-a03a-849dfcec7360")
+    (uuid "22fd6051-fb00-5874-b1eb-488ab313fdf9")
   )
   (label "BAT_RAW"
     (at 365.76 134.62 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "89e8fefb-10a4-56ba-85f6-718a28b12c04")
+    (uuid "5df68f58-ac8f-562d-918c-9038d8dd9642")
   )
   (symbol
     (lib_id "Switch:SW_Push")
@@ -6052,8 +6052,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 386.08 132.08 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "52db20ae-8a3b-5292-8fe4-88e41a58f00e"))
-    (pin "2" (uuid "b6b69460-de67-5b6b-a2e2-8ffaac3a399e"))
+    (pin "1" (uuid "ac2b9afe-2965-5ef4-b4e3-e033ce9e81c9"))
+    (pin "2" (uuid "4145bb83-df5b-5a87-a624-9caf72252b51"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -6066,12 +6066,12 @@
   (label "RST"
     (at 381 132.08 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "4a129cd3-3dd2-56d3-bfc4-5e7e360b93c0")
+    (uuid "e49b3e3c-62fc-5373-a03a-849dfcec7360")
   )
   (label "GND"
     (at 391.16 132.08 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "87851bf0-4506-5324-a13b-5af7d8a6dbe4")
+    (uuid "89e8fefb-10a4-56ba-85f6-718a28b12c04")
   )
   (symbol
     (lib_id "Device:C")
@@ -6089,8 +6089,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 340.36 154.94 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "e0a7611f-e98b-5dae-af89-98eb46acd1ac"))
-    (pin "2" (uuid "a74de847-f946-593a-8084-bf6867bc510f"))
+    (pin "1" (uuid "52db20ae-8a3b-5292-8fe4-88e41a58f00e"))
+    (pin "2" (uuid "b6b69460-de67-5b6b-a2e2-8ffaac3a399e"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -6103,12 +6103,12 @@
   (label "LED_VDD"
     (at 340.36 151.13 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "f7438d47-0b45-54b5-8e9a-75b7f44d36c8")
+    (uuid "4a129cd3-3dd2-56d3-bfc4-5e7e360b93c0")
   )
   (label "GND"
     (at 340.36 158.75 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "1b29d2d1-09e2-5a47-aa08-62031fe98c33")
+    (uuid "87851bf0-4506-5324-a13b-5af7d8a6dbe4")
   )
   (symbol
     (lib_id "Device:C")
@@ -6126,8 +6126,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 353.06 154.94 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "0ab9ef30-a400-512f-8e6a-d73b05b5e686"))
-    (pin "2" (uuid "fc6eb25d-155a-5766-88ea-6111818e5918"))
+    (pin "1" (uuid "e0a7611f-e98b-5dae-af89-98eb46acd1ac"))
+    (pin "2" (uuid "a74de847-f946-593a-8084-bf6867bc510f"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -6140,12 +6140,12 @@
   (label "LED_VDD"
     (at 353.06 151.13 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "22898597-1e39-5540-82e6-f08151609ed2")
+    (uuid "f7438d47-0b45-54b5-8e9a-75b7f44d36c8")
   )
   (label "GND"
     (at 353.06 158.75 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "7999a11a-7156-54e1-bfdf-17b2679ca88d")
+    (uuid "1b29d2d1-09e2-5a47-aa08-62031fe98c33")
   )
   (symbol
     (lib_id "power:PWR_FLAG")
@@ -6160,7 +6160,7 @@
     (property "Value" "PWR_FLAG" (at 373.38 161.29 0) (effects (font (size 1.27 1.27))))
     (property "Footprint" "" (at 373.38 154.94 0) (effects (font (size 1.27 1.27)) (hide yes)))
     (property "Datasheet" "" (at 373.38 154.94 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "18aed6c9-3e62-5f57-aef3-120c61cc9dbe"))
+    (pin "1" (uuid "0ab9ef30-a400-512f-8e6a-d73b05b5e686"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -6173,7 +6173,7 @@
   (label "GND"
     (at 373.38 154.94 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "f68c131d-f980-54eb-9669-e2cf4186c806")
+    (uuid "fc6eb25d-155a-5766-88ea-6111818e5918")
   )
   (symbol
     (lib_id "power:PWR_FLAG")
@@ -6188,7 +6188,7 @@
     (property "Value" "PWR_FLAG" (at 386.08 161.29 0) (effects (font (size 1.27 1.27))))
     (property "Footprint" "" (at 386.08 154.94 0) (effects (font (size 1.27 1.27)) (hide yes)))
     (property "Datasheet" "" (at 386.08 154.94 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "53b1fde8-2c15-537d-ae1c-3347cd56a1cf"))
+    (pin "1" (uuid "22898597-1e39-5540-82e6-f08151609ed2"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -6201,7 +6201,7 @@
   (label "VBAT"
     (at 386.08 154.94 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "82b2dc27-0ca9-5519-86c2-fc10a2ad47fc")
+    (uuid "7999a11a-7156-54e1-bfdf-17b2679ca88d")
   )
   (symbol
     (lib_id "power:PWR_FLAG")
@@ -6216,7 +6216,7 @@
     (property "Value" "PWR_FLAG" (at 398.78 161.29 0) (effects (font (size 1.27 1.27))))
     (property "Footprint" "" (at 398.78 154.94 0) (effects (font (size 1.27 1.27)) (hide yes)))
     (property "Datasheet" "" (at 398.78 154.94 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "c79fb6aa-ba39-51e2-90f7-02d691444018"))
+    (pin "1" (uuid "18aed6c9-3e62-5f57-aef3-120c61cc9dbe"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -6229,19 +6229,19 @@
   (label "LED_VDD"
     (at 398.78 154.94 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "a8d7ad88-434e-5de0-9557-3bf5a5046f9e")
+    (uuid "f68c131d-f980-54eb-9669-e2cf4186c806")
   )
   (text "C1/C2 sit at the LED power switch's output."
     (exclude_from_sim no)
     (at 335.28 165.1 0)
     (effects (font (size 1.27 1.27)) (justify left top))
-    (uuid "4cef192c-0cc0-5ecf-b22f-83109dcd660c")
+    (uuid "53b1fde8-2c15-537d-ae1c-3347cd56a1cf")
   )
   (text "BATTERY SWITCH (P-MOSFET; the slide switch only drives the gate)"
     (exclude_from_sim no)
     (at 335.28 170.18 0)
     (effects (font (size 2 2)) (justify left top))
-    (uuid "ba2465c0-2147-5693-ba36-2943e900c790")
+    (uuid "82b2dc27-0ca9-5519-86c2-fc10a2ad47fc")
   )
   (symbol
     (lib_id "Transistor_FET:AO3401A")
@@ -6259,9 +6259,9 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 360.68 185.42 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "4d74722a-10d7-5917-9ef6-088c1bda67e6"))
-    (pin "2" (uuid "f302e4fd-f90d-5cc8-a32c-3e888f0a7932"))
-    (pin "3" (uuid "d50c3a92-dd92-5c95-b843-0da8757618fe"))
+    (pin "1" (uuid "c79fb6aa-ba39-51e2-90f7-02d691444018"))
+    (pin "2" (uuid "a8d7ad88-434e-5de0-9557-3bf5a5046f9e"))
+    (pin "3" (uuid "4cef192c-0cc0-5ecf-b22f-83109dcd660c"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -6274,17 +6274,17 @@
   (label "BAT_GATE"
     (at 355.6 185.42 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "e0c3712f-68b5-5244-98e1-29e446a16a23")
+    (uuid "ba2465c0-2147-5693-ba36-2943e900c790")
   )
   (label "BAT_RAW"
     (at 363.22 190.5 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "e35382e3-c6a7-5c60-a5e3-959073e20068")
+    (uuid "4d74722a-10d7-5917-9ef6-088c1bda67e6")
   )
   (label "VBAT"
     (at 363.22 180.34 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "e3b1fe1b-dd02-5a50-aed0-f1c09ca9b70e")
+    (uuid "f302e4fd-f90d-5cc8-a32c-3e888f0a7932")
   )
   (symbol
     (lib_id "Device:R")
@@ -6302,8 +6302,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 375.92 185.42 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "6332a842-0644-59cf-98d2-94a7590f2ce3"))
-    (pin "2" (uuid "c5013792-ed34-5763-9221-a60908507c0c"))
+    (pin "1" (uuid "d50c3a92-dd92-5c95-b843-0da8757618fe"))
+    (pin "2" (uuid "e0c3712f-68b5-5244-98e1-29e446a16a23"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -6316,24 +6316,24 @@
   (label "BAT_GATE"
     (at 375.92 181.61 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "77c7df0f-e9e1-518e-806e-b4eec92ff42c")
+    (uuid "e35382e3-c6a7-5c60-a5e3-959073e20068")
   )
   (label "BAT_RAW"
     (at 375.92 189.23 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "e80bbc41-5648-5b87-9e39-2b1da307602d")
+    (uuid "e3b1fe1b-dd02-5a50-aed0-f1c09ca9b70e")
   )
   (text "Switch 2-1: gate to GND, on. Switch 2-3: gate to source, off.\nR1 holds the gate off between positions. Leave the switch on while charging:\noff, USB charges the cell through the body diode (~0.35 W at 500 mA)."
     (exclude_from_sim no)
     (at 335.28 198.12 0)
     (effects (font (size 1.27 1.27)) (justify left top))
-    (uuid "cc386eb4-9af9-5de7-b7c3-73b741ad82ba")
+    (uuid "6332a842-0644-59cf-98d2-94a7590f2ce3")
   )
   (text "LED POWER SWITCH (P0.08 high = LEDs on)"
     (exclude_from_sim no)
     (at 434.34 116.84 0)
     (effects (font (size 2 2)) (justify left top))
-    (uuid "9feb4a4a-29b0-5458-a12a-c2e8ecce20dc")
+    (uuid "c5013792-ed34-5763-9221-a60908507c0c")
   )
   (symbol
     (lib_id "Transistor_FET:AO3401A")
@@ -6351,9 +6351,9 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 459.74 132.08 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "acd03eb1-48c9-5c34-aa48-116716f36501"))
-    (pin "2" (uuid "fb045540-0f26-5c90-8d91-088098ca04fd"))
-    (pin "3" (uuid "b091aacb-37fd-5fa6-8783-af5842ac69b8"))
+    (pin "1" (uuid "77c7df0f-e9e1-518e-806e-b4eec92ff42c"))
+    (pin "2" (uuid "e80bbc41-5648-5b87-9e39-2b1da307602d"))
+    (pin "3" (uuid "cc386eb4-9af9-5de7-b7c3-73b741ad82ba"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -6366,17 +6366,17 @@
   (label "LED_GATE"
     (at 454.66 132.08 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "acff829f-cc49-54ec-acd0-1cbd33748df8")
+    (uuid "9feb4a4a-29b0-5458-a12a-c2e8ecce20dc")
   )
   (label "VBAT"
     (at 462.28 137.16 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "201daa18-1230-5d62-8969-ebcf9de319e7")
+    (uuid "acd03eb1-48c9-5c34-aa48-116716f36501")
   )
   (label "LED_VDD"
     (at 462.28 127 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "d9ec2895-98fc-5a51-aa79-ec5b2e01e53a")
+    (uuid "fb045540-0f26-5c90-8d91-088098ca04fd")
   )
   (symbol
     (lib_id "Device:R")
@@ -6394,8 +6394,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 480.06 132.08 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "8fbb8c76-eedd-5977-a4c7-65b5c101d19e"))
-    (pin "2" (uuid "4fb82bfe-0c0f-5a87-a28a-b69bf4dfb641"))
+    (pin "1" (uuid "b091aacb-37fd-5fa6-8783-af5842ac69b8"))
+    (pin "2" (uuid "acff829f-cc49-54ec-acd0-1cbd33748df8"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -6408,12 +6408,12 @@
   (label "LED_GATE"
     (at 480.06 128.27 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "d7a16de4-78f1-5e10-bee9-ffc4f53ce53d")
+    (uuid "201daa18-1230-5d62-8969-ebcf9de319e7")
   )
   (label "VBAT"
     (at 480.06 135.89 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "667ffa4b-5b69-521d-9d9b-b0670b2a32e7")
+    (uuid "d9ec2895-98fc-5a51-aa79-ec5b2e01e53a")
   )
   (symbol
     (lib_id "Transistor_FET:AO3400A")
@@ -6431,9 +6431,9 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 459.74 157.48 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "66445f55-9598-5187-91ba-215b2b9f9fb8"))
-    (pin "2" (uuid "e09b9b14-6817-55c6-89b2-5360a12ded24"))
-    (pin "3" (uuid "1ece93dc-5af5-5e5c-8f7a-e292ce5a0992"))
+    (pin "1" (uuid "8fbb8c76-eedd-5977-a4c7-65b5c101d19e"))
+    (pin "2" (uuid "4fb82bfe-0c0f-5a87-a28a-b69bf4dfb641"))
+    (pin "3" (uuid "d7a16de4-78f1-5e10-bee9-ffc4f53ce53d"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -6446,17 +6446,17 @@
   (label "LED_EN"
     (at 454.66 157.48 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "6a4e1fe8-7e59-57fe-8cee-20901107b754")
+    (uuid "667ffa4b-5b69-521d-9d9b-b0670b2a32e7")
   )
   (label "GND"
     (at 462.28 162.56 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "770ec29d-59c5-522f-b63b-f09e46beb840")
+    (uuid "66445f55-9598-5187-91ba-215b2b9f9fb8")
   )
   (label "LED_GATE"
     (at 462.28 152.4 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "22bcbb80-0f02-5910-a8e1-c40ef27c4c33")
+    (uuid "e09b9b14-6817-55c6-89b2-5360a12ded24")
   )
   (symbol
     (lib_id "Device:R")
@@ -6474,8 +6474,8 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 480.06 157.48 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "d6ee2773-3736-5397-90e4-bb3fef9a758a"))
-    (pin "2" (uuid "05ce962b-6b66-5dd9-8847-eb9a6a44180d"))
+    (pin "1" (uuid "1ece93dc-5af5-5e5c-8f7a-e292ce5a0992"))
+    (pin "2" (uuid "6a4e1fe8-7e59-57fe-8cee-20901107b754"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -6488,18 +6488,18 @@
   (label "LED_EN"
     (at 480.06 153.67 90)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "1420bebc-8f3f-563f-a6aa-e28bd60b925f")
+    (uuid "770ec29d-59c5-522f-b63b-f09e46beb840")
   )
   (label "GND"
     (at 480.06 161.29 270)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "0d8296d1-bfdc-5388-adb1-7b8421de004b")
+    (uuid "22bcbb80-0f02-5910-a8e1-c40ef27c4c33")
   )
   (text "ROTARY ENCODER (EC11) - push switch in the matrix at ROW0/COL6"
     (exclude_from_sim no)
     (at 335.28 213.36 0)
     (effects (font (size 2 2)) (justify left top))
-    (uuid "158e368c-0c23-5bbc-a851-534271cbcddf")
+    (uuid "d6ee2773-3736-5397-90e4-bb3fef9a758a")
   )
   (symbol
     (lib_id "Device:RotaryEncoder_Switch")
@@ -6517,11 +6517,11 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 360.68 228.6 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "A" (uuid "ff929702-7ebd-5b24-bab0-b35055dc84e4"))
-    (pin "B" (uuid "c0391b26-440e-500e-aa73-762d0ad122fb"))
-    (pin "C" (uuid "af1170a6-4f95-5db9-b361-835716756d9d"))
-    (pin "S1" (uuid "3f3ad59a-49f8-5fda-be5e-00eb180f0707"))
-    (pin "S2" (uuid "489bd9a1-bb15-587b-a27a-7f7a06aea260"))
+    (pin "A" (uuid "05ce962b-6b66-5dd9-8847-eb9a6a44180d"))
+    (pin "B" (uuid "1420bebc-8f3f-563f-a6aa-e28bd60b925f"))
+    (pin "C" (uuid "0d8296d1-bfdc-5388-adb1-7b8421de004b"))
+    (pin "S1" (uuid "158e368c-0c23-5bbc-a851-534271cbcddf"))
+    (pin "S2" (uuid "ff929702-7ebd-5b24-bab0-b35055dc84e4"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -6534,33 +6534,33 @@
   (label "ENC_A"
     (at 353.06 226.06 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "b4d7c481-1a30-5d17-8b35-b363262c812e")
+    (uuid "c0391b26-440e-500e-aa73-762d0ad122fb")
   )
   (label "ENC_B"
     (at 353.06 231.14 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "b23b4b84-9c88-5598-a501-1c83723a0bbd")
+    (uuid "af1170a6-4f95-5db9-b361-835716756d9d")
   )
   (label "GND"
     (at 353.06 228.6 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "c35171c1-8062-5ef8-8324-73421f361d66")
+    (uuid "3f3ad59a-49f8-5fda-be5e-00eb180f0707")
   )
   (label "COL6"
     (at 368.3 226.06 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "35b497f3-ac7f-5f79-a9c9-40179e46c383")
+    (uuid "489bd9a1-bb15-587b-a27a-7f7a06aea260")
   )
   (label "K06"
     (at 368.3 231.14 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "62093879-e219-58e0-a521-8a25d8c9b97e")
+    (uuid "b4d7c481-1a30-5d17-8b35-b363262c812e")
   )
   (text "OLED (0.96 in. 128x64 SSD1306, I2C address 0x3C) - check the module's pin order: GND VCC SCL SDA"
     (exclude_from_sim no)
     (at 434.34 213.36 0)
     (effects (font (size 2 2)) (justify left top))
-    (uuid "418df4d9-cd5a-5dc4-8a83-c1979b3a90e1")
+    (uuid "b23b4b84-9c88-5598-a501-1c83723a0bbd")
   )
   (symbol
     (lib_id "Connector_Generic:Conn_01x04")
@@ -6578,10 +6578,10 @@
       (effects (font (size 1.27 1.27)) (hide yes))
     )
     (property "Datasheet" "" (at 459.74 228.6 0) (effects (font (size 1.27 1.27)) (hide yes)))
-    (pin "1" (uuid "bf85e034-096b-52e8-b5d4-b0a652e52037"))
-    (pin "2" (uuid "6422b3cb-06dd-5920-803a-dca010f6c190"))
-    (pin "3" (uuid "5ec7d064-e8b8-5953-b951-6bd76fbbe0b9"))
-    (pin "4" (uuid "f04905e1-49a3-530c-bb56-66209ddf084d"))
+    (pin "1" (uuid "c35171c1-8062-5ef8-8324-73421f361d66"))
+    (pin "2" (uuid "35b497f3-ac7f-5f79-a9c9-40179e46c383"))
+    (pin "3" (uuid "62093879-e219-58e0-a521-8a25d8c9b97e"))
+    (pin "4" (uuid "418df4d9-cd5a-5dc4-8a83-c1979b3a90e1"))
     (instances
       (project "keygen"
         (path "/6967da33-a0e5-5fa7-9742-40725aff3c90/0c428d53-712b-56dc-b044-5fe085247794"
@@ -6594,28 +6594,28 @@
   (label "GND"
     (at 454.66 226.06 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "2d9850fa-ec5d-5dbd-b699-fb54b5b50885")
+    (uuid "bf85e034-096b-52e8-b5d4-b0a652e52037")
   )
   (label "VCC"
     (at 454.66 228.6 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "b966cdfe-3a80-5c8f-8026-3e91e2a2b62c")
+    (uuid "6422b3cb-06dd-5920-803a-dca010f6c190")
   )
   (label "OLED_SCL"
     (at 454.66 231.14 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "c880ba30-b47f-5d7f-b270-2140833ecdf9")
+    (uuid "5ec7d064-e8b8-5953-b951-6bd76fbbe0b9")
   )
   (label "OLED_SDA"
     (at 454.66 233.68 180)
     (effects (font (size 1.27 1.27)) (justify right bottom))
-    (uuid "f37191e7-b155-5432-ae2f-3be5e2166378")
+    (uuid "f04905e1-49a3-530c-bb56-66209ddf084d")
   )
   (text "MOUNTING HOLES (M2)"
     (exclude_from_sim no)
     (at 335.28 259.08 0)
     (effects (font (size 2 2)) (justify left top))
-    (uuid "9c0f5c79-4e59-5860-a39a-90cfa14084bf")
+    (uuid "2d9850fa-ec5d-5dbd-b699-fb54b5b50885")
   )
   (symbol
     (lib_id "Mechanical:MountingHole")
