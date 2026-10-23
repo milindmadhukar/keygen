@@ -47,6 +47,9 @@ python3 tools/render_keymap.py   # assets/keymap-*.svg, with keymap-drawer throu
 
 - `Esc`: tap for Esc, hold for Ctrl.
 - `Caps Word`: capitals until the end of the word.
+- Shift, Ctrl and Alt are on the left half only. The right half's 1u thumb keys are `:` (above
+  Space) and dictation (above Enter: Ctrl+Alt+Space, OpenWhispr's toggle); its outer bottom key is
+  `_`.
 - The two 1.25u thumb keys hold the NAV and FN layers. Holding both gives SYS.
 - Left knob (the left key marked ↻): a scroll wheel on every layer; press for a middle click. With
   Super held, turning it walks Hyprland's workspaces (Super + mouse wheel).

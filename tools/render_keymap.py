@@ -22,10 +22,9 @@ KNOBS = {6: {"Base": "scroll", "Nav": "scroll", "Fn": "scroll"},
 
 LABELS = {
     "&esc_ctrl LCTRL ESC": {"t": "Esc", "h": "Ctrl"},
-    "&kp LGUI": "Super", "&kp LCTRL": "Ctrl", "&kp RCTRL": "Ctrl", "&kp LALT": "Alt", "&kp RALT": "Alt",
-    "&kp LSHFT": "Shift", "&kp RSHFT": "Shift", "&kp BSPC": "Bksp", "&kp RET": "Enter",
-    "&kp SPACE": "Space", "&kp TAB": "Tab", "&kp DEL": "Del", "&kp INS": "Ins", "&kp PSCRN": "PrtSc",
-    "&kp CAPS": "Caps Lock", "&caps_word": "Caps Word",
+    "&kp LGUI": "Super", "&kp LCTRL": "Ctrl", "&kp LALT": "Alt", "&kp LSHFT": "Shift", "&kp BSPC": "Bksp",
+    "&kp RET": "Enter", "&kp SPACE": "Space", "&kp TAB": "Tab", "&kp DEL": "Del", "&kp INS": "Ins", "&kp PSCRN": "PrtSc",
+    "&kp CAPS": "Caps Lock", "&caps_word": "Caps Word", "&kp LC(LA(SPACE))": "Dictate",
     "&kp LEFT": "←", "&kp DOWN": "↓", "&kp UP": "↑", "&kp RIGHT": "→",
     "&kp HOME": "Home", "&kp END": "End", "&kp PG_UP": "PgUp", "&kp PG_DN": "PgDn",
     "&kp C_MUTE": "Mute", "&mkp MCLK": "Middle click", "&kp C_PP": "Play", "&kp C_PREV": "Prev", "&kp C_NEXT": "Next",

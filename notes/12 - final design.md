@@ -41,7 +41,7 @@ Keygen uses Redox's six main columns per hand. The space beside T/G and Y/H hold
 | Number | `=` `1` `2` `3` `4` `5` | `6` `7` `8` `9` `0` `-` |
 | Top | `Tab` `Q` `W` `E` `R` `T` | `Y` `U` `I` `O` `P` `\` |
 | Home | `Esc`/`Ctrl` `A` `S` `D` `F` `G` | `H` `J` `K` `L` `;` `'` |
-| Bottom | `Shift` `Z` `X` `C` `V` `B` | `N` `M` `,` `.` `/` `Shift` |
+| Bottom | `Shift` `Z` `X` `C` `V` `B` | `N` `M` `,` `.` `/` `_` |
 | Extra | `` ` `` `CapsWord` `(` `)` | `[` `]` `{` `}` |
 
 The outer columns are 1.25u. The extra bottom row follows the Kinesis Advantage. In the keymap the number row has 14 positions, with the two knob presses in the middle (position 6 = left knob, 7 = right knob), so the keymap has 68 positions in all.
@@ -60,10 +60,11 @@ The outer columns are 1.25u. The extra bottom row follows the Kinesis Advantage.
 |---|---|---|
 | 1.5u, hand side (rest) | `Backspace` | `Space` |
 | 1.5u, centre side | `Super` | `Enter` |
-| 1u, top row | `Ctrl` `Alt` | `Alt` `Ctrl` |
+| 1u, over the rest key | `Ctrl` | `:` |
+| 1u, over the centre key | `Alt` | Dictate (`Ctrl`+`Alt`+`Space`) |
 | 1.25u, toward the palm | hold `Nav` | hold `Fn` |
 
-**Super** sits one step from the resting thumb because Hyprland uses it constantly: Super + number row for workspaces, Super + HJKL for focus, Super + Enter/Space across both thumbs. Del is Fn + Bksp. Both 1.25u keys are layer keys; holding both gives the System layer.
+**Super** sits one step from the resting thumb because Hyprland uses it constantly: Super + number row for workspaces, Super + HJKL for focus, Super + Enter/Space across both thumbs. Shift, Ctrl and Alt live on the left half only, so the right half's keys each do something of their own: `:` opens Vim's command line in one press, and Dictate sends `Ctrl`+`Alt`+`Space`, OpenWhispr's dictation toggle in Hyprland. Del is Fn + Bksp. Both 1.25u keys are layer keys; holding both gives the System layer.
 
 Every 2×2 key is at most one step from where the thumb rests. That keeps the whole cluster in reach for small hands.
 
