@@ -156,8 +156,9 @@ button-head screws from below.
 
 ### Step 12: Switch pads and plate foam
 
-1. Stick a 0.5 mm Poron ring switch pad on the PCB under each switch position (33), its open middle
-   over the LED window.
+1. Stick a 0.5 mm Poron ring switch pad on the PCB round each switch position (33), its notches
+   facing the switch's clips (top and bottom) and its open middle round the pins and the LED
+   window. Where a ring's corner meets a standoff (7 rings per half), snip that corner off first.
 2. Lay the 2 mm EVA plate foam over them.
 
 ### Step 13: Plate and OLED

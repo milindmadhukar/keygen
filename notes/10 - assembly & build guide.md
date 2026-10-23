@@ -98,7 +98,7 @@ The case is gasket-mounted: the plate and PCB become one unit that floats on Por
 - Lay the top frame deck-down and press the 8 M2 heat-set inserts into the holes in its underside (about 200–230 °C), flush and no deeper, and let them cool. 1.4 mm of frame covers each hole. [Heat-set insert guide](https://www.youtube.com/watch?v=cyof7fYFcuQ)
 - Screw the five M2 × 3.5 mm standoffs onto the PCB from below with M2 × 4 screws.
 - Cut the foam from the files in `case/foam/dxf/` or `case/foam/svg/` (DXF for a laser, SVG printed at 100 % as a template): per half a 2 mm EVA plate foam and a 5 mm EVA case foam, each the right way up as drawn.
-- Stick a 0.5 mm Poron ring switch pad on the PCB under each switch, its open middle over the LED window, then lay the plate foam over them.
+- Stick a 0.5 mm Poron ring switch pad on the PCB round each switch, its notches towards the switch clips and its open middle round the pins and the LED window, then lay the plate foam over them. Seven rings per half have a corner snipped off where they meet a standoff.
 - Plate onto the standoffs, with M2 × 4 button-head screws at H102–H105 (left) and H202–H204 (right). H101, H201 and H205 get no screw on top.
 - **OLED module (J101/J201):** check its printed pin order matches the footprint's GND, VCC, SCL, SDA (some modules swap GND and VCC). Pass its header pins down through the plate's OLED window into the board, with the module resting on its 2.5 mm plastic spacer, and solder them from the back. Power the half and check the status screen appears.
 

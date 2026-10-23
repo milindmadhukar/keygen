@@ -40,10 +40,10 @@ about ₹23,000 with a steel plate, ₹29,000 with FR-4 (at about ₹55 per AU$)
 | [ ] | Case screws M2 × 16, socket head | 20 | Amazon.in / hardware store | | | The M2 × 6 pack linked before is the wrong length now; find M2 × 16 |
 | [ ] | Plate standoffs M2 × 3.5 mm, female-female | 15 | Hardware store | | ~₹300 with the screws (estimate) | The length sets the plate height for MX. If 3.5 mm is not stocked, file 4 mm ones down; not 5 mm |
 | [ ] | Plate screws M2 × 4, button head | 25 | Hardware store | | | |
-| [ ] | Switch pads, Poron ring, pack of 120 | 66 | AliExpress → Australia (in cart) | [CHENJ 3C Digital Store](https://www.aliexpress.com/item/1005006310350571.html) | AU$3.89 | Open middle, so the LED window stays clear. In place of the PE switch-foam sheet |
-| [ ] | Plate foam, EVA 2 mm, A4 | 2 sheets | Amazon.in | [black, pack of 10](https://www.amazon.in/dp/B0H4D6P874) | ₹140 | Cut from `case/foam/svg/`. No thicker than 2.8 mm, or it lifts the plate |
-| [ ] | Case foam, EVA 5 mm, A4 | 2 sheets | Amazon.in | [black, pack of 5](https://www.amazon.in/dp/B0D2NJD4DK) | ₹249 | Cut from `case/foam/svg/` |
-| [ ] | Gaskets, Poron strip 80 × 4 × 2 mm, pack of 20 | 32 pieces | AliExpress → Australia (in cart) | [gasket Poron strip](https://www.aliexpress.com/item/1005004800667967.html) | AU$7.00 | Cut each strip into six 12 mm pieces. Option 80x4x2MM |
+| [ ] | Switch pads, Poron ring, pack of 120 | 66 | AliExpress → Australia (in cart) | [CHENJ 3C Digital Store](https://www.aliexpress.com/item/1005006310350571.html) | AU$3.89 | One round each switch on the PCB, under the plate foam. Open middle, so the LED window stays clear. In place of the PE switch-foam sheet |
+| [ ] | Plate foam, EVA 2 mm, A4 | 2 sheets | Amazon.in (in cart) | [black, pack of 10](https://www.amazon.in/dp/B0H4D6P874) | ₹140 | Goes between the PCB and the plate, on the switch pads. Cut from `case/foam/svg/`. No thicker than 2.8 mm, or it lifts the plate |
+| [ ] | Case foam, EVA 5 mm, A4 | 2 sheets | Amazon.in (in cart) | [black, pack of 5](https://www.amazon.in/dp/B0D2NJD4DK) | ₹249 | Goes on the bottom shell's floor, under the PCB, to fill the hollow case. Cut from `case/foam/svg/` |
+| [ ] | Gaskets, Poron strip 80 × 4 × 2 mm, pack of 20 | 32 pieces | AliExpress → Australia (in cart) | [gasket Poron strip](https://www.aliexpress.com/item/1005004800667967.html) | AU$7.00 | Cut each strip into six 12 mm pieces. Two per plate tab: one on the shell's ledge under the tab, one on top of it under the frame. Option 80x4x2MM |
 | [ ] | Charging cable, USB-C 1-to-2 splitter | 1 | | | | Optional |
 | [ ] | Weight and tenting | | | | | After tenting is chosen |
 | [x] | Hotswap sockets, Kailh | 66 of 100 | Already owned | | | |

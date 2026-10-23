@@ -2,8 +2,8 @@
 """Render the case and the switch plate into assets/:
 
 render-case.png           the board in its case
-render-case-exploded.png  bottom shell, case foam, PCB, plate foam, plate and top frame lifted
-                          apart (no switches or keycaps)
+render-case-exploded.png  bottom shell, case foam, PCB, switch pads, plate foam, lower gaskets,
+                          plate, upper gaskets and top frame lifted apart (no switches or keycaps)
 render-case-parts.png     the printed parts alone: each bottom shell with its top frame above it
 render-case-bottom.png    the case from below: floor, case screw counterbores, reset pinholes, USB-C and
                           switch openings
@@ -28,8 +28,8 @@ PCB = ROOT / "pcb/keygen.kicad_pcb"
 PLATE = ROOT / "pcb/plate/keygen-plate.kicad_pcb"
 TMP = ROOT / "pcb/_render_case.kicad_pcb"      # beside the real board so ${KIPRJMOD} models resolve
 CASE = ROOT / "case"
-EXPLODE = {"bottom": -45.0, "foam/case": -22.0, "foam/plate": 18.0, "plate": 30.0,
-           "top": 55.0}                                   # mm, for the exploded view
+EXPLODE = {"bottom": -50.0, "foam/case": -25.0, "pads": 10.0, "foam/plate": 22.0, "gaskets/lower": 28.0,
+           "plate": 36.0, "gaskets/upper": 46.0, "top": 64.0}                                   # mm, for the exploded view
 PARTS_LIFT = 30.0                                         # top frame above its shell, parts view
 SWITCHES_AND_CAPS = re.compile(r'\t\t\(model "[^"]*(?:SW_Cherry_MX_PCB|Keycap_)[^"]*"\n(?:\t\t\t[^\n]*\n)*\t\t\)\n')
 OPAQUE_MASK = (r'(\(type "(?:Top|Bottom) Solder Mask"\)\s*\(color )"Black"', r'\1"#0E0E10F5"')
@@ -37,7 +37,7 @@ BOARD_VIEWS = {
     "case": ["-w", "2800", "-h", "1400", "--quality", "basic", "--floor", "--perspective",
              "--rotate", "-38,0,0", "--zoom", "1.75"],
     "case-exploded": ["-w", "2800", "-h", "1800", "--quality", "basic", "--perspective",
-                      "--rotate", "-50,0,0", "--zoom", "1.3"],
+                      "--rotate", "-60,0,0", "--zoom", "1.2"],
 }
 CASE_VIEWS = {
     "case-parts": ["-w", "2800", "-h", "1600", "--quality", "basic", "--perspective",
@@ -47,13 +47,18 @@ CASE_VIEWS = {
 
 
 def case_footprint(lifts, parts=("bottom", "plate", "top")):
-    """A footprint carrying the case parts as 3D models; a part is "bottom", "plate", "top" or
-    "foam/<layer>"."""
+    """A footprint carrying the case parts as 3D models; a part is "bottom", "plate", "top",
+    "foam/<layer>", "pads" (the switch pads) or "gaskets/<lower|upper>"."""
     models = []
     for side in ("left", "right"):
         for part in parts:
             d, _, name = part.rpartition("/")
-            path = CASE / (d or part) / "step" / f"keygen-{side}-{name}{'-foam' if d else ''}.step"
+            if part == "pads":
+                path = CASE / "foam/step" / f"keygen-{side}-switch-pads.step"
+            elif d == "gaskets":
+                path = CASE / "foam/step" / f"keygen-{side}-{name}-gaskets.step"
+            else:
+                path = CASE / (d or part) / "step" / f"keygen-{side}-{name}{'-foam' if d else ''}.step"
             models.append(f'(model "{path}" (offset (xyz 0 0 {lifts.get(part, 0.0)})) '
                           f'(scale (xyz 1 1 1)) (rotate (xyz 0 0 0)))')
     return (f'(footprint "keygen:case" (layer "F.Cu") (uuid "{uuid.uuid4()}") (at 0 0)\n'

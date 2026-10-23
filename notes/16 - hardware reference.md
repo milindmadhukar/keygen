@@ -92,10 +92,11 @@ References and soldering notes for every part are in `fab/BOM.md`.
   everywhere but the keycaps (0.6 mm clear of each), the OLED window and the encoder. The
   OLED window opens out towards the thumbs; the glass sits 3.5 mm below the deck top. The encoder
   bushing passes through a 9 mm hole under the knob, whose underside is 2.9 mm above the deck.
-- **Foam:** per half, switch pads and two foam layers cut from the files in `case/foam/` (DXF or
-  SVG).
-  - Poron ring switch pads, 0.5 mm, one stuck on the PCB under each switch, their open middle
-    keeping the LED window clear.
+- **Foam:** per half, the switch pads and two foam layers, the layers cut from the files in
+  `case/foam/` (DXF or SVG).
+  - Poron ring switch pads, 0.5 mm, ready-made: a square ring about 18 mm across with a 14.2 mm
+    open middle, notched on the clip sides, one stuck on the PCB round each switch. Seven rings
+    per half have a corner snipped off round a standoff.
   - EVA plate foam, 2 mm, on the switch pads under the plate, with the plate's switch, encoder and
     OLED cut-outs (switches 14.4 mm) and holes for the pads and standoffs. Up to 2.8 mm fits.
   - EVA case foam, 5 mm, on the case floor round the battery bay, the controller, the
