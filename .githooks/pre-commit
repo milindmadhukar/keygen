@@ -1,0 +1,4 @@
+#!/bin/sh
+# Refuse a commit while a generated file is stale: tools/regen.py compares each generator's inputs
+# with tools/regen.lock. Run python3 tools/regen.py, stage what it writes, then commit again.
+exec python3 "$(git rev-parse --show-toplevel)/tools/regen.py" --check

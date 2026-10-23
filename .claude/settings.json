@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/tools/regen.py\" --hook",
+            "timeout": 900,
+            "statusMessage": "Regenerating stale outputs (tools/regen.py)"
+          }
+        ]
+      }
+    ]
+  }
+}
