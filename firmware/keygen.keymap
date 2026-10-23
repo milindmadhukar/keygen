@@ -5,6 +5,10 @@
  *
  * Layers: BASE, NAV (hold left 1.25u), FN (hold right 1.25u), SYS (hold both).
  *
+ * The right half has no Shift, Ctrl or Alt: those come from the left half. Its two 1u thumb keys
+ * are ':' (Vim's command line) and dictation (Ctrl+Alt+Space, OpenWhispr's toggle), and its outer
+ * bottom key is '_'.
+ *
  * Knobs: the left one is a scroll wheel on every layer (with Super held it walks Hyprland's
  * workspaces), and pressing it is a middle click. The right one is volume / page / brightness.
  */
@@ -57,17 +61,17 @@
 // |   =  |  1  |  2  |  3  |  4  |  5  |  MCLK  | MUTE |        |  6  |  7  |  8  |  9  |  0  |   -  |
 // | Tab  |  Q  |  W  |  E  |  R  |  T  |                          |  Y  |  U  |  I  |  O  |  P  |   \  |
 // |Esc/Ct|  A  |  S  |  D  |  F  |  G  |                          |  H  |  J  |  K  |  L  |  ;  |   '  |
-// | Shft |  Z  |  X  |  C  |  V  |  B  |                          |  N  |  M  |  ,  |  .  |  /  | Shft |
+// | Shft |  Z  |  X  |  C  |  V  |  B  |                          |  N  |  M  |  ,  |  .  |  /  |   _  |
 // |  `   |CapsW|  (  |  )  |                                                  |  [  |  ]  |  {  |  }  |
-//                        | Ctrl | Alt |                    | Alt  | Ctrl |
+//                        | Ctrl | Alt |                    |Dictat|  :   |
 //                 | NAV  | Bksp |Super|                    |Enter |Space |  FN  |
             bindings = <
     &kp EQUAL  &kp N1 &kp N2 &kp N3 &kp N4 &kp N5    &mkp MCLK &kp C_MUTE    &kp N6 &kp N7 &kp N8    &kp N9  &kp N0   &kp MINUS
     &kp TAB    &kp Q  &kp W  &kp E  &kp R  &kp T                   &kp Y  &kp U  &kp I     &kp O   &kp P    &kp BSLH
     &esc_ctrl LCTRL ESC &kp A &kp S &kp D &kp F &kp G              &kp H  &kp J  &kp K     &kp L   &kp SEMI &kp SQT
-    &kp LSHFT  &kp Z  &kp X  &kp C  &kp V  &kp B                   &kp N  &kp M  &kp COMMA &kp DOT &kp FSLH &kp RSHFT
+    &kp LSHFT  &kp Z  &kp X  &kp C  &kp V  &kp B                   &kp N  &kp M  &kp COMMA &kp DOT &kp FSLH &kp UNDER
     &kp GRAVE  &caps_word &kp LPAR &kp RPAR                                      &kp LBKT  &kp RBKT &kp LBRC &kp RBRC
-                             &kp LCTRL &kp LALT                    &kp RALT &kp RCTRL
+                             &kp LCTRL &kp LALT                    &kp LC(LA(SPACE)) &kp COLON
                    &mo NAV   &kp BSPC  &kp LGUI                    &kp RET  &kp SPACE &mo FN
             >;
 
