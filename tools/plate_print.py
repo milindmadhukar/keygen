@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Write case/plate/pdf/keygen-plate-print.pdf: the switch plate at 1:1 on A4, one half per page, for printing
+"""Write a 1:1 switch plate PDF on A4, one half per page, for printing
 on paper to get a feel for the layout. Each page shows the plate outline (= PCB outline), the
 14 x 14 mm switch cut-outs, keycap footprints with legends, M2 holes, the encoder cut-out and
 knob, and the OLED window. Positions come from pcb/keygen.kicad_pcb and the key tables, so re-run
 it after any PCB change. Print at 100 % ("Actual size", not "Fit to page") and check the 100 mm
-ruler on the sheet."""
+ruler on the sheet. Use --portrait for printers that shrink landscape PDF pages."""
+import argparse
 import math, sys
 from pathlib import Path
 
@@ -18,6 +19,7 @@ import gen_schematic as g
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "case/plate/pdf/keygen-plate-print.pdf"
+PORTRAIT_OUT = ROOT / "case/plate/pdf/keygen-plate-print-portrait.pdf"
 PT = 72 / 25.4                     # points per mm
 A4 = (297.0, 210.0)                # landscape, mm
 CUTOUT = 14.0                      # MX plate cut-out
@@ -140,21 +142,32 @@ def page(cr, side, outline, holes, enc, oled):
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--portrait", action="store_true", help="rotate the full-size drawing onto portrait A4")
+    args = parser.parse_args()
     outlines, holes, enc = board_data()
     halves = {}
     for o in outlines:
         mid = sum(p[0] for p in o) / len(o)
         halves["left" if mid < 200 else "right"] = o
     inside = lambda pt, o: min(p[0] for p in o) <= pt[0] <= max(p[0] for p in o) and min(p[1] for p in o) <= pt[1] <= max(p[1] for p in o)
-    OUT.parent.mkdir(parents=True, exist_ok=True)
-    surf = cairo.PDFSurface(str(OUT), A4[0] * PT, A4[1] * PT)
+    out = PORTRAIT_OUT if args.portrait else OUT
+    out.parent.mkdir(parents=True, exist_ok=True)
+    size = (A4[1], A4[0]) if args.portrait else A4
+    surf = cairo.PDFSurface(str(out), size[0] * PT, size[1] * PT)
     cr = cairo.Context(surf); cr.scale(PT, PT)
     for side in ("left", "right"):
         o = halves[side]
+        if args.portrait:
+            cr.save()
+            cr.translate(0, A4[0])
+            cr.rotate(-math.pi / 2)
         page(cr, side, o, [h for h in holes if inside(h, o)], [e for e in enc if inside(e, o)], C.halves()[side]["oled"])
+        if args.portrait:
+            cr.restore()
         cr.show_page()
     surf.finish()
-    print(f"wrote {OUT.relative_to(ROOT)}")
+    print(f"wrote {out.relative_to(ROOT)}")
 
 
 if __name__ == "__main__":

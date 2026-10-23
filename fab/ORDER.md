@@ -9,7 +9,7 @@ Per half came out cheaper at Lion Circuits than the combined file (checked 2026-
 | Layers | 2 |
 | Material | FR-4, 1.6 mm |
 | Copper | 1 oz (35 µm) |
-| Board size | both halves: 363.0 × 125.9 mm · one half: 162.7 × 125.9 mm |
+| Board size | both halves: 363.0 × 126.1 mm · one half: 160.3 × 126.1 mm |
 | Quantity | 5 left + 5 right (two orders) |
 | Surface finish | HASL lead-free (cheapest; fine for hand soldering) |
 | Soldermask / silkscreen | **black / white** (the silkscreen artwork is drawn for it; set in the board stackup) |

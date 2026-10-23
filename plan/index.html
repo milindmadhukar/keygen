@@ -93,7 +93,7 @@ svg text{font-family:var(--mono)}
   <p class="lede prose">Keep Redox's key positions and thumb cluster, then redraw the electronics around two nRF52840 controllers. You get Bluetooth to the computer, Bluetooth between the halves, and a cable for either link when you want one. It's a one-off build, so every feature goes in now. The trackpad and the screen are dropped, and the controllers sit hidden under the board.</p>
 
   <div class="verdict prose">
-    <p><strong>Good news:</strong> Redox's thumb cluster is already a 2×2 block, two 1u keys over two 1.5u keys and rotated 30°, plus one 1.25u key. That's the Manuform-style block you wanted, on a flat board.</p>
+    <p><strong>Good news:</strong> Redox's thumb cluster is already a 2×2 block, two 1u keys over two 1.25u keys and rotated 30°, plus one 1.25u key. That's the Manuform-style block you wanted, on a flat board.</p>
     <p><strong>Controller:</strong> one nRF52840 per half (an nRF52840 SuperMini, a nice!nano v2 clone, on the Pro Micro footprint Redox already uses). Firmware is ZMK, the only mature firmware that does Bluetooth split.</p>
     <p><strong>What you reuse:</strong> Redox is MIT-licensed, so the fork is fine. The key coordinates and outline carry over. The copper doesn't: rev1 is a 2018 KiCad 5 board with solder-in switches and no LEDs, so the schematic and routing get redone in KiCad 10. That's the PCB learning you wanted.</p>
   </div>
@@ -110,13 +110,13 @@ svg text{font-family:var(--mono)}
     <span><span class="sw" style="background:var(--part);border-color:var(--part-edge)"></span>Knob</span>
     <span><span class="sw" style="background:transparent;border-color:var(--part-edge);border-style:dashed"></span>Under the board</span>
   </div>
-  <p class="cap">Each half has a knob where the inner column used to be, its edge 4.5 mm below the OLED, 5.7 mm from the thumb cluster's top key and 9.1 mm from the G/H column, and a 0.96 in. OLED above it, standing in a window in the plate over the controller's lower end. Reach a knob with your index finger or a lifted thumb. Each controller is mounted on the underside, beneath the old inner column. Only its USB-C port reaches the case's top edge.</p>
+  <p class="cap">Each half has a knob where the inner column used to be, its edge 10 mm below the OLED, 5.7 mm from the thumb cluster's top key and 9.1 mm from the G/H column, and a 0.96 in. OLED above it, standing in a window in the plate over the controller's lower end. Reach a knob with your index finger or a lifted thumb. Each controller is mounted on the underside, beneath the old inner column. Only its USB-C port reaches the case's top edge.</p>
 
   <div class="tablewrap"><table>
     <thead><tr><th>Thumb key</th><th>Left</th><th>Right</th><th>Reach</th></tr></thead>
     <tbody>
-      <tr><td>1.5u, hand side (rest)</td><td><span class="k">Backspace</span></td><td><span class="k">Space</span></td><td>where the thumb rests</td></tr>
-      <tr><td>1.5u, centre side</td><td><span class="k">Del</span></td><td><span class="k">Enter</span></td><td>one step</td></tr>
+      <tr><td>1.25u, hand side (rest)</td><td><span class="k">Backspace</span></td><td><span class="k">Space</span></td><td>where the thumb rests</td></tr>
+      <tr><td>1.25u, centre side</td><td><span class="k">Del</span></td><td><span class="k">Enter</span></td><td>one step</td></tr>
       <tr><td>1u, top row</td><td><span class="k">Ctrl</span> <span class="k">Alt</span></td><td><span class="k">Alt</span> <span class="k">Ctrl</span></td><td>one step up</td></tr>
       <tr><td>1.25u, toward the palm</td><td><span class="k">Super</span></td><td><span class="k">Fn</span></td><td>curl in; fine for held keys</td></tr>
     </tbody>

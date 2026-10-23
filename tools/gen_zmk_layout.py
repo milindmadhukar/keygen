@@ -4,7 +4,7 @@ layout, from the same Redox KLE and key table the PCB is placed from.
 
 Key positions (the order of every keymap layer) run left to right, top to bottom:
 number row (with the two encoder presses between the halves), top, home, bottom, the extra row, the
-thumb cluster's 1u top row, then its bottom row (1.25u, 1.5u, 1.5u on each half).
+thumb cluster's 1u top row, then its bottom row (three 1.25u keys on each half).
 """
 import sys
 from pathlib import Path

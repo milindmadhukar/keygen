@@ -18,7 +18,7 @@ updated: 2026-10-22T17:53
 A one-off, **flat, wireless split keyboard** built on the **Redox** key layout, with:
 
 - **66 keys**, QWERTY, on Redox key positions, six columns per hand
-- **Redox thumb cluster**: a 2×2 block (two 1u over two 1.5u, rotated 30°) plus one 1.25u key per hand
+- **Redox thumb cluster**: a 2×2 block (two 1u over two 1.25u, rotated 30°) plus one 1.25u key per hand
 - **Two rotary encoders (knobs)**, one on each half's inner edge, mirrored
 - **An OLED status screen on each half** (0.96 in., 128×64), plus **per-key RGB** that also shows status
 - **Two nRF52840 controllers**, hidden under the PCB, USB-C through the case
@@ -58,8 +58,8 @@ The outer columns are 1.25u. The extra bottom row follows the Kinesis Advantage.
 
 | Key | Left | Right |
 |---|---|---|
-| 1.5u, hand side (rest) | `Backspace` | `Space` |
-| 1.5u, centre side | `Super` | `Enter` |
+| 1.25u, hand side (rest) | `Backspace` | `Space` |
+| 1.25u, centre side | `Super` | `Enter` |
 | 1u, over the rest key | `Ctrl` | `:` |
 | 1u, over the centre key | `Alt` | Dictate (`Ctrl`+`Alt`+`Space`) |
 | 1.25u, toward the palm | hold `Nav` | hold `Fn` |
@@ -67,6 +67,7 @@ The outer columns are 1.25u. The extra bottom row follows the Kinesis Advantage.
 **Super** sits one step from the resting thumb because Hyprland uses it constantly: Super + number row for workspaces, Super + HJKL for focus, Super + Enter/Space across both thumbs. Shift, Ctrl and Alt live on the left half only, so the right half's keys each do something of their own: `:` opens Vim's command line in one press, and Dictate sends `Ctrl`+`Alt`+`Space`, OpenWhispr's dictation toggle in Hyprland. Del is Fn + Bksp. Both 1.25u keys are layer keys; holding both gives the System layer.
 
 Every 2×2 key is at most one step from where the thumb rests. That keeps the whole cluster in reach for small hands.
+The upper two keys stay 1u: with 1.25u lower caps, they can sit 4.76 mm closer to the resting thumb than before. Making the upper caps 1.25u too would push their switch centres 2.38 mm back to preserve cap clearance.
 
 ### Nav, Fn and System layers
 
@@ -76,7 +77,7 @@ Every 2×2 key is at most one step from where the thumb rests. That keeps the wh
 
 ### Knobs
 
-Each half has an EC11 encoder (push switch, 20 mm D shaft) with a 17 × 13 mm knurled aluminium knob (a "D halfshaft 17x13" amplifier knob) on its inner edge, mirrored: the right shaft is at (256.5, 129.0) and the left at (167.0, 129.0) in board coordinates (KiCad mm). On both halves the knob's edge sits 4.5 mm below the OLED, 5.7 mm from the thumb cluster's top key and 9.1 mm from the G/H column, close enough to reach with the thumb.
+Each half has an EC11 encoder (push switch, 20 mm D shaft) with a 17 × 13 mm knurled aluminium knob (a "D halfshaft 17x13" amplifier knob) on its inner edge, mirrored: the right shaft is at (256.5, 134.5) and the left at (167.0, 134.5) in board coordinates (KiCad mm). On both halves the knob's edge sits 10 mm below the OLED, 5.7 mm from the thumb cluster's top key and 9.1 mm from the G/H column, close enough to reach with the thumb.
 
 | Layer | Left knob | Right knob |
 |---|---|---|
@@ -137,7 +138,7 @@ The three inner pads (P1.01, P1.02, P1.07) are unused.
 
 The matrix is COL2ROW: each switch connects to its column, and the diode cathode connects to its row. There are 5 rows and 7 columns (column 0 is the outer edge on both halves).
 
-- **Column 6** holds Alt (row 2), Ctrl (row 3) and the 1.5u centre-side thumb key (row 4).
+- **Column 6** holds Alt (row 2), Ctrl (row 3) and the 1.25u centre-side thumb key (row 4).
 - **Row 4** holds the extra bottom row and the thumbs.
 - **Both halves:** each encoder's push switch sits at row 0 / column 6, with its own 1N4148 (D107 left, D207 right, on the back beside the encoder).
 - **Left references:** the left keys are SW101–SW106 and SW108–SW134, with diodes D101–D106 and D108–D134.
@@ -148,7 +149,7 @@ The matrix is COL2ROW: each switch connects to its column, and the diode cathode
 - **Footprint:** a 1×4 2.54 mm header, pin order **GND, VCC, SCL, SDA**. Check the module's printed order before soldering; some swap GND and VCC.
 - **Wiring:** SDA on P0.17 (pad 5), SCL on P0.20 (pad 6), both full-speed pins. Power comes from the controller's VCC (pad 16), its switched 3.3 V output, which P0.13 turns on. The firmware holds P0.13 high with a gpio-hog, so the OLED stays powered on battery.
 - **Mounting:** the module's own header pins solder straight into the board, on their 2.5 mm plastic spacer, so the glass sits about level with the plate top (~5 mm above the PCB), in a 28.5 × 29 mm plate window. The module is 27.5 × 28 mm.
-- **Position:** over the lower (antenna) end of each controller, in the free area above the knob. Right module x 245–272.5, y 88–116; left x 151–178.5, y 88–116 (board coordinates). The header runs along the module's bottom edge, so the firmware draws the text turned 180°. Sitting over the antenna end costs some Bluetooth range, as with a display over a nice!nano on a Corne.
+- **Position:** over the lower (antenna) end of each controller, in the free area above the knob. Right module x 242–269.5, y 88–116; left x 154–181.5, y 88–116 (board coordinates). The module is 4.6 mm from the nearest keycaps on either half; the nearby M2 holes sit below the reset switches. The header runs along the module's bottom edge, so the firmware draws the text turned 180°. Sitting over the antenna end costs some Bluetooth range, as with a display over a nice!nano on a Corne.
 
 ### Schematic
 
@@ -205,7 +206,7 @@ Each half has 34 diodes: 33 for the keys and one for its encoder's push switch, 
 
 ### Keycaps
 
-**4 × 1.5u**, **10 × 1.25u** (8 outer column + 2 thumb), **52 × 1u**. Nothing is wider than 1.5u, so **no stabilizers** are needed. Uniform-profile caps are easiest because the thumb keys are rotated.
+**14 × 1.25u** (8 outer column, 2 thumb, 4 tall thumb), **52 × 1u**. Nothing is wider than 1.25u, so **no stabilizers** are needed. Uniform-profile caps are easiest because the thumb keys are rotated.
 
 - **Keycaps** (decided 2026-10-20): blank **DSA PBT in smoke translucent**, so the per-key status LEDs show through. All sizes from one AliExpress seller (SZElectronic Store) in its translucent black, with two mixed-colour 1u accents.
 - **Switches** (decided 2026-10-20): **Akko V3 Lavender Purple Pro**, a light tactile with a clear top.
@@ -262,9 +263,9 @@ See [[05 - pcb design]].
 
 - **Placement:**
   - Generated from Redox's KLE.
-  - The tall 1.5u thumb keys are turned 90°.
+  - The tall 1.25u thumb keys are turned 90°.
   - Both halves sit on one A3 sheet in one KiCad project.
-  - The bottom edge is cut back to the bottom row and thumb keys (`tools/trim_outline.py`).
+  - The bottom edge runs flat along the bottom row, then along the thumb keys at 30° (`tools/trim_outline.py`).
 - **Look:** black soldermask with white silkscreen artwork from the *Keygen* cover (`tools/silkscreen_art.py`): the keygen.exe window on the left half, moon and STMPD emblem by the right half's encoder, GENERATE under each reset button, stars on free board area.
 - **Routing:**
   - **Freerouting** did about 85% of the signal routing, with ground left to the fill.

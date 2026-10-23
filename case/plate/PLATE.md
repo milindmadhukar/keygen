@@ -7,7 +7,7 @@ The plate is a plain FR-4 board with no copper. Place **two orders**, like the P
 |---|---|
 | Layers | 2 (both copper layers are empty) |
 | Material | FR-4, 1.6 mm |
-| Board size | one half: 171.8 × 130.9 mm |
+| Board size | one half: 169.8 × 130.6 mm |
 | Quantity | 5 left + 5 right (two orders) |
 | Surface finish | HASL lead-free (no copper is exposed) |
 | Soldermask / silkscreen | **black** both sides / none |
@@ -36,6 +36,6 @@ seen from above, one closed outline per contour, on three layers:
 | `DRILL` | 2.2 mm holes, drilled (smaller than a router bit) |
 
 - Sheet: 1.6 mm (1.5 mm also fits; the MX clips are made for it), at least
-  180 × 139 mm per half.
+  178 × 139 mm per half.
 - Each cut-out corner has a dogbone (a half circle through the corner) for a router bit of
   3.175 mm (1/8 in.) or smaller, so the switches sit square. A laser cuts them as drawn.

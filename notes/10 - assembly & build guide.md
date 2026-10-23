@@ -40,7 +40,7 @@ From `fab/BOM.md` (left 1xx, right 2xx):
 | 1N4148 diode (DO-35) | 34 | back | band (cathode) toward the square pad; D107/D207 is the encoder's, beside it |
 | Kailh MX hotswap socket | 33 | back | |
 | EC11 encoder, ENC101/ENC201 | 1 | front | 17 mm knob on the D shaft |
-| MX switch + keycap | 33 | front | 1.5u thumb switches turned 90° |
+| MX switch + keycap | 33 | front | tall 1.25u thumb switches turned 90° |
 | 0.96 in. SSD1306 I2C OLED module, J101/J201 | 1 | front | the module's own header pins; goes in after the plate, through its window |
 
 ## Build sequence (per half)
@@ -103,11 +103,11 @@ The case is gasket-mounted: the plate and PCB become one unit that floats on Por
 - **OLED module (J101/J201):** check its printed pin order matches the footprint's GND, VCC, SCL, SDA (some modules swap GND and VCC). Pass its header pins down through the plate's OLED window into the board, with the module resting on its 2.5 mm plastic spacer, and solder them from the back. Power the half and check the status screen appears.
 
 ### 11. Switches, then into the case
-- Check each switch's pins are straight, then press it through the plate into its socket, with a hand under the PCB behind the socket. The 1.5u thumb switches are turned 90°.
+- Check each switch's pins are straight, then press it through the plate into its socket, with a hand under the PCB behind the socket. The tall 1.25u thumb switches are turned 90°.
 - Case foam onto the floor of the bottom shell, round the battery in its bay.
 - Poron strips (12 × 4 × 2 mm, cut from 80 × 4 × 2 mm strips) on the 8 ledges, then the plate-and-PCB unit onto them with the USB-C over its slot, then a strip on top of each tab.
 - Top frame on. Holding the two parts together, turn the half over onto a soft cloth and drive the 8 M2 × 16 screws up through the floor evenly: snug, not tight, so the gaskets stay soft.
-- Fit the keycaps (52 × 1u, 10 × 1.25u, 4 × 1.5u) and push a knob onto each encoder shaft.
+- Fit the keycaps (52 × 1u, 14 × 1.25u) and push a knob onto each encoder shaft.
 - Final test: every key on every layer, both encoders, both OLEDs, the LEDs on USB, and Bluetooth between the halves on battery.
 
 ## Flashing

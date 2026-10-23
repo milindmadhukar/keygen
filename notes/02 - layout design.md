@@ -5,7 +5,7 @@ name: 02 - layout design
 ---
 
 > [!success] Layout
-> **Redox minus its inner column**: 66 keys, QWERTY, 1.25u outer columns, a Kinesis-style extra bottom row with `[` `]` on the right, and the Redox thumb cluster (2×2 block: two 1u over two 1.5u at 30°, plus one 1.25u). Arrows are on **HJKL** behind a layer key. An EC11 knob sits in the freed space on each half's inner edge, mirrored, with an OLED above it. Geometry comes from `redox-layout.json` (mattdibi/redox-keyboard, MIT), placed in KiCad with KB Placer. Full keymap: [[12 - final design#Layout]].
+> **Redox minus its inner column**: 66 keys, QWERTY, 1.25u outer columns, a Kinesis-style extra bottom row with `[` `]` on the right, and the Redox thumb cluster (2×2 block: two 1u over two 1.25u at 30°, plus one 1.25u). Arrows are on **HJKL** behind a layer key. An EC11 knob sits in the freed space on each half's inner edge, mirrored, with an OLED above it. Geometry comes from `redox-layout.json` (mattdibi/redox-keyboard, MIT), placed in KiCad with KB Placer. Full keymap: [[12 - final design#Layout]].
 
 ## Key layout
 
@@ -14,7 +14,7 @@ name: 02 - layout design
 - **Split**: two halves at shoulder width
 
 ### Key count
-- **66 keys total** (33 per half): 52 × 1u, 10 × 1.25u, 4 × 1.5u
+- **66 keys total** (33 per half): 52 × 1u, 14 × 1.25u
 - Thumb cluster: 5 per side (2×2 block + one 1.25u)
 - One rotary encoder per half; each push switch is in its half's matrix, so the keymap has 68 positions (both knob presses sit in the middle of the number row)
 

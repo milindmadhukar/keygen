@@ -10,9 +10,8 @@ AO3401A P-MOSFET (SOT-23),2,Q101 Q102,AO3401A,Package_TO_SOT_SMD:SOT-23,"SMD, ba
 AO3400A N-MOSFET (SOT-23),1,Q103,AO3400A,Package_TO_SOT_SMD:SOT-23,"SMD, back side, in the LED power switch"
 1 MΩ resistor (1206),1,R101,1M,Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder,"SMD, back side, below the battery MOSFET"
 100 kΩ resistor (1206),2,R102 R103,100k,Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder,"SMD, back side, in the LED power switch"
-"MX switch, 1.25u key",5,SW101 SW108 SW114 SW121 SW132,=,keygen:SW_MX_HS_CPG151101S11_1.25u,Kailh socket on the back; switch + 1.25u keycap
+"MX switch, 1.25u key",7,SW101 SW108 SW114 SW121 SW132 SW133 SW134,=,keygen:SW_MX_HS_CPG151101S11_1.25u,Kailh socket on the back; switch + 1.25u keycap (the two tall thumb keys turned 90°)
 "MX switch, 1u key",26,SW102 SW103 SW104 SW105 SW106 SW109 SW110 SW111 SW112 SW113 SW115 SW116 SW117 SW118 SW119 SW120 SW122 SW123 SW124 SW125 SW126 SW127 SW128 SW129 SW130 SW131,1,keygen:SW_MX_HS_CPG151101S11_1u,Kailh socket on the back; switch + 1u keycap on top
-"MX switch, 1.5u key (tall thumb)",2,SW133 SW134,Bksp,keygen:SW_MX_HS_CPG151101S11_1.5u,"Kailh socket on the back; switch + 1.5u keycap, turned 90°"
 MSK12C02 power slide switch,1,SW190,MSK12C02 power,keygen:SW_MSK12C02-HB,"SMD, back side at the top edge, lever out"
 6 mm reset button,1,SW191,Reset,Button_Switch_THT:SW_PUSH_6mm_H5mm,"through-hole, back side"
 nRF52840 SuperMini (nice!nano v2 clone),1,U101,nRF52840 Pro Micro,keygen:nice_nano_H_USBup,"on the back, socketed (Mill-Max/low-profile); check B+, GND and VCC first"

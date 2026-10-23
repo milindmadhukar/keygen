@@ -96,7 +96,9 @@ def stitch_fill(b, pitch=6.0, margin=0.65):
         side = z.GetNetname().split("/")[1]
         fills.setdefault(side, {})[z.GetLayer()] = (z.GetFilledPolysList(z.GetLayer()), z.GetNet())
     have = [t.GetPosition() for t in b.GetTracks() if isinstance(t, pcbnew.PCB_VIA)]
-    ring = [(math.cos(a) * mm(margin), math.sin(a) * mm(margin)) for a in [k * math.pi / 4 for k in range(8)]] + [(0, 0)]
+    # and drilled pads: a GND pad joined to the fill solid (no spokes) is covered on both layers
+    have += [p.GetPosition() for fp in b.GetFootprints() for p in fp.Pads() if p.GetDrillSize().x > 0]
+    ring =[(math.cos(a) * mm(margin), math.sin(a) * mm(margin)) for a in [k * math.pi / 4 for k in range(8)]] + [(0, 0)]
     added = 0
     for side, layers in fills.items():
         if pcbnew.F_Cu not in layers or pcbnew.B_Cu not in layers: continue

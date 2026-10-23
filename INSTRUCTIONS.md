@@ -175,7 +175,7 @@ button-head screws from below.
 
 - Check each switch's pins are straight, then press it through the plate into its socket while
   supporting the PCB behind the socket with your other hand.
-- The two 1.5u thumb switches per half are turned 90°.
+- The two tall 1.25u thumb switches per half are turned 90°.
 
 ## 5. Close the case
 
@@ -211,7 +211,7 @@ tight, so the gaskets stay soft.
 
 ### Step 20: Keycaps, knob and final test
 
-1. Fit the keycaps: per half, 26 × 1u, 5 × 1.25u and 2 × 1.5u.
+1. Fit the keycaps: per half, 26 × 1u and 7 × 1.25u (the two tall thumb caps turned 90°).
 2. Push a knob onto each encoder shaft.
 3. Turn both halves on together so they pair with each other, then pair the host to Bluetooth
    profile 1 (SYS + `1`).
