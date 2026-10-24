@@ -17,7 +17,7 @@ name: 10 - assembly & build guide
 - Isopropyl alcohol (90 %+) for flux residue
 - Magnifier for the LED and SOT-23 joints
 - USB-C cable; a 1-to-2 USB-C cable for charging both halves
-- Phillips screwdriver for the M2 screws, 1.5 mm hex key for the case screws; iron tip or heat-set tool for the inserts
+- 1.3 mm hex key for the M2 button-head screws, 1.5 mm for the case screws; iron tip or heat-set tool for the inserts
 
 [GOLEM tools guide](https://golem.hu/guide/tools/)
 
@@ -89,17 +89,17 @@ From `fab/BOM.md` (left 1xx, right 2xx):
 - Turn and press the encoder: on the left, scroll and middle click; on the right, volume and mute.
 
 ### 10. Battery
-- Tape the pouch into the battery bay in the bottom shell's floor with double-sided tape, its lead end towards the battery connector. The bay keeps it at least 15 mm from the controller's antenna end and 2.5 mm below the solder joints. Placement: [[14 - case & plate requirements#Inside the case (under the PCB)]].
+- Tape the pouch into the battery bay in the bottom shell's floor with double-sided tape, its lead end towards the battery connector. The bay keeps it at least 15 mm from the controller's antenna end and 1.4 mm from assumed 2 mm underside parts at full gasket travel, with a 6.1 mm installed battery stack. Placement: [[14 - case & plate requirements#Inside the case (under the PCB)]].
 - The lead end sits about 40 mm from the connector, so a lead of 60 mm or more reaches it.
 - Never press, fold or puncture the pouch.
 
 ### Case assembly
 The case is gasket-mounted: the plate and PCB become one unit that floats on Poron strips. Design: [[09 - case design]].
 - Lay the top frame deck-down and press the 8 M2 heat-set inserts into the holes in its underside (about 200–230 °C), flush and no deeper, and let them cool. 1.4 mm of frame covers each hole. [Heat-set insert guide](https://www.youtube.com/watch?v=cyof7fYFcuQ)
-- Screw the five M2 × 3.5 mm standoffs onto the PCB from below with M2 × 4 screws.
+- Put a 0.5 mm shim on the PCB over each mounting hole, stand an M2 × 3 mm standoff on it and screw it on from below: M2 × 3 button heads at H102, H103, H105, H202 and H204, which also take a plate screw from above, and M2 × 4 at the other five.
 - Cut the foam from the files in `case/foam/dxf/` or `case/foam/svg/` (DXF for a laser, SVG printed at 100 % as a template): per half a 2 mm EVA plate foam and a 5 mm EVA case foam, each the right way up as drawn.
 - Stick a 0.5 mm Poron ring switch pad on the PCB round each switch, its notches towards the switch clips and its open middle round the pins and the LED window, then lay the plate foam over them. Seven rings per half have a corner snipped off where they meet a standoff.
-- Plate onto the standoffs, with M2 × 4 button-head screws at H102–H105 (left) and H202–H204 (right). H101, H201 and H205 get no screw on top.
+- Plate onto the standoffs, with M2 × 3 button-head screws at H102, H103 and H105 (left) and H202 and H204 (right). H101, H104, H201, H203 and H205 get no screw on top; the standoffs bear against the plate there.
 - **OLED module (J101/J201):** check its printed pin order matches the footprint's GND, VCC, SCL, SDA (some modules swap GND and VCC). Pass its header pins down through the plate's OLED window into the board, with the module resting on its 2.5 mm plastic spacer, and solder them from the back. Power the half and check the status screen appears.
 
 ### 11. Switches, then into the case

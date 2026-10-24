@@ -189,6 +189,12 @@ def build(h):
     # the plate, level with the rim, with windows for the keycaps and the OLED and a hole for the encoder
     top = Pos(0, 0, C.SPLIT_Z) * extrude(outer - inner, C.CEIL_Z - C.SPLIT_Z, dir=UP)
     top += Pos(0, 0, C.CEIL_Z) * extrude(deck(h), C.TOP_Z - C.CEIL_Z, dir=UP)
+    # The selected HongYan encoder body can reach 6.8 mm above the PCB; relieve the underside
+    # locally while keeping the smaller bushing opening on the visible face of the deck.
+    for p in h["enc"]:
+        x, y = xy(p)
+        top -= Pos(x, y, C.CEIL_Z - EPS) * Box(
+            C.ENC_CUTOUT, C.ENC_CUTOUT, C.ENC_RECESS_TOP - C.CEIL_Z + EPS, align=Z)
     z0, z1 = C.CEIL_Z - 0.1, C.TOP_Z + 0.1
     top -= loft([Pos(0, 0, z0) * rect(C.oled_window(h, z0)), Pos(0, 0, z1) * rect(C.oled_window(h, z1))], ruled=True)
     cuts = [notch]
@@ -391,7 +397,7 @@ def fit_check(h, bottom, top, plt, foam):
     kinds = C.standoffs(h)
     standoffs = heads = None
     for ref, p in h["holes"].items():
-        so = cylinder(p, C.STANDOFF_D, 0, C.PLATE_BOT)
+        so = cylinder(p, C.SHIM_D, 0, C.SHIM_T) + cylinder(p, C.STANDOFF_D, C.SHIM_T, C.PLATE_BOT)
         standoffs = so if standoffs is None else standoffs + so
         if kinds[ref][0] == "screwed":
             hd = cylinder(p, C.SCREW_HEAD_D, C.PLATE_TOP, C.PLATE_TOP + C.SCREW_HEAD_H)
@@ -399,7 +405,7 @@ def fit_check(h, bottom, top, plt, foam):
     x0, y0, x1, y1 = C.battery(h)["cell"]
     (bx, by) = xy(((x0 + x1) / 2, (y0 + y1) / 2))
     cell = lambda lift: Pos(bx, by, C.CAVITY_Z - C.BAY_DEPTH + lift) * Box(
-        x1 - x0, y1 - y0, C.BATTERY_T + C.BATTERY_GROWTH, align=Z)
+        x1 - x0, y1 - y0, C.BATTERY_STACK_T, align=Z)
     battery = cell(0.0)
     tall = None
     for t in h["tall"]:
@@ -476,8 +482,10 @@ def main():
         print(f"{side} screw walls: " + (f"thin round screws {broken}" if broken else "solid round every screw"))
         for k, v in C.deck_clearances(h).items():
             print(f"{side} deck: {k} {v:.1f} mm")
+        for k, v in C.standoff_threads().items():
+            print(f"{side} standoffs: {k} {v:.1f} mm")
         top_z, gap, pressed = C.battery_heights()
-        print(f"{side} battery: {C.BATTERY_L:g} x {C.BATTERY_W:g} x {C.BATTERY_T:g} mm (+{C.BATTERY_GROWTH:g}) in the "
+        print(f"{side} battery: {C.BATTERY_L:g} x {C.BATTERY_W:g} x {C.BATTERY_STACK_T:g} mm installed envelope in the "
               f"floor bay, {gap:.1f} mm under the solder joints, {pressed:.1f} mm with the stack pressed down")
         clash = fit_check(h, bottom, top, plt, foam)
         print(f"{side} fit check: " + (", ".join(f"{k} {v:.2f} mm3" for k, v in clash.items()) or "no overlaps"))

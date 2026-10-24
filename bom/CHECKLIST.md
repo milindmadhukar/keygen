@@ -7,12 +7,12 @@ only, and a friend brings it to India.
 
 Order in two stages. First the PCBs, the electronics and the AliExpress cart; build one half on the
 bench and test it. Then the plate and the case, measured against the parts in hand. Estimated total
-about ₹23,000 with a steel plate, ₹29,000 with FR-4 (at about ₹55 per AU$).
+about ₹22,000 (at about ₹55 per AU$), plus the CNC cutting of the plate.
 
 | Got | Item | Qty | Where | Link | Price | Notes |
 |---|---|---|---|---|---|---|
 | [ ] | Main PCBs, black | 5 left + 5 right | Lion Circuits | [quote](https://www.lioncircuits.com/quote) | ₹3,400 per design, ₹6,800 | Settings in [`fab/ORDER.md`](../fab/ORDER.md). Stage 1 |
-| [ ] | Switch plates | 1 left + 1 right | Not decided | | FR-4 ₹3,400 per design; steel ~₹1,000–1,500 per plate | Stage 2. FR-4 from Lion with the Gerbers, or 1.5 mm steel laser-cut from [`case/plate/dxf/`](../case/plate/dxf/) (SheetCutters quotes 1.5 mm; Robu only 1 or 2 mm, which do not suit MX clips) |
+| [ ] | Switch plate sheet, black FR-4 (G10), 1.5 mm, 300 × 300 mm | 1 | AliExpress → Australia (in cart) | [G10 sheet](https://www.aliexpress.com/item/1005004936570575.html), option 300MM x 300MM / 1.5mm | AU$15.99 | Both halves fit on it. Then a CNC router job with [`case/plate/dxf/`](../case/plate/dxf/), 1/8 in. bit or smaller, as [`PLATE.md`](../case/plate/PLATE.md) describes |
 | [ ] | Switches, Akko V3 Lavender Purple Pro | 90 (2 × 45) | StacksKB (in cart) | [pack of 45](https://stackskb.com/store/akko-v3-lavender-purple-pro-switch-pack-of-45/) | ₹2,198 | 24 spare |
 | [ ] | Diodes 1N4148, DO-35 | 100 (10 × 10) | StacksKB (in cart) | [pack of 10](https://stackskb.com/store/1n4148-through-hole-diode/) | ₹150 | |
 | [ ] | Keycaps 1u, blank DSA PBT, LBlack (smoke translucent), pack of 50 | 50 | AliExpress → Australia (in cart) | [SZElectronic Store](https://www.aliexpress.com/item/1005008827240220.html) | AU$10.40 | Option "50pcs LBlack" |
@@ -38,8 +38,10 @@ about ₹23,000 with a steel plate, ₹29,000 with FR-4 (at about ₹55 per AU$)
 | [ ] | Case, PETG: 2 bottom shells + 2 top frames | 4 parts | Robu.in | [3D printing service](https://robu.in/product/3d-printing-service1/) | ~₹2,000–3,000 (estimate) | Stage 2. Upload `case/{bottom,top}/stl/`. About 250–315 g of PETG. Shop around: services vary a lot per gram |
 | [ ] | Heat-set inserts M2, 3 mm long, 3.5 mm OD, pack of 100 | 16 | AliExpress → Australia (in cart) | [brass heat insert nut](https://www.aliexpress.com/item/1005006798286851.html) | AU$5.19 | Size for the case's 3.2 mm holes. 84 left for other projects |
 | [ ] | Case screws M2 × 16, socket head | 20 | Amazon.in / hardware store | | | The M2 × 6 pack linked before is the wrong length now; find M2 × 16 |
-| [ ] | Plate standoffs M2 × 3.5 mm, female-female | 15 | Hardware store | | ~₹300 with the screws (estimate) | The length sets the plate height for MX. If 3.5 mm is not stocked, file 4 mm ones down; not 5 mm |
-| [ ] | Plate screws M2 × 4, button head | 25 | Hardware store | | | |
+| [ ] | Plate standoffs M2 × 3 mm, brass hex, female-female, pack of 100 | 10 | AliExpress → Australia (in cart) | [brass standoff](https://www.aliexpress.com/item/1005008798318304.html), option M2 / 3mm | AU$4.31 | Each stands on a 0.5 mm shim: together they set the plate height for MX. 3.5 mm standoffs are not stocked |
+| [ ] | Standoff shims, DIN 988 M2 2 × 5 × 0.5 mm, pack of 50 | 10 | AliExpress → Australia (in cart) | [shim washer](https://www.aliexpress.com/item/1005002301164770.html), option M2x5 / 0.5mm | AU$3.92 | One under each standoff, on the PCB |
+| [ ] | Plate screws M2 × 4, button head, pack of 50 | 5 | AliExpress → Australia (in cart) | [HZYUEGOU ISO 7380](https://www.aliexpress.com/item/32967225441.html), option M2 / 4mm | AU$2.04 | Under the PCB at the five standoffs with no screw on top |
+| [ ] | Plate screws M2 × 3, button head, pack of 50 | 10 | AliExpress → Australia (in cart) | [HZYUEGOU ISO 7380](https://www.aliexpress.com/item/32967225441.html), option M2 / 3mm | AU$2.04 | Above and below the five standoffs that also take a plate screw; two M2 × 4 would meet inside the standoff |
 | [ ] | Switch pads, Poron ring, pack of 120 | 66 | AliExpress → Australia (in cart) | [Apc Accessories Store](https://www.aliexpress.com/item/1005009936259305.html), option PORON | AU$4.13 | One round each switch on the PCB, under the plate foam. Open middle, so the LED window stays clear. In place of the PE switch-foam sheet |
 | [ ] | Plate foam, EVA 2 mm, A4 | 2 sheets | Amazon.in (in cart) | [black, pack of 10](https://www.amazon.in/dp/B0H4D6P874) | ₹140 | Goes between the PCB and the plate, on the switch pads. Cut from `case/foam/svg/`. No thicker than 2.8 mm, or it lifts the plate |
 | [ ] | Case foam, EVA 5 mm, A4 | 2 sheets | Amazon.in (in cart) | [black, pack of 5](https://www.amazon.in/dp/B0D2NJD4DK) | ₹249 | Goes on the bottom shell's floor, under the PCB, to fill the hollow case. Cut from `case/foam/svg/` |

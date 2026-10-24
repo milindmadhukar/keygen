@@ -16,7 +16,7 @@ The plate is a plain FR-4 board with no copper. Place **two orders**, like the P
 **Things to tell the fab or check in their DFM report**
 - It is a keyboard switch plate: **no copper** on either layer. Empty copper Gerbers are on purpose.
 - 66 square switch cut-outs (33 per half), 14.0 × 14.0 mm with 0.5 mm corner radii, plus
-  a 13 × 13 mm encoder cut-out and a 28.5 × 29 mm OLED window per half. All are internal Edge.Cuts outlines to be
+  a 15 × 15 mm encoder cut-out and a 29.5 × 30 mm OLED window per half. All are internal Edge.Cuts outlines to be
   routed (milled) with a bit of 1.0 mm or less, so the corners stay at 0.5 mm.
 - The outline has rectangular tabs (12 × 5 mm) on its edges. They are part of the board.
 - Five 2.2 mm non-plated holes per half (M2).
@@ -35,7 +35,7 @@ seen from above, one closed outline per contour, on three layers:
 | `OUTLINE` | outside the line: the plate edge with its gasket tabs |
 | `DRILL` | 2.2 mm holes, drilled (smaller than a router bit) |
 
-- Sheet: 1.6 mm (1.5 mm also fits; the MX clips are made for it), at least
-  178 × 139 mm per half.
+- Sheet: black FR-4 (G10), 1.5 mm (the MX clips are made for it), at least
+  178 × 139 mm per half: one 300 × 300 mm sheet holds both halves.
 - Each cut-out corner has a dogbone (a half circle through the corner) for a router bit of
   3.175 mm (1/8 in.) or smaller, so the switches sit square. A laser cuts them as drawn.

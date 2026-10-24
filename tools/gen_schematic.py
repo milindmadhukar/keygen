@@ -226,11 +226,16 @@ def keygen_footprints():
         fp = load(marb / lib, name)
         fp[:] = [n if not (isinstance(n, list) and n and n[0] == "model") else vendor_model(n, base) for n in fp]
         if name.startswith("ROT_"):         # the knob (tools/gen_models.py), just above the EC11's bushing
-            fp.append(model(f"{SHAPES}/Knob_17mm.step", offset=(0, 0, 11.5)))
+            fp.append(model(f"{SHAPES}/Knob_17mm.step", offset=(0, 0, 14.1)))
             # the common pin C sits 2.5 mm between A and B, which leaves no room for thermal spokes
             # sideways: connect it to the ground pour solid
             for pad in find(fp, "pad"):
                 if pad[1] == "C": pad.append([S("zone_connect"), 2])
+                # The selected HongYan EC11H calls for 1.8-1.9 mm wide mounting holes. Give
+                # the plated slots 0.1 mm width margin and retain 0.2 mm copper annular width.
+                if pad[1] == "MP":
+                    first(pad, "size")[1:] = [3.4, 2.4]
+                    first(pad, "drill")[2:] = [2.8, 2.0]
         save(fp, name)
 
 def keygen_lib():

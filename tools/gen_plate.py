@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""The switch plate: a 1.6 mm FR-4 board with no copper, made by the PCB fab.
+"""The switch plate: black FR-4, CNC-routed from 1.5 mm sheet with the DXFs, or made by a PCB fab
+as a 1.6 mm board with no copper from the Gerbers.
 
 pcb/plate/keygen-plate.kicad_pcb     both halves (KiCad 10), black mask
 case/plate/gerber/keygen-plate-left-gerbers.zip    } one order per half, like the PCB
@@ -27,6 +28,7 @@ OUT = ROOT / "pcb/plate/keygen-plate.kicad_pcb"
 PLATE_DIR = ROOT / "case/plate"
 GERBERS = PLATE_DIR / "gerber"
 DXF = PLATE_DIR / "dxf"
+FAB_T = 1.6                    # the PCB fab's standard thickness; the case takes it too
 BIT_D = 3.175                  # largest router bit the DXF dogbones fit (1/8 in.); any smaller bit works
 HOLE_D = 2.2                   # M2 clearance, drilled
 N = pcbnew.FromMM
@@ -83,7 +85,7 @@ def build(sides, path):
     hs = C.halves()
     board = pcbnew.BOARD()
     board.SetCopperLayerCount(2)
-    board.GetDesignSettings().SetBoardThickness(N(C.PLATE_T))
+    board.GetDesignSettings().SetBoardThickness(N(FAB_T))
     for side in sides:
         h = hs[side]
         pts = outline_with_tabs(h, C.tabs(h))
@@ -213,7 +215,7 @@ The plate is a plain FR-4 board with no copper. Place **two orders**, like the P
 | Setting | Value |
 |---|---|
 | Layers | 2 (both copper layers are empty) |
-| Material | FR-4, 1.6 mm |
+| Material | FR-4, {FAB_T:g} mm |
 | Board size | one half: {w:.1f} × {hh:.1f} mm |
 | Quantity | 5 left + 5 right (two orders) |
 | Surface finish | HASL lead-free (no copper is exposed) |
@@ -223,7 +225,7 @@ The plate is a plain FR-4 board with no copper. Place **two orders**, like the P
 **Things to tell the fab or check in their DFM report**
 - It is a keyboard switch plate: **no copper** on either layer. Empty copper Gerbers are on purpose.
 - {cut} square switch cut-outs ({cut // 2} per half), 14.0 × 14.0 mm with 0.5 mm corner radii, plus
-  a 13 × 13 mm encoder cut-out and a {C.OLED_W + 2 * C.OLED_CLEAR:g} × {C.OLED_H + 2 * C.OLED_CLEAR:g} mm OLED window per half. All are internal Edge.Cuts outlines to be
+  a {C.ENC_CUTOUT:g} × {C.ENC_CUTOUT:g} mm encoder cut-out and a {C.OLED_W + 2 * C.OLED_CLEAR:g} × {C.OLED_H + 2 * C.OLED_CLEAR:g} mm OLED window per half. All are internal Edge.Cuts outlines to be
   routed (milled) with a bit of 1.0 mm or less, so the corners stay at 0.5 mm.
 - The outline has rectangular tabs ({C.TAB_W:g} × {C.TAB_D:g} mm) on its edges. They are part of the board.
 - Five 2.2 mm non-plated holes per half (M2).
@@ -242,8 +244,8 @@ seen from above, one closed outline per contour, on three layers:
 | `OUTLINE` | outside the line: the plate edge with its gasket tabs |
 | `DRILL` | {HOLE_D:g} mm holes, drilled (smaller than a router bit) |
 
-- Sheet: {C.PLATE_T:g} mm (1.5 mm also fits; the MX clips are made for it), at least
-  {w + 8:.0f} × {hh + 8:.0f} mm per half.
+- Sheet: black FR-4 (G10), {C.PLATE_T:g} mm (the MX clips are made for it), at least
+  {w + 8:.0f} × {hh + 8:.0f} mm per half: one 300 × 300 mm sheet holds both halves.
 - Each cut-out corner has a dogbone (a half circle through the corner) for a router bit of
   {BIT_D:g} mm (1/8 in.) or smaller, so the switches sit square. A laser cuts them as drawn.
 """)

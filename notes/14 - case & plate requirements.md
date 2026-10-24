@@ -4,7 +4,7 @@ name: 14 - case & plate requirements
 tags:
   - keyboards
   - case
-updated: 2026-10-22T17:53
+updated: 2026-10-24
 ---
 # Case & Plate Requirements
 
@@ -22,34 +22,34 @@ All the ports are on the **top edge** of each half, next to the controller, so o
 | **USB-C** | Top wall, at the controller | The controller (18 mm wide) hangs **under** the PCB on sockets, and its USB-C end reaches ~1 mm past the PCB edge; the edge is slanted, so one corner reaches ~1.6 mm. The case has an **open slot 20 mm wide** from the floor up to the PCB's underside, which clears the whole controller end and any cable overmould. |
 | **Power switch** (MSK12C02, side-actuated) | Top wall, near the USB-C | The lever pokes out past the PCB edge, at the PCB's underside. A **9 × 3.4 mm slot** at the lever. The wall is thinned to **1.5 mm** from 10 mm before the USB-C to the corner past the switch, so a fingernail reaches the lever. |
 | **Reset pinhole** | Case **floor**, under the reset button | The 6 × 6 mm, 5 mm-tall button sits on the PCB underside. You press it with a **paperclip** through a **Ø 2 mm hole**, countersunk outside, with a guide tube (Ø 5 mm) up to 1 mm under the button. ZMK can also enter the bootloader from a key combo. |
-| **Rotary encoder knob** (both halves, mirrored) | Top: through the switch plate | The EC11 body is ~12 × 12 mm and 4.5 mm tall on the PCB top, so the plate has a **13 × 13 mm cut-out** around it; above it only the 7 mm bushing (to 11.5 mm) passes through a 9 mm hole in the top frame's deck, under the knob, whose underside is 2.9 mm above the deck. The knob is Ø 17 mm, its edge 10 mm below the OLED, 5.7 mm from the thumb cluster's top key and 9.1 mm from the G/H column. Shafts at (167.0, 134.5) left and (256.5, 134.5) right, in board coordinates (KiCad mm). |
-| **OLED window** (both halves) | Top: through the switch plate, above the knob | The 27.5 × 28 mm SSD1306 module stands on its own header pins and 2.5 mm spacer, so its glass sits about level with the plate top (~5 mm above the PCB). The plate has a **28.5 × 29 mm window**, and the top frame's deck a window round the active area, opening towards the thumbs; the glass sits 3.5 mm below the deck top. Module at x 154–181.5, y 88–116 (left) and x 242–269.5, y 88–116 (right), in board coordinates, over the controller's antenna end and 4.6 mm from the nearest keycaps. `tools/gen_case.py` checks the case against the modules. |
+| **Rotary encoder knob** (both halves, mirrored) | Top: through the switch plate | The selected HongYan EC11H body is 12 × 11.7 mm and up to 6.8 mm tall on the PCB top, including drawing tolerances. The plate has a **15 × 15 mm cut-out**; the top frame has a matching underside relief up to 7.4 mm, then a 9 mm hole for the 7 mm bushing. The modeled knob underside is 5.5 mm above the deck using the bushing's 14.1 mm maximum height. The knob is Ø 17 mm, its edge 10 mm below the OLED, 5.7 mm from the thumb cluster's top key and 9.1 mm from the G/H column. Shafts at (167.0, 134.5) left and (256.5, 134.5) right, in board coordinates (KiCad mm). |
+| **OLED window** (both halves) | Top: through the switch plate, above the knob | The 27.5 × 28 mm SSD1306 module stands on its own header pins and 2.5 mm spacer, so its glass sits about level with the plate top (~5 mm above the PCB). The plate has a **29.5 × 30 mm window**, giving the module 1 mm per side, and the top frame's deck a window round the active area, opening towards the thumbs; the glass sits 3.5 mm below the deck top. Module at x 154–181.5, y 88–116 (left) and x 242–269.5, y 88–116 (right), in board coordinates, over the controller's antenna end and 4.6 mm from the nearest keycaps. `tools/gen_case.py` checks the case against the modules. |
 
 ## Inside the case (under the PCB)
 
-- **Tallest part: the controller on sockets.** About 4.5 mm of low-profile socket plus the controller's 3.2 mm (mid-mount USB-C), so about **7.5 mm below the PCB**. Measure the real one before fixing the cavity depth.
+- **Tallest part: the controller on sockets.** The case reserves **8.5 mm below the PCB** for the socketed controller, plus 1.5 mm of float travel to the floor. The PCB's 3D model uses a 4.5 mm socket and a mid-mount USB-C connector.
 - **Battery** (decided 2026-10-23): a **505080 LiPo pouch, 80 × 50 × 5 mm, about 2500 mAh**, with a protection board. The bay takes a cell **≤ 5 mm thick and at most 60 × 88 mm** including the protection board. It lies in a **bay sunk 1 mm into the case floor**, long side across the board, under the outer and middle key columns, held with double-sided tape. Measure the actual cell before printing.
   - Bay: the cell plus 1.5 mm each side, 63 × 91 mm. Cell position (same coordinates as the table below): left half x 16.7–104.7, y 6.4–66.4; right half x 57.9–145.9, y 6.4–66.4. `tools/case_geometry.py` places it, as near the battery connector as the rules below allow.
   - Keep it **≥ 15 mm from the controller's antenna end** (no foil near the antenna) and ≥ 3 mm from the controller, the JST-PH connector, the slide switch, the reset button, the encoder and the OLED header pins. It has 10 mm.
   - The lead end faces the side-entry JST-PH next to the controller, about 40 mm away, so a lead of 60 mm or more reaches it.
-  - Height: bay floor 10.0 mm below the PCB's underside. A 5.5 mm cell (5 mm plus tolerance and swelling) leaves 2.5 mm to the sockets and diodes (2.0 mm under the PCB), and 1.0 mm with the floating stack pressed 1.5 mm down. `tools/gen_case.py` checks both. The battery adds no case height.
-- **Case height:** 3.0 mm floor + 1.5 mm float gap + 7.5 mm controller + 1.6 mm PCB puts the PCB top 13.6 mm above the desk, the plate top 18.6 mm and keycap tops about 33 mm, before tenting and feet. The full stack is in [[09 - case design#The stack]].
+  - Height: bay floor 11.0 mm below the PCB's underside. A 6.1 mm installed envelope (5.0 mm nominal cell + 0.3 mm thickness tolerance + 0.5 mm swelling + 0.3 mm tape) leaves 2.9 mm to the sockets and diodes (assumed 2.0 mm under the PCB), and 1.4 mm with the floating stack pressed 1.5 mm down. `tools/gen_case.py` checks the modeled envelope. Solder higher than 2.0 mm uses that gap.
+- **Case height:** 3.0 mm floor + 1.5 mm float gap + 8.5 mm controller envelope + 1.6 mm PCB puts the PCB top 14.6 mm above the desk, the plate top 19.6 mm and keycap tops about 34 mm, before tenting and feet. The full stack is in [[09 - case design#The stack]].
 - **Plate standoff screws** under the PCB (M2 button heads, 1.1 mm) are lower than the hotswap sockets.
 - **Other underside parts.** Kailh hotswap sockets (~1.8 mm), through-hole diodes (~2 mm body, leads clipped flush), reverse-mount LEDs (nearly flush) and the switch pins poking through. Allow **≥ 4 mm** clear under the key area.
 - **Bluetooth antenna.** The nRF52840's chip antenna is at the controller's **bottom end** (opposite USB-C). The case must be **plastic**, with **no metal plate, weight or screws** under or right next to that end. The PCB already keeps ground fill out of that area.
 
 ## Switch plate (faceplate)
 
-- **FR-4, 1.6 mm**, black mask, no copper, made by the PCB fab from `case/plate/gerber/keygen-plate-{left,right}-gerbers.zip` (settings in `case/plate/PLATE.md`). MX clips are made for 1.5 mm and take 1.6 mm.
-- **14.0 × 14.0 mm** square cut-out per switch, with 0.5 mm corner radii from the fab's router bit.
+- **Black FR-4 (G10), 1.5 mm**, the thickness the MX clips are made for, CNC-routed from one 300 × 300 mm sheet with `case/plate/dxf/` (notes in `case/plate/PLATE.md`). `case/plate/gerber/` has the same plate as a 1.6 mm board with no copper for a PCB fab; the case takes either.
+- **14.0 × 14.0 mm** square cut-out per switch, with 0.5 mm corner radii (in the DXFs, a dogbone at each corner for a 1/8 in. bit).
   - Thumb keys follow the PCB rotation (±15° / ±30°).
   - The two tall 1.25u thumb switches per half are turned 90°, but the cut-out is square so that doesn't matter.
 - **No stabilizer cut-outs.** Nothing is wider than 1.25u.
-- **Plate-to-PCB gap.** The plate top sits 5.0 mm above the PCB top (MX standard), so the gap is 3.4 mm. **M2 × 3.5 mm female-female standoffs** at all five holes per half, screwed from below with M2 × 4 screws.
-- **Plate screws** (M2 × 4 button head, Ø 3.5 mm head) only where the head clears the switch top housings (15.6 mm square) by 0.3 mm: H102–H105 and H202–H204. At H101, H201 and H205 there is 1.65–1.98 mm of room, so those standoffs are screwed from below only and their top bears on the plate.
+- **Plate-to-PCB gap.** The plate top sits 5.0 mm above the PCB top (MX standard), so the gap is 3.5 mm. At all five holes per half an **M2 × 3 mm female-female standoff** stands on a **0.5 mm DIN 988 shim** (2 × 5 mm) on the PCB, screwed on from below: M2 × 4 where there is no plate screw, M2 × 3 where there is, so the two screws in one standoff stay 0.6 mm apart.
+- **Plate screws** (M2 × 3 button head, Ø 3.5 mm head) only where the head clears the switch top housings (15.6 mm square) by at least 0.3 mm: H102, H103 and H105 on the left; H202 and H204 on the right. At H101, H104, H201, H203 and H205 there is only 1.65–1.98 mm of room from the hole centre to the switch housing, so those standoffs are screwed from below only and their top bears on the plate.
 - **Mounting holes** line up with the PCB's M2 holes (table below), 2.2 mm.
 - **Gasket tabs:** 8 per half, 12 × 5 mm, on the plate edge, kept 22 mm from the USB-C and the switch lever. The right half's are the left's, mirrored.
-- **Encoder cut-out** (13 × 13 mm) and **OLED window** (28.5 × 29 mm) on both halves (see above).
+- **Encoder cut-out** (15 × 15 mm) and **OLED window** (29.5 × 30 mm) on both halves (see above). The encoder's two plated PCB mounting slots are 2.0 × 2.8 mm, widened from the vendor footprint's 1.5 × 2.8 mm for clearance around HongYan's 1.8–1.9 × 2.1–2.2 mm recommended holes.
 
 ## Lighting
 
