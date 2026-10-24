@@ -90,6 +90,7 @@ steps and what they run:
 python3 tools/gen_schematic.py                      # schematic: pcb/*.kicad_sch, pcb/lib/
 python3 tools/gen_plate.py                          # plate: pcb/plate/, case/plate/{gerber,dxf}/, case/plate/PLATE.md
 ~/.venvs/keygen-cad/bin/python tools/gen_case.py    # case: case/{bottom,top}/, case/plate/step/, case/foam/, the fit check
+~/.venvs/keygen-cad/bin/python tools/check_mechanical.py  # pairwise and tolerance clearances, plus the 3D fit check
 python3 tools/render_case.py                        # case-renders: assets/render-case*.png, assets/render-plate.png
 ~/.venvs/keygen-cad/bin/python tools/gen_models.py  # models: pcb/lib/keygen.3dshapes/: the knob and OLED 3D models
 ```

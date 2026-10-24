@@ -32,9 +32,11 @@ updated: 2026-10-22T19:00
   off between positions. Leave the switch on while charging.
 - **Battery:** a 505080 LiPo pouch (5 × 50 × 80 mm, about 2500 mAh) with a protection board, as
   the controller has no over-discharge cut-off. It lies in a bay sunk 1 mm into the case floor,
-  which takes up to 60 × 88 × 5 mm, under the outer and middle key columns, its lead end towards
-  the battery connector. It sits 2.5 mm below the solder joints on the PCB's underside and at least
-  15 mm from the controller's antenna end.
+  which takes up to a 60 × 88 mm cell with a 6.1 mm installed height envelope, under the outer
+  and middle key columns, its lead end towards
+  the battery connector. With a 6.1 mm installed battery stack, it clears assumed 2 mm underside
+  parts by 2.9 mm at rest and 1.4 mm at full gasket travel, and stays at least 15 mm from the
+  controller's antenna end.
 - **LED power:** the LEDs run from the battery (B+) through an AO3401A P-MOSFET, whose gate an
   AO3400A N-MOSFET on P0.08 pulls low to turn them on. 100 kΩ resistors hold both MOSFETs off, and
   a 10 µF + 100 nF pair sits at the switch's output.
@@ -76,22 +78,24 @@ References and soldering notes for every part are in `fab/BOM.md`.
 
 ## Plate and case
 
-- **Gasket mount:** the plate and PCB are tied together by M2 × 3.5 mm standoffs and touch the
+- **Gasket mount:** the plate and PCB are tied together by M2 × 3 mm standoffs on 0.5 mm shims and touch the
   case only through Poron strips (12 × 4 × 2 mm, cut from 80 × 4 × 2 mm strips), one above and
   one below each of the plate's 8 tabs per half. Closing the case squeezes each strip by 0.4 mm.
-- **Plate:** FR-4 1.6 mm with black mask and no copper. 14 × 14 mm cut-outs following each key's
-  rotation, a 13 × 13 mm encoder cut-out and a 28.5 × 29 mm OLED window per half, and the PCB's M2
-  holes. Plate screws go in at H102–H105 and H202–H204; the standoffs at H101, H201 and H205 are
+- **Plate:** black FR-4, 1.5 mm, CNC-routed from sheet. 14 × 14 mm cut-outs following each key's
+  rotation, a 15 × 15 mm encoder cut-out and a 29.5 × 30 mm OLED window per half, and the PCB's M2
+  holes. Plate screws go in at H102, H103, H105, H202 and H204; the other five standoffs are
   screwed from below only.
 - **Case:** the bottom shell and top frame are screwed together from below with 8 M2 × 16 screws
   per half, up through the walls into heat-set inserts in blind holes in the top frame's underside,
-  none within 15 mm of the controller's antenna end. The heads sit 2 mm up in counterbores in the
-  floor; the top frame has no holes on top. The PCB top sits 13.6 mm
-  above the desk and the plate top 18.6 mm.
+  none within 15 mm of the controller's antenna end. The heads sit 3 mm up in counterbores in the
+  floor; the top frame has no holes on top. The PCB top sits 14.6 mm
+  above the desk and the plate top 19.6 mm.
 - **Top frame deck:** level with the frame's rim, 3.6 mm above the plate top, covering the plate
-  everywhere but the keycaps (0.6 mm clear of each), the OLED window and the encoder. The
+  everywhere but the keycaps (0.8 mm clear of each), the OLED window and the encoder. The
   OLED window opens out towards the thumbs; the glass sits 3.5 mm below the deck top. The encoder
-  bushing passes through a 9 mm hole under the knob, whose underside is 2.9 mm above the deck.
+  bushing passes through a 9 mm hole under the knob; a 15 mm square recess above the encoder body
+  provides 0.6 mm nominal headroom at the tallest published body height. The knob underside is
+  5.5 mm above the deck at the tallest published bushing height.
 - **Foam:** per half, the switch pads and two foam layers, the layers cut from the files in
   `case/foam/` (DXF or SVG).
   - Poron ring switch pads, 0.5 mm, ready-made: a square ring about 18 mm across with a 14.2 mm
@@ -101,7 +105,7 @@ References and soldering notes for every part are in `fab/BOM.md`.
     OLED cut-outs (switches 14.4 mm) and holes for the pads and standoffs. Up to 2.8 mm fits.
   - EVA case foam, 5 mm, on the case floor round the battery bay, the controller, the
     battery connector, the slide switch, the reset tube and the encoder and OLED pins. It sits
-    2.0 mm below the parts under the PCB.
+    3.0 mm below the parts under the PCB at rest and 1.5 mm below at full gasket travel.
 - **Openings:** an open 20 mm USB-C slot and a 9 × 3.4 mm power switch slot on the top edge, with
   the wall thinned to 1.5 mm in front of them, and a 2 mm reset pinhole in the floor with a guide
   tube up to the button.

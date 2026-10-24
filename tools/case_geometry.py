@@ -40,7 +40,7 @@ MM = pcbnew.ToMM
 
 # ---------------------------------------------------------------- stack (mm)
 PCB_T = 1.6
-PLATE_T = 1.6                  # FR-4 plate; MX clips are made for 1.5 mm and take 1.6
+PLATE_T = 1.5                  # black FR-4 sheet, CNC-routed; the MX clips are made for 1.5 mm
 PLATE_TOP = 5.0
 PLATE_BOT = PLATE_TOP - PLATE_T
 GASKET_T = 2.0                 # Poron strip, uncompressed
@@ -50,7 +50,7 @@ LEDGE_Z = PLATE_BOT - (GASKET_T - GASKET_SQUEEZE)
 CEIL_Z = PLATE_TOP + (GASKET_T - GASKET_SQUEEZE)
 SPLIT_Z = PLATE_BOT            # bottom shell / top frame joint
 TOP_Z = CEIL_Z + 2.0
-CONTROLLER_DEPTH = 7.5         # socketed nice!nano below the PCB's underside
+CONTROLLER_DEPTH = 8.5         # conservative socketed-controller envelope below the PCB's underside
 FLOAT_GAP = 1.5                # under the controller, so the floating stack can travel
 CAVITY_Z = -PCB_T - CONTROLLER_DEPTH - FLOAT_GAP
 FLOOR_T = 3.0
@@ -61,11 +61,11 @@ CUTOUT = 14.0                  # MX switch cut-out
 CUTOUT_R = 0.5                 # its corner radius (the fab's router bit)
 SWITCH_FLANGE = 15.6           # MX top housing, resting on the plate
 CAP_GAP = 0.95                 # keycap = n * 19.05 - this
-ENC_CUTOUT = 13.0              # square plate cut-out around the EC11 body
+ENC_CUTOUT = 15.0              # square plate cut-out around the selected HongYan EC11H body
 OLED_W, OLED_H = 27.5, 28.0    # 0.96 in. OLED module, standing in a plate window
 OLED_HDR_IN = 1.3              # its header row from its bottom edge (the module sits above the pins)
 OLED_Z = (2.5, 5.1)            # module bottom and glass top above the PCB (on the header's spacer)
-OLED_CLEAR = 0.5               # module to plate window, each side
+OLED_CLEAR = 1.0               # module to plate window, each side
 HOLE_D = 2.2
 TAB_W, TAB_D = 12.0, 5.0       # gasket tab: width along the edge, depth beyond the outline
 TABS_PER_HALF = 8
@@ -82,7 +82,10 @@ ANTENNA_KEEP = 15.0            # no metal (inserts, screws) this close to it
 SCREW_HEAD_D = 3.5             # M2 button head (ISO 7380) on top of the plate
 HEAD_CLEAR = 0.3               # head to switch top housing
 BATTERY_W, BATTERY_L, BATTERY_T = 60.0, 88.0, 5.0   # the largest cell bom.csv allows, protection board included
-BATTERY_GROWTH = 0.5           # pouch thickness tolerance and swelling with age
+BATTERY_SIZE_TOL = 0.3         # delivered cell thickness above its nominal rating
+BATTERY_GROWTH = 0.5           # pouch swelling with age
+BATTERY_TAPE = 0.3             # double-sided mounting tape
+BATTERY_STACK_T = BATTERY_T + BATTERY_SIZE_TOL + BATTERY_GROWTH + BATTERY_TAPE
 BATTERY_CLEAR = 1.5            # cell to the bay wall, each side
 BAY_DEPTH = 1.0                # the bay is sunk this far into the floor
 UNDERSIDE_H = 2.0              # hotswap sockets (1.85 mm) and DO-35 diodes (1.75 mm body) under the PCB
@@ -90,10 +93,11 @@ TALL_CLEAR = 3.0               # cell to the controller, battery connector, butt
 TALL_REFS = ("U", "BT", "ENC", "J")   # and the slide switch and reset button (SWx90, SWx91)
 
 # ---------------------------------------------------------------- top frame deck (mm)
-CAP_CLEAR = 0.6                # keycap to its window in the deck, each side
-ENC_BODY, ENC_BODY_H = 12.5, 4.5         # EC11E body on the PCB (datasheet: 11.7 x 12.5, 4.5 tall)
-ENC_BUSHING_D, ENC_BUSHING_TOP = 7.0, 11.5   # the bushing above it, up to where the knob starts
+CAP_CLEAR = 0.8                # keycap to its window in the deck, each side
+ENC_BODY, ENC_BODY_H = 12.5, 6.8         # HongYan EC11H: 12 x 11.7 plan, 6.5 tall; include drawing tolerances
+ENC_BUSHING_D, ENC_BUSHING_TOP = 7.0, 14.1   # HongYan bushing: 6.5 + 7 mm nominal, plus both tolerances
 ENC_HOLE_D = 9.0               # deck hole round the bushing; the knob hides it
+ENC_RECESS_TOP = 7.4           # local underside relief: 0.6 mm above the tallest encoder body
 KNOB_D, KNOB_H = 17.0, 13.0    # knob, its underside at ENC_BUSHING_TOP (gen_models.py)
 OLED_GLASS = (26.7, 19.3, 1.4) # glass on the module, 2.0 mm in from the edge away from the header
 OLED_ACTIVE = (21.7, 10.9)     # active area, 1.0 mm off the glass centre away from the header
@@ -102,6 +106,11 @@ OLED_VIEW = 50.0               # degrees from vertical, from the thumb side: the
                                # the active area at this angle
 SCREW_HEAD_H = 1.1             # M2 button head (ISO 7380) on the plate
 STANDOFF_D = 4.0               # M2 hex standoff, across the corners
+STANDOFF_L = 3.0               # M2 x 3 female-female; 3.5 mm is not a stock length
+SHIM_T, SHIM_D = 0.5, 5.0      # DIN 988 shim (2 x 5 x 0.5) under each standoff, on the PCB, so
+                               # standoff and shim fill the plate gap
+SCREW_L_UNDER = 4.0            # M2 button head into the standoff from below, where there is no plate screw
+SCREW_L_BOTH = 3.0             # both screws, above and below, where there is a plate screw
 
 # ---------------------------------------------------------------- foam (mm)
 PE_T = 0.5                     # Poron ring switch pads on the PCB, one per switch
@@ -406,9 +415,8 @@ def battery(h):
 
 
 def battery_heights():
-    """(cell top above the bay floor's z, gap to the parts under the PCB, gap with the stack pressed
-    down by FLOAT_GAP), all for a cell grown by BATTERY_GROWTH."""
-    top = CAVITY_Z - BAY_DEPTH + BATTERY_T + BATTERY_GROWTH
+    """(cell top, gap to underside parts, gap at full travel), including tape, size tolerance and swelling."""
+    top = CAVITY_Z - BAY_DEPTH + BATTERY_STACK_T
     gap = -PCB_T - UNDERSIDE_H - top
     return top, gap, gap - FLOAT_GAP
 
@@ -442,6 +450,18 @@ def deck_clearances(h):
             "plate screw heads below the deck": CEIL_Z - PLATE_TOP - SCREW_HEAD_H}
 
 
+def standoff_threads():
+    """{what: mm} for the standoffs: how far each screw reaches into its standoff, and the room left
+    between the two screws where one comes from above and one from below."""
+    under = SCREW_L_UNDER - PCB_T - SHIM_T
+    both_under, both_over = SCREW_L_BOTH - PCB_T - SHIM_T, SCREW_L_BOTH - PLATE_T
+    return {"standoff and shim short of the plate": PLATE_BOT - STANDOFF_L - SHIM_T,
+            f"M2 x {SCREW_L_UNDER:g} from below, into the standoff": under,
+            f"M2 x {SCREW_L_BOTH:g} from below, into the standoff": both_under,
+            f"M2 x {SCREW_L_BOTH:g} from above, into the standoff": both_over,
+            "between the two screws": STANDOFF_L - both_under - both_over}
+
+
 def standoffs(h):
     """{hole ref: 'screwed' | 'post'}. A plate screw goes in only where its head clears the switch
     top housings and the encoder; elsewhere the standoff is screwed from below and its top bears on
@@ -470,6 +490,7 @@ if __name__ == "__main__":
     print(f"stack: floor {BOTTOM_Z:.1f}, cavity {CAVITY_Z:.1f}, ledge {LEDGE_Z:.1f}, split {SPLIT_Z:.1f}, "
           f"plate {PLATE_BOT:.1f}..{PLATE_TOP:.1f}, ceiling {CEIL_Z:.1f}, top {TOP_Z:.1f}")
     for k, v in deck_clearances(halves()["left"]).items(): print(f"deck: {k} {v:.1f} mm")
+    for k, v in standoff_threads().items(): print(f"standoffs: {k} {v:.1f} mm")
     top, gap, pressed = battery_heights()
-    print(f"battery: bay floor {CAVITY_Z - BAY_DEPTH:.1f}, cell top {top:.1f} ({BATTERY_T:g} + {BATTERY_GROWTH:g} mm), "
+    print(f"battery: bay floor {CAVITY_Z - BAY_DEPTH:.1f}, cell top {top:.1f} ({BATTERY_STACK_T:g} mm installed), "
           f"{gap:.1f} mm under the solder joints, {pressed:.1f} mm with the stack pressed down {FLOAT_GAP:g} mm")

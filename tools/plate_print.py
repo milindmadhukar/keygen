@@ -24,7 +24,7 @@ PT = 72 / 25.4                     # points per mm
 A4 = (297.0, 210.0)                # landscape, mm
 CUTOUT = 14.0                      # MX plate cut-out
 CAP_GAP = 0.95                     # keycap bottom = n * 19.05 - this
-ENC_CUTOUT = 13.0                  # square cut-out around the EC11 body
+ENC_CUTOUT = 15.0                  # square cut-out around the EC11 body
 KNOB_D = 19.0
 HOLE_D = 2.2
 

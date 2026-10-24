@@ -26,10 +26,11 @@ Everything sits on the **back** of the PCB except the switches, the encoder and 
 2. **PCBs.** Two orders of 5: [`fab/keygen-left-gerbers.zip`](fab/keygen-left-gerbers.zip) and
    [`fab/keygen-right-gerbers.zip`](fab/keygen-right-gerbers.zip), bare boards, black mask. The
    order-form settings and what to check in the DFM report are in [`fab/ORDER.md`](fab/ORDER.md).
-3. **Switch plates.** The two zips in [`case/plate/gerber/`](case/plate/gerber/), with the settings
-   in [`case/plate/PLATE.md`](case/plate/PLATE.md). Or have them CNC- or laser-cut from 1.5–1.6 mm
-   sheet with the DXFs in [`case/plate/dxf/`](case/plate/dxf/), as
-   [`PLATE.md`](case/plate/PLATE.md#cutting-the-plates-from-sheet-cnc-router-or-laser) describes.
+3. **Switch plates.** Have both halves CNC-routed from one 300 × 300 mm sheet of 1.5 mm black FR-4
+   with the DXFs in [`case/plate/dxf/`](case/plate/dxf/), as
+   [`PLATE.md`](case/plate/PLATE.md#cutting-the-plates-from-sheet-cnc-router-or-laser) describes. Or
+   order them from a PCB fab: the two zips in [`case/plate/gerber/`](case/plate/gerber/), with the
+   settings in [`case/plate/PLATE.md`](case/plate/PLATE.md).
 4. **Case.** The four STLs in [`case/bottom/stl/`](case/bottom/stl/) and
    [`case/top/stl/`](case/top/stl/), printed in PETG.
 5. **Foam.** Cut per half from the 1:1 files in [`case/foam/dxf/`](case/foam/dxf/) (laser) or
@@ -42,8 +43,10 @@ Fasteners per half:
 
 | Part | Qty | Where |
 |---|---|---|
-| M2 × 3.5 mm female-female standoff | 5 | Between the PCB and the plate |
-| M2 × 4 mm button-head screw | 5 + 4 (left), 5 + 3 (right) | Standoffs from below; plate from above |
+| M2 × 3 mm female-female standoff | 5 | Between the PCB and the plate |
+| M2 shim, 2 × 5 × 0.5 mm (DIN 988) | 5 | Under each standoff, on the PCB |
+| M2 × 4 mm button-head screw | 2 (left), 3 (right) | Standoffs with no plate screw, from below |
+| M2 × 3 mm button-head screw | 3 + 3 (left), 2 + 2 (right) | Standoffs with a plate screw, from below; plate from above |
 | M2 × 3 mm brass heat-set insert | 8 | Top frame underside |
 | M2 × 16 mm socket-head screw | 8 | Bottom shell to top frame, from below |
 | Poron strip, 12 × 4 × 2 mm, cut from 80 × 4 × 2 mm strips | 16 | Two per plate tab |
@@ -58,7 +61,7 @@ Fasteners per half:
 - Isopropyl alcohol (90 % or more) for flux residue
 - A magnifier for the LED and SOT-23 joints
 - A USB-C cable
-- A Phillips screwdriver for the M2 screws, a 1.5 mm hex key for the case screws, and an iron tip or heat-set tool for the inserts
+- A 1.3 mm hex key for the M2 button-head screws, a 1.5 mm hex key for the case screws, and an iron tip or heat-set tool for the inserts
 - Double-sided tape for the battery
 
 ## 3. Solder the board
@@ -151,8 +154,10 @@ pad, solder the other pads, then touch up the first.
 
 ### Step 11: Standoffs
 
-Screw the five M2 × 3.5 mm standoffs onto the PCB at **H101–H105 / H201–H205**, with M2 × 4
-button-head screws from below.
+Put a 0.5 mm shim on the PCB over each mounting hole, **H101–H105 / H201–H205**, stand an M2 × 3 mm
+standoff on it and screw it on from below: M2 × 3 button-head screws at **H102, H103 and H105**
+(left) and **H202 and H204** (right), M2 × 4 at the others. The shorter screws leave room for the
+plate screws that go into the same standoffs from above.
 
 ### Step 12: Switch pads and plate foam
 
@@ -163,8 +168,9 @@ button-head screws from below.
 
 ### Step 13: Plate and OLED
 
-1. Set the plate on the standoffs and screw it down with M2 × 4 button-head screws at
-   **H102–H105** (left) and **H202–H204** (right). H101, H201 and H205 get no screw on top.
+1. Set the plate on the standoffs and screw it down with M2 × 3 button-head screws at
+   **H102, H103 and H105** (left) and **H202 and H204** (right). H101, H104, H201, H203 and H205
+   get no screw on top; the standoffs bear against the plate there.
 2. **OLED J101 / J201.** Check that the pin order printed on the module is GND, VCC, SCL, SDA, the
    same as the footprint; some modules swap GND and VCC. Pass its header pins down through the
    plate's OLED window into the board, with the module resting on its plastic spacer, and solder
@@ -189,6 +195,10 @@ hole), and let them cool.
 
 - Tape the pouch into the bay in the bottom shell's floor with double-sided tape, its lead end
   towards the battery connector.
+- Check the installed cell, protection board and tape thickness before closing: the modeled 1.4 mm
+  gap at full gasket travel includes a 6.1 mm battery stack (5.0 mm cell, 0.3 mm thickness tolerance,
+  0.5 mm swelling allowance and 0.3 mm tape) and underside parts no taller than 2.0 mm. Excess
+  solder or a thicker battery stack uses that gap.
 - Never press, fold or puncture the pouch.
 
 ### Step 17: Case foam

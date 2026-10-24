@@ -210,8 +210,8 @@
   )
   (pad "MP" thru_hole roundrect
     (at -5.6 0 90)
-    (size 3.4 2.2)
-    (drill oval 2.8 1.5)
+    (size 3.4 2.4)
+    (drill oval 2.8 2)
     (layers "*.Cu" "B.Mask")
     (remove_unused_layers no)
     (roundrect_rratio 0.25)
@@ -219,8 +219,8 @@
   )
   (pad "MP" thru_hole roundrect
     (at 5.6 0 90)
-    (size 3.4 2.2)
-    (drill oval 2.8 1.5)
+    (size 3.4 2.4)
+    (drill oval 2.8 2)
     (layers "*.Cu" "B.Mask")
     (remove_unused_layers no)
     (roundrect_rratio 0.25)
@@ -248,7 +248,7 @@
     (rotate (xyz 0 0 -90))
   )
   (model "${KIPRJMOD}/lib/keygen.3dshapes/Knob_17mm.step"
-    (offset (xyz 0 0 11.5))
+    (offset (xyz 0 0 14.1))
     (scale (xyz 1 1 1))
     (rotate (xyz 0 0 0))
   )

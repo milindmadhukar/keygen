@@ -1,7 +1,7 @@
 ISO-10303-21;
 HEADER;
 FILE_DESCRIPTION(('Open CASCADE Model'),'2;1');
-FILE_NAME('left case foam','2026-10-23T21:24:58',('Author'),(
+FILE_NAME('left case foam','2026-10-24T11:54:52',('Author'),(
     'Open CASCADE'),'Open CASCADE STEP processor 8.0','build123d',
   'Unknown');
 FILE_SCHEMA(('AUTOMOTIVE_DESIGN { 1 0 10303 214 1 1 1 1 }'));
@@ -24,7 +24,7 @@ DATA;
 #13 = DIRECTION('',(0.,0.,1.));
 #14 = DIRECTION('',(1.,0.,-0.));
 #15 = AXIS2_PLACEMENT_3D('',#16,#17,#18);
-#16 = CARTESIAN_POINT('',(0.,0.,-10.6));
+#16 = CARTESIAN_POINT('',(0.,0.,-11.6));
 #17 = DIRECTION('',(0.,0.,1.));
 #18 = DIRECTION('',(1.,0.,-0.));
 #19 = ( GEOMETRIC_REPRESENTATION_CONTEXT(3) 
