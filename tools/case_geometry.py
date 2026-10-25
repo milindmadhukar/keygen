@@ -94,6 +94,8 @@ TALL_REFS = ("U", "BT", "ENC", "J")   # and the slide switch and reset button (S
 
 # ---------------------------------------------------------------- top frame deck (mm)
 CAP_CLEAR = 0.8                # keycap to its window in the deck, each side
+DECK_MIN_WEB = 4.0             # narrowest web or finger of deck between the windows; anything thinner
+                               # is trimmed back to a rounded end, so no point of the printed deck snaps off
 ENC_BODY, ENC_BODY_H = 12.5, 6.8         # HongYan EC11H: 12 x 11.7 plan, 6.5 tall; include drawing tolerances
 ENC_BUSHING_D, ENC_BUSHING_TOP = 7.0, 14.1   # HongYan bushing: 6.5 + 7 mm nominal, plus both tolerances
 ENC_HOLE_D = 9.0               # deck hole round the bushing; the knob hides it

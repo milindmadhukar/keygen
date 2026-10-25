@@ -32,7 +32,8 @@ Everything sits on the **back** of the PCB except the switches, the encoder and 
    order them from a PCB fab: the two zips in [`case/plate/gerber/`](case/plate/gerber/), with the
    settings in [`case/plate/PLATE.md`](case/plate/PLATE.md).
 4. **Case.** The four STLs in [`case/bottom/stl/`](case/bottom/stl/) and
-   [`case/top/stl/`](case/top/stl/), printed in PETG.
+   [`case/top/stl/`](case/top/stl/), printed in PETG at 0.2 mm layers and 40 % infill: the bottom
+   shells floor-down and the top frames deck-down, without supports.
 5. **Foam.** Cut per half from the 1:1 files in [`case/foam/dxf/`](case/foam/dxf/) (laser) or
    [`case/foam/svg/`](case/foam/svg/) (printed at 100 % as a template): a 2 mm EVA plate foam and a
    5 mm EVA case foam, each the right way up as drawn. The Poron switch pads come ready to stick.

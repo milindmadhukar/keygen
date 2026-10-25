@@ -210,13 +210,19 @@ def build(h):
 
 def deck(h):
     """The top frame in plan at deck level: the case outline less a window per keycap, the OLED
-    window and the encoder hole. Webs under 1 mm wide, and any islands they leave, are dropped."""
-    outer = SPoly(h["outline"]).buffer(C.WALL_OUT, join_style="mitre", mitre_limit=10)
+    window and the encoder hole. Inside the walls, every web or point of deck narrower than
+    DECK_MIN_WEB is trimmed back to a rounded end, and any island that leaves is dropped; the rim
+    over the walls keeps its sharp corners."""
+    outline = SPoly(h["outline"])
+    outer = outline.buffer(C.WALL_OUT, join_style="mitre", mitre_limit=10)
     holes = [sq((k["x"], k["y"]), k["h"] * 19.05 - C.CAP_GAP + 2 * C.CAP_CLEAR, k["rot"],
                 k["w"] * 19.05 - C.CAP_GAP + 2 * C.CAP_CLEAR) for k in h["keys"]]
     holes += [circ(p, C.ENC_HOLE_D) for p in h["enc"]]
     holes.append(box(*C.oled_window(h, C.CEIL_Z)))
-    return to_face(opened(outer.difference(unary_union(holes)), 0.5))
+    raw = outer.difference(unary_union(holes))
+    r = C.DECK_MIN_WEB / 2
+    rim = raw.difference(outline.buffer(C.WALL_IN, join_style="mitre", mitre_limit=10))
+    return to_face(opened(unary_union([raw.buffer(-r).buffer(r, quad_segs=8).intersection(raw), rim]), 0.05))
 
 
 def foams(h):
