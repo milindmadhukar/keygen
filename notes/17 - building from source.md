@@ -79,7 +79,8 @@ python3 tools/regen.py --force    # rerun every step (or name steps: --force cas
 
 A step's inputs are its script, the `tools/` modules it imports and its data files (the PCB, the
 keymap, `bom/bom.csv` and so on). Their hashes from the last run are in `tools/regen.lock`,
-committed with the outputs. A full run takes about 3 minutes; the case is most of it.
+committed with the outputs. A full run takes about 20 minutes: 14 for the Blender renders, 3 for
+the case.
 
 - **Claude Code** runs it at the end of every turn (the Stop hook in `.claude/settings.json`), and
   a failing step comes back as feedback to fix.
@@ -112,6 +113,7 @@ python3 tools/render_routing.py  # assets/pcb-routing.png
 python3 tools/render_keymap.py   # assets/keymap-*.svg: one picture per keymap layer
 python3 tools/gen_zmk_layout.py  # firmware/boards/shields/keygen/keygen-layouts.dtsi
 python3 tools/gen_blend.py       # blender/keygen-parts.blend (local, see below)
+python3 tools/render_blender.py  # assets/render-studio-*: the Blender stills and GIFs
 ```
 
 ## Blender scene
@@ -136,6 +138,11 @@ black-mask PCB.
   `python3 tools/gen_blend.py --reset-studio` writes it afresh.
 - The LED colours are `LED_SCHEME` in `tools/blend_scene.py` (`gradient`, `lavender`, `white`,
   `rainbow`), and the materials are defined there too.
+- `tools/render_blender.py` (the `studio-renders` step) renders the README's pictures from the
+  studio file with Cycles: `assets/render-studio-{hero,top,thumbs}.jpg`, and the
+  `render-studio-{leds,turntable}.gif` loops. The hero uses the studio camera, so moving it moves the
+  README picture; the other views are set up in `tools/blend_render.py`. `--preview` renders them
+  small and noisy into `/tmp/keygen-preview/`.
 
 ## Generated files
 
@@ -152,6 +159,7 @@ PCB.
 | `pcb/keygen-schematic.pdf` | Printable schematic | `kicad-cli sch export pdf` |
 | `pcb/lib/keygen.3dshapes/` | 3D models for KiCad's 3D view: knob, OLED module, DSA keycaps (also as STL, for Blender), controller | `gen_models.py`, `gen_keycaps.py`, `gen_schematic.py` |
 | `assets/render-*.png` | The board, case and plate renders | `render_board.py`, `render_case.py` |
+| `assets/render-studio-*` | The Blender stills and GIFs | `render_blender.py`, `blend_render.py` |
 | `assets/pcb-routing.png` | Both copper layers | `render_routing.py` |
 | `assets/keymap-*.svg` | One picture per keymap layer | `render_keymap.py` |
 | `firmware/boards/shields/keygen/keygen-layouts.dtsi` | ZMK matrix transform and physical layout | `gen_zmk_layout.py` |

@@ -75,11 +75,11 @@ def smoke_pbt():
     """Translucent smoke PBT: clear-ish surface with fine texture, darkened by absorption inside, so
     thin walls pass the LED light and thick parts read black."""
     m, nodes, links, bsdf = material("Keycap smoke PBT", **{
-        "Base Color": (0.4, 0.4, 0.42), "Roughness": 0.42, "IOR": 1.53, "Transmission Weight": 1.0})
+        "Base Color": (0.26, 0.26, 0.28), "Roughness": 0.55, "IOR": 1.53, "Transmission Weight": 1.0})
     bump(nodes, links, bsdf, noise(nodes, links, 9000.0, 4.0).outputs["Fac"], 0.08, 0.00002)
     vol = nodes.new("ShaderNodeVolumeAbsorption")
     vol.inputs["Color"].default_value = (0.08, 0.08, 0.085, 1)
-    vol.inputs["Density"].default_value = 350.0
+    vol.inputs["Density"].default_value = 450.0
     links.new(vol.outputs["Volume"], nodes["Material Output"].inputs["Volume"])
     return m
 
@@ -87,7 +87,7 @@ def smoke_pbt():
 def petg_black():
     """Black PETG, 3D-printed: satin, with 0.2 mm layer lines along z."""
     m, nodes, links, bsdf = material("Case black PETG", **{
-        "Base Color": (0.012, 0.012, 0.013), "Roughness": 0.32, "Coat Weight": 0.15, "Coat Roughness": 0.25})
+        "Base Color": (0.012, 0.012, 0.013), "Roughness": 0.45})
     sep = nodes.new("ShaderNodeSeparateXYZ")
     links.new(object_coords(nodes), sep.inputs["Vector"])
     mul = nodes.new("ShaderNodeMath"); mul.operation = "MULTIPLY"
@@ -368,7 +368,8 @@ def build_studio():
     inst.instance_type = "COLLECTION"; inst.instance_collection = keygen
     scene.collection.objects.link(inst)
 
-    pts = [o.matrix_world @ Vector(c) for o in keygen.all_objects if o.type == "MESH" for c in o.bound_box]
+    case = keygen.children["Case"]                     # frame on the case: the outermost part
+    pts = [o.matrix_world @ Vector(c) for o in case.all_objects if o.type == "MESH" for c in o.bound_box]
     lo = Vector((min(p.x for p in pts), min(p.y for p in pts), min(p.z for p in pts)))
     hi = Vector((max(p.x for p in pts), max(p.y for p in pts), max(p.z for p in pts)))
     centre, size = (lo + hi) / 2, hi - lo
@@ -383,14 +384,14 @@ def build_studio():
     target.location = centre; scene.collection.objects.link(target)
     cam = bpy.data.objects.new("Camera", bpy.data.cameras.new("Camera"))
     cam.data.lens = 50
-    cam.location = centre + Vector((0, -size.x * 1.25, size.x * 1.0))
+    cam.location = centre + Vector((0, -size.x * 1.3, size.x * 0.8))
     look_at(cam, centre)
     cam.data.dof.use_dof = True; cam.data.dof.focus_object = target; cam.data.dof.aperture_fstop = 5.6
     scene.collection.objects.link(cam); scene.camera = cam
 
-    for name, offset, energy, area in (("Key light", (-0.35, -0.45, 0.55), 5.0, 0.5),
-                                       ("Rim light", (0.3, 0.5, 0.3), 4.0, 0.35),
-                                       ("Fill light", (0.6, -0.2, 0.25), 0.8, 0.6)):
+    for name, offset, energy, area in (("Key light", (-0.35, -0.45, 0.55), 2.5, 0.5),
+                                       ("Rim light", (0.3, 0.5, 0.3), 3.0, 0.35),
+                                       ("Fill light", (0.6, -0.2, 0.25), 0.4, 0.6)):
         l = bpy.data.lights.new(name, "AREA"); l.energy = energy; l.size = area
         o = bpy.data.objects.new(name, l); o.location = centre + Vector(offset); look_at(o, centre)
         scene.collection.objects.link(o)

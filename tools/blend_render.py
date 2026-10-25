@@ -1,0 +1,160 @@
+"""Blender side of tools/render_blender.py; run inside Blender on the studio file, not on its own:
+
+    blender -b blender/keygen.blend --python tools/blend_render.py -- <outdir> [--preview] [view ...]
+
+Writes into <outdir>:
+
+hero.png              the studio camera, as set up in blender/keygen.blend
+top.png               straight down on both halves
+thumbs.png            close up on the left half's knob, OLED and thumb cluster
+leds_####.png         the hero view, a rainbow wave running across the LEDs (a looping GIF's frames)
+turntable_####.png    one turn round the keyboard (a looping GIF's frames)
+
+The linked parts are swapped for a local copy first, so the LEDs and the camera can be animated.
+--preview renders small and noisy, to check a change quickly.
+"""
+import colorsys, math, sys
+from pathlib import Path
+
+import bpy
+from mathutils import Vector
+
+argv = sys.argv[sys.argv.index("--") + 1:]
+OUT = Path(argv[0])
+PREVIEW = "--preview" in argv
+VIEWS = [a for a in argv[1:] if not a.startswith("--")] or ["hero", "top", "thumbs", "leds", "turntable"]
+
+STILL = dict(width=2000, height=1125, samples=96)
+FRAMES = dict(width=640, height=360, samples=16)
+LED_FRAMES, TURN_FRAMES = 36, 48
+WAVE_SPAN = 0.7            # hues across the keyboard at once in the LED wave
+
+
+def log(msg):
+    print(f"keygen: {msg}", flush=True)
+
+
+def localise():
+    """Replace the linked Keygen collection instance with an appended copy of the collection."""
+    scene = bpy.context.scene
+    inst = next(o for o in scene.objects if o.instance_type == "COLLECTION" and o.instance_collection)
+    lib = inst.instance_collection.library
+    path = bpy.path.abspath(lib.filepath)
+    bpy.data.objects.remove(inst)
+    with bpy.data.libraries.load(path, link=False) as (src, dst):
+        dst.collections = ["Keygen"]
+    col = dst.collections[0]
+    scene.collection.children.link(col)
+    return col
+
+
+def bounds(col):
+    """The case's bounding box: the outermost part, and free of stray GLB geometry."""
+    case = next(c for c in col.children if c.name.split(".")[0] == "Case")
+    pts = [o.matrix_world @ Vector(c) for o in case.all_objects if o.type == "MESH" for c in o.bound_box]
+    lo = Vector((min(p.x for p in pts), min(p.y for p in pts), min(p.z for p in pts)))
+    hi = Vector((max(p.x for p in pts), max(p.y for p in pts), max(p.z for p in pts)))
+    return lo, hi
+
+
+def look_at(obj, target):
+    obj.rotation_euler = (target - obj.location).to_track_quat("-Z", "Y").to_euler()
+
+
+def camera(name, location, target, lens=50, fstop=None, ortho=None):
+    cam = bpy.data.objects.new(name, bpy.data.cameras.new(name))
+    bpy.context.scene.collection.objects.link(cam)
+    cam.location = location
+    look_at(cam, target)
+    cam.data.lens = lens
+    cam.data.clip_start = 0.005
+    if ortho:
+        cam.data.type = "ORTHO"; cam.data.ortho_scale = ortho
+    if fstop:
+        focus = bpy.data.objects.new(f"{name} focus", None); focus.location = target
+        bpy.context.scene.collection.objects.link(focus)
+        cam.data.dof.use_dof = True; cam.data.dof.focus_object = focus; cam.data.dof.aperture_fstop = fstop
+    return cam
+
+
+def settings(scene, s):
+    k = 0.25 if PREVIEW else 1.0
+    scene.render.resolution_x, scene.render.resolution_y = int(s["width"] * k), int(s["height"] * k)
+    scene.render.resolution_percentage = 100
+    scene.cycles.samples = max(4, int(s["samples"] * k))
+    scene.cycles.use_denoising = True
+    scene.render.image_settings.file_format = "PNG"
+
+
+def still(scene, name, cam):
+    settings(scene, STILL)
+    scene.camera = cam
+    scene.render.filepath = str(OUT / f"{name}.png")
+    bpy.ops.render.render(write_still=True)
+    log(f"rendered {name}")
+
+
+def animation(scene, name, cam, frames):
+    settings(scene, FRAMES)
+    scene.camera = cam
+    scene.frame_start, scene.frame_end = 1, frames if not PREVIEW else min(frames, 6)
+    scene.render.use_persistent_data = True          # keep the scene between frames; only lights and camera move
+    scene.render.filepath = str(OUT / f"{name}_")
+    bpy.ops.render.render(animation=True)
+    log(f"rendered {name}: {scene.frame_end} frames")
+
+
+def led_wave(col, frames):
+    """Keyframe a rainbow running across the keyboard, one full cycle over the loop."""
+    leds = [o for o in col.all_objects if "led_color" in o.keys()]
+    lights = {o.name.removesuffix(" light"): o.data for o in col.all_objects if o.type == "LIGHT"}
+    xs = [o.location.x for o in leds]
+    x0, span = min(xs), max(xs) - min(xs)
+    for f in range(1, frames + 1):
+        for o in leds:
+            hue = ((o.location.x - x0) / span * WAVE_SPAN - (f - 1) / frames) % 1.0
+            c = colorsys.hsv_to_rgb(hue, 0.85, 1.0)
+            o["led_color"] = (*c, 1.0)
+            o.keyframe_insert('["led_color"]', frame=f)
+            light = lights.get(o.name.split(".")[0])
+            if light:
+                light.color = c
+                light.keyframe_insert("color", frame=f)
+
+
+def main():
+    OUT.mkdir(parents=True, exist_ok=True)
+    scene = bpy.context.scene
+    col = localise()
+    lo, hi = bounds(col)
+    centre, size = (lo + hi) / 2, hi - lo
+    hero = scene.camera
+    bpy.context.preferences.edit.keyframe_new_interpolation_type = "LINEAR"
+
+    if "hero" in VIEWS:
+        still(scene, "hero", hero)
+    if "top" in VIEWS:
+        top = camera("Top", centre + Vector((0, 0, 1.0)), centre, ortho=size.x * 1.06)
+        still(scene, "top", top)
+    if "thumbs" in VIEWS:
+        knob = next(o for o in col.all_objects if o.name.startswith("ENC1"))
+        target = knob.matrix_world.translation.copy(); target.z = hi.z - 0.008
+        target += Vector((-0.03, -0.03, 0))                  # between the knob and the thumb cluster
+        cam = camera("Thumbs", target + Vector((-0.10, -0.26, 0.17)), target, lens=60, fstop=4.0)
+        still(scene, "thumbs", cam)
+    if "turntable" in VIEWS:
+        pivot = bpy.data.objects.new("Turntable", None); pivot.location = centre
+        scene.collection.objects.link(pivot)
+        offset = hero.matrix_world.translation - centre
+        cam = camera("Turntable camera", centre + offset, centre, lens=hero.data.lens)
+        cam.parent = pivot; cam.location = offset                # the pivot sits at the centre, unturned
+        n = TURN_FRAMES
+        for f, a in ((1, 0.0), (n + 1, 2 * math.pi)):           # frame n + 1 is frame 1 again: a seamless loop
+            pivot.rotation_euler.z = a; pivot.keyframe_insert("rotation_euler", index=2, frame=f)
+        animation(scene, "turntable", cam, n)
+    if "leds" in VIEWS:
+        led_wave(col, LED_FRAMES)
+        animation(scene, "leds", hero, LED_FRAMES)
+
+
+main()

@@ -7,7 +7,7 @@
 ![ZMK](https://img.shields.io/badge/firmware-ZMK-5B4A9E)
 ![Status](https://img.shields.io/badge/status-PCB%20routed%2C%20DRC%20clean-2EA44F)
 
-![Keygen, both halves with switches and keycaps](assets/render-hero.png)
+![Keygen, both halves in their black PETG case, the per-key LEDs lit under smoke translucent keycaps](assets/render-studio-hero.jpg)
 
 Keygen is a one-off build: 66 keys over two column-staggered halves, a 2 × 2 thumb cluster, a rotary
 encoder and a 0.96-inch OLED on each half, and per-key RGB lighting. Each half has its own
@@ -47,13 +47,26 @@ clearances, including the battery stack at full gasket travel.
 
 ## Gallery
 
-**In the case.** The plate and PCB float on Poron gaskets between the bottom shell and the top frame.
+The lit pictures are Cycles renders of the [Blender scene](notes/17%20-%20building%20from%20source.md#blender-scene),
+which is rebuilt from the board and the case whenever they change; the case layers and the PCB come
+from KiCad.
 
-![Keygen in its case](assets/render-case.png)
+**Per-key lighting.** The SK6812MINI-E LEDs shine up through the switches' clear tops and the smoke
+translucent caps.
+
+![A rainbow wave running across Keygen's per-key LEDs](assets/render-studio-leds.gif)
+
+**All round.**
+
+![Keygen turning on a turntable](assets/render-studio-turntable.gif)
 
 **From above.** The top frame's deck round the keycaps, the OLED window and the knob.
 
-![Keygen in its case, from above](assets/render-case-top.png)
+![Keygen from above](assets/render-studio-top.jpg)
+
+**Knob and thumb cluster.**
+
+![Close up on the left half's knob, OLED window and thumb cluster](assets/render-studio-thumbs.jpg)
 
 **Case layers.** Bottom shell, case foam, PCB, switch pads, plate foam, gasket strips under and
 over the plate tabs, plate and top frame.
