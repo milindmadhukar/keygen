@@ -2,6 +2,7 @@
 """Render the case and the switch plate into assets/:
 
 render-case.png           the board in its case
+render-case-top.png       the same from straight above, to judge the deck round the keycaps
 render-case-exploded.png  bottom shell, case foam, PCB, switch pads, plate foam, lower gaskets,
                           plate, upper gaskets and top frame lifted apart (no switches or keycaps)
 render-case-parts.png     the printed parts alone: each bottom shell with its top frame above it
@@ -36,6 +37,7 @@ OPAQUE_MASK = (r'(\(type "(?:Top|Bottom) Solder Mask"\)\s*\(color )"Black"', r'\
 BOARD_VIEWS = {
     "case": ["-w", "2800", "-h", "1400", "--quality", "basic", "--floor", "--perspective",
              "--rotate", "-38,0,0", "--zoom", "1.75"],
+    "case-top": ["-w", "4400", "-h", "2000", "--quality", "basic", "--side", "top", "--zoom", "1.7"],
     "case-exploded": ["-w", "2800", "-h", "1800", "--quality", "basic", "--perspective",
                       "--rotate", "-60,0,0", "--zoom", "1.2"],
 }

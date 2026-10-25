@@ -51,6 +51,10 @@ clearances, including the battery stack at full gasket travel.
 
 ![Keygen in its case](assets/render-case.png)
 
+**From above.** The top frame's deck round the keycaps, the OLED window and the knob.
+
+![Keygen in its case, from above](assets/render-case-top.png)
+
 **Case layers.** Bottom shell, case foam, PCB, switch pads, plate foam, gasket strips under and
 over the plate tabs, plate and top frame.
 
