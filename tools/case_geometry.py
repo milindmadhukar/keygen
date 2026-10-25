@@ -43,8 +43,9 @@ PCB_T = 1.6
 PLATE_T = 1.5                  # black FR-4 sheet, CNC-routed; the MX clips are made for 1.5 mm
 PLATE_TOP = 5.0
 PLATE_BOT = PLATE_TOP - PLATE_T
-GASKET_T = 2.0                 # Poron strip, uncompressed
-GASKET_SQUEEZE = 0.4           # how much each strip is compressed when the case is closed
+GASKET_T = 3.0                 # Poron strip, uncompressed
+GASKET_SQUEEZE = 1.0           # how much each strip is compressed when the case is closed: a third, so
+                               # a printed part ±0.2 mm off still leaves every strip 27-40 % squeezed
 GASKET_L, GASKET_W = 12.0, 4.0 # each strip: along the tab's edge, and outward across it
 LEDGE_Z = PLATE_BOT - (GASKET_T - GASKET_SQUEEZE)
 CEIL_Z = PLATE_TOP + (GASKET_T - GASKET_SQUEEZE)

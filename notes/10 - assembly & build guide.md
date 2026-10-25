@@ -95,7 +95,7 @@ From `fab/BOM.md` (left 1xx, right 2xx):
 
 ### Case assembly
 The case is gasket-mounted: the plate and PCB become one unit that floats on Poron strips. Design: [[09 - case design]].
-- Lay the top frame deck-down and press the 8 M2 heat-set inserts into the holes in its underside (about 200–230 °C), flush and no deeper, and let them cool. 1.4 mm of frame covers each hole. [Heat-set insert guide](https://www.youtube.com/watch?v=cyof7fYFcuQ)
+- Lay the top frame deck-down and press the 8 M2 heat-set inserts into the holes in its underside (about 200–230 °C), flush and no deeper, and let them cool. 1.7 mm of frame covers each hole. [Heat-set insert guide](https://www.youtube.com/watch?v=cyof7fYFcuQ)
 - Put a 0.5 mm shim on the PCB over each mounting hole, stand an M2 × 3 mm standoff on it and screw it on from below: M2 × 3 button heads at H102, H103, H105, H202 and H204, which also take a plate screw from above, and M2 × 4 at the other five.
 - Cut the foam from the files in `case/foam/dxf/` or `case/foam/svg/` (DXF for a laser, SVG printed at 100 % as a template): per half a 2 mm EVA plate foam and a 5 mm EVA case foam, each the right way up as drawn.
 - Stick a 0.5 mm Poron ring switch pad on the PCB round each switch, its notches towards the switch clips and its open middle round the pins and the LED window, then lay the plate foam over them. Seven rings per half have a corner snipped off where they meet a standoff.
@@ -105,7 +105,7 @@ The case is gasket-mounted: the plate and PCB become one unit that floats on Por
 ### 11. Switches, then into the case
 - Check each switch's pins are straight, then press it through the plate into its socket, with a hand under the PCB behind the socket. The tall 1.25u thumb switches are turned 90°.
 - Case foam onto the floor of the bottom shell, round the battery in its bay.
-- Poron strips (12 × 4 × 2 mm, cut from 80 × 4 × 2 mm strips) on the 8 ledges, then the plate-and-PCB unit onto them with the USB-C over its slot, then a strip on top of each tab.
+- Poron strips (12 × 4 × 3 mm, cut from 80 × 4 × 3 mm strips) on the 8 ledges, then the plate-and-PCB unit onto them with the USB-C over its slot, then a strip on top of each tab.
 - Top frame on. Holding the two parts together, turn the half over onto a soft cloth and drive the 8 M2 × 16 screws up through the floor evenly: snug, not tight, so the gaskets stay soft.
 - Fit the keycaps (52 × 1u, 14 × 1.25u) and push a knob onto each encoder shaft.
 - Final test: every key on every layer, both encoders, both OLEDs, the LEDs on USB, and Bluetooth between the halves on battery.

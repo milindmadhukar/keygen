@@ -19,13 +19,13 @@ Designed and generated from the PCB; tenting, base weight and rubber feet are st
 ## Construction
 
 - **Material: PETG**, plastic all round because the nRF52840's antenna is inside.
-- **Shape:** flat, following the PCB outline 7.5 mm out, with sharp corners. Each half is 175.4 × 143.7 mm and 23.2 mm tall (bottom shell 18.0 mm, top frame 5.2 mm).
+- **Shape:** flat, following the PCB outline 7.5 mm out, with sharp corners. Each half is 175.4 × 143.7 mm and 23.6 mm tall (bottom shell 18.1 mm, top frame 5.5 mm).
 - **Gasket mount:** the plate and PCB are one unit, tied together by M2 standoffs, and touch the case only through the gaskets.
   - The plate has **8 tabs per half**, 12 × 5 mm, spread round its edge and kept clear of the USB-C and power switch.
-  - Each tab sits between two **Poron strips, 12 × 4 × 2 mm**, cut from 80 × 4 × 2 mm strips: one on a ledge in the bottom shell, one under the top frame. Closing the case squeezes each strip by 0.4 mm. That is 16 strips per half.
+  - Each tab sits between two **Poron strips, 12 × 4 × 3 mm**, cut from 80 × 4 × 3 mm strips: one on a ledge in the bottom shell, one under the top frame. Closing the case squeezes each strip by 1.0 mm, a third of it, so a part printed 0.2 mm off still leaves it firmly held. That is 16 strips per half.
   - The PCB and plate edges keep 1.0 mm from the walls, and the controller 1.5 mm from the floor, so the unit floats.
 - **Closing the case:** 8 **M2 × 16 socket-head screws** per half go up from the underside, through the bottom shell's walls, into **M2 × 3 heat-set inserts** in blind holes in the top frame's underside. The top frame has no screw holes on top: 1.4 mm of frame covers each insert. The heads sit 3 mm up inside counterbores in the floor. No insert or screw is within 15 mm of the controller's antenna end.
-- **Top frame deck:** inside the rim, the top frame carries a deck level with it (6.6 to 8.6 mm above the PCB, 3.6 mm over the plate top) that covers the plate everywhere but the keycaps, keeping 0.8 mm clear of each. Every web or point of deck narrower than 4 mm is trimmed back to a rounded end, so nothing on the 2 mm printed deck can snap off.
+- **Top frame deck:** inside the rim, the top frame carries a deck level with it (7.0 to 9.0 mm above the PCB, 4.0 mm over the plate top) that covers the plate everywhere but the keycaps, keeping 0.8 mm clear of each. Every web or point of deck narrower than 4 mm is trimmed back to a rounded end, so nothing on the 2 mm printed deck can snap off.
 - **Walls:** 6.5 mm thick, thinned to 1.5 mm across the USB-C and power switch out to the corner. The floor is 3.0 mm, and 2.0 mm under the battery bay.
 
 ## The stack
@@ -38,11 +38,11 @@ Heights above the PCB's top surface:
 | Cavity (the controller envelope reaches −10.1 mm) | −11.6 mm | −1.6 mm |
 | PCB | −1.6 mm | 0 |
 | Bottom shell walls, up to the joint | | 3.5 mm |
-| Lower gasket strip, on the ledge | 1.9 mm | 3.5 mm |
+| Lower gasket strip, on the ledge | 1.5 mm | 3.5 mm |
 | Plate tab, 1.5 mm FR-4 | 3.5 mm | 5.0 mm |
-| Upper gasket strip, under the frame | 5.0 mm | 6.6 mm |
-| Top frame rim | 3.5 mm | 8.6 mm |
-| Top frame deck, over the plate | 6.6 mm | 8.6 mm |
+| Upper gasket strip, under the frame | 5.0 mm | 7.0 mm |
+| Top frame rim | 3.5 mm | 9.0 mm |
+| Top frame deck, over the plate | 7.0 mm | 9.0 mm |
 | Poron ring switch pads, on the PCB | 0 | 0.5 mm |
 | EVA plate foam | 0.5 mm | 2.5 mm |
 | EVA case foam, on the floor | −11.6 mm | −6.6 mm |

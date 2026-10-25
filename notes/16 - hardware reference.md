@@ -79,8 +79,8 @@ References and soldering notes for every part are in `fab/BOM.md`.
 ## Plate and case
 
 - **Gasket mount:** the plate and PCB are tied together by M2 × 3 mm standoffs on 0.5 mm shims and touch the
-  case only through Poron strips (12 × 4 × 2 mm, cut from 80 × 4 × 2 mm strips), one above and
-  one below each of the plate's 8 tabs per half. Closing the case squeezes each strip by 0.4 mm.
+  case only through Poron strips (12 × 4 × 3 mm, cut from 80 × 4 × 3 mm strips), one above and
+  one below each of the plate's 8 tabs per half. Closing the case squeezes each strip by 1.0 mm, a third of it.
 - **Plate:** black FR-4, 1.5 mm, CNC-routed from sheet. 14 × 14 mm cut-outs following each key's
   rotation, a 15 × 15 mm encoder cut-out and a 29.5 × 30 mm OLED window per half, and the PCB's M2
   holes. Plate screws go in at H102, H103, H105, H202 and H204; the other five standoffs are
@@ -90,12 +90,12 @@ References and soldering notes for every part are in `fab/BOM.md`.
   none within 15 mm of the controller's antenna end. The heads sit 3 mm up in counterbores in the
   floor; the top frame has no holes on top. The PCB top sits 14.6 mm
   above the desk and the plate top 19.6 mm.
-- **Top frame deck:** level with the frame's rim, 3.6 mm above the plate top, covering the plate
+- **Top frame deck:** level with the frame's rim, 4.0 mm above the plate top, covering the plate
   everywhere but the keycaps (0.8 mm clear of each), the OLED window and the encoder. The
-  OLED window opens out towards the thumbs; the glass sits 3.5 mm below the deck top. The encoder
+  OLED window opens out towards the thumbs; the glass sits 3.9 mm below the deck top. The encoder
   bushing passes through a 9 mm hole under the knob; a 15 mm square recess above the encoder body
   provides 0.6 mm nominal headroom at the tallest published body height. The knob underside is
-  5.5 mm above the deck at the tallest published bushing height.
+  5.1 mm above the deck at the tallest published bushing height.
 - **Foam:** per half, the switch pads and two foam layers, the layers cut from the files in
   `case/foam/` (DXF or SVG).
   - Poron ring switch pads, 0.5 mm, ready-made: a square ring about 18 mm across with a 14.2 mm

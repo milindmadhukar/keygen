@@ -32,7 +32,7 @@ Everything sits on the **back** of the PCB except the switches, the encoder and 
    order them from a PCB fab: the two zips in [`case/plate/gerber/`](case/plate/gerber/), with the
    settings in [`case/plate/PLATE.md`](case/plate/PLATE.md).
 4. **Case.** The four STLs in [`case/bottom/stl/`](case/bottom/stl/) and
-   [`case/top/stl/`](case/top/stl/), printed in PETG at 0.2 mm layers and 40 % infill: the bottom
+   [`case/top/stl/`](case/top/stl/), printed in PETG at 0.2 mm layers and 90 % infill, dense for weight and a deeper sound: the bottom
    shells floor-down and the top frames deck-down, without supports.
 5. **Foam.** Cut per half from the 1:1 files in [`case/foam/dxf/`](case/foam/dxf/) (laser) or
    [`case/foam/svg/`](case/foam/svg/) (printed at 100 % as a template): a 2 mm EVA plate foam and a
@@ -50,7 +50,7 @@ Fasteners per half:
 | M2 × 3 mm button-head screw | 3 + 3 (left), 2 + 2 (right) | Standoffs with a plate screw, from below; plate from above |
 | M2 × 3 mm brass heat-set insert | 8 | Top frame underside |
 | M2 × 16 mm socket-head screw | 8 | Bottom shell to top frame, from below |
-| Poron strip, 12 × 4 × 2 mm, cut from 80 × 4 × 2 mm strips | 16 | Two per plate tab |
+| Poron strip, 12 × 4 × 3 mm, cut from 80 × 4 × 3 mm strips | 16 | Two per plate tab |
 
 ## 2. Tools
 
@@ -189,7 +189,7 @@ plate screws that go into the same standoffs from above.
 ### Step 15: Heat-set inserts
 
 Lay the top frame deck-down and press the 8 M2 heat-set inserts into the blind holes in its
-underside at about 200–230 °C, flush with the surface and no deeper (1.4 mm of frame covers each
+underside at about 200–230 °C, flush with the surface and no deeper (1.7 mm of frame covers each
 hole), and let them cool.
 
 ### Step 16: Battery
