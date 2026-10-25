@@ -11,6 +11,10 @@ step that reads another's outputs (the case renders read the case STEP files) se
 The PCB itself (gen_pcb.py through silkscreen_art.py) is a source here, not a step: those scripts
 edit pcb/keygen.kicad_pcb and are run by hand.
 
+Steps in LOCAL write files that are gitignored (the Blender parts file). Their outputs are looked
+for on disk, their hashes go in tools/regen.local.lock (also ignored), and --check skips them, so
+a commit never depends on them; a plain run and the Stop hook keep them current.
+
     python3 tools/regen.py               run the stale steps
     python3 tools/regen.py --check       list the stale steps, exit 1 if any (the pre-commit hook)
     python3 tools/regen.py --force [STEP ...]   rerun steps even if current (every step if none named)
@@ -24,16 +28,19 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 TOOLS = ROOT / "tools"
 LOCK = TOOLS / "regen.lock"
+LOCAL_LOCK = TOOLS / "regen.local.lock"
 PY = "python3"
 CAD = str(Path.home() / ".venvs/keygen-cad/bin/python")     # build123d + shapely, see notes/17
 PCB = "pcb/keygen.kicad_pcb"
-SUBMODULES = ("lib/marbastlib", "lib/Keebio-Parts.pretty")  # hashed by their checked-out commit
+SUBMODULES = ("lib/marbastlib", "lib/Keebio-Parts.pretty", "lib/KeyV2")  # hashed by their checked-out commit
 
 # name, command, data inputs (globs), outputs (globs; each must match something)
 STEPS = [
+    ("keycaps", [PY, "tools/gen_keycaps.py"], ["lib/KeyV2"],
+     ["pcb/lib/keygen.3dshapes/Keycap_*.wrl", "pcb/lib/keygen.3dshapes/Keycap_*.stl"]),
     ("schematic", [PY, "tools/gen_schematic.py"], [*SUBMODULES],
      ["pcb/keygen.kicad_sch", "pcb/left.kicad_sch", "pcb/right.kicad_sch", "pcb/lib/keygen.kicad_sym",
-      "pcb/lib/keygen.pretty/*.kicad_mod", "pcb/lib/keygen.3dshapes/Keycap_*.wrl"]),
+      "pcb/lib/keygen.pretty/*.kicad_mod"]),
     ("schematic-pdf", ["kicad-cli", "sch", "export", "pdf", "-o", "pcb/keygen-schematic.pdf", "pcb/keygen.kicad_sch"],
      ["pcb/*.kicad_sch", "pcb/keygen.kicad_pro", "pcb/lib/keygen.kicad_sym"], ["pcb/keygen-schematic.pdf"]),
     ("zmk-layout", [PY, "tools/gen_zmk_layout.py"], [],
@@ -50,7 +57,7 @@ STEPS = [
     ("case-footprint-print", [CAD, "tools/case_footprint_print.py"], [PCB],
      ["case/plate/pdf/keygen-case-footprint-portrait.pdf"]),
     ("case", [CAD, "tools/gen_case.py"], [PCB],
-     ["case/keygen-case.step", "case/bottom/stl/*.stl", "case/top/stl/*.stl", "case/plate/step/*.step",
+     ["case/keygen-case.step", "case/bottom/stl/*.stl", "case/top/stl/*.stl", "case/plate/stl/*.stl", "case/plate/step/*.step",
       "case/foam/dxf/*.dxf", "case/foam/svg/*.svg", "case/foam/step/*.step"]),
     ("case-renders", [PY, "tools/render_case.py"],
      [PCB, "pcb/keygen.kicad_pro", "pcb/plate/keygen-plate.kicad_pcb", "case/*.step", "pcb/lib/**", *SUBMODULES],
@@ -58,11 +65,15 @@ STEPS = [
     ("board-renders", [PY, "tools/render_board.py"], [PCB, "pcb/keygen.kicad_pro", "pcb/lib/**", *SUBMODULES],
      ["assets/render-hero.png", "assets/render-top.png", "assets/render-bottom.png"]),
     ("routing-render", [PY, "tools/render_routing.py"], [PCB], ["assets/pcb-routing.png"]),
+    ("blender", [PY, "tools/gen_blend.py"],
+     [PCB, "pcb/keygen.kicad_pro", "pcb/lib/**", *SUBMODULES, "case/*/stl/*.stl", "tools/blend_scene.py"],
+     ["blender/keygen-parts.blend"]),
     ("fab", [PY, "tools/export_fab.py"], [PCB, "pcb/keygen.kicad_pro"],
      ["fab/keygen-gerbers.zip", "fab/keygen-left-gerbers.zip", "fab/keygen-right-gerbers.zip", "fab/ORDER.md"]),
     ("assembly-bom", [PY, "tools/export_bom.py"], ["pcb/*.kicad_sch", "bom/bom.csv"], ["fab/BOM.md", "fab/BOM-*.csv"]),
     ("bom-page", [PY, "tools/render_bom.py"], ["bom/bom.csv"], ["plan/bom.html", "notes/13 - bill of materials.md"]),
 ]
+LOCAL = {"blender"}
 
 
 def git(*args):
@@ -121,15 +132,17 @@ class Tree:
         return h.hexdigest()
 
     def missing(self, step):
-        return [o for o in step[3] if not self.match(o)]
+        found = (lambda o: any(ROOT.glob(o))) if step[0] in LOCAL else self.match
+        return [o for o in step[3] if not found(o)]
 
 
 def load_lock():
-    return json.loads(LOCK.read_text()) if LOCK.exists() else {}
+    return {k: v for f in (LOCK, LOCAL_LOCK) if f.exists() for k, v in json.loads(f.read_text()).items()}
 
 
 def save_lock(lock):
-    LOCK.write_text(json.dumps(dict(sorted(lock.items())), indent=2) + "\n")
+    for f, keep in ((LOCK, lambda k: k not in LOCAL), (LOCAL_LOCK, lambda k: k in LOCAL)):
+        f.write_text(json.dumps({k: v for k, v in sorted(lock.items()) if keep(k)}, indent=2) + "\n")
 
 
 def stale(tree, lock, step):
@@ -177,7 +190,7 @@ def main():
 
     if a.check:
         tree, lock = Tree(), load_lock()
-        bad = [(s[0], why) for s in STEPS if (why := stale(tree, lock, s))]
+        bad = [(s[0], why) for s in STEPS if s[0] not in LOCAL and (why := stale(tree, lock, s))]
         for name, why in bad:
             print(f"stale: {name} ({why})")
         if bad:

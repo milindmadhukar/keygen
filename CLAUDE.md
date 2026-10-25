@@ -26,7 +26,10 @@ each generator's inputs against `tools/regen.lock` and reruns only the stale ste
   fails, the error comes back as the hook's feedback: fix the source, don't skip the step.
 - the git pre-commit hook (`.githooks/pre-commit`) refuses a commit while anything is stale.
 
-Commit the regenerated files and `tools/regen.lock` together with the source change. A new
+Commit the regenerated files and `tools/regen.lock` together with the source change. The one
+exception is `blender/keygen-parts.blend`: a local step, gitignored, kept current by the hook but
+never committed (its hash is in the ignored `tools/regen.local.lock`). `blender/keygen.blend` links
+it and is edited by hand. A new
 generator, or a new file a generator reads, goes into the `STEPS` table in `tools/regen.py`.
 
 `render_board.py` renders with the board's stackup colours, from a temporary copy whose mask is

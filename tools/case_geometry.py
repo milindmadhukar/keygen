@@ -43,6 +43,7 @@ PCB_T = 1.6
 PLATE_T = 1.5                  # black FR-4 sheet, CNC-routed; the MX clips are made for 1.5 mm
 PLATE_TOP = 5.0
 PLATE_BOT = PLATE_TOP - PLATE_T
+CAP_SKIRT = 7.5                # keycap skirt bottom above the plate at rest (DSA on MX, about)
 GASKET_T = 3.0                 # Poron strip, uncompressed
 GASKET_SQUEEZE = 1.0           # how much each strip is compressed when the case is closed: a third, so
                                # a printed part ±0.2 mm off still leaves every strip 27-40 % squeezed

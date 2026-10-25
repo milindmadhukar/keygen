@@ -146,6 +146,7 @@ def vendor_model(node, base):
 # Parts on the back flip their models with them; anything that has to stand on the FRONT
 # (switch, keycap) is turned over and pushed through the board so the flip puts it back on top.
 ON_FRONT = dict(rotate=(0, 180, 0))
+CAP_MODEL_Z = 11.5   # keycap model origin above the PCB top; tools/gen_keycaps.py places the cap from it
 
 def wrl_box_mesh(boxes):
     """VRML (KiCad units: 0.1 inch) for a list of (x0,y0,z0,x1,y1,z1,rgb) boxes in mm."""
@@ -158,21 +159,10 @@ def wrl_box_mesh(boxes):
                    f"geometry IndexedFaceSet {{ coord Coordinate {{ point [{pts}] }} coordIndex [{faces}] }} }}")
     return "\n".join(out) + "\n"
 
-def wrl_keycap(w_u, rgb="0.86 0.85 0.80"):
-    """Uniform-profile (DSA-like) keycap: 18.2 mm base, 12.7 mm top, 7.4 mm tall, origin at base centre."""
-    bw, bd = w_u * 19.05 - 0.85, 18.2
-    tw, td, h = bw - 5.5, bd - 5.5, 7.4
-    v = [(-bw/2, -bd/2, 0), (bw/2, -bd/2, 0), (bw/2, bd/2, 0), (-bw/2, bd/2, 0),
-         (-tw/2, -td/2, h), (tw/2, -td/2, h), (tw/2, td/2, h), (-tw/2, td/2, h)]
-    pts = ",".join(f"{x/2.54:.4f} {y/2.54:.4f} {z/2.54:.4f}" for x, y, z in v)
-    faces = "0,3,2,1,-1,4,5,6,7,-1,0,1,5,4,-1,1,2,6,5,-1,2,3,7,6,-1,3,0,4,7,-1"
-    return ("#VRML V2.0 utf8\n" f"Shape {{ appearance Appearance {{ material Material {{ diffuseColor {rgb} }} }} "
-            f"geometry IndexedFaceSet {{ coord Coordinate {{ point [{pts}] }} coordIndex [{faces}] }} }}\n")
-
 def keygen_footprints():
     """pcb/lib/keygen.pretty + keygen.3dshapes: project copies of the vendored footprints with
-    model paths that resolve inside the repo, the 14 mm switch outline, and simple keycap and
-    controller models for KiCad's 3D view."""
+    model paths that resolve inside the repo, the 14 mm switch outline, and a simple controller
+    model for KiCad's 3D view. The keycap models are tools/gen_keycaps.py's."""
     from sexp import parse as sparse
     shapes = PCB / "lib/keygen.3dshapes"; shapes.mkdir(parents=True, exist_ok=True)
     out = PCB / "lib/keygen.pretty"; out.mkdir(parents=True, exist_ok=True)
@@ -184,7 +174,6 @@ def keygen_footprints():
     # MX hotswap switches (placed on the back): socket model + switch + keycap on the front
     for size in ("1", "1.25"):
         name = f"SW_MX_HS_CPG151101S11_{size}u"
-        (shapes / f"Keycap_{size}u.wrl").write_text(wrl_keycap(float(size)))
         fp = load(marb / "marbastlib-mx.pretty", name)
         sock = [vendor_model(m, VENDOR3D["marbastlib"]) for m in find(fp, "model")]
         fp[:] = [n for n in fp if not (isinstance(n, list) and n and n[0] == "model")]
@@ -196,7 +185,7 @@ def keygen_footprints():
                        [S("stroke"), [S("width"), 0.15], [S("type"), S("solid")]], [S("layer"), "B.SilkS"], [S("uuid"), U()]])
         fp += sock
         fp.append(model(f"{SHAPES}/SW_Cherry_MX_PCB.wrl", offset=(0, 0, -PCB_T), **ON_FRONT))
-        fp.append(model(f"{SHAPES}/Keycap_{size}u.wrl", offset=(0, 0, -(PCB_T + 11.5)), **ON_FRONT))
+        fp.append(model(f"{SHAPES}/Keycap_{size}u.wrl", offset=(0, 0, -(PCB_T + CAP_MODEL_Z)), **ON_FRONT))
         save(fp, name)
 
     # controller: no public model, so a plain block hanging under the board on its header sockets.

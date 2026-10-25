@@ -5,7 +5,7 @@ tags:
   - keyboards
   - pcb
   - tooling
-updated: 2026-10-23T14:00
+updated: 2026-10-25T23:55
 ---
 # Building From Source
 
@@ -26,6 +26,9 @@ updated: 2026-10-23T14:00
   uv venv ~/.venvs/keygen-cad --python /usr/bin/python3 --system-site-packages
   uv pip install --python ~/.venvs/keygen-cad/bin/python build123d shapely
   ```
+- For the keycap models: an [OpenSCAD development snapshot](https://openscad.org/downloads.html#snapshots)
+  (2025 or later; the 2021.01 release cannot run KeyV2), as `openscad` or `$KEYGEN_OPENSCAD`
+- For the Blender scene: [Blender](https://www.blender.org) 5.2, as `blender` or `$KEYGEN_BLENDER`
 
 ```sh
 git clone --recursive https://github.com/milindmadhukar/keygen.git
@@ -87,9 +90,10 @@ The plate and case follow the PCB through the shared geometry in `tools/case_geo
 steps and what they run:
 
 ```sh
+python3 tools/gen_keycaps.py                        # keycaps: pcb/lib/keygen.3dshapes/Keycap_*: DSA 1u and 1.25u from KeyV2
 python3 tools/gen_schematic.py                      # schematic: pcb/*.kicad_sch, pcb/lib/
 python3 tools/gen_plate.py                          # plate: pcb/plate/, case/plate/{gerber,dxf}/, case/plate/PLATE.md
-~/.venvs/keygen-cad/bin/python tools/gen_case.py    # case: case/{bottom,top}/, case/plate/step/, case/foam/, the fit check
+~/.venvs/keygen-cad/bin/python tools/gen_case.py    # case: case/{bottom,top}/, case/plate/{stl,step}/, case/foam/, the fit check
 ~/.venvs/keygen-cad/bin/python tools/check_mechanical.py  # pairwise and tolerance clearances, plus the 3D fit check
 python3 tools/render_case.py                        # case-renders: assets/render-case*.png, assets/render-plate.png
 ~/.venvs/keygen-cad/bin/python tools/gen_models.py  # models: pcb/lib/keygen.3dshapes/: the knob and OLED 3D models
@@ -107,7 +111,31 @@ python3 tools/render_board.py    # assets/render-{hero,top,bottom}.png: 3D rende
 python3 tools/render_routing.py  # assets/pcb-routing.png
 python3 tools/render_keymap.py   # assets/keymap-*.svg: one picture per keymap layer
 python3 tools/gen_zmk_layout.py  # firmware/boards/shields/keygen/keygen-layouts.dtsi
+python3 tools/gen_blend.py       # blender/keygen-parts.blend (local, see below)
 ```
+
+## Blender scene
+
+`blender/` holds a realistic model of the finished keyboard: smoke translucent DSA caps lit by the
+per-key LEDs, the clear-top lavender switches, the black PETG case, the black FR-4 plate and the
+black-mask PCB.
+
+- `blender/keygen-parts.blend` holds every part with its material in one collection, `Keygen`.
+  `tools/gen_blend.py` builds it:
+  - the board and its parts come from KiCad as GLB;
+  - the case, the plate and the caps come from their STLs;
+  - the LEDs are placed from the PCB.
+
+  It is gitignored. `regen.py` rebuilds it whenever the board, the case or the caps change: the
+  `blender` step is a *local* step, with its hash in the ignored `tools/regen.local.lock`, and
+  `--check` skips it, so commits never wait on it.
+- `blender/keygen.blend` is the studio file: camera, lights, floor, Cycles and a bloom compositor.
+  It **links** the `Keygen` collection, so it always shows the current design, and is edited by
+  hand. Open it and press F12 for a Cycles render; the viewport shows an EEVEE preview. After a
+  rebuild, reopen the file, or reload the library from the Outliner's Blender File view.
+  `python3 tools/gen_blend.py --reset-studio` writes it afresh.
+- The LED colours are `LED_SCHEME` in `tools/blend_scene.py` (`gradient`, `lavender`, `white`,
+  `rainbow`), and the materials are defined there too.
 
 ## Generated files
 
@@ -122,12 +150,13 @@ PCB.
 | `pcb/plate/keygen-plate.kicad_pcb` | The switch plate as a KiCad board, both halves | `gen_plate.py` |
 | `case/` | Everything outside the PCB, one folder per part and one folder per file type inside it (below) | `gen_case.py`, `gen_plate.py`, `plate_print.py` |
 | `pcb/keygen-schematic.pdf` | Printable schematic | `kicad-cli sch export pdf` |
-| `pcb/lib/keygen.3dshapes/` | 3D models for KiCad's 3D view: knob, OLED module, keycaps, controller | `gen_models.py`, `gen_schematic.py` |
+| `pcb/lib/keygen.3dshapes/` | 3D models for KiCad's 3D view: knob, OLED module, DSA keycaps (also as STL, for Blender), controller | `gen_models.py`, `gen_keycaps.py`, `gen_schematic.py` |
 | `assets/render-*.png` | The board, case and plate renders | `render_board.py`, `render_case.py` |
 | `assets/pcb-routing.png` | Both copper layers | `render_routing.py` |
 | `assets/keymap-*.svg` | One picture per keymap layer | `render_keymap.py` |
 | `firmware/boards/shields/keygen/keygen-layouts.dtsi` | ZMK matrix transform and physical layout | `gen_zmk_layout.py` |
 | `tools/regen.lock` | The input hashes each step last ran with | `regen.py` |
+| `blender/keygen-parts.blend` | The Blender parts and materials (gitignored) | `gen_blend.py`, `blend_scene.py` |
 
 The `case/` folder:
 
@@ -136,7 +165,7 @@ case/
 ├── keygen-case.step                    every part in place, for CAD
 ├── bottom/  stl/  step/                bottom shells (print the STL)
 ├── top/     stl/  step/                top frames (print the STL)
-├── plate/   gerber/  dxf/  step/  pdf/ switch plates: Gerbers to order, CNC/laser cut files, solids, 1:1 paper print
+├── plate/   gerber/  dxf/  stl/  step/  pdf/  switch plates: Gerbers to order, CNC/laser cut files, meshes, solids, 1:1 paper print
 │   └── PLATE.md                        plate order-form settings
 └── foam/    dxf/  svg/  step/          plate and case foam: 1:1 cut files, solids; switch pads and
                                         gasket strips: solids

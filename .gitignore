@@ -13,3 +13,6 @@ pcb/fp-info-cache
 .history/
 firmware/out/
 .playwright-mcp/
+blender/keygen-parts.blend
+blender/*.blend1
+tools/regen.local.lock

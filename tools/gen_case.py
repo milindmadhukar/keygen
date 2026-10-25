@@ -5,7 +5,8 @@ case/bottom/{stl,step}/keygen-{left,right}-bottom.*   floor, battery bay, walls,
                                                       screw holes
 case/top/{stl,step}/keygen-{left,right}-top.*         frame round the plate and a deck over it, gasket
                                                       pockets, insert holes
-case/plate/step/keygen-{left,right}-plate.step        the plate, for the fit check (it is made from the Gerbers)
+case/plate/{stl,step}/keygen-{left,right}-plate.*     the plate, for the fit check and the Blender scene (it is
+                                                      made from the Gerbers)
 case/foam/{dxf,svg}/keygen-{left,right}-{plate,case}-foam.*   the two foam layers, to cut
 case/foam/step/keygen-{left,right}-*-foam.step        the same layers as solids, in place
 case/foam/step/keygen-{left,right}-switch-pads.step   the switch pads, one ring per switch, in place
@@ -365,7 +366,6 @@ def screw_walls(bottom, top, screws):
 
 
 KEY_TRAVEL = 4.0
-CAP_SKIRT = 7.5                        # keycap skirt bottom above the plate at rest (DSA on MX, about)
 
 
 def fit_check(h, bottom, top, plt, foam):
@@ -382,7 +382,7 @@ def fit_check(h, bottom, top, plt, foam):
     caps = switches = None
     for k in h["keys"]:
         x, y = xy((k["x"], k["y"]))
-        cap = Pos(x, y, C.PLATE_TOP + CAP_SKIRT - KEY_TRAVEL) * Rot(0, 0, -k["rot"]) * Box(
+        cap = Pos(x, y, C.PLATE_TOP + C.CAP_SKIRT - KEY_TRAVEL) * Rot(0, 0, -k["rot"]) * Box(
             k["w"] * 19.05 - C.CAP_GAP, k["h"] * 19.05 - C.CAP_GAP, 10, align=Z)
         sw = Pos(x, y, 0) * Rot(0, 0, -k["rot"]) * Box(C.CUTOUT, C.CUTOUT, C.PLATE_BOT, align=Z)
         caps = cap if caps is None else caps + cap
@@ -455,8 +455,7 @@ def main():
         for name, part in (("bottom", bottom), ("top", top), ("plate", plt)):
             part.color = PLATE_COLOUR if name == "plate" else CASE_COLOUR
             export_step(part, str(out_path(name, "step", side)))
-            if name != "plate":
-                export_stl(part, str(out_path(name, "stl", side)), tolerance=0.02, angular_tolerance=0.2)
+            export_stl(part, str(out_path(name, "stl", side)), tolerance=0.02, angular_tolerance=0.2)
             bb = part.bounding_box()
             print(f"keygen-{side}-{name}: {bb.size.X:.1f} x {bb.size.Y:.1f} x {bb.size.Z:.1f} mm, "
                   f"{part.volume / 1000:.1f} cm3, valid {part.is_valid}")

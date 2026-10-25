@@ -75,7 +75,7 @@ Renders of the case parts, the plate and the routing are in [`assets/`](assets/)
 |---|---|
 | [Assembly instructions](INSTRUCTIONS.md) | Step by step: ordering, soldering, flashing, closing the case, troubleshooting |
 | [Hardware reference](notes/16%20-%20hardware%20reference.md) | Electronics, PCB rules, plate, case, foam and the silkscreen artwork |
-| [Building from source](notes/17%20-%20building%20from%20source.md) | Requirements, the schematic and PCB pipeline, the plate and case, every generated file |
+| [Building from source](notes/17%20-%20building%20from%20source.md) | Requirements, the schematic and PCB pipeline, the plate and case, the [Blender scene](notes/17%20-%20building%20from%20source.md#blender-scene), every generated file |
 | [Firmware](firmware/README.md) | ZMK configuration: keymap, hardware support, building and flashing |
 | [Design notes](notes/index.md) | The Obsidian design notes: layout, controller, PCB, case, final design, datasheet audit |
 | [Build plan](plan/index.html) | Layout drawing, connectivity, parts, pin budget and checklist. Open it in a browser |
@@ -110,9 +110,10 @@ keygen/
 ├── plan/           Build plan and parts list as HTML
 ├── docs/           Part datasheets
 ├── assets/         Renders and keymap pictures
+├── blender/        Blender studio scene with the materials and the lit LEDs; it links the generated parts
 ├── notes/          Design notes, hardware reference and build pipeline (Obsidian Markdown)
 ├── firmware/       ZMK configuration: shield, keymap, builds
-└── lib/            Git submodules: marbastlib and Keebio-Parts footprint libraries
+└── lib/            Git submodules: marbastlib and Keebio-Parts footprint libraries, KeyV2 keycaps
 ```
 
 ## Project status
@@ -130,6 +131,7 @@ keygen/
 
 - Footprints from [marbastlib](https://github.com/ebastler/marbastlib) (CERN-OHL-P v2) and
   [Keebio-Parts](https://github.com/keebio/Keebio-Parts.pretty) (MIT), included as git submodules.
+- DSA keycap models generated with [KeyV2](https://github.com/rsheldiii/KeyV2) (GPL-3.0), a git submodule.
 - MX switch 3D model from [kiswitch](https://github.com/kiswitch/kiswitch) (MIT / CC-BY-SA 4.0); see
   [`pcb/lib/keygen.3dshapes/NOTICE.md`](pcb/lib/keygen.3dshapes/NOTICE.md).
 - Datasheets in [`docs/datasheets/`](docs/datasheets/) belong to their manufacturers.
