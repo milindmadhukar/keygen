@@ -71,6 +71,7 @@ STEPS = [
      ["assets/render-hero.png", "assets/render-top.png", "assets/render-bottom.png",
       "assets/render-bare*.png"]),
     ("routing-render", [PY, "tools/render_routing.py"], [PCB], ["assets/pcb-routing.png"]),
+    ("assembly-maps", [PY, "tools/render_assembly.py"], [PCB], ["assets/assembly-*.png"]),
     ("blender", [PY, "tools/gen_blend.py"],
      [PCB, "pcb/keygen.kicad_pro", "pcb/lib/**", *SUBMODULES, "case/*/stl/*.stl", "tools/blend_scene.py"],
      ["blender/keygen-parts.blend"]),

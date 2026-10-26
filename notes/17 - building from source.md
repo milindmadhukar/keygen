@@ -114,6 +114,7 @@ python3 tools/plate_print.py     # case/plate/pdf/keygen-plate-print.pdf
 kicad-cli sch export pdf -o pcb/keygen-schematic.pdf pcb/keygen.kicad_sch
 python3 tools/render_board.py    # assets/render-{hero,top,bottom}.png, and render-bare*.png without parts
 python3 tools/render_routing.py  # assets/pcb-routing.png
+python3 tools/render_assembly.py # assets/assembly-*.png: part references on each side, per half
 python3 tools/render_keymap.py   # assets/keymap-*.svg: one picture per keymap layer
 python3 tools/gen_zmk_layout.py  # firmware/boards/shields/keygen/keygen-layouts.dtsi
 python3 tools/gen_blend.py       # blender/keygen-parts.blend (local, see below)
@@ -176,6 +177,7 @@ from `tools/regen.py`. A fresh clone runs every step on its first `regen.py`.
 | `assets/render-*.png` | The board (assembled and bare), case and plate renders | `render_board.py`, `render_case.py` |
 | `assets/render-studio-*` | The Blender stills and GIFs | `render_blender.py`, `blend_render.py` |
 | `assets/pcb-routing.png` | Both copper layers | `render_routing.py` |
+| `assets/assembly-*.png` | Assembly maps: every part's reference on each side of each half, and the power parts enlarged | `render_assembly.py` |
 | `assets/keymap-*.svg` | One picture per keymap layer | `render_keymap.py` |
 | `firmware/boards/shields/keygen/keygen-layouts.dtsi` | ZMK matrix transform and physical layout | `gen_zmk_layout.py` |
 | `tools/regen.lock` | The input hashes each step last ran with | `regen.py` |

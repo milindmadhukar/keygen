@@ -6,7 +6,9 @@ Mark the first column `[x]` as things arrive. Anything shipped to Australia is b
 only, and a friend brings it to India.
 
 Order in two stages. First the PCBs, the electronics and the AliExpress cart; build one half on the
-bench and test it. Then the plate and the case, measured against the parts in hand. Estimated total
+bench and test it. Then the parts made to fit: the plate and its foam once an OLED module measures
+27.5 × 28 mm or less, and the case and its foam once the controller sockets are measured
+([INSTRUCTIONS.md](../INSTRUCTIONS.md#1-the-plan-what-to-get-and-when)). Estimated total
 about ₹24,500 (at about ₹55 per AU$), plus the CNC cutting of the plate.
 
 | Got | Item | Qty | Where | Link | Price | Notes |

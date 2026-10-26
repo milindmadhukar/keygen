@@ -101,7 +101,7 @@ Renders of the case parts, the plate and the routing are in the [`media` release
 
 | Document | What it covers |
 |---|---|
-| [Assembly instructions](INSTRUCTIONS.md) | Step by step: ordering, soldering, flashing, closing the case, troubleshooting |
+| [Assembly instructions](INSTRUCTIONS.md) | Step by step: what to order and when, assembly maps, soldering, flashing, closing the case, troubleshooting |
 | [Hardware reference](notes/16%20-%20hardware%20reference.md) | Electronics, PCB rules, plate, case, foam and the silkscreen artwork |
 | [Building from source](notes/17%20-%20building%20from%20source.md) | Requirements, the schematic and PCB pipeline, the plate and case, the [Blender scene](notes/17%20-%20building%20from%20source.md#blender-scene), every generated file |
 | [Firmware](firmware/README.md) | ZMK configuration: keymap, hardware support, building and flashing |
