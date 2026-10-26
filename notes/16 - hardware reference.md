@@ -133,7 +133,8 @@ silkscreen reuses those pieces:
 | Top, left half | The window, upright beside the controller: title bar, the KEYGEN logo as KEY over GEN in a star cloud, moon, the cover's serial `5233-5131-4927-406`, a stacked frame behind |
 | Top, right half | A crescent moon and the STMPD emblem beside the right encoder |
 | Underside, both halves | GENERATE between two STMPD emblems under each reset button. Double-tapping reset enters the bootloader |
-| Underside, left half | Credits |
+| Underside, left half | The KEYGEN logo, `github.com/milindmadhukar/keygen` and the revision, in a column under GENERATE |
+| Underside, right half, bottom edge | KEYGEN REV 0.1 over DESIGNED BY MILIND MADHUKAR |
 | Underside, right half | A small keygen.exe window: "press GENERATE twice to flash firmware" |
 | Everywhere else, both faces | Stars, on any free board area, with a few denser clouds |
 

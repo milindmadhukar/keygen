@@ -10,7 +10,8 @@ script draws those pieces on the free board between each controller and its thum
                        stars, serial, a stacked frame
   top, right half      crescent moon, STMPD emblem and stars beside the encoder
   bottom, both halves  [emblem] GENERATE [emblem] under the reset button (double-tap: bootloader)
-  bottom, left half    credits
+  bottom, left half    the logo and the repo link, in a column under GENERATE
+  bottom, right half   the maker's line along the bottom edge
   bottom, right half   a small keygen.exe window with the flashing hint
   everywhere else      stars, on both faces, wherever the board is free
 
@@ -147,6 +148,7 @@ GLYPHS = {
     "-": (2.5, [[(0, 3), (2.5, 3)]]),
     ":": (0, [[(0, 2)], [(0, 5)]]),
     ".": (0, [[(0, 6)]]),
+    "\u00b7": (0, [[(0, 3)]]),                       # middle dot
     "/": (3, [[(0, 6), (3, 0)]]),
     "=": (3, [[(0, 2), (3, 2)], [(0, 4), (3, 4)]]),
     " ": (2, []),
@@ -426,20 +428,21 @@ def artwork(b):
     # Each piece below sits where nothing clips it: clear of the board edge, the pads and holes (the
     # encoder's pins and mounting slots among them) and the footprints' own silkscreen.
 
-    # bottom, both halves: GENERATE under the reset button
-    art["B"].append(place(generate_row(), 175.55, 130.7, mirror=True))
+    # bottom, both halves: GENERATE under the reset button; on the left half it heads a column with
+    # the logo and the link below it, all on one centre line
+    art["B"].append(place(generate_row(), 176.0, 130.5, mirror=True))
     art["B"].append(place(generate_row(), 246.9, 130.7, mirror=True))
 
-    # bottom, left half: credits, the logo above the encoder's pins and the lines below them
-    lg_line_s, _ = logo(3.4, 0.6, 0.16)
-    art["B"].append(place(lg_line_s, 171.0, 138.7, mirror=True))
-    credits = union([
-        text("A WIRELESS SPLIT KEYBOARD", 0, -3.15, 0.9, w=0.16),
-        text("NAMED FOR KEYGEN BY MARTIN GARRIX", 0, -1.05, 0.9, w=0.16),
-        text("GITHUB.COM/MILINDMADHUKAR/KEYGEN", 0, 1.45, 0.9, w=0.16),
-        text("REV 0.1", 0, 3.55, 0.9, w=0.16),
-    ])
-    art["B"].append(place(credits, 171.0, 147.0, mirror=True))
+    # bottom, left half: the logo and the link
+    lg_line_s, _ = logo(3.8, 0.684, 0.18)
+    art["B"].append(place(lg_line_s, 176.0, 138.5, mirror=True))
+    link = union([text("GITHUB.COM/MILINDMADHUKAR/KEYGEN", 0, -1.035, 0.9, w=0.16),
+                  text("REV 0.1", 0, 1.035, 0.9, w=0.16)])
+    art["B"].append(place(link, 176.0, 145.0, mirror=True))
+
+    # bottom, right half: the maker's line along the bottom edge
+    maker = union([text("KEYGEN REV 0.1", 0, -1.68, 1.4, w=0.22), text("DESIGNED BY MILIND MADHUKAR", 0, 1.68, 1.4, w=0.22)])
+    art["B"].append(place(maker, 328.25, 174.0, mirror=True))
 
     # bottom, right half: keygen.exe window with the flashing hint
     w2, _ = window(22.0, 13.0, "KEYGEN.EXE", stacked=1)

@@ -38,7 +38,10 @@ Every file to order, print or cut is in the [build release](https://github.com/m
 4. **Case.** The four STLs, [`keygen-left-bottom.stl`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-left-bottom.stl),
    [`keygen-right-bottom.stl`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-right-bottom.stl), [`keygen-left-top.stl`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-left-top.stl)
    and [`keygen-right-top.stl`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-right-top.stl), printed in PETG at 0.2 mm layers and 90 % infill, dense for weight and a deeper sound: the bottom
-   shells floor-down and the top frames deck-down, without supports.
+   shells floor-down and the top frames deck-down, without supports. The fits are close (1.0 mm
+   from the plate edge to the wall, 0.5 mm round each gasket tab), so calibrate the printer's flow
+   and dimensions first, and try the plate in each bottom shell before setting the inserts: sand
+   a tight wall or pocket, don't force the plate.
 5. **Foam.** Cut per half from the 1:1 `keygen-{left,right}-{plate,case}-foam` files in the
    [build release](https://github.com/milindmadhukar/keygen/releases/tag/build), DXF for a laser or SVG printed at 100 % as a template: a 2 mm EVA plate foam and a
    5 mm EVA case foam, each the right way up as drawn. The Poron switch pads come ready to stick.
