@@ -6,7 +6,8 @@ keygen.exe window: a "MARTIN GARRIX" title bar, an outlined KEYGEN logo in a sta
 crescent moon, a serial-number field, and a GENERATE button between two STMPD emblems. This
 script draws those pieces on the free board between each controller and its thumb cluster:
 
-  top, left half       the window: title bar, KEYGEN logo, stars, serial, stacked frames
+  top, left half       the window, upright beside the controller: title bar, KEY over GEN, moon,
+                       stars, serial, a stacked frame
   top, right half      crescent moon, STMPD emblem and stars beside the encoder
   bottom, both halves  [emblem] GENERATE [emblem] under the reset button (double-tap: bootloader)
   bottom, left half    credits
@@ -170,10 +171,10 @@ def text_width(s, h, sx=1.0, gap=1.6): return text_lines(s, h, sx, gap)[1]
 
 # ---------------------------------------------------------------- the pieces, in local mm, (0, 0) centred
 
-def logo(h, w, line, sx=1.15, gap=1.2):
-    """Outlined KEYGEN, h tall: letters drawn with a fat pen of width w, then only their outline kept.
-    Returns (outline, filled letters)."""
-    fat = text("KEYGEN", 0, 0, h - w, w=w, sx=sx, gap=gap + 6 * w / (h - w))
+def logo(h, w, line, sx=1.15, gap=1.2, s="KEYGEN"):
+    """Outlined KEYGEN (or s), h tall: letters drawn with a fat pen of width w, then only their
+    outline kept. Returns (outline, filled letters)."""
+    fat = text(s, 0, 0, h - w, w=w, sx=sx, gap=gap + 6 * w / (h - w))
     return ring(fat, line), fat
 
 # The STMPD RCRDS emblem, a geometric lion's face in a hexagon: the label's own vector (the
@@ -244,7 +245,7 @@ def moon(r, craters):
     for x, y, cr in craters: m = minus(m, circle(x * r, y * r, cr * r, 24))
     return m
 
-def window(w, h, title, line=0.25, bar=3.0, stacked=2, offset=1.3):
+def window(w, h, title, line=0.25, bar=3.0, stacked=2, offset=1.3, title_h=1.2, title_w=0.2, title_gap=2.2):
     """Frame, title bar with [X], and `stacked` frames peeking out behind to the lower right."""
     x0, y0, x1, y1 = -w / 2, -h / 2, w / 2, h / 2
     parts = [rect(x0, y0, x1, y1, line)]
@@ -254,7 +255,7 @@ def window(w, h, title, line=0.25, bar=3.0, stacked=2, offset=1.3):
     s, xc, yc = bar - 0.6 - 1.0, (xb + x1 - 0.8) / 2, y0 + 0.8 + (bar - 0.6) / 2
     parts.append(strokes([[(xc - s / 2, yc - s / 2), (xc + s / 2, yc + s / 2)], [(xc + s / 2, yc - s / 2), (xc - s / 2, yc + s / 2)]], line))
     if title:
-        parts.append(text(title, (x0 + 0.8 + xb - 0.7) / 2, yc, 1.2, w=0.2, gap=2.2))
+        parts.append(text(title, (x0 + 0.8 + xb - 0.7) / 2, yc, title_h, w=title_w, gap=title_gap))
     for i in range(1, stacked + 1):
         d = offset * i
         parts.append(minus(rect(x0 + d, y0 + d, x1 + d, y1 + d, line), grow(poly([(x0 + d - offset, y0 + d - offset),
@@ -388,22 +389,23 @@ def artwork(b):
     board = pcbnew.SHAPE_POLY_SET(); b.GetBoardPolygonOutlines(board, False)
     inside = grow(board, -EDGE_CLEAR - 0.1)
 
-    # top, left half: the keygen window
-    WX, WY, WW, WH = 168.0, 133.2, 36.0, 20.0
-    frame, (bx0, by0, bx1, by1) = window(WW, WH, "MARTIN GARRIX")
-    lg_line, lg_fat = logo(5.6, 1.0, 0.22)
-    lg_fat = grow(lg_fat, 0.11)                     # the outline's outer edge
-    lw, sw = text_width("SERIAL:", 1.1), text_width(SERIAL, 1.2, gap=1.9) + 2.0
-    sy, sx0 = WH / 2 - 2.4, -(text_width("SERIAL:", 1.1) + 1.0 + sw) / 2
-    serial = union([text("SERIAL:", sx0 + lw / 2, sy, 1.1, w=0.19),
-                    rect(sx0 + lw + 1.0, sy - 1.25, sx0 + lw + 1.0 + sw, sy + 1.25, 0.22),
-                    text(SERIAL, sx0 + lw + 1.0 + sw / 2, sy, 1.2, w=0.2, gap=1.9)])
-    moon_w = minus(place(moon(2.6, [(-0.55, 0.2, 0.14), (-0.4, -0.45, 0.1)]), bx1 - 2.8, by0 + 2.7, mirror=True),
+    # top, left half: the keygen window, upright in the clear corner right of the controller's header
+    # rows (the encoder and the reset button fill the space a wide window would need), with the logo
+    # on two lines, KEY over GEN
+    WX, WY, WW, WH, LH = 176.25, 98.0, 14.6, 21.0, 4.2
+    frame, (bx0, by0, bx1, by1) = window(WW, WH, "MARTIN GARRIX", stacked=1, title_h=0.8, title_w=0.15, title_gap=2.0)
+    ky, gy = by0 + 0.9 + LH / 2 + 0.6, by0 + 0.9 + LH * 1.5 + 1.7
+    lines_, fats = zip(*(logo(LH, LH * 0.18, 0.2, s=s) for s in ("KEY", "GEN")))
+    lg_line = union([place(lines_[0], 0, ky), place(lines_[1], 0, gy)])
+    lg_fat = grow(union([place(fats[0], 0, ky), place(fats[1], 0, gy)]), 0.1)      # the outline's outer edge
+    sw, sy = text_width(SERIAL, 0.8) + 1.2, by1 - 1.6
+    serial = union([rect(-sw / 2, sy - 1.0, sw / 2, sy + 1.0, 0.18), text(SERIAL, 0, sy, 0.8, w=0.15)])
+    moon_w = minus(place(moon(2.2, [(-0.55, 0.2, 0.14), (-0.4, -0.45, 0.1)]), bx1 - 1.7, ky + 0.9, mirror=True),
                    grow(lg_fat, 0.35))
     win = union([frame, lg_line, serial, moon_w])
-    sky = minus(poly([(bx0, by0), (bx1, by0), (bx1, by1), (bx0, by1)]), grow(moon_w, 0.2))
-    avoid = union([grow(win, 0.15), grow(lg_fat, 0.15), place(obs["F"][0], -WX, -WY), place(obs["F"][1], -WX, -WY)])
-    stars = starfield(sky, avoid, rng, 170, big=0.03, nebula=(0.0, -0.5, 8.0, 3.5))
+    sky = minus(poly([(bx0, by0), (bx1, by0), (bx1, sy - 1.3), (bx0, sy - 1.3)]), union([grow(moon_w, 0.2), grow(lg_fat, 0.15)]))
+    avoid = union([grow(win, 0.15), place(obs["F"][0], -WX, -WY), place(obs["F"][1], -WX, -WY)])
+    stars = starfield(sky, avoid, rng, 70, big=0.03, nebula=(0.0, gy - 1.0, 4.0, 5.0))
     art["F"].append(place(union([win, stars]), WX, WY))
 
     # top, left half: stars between the controller's header rows
