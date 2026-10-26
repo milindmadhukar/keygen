@@ -73,7 +73,8 @@ LEVER_SLOT_W, LEVER_SLOT_H = 9.0, 3.4
 RESET_HOLE_D, RESET_TUBE_D = 2.0, 5.0  # paperclip hole, and the guide tube round it
 RESET_BUTTON_H = 5.0                   # 6 mm tact switch, 5 mm tall, on the PCB underside
 EPS = 0.01
-CASE_COLOUR, PLATE_COLOUR = Color(0x2E2E33), Color(0x111113)
+CASE_COLOUR = Color(0x2E2E33)
+PLATE_COLOUR = Color(0xC8D6DC, alpha=0x60)   # clear polycarbonate, see-through
 FOAM_COLOURS = {"plate": Color(0x3A3B40), "case": Color(0x4A4C52)}   # both black EVA, two greys to tell them apart
 PAD_COLOUR = Color(0x6A6C73)                                          # black Poron rings, lighter to show on the PCB
 

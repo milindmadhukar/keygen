@@ -99,16 +99,10 @@ def petg_black():
     return m
 
 
-def fr4_black():
-    """The switch plate: black FR-4 sheet, satin epoxy with a faint glass-weave texture."""
-    m, nodes, links, bsdf = material("Plate black FR-4", **{
-        "Base Color": (0.014, 0.014, 0.015), "Roughness": 0.5, "Coat Weight": 0.3, "Coat Roughness": 0.35})
-    wave = nodes.new("ShaderNodeTexWave")
-    wave.wave_type = "BANDS"; wave.bands_direction = "DIAGONAL"
-    wave.inputs["Scale"].default_value = 2500.0
-    links.new(object_coords(nodes), wave.inputs["Vector"])
-    bump(nodes, links, bsdf, wave.outputs["Fac"], 0.05, 0.00001)
-    return m
+def polycarbonate_clear():
+    """The switch plate: clear polycarbonate sheet, glossy faces with a faint blue-grey tint."""
+    return principled("Plate clear polycarbonate", **{
+        "Base Color": (0.93, 0.96, 0.97), "Roughness": 0.03, "IOR": 1.585, "Transmission Weight": 1.0})
 
 
 def principled(name, **inputs):
@@ -134,7 +128,7 @@ def materials():
     return {
         "keycap": smoke_pbt(),
         "case": petg_black(),
-        "plate": fr4_black(),
+        "plate": polycarbonate_clear(),
         "mask": principled("PCB black soldermask", **{"Base Color": (0.008, 0.008, 0.01), "Roughness": 0.3,
                                                       "Coat Weight": 0.6, "Coat Roughness": 0.1}),
         "silk": principled("PCB white silkscreen", **{"Base Color": (0.85, 0.85, 0.83), "Roughness": 0.65}),

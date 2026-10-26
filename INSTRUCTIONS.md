@@ -23,7 +23,7 @@ order of things matters.
 
 Two halves, built the same way. Each is a stack, from the bottom: a 3D-printed bottom shell with
 the battery and a foam layer in it; the PCB, with most parts on its underside; foam pads and a foam
-sheet; an FR-4 switch plate on five standoffs, holding the switches; and a 3D-printed top frame
+sheet; a clear polycarbonate switch plate on five standoffs, holding the switches; and a 3D-printed top frame
 over it all, screwed to the bottom shell. The plate-and-PCB unit rests on small foam strips (gaskets)
 between the shell and the frame, so it floats.
 
@@ -75,7 +75,7 @@ boards can be built and tested while the plate and the case are being made.
 
 | When | Do | Waiting for |
 |---|---|---|
-| Day one | Print the fit test ([2.1](#21-fit-test)). Then order the PCBs ([2.2](#22-pcbs)) and every part on the parts list ([2.3](#23-parts)), including the FR-4 sheet for the plates and the EVA foam sheets | Nothing. The parts shipped from abroad and the PCBs take longest: order them first |
+| Day one | Print the fit test ([2.1](#21-fit-test)). Then order the PCBs ([2.2](#22-pcbs)) and every part on the parts list ([2.3](#23-parts)), including the polycarbonate sheet for the plates and the EVA foam sheets | Nothing. The parts shipped from abroad and the PCBs take longest: order them first |
 | The OLED modules have arrived | Measure one ([2.4](#24-switch-plates)). Then have the switch plates cut, and cut the plate foam ([2.5](#25-foam)) | The plate's OLED window, and the plate foam round it, are sized for a 27.5 × 28 mm module with 1 mm to spare on each side |
 | The controller sockets have arrived | Measure one ([2.6](#26-case)). Then print the case, and cut the case foam ([2.5](#25-foam)) | The case's USB-C opening is placed from the socket height |
 | The PCBs and the electronics have arrived | Solder and test both boards: steps 1–10 | Nothing more |
@@ -131,11 +131,11 @@ no larger than 27.5 × 28 mm. If it is larger, the plate and the plate foam have
 set `OLED_W` and `OLED_H` in [`tools/case_geometry.py`](tools/case_geometry.py) and run
 `tools/regen.py` (the tools are listed in [Building from source](notes/17%20-%20building%20from%20source.md)).
 
-Then have both halves CNC-routed from one 300 × 300 mm sheet of 1.5 mm black FR-4 with
+Then have both halves CNC-routed (not laser-cut) from the 1.5 mm clear polycarbonate sheet with
 [`keygen-plate-left.dxf`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-plate-left.dxf) and
 [`keygen-plate-right.dxf`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-plate-right.dxf), as
-[`PLATE.md`](case/plate/PLATE.md#cutting-the-plates-from-sheet-cnc-router-or-laser) describes. Or
-order them from a PCB fab: [`keygen-plate-left-gerbers.zip`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-plate-left-gerbers.zip) and
+[`PLATE.md`](case/plate/PLATE.md#routing-the-plates-from-polycarbonate-sheet) describes. Or
+order the same plate in FR-4 from a PCB fab: [`keygen-plate-left-gerbers.zip`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-plate-left-gerbers.zip) and
 [`keygen-plate-right-gerbers.zip`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-plate-right-gerbers.zip), with the
 settings in [`case/plate/PLATE.md`](case/plate/PLATE.md).
 

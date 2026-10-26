@@ -5,7 +5,7 @@ name: 09 - case design
 ---
 
 > [!success] Case
-> A **closed, flat, gasket-mounted 3D-printed PETG case** per half: a bottom shell and a top frame, with the FR-4 switch plate floating on Poron gaskets between them. Openings on the top edge for **USB-C and the power switch**, a guided reset pinhole in the floor, and foam layers inside. Summary: [[12 - final design#Case]]. Clearances, plate spec and PCB positions: [[14 - case & plate requirements]].
+> A **closed, flat, gasket-mounted 3D-printed PETG case** per half: a bottom shell and a top frame, with the polycarbonate switch plate floating on Poron gaskets between them. Openings on the top edge for **USB-C and the power switch**, a guided reset pinhole in the floor, and foam layers inside. Summary: [[12 - final design#Case]]. Clearances, plate spec and PCB positions: [[14 - case & plate requirements]].
 
 ## Status
 
@@ -39,7 +39,7 @@ Heights above the PCB's top surface:
 | PCB | −1.6 mm | 0 |
 | Bottom shell walls, up to the joint | | 3.5 mm |
 | Lower gasket strip, on the ledge | 1.5 mm | 3.5 mm |
-| Plate tab, 1.5 mm FR-4 | 3.5 mm | 5.0 mm |
+| Plate tab, 1.5 mm polycarbonate | 3.5 mm | 5.0 mm |
 | Upper gasket strip, under the frame | 5.0 mm | 7.0 mm |
 | Top frame rim | 3.5 mm | 9.0 mm |
 | Top frame deck, over the plate | 7.0 mm | 9.0 mm |

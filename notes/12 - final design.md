@@ -285,7 +285,7 @@ See [[05 - pcb design]].
 ## Case
 
 - **3D-printed PETG, closed, gasket-mounted**: a bottom shell and a top frame per half, 175.4 × 143.7 × 23.6 mm. The top frame's deck, level with its rim, covers the plate everywhere but the keycaps, the OLED and the knob. Plastic all round keeps the Bluetooth antenna clear.
-- **Switch plate: 1.5 mm black FR-4**, CNC-routed from one 300 × 300 mm sheet. It is tied to the PCB by M2 × 3 mm standoffs on 0.5 mm shims, and its 8 tabs per half float between Poron strips clamped by the case. Each half's plate has a 15 × 15 mm encoder cut-out and a 29.5 × 30 mm OLED window.
+- **Switch plate: 1.5 mm clear polycarbonate**, CNC-routed from solid sheet, three halves per 6 × 24 in. (152 × 610 mm) strip. It is tied to the PCB by M2 × 3 mm standoffs on 0.5 mm shims, and its 8 tabs per half float between Poron strips clamped by the case. Each half's plate has a 15 × 15 mm encoder cut-out and a 29.5 × 30 mm OLED window.
 - A rounded **USB-C port**, sized for a plug carried by the floating stack, and a **power switch slot** on the top edge, with the wall thinned outside them, and a guided **reset pinhole** in the floor. The reset buttons mirror between the halves (left origin at x 182.85), and so do the pinholes.
 - 8.5 mm under the PCB for the socketed controller, plus 1.5 mm to float; the ≤ 5 mm nominal battery fits with thickness and tape allowances.
 - Foam for a thocky sound: a 0.5 mm Poron ring switch pad under each switch, 2 mm EVA plate foam and 5 mm EVA case foam.

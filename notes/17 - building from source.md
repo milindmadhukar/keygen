@@ -124,7 +124,7 @@ python3 tools/render_blender.py  # assets/render-studio-*: the Blender stills an
 ## Blender scene
 
 `blender/` holds a realistic model of the finished keyboard: smoke translucent DSA caps lit by the
-per-key LEDs, the clear-top lavender switches, the black PETG case, the black FR-4 plate and the
+per-key LEDs, the clear-top lavender switches, the black PETG case, the clear polycarbonate plate and the
 black-mask PCB.
 
 - `blender/keygen-parts.blend` holds every part with its material in one collection, `Keygen`.

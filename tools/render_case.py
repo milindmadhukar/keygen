@@ -8,10 +8,11 @@ render-case-exploded.png  bottom shell, case foam, PCB, switch pads, plate foam,
 render-case-parts.png     the printed parts alone: each bottom shell with its top frame above it
 render-case-bottom.png    the case from below: floor, case screw counterbores, reset pinholes, USB-C and
                           switch openings
-render-plate.png          the FR-4 switch plates, top view
+render-plate.png          the switch plates, top view
 
 The case views attach the parts from case/*/step/ (run gen_case.py first) to a copy of the board as 3D
-models, with the same opaque black mask as render_board.py. KiCad only renders a board, so the
+models, with the same opaque black mask as render_board.py; the plate view gives the plate board a pale
+tinted mask for its clear polycarbonate. KiCad only renders a board, so the
 case-only views use a scratch board made of 1 mm squares hidden inside the case walls.
 
     python3 tools/render_case.py
@@ -34,6 +35,9 @@ EXPLODE = {"bottom": -50.0, "foam/case": -25.0, "pads": 10.0, "foam/plate": 22.0
 PARTS_LIFT = 30.0                                         # top frame above its shell, parts view
 SWITCHES_AND_CAPS = re.compile(r'\t\t\(model "[^"]*(?:SW_Cherry_MX_PCB|Keycap_)[^"]*"\n(?:\t\t\t[^\n]*\n)*\t\t\)\n')
 OPAQUE_MASK = (r'(\(type "(?:Top|Bottom) Solder Mask"\)\s*\(color )"Black"', r'\1"#0E0E10F5"')
+# the plate is clear polycarbonate: KiCad renders a board body opaque, so a pale tinted sheet stands in
+CLEAR_PLATE = [(r'(\(type "(?:Top|Bottom) Solder Mask"\)\s*\(color )"Black"', r'\1"#A9BCC6B0"'),
+               (r'\(color "FR4 natural"\)', '(color "#D5E0E4")')]
 BOARD_VIEWS = {
     "case": ["-w", "5600", "-h", "2800", "--quality", "basic", "--floor", "--perspective",
              "--rotate", "-38,0,0", "--zoom", "1.75"],
@@ -115,7 +119,10 @@ def main():
             TMP.write_text(empty[:-1] + case_footprint(lifts, ("bottom", "top")) + ")\n")
             render(TMP, name, args)
         plate = PLATE.with_name("_render.kicad_pcb")
-        plate.write_text(re.sub(*OPAQUE_MASK, PLATE.read_text()))
+        text = PLATE.read_text()
+        for pat, rep in CLEAR_PLATE:
+            text = re.sub(pat, rep, text)
+        plate.write_text(text)
         try:
             render(plate, "plate", ["-w", "5600", "-h", "2200", "--quality", "basic", "--side", "top", "--zoom", "2.5"])
         finally:

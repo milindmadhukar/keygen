@@ -40,7 +40,7 @@ MM = pcbnew.ToMM
 
 # ---------------------------------------------------------------- stack (mm)
 PCB_T = 1.6
-PLATE_T = 1.5                  # black FR-4 sheet, CNC-routed; the MX clips are made for 1.5 mm
+PLATE_T = 1.5                  # clear polycarbonate sheet, CNC-routed; the MX clips are made for 1.5 mm
 PLATE_TOP = 5.0
 PLATE_BOT = PLATE_TOP - PLATE_T
 CAP_SKIRT = 6.7                # keycap skirt bottom above the plate at rest: the MX slider's shoulder, where

@@ -9,12 +9,12 @@ Order in two stages. First the PCBs, the electronics and the AliExpress cart; bu
 bench and test it. Then the parts made to fit: the plate and its foam once an OLED module measures
 27.5 × 28 mm or less, and the case and its foam once the controller sockets are measured
 ([INSTRUCTIONS.md](../INSTRUCTIONS.md#1-the-plan-what-to-get-and-when)). Estimated total
-about ₹24,500 (at about ₹55 per AU$), plus the CNC cutting of the plate.
+about ₹24,300 (at about ₹55 per AU$), plus the CNC cutting of the plate.
 
 | Got | Item | Qty | Where | Link | Price | Notes |
 |---|---|---|---|---|---|---|
 | [ ] | Main PCBs, black | 5 left + 5 right | Lion Circuits | [quote](https://www.lioncircuits.com/quote) | ₹3,400 per design, ₹6,800 | Settings in [`fab/ORDER.md`](../fab/ORDER.md). Stage 1 |
-| [ ] | Switch plate sheet, black FR-4 (G10), 1.5 mm, 300 × 300 mm | 1 | AliExpress → Australia (in cart) | [G10 sheet](https://www.aliexpress.com/item/1005004936570575.html), option 300MM x 300MM / 1.5mm | AU$15.99 | Both halves fit on it. Then a CNC router job with [`case/plate/dxf/`](../case/plate/dxf/), 1/8 in. bit or smaller, as [`PLATE.md`](../case/plate/PLATE.md) describes |
+| [ ] | Switch plate sheet, clear polycarbonate, 1.5 mm solid, 6 × 24 in. (152 × 610 mm), pack of 2 | 1 | Amazon.in (in cart) | [V-LITE 1.5 mm sheet](https://www.amazon.in/dp/B0GXG2SW48), size 6x24IN | ₹704 | Three halves per strip. Then a CNC router job (not a laser) with [`case/plate/dxf/`](../case/plate/dxf/), 1/8 in. bit or smaller, as [`PLATE.md`](../case/plate/PLATE.md) describes |
 | [ ] | Switches, Akko V3 Lavender Purple Pro | 90 (2 × 45) | StacksKB (in cart) | [pack of 45](https://stackskb.com/store/akko-v3-lavender-purple-pro-switch-pack-of-45/) | ₹2,198 | 24 spare |
 | [ ] | Diodes 1N4148, DO-35 | 100 (10 × 10) | StacksKB (in cart) | [pack of 10](https://stackskb.com/store/1n4148-through-hole-diode/) | ₹150 | |
 | [ ] | Keycaps 1u, blank DSA PBT, LBlack (smoke translucent), pack of 50 | 50 | AliExpress → Australia (in cart) | [SZElectronic Store](https://www.aliexpress.com/item/1005008827240220.html) | AU$10.40 | Option "50pcs LBlack" |
@@ -52,6 +52,7 @@ about ₹24,500 (at about ₹55 per AU$), plus the CNC cutting of the plate.
 | [ ] | Tenting stands, magnetic, for split keyboards, black, pack of 2 | 2 | AliExpress → Australia (in cart) | [GEVBAY Store](https://www.aliexpress.com/item/1005010608928916.html), option BK 2pcs | AU$20.52 | One per half: a magnetic puck on an adjustable arm, detachable |
 | [ ] | Steel plates, self-adhesive, 35 × 45 mm, black, pack of 5 | 2 | AliExpress → Australia (in cart) | [metal plate](https://www.aliexpress.com/item/1005006982507966.html), option 5pcs Black 35x45mm | AU$3.07 | One per half on the floor for the stand's magnet, 15 mm or more from the antenna end; the spares add weight |
 | [ ] | Rubber feet, silicone, black, 10 × 4 mm, pack of 50 | 8 | AliExpress → Australia (in cart) | [meifang Store](https://www.aliexpress.com/item/1005005315398342.html), option Black 10x4mm 50pcs | AU$3.13 | Four per half |
+| [ ] | Wrist rests, memory foam, black, 130 mm wide, 18 mm tall | 2 | Amazon.in (in cart) | [Techzere](https://www.amazon.in/dp/B08R41X5V6) | ₹598 | One per half. Raise it with a strip of 5 mm case EVA when tented |
 | [ ] | Flux, no-clean NC-559, 10 cc syringe | 1 | AliExpress → Australia (in cart) | [DSUNYK NC-559](https://www.aliexpress.com/item/1005006580049018.html), option 1pcs | AU$3.36 + AU$3.14 shipping | For the LEDs and the SOT-23 parts |
 | [ ] | Kapton tape, 10 mm | 1 roll | AliExpress → Australia (in cart) | [Manumoc LCD Store](https://www.aliexpress.com/item/1005009260450140.html), option 10mm 1pcs | AU$4.52 | |
 | [ ] | Keycap and switch puller, 2-in-1 | 1 | AliExpress → Australia (in cart) | [Six Six Likes Store](https://www.aliexpress.com/item/1005007129115924.html) | AU$2.35 | |

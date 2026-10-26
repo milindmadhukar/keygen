@@ -40,7 +40,7 @@ All the ports are on the **top edge** of each half, next to the controller, so o
 
 ## Switch plate (faceplate)
 
-- **Black FR-4 (G10), 1.5 mm**, the thickness the MX clips are made for, CNC-routed from one 300 × 300 mm sheet with `case/plate/dxf/` (notes in `case/plate/PLATE.md`). `case/plate/gerber/` has the same plate as a 1.6 mm board with no copper for a PCB fab; the case takes either.
+- **Clear polycarbonate, 1.5 mm**, the thickness the MX clips are made for, CNC-routed from solid sheet with `case/plate/dxf/` (notes in `case/plate/PLATE.md`): each half needs a 178 × 139 mm piece, so a 6 × 24 in. (152 × 610 mm) strip holds three. Routed, not laser-cut: a laser browns and chars polycarbonate edges. `case/plate/gerber/` has the same plate as a 1.6 mm board with no copper for a PCB fab; the case takes either.
 - **14.0 × 14.0 mm** square cut-out per switch, with 0.5 mm corner radii (in the DXFs, a dogbone at each corner for a 1/8 in. bit).
   - Thumb keys follow the PCB rotation (±15° / ±30°).
   - The two tall 1.25u thumb switches per half are turned 90°, but the cut-out is square so that doesn't matter.

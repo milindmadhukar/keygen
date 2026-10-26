@@ -81,7 +81,7 @@ References and soldering notes for every part are in `fab/BOM.md`.
 - **Gasket mount:** the plate and PCB are tied together by M2 × 3 mm standoffs on 0.5 mm shims and touch the
   case only through Poron strips (12 × 4 × 3 mm, cut from 80 × 4 × 3 mm strips), one above and
   one below each of the plate's 8 tabs per half. Closing the case squeezes each strip by 1.0 mm, a third of it.
-- **Plate:** black FR-4, 1.5 mm, CNC-routed from sheet. 14 × 14 mm cut-outs following each key's
+- **Plate:** clear polycarbonate, 1.5 mm, CNC-routed from sheet. 14 × 14 mm cut-outs following each key's
   rotation, a 15 × 15 mm encoder cut-out and a 29.5 × 30 mm OLED window per half, and the PCB's M2
   holes. Plate screws go in at H102, H103, H105, H202 and H204; the other five standoffs are
   screwed from below only.
