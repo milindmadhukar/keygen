@@ -43,7 +43,10 @@ PCB_T = 1.6
 PLATE_T = 1.5                  # black FR-4 sheet, CNC-routed; the MX clips are made for 1.5 mm
 PLATE_TOP = 5.0
 PLATE_BOT = PLATE_TOP - PLATE_T
-CAP_SKIRT = 7.5                # keycap skirt bottom above the plate at rest (DSA on MX, about)
+CAP_SKIRT = 6.7                # keycap skirt bottom above the plate at rest: the MX slider's shoulder, where
+                               # a DSA cap's flush stem seats (SW_Cherry_MX_PCB.stp: 11.74 mm above the PCB)
+CAP_STEM_RECESS = 1.0          # a cap whose stem is recessed into it sits up to this much lower
+KEY_TRAVEL = 4.0               # MX total travel; the Akko V3 is 3.8
 GASKET_T = 3.0                 # Poron strip, uncompressed
 GASKET_SQUEEZE = 1.0           # how much each strip is compressed when the case is closed: a third, so
                                # a printed part ±0.2 mm off still leaves every strip 27-40 % squeezed
@@ -63,6 +66,7 @@ CUTOUT = 14.0                  # MX switch cut-out
 CUTOUT_R = 0.5                 # its corner radius (the fab's router bit)
 SWITCH_FLANGE = 15.6           # MX top housing, resting on the plate
 CAP_GAP = 0.95                 # keycap = n * 19.05 - this
+CAP_SIZE_TOL = 0.15            # real DSA skirts are up to 18.4 mm (KeyV2 18.24): this much wider each side
 ENC_CUTOUT = 15.0              # square plate cut-out around the selected HongYan EC11H body
 OLED_W, OLED_H = 27.5, 28.0    # 0.96 in. OLED module, standing in a plate window
 OLED_HDR_IN = 1.3              # its header row from its bottom edge (the module sits above the pins)
@@ -95,7 +99,10 @@ TALL_CLEAR = 3.0               # cell to the controller, battery connector, butt
 TALL_REFS = ("U", "BT", "ENC", "J")   # and the slide switch and reset button (SWx90, SWx91)
 
 # ---------------------------------------------------------------- top frame deck (mm)
-CAP_CLEAR = 0.8                # keycap to its window in the deck, each side
+CAP_CLEAR = 1.2                # keycap to its window in the deck, each side: covers CAP_SIZE_TOL, the plate
+                               # floating POCKET_CLEAR in its gasket pockets, and cap wobble and print error
+CAP_CHAMFER = 0.4              # 45 degree chamfer round each keycap window at the deck top, the face printed
+                               # on the bed, so first-layer squish does not narrow the window where caps enter
 DECK_MIN_WEB = 4.0             # narrowest web or finger of deck between the windows; anything thinner
                                # is trimmed back to a rounded end, so no point of the printed deck snaps off
 ENC_BODY, ENC_BODY_H = 12.5, 6.8         # HongYan EC11H: 12 x 11.7 plan, 6.5 tall; include drawing tolerances

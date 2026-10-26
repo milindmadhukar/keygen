@@ -91,11 +91,11 @@ References and soldering notes for every part are in `fab/BOM.md`.
   floor; the top frame has no holes on top. The PCB top sits 14.6 mm
   above the desk and the plate top 19.6 mm.
 - **Top frame deck:** level with the frame's rim, 4.0 mm above the plate top, covering the plate
-  everywhere but the keycaps (0.8 mm clear of each), the OLED window and the encoder. The
-  OLED window opens out towards the thumbs; the glass sits 3.9 mm below the deck top. The encoder
-  bushing passes through a 9 mm hole under the knob; a 15 mm square recess above the encoder body
-  provides 0.6 mm nominal headroom at the tallest published body height. The knob underside is
-  5.1 mm above the deck at the tallest published bushing height.
+  everywhere but the keycaps (1.2 mm clear of each, the windows chamfered 0.4 mm at the deck top),
+  the OLED window and the encoder. The OLED window opens out towards the thumbs; the glass sits
+  3.9 mm below the deck top. The encoder bushing passes through a 9 mm hole under the knob; a 15 mm
+  square recess above the encoder body provides 0.6 mm nominal headroom at the tallest published
+  body height. The knob underside is 5.1 mm above the deck at the tallest published bushing height.
 - **Foam:** per half, the switch pads and two foam layers, the layers cut from the files in
   `case/foam/` (DXF or SVG).
   - Poron ring switch pads, 0.5 mm, ready-made: a square ring about 18 mm across with a 14.2 mm
@@ -109,11 +109,12 @@ References and soldering notes for every part are in `fab/BOM.md`.
 - **Openings:** an open 20 mm USB-C slot and a 9 × 3.4 mm power switch slot on the top edge, with
   the wall thinned to 1.5 mm in front of them, and a 2 mm reset pinhole in the floor with a guide
   tube up to the button.
-- **Fit check:** `tools/gen_case.py` checks every case part against the PCB,
-  the plate, the controller, the reset button, the battery, the OLED, the encoder, the knob, the
-  plate screw heads and the keycaps at the bottom of their travel; each foam layer against the
-  parts beside it; and a 5.5 mm cell and the case foam against the parts under the PCB with the
-  stack pressed 1.5 mm down onto its gaskets. It finds no overlaps.
+- **Fit check:** `tools/gen_case.py` checks every case part against the PCB, the plate, the
+  controller, the reset button, the battery, the OLED, the encoder, the knob, the plate screw heads
+  and the keycaps at the bottom of their travel (an 18.4 mm skirt, a recessed stem and the plate
+  shifted 0.5 mm in its pockets); each foam layer against the parts beside it; and a 5.5 mm cell and
+  the case foam against the parts under the PCB with the stack pressed 1.5 mm down onto its gaskets.
+  It finds no overlaps.
 
 - **Printed parts:** the bottom shells have the battery bays, the gasket ledges, the counterbored
   screw holes, the USB-C and power switch openings and the reset guide tube; the top frames have the

@@ -198,6 +198,10 @@ def build(h):
             C.ENC_CUTOUT, C.ENC_CUTOUT, C.ENC_RECESS_TOP - C.CEIL_Z + EPS, align=Z)
     z0, z1 = C.CEIL_Z - 0.1, C.TOP_Z + 0.1
     top -= loft([Pos(0, 0, z0) * rect(C.oled_window(h, z0)), Pos(0, 0, z1) * rect(C.oled_window(h, z1))], ruled=True)
+    # chamfer each keycap window's mouth on the deck top, the face printed on the bed
+    z0, z1 = C.TOP_Z - C.CAP_CHAMFER, C.TOP_Z + 0.1
+    for k in h["keys"]:
+        top -= loft([Pos(0, 0, z0) * to_face(key_window(k)), Pos(0, 0, z1) * to_face(key_window(k, z1 - z0))], ruled=True)
     cuts = [notch]
     for t in tab_list:                               # pocket for the tab and the upper gasket strip
         cuts.append(edge_box(t["edge"], t["s"] - C.TAB_W / 2 - C.POCKET_CLEAR, t["s"] + C.TAB_W / 2 + C.POCKET_CLEAR,
@@ -209,6 +213,12 @@ def build(h):
     return bottom, top, plate(h, tab_list), tab_list, screws
 
 
+def key_window(k, grow=0.0):
+    """The deck's window round keycap k, CAP_CLEAR all round, grown by `grow` on each side."""
+    m = 2 * (C.CAP_CLEAR + grow)
+    return sq((k["x"], k["y"]), k["h"] * 19.05 - C.CAP_GAP + m, k["rot"], k["w"] * 19.05 - C.CAP_GAP + m)
+
+
 def deck(h):
     """The top frame in plan at deck level: the case outline less a window per keycap, the OLED
     window and the encoder hole. Inside the walls, every web or point of deck narrower than
@@ -216,8 +226,7 @@ def deck(h):
     over the walls keeps its sharp corners."""
     outline = SPoly(h["outline"])
     outer = outline.buffer(C.WALL_OUT, join_style="mitre", mitre_limit=10)
-    holes = [sq((k["x"], k["y"]), k["h"] * 19.05 - C.CAP_GAP + 2 * C.CAP_CLEAR, k["rot"],
-                k["w"] * 19.05 - C.CAP_GAP + 2 * C.CAP_CLEAR) for k in h["keys"]]
+    holes = [key_window(k) for k in h["keys"]]
     holes += [circ(p, C.ENC_HOLE_D) for p in h["enc"]]
     holes.append(box(*C.oled_window(h, C.CEIL_Z)))
     raw = outer.difference(unary_union(holes))
@@ -365,14 +374,12 @@ def screw_walls(bottom, top, screws):
     return out
 
 
-KEY_TRAVEL = 4.0
-
-
 def fit_check(h, bottom, top, plt, foam):
     """Volumes (mm3) where a case part or a foam layer overlaps the board, the plate, the parts on
     and under the PCB, the battery, the knob or a keycap at the bottom of its travel, and where the
     battery or the case foam meets the solder joints under the PCB with the stack pressed down. All
-    should be 0."""
+    should be 0. The keycaps are taken at their largest (CAP_SIZE_TOL) and lowest (a recessed stem),
+    and grown by the plate's float in its gasket pockets, so the deck clears them wherever it settles."""
     pcb = Pos(0, 0, -C.PCB_T) * extrude(face(h["outline"]), C.PCB_T, dir=UP)
     x0, y0, x1, y1 = h["controller"]
     (cx, cy) = xy(((x0 + x1) / 2, (y0 + y1) / 2))
@@ -382,8 +389,9 @@ def fit_check(h, bottom, top, plt, foam):
     caps = switches = None
     for k in h["keys"]:
         x, y = xy((k["x"], k["y"]))
-        cap = Pos(x, y, C.PLATE_TOP + C.CAP_SKIRT - KEY_TRAVEL) * Rot(0, 0, -k["rot"]) * Box(
-            k["w"] * 19.05 - C.CAP_GAP, k["h"] * 19.05 - C.CAP_GAP, 10, align=Z)
+        grow = 2 * (C.CAP_SIZE_TOL + C.POCKET_CLEAR)
+        cap = Pos(x, y, C.PLATE_TOP + C.CAP_SKIRT - C.CAP_STEM_RECESS - C.KEY_TRAVEL) * Rot(0, 0, -k["rot"]) * Box(
+            k["w"] * 19.05 - C.CAP_GAP + grow, k["h"] * 19.05 - C.CAP_GAP + grow, 10, align=Z)
         sw = Pos(x, y, 0) * Rot(0, 0, -k["rot"]) * Box(C.CUTOUT, C.CUTOUT, C.PLATE_BOT, align=Z)
         caps = cap if caps is None else caps + cap
         switches = sw if switches is None else switches + sw

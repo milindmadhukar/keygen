@@ -60,7 +60,10 @@ for side, h in C.halves().items():
     require(plate_web >= 4.5, f"{side} plate webs too narrow")
     require(accessory_web >= 4.5, f"{side} plate web at OLED or encoder too narrow")
     require(knob_gap >= 5.0, f"{side} knob too close to keycaps")
-    require(C.CAP_CLEAR - 0.3 - 0.2 >= 0.09, f"{side} case keycap window allowance exhausted")
+    # The deck window must take the largest cap, the plate floating to one side of its gasket
+    # pockets, and 0.3 mm of cap wobble and print error, with 0.2 mm to spare.
+    window_spare = C.CAP_CLEAR - C.CAP_SIZE_TOL - C.POCKET_CLEAR - 0.3
+    require(window_spare >= 0.2, f"{side} case keycap window allowance exhausted")
     require(C.OLED_CLEAR - 0.2 - 0.3 >= 0.5, f"{side} OLED plate opening too small")
     require((C.ENC_CUTOUT - C.ENC_BODY) / 2 - 0.2 - 0.3 >= 0.2,
             f"{side} encoder plate opening too small")
@@ -102,7 +105,8 @@ for side, h in C.halves().items():
     require(not clashes, f"{side} 3D overlaps: {clashes}")
     print(f"{side}: keycap {cap_gap:.2f} mm ({cap_gap - 0.4:.2f} after cap allowance), housing {housing_gap:.2f} mm, "
           f"pad {pad_gap:.2f} mm, plate web {plate_web:.2f} mm, "
-          f"accessory web {accessory_web:.2f} mm, knob {knob_gap:.2f} mm; "
+          f"accessory web {accessory_web:.2f} mm, knob {knob_gap:.2f} mm, "
+          f"deck window {window_spare:.2f} mm spare after tolerances; "
           f"battery lateral {tall_gap:.1f} mm to parts / {antenna_gap:.1f} mm to antenna; "
           "3D overlaps 0", flush=True)
 
@@ -113,7 +117,12 @@ threads = C.standoff_threads()
 require(abs(threads["standoff and shim short of the plate"]) <= 0.1 + 1e-9, "standoff and shim do not fill the plate gap")
 require(min(v for k, v in threads.items() if "into the standoff" in k) >= 0.8, "a plate screw barely reaches its standoff")
 require(threads["between the two screws"] >= 0.2, "the screws above and below a standoff meet")
+# a keycap pressed fully down, its stem recessed, over a plate screw head
+skirt_over_heads = C.CAP_SKIRT - C.CAP_STEM_RECESS - C.KEY_TRAVEL - C.SCREW_HEAD_H
+require(skirt_over_heads >= 0.3, "a pressed keycap reaches the plate screw heads")
 print(f"battery: {C.BATTERY_STACK_T:.1f} mm installed envelope, {battery_gap:.1f} mm gap at rest, "
       f"{pressed_gap:.1f} mm at full travel; controller: {C.CONTROLLER_DEPTH:.1f} mm envelope "
       f"plus {C.FLOAT_GAP:.1f} mm travel")
 print("standoffs: " + ", ".join(f"{k} {v:.1f} mm" for k, v in threads.items()))
+print(f"keycaps: skirt {C.CAP_SKIRT:.1f} mm above the plate at rest, {skirt_over_heads:.1f} mm over the plate "
+      f"screw heads at full travel with a {C.CAP_STEM_RECESS:.1f} mm recessed stem")

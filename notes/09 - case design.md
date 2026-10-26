@@ -11,7 +11,7 @@ name: 09 - case design
 
 Designed and generated from the PCB; tenting, base weight and rubber feet are still to be added to the floor.
 
-- `tools/gen_case.py` (build123d) writes the printable parts to `case/bottom/stl/` and `case/top/stl/` in the repo, with STEP files in each part's `step/` folder. It also runs a fit check against the PCB, plate, controller, reset button, OLED modules and keycaps at full travel; it reports no overlaps.
+- `tools/gen_case.py` (build123d) writes the printable parts to `case/bottom/stl/` and `case/top/stl/` in the repo, with STEP files in each part's `step/` folder. It also runs a fit check against the PCB, plate, controller, reset button, OLED modules and keycaps at full travel, the keycaps taken at their largest and lowest and grown by the plate's float; it reports no overlaps.
 - `tools/gen_plate.py` writes the plate as its own KiCad board, `pcb/plate/keygen-plate.kicad_pcb`, and its Gerbers, `case/plate/gerber/keygen-plate-{left,right}-gerbers.zip`, with the order settings in `case/plate/PLATE.md`.
 - Both read `tools/case_geometry.py`, which takes every position from the PCB, so a PCB change is one rerun away. `tools/render_case.py` renders the board in its case into `assets/`.
 - The parts go to a printing service.
@@ -25,7 +25,7 @@ Designed and generated from the PCB; tenting, base weight and rubber feet are st
   - Each tab sits between two **Poron strips, 12 × 4 × 3 mm**, cut from 80 × 4 × 3 mm strips: one on a ledge in the bottom shell, one under the top frame. Closing the case squeezes each strip by 1.0 mm, a third of it, so a part printed 0.2 mm off still leaves it firmly held. That is 16 strips per half.
   - The PCB and plate edges keep 1.0 mm from the walls, and the controller 1.5 mm from the floor, so the unit floats.
 - **Closing the case:** 8 **M2 × 16 socket-head screws** per half go up from the underside, through the bottom shell's walls, into **M2 × 3 heat-set inserts** in blind holes in the top frame's underside. The top frame has no screw holes on top: 1.4 mm of frame covers each insert. The heads sit 3 mm up inside counterbores in the floor. No insert or screw is within 15 mm of the controller's antenna end.
-- **Top frame deck:** inside the rim, the top frame carries a deck level with it (7.0 to 9.0 mm above the PCB, 4.0 mm over the plate top) that covers the plate everywhere but the keycaps, keeping 0.8 mm clear of each. Every web or point of deck narrower than 4 mm is trimmed back to a rounded end, so nothing on the 2 mm printed deck can snap off.
+- **Top frame deck:** inside the rim, the top frame carries a deck level with it (7.0 to 9.0 mm above the PCB, 4.0 mm over the plate top) that covers the plate everywhere but the keycaps, keeping 1.2 mm clear of each, with a 0.4 mm chamfer round each window's mouth on the deck top. A pressed keycap's skirt sinks about 1 mm into its window, so the clearance takes an 18.4 mm DSA skirt, the plate floating 0.5 mm to one side in its gasket pockets, and cap wobble and print error; the chamfer takes the first-layer squish, as the deck top is printed on the bed. Every web or point of deck narrower than 4 mm is trimmed back to a rounded end, so nothing on the 2 mm printed deck can snap off.
 - **Walls:** 6.5 mm thick, thinned to 1.5 mm across the USB-C and power switch out to the corner. The floor is 3.0 mm, and 2.0 mm under the battery bay.
 
 ## The stack
