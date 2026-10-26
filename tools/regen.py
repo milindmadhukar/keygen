@@ -24,9 +24,10 @@ a plain run and the Stop hook keep them current.
     python3 tools/regen.py --force [STEP ...]   rerun steps even if current (every step if none named)
     python3 tools/regen.py --hook        the Claude Code Stop hook: run the stale steps, report as JSON
 
-Wired up in .claude/settings.json (Stop) and .githooks/pre-commit.
+Wired up in .claude/settings.json (Stop) and .githooks/pre-commit. One run at a time: a run waits
+for another that holds the lock (in the git directory), and the Stop hook skips instead of waiting.
 """
-import argparse, ast, fnmatch, hashlib, json, subprocess, sys, time
+import argparse, ast, fcntl, fnmatch, hashlib, json, subprocess, sys, time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -165,9 +166,24 @@ def stale(tree, lock, step):
     return None
 
 
+def hold(wait=True):
+    """Take the run lock, so two runs (a Stop hook and a run by hand, or two sessions' hooks) never
+    write the same outputs at once. Returns the open lock file, or None if busy and not waiting."""
+    f = open(ROOT / git("rev-parse", "--git-common-dir").strip() / "regen.running", "w")
+    try:
+        fcntl.flock(f, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except BlockingIOError:
+        if not wait:
+            f.close()
+            return None
+        print("regen: waiting for another run to finish", flush=True)
+        fcntl.flock(f, fcntl.LOCK_EX)
+    return f
+
+
 def run(force=(), log=print):
     """Run the stale steps (and the forced ones) in order. Returns (ran, failure) where failure is
-    (step name, output tail) or None."""
+    (step name, output tail) or None. Call with the run lock held."""
     lock, ran = load_lock(), []
     for step in STEPS:
         name, cmd = step[0], step[1]
@@ -210,6 +226,9 @@ def main():
 
     if a.hook:
         event = json.loads(sys.stdin.read() or "{}")
+        if not (held := hold(wait=False)):
+            print(json.dumps({"systemMessage": "tools/regen.py: another run is in progress; skipped"}))
+            sys.exit(0)
         ran, fail = run(log=lambda m: None)
         if fail:
             msg = f"tools/regen.py: step '{fail[0]}' failed, so its outputs are stale:\n{fail[1]}"
@@ -225,6 +244,7 @@ def main():
     force = names if a.force == [] else (a.force or [])
     if unknown := set(force) - set(names):
         sys.exit(f"unknown step(s): {', '.join(sorted(unknown))}; steps are {', '.join(names)}")
+    held = hold()
     ran, fail = run(force)
     if fail:
         sys.exit(f"regen: {fail[0]} failed:\n{fail[1]}")
