@@ -35,16 +35,16 @@ PARTS_LIFT = 30.0                                         # top frame above its 
 SWITCHES_AND_CAPS = re.compile(r'\t\t\(model "[^"]*(?:SW_Cherry_MX_PCB|Keycap_)[^"]*"\n(?:\t\t\t[^\n]*\n)*\t\t\)\n')
 OPAQUE_MASK = (r'(\(type "(?:Top|Bottom) Solder Mask"\)\s*\(color )"Black"', r'\1"#0E0E10F5"')
 BOARD_VIEWS = {
-    "case": ["-w", "2800", "-h", "1400", "--quality", "basic", "--floor", "--perspective",
+    "case": ["-w", "5600", "-h", "2800", "--quality", "basic", "--floor", "--perspective",
              "--rotate", "-38,0,0", "--zoom", "1.75"],
-    "case-top": ["-w", "4400", "-h", "2000", "--quality", "basic", "--side", "top", "--zoom", "1.7"],
-    "case-exploded": ["-w", "2800", "-h", "1800", "--quality", "basic", "--perspective",
+    "case-top": ["-w", "8800", "-h", "4000", "--quality", "basic", "--side", "top", "--zoom", "1.7"],
+    "case-exploded": ["-w", "5600", "-h", "3600", "--quality", "basic", "--perspective",
                       "--rotate", "-60,0,0", "--zoom", "1.2"],
 }
 CASE_VIEWS = {
-    "case-parts": ["-w", "2800", "-h", "1600", "--quality", "basic", "--perspective",
+    "case-parts": ["-w", "5600", "-h", "3200", "--quality", "basic", "--perspective",
                    "--rotate", "-45,0,0", "--zoom", "1.4"],
-    "case-bottom": ["-w", "2800", "-h", "1300", "--quality", "basic", "--side", "bottom", "--zoom", "2.1"],
+    "case-bottom": ["-w", "5600", "-h", "2600", "--quality", "basic", "--side", "bottom", "--zoom", "2.1"],
 }
 
 
@@ -74,7 +74,7 @@ def render(board, name, args):
     subprocess.run(["kicad-cli", "pcb", "render", "-o", str(raw), *args, "--background", "transparent",
                     "--use-board-stackup-colors", str(board)], check=True, capture_output=True)
     subprocess.run(["magick", str(raw), "-trim", "+repage", "-bordercolor", "none", "-border", "20",
-                    "-resize", "2000x", "-strip", str(out)], check=True)
+                    "-resize", "3840x", "-strip", str(out)], check=True)
     raw.unlink()
     print(f"wrote {out.relative_to(ROOT)}")
 
@@ -117,7 +117,7 @@ def main():
         plate = PLATE.with_name("_render.kicad_pcb")
         plate.write_text(re.sub(*OPAQUE_MASK, PLATE.read_text()))
         try:
-            render(plate, "plate", ["-w", "2800", "-h", "1100", "--quality", "basic", "--side", "top", "--zoom", "2.5"])
+            render(plate, "plate", ["-w", "5600", "-h", "2200", "--quality", "basic", "--side", "top", "--zoom", "2.5"])
         finally:
             for p in (plate, plate.with_suffix(".kicad_prl")): p.unlink(missing_ok=True)
     finally:

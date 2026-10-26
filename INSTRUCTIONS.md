@@ -38,7 +38,10 @@ Every file to order, print or cut is in the [build release](https://github.com/m
 4. **Case.** The four STLs, [`keygen-left-bottom.stl`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-left-bottom.stl),
    [`keygen-right-bottom.stl`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-right-bottom.stl), [`keygen-left-top.stl`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-left-top.stl)
    and [`keygen-right-top.stl`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-right-top.stl), printed in PETG at 0.2 mm layers and 90 % infill, dense for weight and a deeper sound: the bottom
-   shells floor-down and the top frames deck-down, without supports. The fits are close (1.0 mm
+   shells floor-down and the top frames deck-down, without supports. Print them once the controller
+   sockets have arrived: the USB-C port is placed from their height. Measure the socket body; if it
+   is not 3.0 mm, set `SOCKET_H` in [`tools/gen_schematic.py`](tools/gen_schematic.py) and run
+   `tools/regen.py` before printing. The fits are close (1.0 mm
    from the plate edge to the wall, 0.5 mm round each gasket tab), so calibrate the printer's flow
    and dimensions first, and try the plate in each bottom shell before setting the inserts: sand
    a tight wall or pocket, don't force the plate.
@@ -217,16 +220,20 @@ Lay the 5 mm EVA case foam on the floor of the bottom shell, round the battery i
 ### Step 18: Plate-and-PCB unit
 
 1. Cut the Poron strips into 12 mm pieces and put one on each of the 8 gasket ledges.
-2. Plug the battery lead into **BT101 / BT201**.
-3. Lower the plate-and-PCB unit onto the strips, with the USB-C over its slot and the slide switch
-   in its opening.
-4. Put a second piece on top of each plate tab.
+2. Plug the battery lead into **BT101 / BT201**, leaving it a loose loop: the unit floats, and a
+   tight lead holds it down on one side.
+3. Lower the plate-and-PCB unit onto the strips, with the controller's end down into its pocket
+   behind the USB-C port and the slide switch in its opening.
+4. Press the plate down near each tab: it should sink evenly on the strips and spring back, with
+   nothing under it (the lead, a strip off its ledge) pressing on it or holding it.
+5. Put a second piece on top of each plate tab.
 
 ### Step 19: Top frame
 
 Fit the top frame. Holding the two parts together, turn the half over onto a soft cloth and drive
 the 8 M2 × 16 screws up through the floor's counterbores evenly, a little at a time: snug, not
-tight, so the gaskets stay soft.
+tight, so the gaskets stay soft. The closed half should not rattle when shaken, and the plate
+should give a little when pressed in the middle; if it rattles, a strip has fallen off its ledge.
 
 ### Step 20: Keycaps, knob and final test
 

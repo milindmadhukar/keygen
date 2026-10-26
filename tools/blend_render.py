@@ -7,6 +7,8 @@ Writes into <outdir>:
 hero.png              the studio camera, as set up in blender/keygen.blend
 top.png               straight down on both halves
 thumbs.png            close up on the left half's knob, OLED and thumb cluster
+side.png              low along the back edge: the case's profile, the USB-C ports and power switches
+bottom.png            straight down on the keyboard turned over on the floor: the case's underside
 leds_####.png         the hero view, a rainbow wave running across the LEDs (a looping GIF's frames)
 turntable_####.png    one turn round the keyboard (a looping GIF's frames)
 
@@ -22,9 +24,10 @@ from mathutils import Vector
 argv = sys.argv[sys.argv.index("--") + 1:]
 OUT = Path(argv[0])
 PREVIEW = "--preview" in argv
-VIEWS = [a for a in argv[1:] if not a.startswith("--")] or ["hero", "top", "thumbs", "leds", "turntable"]
+VIEWS = [a for a in argv[1:] if not a.startswith("--")] or ["hero", "top", "thumbs", "side", "leds", "turntable",
+                                                             "bottom"]
 
-STILL = dict(width=2000, height=1125, samples=96)
+STILL = dict(width=1920, height=1080, samples=128)
 FRAMES = dict(width=640, height=360, samples=16)
 LED_FRAMES, TURN_FRAMES = 36, 48
 WAVE_SPAN = 0.7            # hues across the keyboard at once in the LED wave
@@ -57,6 +60,26 @@ def bounds(col):
     return lo, hi
 
 
+def turn_over(col, lo, centre):
+    """Turn the keyboard upside down about its long axis and lay it on the floor, resting on its
+    highest point (the knobs), so the studio lights fall on the case's underside."""
+    zmax = max((o.matrix_world @ Vector(c)).z for o in col.all_objects if o.type == "MESH" for c in o.bound_box)
+    pivot = bpy.data.objects.new("Turned over", None)
+    bpy.context.scene.collection.objects.link(pivot)
+    for o in col.all_objects:
+        if o.parent is None:
+            o.parent = pivot
+    pivot.rotation_euler.y = math.pi                         # (x, y, z) -> (2 cx - x, y, lo + zmax - z)
+    pivot.location = (2 * centre.x, 0, lo.z + zmax)
+    for o in col.all_objects:                                # LEDs off: they would light the floor through the caps
+        if o.type == "LIGHT":
+            o.hide_render = True
+    light = bpy.data.lights.new("Underside light", "AREA"); light.energy = 6.0; light.size = 0.5
+    lo_ = bpy.data.objects.new("Underside light", light)
+    lo_.location = centre + Vector((-0.5, -0.4, 0.5)); look_at(lo_, centre)
+    bpy.context.scene.collection.objects.link(lo_)
+
+
 def look_at(obj, target):
     obj.rotation_euler = (target - obj.location).to_track_quat("-Z", "Y").to_euler()
 
@@ -86,8 +109,8 @@ def settings(scene, s):
     scene.render.image_settings.file_format = "PNG"
 
 
-def still(scene, name, cam):
-    settings(scene, STILL)
+def still(scene, name, cam, aspect=16 / 9):
+    settings(scene, dict(STILL, height=round(STILL["width"] / aspect)))
     scene.camera = cam
     scene.render.filepath = str(OUT / f"{name}.png")
     bpy.ops.render.render(write_still=True)
@@ -142,6 +165,10 @@ def main():
         target += Vector((-0.03, -0.03, 0))                  # between the knob and the thumb cluster
         cam = camera("Thumbs", target + Vector((-0.10, -0.26, 0.17)), target, lens=60, fstop=4.0)
         still(scene, "thumbs", cam)
+    if "side" in VIEWS:
+        target = centre + Vector((0, size.y / 2, size.z * 0.4))
+        cam = camera("Side", target + Vector((-0.30, 0.95, 0.06)), target, lens=80, fstop=11.0)
+        still(scene, "side", cam, aspect=8 / 3)
     if "turntable" in VIEWS:
         pivot = bpy.data.objects.new("Turntable", None); pivot.location = centre
         scene.collection.objects.link(pivot)
@@ -155,6 +182,10 @@ def main():
     if "leds" in VIEWS:
         led_wave(col, LED_FRAMES)
         animation(scene, "leds", hero, LED_FRAMES)
+    if "bottom" in VIEWS:                                      # last: it moves the keyboard
+        turn_over(col, lo, centre)
+        bottom = camera("Bottom", centre + Vector((0, 0, 1.0)), centre, ortho=size.x * 1.06)
+        still(scene, "bottom", bottom)
 
 
 main()

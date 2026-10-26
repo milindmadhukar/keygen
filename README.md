@@ -64,6 +64,14 @@ translucent caps.
 
 ![Keygen from above](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-top.jpg)
 
+**From the side.** The back edge of each half, with its USB-C port and power switch.
+
+![Keygen from behind at desk level, showing the case profile, the USB-C ports and the power switches](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-side.jpg)
+
+**Underneath.** The bottom shells, with the counterbored case screws and the reset pinhole.
+
+![Keygen turned over, showing the underside of both bottom shells](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-bottom.jpg)
+
 **Knob and thumb cluster.**
 
 ![Close up on the left half's knob, OLED window and thumb cluster](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-thumbs.jpg)

@@ -106,8 +106,9 @@ References and soldering notes for every part are in `fab/BOM.md`.
   - EVA case foam, 5 mm, on the case floor round the battery bay, the controller, the
     battery connector, the slide switch, the reset tube and the encoder and OLED pins. It sits
     3.0 mm below the parts under the PCB at rest and 1.5 mm below at full gasket travel.
-- **Openings:** an open 20 mm USB-C slot and a 9 × 3.4 mm power switch slot on the top edge, with
-  the wall thinned to 1.5 mm in front of them, and a 2 mm reset pinhole in the floor with a guide
+- **Openings:** a 14.2 × 9.8 mm rounded USB-C port, in front of a pocket inside the wall for the
+  controller's end, and a 9 × 3.4 mm power switch slot on the top edge, with the wall thinned outside
+  them, and a 2 mm reset pinhole in the floor with a guide
   tube up to the button.
 - **Fit check:** `tools/gen_case.py` checks every case part against the PCB, the plate, the
   controller, the reset button, the battery, the OLED, the encoder, the knob, the plate screw heads

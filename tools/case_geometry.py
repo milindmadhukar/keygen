@@ -78,11 +78,18 @@ TABS_PER_HALF = 8
 POCKET_CLEAR = 0.5             # tab to pocket, each side, so the tab floats
 WALL_IN = 1.0                  # PCB/plate edge to the case's inner wall
 WALL_OUT = 7.5                 # PCB/plate edge to the case's outer wall
-PORT_WALL = 1.5                # wall thickness in front of the USB-C and power switch
+PORT_WALL = 1.5                # wall in front of the controller's pocket, and round the switch lever
 PORT_KEEP = 22.0               # no tab this close to the USB-C or switch lever
 PORT_KEEP_SCREW = 16.0         # no case screw this close to them
 NANO_W, NANO_L = 18.0, 33.5    # nice!nano v2 board
 USB_OVERHANG = 1.0             # its USB-C end reaches this far past the PCB edge
+SOCKET_H, NANO_T = g.SOCKET_H, g.NANO_T   # the controller's sockets and board (set SOCKET_H as measured)
+USB_Z = -PCB_T - SOCKET_H - NANO_T / 2   # the USB-C receptacle's centre, on the board's mid-plane (mid-mount)
+PLUG_W, PLUG_H = 12.35, 6.5    # USB-C cable overmould: the largest the USB-C spec recommends
+FLOAT_UP = 1.0                 # the floating stack lifting, the upper gasket strips squeezed further
+PORT_CLEAR = 0.4               # plug to port at the end of its float, each side: print error
+PORT_R = 2.0                   # port corner radius; overmoulds are rounded at least this much
+NANO_POCKET_CLEAR = 0.3        # controller end to its pocket in the wall, past the stack's float
 ANTENNA_LEN = 12.0             # chip antenna end of the nice!nano
 ANTENNA_KEEP = 15.0            # no metal (inserts, screws) this close to it
 SCREW_HEAD_D = 3.5             # M2 button head (ISO 7380) on top of the plate
@@ -423,6 +430,14 @@ def battery(h):
     as near the battery connector as it can while keeping ANTENNA_KEEP from the antenna end and
     TALL_CLEAR from the tall parts under the PCB; the right half's is the left's, mirrored."""
     return _battery(h["side"])
+
+
+def usb_port():
+    """(width, z0, z1) of the USB-C port through the wall: the largest plug overmould round the
+    receptacle, carried by the floating stack (POCKET_CLEAR sideways, FLOAT_GAP down, FLOAT_UP up),
+    with PORT_CLEAR all round, so a plugged cable never touches the case."""
+    w = PLUG_W + 2 * (POCKET_CLEAR + PORT_CLEAR)
+    return w, USB_Z - PLUG_H / 2 - FLOAT_GAP - PORT_CLEAR, USB_Z + PLUG_H / 2 + FLOAT_UP + PORT_CLEAR
 
 
 def battery_heights():

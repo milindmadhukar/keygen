@@ -80,13 +80,16 @@ python3 tools/regen.py --force    # rerun every step (or name steps: --force cas
 
 A step's inputs are its script, the `tools/` modules it imports and its data files (the PCB, the
 keymap, `bom/bom.csv` and so on). Their hashes from the last run are in `tools/regen.lock`,
-committed with the change, so the repo records that every output, published or not, is current. A full run takes about 20 minutes: 14 for the Blender renders, 3 for
-the case.
+committed with the change, so the repo records that every output, published or not, is current. A full run takes about 30 minutes: 17 for the Blender renders, 7 for
+the KiCad renders and 2 for the case.
 
 - **Claude Code** runs it at the end of every turn (the Stop hook in `.claude/settings.json`), and
   a failing step comes back as feedback to fix.
 - **Git** refuses a commit while anything is stale (`.githooks/pre-commit`; turn the hooks on with
   `git config core.hooksPath .githooks`).
+
+One run at a time: a run started while another holds the lock waits for it, and the Stop hook skips
+instead, so two sessions never render the same files at once.
 
 The plate and case follow the PCB through the shared geometry in `tools/case_geometry.py`. The
 steps and what they run:
@@ -140,8 +143,9 @@ black-mask PCB.
 - The LED colours are `LED_SCHEME` in `tools/blend_scene.py` (`gradient`, `lavender`, `white`,
   `rainbow`), and the materials are defined there too.
 - `tools/render_blender.py` (the `studio-renders` step) renders the README's pictures from the
-  studio file with Cycles: `assets/render-studio-{hero,top,thumbs}.jpg`, and the
-  `render-studio-{leds,turntable}.gif` loops. The hero uses the studio camera, so moving it moves the
+  studio file with Cycles: `assets/render-studio-{hero,top,thumbs,side,bottom}.jpg` at 1920 × 1080,
+  and the `render-studio-{leds,turntable}.gif` loops. The bottom view turns the
+  keyboard over onto the floor, its LEDs off. The hero uses the studio camera, so moving it moves the
   README picture; the other views are set up in `tools/blend_render.py`. `--preview` renders them
   small and noisy into `/tmp/keygen-preview/`.
 

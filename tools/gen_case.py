@@ -19,8 +19,9 @@ between two Poron strips: one on a ledge in the bottom shell, one under the top 
 parts are screwed together from below, up through the walls (M2 x 16 into M2 heat-set inserts in
 blind holes in the top frame's underside), so the top has no holes and the screw heads sit in
 counterbores, below the flat underside. The bottom shell
-has an open slot under the USB-C, a slot for the power switch lever (with the wall thinned in
-front of both), and a guided pinhole under the reset button. The LiPo lies in a bay sunk into the
+has a rounded USB-C port, sized for a cable's plug wherever the floating stack carries it, in front of a
+pocket inside the wall for the controller's end; a slot for the power switch lever (the wall thinned
+outside both); and a guided pinhole under the reset button. The LiPo lies in a bay sunk into the
 floor, clear of the solder joints above it. The underside is flat.
 
 The top frame's deck is level with its rim and covers the plate everywhere but the keycaps, the
@@ -42,8 +43,8 @@ build123d next to KiCad's pcbnew; see the README:
 import math, sys
 from pathlib import Path
 
-from build123d import (Align, Box, Circle, Color, Compound, Cone, Cylinder, ExportDXF, ExportSVG, Face, Kind, Polygon, Pos,
-                       Rectangle, RectangleRounded, Rot, Unit, Wire, export_step, export_stl, extrude, loft, offset)
+from build123d import (Align, Axis, Box, Circle, Color, Compound, Cone, Cylinder, ExportDXF, ExportSVG, Face, Kind, Polygon, Pos,
+                       Rectangle, RectangleRounded, Rot, Unit, Wire, export_step, export_stl, extrude, fillet, loft, offset)
 
 from shapely import Point, Polygon as SPoly, box, unary_union
 from shapely.affinity import rotate
@@ -67,7 +68,7 @@ SCREW_L = 16.0                         # M2 x 16 socket head (ISO 4762), from be
 CBORE_D, HEAD_H = 4.4, 2.0             # its counterbore in the floor, and its head height
 CBORE_CHAMFER = 0.6
 CBORE_TOP = C.SPLIT_Z + INSERT_L - SCREW_L   # the head's seat: the screw ends level with the insert's top
-USB_SLOT_W = C.NANO_W + 2.0            # the whole nice!nano end, which overhangs the slanted edge
+NANO_POCKET_W = C.NANO_W + 2.0         # the controller's end, which overhangs the slanted edge, floating sideways
 LEVER_SLOT_W, LEVER_SLOT_H = 9.0, 3.4
 RESET_HOLE_D, RESET_TUBE_D = 2.0, 5.0  # paperclip hole, and the guide tube round it
 RESET_BUTTON_H = 5.0                   # 6 mm tact switch, 5 mm tall, on the PCB underside
@@ -99,6 +100,15 @@ def dir_box(p, u, along0, along1, width, z0, z1):
     cx, cy = xy((p[0] + u[0] * a, p[1] + u[1] * a))
     ang = math.degrees(math.atan2(-u[1], u[0]))
     return Pos(cx, cy, z0) * Rot(0, 0, ang) * Box(along1 - along0, width, z1 - z0, align=Z)
+
+
+def dir_port(p, u, along0, along1, width, z0, z1, r):
+    """dir_box with its four edges along u rounded to r: a port through a wall."""
+    a = (along0 + along1) / 2
+    cx, cy = xy((p[0] + u[0] * a, p[1] + u[1] * a))
+    ang = math.degrees(math.atan2(-u[1], u[0]))
+    b = Box(along1 - along0, width, z1 - z0)
+    return Pos(cx, cy, (z0 + z1) / 2) * Rot(0, 0, ang) * fillet(b.edges().filter_by(Axis.X), r)
 
 
 def rect(r):
@@ -134,14 +144,43 @@ def cylinder(p, d, z0, z1):
     return Pos(x, y, z0) * Cylinder(d / 2, z1 - z0, align=Z)
 
 
+def usb_axis(h):
+    """The unit direction the controller's USB-C faces, from its antenna end."""
+    ax0, ay0, ax1, ay1 = h["antenna"]
+    u = (h["usb"][0] - (ax0 + ax1) / 2, h["usb"][1] - (ay0 + ay1) / 2)
+    n = math.hypot(*u)
+    return u[0] / n, u[1] / n
+
+
+def nano_pocket(h):
+    """The pocket inside the wall that the controller's end sits in, as (along0, along1, width) on
+    usb_axis from the USB-C end, and the four corners of its outer face, in board mm."""
+    u = usb_axis(h)
+    along1 = C.POCKET_CLEAR + C.NANO_POCKET_CLEAR
+    c = (h["usb"][0] + u[0] * along1, h["usb"][1] + u[1] * along1)
+    side = (-u[1] * NANO_POCKET_W / 2, u[0] * NANO_POCKET_W / 2)
+    return (-3.0, along1, NANO_POCKET_W), [(c[0] + side[0], c[1] + side[1]), (c[0] - side[0], c[1] - side[1])]
+
+
 def port_cuts(h):
-    """The thinned wall in front of the USB-C and the switch lever, as edge-aligned spans."""
+    """The thinned wall outside the USB-C and the switch lever, as edge-aligned boxes: PORT_WALL in
+    front of the controller's pocket, and PORT_WALL past the inner wall round the lever."""
     e = h["port_edge"]
     s_usb, s_lev = e.s_of(h["usb"]), e.s_of(h["lever"])
     lo, hi = min(s_usb, s_lev) - 10.0, max(s_usb, s_lev) + 8.0
     if lo < 10.0: lo = -(C.WALL_OUT + 2.0)          # run the notch off the corner
     if hi > e.len - 10.0: hi = e.len + C.WALL_OUT + 2.0
-    return e, lo, hi, s_lev
+    _, corners = nano_pocket(h)
+    out = lambda p: (p[0] - e.a[0]) * e.n[0] + (p[1] - e.a[1]) * e.n[1]
+    deep = max(out(p) for p in corners) + C.PORT_WALL
+    ps = sorted(e.s_of(p) for p in corners)
+    z = (C.BOTTOM_Z - 1, C.TOP_Z + 1)
+    if s_lev > s_usb:
+        boxes = [(lo, ps[1] + C.PORT_WALL, deep), (ps[1] + C.PORT_WALL, hi, C.WALL_IN + C.PORT_WALL)]
+    else:
+        boxes = [(lo, ps[0] - C.PORT_WALL, C.WALL_IN + C.PORT_WALL), (ps[0] - C.PORT_WALL, hi, deep)]
+    notch = [edge_box(e, s0, s1, out0, C.WALL_OUT + 3.0, *z) for s0, s1, out0 in boxes]
+    return e, notch[0] + notch[1], s_lev, deep
 
 
 def build(h):
@@ -150,8 +189,7 @@ def build(h):
     outer = offset(outline, C.WALL_OUT, kind=Kind.INTERSECTION)
     tab_list = C.tabs(h)
     screws = C.case_screws(h, tab_list)
-    e, lo, hi, s_lev = port_cuts(h)
-    notch = edge_box(e, lo, hi, C.WALL_IN + C.PORT_WALL, C.WALL_OUT + 3.0, C.BOTTOM_Z - 1, C.TOP_Z + 1)
+    e, notch, s_lev, _ = port_cuts(h)
 
     # bottom shell: floor + walls up to the split
     bottom = Pos(0, 0, C.BOTTOM_Z) * extrude(outer, C.SPLIT_Z - C.BOTTOM_Z, dir=UP)
@@ -163,11 +201,13 @@ def build(h):
     for p in screws:
         cuts.append(cylinder(p, SCREW_D, C.BOTTOM_Z - 1, C.SPLIT_Z + 1))
         cuts.append(cylinder(p, CBORE_D, C.BOTTOM_Z - 1, CBORE_TOP))
-    # USB-C: open slot down through the floor edge, along the controller's USB direction
-    ax0, ay0, ax1, ay1 = h["antenna"]
-    u = (h["usb"][0] - (ax0 + ax1) / 2, h["usb"][1] - (ay0 + ay1) / 2)
-    n = math.hypot(*u); u = (u[0] / n, u[1] / n)
-    cuts.append(dir_box(h["usb"], u, -3.0, C.WALL_OUT + 5.0, USB_SLOT_W, C.BOTTOM_Z - 1, -C.PCB_T))
+    # USB-C: the controller's end in a pocket inside the wall, open at the top so the stack drops in
+    # straight, and a rounded port through the wall in front of it
+    u = usb_axis(h)
+    (a0, a1, w), _ = nano_pocket(h)
+    cuts.append(dir_box(h["usb"], u, a0, a1, w, C.CAVITY_Z, C.SPLIT_Z + 1))
+    pw, pz0, pz1 = C.usb_port()
+    cuts.append(dir_port(h["usb"], u, -3.0, C.WALL_OUT + 5.0, pw, pz0, pz1, C.PORT_R))
     # power switch lever
     cuts.append(edge_box(e, s_lev - LEVER_SLOT_W / 2, s_lev + LEVER_SLOT_W / 2, -2.0, C.WALL_OUT + 3.0,
                          -C.PCB_T - LEVER_SLOT_H, -C.PCB_T))

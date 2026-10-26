@@ -126,3 +126,20 @@ print(f"battery: {C.BATTERY_STACK_T:.1f} mm installed envelope, {battery_gap:.1f
 print("standoffs: " + ", ".join(f"{k} {v:.1f} mm" for k, v in threads.items()))
 print(f"keycaps: skirt {C.CAP_SKIRT:.1f} mm above the plate at rest, {skirt_over_heads:.1f} mm over the plate "
       f"screw heads at full travel with a {C.CAP_STEM_RECESS:.1f} mm recessed stem")
+# the USB-C port: the plug, carried by the floating stack, inside it; the wall closed below it
+port_w, port_z0, port_z1 = C.usb_port()
+plug_low = C.USB_Z - C.PLUG_H / 2 - C.FLOAT_GAP
+plug_high = C.USB_Z + C.PLUG_H / 2 + C.FLOAT_UP
+require(min(plug_low - port_z0, port_z1 - plug_high,
+            (port_w - C.PLUG_W) / 2 - C.POCKET_CLEAR) >= C.PORT_CLEAR - 1e-9,
+        "a plugged USB-C cable can touch the port at full float")
+require(port_z0 - C.BOTTOM_Z >= 3.0, "too little wall under the USB-C port")
+for side, h in C.halves().items():
+    _, _, _, deep = G.port_cuts(h)
+    (_, along1, _), corners = G.nano_pocket(h)
+    e = h["port_edge"]
+    wall = deep - max((p[0] - e.a[0]) * e.n[0] + (p[1] - e.a[1]) * e.n[1] for p in corners)
+    require(wall >= 1.2, f"{side} wall in front of the controller's pocket too thin")
+print(f"usb-c: port {port_w:.1f} x {port_z1 - port_z0:.1f} mm (r {C.PORT_R:g}), centred on the receptacle "
+      f"{-C.USB_Z:.1f} mm under the PCB top with {C.SOCKET_H:g} mm sockets; a {C.PLUG_W:g} x {C.PLUG_H:g} mm "
+      f"plug keeps {C.PORT_CLEAR:g} mm clear at full float; {port_z0 - C.BOTTOM_Z:.1f} mm of wall below it")

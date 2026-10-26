@@ -22,13 +22,13 @@ PCB = ROOT / "pcb/keygen.kicad_pcb"
 TMP = ROOT / "pcb/_render.kicad_pcb"          # beside the real board so ${KIPRJMOD} models resolve
 OPAQUE_MASK = (r'(\(type "(?:Top|Bottom) Solder Mask"\)\s*\(color )"Black"', r'\1"#0E0E10F5"')
 MODELS = re.compile(r'\n\t\t\(model "[^"]*"\n(?:\t\t\t[^\n]*\n)*\t\t\)')
-FLAT = ["-w", "2800", "-h", "1100", "--zoom", "2.5"]
+FLAT = ["-w", "5600", "-h", "2200", "--zoom", "2.5"]
 VIEWS = {   # name: (bare board, kicad-cli render options)
-    "hero": (False, ["-w", "2800", "-h", "1300", "--quality", "high", "--floor", "--perspective",
+    "hero": (False, ["-w", "5600", "-h", "2600", "--quality", "high", "--floor", "--perspective",
                      "--rotate", "-38,0,0", "--zoom", "1.85"]),
     "top": (False, [*FLAT, "--quality", "basic", "--side", "top"]),
     "bottom": (False, [*FLAT, "--quality", "basic", "--side", "bottom"]),
-    "bare": (True, ["-w", "2800", "-h", "1400", "--quality", "high", "--floor", "--perspective",
+    "bare": (True, ["-w", "5600", "-h", "2800", "--quality", "high", "--floor", "--perspective",
                     "--rotate", "-45,0,0", "--zoom", "1.9"]),
     "bare-top": (True, [*FLAT, "--quality", "high", "--side", "top"]),
     "bare-bottom": (True, [*FLAT, "--quality", "high", "--side", "bottom"]),
@@ -44,7 +44,7 @@ def main():
             subprocess.run(["kicad-cli", "pcb", "render", "-o", str(raw), *args, "--background", "transparent",
                             "--use-board-stackup-colors", str(TMP)], check=True, capture_output=True)
             subprocess.run(["magick", str(raw), "-trim", "+repage", "-bordercolor", "none", "-border", "20",
-                            "-resize", "2000x", "-strip", str(out)], check=True)
+                            "-resize", "3840x", "-strip", str(out)], check=True)
             raw.unlink()
             print(f"wrote {out.relative_to(ROOT)}")
     finally:

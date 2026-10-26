@@ -105,7 +105,7 @@ The case is gasket-mounted: the plate and PCB become one unit that floats on Por
 ### 11. Switches, then into the case
 - Check each switch's pins are straight, then press it through the plate into its socket, with a hand under the PCB behind the socket. The tall 1.25u thumb switches are turned 90°.
 - Case foam onto the floor of the bottom shell, round the battery in its bay.
-- Poron strips (12 × 4 × 3 mm, cut from 80 × 4 × 3 mm strips) on the 8 ledges, then the plate-and-PCB unit onto them with the USB-C over its slot, then a strip on top of each tab.
+- Poron strips (12 × 4 × 3 mm, cut from 80 × 4 × 3 mm strips) on the 8 ledges, then the plate-and-PCB unit onto them with the controller's end down into its pocket behind the USB-C port, then a strip on top of each tab.
 - Top frame on. Holding the two parts together, turn the half over onto a soft cloth and drive the 8 M2 × 16 screws up through the floor evenly: snug, not tight, so the gaskets stay soft.
 - Fit the keycaps (52 × 1u, 14 × 1.25u) and push a knob onto each encoder shaft.
 - Final test: every key on every layer, both encoders, both OLEDs, the LEDs on USB, and Bluetooth between the halves on battery.

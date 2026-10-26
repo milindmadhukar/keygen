@@ -4,11 +4,13 @@
 assets/render-studio-hero.jpg       the studio camera: both halves, LEDs lit
 assets/render-studio-top.jpg        straight down on both halves
 assets/render-studio-thumbs.jpg     close up on the knob, the OLED and the thumb cluster
+assets/render-studio-side.jpg       low along the back edge: the case's profile and its ports
+assets/render-studio-bottom.jpg     the keyboard turned over: the case's underside
 assets/render-studio-leds.gif       a rainbow wave running across the per-key LEDs
 assets/render-studio-turntable.gif  one turn round the keyboard
 
-Run tools/gen_blend.py first (regen.py does); the views are set up in tools/blend_render.py. A full
-run takes about 14 minutes on the CPU.
+Run tools/gen_blend.py first (regen.py does); the views are set up in tools/blend_render.py. The stills are
+1920 x 1080; a full run takes about 20 minutes on the CPU.
 
     python3 tools/render_blender.py              write the assets
     python3 tools/render_blender.py --preview    small and noisy, into /tmp/keygen-preview/ instead
@@ -20,7 +22,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 STUDIO = ROOT / "blender/keygen.blend"
-STILLS = ("hero", "top", "thumbs")
+STILLS = ("hero", "top", "thumbs", "side", "bottom")
 GIFS = {"leds": (12, 256), "turntable": (12, 128)}     # frames per second, colours (the turntable changes
                                                        # every pixel each frame, so it gets fewer)
 
