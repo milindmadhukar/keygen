@@ -7,7 +7,7 @@ only, and a friend brings it to India.
 
 Order in two stages. First the PCBs, the electronics and the AliExpress cart; build one half on the
 bench and test it. Then the plate and the case, measured against the parts in hand. Estimated total
-about ₹22,000 (at about ₹55 per AU$), plus the CNC cutting of the plate.
+about ₹24,500 (at about ₹55 per AU$), plus the CNC cutting of the plate.
 
 | Got | Item | Qty | Where | Link | Price | Notes |
 |---|---|---|---|---|---|---|
@@ -37,7 +37,7 @@ about ₹22,000 (at about ₹55 per AU$), plus the CNC cutting of the plate.
 | [ ] | Reset button, 6 × 6 × 5 mm | 10 | Robu.in (in cart) | [tact switch](https://robu.in/product/kfc-a06-5-0-tact-switch-4pin6x6x5/) | ₹13 | |
 | [ ] | Case, PETG: 2 bottom shells + 2 top frames | 4 parts | Robu.in | [3D printing service](https://robu.in/product/3d-printing-service1/) | ~₹2,000–3,000 (estimate) | Stage 2. Upload `case/{bottom,top}/stl/`. About 250–315 g of PETG. Shop around: services vary a lot per gram |
 | [ ] | Heat-set inserts M2, 3 mm long, 3.5 mm OD, pack of 100 | 16 | AliExpress → Australia (in cart) | [brass heat insert nut](https://www.aliexpress.com/item/1005006798286851.html) | AU$5.19 | Size for the case's 3.2 mm holes. 84 left for other projects |
-| [ ] | Case screws M2 × 16, socket head | 20 | Amazon.in / hardware store | | | The M2 × 6 pack linked before is the wrong length now; find M2 × 16 |
+| [ ] | Case screws M2 × 16, socket head (ISO 4762), 304 stainless, pack of 50 | 16 | AliExpress → Australia (in cart) | [HZYUEGOU](https://www.aliexpress.com/item/32966941844.html), option 304 stainless steel / M2 / 16mm | AU$2.84 | Bottom shell to top frame, 8 per half. Same store as the button-head screws |
 | [ ] | Plate standoffs M2 × 3 mm, brass hex, female-female, pack of 100 | 10 | AliExpress → Australia (in cart) | [brass standoff](https://www.aliexpress.com/item/1005008798318304.html), option M2 / 3mm | AU$4.31 | Each stands on a 0.5 mm shim: together they set the plate height for MX. 3.5 mm standoffs are not stocked |
 | [ ] | Standoff shims, DIN 988 M2 2 × 5 × 0.5 mm, pack of 50 | 10 | AliExpress → Australia (in cart) | [shim washer](https://www.aliexpress.com/item/1005002301164770.html), option M2x5 / 0.5mm | AU$3.92 | One under each standoff, on the PCB |
 | [ ] | Plate screws M2 × 4, button head, pack of 50 | 5 | AliExpress → Australia (in cart) | [HZYUEGOU ISO 7380](https://www.aliexpress.com/item/32967225441.html), option M2 / 4mm | AU$2.04 | Under the PCB at the five standoffs with no screw on top |
@@ -47,5 +47,11 @@ about ₹22,000 (at about ₹55 per AU$), plus the CNC cutting of the plate.
 | [ ] | Case foam, EVA 5 mm, A4 | 2 sheets | Amazon.in (in cart) | [black, pack of 5](https://www.amazon.in/dp/B0D2NJD4DK) | ₹249 | Goes on the bottom shell's floor, under the PCB, to fill the hollow case. Cut from `case/foam/svg/` |
 | [ ] | Gaskets, Poron strip 80 × 4 × 3 mm, pack of 20 | 32 pieces | AliExpress → Australia (in cart) | [gasket Poron strip](https://www.aliexpress.com/item/1005004800667967.html) | AU$6.93 | Cut each strip into six 12 mm pieces. Two per plate tab: one on the shell's ledge under the tab, one on top of it under the frame. Option 80x4x3MM |
 | [ ] | Y cable, USB-A to 2 × USB-C, data and charging | 1 | AliExpress → Australia (in cart) | [Asia Market Choice Store](https://www.aliexpress.com/item/1005012373354214.html), option Black 1.8m | AU$6.14 | Optional. Powers both halves from one port, wired mode through the left. Find the data leg on arrival: plug only the left half into each leg in turn |
-| [ ] | Weight and tenting | | | | | After tenting is chosen |
+| [ ] | Tenting stands, magnetic, for split keyboards, black, pack of 2 | 2 | AliExpress → Australia (in cart) | [GEVBAY Store](https://www.aliexpress.com/item/1005010608928916.html), option BK 2pcs | AU$20.52 | One per half: a magnetic puck on an adjustable arm, detachable |
+| [ ] | Steel plates, self-adhesive, 35 × 45 mm, black, pack of 5 | 2 | AliExpress → Australia (in cart) | [metal plate](https://www.aliexpress.com/item/1005006982507966.html), option 5pcs Black 35x45mm | AU$3.07 | One per half on the floor for the stand's magnet, 15 mm or more from the antenna end; the spares add weight |
+| [ ] | Rubber feet, silicone, black, 10 × 4 mm, pack of 50 | 8 | AliExpress → Australia (in cart) | [meifang Store](https://www.aliexpress.com/item/1005005315398342.html), option Black 10x4mm 50pcs | AU$3.13 | Four per half |
+| [ ] | Flux, no-clean NC-559, 10 cc syringe | 1 | AliExpress → Australia (in cart) | [DSUNYK NC-559](https://www.aliexpress.com/item/1005006580049018.html), option 1pcs | AU$3.36 + AU$3.14 shipping | For the LEDs and the SOT-23 parts |
+| [ ] | Kapton tape, 10 mm | 1 roll | AliExpress → Australia (in cart) | [Manumoc LCD Store](https://www.aliexpress.com/item/1005009260450140.html), option 10mm 1pcs | AU$4.52 | |
+| [ ] | Keycap and switch puller, 2-in-1 | 1 | AliExpress → Australia (in cart) | [Six Six Likes Store](https://www.aliexpress.com/item/1005007129115924.html) | AU$2.35 | |
+| [ ] | Double-sided tape, thin (0.3 mm or less) | 1 roll | Stationery shop | | ~₹30 | Holds the battery in its bay. Tissue tape, not foam tape |
 | [x] | Hotswap sockets, Kailh | 66 of 100 | Already owned | | | |

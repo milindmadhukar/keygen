@@ -9,7 +9,7 @@ name: 09 - case design
 
 ## Status
 
-Designed and generated from the PCB; tenting, base weight and rubber feet are still to be added to the floor.
+Designed and generated from the PCB. The flat floor takes rubber feet and a steel plate for a detachable magnetic tenting stand.
 
 - `tools/gen_case.py` (build123d) writes the printable parts to `case/bottom/stl/` and `case/top/stl/` in the repo, with STEP files in each part's `step/` folder. It also runs a fit check against the PCB, plate, controller, reset button, OLED modules and keycaps at full travel, the keycaps taken at their largest and lowest and grown by the plate's float; it reports no overlaps.
 - `tools/gen_plate.py` writes the plate as its own KiCad board, `pcb/plate/keygen-plate.kicad_pcb`, and its Gerbers, `case/plate/gerber/keygen-plate-{left,right}-gerbers.zip`, with the order settings in `case/plate/PLATE.md`.
@@ -24,7 +24,7 @@ Designed and generated from the PCB; tenting, base weight and rubber feet are st
   - The plate has **8 tabs per half**, 12 × 5 mm, spread round its edge and kept clear of the USB-C and power switch.
   - Each tab sits between two **Poron strips, 12 × 4 × 3 mm**, cut from 80 × 4 × 3 mm strips: one on a ledge in the bottom shell, one under the top frame. Closing the case squeezes each strip by 1.0 mm, a third of it, so a part printed 0.2 mm off still leaves it firmly held. That is 16 strips per half.
   - The PCB and plate edges keep 1.0 mm from the walls, and the controller 1.5 mm from the floor, so the unit floats.
-- **Closing the case:** 8 **M2 × 16 socket-head screws** per half go up from the underside, through the bottom shell's walls, into **M2 × 3 heat-set inserts** in blind holes in the top frame's underside. The top frame has no screw holes on top: 1.4 mm of frame covers each insert. The heads sit 3 mm up inside counterbores in the floor. No insert or screw is within 15 mm of the controller's antenna end.
+- **Closing the case:** 8 **M2 × 16 socket-head screws** per half go up from the underside, through the bottom shell's walls, into **M2 × 3 heat-set inserts** in blind holes in the top frame's underside. The top frame has no screw holes on top: 1.7 mm of frame covers each insert. The heads sit 3 mm up inside counterbores in the floor. No insert or screw is within 15 mm of the controller's antenna end.
 - **Top frame deck:** inside the rim, the top frame carries a deck level with it (7.0 to 9.0 mm above the PCB, 4.0 mm over the plate top) that covers the plate everywhere but the keycaps, keeping 1.2 mm clear of each, with a 0.4 mm chamfer round each window's mouth on the deck top. A pressed keycap's skirt sinks about 1 mm into its window, so the clearance takes an 18.4 mm DSA skirt, the plate floating 0.5 mm to one side in its gasket pockets, and cap wobble and print error; the chamfer takes the first-layer squish, as the deck top is printed on the bed. Every web or point of deck narrower than 4 mm is trimmed back to a rounded end, so nothing on the 2 mm printed deck can snap off.
 - **Walls:** 6.5 mm thick, thinned outside across the USB-C and power switch out to the corner: 1.5 mm past the inner wall at the lever, and 1.5 mm in front of the controller's pocket at the USB-C. The floor is 3.0 mm, and 2.0 mm under the battery bay.
 
@@ -54,9 +54,9 @@ So the PCB top is 14.6 mm above the desk and the plate top 19.6 mm. Keycap tops 
 
 - **USB-C:** the controller's end, which overhangs the slanted top edge, sits in a 20 mm pocket inside the wall, open at the top of the bottom shell so the stack drops in straight. A 14.2 × 9.8 mm port with 2 mm corners goes through the wall in front of it, centred on the receptacle: a 12.35 × 6.5 mm plug overmould, moved by the floating stack, keeps 0.4 mm clear of it, so the cable never ties the stack to the case. The port's height comes from the socket height, `SOCKET_H` in `tools/gen_schematic.py`.
 - **Power switch:** a 9 × 3.4 mm slot at the lever, through the 1.5 mm wall.
-- **Reset:** a 2 mm pinhole through the floor, countersunk outside, with a guide tube up to 1 mm under the button so a paperclip finds it. The reset buttons mirror between the halves, and so do the pinholes.
+- **Reset:** a 2 mm pinhole through the floor, countersunk outside, with a guide tube up to 2 mm under the button so a paperclip finds it; the button clears it with the stack pressed 1.5 mm down onto its gaskets. The reset buttons mirror between the halves, and so do the pinholes.
 - **Through the plate:** on each half a 15 × 15 mm encoder cut-out and a 29.5 × 30 mm OLED window, with the OLED glass about level with the plate top.
-- **Through the deck:** an OLED window round the display's active area, 1 mm clear at the deck's underside, opening at 45° on three sides and further towards the thumbs, so the whole active area shows at 50° from vertical. The glass sits 3.5 mm below the deck top. The encoder bushing (7 mm) passes through a 9 mm hole, hidden under the knob; the body has a 15 mm square underside relief to 7.4 mm. The knob's underside is 5.5 mm above the deck using the tallest bushing. The plate screw heads sit 0.5 mm under the deck.
+- **Through the deck:** an OLED window round the display's active area, 1 mm clear at the deck's underside, opening at 45° on three sides and further towards the thumbs, so the whole active area shows at 50° from vertical. The glass sits 3.9 mm below the deck top. The encoder bushing (7 mm) passes through a 9 mm hole, hidden under the knob; the body has a 15 mm square underside relief to 7.4 mm. The knob's underside is 5.1 mm above the deck using the tallest bushing. The plate screw heads sit 0.9 mm under the deck.
 
 Exact sizes and positions: [[14 - case & plate requirements]].
 
@@ -68,9 +68,12 @@ Exact sizes and positions: [[14 - case & plate requirements]].
 - **Cut files:** the switch pads come ready-made; `gen_case.py` models them in place in `case/foam/step/`. It writes the plate foam and the case foam per half as 1:1 DXF and SVG, seen from above, to `case/foam/dxf/` and `case/foam/svg/` in the repo, for a laser or a printed template. No strip is narrower than 1.5 mm. The fit check covers the foam too.
 - PETG is light and resonant on its own, so the foam and the gaskets do most of the work.
 
-## Still to add: tenting, weight and feet
+## Feet, tenting and weight
 
-Tenting is not chosen yet; it decides what the flat floor gets. Weight goes in the base, away from the controller's antenna end. Rubber feet go on the floor.
+- **Feet:** four 10 × 4 mm self-adhesive silicone feet per half, near the floor's corners: outer top, outer bottom, the thumb tip and the inner top, the last 17 mm below the top edge to clear the USB-C opening. All clear the screw counterbores and the reset pinhole.
+- **Tenting:** a detachable magnetic tenting stand per half, made for split keyboards: a magnetic puck on a height- and angle-adjustable arm. Its puck holds to a 35 × 45 mm self-adhesive steel plate on the inner half of the floor, between the reset pinhole and the thumb cluster, 19 mm from the controller's antenna end. The half tilts on its two outer feet, about 13° with the arm at 30 mm; without the stand it lies flat on its feet.
+- **Weight:** spare steel plates under the battery bay, on the outer half of the floor.
+- Placement is step 21 of `INSTRUCTIONS.md` in the repo.
 
 ## Assembly
 

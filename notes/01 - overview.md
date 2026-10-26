@@ -40,7 +40,7 @@ Five Bluetooth profiles plus USB-C on the left half cover several computers. Pro
 - PCB routed, DRC clean with schematic parity, datasheet audit passed ([[15 - datasheet audit]])
 - Manufacturing files and assembly BOM exported
 - Switch plate and gasket-mounted case designed and generated from the PCB ([[09 - case design]])
-- Next: order the boards and plates, print the case ([[09 - case design]]), choose the tenting
+- Next: order the boards and plates, print the case ([[09 - case design]])
 
 ## Related notes
 - [[02 - layout design]] — key layout and geometry

@@ -220,7 +220,7 @@ def build(h):
         x, y = xy(p)
         bottom -= Pos(x, y, C.BOTTOM_Z - EPS) * Cone(CBORE_D / 2 + CBORE_CHAMFER, CBORE_D / 2, CBORE_CHAMFER + EPS, align=Z)
     # reset: a guide tube from the floor up to just under the button, and the pinhole through both
-    tube_top = -C.PCB_T - RESET_BUTTON_H - 1.0
+    tube_top = -C.PCB_T - RESET_BUTTON_H - C.FLOAT_GAP - 0.5   # clear of the button with the stack pressed down
     bottom += cylinder(h["reset"], RESET_TUBE_D, C.CAVITY_Z - EPS, tube_top)
     bottom -= cylinder(h["reset"], RESET_HOLE_D, C.BOTTOM_Z - 1, tube_top + 1)
     rx, ry = xy(h["reset"])
@@ -476,6 +476,7 @@ def fit_check(h, bottom, top, plt, foam):
 
     for name, part in (("bottom", bottom), ("top", top)):
         check(name, part, (("pcb", pcb), ("plate", plt), ("controller", controller), ("reset button", button),
+                           ("reset button, stack pressed down", Pos(0, 0, -C.FLOAT_GAP) * button),
                            ("keycaps", caps), ("oled", oled), ("battery", battery), ("encoder", encoder),
                            ("knob", knob), ("plate screw heads", heads)))
     check("plate foam", foam["plate"], (("switches", switches), ("encoder", encoder), ("oled", oled),

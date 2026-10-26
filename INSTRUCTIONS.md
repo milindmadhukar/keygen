@@ -15,7 +15,7 @@ Everything sits on the **back** of the PCB except the switches, the encoder and 
 2. [Tools](#2-tools)
 3. [Solder the board](#3-solder-the-board) (steps 1–10)
 4. [Plate, OLED and switches](#4-plate-oled-and-switches) (steps 11–14)
-5. [Close the case](#5-close-the-case) (steps 15–20)
+5. [Close the case](#5-close-the-case) (steps 15–21)
 6. [Flashing](#flashing)
 7. [Troubleshooting](#troubleshooting)
 
@@ -66,7 +66,7 @@ Fasteners per half:
 ## 2. Tools
 
 - Temperature-controlled soldering iron with a fine tip (300–350 °C; 320 °C for the LEDs)
-- Solder, flux, desoldering wick
+- Solder, no-clean flux (a syringe of NC-559 paste), desoldering wick
 - Flush cutters, fine tweezers
 - Multimeter (continuity, polarity, battery voltage)
 - Kapton tape
@@ -74,7 +74,8 @@ Fasteners per half:
 - A magnifier for the LED and SOT-23 joints
 - A USB-C cable
 - A 1.3 mm hex key for the M2 button-head screws, a 1.5 mm hex key for the case screws, and an iron tip or heat-set tool for the inserts
-- Double-sided tape for the battery
+- Thin double-sided tape for the battery (tissue tape, 0.3 mm or less, not foam tape)
+- A keycap and switch puller
 
 ## 3. Solder the board
 
@@ -130,6 +131,9 @@ pad, solder the other pads, then touch up the first.
 5. **Charge current.** With the multimeter in series with the battery and USB plugged in, confirm
    about 100 mA. An empty 2500 mAh cell takes roughly a day. Unplug the battery again before the
    next step.
+6. **Lead length.** Measure the battery lead from the pouch to the end of the plug. It runs about
+   50 mm in the case, from the bay to **BT101 / BT201**; with less than about 80 mm, plug it in
+   before taping the cell down (step 16).
 
 ### Step 7: LEDs, one column at a time
 
@@ -146,7 +150,8 @@ pad, solder the other pads, then touch up the first.
 - 1N4148 **D101–D134 / D201–D234** (DO-35), body on the back, **band towards the square pad**.
 - **D107 / D207** is the encoder's, beside it.
 - Bend the leads to the footprint spacing, insert, splay the legs, solder, and trim the legs flush
-  so nothing touches a switch.
+  so nothing touches a switch. Keep the joints on the front low: the switch pads stick down over
+  them.
 
 ### Step 9: Hotswap sockets
 
@@ -176,6 +181,7 @@ plate screws that go into the same standoffs from above.
 1. Stick a 0.5 mm Poron ring switch pad on the PCB round each switch position (33), its notches
    facing the switch's clips (top and bottom) and its open middle round the pins and the LED
    window. Where a ring's corner meets a standoff (7 rings per half), snip that corner off first.
+   Where a ring crosses a diode's two joints, snip a notch in it so it lies flat on the board.
 2. Lay the 2 mm EVA plate foam over them.
 
 ### Step 13: Plate and OLED
@@ -186,7 +192,7 @@ plate screws that go into the same standoffs from above.
 2. **OLED J101 / J201.** Check that the pin order printed on the module is GND, VCC, SCL, SDA, the
    same as the footprint; some modules swap GND and VCC. Pass its header pins down through the
    plate's OLED window into the board, with the module resting on its plastic spacer, and solder
-   them from the back.
+   them from the back. Trim the pins flush on the back: the battery lead runs under them.
 3. Power the half and check the status screen appears.
 
 ### Step 14: Switches
@@ -205,8 +211,9 @@ hole), and let them cool.
 
 ### Step 16: Battery
 
-- Tape the pouch into the bay in the bottom shell's floor with double-sided tape, its lead end
-  towards the battery connector.
+- Tape the pouch into the bay in the bottom shell's floor with thin double-sided tape, its lead
+  end towards the battery connector. With a short lead (step 6), plug it into **BT101 / BT201**
+  first, holding the plate-and-PCB unit on its edge beside the shell, then lay the cell in its bay.
 - Check the installed cell, protection board and tape thickness before closing: the modeled 1.4 mm
   gap at full gasket travel includes a 6.1 mm battery stack (5.0 mm cell, 0.3 mm thickness tolerance,
   0.5 mm swelling allowance and 0.3 mm tape) and underside parts no taller than 2.0 mm. Excess
@@ -219,11 +226,13 @@ Lay the 5 mm EVA case foam on the floor of the bottom shell, round the battery i
 
 ### Step 18: Plate-and-PCB unit
 
-1. Cut the Poron strips into 12 mm pieces and put one on each of the 8 gasket ledges.
+1. Cut the Poron strips into 12 mm pieces and put one on each of the 8 gasket ledges, pushed to
+   the ledge's outer end.
 2. Plug the battery lead into **BT101 / BT201**, leaving it a loose loop: the unit floats, and a
    tight lead holds it down on one side.
 3. Lower the plate-and-PCB unit onto the strips, with the controller's end down into its pocket
-   behind the USB-C port and the slide switch in its opening.
+   behind the USB-C port and the slide switch in its opening. Hold the unit away from the top
+   edge as it goes down: the switch lever clears that wall by only 0.2 mm.
 4. Press the plate down near each tab: it should sink evenly on the strips and spring back, with
    nothing under it (the lead, a strip off its ledge) pressing on it or holding it.
 5. Put a second piece on top of each plate tab.
@@ -238,11 +247,25 @@ should give a little when pressed in the middle; if it rattles, a strip has fall
 ### Step 20: Keycaps, knob and final test
 
 1. Fit the keycaps: per half, 26 × 1u and 7 × 1.25u (the two tall thumb caps turned 90°).
-2. Push a knob onto each encoder shaft.
+2. Push a knob onto each encoder shaft, stopping at least 2.5 mm above the deck so it clears the
+   deck when the plate is pressed down.
 3. Turn both halves on together so they pair with each other, then pair the host to Bluetooth
    profile 1 (SYS + `1`).
 4. Test every key on every layer, both encoders, both OLEDs, the LEDs on USB, and the link between
    the halves on battery. The keymap is in [`firmware/README.md`](firmware/README.md#keymap).
+
+### Step 21: Feet and tenting
+
+1. **Rubber feet.** Stick four 10 × 4 mm feet on the floor: at the outer top corner, the outer
+   bottom corner and the tip under the thumb cluster, each about 7 mm in from the edges, and at
+   the inner top corner, its centre 17 mm below the top edge so it stays clear of the USB-C
+   opening. Keep each one clear of the screw counterbores and the reset pinhole.
+2. **Steel plate.** Stick a 35 × 45 mm steel plate on the inner half of the floor, between the
+   reset pinhole and the thumb cluster, its near edge about 12 mm from the pinhole: the
+   controller's antenna end is above the pinhole, and no metal goes within 15 mm of it. Spare
+   plates can go under the battery bay, on the outer half, for weight.
+3. **Stand.** The tenting stand's magnetic puck holds to the plate, and the half tilts on its two
+   outer feet. Pull the stand off to lay the half flat on its feet.
 
 ## Flashing
 
