@@ -16,3 +16,24 @@ firmware/out/
 blender/keygen-parts.blend
 blender/*.blend1
 tools/regen.local.lock
+
+# Generated binaries: tools/regen.py writes them, tools/publish.py publishes them to the GitHub
+# releases "media" (README pictures) and "build" (manufacturing and CAD files) on every push to main.
+assets/*.png
+assets/*.jpg
+assets/*.gif
+case/**/*.step
+case/**/*.stl
+case/**/*.dxf
+case/**/*.svg
+case/**/*.pdf
+case/**/*.zip
+fab/*.zip
+pcb/keygen-schematic.pdf
+pcb/lib/keygen.3dshapes/Keycap_*
+pcb/lib/keygen.3dshapes/Knob_17mm.step
+pcb/lib/keygen.3dshapes/OLED_096_I2C.step
+pcb/lib/keygen.3dshapes/nRF52840_ProMicro.wrl
+# The part datasheets live in the "datasheets" release: python3 tools/publish.py --fetch datasheets
+docs/datasheets/*.pdf
+docs/datasheets/*.png

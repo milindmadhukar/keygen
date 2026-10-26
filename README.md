@@ -7,7 +7,7 @@
 ![ZMK](https://img.shields.io/badge/firmware-ZMK-5B4A9E)
 ![Status](https://img.shields.io/badge/status-PCB%20routed%2C%20DRC%20clean-2EA44F)
 
-![Keygen, both halves in their black PETG case, the per-key LEDs lit under smoke translucent keycaps](assets/render-studio-hero.jpg)
+![Keygen, both halves in their black PETG case, the per-key LEDs lit under smoke translucent keycaps](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-hero.jpg)
 
 Keygen is a one-off build: 66 keys over two column-staggered halves, a 2 × 2 thumb cluster, a rotary
 encoder and a 0.96-inch OLED on each half, and per-key RGB lighting. Each half has its own
@@ -54,33 +54,33 @@ from KiCad.
 **Per-key lighting.** The SK6812MINI-E LEDs shine up through the switches' clear tops and the smoke
 translucent caps.
 
-![A rainbow wave running across Keygen's per-key LEDs](assets/render-studio-leds.gif)
+![A rainbow wave running across Keygen's per-key LEDs](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-leds.gif)
 
 **All round.**
 
-![Keygen turning on a turntable](assets/render-studio-turntable.gif)
+![Keygen turning on a turntable](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-turntable.gif)
 
 **From above.** The top frame's deck round the keycaps, the OLED window and the knob.
 
-![Keygen from above](assets/render-studio-top.jpg)
+![Keygen from above](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-top.jpg)
 
 **Knob and thumb cluster.**
 
-![Close up on the left half's knob, OLED window and thumb cluster](assets/render-studio-thumbs.jpg)
+![Close up on the left half's knob, OLED window and thumb cluster](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-thumbs.jpg)
 
 **Case layers.** Bottom shell, case foam, PCB, switch pads, plate foam, gasket strips under and
 over the plate tabs, plate and top frame.
 
-![Keygen case, exploded](assets/render-case-exploded.png)
+![Keygen case, exploded](https://github.com/milindmadhukar/keygen/releases/download/media/render-case-exploded.png)
 
 **PCB, top and underside.** The controllers, power switches, battery connectors and reset buttons
 sit on the back.
 
-![Keygen PCB, top view](assets/render-top.png)
+![Keygen PCB, top view](https://github.com/milindmadhukar/keygen/releases/download/media/render-top.png)
 
-![Keygen PCB, underside](assets/render-bottom.png)
+![Keygen PCB, underside](https://github.com/milindmadhukar/keygen/releases/download/media/render-bottom.png)
 
-Renders of the case parts, the plate and the routing are in [`assets/`](assets/).
+Renders of the case parts, the plate and the routing are in the [`media` release](https://github.com/milindmadhukar/keygen/releases/tag/media).
 
 ## Documentation
 
@@ -92,8 +92,9 @@ Renders of the case parts, the plate and the routing are in [`assets/`](assets/)
 | [Firmware](firmware/README.md) | ZMK configuration: keymap, hardware support, building and flashing |
 | [Design notes](notes/index.md) | The Obsidian design notes: layout, controller, PCB, case, final design, datasheet audit |
 | [Build plan](plan/index.html) | Layout drawing, connectivity, parts, pin budget and checklist. Open it in a browser |
-| [Schematic (PDF)](pcb/keygen-schematic.pdf) | A top sheet with left (refs 1xx) and right (refs 2xx) sub-sheets |
+| [Schematic (PDF)](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-schematic.pdf) | A top sheet with left (refs 1xx) and right (refs 2xx) sub-sheets |
 | [KiCad project](pcb/keygen.kicad_pro) | Schematic and PCB, KiCad 10. Both halves are in one board file as two separate outlines |
+| [Build files](https://github.com/milindmadhukar/keygen/releases/tag/build) | The PCB and plate Gerbers, case STLs and STEPs, foam cut files and plate print PDFs, as a release |
 | [Ordering notes](fab/ORDER.md) | PCB order-form settings and what to check in the DFM report |
 | [Plate ordering notes](case/plate/PLATE.md) | Order-form settings for the FR-4 switch plates, and the DXFs for cutting them from sheet |
 | [Assembly BOM](fab/BOM.md) | Every part's references per half, with quantities and soldering notes |
@@ -117,12 +118,12 @@ keygen/
 ├── INSTRUCTIONS.md Step-by-step assembly
 ├── pcb/            KiCad 10 project: schematic (generated), PCB, plate, project footprints and 3D models
 ├── tools/          Python scripts that generate, route, check and export the design
-├── fab/            Gerbers per half and combined, assembly BOMs, ordering notes
-├── case/           Case, plate and foam: one folder per part, one folder per file type
+├── fab/            Assembly BOMs and ordering notes (the Gerbers are in the build release)
+├── case/           Plate ordering notes (the case, plate and foam files are in the build release)
 ├── bom/            Bill of materials with sources (bom.csv) and the shopping checklist
 ├── plan/           Build plan and parts list as HTML
-├── docs/           Part datasheets
-├── assets/         Renders and keymap pictures
+├── docs/           Datasheet index (the PDFs are in the datasheets release)
+├── assets/         Keymap pictures (the renders are in the media release)
 ├── blender/        Blender studio scene with the materials and the lit LEDs; it links the generated parts
 ├── notes/          Design notes, hardware reference and build pipeline (Obsidian Markdown)
 ├── firmware/       ZMK configuration: shield, keymap, builds
@@ -147,4 +148,4 @@ keygen/
 - DSA keycap models generated with [KeyV2](https://github.com/rsheldiii/KeyV2) (GPL-3.0), a git submodule.
 - MX switch 3D model from [kiswitch](https://github.com/kiswitch/kiswitch) (MIT / CC-BY-SA 4.0); see
   [`pcb/lib/keygen.3dshapes/NOTICE.md`](pcb/lib/keygen.3dshapes/NOTICE.md).
-- Datasheets in [`docs/datasheets/`](docs/datasheets/) belong to their manufacturers.
+- Datasheets in the [`datasheets` release](https://github.com/milindmadhukar/keygen/releases/tag/datasheets) belong to their manufacturers.

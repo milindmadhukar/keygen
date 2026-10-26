@@ -1,0 +1,17 @@
+#!/bin/sh
+# When main is pushed, publish the generated binaries (renders, Gerbers, case files, schematic PDF)
+# to the GitHub releases: tools/publish.py uploads whatever changed. Refuses the push while anything
+# is stale, or when the commit pushed to main is not the one checked out (its files are not here).
+root=$(git rev-parse --show-toplevel)
+zero=0000000000000000000000000000000000000000
+while read -r local_ref local_sha remote_ref remote_sha; do
+	[ "$remote_ref" = refs/heads/main ] && [ "$local_sha" != "$zero" ] || continue
+	if [ "$local_sha" != "$(git rev-parse HEAD)" ]; then
+		echo "pre-push: main is being pushed at ${local_sha%"${local_sha#???????}"}, but HEAD is elsewhere;" \
+		     "check out that commit so tools/publish.py can publish its files" >&2
+		exit 1
+	fi
+	python3 "$root/tools/regen.py" --check || exit 1
+	python3 "$root/tools/publish.py" --commit "$local_sha" || exit 1
+done
+exit 0

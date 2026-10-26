@@ -11,9 +11,13 @@ step that reads another's outputs (the case renders read the case STEP files) se
 The PCB itself (gen_pcb.py through silkscreen_art.py) is a source here, not a step: those scripts
 edit pcb/keygen.kicad_pcb and are run by hand.
 
-Steps in LOCAL write files that are gitignored (the Blender parts file). Their outputs are looked
-for on disk, their hashes go in tools/regen.local.lock (also ignored), and --check skips them, so
-a commit never depends on them; a plain run and the Stop hook keep them current.
+The binary outputs (renders, Gerbers, case files, the schematic PDF, 3D models) are gitignored:
+tools/publish.py uploads them to GitHub releases on every push to main (.githooks/pre-push). Their
+steps still hash into tools/regen.lock, so a commit still waits until they match its sources.
+
+Steps in LOCAL write files that are never published (the Blender parts file). Their hashes go in
+tools/regen.local.lock (also ignored), and --check skips them, so a commit never depends on them;
+a plain run and the Stop hook keep them current.
 
     python3 tools/regen.py               run the stale steps
     python3 tools/regen.py --check       list the stale steps, exit 1 if any (the pre-commit hook)
@@ -85,8 +89,11 @@ def git(*args):
 
 
 def repo_files():
-    """Every tracked or untracked-but-not-ignored file, relative to the root."""
-    return sorted(git("ls-files", "-co", "--exclude-standard", "-z").split("\0")[:-1])
+    """Every file in the work tree, relative to the root: tracked, untracked and ignored. The
+    generated binaries are ignored (tools/publish.py publishes them), yet they are outputs to look
+    for and inputs to hash."""
+    return sorted(set(git("ls-files", "-co", "--exclude-standard", "-z").split("\0")[:-1])
+                  | set(git("ls-files", "-oi", "--exclude-standard", "-z").split("\0")[:-1]))
 
 
 def local_imports(script, seen=None):
@@ -136,8 +143,7 @@ class Tree:
         return h.hexdigest()
 
     def missing(self, step):
-        found = (lambda o: any(ROOT.glob(o))) if step[0] in LOCAL else self.match
-        return [o for o in step[3] if not found(o)]
+        return [o for o in step[3] if not self.match(o)]
 
 
 def load_lock():

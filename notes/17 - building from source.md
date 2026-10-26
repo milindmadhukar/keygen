@@ -16,6 +16,7 @@ updated: 2026-10-25T23:55
 
 - [KiCad 10](https://www.kicad.org), including its `pcbnew` Python module and `kicad-cli`
 - Python 3 with `numpy` and `pycairo`
+- The [GitHub CLI](https://cli.github.com), logged in, to publish the generated files (below)
 - Java 17 or newer and [Freerouting 2.5.0](https://github.com/freerouting/freerouting/releases),
   saved as `tools/freerouting-2.5.0.jar` (not checked in)
 - For the case: [build123d](https://build123d.readthedocs.io/) and
@@ -79,7 +80,7 @@ python3 tools/regen.py --force    # rerun every step (or name steps: --force cas
 
 A step's inputs are its script, the `tools/` modules it imports and its data files (the PCB, the
 keymap, `bom/bom.csv` and so on). Their hashes from the last run are in `tools/regen.lock`,
-committed with the outputs. A full run takes about 20 minutes: 14 for the Blender renders, 3 for
+committed with the change, so the repo records that every output, published or not, is current. A full run takes about 20 minutes: 14 for the Blender renders, 3 for
 the case.
 
 - **Claude Code** runs it at the end of every turn (the Stop hook in `.claude/settings.json`), and
@@ -147,7 +148,17 @@ black-mask PCB.
 ## Generated files
 
 Everything below is written by a script in `tools/` from the schematic tables and the
-PCB.
+PCB. The binaries among them (renders, Gerber zips, case, plate and foam files, the schematic PDF,
+the generated 3D models) are not in git. When `main` is pushed, `.githooks/pre-push` refuses the
+push while anything is stale, then runs `tools/publish.py`, which uploads whatever changed to two
+releases whose tags never move, so their links stay put:
+
+- [`media`](https://github.com/milindmadhukar/keygen/releases/tag/media): the renders and GIFs the README and these notes show;
+- [`build`](https://github.com/milindmadhukar/keygen/releases/tag/build): everything to order, print or cut, and the schematic PDF.
+
+The part datasheets are a third release, [`datasheets`](https://github.com/milindmadhukar/keygen/releases/tag/datasheets).
+`python3 tools/publish.py --fetch` downloads `media` and `datasheets` into place; `build` comes
+from `tools/regen.py`. A fresh clone runs every step on its first `regen.py`.
 
 | File | What it is | Made by |
 |---|---|---|
@@ -166,7 +177,7 @@ PCB.
 | `tools/regen.lock` | The input hashes each step last ran with | `regen.py` |
 | `blender/keygen-parts.blend` | The Blender parts and materials (gitignored) | `gen_blend.py`, `blend_scene.py` |
 
-The `case/` folder:
+The `case/` folder, after `tools/regen.py` has run (only `PLATE.md` is in git):
 
 ```
 case/

@@ -26,7 +26,17 @@ each generator's inputs against `tools/regen.lock` and reruns only the stale ste
   fails, the error comes back as the hook's feedback: fix the source, don't skip the step.
 - the git pre-commit hook (`.githooks/pre-commit`) refuses a commit while anything is stale.
 
-Commit the regenerated files and `tools/regen.lock` together with the source change. The one
+Generated binaries are not in git: the renders and GIFs, the Gerber zips, the case, plate and foam
+files, the schematic PDF and the generated 3D models are gitignored. The git pre-push hook
+(`.githooks/pre-push`) runs `tools/publish.py` when `main` is pushed, which uploads whatever changed
+to the GitHub releases `media` (README pictures) and `build` (manufacturing and CAD files), under
+fixed tags so their URLs never change. Link them from docs as
+`https://github.com/milindmadhukar/keygen/releases/download/<media|build>/<file>`, never by repo
+path. The datasheet PDFs live in the `datasheets` release (`tools/publish.py --fetch datasheets`).
+Never commit a binary that a script can make; add it to `.gitignore` and to `tools/publish.py`.
+
+Commit the regenerated text files and `tools/regen.lock` together with the source change; the lock
+also covers the ignored binaries, so a commit still waits until they are current. The one
 exception is `blender/keygen-parts.blend`: a local step, gitignored, kept current by the hook but
 never committed (its hash is in the ignored `tools/regen.local.lock`). `blender/keygen.blend` links
 it and is edited by hand. A new
@@ -38,8 +48,9 @@ an opaque black: KiCad's named "Black" mask, which the board keeps so the Gerber
 
 ## Layout of the documentation
 
-- `assets/`: images only (renders, keymap pictures), written by the `tools/render_*.py` scripts.
-- `docs/`: Markdown documentation and the part datasheets.
+- `assets/`: images only, written by the `tools/render_*.py` scripts. The keymap SVGs are tracked;
+  the renders are ignored and published to the `media` release.
+- `docs/`: Markdown documentation and the datasheet index (the PDFs are in the `datasheets` release).
 - `notes/`: the Keygen design notes (Obsidian Markdown). Edit them here; the vault folder
   `~/Documents/Obsidian Vault/01 - Projects/Hardware & Electronics/Keygen Custom Keyboard/` is a
   copy. `tools/sync_notes.sh` mirrors `notes/` into it, run by the `.githooks/` post-commit (when

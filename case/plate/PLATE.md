@@ -1,7 +1,8 @@
 # Ordering the Keygen switch plates
 
 The plate is a plain FR-4 board with no copper. Place **two orders**, like the PCB:
-`gerber/keygen-plate-left-gerbers.zip` and `gerber/keygen-plate-right-gerbers.zip`, 5 of each.
+[`keygen-plate-left-gerbers.zip`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-plate-left-gerbers.zip) and
+[`keygen-plate-right-gerbers.zip`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-plate-right-gerbers.zip) from the build release, 5 of each.
 
 | Setting | Value |
 |---|---|
@@ -26,7 +27,7 @@ Files in each zip: keygen-plate-right-B_Cu.gbl, keygen-plate-right-B_Mask.gbs, k
 
 ## Cutting the plates from sheet (CNC router or laser)
 
-`dxf/keygen-plate-left.dxf` and `dxf/keygen-plate-right.dxf` are the same plates as 1:1 DXFs in mm,
+[`keygen-plate-left.dxf`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-plate-left.dxf) and [`keygen-plate-right.dxf`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-plate-right.dxf) are the same plates as 1:1 DXFs in mm,
 seen from above, one closed outline per contour, on three layers:
 
 | Layer | Cut |

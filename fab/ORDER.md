@@ -1,8 +1,9 @@
 # Ordering the Keygen PCBs (bare boards, self-assembly)
 
-Place **two orders**: `keygen-left-gerbers.zip` and `keygen-right-gerbers.zip`, 5 of each.
+Place **two orders**: [`keygen-left-gerbers.zip`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-left-gerbers.zip) and
+[`keygen-right-gerbers.zip`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-right-gerbers.zip), 5 of each, from the build release.
 Per half came out cheaper at Lion Circuits than the combined file (checked 2026-10-20).
-`keygen-gerbers.zip` (both halves in one design) is kept for fabs that price it better.
+[`keygen-gerbers.zip`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-gerbers.zip) (both halves in one design) is kept for fabs that price it better.
 
 | Setting | Value |
 |---|---|

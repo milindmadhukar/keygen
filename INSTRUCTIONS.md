@@ -21,21 +21,26 @@ Everything sits on the **back** of the PCB except the switches, the encoder and 
 
 ## 1. Order the parts
 
-1. **Fit test.** Print [`case/plate/pdf/keygen-plate-print.pdf`](case/plate/pdf/keygen-plate-print.pdf)
+Every file to order, print or cut is in the [build release](https://github.com/milindmadhukar/keygen/releases/tag/build).
+
+1. **Fit test.** Print [`keygen-plate-print.pdf`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-plate-print.pdf)
    at 100 % on A4 and check the thumb cluster and the knob positions against your hand.
-2. **PCBs.** Two orders of 5: [`fab/keygen-left-gerbers.zip`](fab/keygen-left-gerbers.zip) and
-   [`fab/keygen-right-gerbers.zip`](fab/keygen-right-gerbers.zip), bare boards, black mask. The
+2. **PCBs.** Two orders of 5: [`keygen-left-gerbers.zip`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-left-gerbers.zip) and
+   [`keygen-right-gerbers.zip`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-right-gerbers.zip), bare boards, black mask. The
    order-form settings and what to check in the DFM report are in [`fab/ORDER.md`](fab/ORDER.md).
 3. **Switch plates.** Have both halves CNC-routed from one 300 × 300 mm sheet of 1.5 mm black FR-4
-   with the DXFs in [`case/plate/dxf/`](case/plate/dxf/), as
+   with [`keygen-plate-left.dxf`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-plate-left.dxf) and
+   [`keygen-plate-right.dxf`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-plate-right.dxf), as
    [`PLATE.md`](case/plate/PLATE.md#cutting-the-plates-from-sheet-cnc-router-or-laser) describes. Or
-   order them from a PCB fab: the two zips in [`case/plate/gerber/`](case/plate/gerber/), with the
+   order them from a PCB fab: [`keygen-plate-left-gerbers.zip`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-plate-left-gerbers.zip) and
+   [`keygen-plate-right-gerbers.zip`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-plate-right-gerbers.zip), with the
    settings in [`case/plate/PLATE.md`](case/plate/PLATE.md).
-4. **Case.** The four STLs in [`case/bottom/stl/`](case/bottom/stl/) and
-   [`case/top/stl/`](case/top/stl/), printed in PETG at 0.2 mm layers and 90 % infill, dense for weight and a deeper sound: the bottom
+4. **Case.** The four STLs, [`keygen-left-bottom.stl`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-left-bottom.stl),
+   [`keygen-right-bottom.stl`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-right-bottom.stl), [`keygen-left-top.stl`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-left-top.stl)
+   and [`keygen-right-top.stl`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-right-top.stl), printed in PETG at 0.2 mm layers and 90 % infill, dense for weight and a deeper sound: the bottom
    shells floor-down and the top frames deck-down, without supports.
-5. **Foam.** Cut per half from the 1:1 files in [`case/foam/dxf/`](case/foam/dxf/) (laser) or
-   [`case/foam/svg/`](case/foam/svg/) (printed at 100 % as a template): a 2 mm EVA plate foam and a
+5. **Foam.** Cut per half from the 1:1 `keygen-{left,right}-{plate,case}-foam` files in the
+   [build release](https://github.com/milindmadhukar/keygen/releases/tag/build), DXF for a laser or SVG printed at 100 % as a template: a 2 mm EVA plate foam and a
    5 mm EVA case foam, each the right way up as drawn. The Poron switch pads come ready to stick.
 6. **Parts.** Everything else, with quantities, spares and sources, is in the
    [parts list](plan/bom.html) ([`bom/bom.csv`](bom/bom.csv)).

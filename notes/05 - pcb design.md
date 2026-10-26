@@ -78,7 +78,7 @@ Ground is a fill on both layers of each half, kept out from under each controlle
 ## Fabrication
 
 - **Lion Circuits** (Bengaluru): 5–6 days, no customs, 6/6 mil capability on 1 oz copper.
-- Order `fab/keygen-left-gerbers.zip` and `fab/keygen-right-gerbers.zip` as **two orders of 5**: bare boards, 2 layers, 1.6 mm, HASL lead-free. Everything is hand-soldered.
+- Order [`keygen-left-gerbers.zip`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-left-gerbers.zip) and [`keygen-right-gerbers.zip`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-right-gerbers.zip) (the [build release](https://github.com/milindmadhukar/keygen/releases/tag/build)) as **two orders of 5**: bare boards, 2 layers, 1.6 mm, HASL lead-free. Everything is hand-soldered.
 - Raise with the fab: the LED windows must be milled, and the LED pads sit close to them. Settings: `fab/ORDER.md`. Assembly BOM: `fab/BOM.md`.
 
 ## Related Notes

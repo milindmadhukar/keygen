@@ -70,7 +70,7 @@ References and soldering notes for every part are in `fab/BOM.md`.
   0.2 mm copper-to-edge. That is within Lion Circuits' 6/6 mil capability.
 - **Routing:** Freerouting does most of the signal routing, then a custom grid maze router
   finishes the rest. All tracks are then straightened into 0/45/90° runs. Ground is a fill on both
-  layers. `assets/pcb-routing.png` shows both copper layers.
+  layers. [`pcb-routing.png`](https://github.com/milindmadhukar/keygen/releases/download/media/pcb-routing.png) shows both copper layers.
 - **Datasheet audit:** `tools/check_datasheets.py` checks the routed
   board against each part's datasheet: pinouts, orientations, nRF52840 pin restrictions, the battery
   path, antenna clearance and the current budget. The datasheets are in
