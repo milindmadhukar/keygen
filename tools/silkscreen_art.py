@@ -421,26 +421,29 @@ def artwork(b):
     sky_r.BooleanIntersection(inside)
     art["F"].append(union([tr, starfield(sky_r, union([grow(tr, 0.35)] + list(obs["F"])), rng, 85)]))
 
-    # bottom, both halves: GENERATE under the reset button
-    art["B"].append(place(generate_row(), 173.05, 128.2, mirror=True))
-    art["B"].append(place(generate_row(), 245.4, 128.2, mirror=True))
+    # Each piece below sits where nothing clips it: clear of the board edge, the pads and holes (the
+    # encoder's pins and mounting slots among them) and the footprints' own silkscreen.
 
-    # bottom, left half: credits
-    lg_line_s, _ = logo(4.2, 0.75, 0.18)
+    # bottom, both halves: GENERATE under the reset button
+    art["B"].append(place(generate_row(), 175.55, 130.7, mirror=True))
+    art["B"].append(place(generate_row(), 246.9, 130.7, mirror=True))
+
+    # bottom, left half: credits, the logo above the encoder's pins and the lines below them
+    lg_line_s, _ = logo(3.4, 0.6, 0.16)
+    art["B"].append(place(lg_line_s, 171.0, 138.7, mirror=True))
     credits = union([
-        place(lg_line_s, 0, -5.6),
-        text("A WIRELESS SPLIT KEYBOARD", 0, -1.2, 1.0, w=0.18),
-        text("NAMED FOR KEYGEN BY MARTIN GARRIX", 0, 1.0, 1.0, w=0.18),
-        text("GITHUB.COM/MILINDMADHUKAR/KEYGEN", 0, 3.6, 1.0, w=0.18),
-        text("REV 0.1", 0, 5.8, 1.0, w=0.18),
+        text("A WIRELESS SPLIT KEYBOARD", 0, -3.15, 0.9, w=0.16),
+        text("NAMED FOR KEYGEN BY MARTIN GARRIX", 0, -1.05, 0.9, w=0.16),
+        text("GITHUB.COM/MILINDMADHUKAR/KEYGEN", 0, 1.45, 0.9, w=0.16),
+        text("REV 0.1", 0, 3.55, 0.9, w=0.16),
     ])
-    art["B"].append(place(credits, 171.0, 140.0, mirror=True))
+    art["B"].append(place(credits, 171.0, 147.0, mirror=True))
 
     # bottom, right half: keygen.exe window with the flashing hint
     w2, _ = window(22.0, 13.0, "KEYGEN.EXE", stacked=1)
     hint = union([w2, text("PRESS GENERATE TWICE", 0, 0.9, 1.0, w=0.18),
                   text("TO FLASH FIRMWARE", 0, 3.3, 1.0, w=0.18)])
-    art["B"].append(place(hint, 245.8, 140.3, mirror=True))
+    art["B"].append(place(hint, 249.8, 143.3, mirror=True))
     return art
 
 
