@@ -73,12 +73,19 @@ over the plate tabs, plate and top frame.
 
 ![Keygen case, exploded](https://github.com/milindmadhukar/keygen/releases/download/media/render-case-exploded.png)
 
-**PCB, top and underside.** The controllers, power switches, battery connectors and reset buttons
+**Bare PCB.** Black soldermask with white silkscreen artwork on both sides; see
+[Silkscreen artwork](notes/16%20-%20hardware%20reference.md#silkscreen-artwork).
+
+![The bare Keygen PCB at an angle, black soldermask and white silkscreen](https://github.com/milindmadhukar/keygen/releases/download/media/render-bare.png)
+
+![The bare Keygen PCB from above](https://github.com/milindmadhukar/keygen/releases/download/media/render-bare-top.png)
+
+![The bare Keygen PCB from below](https://github.com/milindmadhukar/keygen/releases/download/media/render-bare-bottom.png)
+
+**PCB underside, assembled.** The controllers, power switches, battery connectors and reset buttons
 sit on the back.
 
-![Keygen PCB, top view](https://github.com/milindmadhukar/keygen/releases/download/media/render-top.png)
-
-![Keygen PCB, underside](https://github.com/milindmadhukar/keygen/releases/download/media/render-bottom.png)
+![Keygen PCB underside with its parts](https://github.com/milindmadhukar/keygen/releases/download/media/render-bottom.png)
 
 Renders of the case parts, the plate and the routing are in the [`media` release](https://github.com/milindmadhukar/keygen/releases/tag/media).
 

@@ -109,7 +109,7 @@ python3 tools/export_bom.py      # fab/: assembly BOMs from the schematic
 python3 tools/render_bom.py      # plan/bom.html and notes/13 from bom/bom.csv
 python3 tools/plate_print.py     # case/plate/pdf/keygen-plate-print.pdf
 kicad-cli sch export pdf -o pcb/keygen-schematic.pdf pcb/keygen.kicad_sch
-python3 tools/render_board.py    # assets/render-{hero,top,bottom}.png: 3D renders with the black mask
+python3 tools/render_board.py    # assets/render-{hero,top,bottom}.png, and render-bare*.png without parts
 python3 tools/render_routing.py  # assets/pcb-routing.png
 python3 tools/render_keymap.py   # assets/keymap-*.svg: one picture per keymap layer
 python3 tools/gen_zmk_layout.py  # firmware/boards/shields/keygen/keygen-layouts.dtsi
@@ -169,7 +169,7 @@ from `tools/regen.py`. A fresh clone runs every step on its first `regen.py`.
 | `case/` | Everything outside the PCB, one folder per part and one folder per file type inside it (below) | `gen_case.py`, `gen_plate.py`, `plate_print.py` |
 | `pcb/keygen-schematic.pdf` | Printable schematic | `kicad-cli sch export pdf` |
 | `pcb/lib/keygen.3dshapes/` | 3D models for KiCad's 3D view: knob, OLED module, DSA keycaps (also as STL, for Blender), controller | `gen_models.py`, `gen_keycaps.py`, `gen_schematic.py` |
-| `assets/render-*.png` | The board, case and plate renders | `render_board.py`, `render_case.py` |
+| `assets/render-*.png` | The board (assembled and bare), case and plate renders | `render_board.py`, `render_case.py` |
 | `assets/render-studio-*` | The Blender stills and GIFs | `render_blender.py`, `blend_render.py` |
 | `assets/pcb-routing.png` | Both copper layers | `render_routing.py` |
 | `assets/keymap-*.svg` | One picture per keymap layer | `render_keymap.py` |

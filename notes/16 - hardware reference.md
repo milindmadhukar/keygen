@@ -137,6 +137,10 @@ silkscreen reuses those pieces:
 | Underside, right half | A small keygen.exe window: "press GENERATE twice to flash firmware" |
 | Everywhere else, both faces | Stars, on any free board area, with a few denser clouds |
 
+![The bare PCB from above](https://github.com/milindmadhukar/keygen/releases/download/media/render-bare-top.png)
+
+![The bare PCB from below](https://github.com/milindmadhukar/keygen/releases/download/media/render-bare-bottom.png)
+
 `tools/silkscreen_art.py` draws all of it, keeping it 0.25 mm clear
 of pads and holes and 0.5 mm inside the board edge, and writes the board stackup (black mask,
 white silkscreen, HASL). The letters use a small stroke font defined in the script. The STMPD
