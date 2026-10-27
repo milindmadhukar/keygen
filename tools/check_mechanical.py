@@ -73,6 +73,14 @@ for side, h in C.halves().items():
     tall_gap = min(C.rects_dist(battery, part) for part in h["tall"])
     antenna_gap = C.rects_dist(battery, h["antenna"])
     require(tall_gap >= 10.0 and antenna_gap >= 15.0, f"{side} battery too close to tall parts or antenna")
+    disc = Point(C.steel_disc(h)).buffer(C.STEEL_POCKET_D / 2, resolution=64)
+    disc_bay = disc.distance(box(*C.battery(h)["bay"]))
+    disc_screw = min(disc.distance(Point(p)) for p in C.case_screws(h, C.tabs(h))) - G.CBORE_D / 2 - G.CBORE_CHAMFER
+    disc_reset = disc.distance(Point(h["reset"])) - G.RESET_HOLE_D
+    disc_antenna = disc.distance(box(*h["antenna"]))
+    require(disc_bay >= 1.5 and disc_screw >= 1.0 and disc_reset >= 1.0,
+            f"{side} steel disc pocket too close to the battery bay, a counterbore or the reset pinhole")
+    require(disc_antenna >= 15.0, f"{side} steel disc too close to the antenna")
     encoder = board.FindFootprintByReference("ENC101" if side == "left" else "ENC201")
     pins = {pad.GetNumber(): pad for pad in encoder.Pads() if pad.GetNumber() != "MP"}
     def mm_point(pad):
@@ -108,11 +116,16 @@ for side, h in C.halves().items():
           f"accessory web {accessory_web:.2f} mm, knob {knob_gap:.2f} mm, "
           f"deck window {window_spare:.2f} mm spare after tolerances; "
           f"battery lateral {tall_gap:.1f} mm to parts / {antenna_gap:.1f} mm to antenna; "
+          f"steel disc {disc_antenna:.1f} mm from the antenna, {min(disc_bay, disc_screw, disc_reset):.1f} mm off the bay, screws and pinhole; "
           "3D overlaps 0", flush=True)
 
 _, battery_gap, pressed_gap = C.battery_heights()
 require(pressed_gap >= 1.0 - 1e-9, "battery contacts underside at full gasket travel")
 require(C.FLOAT_GAP >= 1.5, "controller has insufficient float travel")
+require(C.FLOOR_T - C.STEEL_POCKET_DEPTH >= 1.8, "floor too thin over the steel disc's pocket")
+require(C.STEEL_POCKET_DEPTH >= C.STEEL_T + 0.1, "steel disc stands proud of the floor")
+require(abs(C.CBORE_MOUTH_R - (G.CBORE_D / 2 + G.CBORE_CHAMFER)) < 1e-9 and abs(C.RESET_MOUTH_R - G.RESET_HOLE_D) < 1e-9,
+        "case_geometry's counterbore or pinhole size differs from gen_case's")
 threads = C.standoff_threads()
 require(abs(threads["standoff and shim short of the plate"]) <= 0.1 + 1e-9, "standoff and shim do not fill the plate gap")
 require(min(v for k, v in threads.items() if "into the standoff" in k) >= 0.8, "a plate screw barely reaches its standoff")

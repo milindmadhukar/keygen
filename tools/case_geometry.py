@@ -102,7 +102,15 @@ BATTERY_TAPE = 0.3             # double-sided mounting tape
 BATTERY_STACK_T = BATTERY_T + BATTERY_SIZE_TOL + BATTERY_GROWTH + BATTERY_TAPE
 BATTERY_CLEAR = 1.5            # cell to the bay wall, each side
 BAY_DEPTH = 1.6                # the bay is sunk this far into the floor, leaving 1.4 mm under the cell
-UNDERSIDE_H = 2.0              # hotswap sockets (1.85 mm) and DO-35 diodes (1.75 mm body) under the PCB
+STEEL_D, STEEL_T = 40.0, 0.6   # round steel plate for the tenting stand's magnetic puck (LIRAMARK)
+STEEL_POCKET_D = STEEL_D + 0.6 # its pocket in the floor's underside, 0.3 mm round the plate,
+STEEL_POCKET_DEPTH = 1.0       # deep enough for the plate and its tape (about 0.75 mm) with the pocket's
+                               # bridged ceiling sagging a little, so the plate sits flush, like the screws
+STEEL_KEEP = 2.0               # pocket to the battery bay, the screw counterbores and the reset pinhole
+STEEL_EDGE_KEEP = 12.0         # pocket to the floor's edge, which keeps it clear of the feet
+CBORE_MOUTH_R = 2.8            # a case screw's counterbore with its chamfered mouth (gen_case.py)
+RESET_MOUTH_R = 2.0            # the reset pinhole's chamfered mouth (gen_case.py)
+UNDERSIDE_H = 2.0             # hotswap sockets (1.85 mm) and DO-35 diodes (1.75 mm body) under the PCB
 TALL_CLEAR = 3.0               # cell to the controller, battery connector, buttons, encoder and OLED pins
 TALL_REFS = ("U", "BT", "ENC", "J")   # and the slide switch and reset button (SWx90, SWx91)
 
@@ -431,6 +439,45 @@ def battery(h):
     as near the battery connector as it can while keeping ANTENNA_KEEP from the antenna end and
     TALL_CLEAR from the tall parts under the PCB; the right half's is the left's, mirrored."""
     return _battery(h["side"])
+
+
+@functools.lru_cache(maxsize=None)
+def _steel_disc(side):
+    h = halves()[side]
+    if side == "right":
+        return _mirror(h, _steel_disc("left"))
+    from shapely.geometry import Point, Polygon, box
+    floor = Polygon(h["outline"]).buffer(WALL_OUT, join_style=2)
+    r = STEEL_POCKET_D / 2
+    keep = ([box(*battery(h)["bay"])]
+            + [Point(p).buffer(CBORE_MOUTH_R) for p in case_screws(h, tabs(h))]
+            + [Point(h["reset"]).buffer(RESET_MOUTH_R)])
+    antenna = box(*h["antenna"])
+    inner_x = (floor.bounds[0] + floor.bounds[2]) / 2
+    best = None
+    x0, y0, x1, y1 = floor.bounds
+    for x in _steps(x0, x1, 0.5):
+        if x < inner_x: continue                      # the inner half: the puck lifts the inner edge
+        for y in _steps(y0, y1, 0.5):
+            c = Point(x, y)
+            edge = floor.exterior.distance(c) - r
+            if not floor.contains(c) or edge < STEEL_EDGE_KEEP: continue
+            if antenna.distance(c) - r < ANTENNA_KEEP: continue
+            room = min(k.distance(c) - r for k in keep)
+            if room < STEEL_KEEP: continue
+            if best is None or min(room, edge - STEEL_EDGE_KEEP + STEEL_KEEP) > best[0]:
+                best = (min(room, edge - STEEL_EDGE_KEEP + STEEL_KEEP), (x, y))
+    if best is None: raise SystemExit(f"{side}: no room for the {STEEL_D:g} mm steel disc in the floor")
+    return best[1]
+
+
+def steel_disc(h):
+    """The centre (x, y) of the tenting stand's steel disc, set flush into a pocket in the floor's
+    underside: on the inner half, ANTENNA_KEEP from the antenna end, STEEL_EDGE_KEEP in from the
+    floor's edge (clear of the feet) and STEEL_KEEP off the battery bay, whose floor is thinner, and
+    off the screw counterbores and the reset pinhole, as far from all of them as it can be. The right
+    half's is the left's, mirrored."""
+    return _steel_disc(h["side"])
 
 
 def usb_port():

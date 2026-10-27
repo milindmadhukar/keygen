@@ -160,7 +160,8 @@ plastic body with calipers. If it is not 3.0 mm, set `SOCKET_H` in
 Print the four STLs, [`keygen-left-bottom.stl`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-left-bottom.stl),
 [`keygen-right-bottom.stl`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-right-bottom.stl), [`keygen-left-top.stl`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-left-top.stl)
 and [`keygen-right-top.stl`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-right-top.stl), in PETG at 0.2 mm layers and 90 % infill, dense for weight and a deeper sound: the bottom
-shells floor-down and the top frames deck-down, without supports. A printing service can do this
+shells floor-down and the top frames deck-down, without supports (the 40 mm pocket for the steel
+disc in each floor is bridged). A printing service can do this
 from the same settings. The fits are close (1.0 mm from the plate edge to the wall, 0.5 mm round
 each gasket tab), so calibrate the printer's flow and dimensions first, and try the plate in each
 bottom shell before setting the inserts: sand a tight wall or pocket, don't force the plate.
@@ -387,11 +388,9 @@ should give a little when pressed in the middle; if it rattles, a strip has fall
    inner top corners with their centres 17 mm below the top edge. Lower than that, the outer top
    foot covers a screw counterbore, and the inner one the USB-C opening. Keep each one clear of the
    counterbores and the reset pinhole.
-2. **Steel plate.** Stick a 65 × 45 mm steel plate on the inner half of the floor, its long side
-   parallel to the top edge, its top edge 10 mm below the reset pinhole and its inner end 11 mm
-   further in than the pinhole. The controller's antenna end is above the pinhole, and no metal
-   goes within 15 mm of it.
-3. **Stand.** The tenting stand's magnetic puck holds to the plate, and the half tilts on its two
+2. **Steel disc.** Press a 40 mm round steel plate, adhesive side down, into the round pocket in
+   the floor. It sits flush, like the screw heads.
+3. **Stand.** The tenting stand's magnetic puck holds to the disc, and the half tilts on its two
    outer feet. Pull the stand off to lay the half flat on its feet.
 
 ## Flashing

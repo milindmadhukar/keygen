@@ -226,6 +226,8 @@ def build(h):
     bottom -= cylinder(h["reset"], RESET_HOLE_D, C.BOTTOM_Z - 1, tube_top + 1)
     rx, ry = xy(h["reset"])
     bottom -= Pos(rx, ry, C.BOTTOM_Z - EPS) * Cone(RESET_HOLE_D, RESET_HOLE_D / 2, 1.0, align=Z)
+    # the tenting stand's steel disc, flush in the floor's underside like the screw heads
+    bottom -= cylinder(C.steel_disc(h), C.STEEL_POCKET_D, C.BOTTOM_Z - 1, C.BOTTOM_Z + C.STEEL_POCKET_DEPTH)
 
     # top frame: the ring round the plate from the split up to the gasket ceiling, then the deck over
     # the plate, level with the rim, with windows for the keycaps and the OLED and a hole for the encoder

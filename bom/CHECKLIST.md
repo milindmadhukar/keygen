@@ -9,7 +9,7 @@ Order in two stages. First the PCBs, the electronics and the AliExpress cart; bu
 bench and test it. Then the parts made to fit: the plate and its foam once an OLED module measures
 27.5 × 28 mm or less, and the case and its foam once the controller sockets are measured
 ([INSTRUCTIONS.md](../INSTRUCTIONS.md#1-the-plan-what-to-get-and-when)). Estimated total
-about ₹19,900 (at about ₹55 per AU$ and ₹88 per US$, with customs on the PCBs), plus the CNC cutting of the plate.
+about ₹20,000 (at about ₹55 per AU$ and ₹88 per US$, with customs on the PCBs), plus the CNC cutting of the plate.
 
 | Got | Item | Qty | Where | Link | Price | Notes |
 |---|---|---|---|---|---|---|
@@ -37,7 +37,7 @@ about ₹19,900 (at about ₹55 per AU$ and ₹88 per US$, with customs on the P
 | [ ] | Capacitor 100 nF, 1206 | 10 | Robu.in (in cart) | [100 nF](https://robu.in/product/100nf-1206-surface-mount-multilayer-ceramic-capacitor-pack-of-30/) | ₹80 | |
 | [ ] | Power switch MSK12C02 | 10 | Robu.in (in cart) | [MSK12C02](https://robu.in/product/mini-msk12co2-shou-han-horizontal-attachment-50ma-single-pole-double-throw-spdt-12v-10000-times-white-smd-slide-switches-rohs/) | ₹150 | Robu spells it MSK12CO2 |
 | [ ] | Reset button, 6 × 6 × 5 mm | 10 | Robu.in (in cart) | [tact switch](https://robu.in/product/kfc-a06-5-0-tact-switch-4pin6x6x5/) | ₹13 | |
-| [ ] | Case, PETG black: 2 bottom shells + 2 top frames | 4 parts | Robu.in (saved BOM "Keygen case print 2026-10-27") | [3D printing service](https://robu.in/product/3d-printing-service1/) | ₹893 (₹313 + ₹314 + ₹133 + ₹133) | Stage 2. Quoted from the current STLs at 0.2 mm, PETG black, 90 % infill. Robu keeps the print and the parts in separate carts: restore the saved BOM to order it. Upload again if the socket height changes the case |
+| [ ] | Case, PETG black: 2 bottom shells + 2 top frames | 4 parts | Robu.in (saved BOM "Keygen case print 2026-10-27") | [3D printing service](https://robu.in/product/3d-printing-service1/) | ₹908 (₹321 + ₹321 + ₹133 + ₹133) | Stage 2. Quoted from the current STLs at 0.2 mm, PETG black, 90 % infill. Robu keeps the print and the parts in separate carts: restore the saved BOM to order it. Ask for no supports: the steel disc's pocket bridges. Upload again if the socket height changes the case |
 | [ ] | Heat-set inserts M2, 3 mm long, 3.5 mm OD, pack of 100 | 16 | AliExpress → Australia (in cart) | [brass heat insert nut](https://www.aliexpress.com/item/1005006798286851.html) | AU$5.18 | Size for the case's 3.2 mm holes. 84 left for other projects |
 | [ ] | Case screws M2 × 16, socket head (ISO 4762), 304 stainless, pack of 50 | 16 | AliExpress → Australia (in cart) | [HZYUEGOU](https://www.aliexpress.com/item/32966941844.html), option 304 stainless steel / M2 / 16mm | AU$2.85 | Bottom shell to top frame, 8 per half. Same store as the button-head screws |
 | [ ] | Plate standoffs M2 × 3 mm, brass hex, female-female, pack of 100 | 10 | AliExpress → Australia (in cart) | [brass standoff](https://www.aliexpress.com/item/1005008798318304.html), option M2 / 3mm | AU$4.49 | Each stands on a 0.5 mm shim: together they set the plate height for MX. 3.5 mm standoffs are not stocked |
@@ -50,7 +50,7 @@ about ₹19,900 (at about ₹55 per AU$ and ₹88 per US$, with customs on the P
 | [ ] | Gaskets, Poron strip 80 × 4 × 3 mm, pack of 20 | 32 pieces | AliExpress → Australia (in cart) | [gasket Poron strip](https://www.aliexpress.com/item/1005004800667967.html) | AU$6.92 | Cut each strip into six 12 mm pieces. Two per plate tab: one on the shell's ledge under the tab, one on top of it under the frame. Option 80x4x3MM |
 | [ ] | Y cable, USB-A to 2 × USB-C, data and charging | 1 | AliExpress → Australia (in cart) | [Asia Market Choice Store](https://www.aliexpress.com/item/1005012373354214.html), option Black/1.8m | AU$6.14 | Optional. Powers both halves from one port, wired mode through the left. Find the data leg on arrival: plug only the left half into each leg in turn |
 | [ ] | Tenting stands, magnetic, for split keyboards, black, pack of 2 | 2 | AliExpress → Australia (in cart) | [GEVBAY Store](https://www.aliexpress.com/item/1005010608928916.html), option BK 2pcs | AU$21.39 | One per half: a magnetic puck on an adjustable arm, detachable. Almost sold out |
-| [ ] | Steel plates, self-adhesive, 65 × 45 × 0.6 mm, black, pack of 2 | 2 | Amazon.in (in cart) | [LIRAMARK 2 Big Rectangle Plates](https://www.amazon.in/dp/B0D6MZCBJL) | ₹99 | One per half on the floor for the stand's magnet, 15 mm or more from the antenna end |
+| [ ] | Steel plates, self-adhesive, round, 40 mm, black, pack of 5 | 2 | Amazon.in (in cart) | [LIRAMARK 5 Round Plates](https://www.amazon.in/dp/B0D6N3WY1T) | ₹179 | One per half, pressed into the round pocket in the floor, flush |
 | [ ] | Rubber feet, silicone bumpers, clear, domed, 8 mm across, 3 mm tall, pack of 100 | 8 | Amazon.in (in cart) | [HASTHIP 3x8mm](https://www.amazon.in/dp/B083DTH5HL) | ₹179 | Four per half |
 | [ ] | Wrist rests, memory foam, black, 130 mm wide, 18 mm tall | 2 | Amazon.in (in cart) | [Techzere](https://www.amazon.in/dp/B08R41X5V6) | ₹598 | One per half. Raise it with a strip of 5 mm case EVA when tented |
 | [ ] | Flux, no-clean 559 paste, 10 ml syringe | 1 | Amazon.in | [SCHOFIC UV-559](https://www.amazon.in/dp/B0F4RKKKX7) | ₹390 | For the LEDs and the SOT-23 parts |

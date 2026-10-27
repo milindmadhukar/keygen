@@ -9,7 +9,7 @@ name: 09 - case design
 
 ## Status
 
-Designed and generated from the PCB. The flat floor takes rubber feet and a steel plate for a detachable magnetic tenting stand.
+Designed and generated from the PCB. The floor takes rubber feet, and a steel disc set flush into a pocket for a detachable magnetic tenting stand.
 
 - `tools/gen_case.py` (build123d) writes the printable parts to `case/bottom/stl/` and `case/top/stl/` in the repo, with STEP files in each part's `step/` folder. It also runs a fit check against the PCB, plate, controller, reset button, OLED modules and keycaps at full travel, the keycaps taken at their largest and lowest and grown by the plate's float; it reports no overlaps.
 - `tools/gen_plate.py` writes the plate as its own KiCad board, `pcb/plate/keygen-plate.kicad_pcb`, and its Gerbers, `case/plate/gerber/keygen-plate-{left,right}-gerbers.zip`, with the order settings in `case/plate/PLATE.md`.
@@ -71,7 +71,7 @@ Exact sizes and positions: [[14 - case & plate requirements]].
 ## Feet and tenting
 
 - **Feet:** four clear domed silicone bumpers per half, 8 mm across and 3 mm tall, self-adhesive, near the floor's corners: outer bottom and the thumb tip, 7 mm in from the edges, and outer top and inner top, 7 mm in from the side and 17 mm below the top edge, which keeps them clear of the outer top case screw and the USB-C opening. All clear the screw counterbores and the reset pinhole.
-- **Tenting:** a detachable magnetic tenting stand per half, made for split keyboards: a magnetic puck on a height- and angle-adjustable arm. Its puck holds to a 65 × 45 mm self-adhesive steel plate on the inner half of the floor, long side across, between the reset pinhole and the thumb cluster, 18 mm from the controller's antenna end. The half tilts on its two outer feet, about 13° with the arm at 30 mm; without the stand it lies flat on its feet.
+- **Tenting:** a detachable magnetic tenting stand per half, made for split keyboards: a magnetic puck on a height- and angle-adjustable arm. Its puck holds to a 40 mm self-adhesive steel disc in a 1.0 mm pocket in the floor's underside, so it sits flush like the screw heads. `case_geometry.steel_disc()` places it on the inner half, at least 15 mm from the controller's antenna end, 2 mm or more off the battery bay (whose floor is thinner), the counterbores and the reset pinhole, and 12 mm in from the floor's edge, clear of the feet. The floor over the pocket is 2.0 mm. The half tilts on its two outer feet, about 13° with the arm at 30 mm; without the stand it lies flat on its feet.
 - Placement is step 21 of `INSTRUCTIONS.md` in the repo.
 
 ## Assembly
