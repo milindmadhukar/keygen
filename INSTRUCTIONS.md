@@ -38,7 +38,7 @@ Counts are for the whole keyboard (two halves). Stores, links, prices and spares
 | Part | Count | Remarks |
 | :--- | :---: | :--- |
 | Akko V3 Lavender Purple Pro switch, 5-pin | 66 | |
-| DSA keycap, 1u | 52 | Blank PBT, smoke translucent, plus two accents |
+| DSA keycap, 1u | 52 | Blank PBT, smoke translucent |
 | DSA keycap, 1.25u | 14 | |
 | Aluminium knob, 17 × 13 mm, 6 mm D bore | 2 | |
 

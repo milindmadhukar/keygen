@@ -61,7 +61,7 @@ Quantities cover **the keyboard with spares**. Prices are what the listings show
 | Part | Spec | Per kb | Buy | India | Import | Price | Status |
 |---|---|---|---|---|---|---|---|
 | Switches | Akko V3 Lavender Purple Pro: tactile, 5-pin, 40 gf operating / 55 gf bump, 3.8 mm travel, clear PC top, POM stem<br>*Light, rounded tactile and not loud. The clear top lets the per-key LEDs through. 24 spare.* | 66 | 90 (2 × 45) | [StacksKB, pack of 45](https://stackskb.com/store/akko-v3-lavender-purple-pro-switch-pack-of-45/) | AKKO official store | ₹1,099 per 45 (₹2,198) | decided |
-| Keycaps | Blank DSA PBT, smoke translucent (LBlack), 50 × 1u, plus 2 × 1u accents in mixed colours, 14 × 1.25u<br>*No stabilizers (nothing over 1.25u). One seller, so the smoke shade matches across sizes.* | 66 | 60 × 1u (50 + 10 mixed); 20 × 1.25u | — | AliExpress, SZElectronic Store, all in one order to Australia: [1u, 50pcs LBlack + 10pcs Mix](https://www.aliexpress.com/item/1005008827240220.html), [1.25u, 20pcs LBlack](https://www.aliexpress.com/item/1005008827506189.html) | AU$10.40 + AU$3.98 + AU$8.09 (AU$22.47) | in cart |
+| Keycaps | Blank DSA PBT, smoke translucent (LBlack), 52 × 1u, 14 × 1.25u, every key the same<br>*No stabilizers (nothing over 1.25u). One seller, so the smoke shade matches across sizes.* | 66 | 60 × 1u (50 + 10); 20 × 1.25u | — | AliExpress, SZElectronic Store, all in one order to Australia: [1u, 50pcs LBlack](https://www.aliexpress.com/item/1005008827240220.html), [1u, 10pcs LBlack](https://www.aliexpress.com/item/1005010720096151.html), [1.25u, 20pcs LBlack](https://www.aliexpress.com/item/1005008827506189.html) | AU$10.89 + AU$3.89 + AU$8.09 (AU$22.87) | in cart |
 
 ## Case
 

@@ -40,7 +40,7 @@ name: 07 - switch & keycap selection
 
 | Size | Qty | Source |
 |---|---|---|
-| 1u | 52 | [SZElectronic Store](https://www.aliexpress.com/item/1005008827240220.html), a 50-pack in LBlack and a 10-pack of mixed colours (2 accent keys, 8 spares) |
+| 1u | 52 | [SZElectronic Store](https://www.aliexpress.com/item/1005008827240220.html), a 50-pack in LBlack, and a [10-pack in LBlack](https://www.aliexpress.com/item/1005010720096151.html) from the same store (8 spares) |
 | 1.25u | 14 (8 outer column, 2 thumb, 4 tall thumb) | [SZElectronic Store](https://www.aliexpress.com/item/1005008827506189.html), 20-pack in LBlack |
 
 All from SZElectronic Store on AliExpress, ordered with the LEDs, so the smoke shade matches across sizes.
