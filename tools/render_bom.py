@@ -49,7 +49,7 @@ page = f"""<!doctype html>
   <p class="eyebrow">Keygen · bill of materials · generated from bom/bom.csv</p>
   <h1>Bill of materials</h1>
   <p class="lede prose">Everything needed for the keyboard, with spares, and where to get it in India or from abroad. Prices are what the listings showed on 20–22 Oct 2026, or rough guides where marked with ~. <a href="index.html">Back to the build plan</a>.</p>
-  <div class="note prose"><strong>Buying strategy:</strong> one AliExpress order, shipped to Australia and brought to India by hand, for the SK6812MINI-E LEDs (not stocked in India), the controllers, the batteries, the knobs, the switch pads, the gaskets and the keycaps; StacksKB for switches and diodes, Robu.in for the encoders and small parts, Amazon.in for the EVA foam, and Lion Circuits (Bengaluru) for the boards. The shopping checklist (<code>bom/CHECKLIST.md</code>) has the exact listings.</div>
+  <div class="note prose"><strong>Buying strategy:</strong> one AliExpress order, shipped to Australia and brought to India by hand, for the SK6812MINI-E LEDs (not stocked in India), the controllers, the batteries, the knobs, the switch pads, the gaskets and the keycaps; StacksKB for the switches, diodes and puller, Robu.in for the encoders, small parts and the case print, Amazon.in for the polycarbonate sheet, the EVA foam, the feet, flux and Kapton tape, and Lion Circuits (Bengaluru) for the boards. The shopping checklist (<code>bom/CHECKLIST.md</code>) has the exact listings.</div>
   {"".join(body)}
 </div>
 </body>

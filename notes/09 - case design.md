@@ -70,7 +70,7 @@ Exact sizes and positions: [[14 - case & plate requirements]].
 
 ## Feet, tenting and weight
 
-- **Feet:** four 10 × 2.5 mm self-adhesive silicone feet per half, near the floor's corners: outer top, outer bottom, the thumb tip and the inner top, the last 17 mm below the top edge to clear the USB-C opening. All clear the screw counterbores and the reset pinhole.
+- **Feet:** four clear domed silicone bumpers per half, 8 mm across and 3 mm tall, self-adhesive, near the floor's corners: outer bottom and the thumb tip, 7 mm in from the edges, and outer top and inner top, 7 mm in from the side and 17 mm below the top edge, which keeps them clear of the outer top case screw and the USB-C opening. All clear the screw counterbores and the reset pinhole.
 - **Tenting:** a detachable magnetic tenting stand per half, made for split keyboards: a magnetic puck on a height- and angle-adjustable arm. Its puck holds to a 35 × 45 mm self-adhesive steel plate on the inner half of the floor, between the reset pinhole and the thumb cluster, 19 mm from the controller's antenna end. The half tilts on its two outer feet, about 13° with the arm at 30 mm; without the stand it lies flat on its feet.
 - **Weight:** spare steel plates under the battery bay, on the outer half of the floor.
 - Placement is step 21 of `INSTRUCTIONS.md` in the repo.

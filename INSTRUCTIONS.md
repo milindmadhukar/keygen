@@ -168,7 +168,7 @@ bottom shell before setting the inserts: sand a tight wall or pocket, don't forc
 ## 3. Tools
 
 - Temperature-controlled soldering iron with a fine tip (300–350 °C; 320 °C for the LEDs)
-- Solder, no-clean flux (a syringe of NC-559 paste), desoldering wick
+- Solder, no-clean flux (a syringe of 559 flux paste), desoldering wick
 - Flush cutters, fine tweezers
 - Multimeter (continuity, polarity, battery voltage, and current for the charge check)
 - Calipers, for the OLED module and the controller sockets
@@ -382,10 +382,11 @@ should give a little when pressed in the middle; if it rattles, a strip has fall
 
 ### Step 21: Feet and tenting
 
-1. **Rubber feet.** Stick four 10 × 2.5 mm feet on the floor: at the outer top corner, the outer
-   bottom corner and the tip under the thumb cluster, each about 7 mm in from the edges, and at
-   the inner top corner, its centre 17 mm below the top edge so it stays clear of the USB-C
-   opening. Keep each one clear of the screw counterbores and the reset pinhole.
+1. **Rubber feet.** Stick four 8 mm silicone bumpers on the floor, centred about 7 mm in from the
+   edges: at the outer bottom corner and the tip under the thumb cluster, and at the outer and
+   inner top corners with their centres 17 mm below the top edge. Lower than that, the outer top
+   foot covers a screw counterbore, and the inner one the USB-C opening. Keep each one clear of the
+   counterbores and the reset pinhole.
 2. **Steel plate.** Stick a 35 × 45 mm steel plate on the inner half of the floor, between the
    reset pinhole and the thumb cluster, its near edge about 12 mm from the pinhole: the
    controller's antenna end is above the pinhole, and no metal goes within 15 mm of it. Spare
