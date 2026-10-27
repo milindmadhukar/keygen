@@ -19,7 +19,12 @@ Steps in LOCAL write files that are never published (the Blender parts file). Th
 tools/regen.local.lock (also ignored), and --check skips them, so a commit never depends on them;
 a plain run and the Stop hook keep them current.
 
+Steps in ON_REQUEST (the Blender parts file and the studio renders) run only when asked for, with
+--blender or by name with --force: a plain run, the Stop hook and --check skip them, so they can lag
+behind their sources until the next time someone renders.
+
     python3 tools/regen.py               run the stale steps
+    python3 tools/regen.py --blender     the same, with the Blender steps
     python3 tools/regen.py --check       list the stale steps, exit 1 if any (the pre-commit hook)
     python3 tools/regen.py --force [STEP ...]   rerun steps even if current (every step if none named)
     python3 tools/regen.py --hook        the Claude Code Stop hook: run the stale steps, report as JSON
@@ -89,6 +94,7 @@ STEPS = [
     ("bom-page", [PY, "tools/render_bom.py"], ["bom/bom.csv"], ["plan/bom.html", "notes/13 - bill of materials.md"]),
 ]
 LOCAL = {"blender"}
+ON_REQUEST = {"blender", "studio-renders"}
 
 
 def git(*args):
@@ -186,12 +192,15 @@ def hold(wait=True):
     return f
 
 
-def run(force=(), log=print):
-    """Run the stale steps (and the forced ones) in order. Returns (ran, failure) where failure is
-    (step name, output tail) or None. Call with the run lock held."""
+def run(force=(), log=print, on_request=False):
+    """Run the stale steps (and the forced ones) in order, the ON_REQUEST ones only if on_request or
+    forced. Returns (ran, failure) where failure is (step name, output tail) or None. Call with the
+    run lock held."""
     lock, ran = load_lock(), []
     for step in STEPS:
         name, cmd = step[0], step[1]
+        if name in ON_REQUEST and name not in force and not on_request:
+            continue
         tree = Tree()                                         # rescan: earlier steps may have written files
         why = "forced" if name in force else stale(tree, lock, step)
         if not why:
@@ -217,12 +226,13 @@ def main():
     ap.add_argument("--check", action="store_true", help="list stale steps; exit 1 if any")
     ap.add_argument("--force", nargs="*", metavar="STEP", help="rerun these steps (all if none named)")
     ap.add_argument("--hook", action="store_true", help="Claude Code Stop hook mode")
+    ap.add_argument("--blender", action="store_true", help="also run the Blender steps if stale")
     a = ap.parse_args()
     names = [s[0] for s in STEPS]
 
     if a.check:
         tree, lock = Tree(), load_lock()
-        bad = [(s[0], why) for s in STEPS if s[0] not in LOCAL and (why := stale(tree, lock, s))]
+        bad = [(s[0], why) for s in STEPS if s[0] not in LOCAL | ON_REQUEST and (why := stale(tree, lock, s))]
         for name, why in bad:
             print(f"stale: {name} ({why})")
         if bad:
@@ -250,7 +260,7 @@ def main():
     if unknown := set(force) - set(names):
         sys.exit(f"unknown step(s): {', '.join(sorted(unknown))}; steps are {', '.join(names)}")
     held = hold()
-    ran, fail = run(force)
+    ran, fail = run(force, on_request=a.blender)
     if fail:
         sys.exit(f"regen: {fail[0]} failed:\n{fail[1]}")
     print("regen: " + (f"ran {', '.join(ran)}" if ran else "everything is current"))

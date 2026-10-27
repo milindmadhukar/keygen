@@ -74,6 +74,7 @@ writes and reruns only what is stale:
 
 ```sh
 python3 tools/regen.py            # run the stale steps, in order
+python3 tools/regen.py --blender  # the same, with the Blender parts file and studio renders
 python3 tools/regen.py --check    # list the stale steps; exit 1 if any
 python3 tools/regen.py --force    # rerun every step (or name steps: --force case keymap)
 ```
@@ -135,9 +136,10 @@ black-mask PCB.
   - the LEDs are placed from the PCB;
   - each OLED shows its status screen from `assets/oled-*.svg`, lit pixel by pixel.
 
-  It is gitignored. `regen.py` rebuilds it whenever the board, the case or the caps change: the
-  `blender` step is a *local* step, with its hash in the ignored `tools/regen.local.lock`, and
-  `--check` skips it, so commits never wait on it.
+  It is gitignored. `regen.py --blender` rebuilds it when the board, the case or the caps have
+  changed: the `blender` step is a *local* step, with its hash in the ignored
+  `tools/regen.local.lock`, and runs only on request, like `studio-renders`; a plain run, the hooks
+  and `--check` skip both, so commits never wait on them.
 - `blender/keygen.blend` is the studio file: camera, lights, floor, Cycles and a bloom compositor.
   It **links** the `Keygen` collection, so it always shows the current design, and is edited by
   hand. Open it and press F12 for a Cycles render; the viewport shows an EEVEE preview. After a

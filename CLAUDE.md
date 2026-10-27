@@ -42,6 +42,10 @@ never committed (its hash is in the ignored `tools/regen.local.lock`). `blender/
 it and is edited by hand. A new
 generator, or a new file a generator reads, goes into the `STEPS` table in `tools/regen.py`.
 
+The two Blender steps, the parts file (`blender`) and the Cycles studio renders (`studio-renders`),
+run only on request: `tools/regen.py --blender`, or `--force studio-renders`. The hooks and
+`--check` skip them, so render only when Milind asks for new pictures.
+
 `render_board.py` renders with the board's stackup colours, from a temporary copy whose mask is
 an opaque black: KiCad's named "Black" mask, which the board keeps so the Gerber job file says
 "Black", renders as see-through brown.
