@@ -22,6 +22,13 @@ firmware/
     ├── boards/nice_nano_nrf52840_zmk.overlay   LED chain on P0.06 and its power switch on P0.08,
     │                                           OLED on I2C (P0.17/P0.20), P0.13 held on for its power
     └── Kconfig.*, keygen.zmk.yml
+module/
+├── src/ui/                         the OLED screens: plain C on a 128 × 64, 1-bit framebuffer
+│   ├── kg_ui.c, kg_ui.h            status screens and the lighting menu, from one kg_state
+│   ├── kg_boot.c                   the boot animation
+│   ├── kg_gfx.c                    pixels, lines, boxes, dither, bitmaps, text
+│   └── kg_assets.c                 fonts, icons and the logo, from tools/gen_oled_assets.py
+└── sim/kg_sim.c                    the screens on a PC, through scripted scenes
 ```
 
 [`keygen-layouts.dtsi`](boards/shields/keygen/keygen-layouts.dtsi) is generated from the same Redox
@@ -95,19 +102,51 @@ python3 tools/render_keymap.py   # assets/keymap-*.svg, with keymap-drawer throu
 | `T` / `Y` | Reset the left / right half |
 | `B` / `N` | Bootloader on the left / right half |
 
-## Status screen
+## OLED screens
 
-ZMK's status screen on each OLED, as [`tools/render_oled.py`](../tools/render_oled.py) draws it from
-ZMK's layout and fonts, on USB power.
+The screens in [`module/src/ui`](module/src/ui) are not yet built into the firmware, which still
+runs ZMK's status screen. [`tools/render_oled.py`](../tools/render_oled.py) compiles them on the PC
+and plays scripted scenes through them; the pictures below are its output, pixel for pixel, at the
+panel's 2:1 with square pixels.
+
+```sh
+python3 tools/gen_oled_assets.py   # module/src/ui/kg_assets.{c,h}: fonts, icons and logo
+python3 tools/render_oled.py       # assets/oled-*.gif and oled-{left,right}.svg (needs gcc and Pillow)
+```
+
+### Boot
+
+Stacked program windows with boxed title bars. On the left, star dust, a crescent moon and the
+KEYGEN logo in outline, drawn in by a scan line; on the right, a serial that churns out of noise
+and locks when the GENERATE button between the two spinning cubes presses itself. It runs 5 s on
+each half, then dissolves into the status screen; a key press skips it.
 
 | Left | Right |
 |---|---|
-| ![Left OLED: Bluetooth profile 1 connected, charging, Base layer](../assets/oled-left.svg) | ![Right OLED: linked to the left half, charging](../assets/oled-right.svg) |
+| ![Left OLED boot: the KEYGEN logo drawn in over star dust and a crescent moon](https://github.com/milindmadhukar/keygen/releases/download/media/oled-boot-left.gif) | ![Right OLED boot: a serial generated and accepted between two spinning cubes](https://github.com/milindmadhukar/keygen/releases/download/media/oled-boot-right.gif) |
 
-- Top left: the output, a Bluetooth profile and whether it is connected (✓), paired but not
-  connected (✕) or unpaired (⚙), or the USB symbol; on the right half, its link to the left.
-- Top right: the battery level, with a bolt while on USB power.
-- Bottom left, left half only: the active layer.
+### Status
+
+| Left | Right |
+|---|---|
+| ![Left OLED status: output, profiles, batteries, layers, modifiers and WPM](https://github.com/milindmadhukar/keygen/releases/download/media/oled-left.gif) | ![Right OLED status: link, battery, the layer and a WPM graph](https://github.com/milindmadhukar/keygen/releases/download/media/oled-right.gif) |
+
+- Left: the output (USB, or the Bluetooth profile with ✓ when connected), the link to the right
+  half and caps lock along the top; the five profiles (lit when active, outlined when paired,
+  dotted when open) and the connection state; both batteries, with a bolt on USB power; the layers,
+  the active one lit; Shift, Ctrl, Alt and Super, lit while held; and the words per minute.
+- Right: the link and its own battery along the top, caps lock between them; the active layer in
+  large type with a line on what it holds, sliding when it changes; and a graph of the last minute's
+  words per minute, which turns to drifting stars after a few seconds idle.
+- Coming back from idle, each screen opens like a CRT turning on.
+
+### Lighting menu
+
+On the right OLED, beside the right knob. Turning the knob changes the selected setting and pressing
+it moves to the next: power, effect (Solid, Breathe, Spectrum, Swirl), hue, saturation, brightness
+and speed. On battery power it notes that the LEDs light only on USB power.
+
+![Right OLED lighting menu: power, effect, hue, saturation, brightness and speed](https://github.com/milindmadhukar/keygen/releases/download/media/oled-light-menu.gif)
 
 ## Hardware support
 

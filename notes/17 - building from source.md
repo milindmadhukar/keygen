@@ -30,6 +30,7 @@ updated: 2026-10-25T23:55
 - For the keycap models: an [OpenSCAD development snapshot](https://openscad.org/downloads.html#snapshots)
   (2025 or later; the 2021.01 release cannot run KeyV2), as `openscad` or `$KEYGEN_OPENSCAD`
 - For the Blender scene: [Blender](https://www.blender.org) 5.2, as `blender` or `$KEYGEN_BLENDER`
+- For the OLED screens: `gcc` and Python's `Pillow`
 
 ```sh
 git clone --recursive https://github.com/milindmadhukar/keygen.git
@@ -117,7 +118,8 @@ python3 tools/render_board.py    # assets/render-{hero,top,bottom}.png, and rend
 python3 tools/render_routing.py  # assets/pcb-routing.png
 python3 tools/render_assembly.py # assets/assembly-*.png: maps, the which-side overview and part close-ups
 python3 tools/render_keymap.py   # assets/keymap-*.svg: one picture per keymap layer
-python3 tools/render_oled.py     # assets/oled-{left,right}.svg: each half's OLED status screen
+python3 tools/gen_oled_assets.py # firmware/module/src/ui/kg_assets.{c,h}: the OLED fonts, icons and logo
+python3 tools/render_oled.py     # assets/oled-*.gif, oled-{left,right}.svg: the OLED screens (gcc, Pillow)
 python3 tools/gen_zmk_layout.py  # firmware/boards/shields/keygen/keygen-layouts.dtsi
 python3 tools/gen_blend.py       # blender/keygen-parts.blend (local, see below)
 python3 tools/render_blender.py  # assets/render-studio-*: the Blender stills and GIFs
@@ -183,7 +185,8 @@ from `tools/regen.py`. A fresh clone runs every step on its first `regen.py`.
 | `assets/pcb-routing.png` | Both copper layers | `render_routing.py` |
 | `assets/assembly-*.png` | Assembly maps: every part's reference on each side of each half, the power parts enlarged, the overview of which part goes on which side, and a close-up of each part type with its orientation (`assembly-part-*.png`) | `render_assembly.py` |
 | `assets/keymap-*.svg` | One picture per keymap layer | `render_keymap.py` |
-| `assets/oled-*.svg` | Each half's OLED status screen, from ZMK's layout and LVGL's fonts (in the ZMK workspace `firmware/build.sh` fetches) | `render_oled.py` |
+| `assets/oled-*.gif`, `assets/oled-*.svg` | The OLED screens: the boot animation, both status screens and the lighting menu as GIFs, and each half's status screen as an SVG for Blender; from the screen code in `firmware/module/src/ui`, built for the PC | `render_oled.py` |
+| `firmware/module/src/ui/kg_assets.{c,h}` | The OLED fonts, icons and logo | `gen_oled_assets.py` |
 | `firmware/boards/shields/keygen/keygen-layouts.dtsi` | ZMK matrix transform and physical layout | `gen_zmk_layout.py` |
 | `tools/regen.lock` | The input hashes each step last ran with | `regen.py` |
 | `blender/keygen-parts.blend` | The Blender parts and materials (gitignored) | `gen_blend.py`, `blend_scene.py` |

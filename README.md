@@ -76,7 +76,8 @@ translucent caps.
 ![Close up on the left half's knob, OLED window and thumb cluster](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-thumbs.jpg)
 
 **Status screen.** ZMK's status screen on the left OLED: Bluetooth profile, battery and layer. The
-screens are drawn from the firmware's fonts and layout by [`tools/render_oled.py`](tools/render_oled.py).
+Keygen screens, with their boot animation and lighting menu, are in
+[`firmware/README.md`](firmware/README.md#oled-screens).
 
 ![Close up on the left half's OLED showing ZMK's status screen, beside the knob](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-oled.jpg)
 
@@ -108,7 +109,7 @@ Renders of the case parts, the plate and the routing are in the [`media` release
 | [Build guide](INSTRUCTIONS.md) | Parts list, what to order and when, what goes on which side, one section per part with close-ups, flashing, closing the case, troubleshooting |
 | [Hardware reference](notes/16%20-%20hardware%20reference.md) | Electronics, PCB rules, plate, case, foam and the silkscreen artwork |
 | [Building from source](notes/17%20-%20building%20from%20source.md) | Requirements, the schematic and PCB pipeline, the plate and case, the [Blender scene](notes/17%20-%20building%20from%20source.md#blender-scene), every generated file |
-| [Firmware](firmware/README.md) | ZMK configuration: keymap, hardware support, building and flashing |
+| [Firmware](firmware/README.md) | ZMK configuration: keymap, OLED screens, hardware support, building and flashing |
 | [Design notes](notes/index.md) | The Obsidian design notes: layout, controller, PCB, case, final design, datasheet audit |
 | [Build plan](plan/index.html) | Layout drawing, connectivity, parts, pin budget and checklist. Open it in a browser |
 | [Schematic (PDF)](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-schematic.pdf) | A top sheet with left (refs 1xx) and right (refs 2xx) sub-sheets |
