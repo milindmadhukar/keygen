@@ -4,8 +4,9 @@
 1. read the switches and LEDs from pcb/keygen.kicad_pcb (pcbnew) into scene.json;
 2. export the board, its parts and their models to GLB with kicad-cli, the keycaps left out;
 3. run tools/blend_scene.py in Blender, which imports the GLB, the case, plate and keycap STLs,
-   places the caps and the LEDs, sets the materials and saves the parts file. It also writes the
-   studio file, blender/keygen.blend, if there is none yet.
+   places the caps and the LEDs, lights the OLEDs with the status screens from assets/oled-*.svg
+   (tools/render_oled.py), sets the materials and saves the parts file. It also writes the studio
+   file, blender/keygen.blend, if there is none yet.
 
 keygen-parts.blend is gitignored and rebuilt by tools/regen.py whenever its sources change.
 keygen.blend links its "Keygen" collection, so it always shows the current design; its camera,
@@ -23,6 +24,7 @@ import pcbnew
 
 sys.path.insert(0, str(Path(__file__).parent))
 import case_geometry as C
+import render_oled
 
 ROOT = Path(__file__).resolve().parent.parent
 PCB = ROOT / "pcb/keygen.kicad_pcb"
@@ -47,7 +49,9 @@ def board_data():
             keys.append(dict(at, size=m.group(1)))
         elif ref.startswith("LED"):
             leds.append(at)
-    return dict(keys=keys, leds=leds, pcb_t=C.PCB_T, plate_top=C.PLATE_TOP, cap_skirt=C.CAP_SKIRT)
+    oled = {side: ["".join(map(str, row)) for row in render_oled.read_svg(ROOT / f"assets/oled-{side}.svg")]
+            for side in ("left", "right")}
+    return dict(keys=keys, leds=leds, oled=oled, pcb_t=C.PCB_T, plate_top=C.PLATE_TOP, cap_skirt=C.CAP_SKIRT)
 
 
 def main():

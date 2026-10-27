@@ -95,6 +95,20 @@ python3 tools/render_keymap.py   # assets/keymap-*.svg, with keymap-drawer throu
 | `T` / `Y` | Reset the left / right half |
 | `B` / `N` | Bootloader on the left / right half |
 
+## Status screen
+
+ZMK's status screen on each OLED, as [`tools/render_oled.py`](../tools/render_oled.py) draws it from
+ZMK's layout and fonts, on USB power.
+
+| Left | Right |
+|---|---|
+| ![Left OLED: Bluetooth profile 1 connected, charging, Base layer](../assets/oled-left.svg) | ![Right OLED: linked to the left half, charging](../assets/oled-right.svg) |
+
+- Top left: the output, a Bluetooth profile and whether it is connected (✓), paired but not
+  connected (✕) or unpaired (⚙), or the USB symbol; on the right half, its link to the left.
+- Top right: the battery level, with a bolt while on USB power.
+- Bottom left, left half only: the active layer.
+
 ## Hardware support
 
 | | |

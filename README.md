@@ -76,6 +76,11 @@ translucent caps.
 
 ![Close up on the left half's knob, OLED window and thumb cluster](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-thumbs.jpg)
 
+**Status screen.** ZMK's status screen on the left OLED: Bluetooth profile, battery and layer. The
+screens are drawn from the firmware's fonts and layout by [`tools/render_oled.py`](tools/render_oled.py).
+
+![Close up on the left half's OLED showing ZMK's status screen, beside the knob](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-oled.jpg)
+
 **Case layers.** Bottom shell, case foam, PCB, switch pads, plate foam, gasket strips under and
 over the plate tabs, plate and top frame.
 

@@ -116,6 +116,7 @@ python3 tools/render_board.py    # assets/render-{hero,top,bottom}.png, and rend
 python3 tools/render_routing.py  # assets/pcb-routing.png
 python3 tools/render_assembly.py # assets/assembly-*.png: part references on each side, per half
 python3 tools/render_keymap.py   # assets/keymap-*.svg: one picture per keymap layer
+python3 tools/render_oled.py     # assets/oled-{left,right}.svg: each half's OLED status screen
 python3 tools/gen_zmk_layout.py  # firmware/boards/shields/keygen/keygen-layouts.dtsi
 python3 tools/gen_blend.py       # blender/keygen-parts.blend (local, see below)
 python3 tools/render_blender.py  # assets/render-studio-*: the Blender stills and GIFs
@@ -131,7 +132,8 @@ black-mask PCB.
   `tools/gen_blend.py` builds it:
   - the board and its parts come from KiCad as GLB;
   - the case, the plate and the caps come from their STLs;
-  - the LEDs are placed from the PCB.
+  - the LEDs are placed from the PCB;
+  - each OLED shows its status screen from `assets/oled-*.svg`, lit pixel by pixel.
 
   It is gitignored. `regen.py` rebuilds it whenever the board, the case or the caps change: the
   `blender` step is a *local* step, with its hash in the ignored `tools/regen.local.lock`, and
@@ -144,7 +146,7 @@ black-mask PCB.
 - The LED colours are `LED_SCHEME` in `tools/blend_scene.py` (`gradient`, `lavender`, `white`,
   `rainbow`), and the materials are defined there too.
 - `tools/render_blender.py` (the `studio-renders` step) renders the README's pictures from the
-  studio file with Cycles: `assets/render-studio-{hero,top,thumbs,side,bottom}.jpg` at 1920 × 1080,
+  studio file with Cycles: `assets/render-studio-{hero,top,thumbs,oled,side,bottom}.jpg` at 1920 × 1080,
   and the `render-studio-{leds,turntable}.gif` loops. The bottom view turns the
   keyboard over onto the floor, its LEDs off. The hero uses the studio camera, so moving it moves the
   README picture; the other views are set up in `tools/blend_render.py`. `--preview` renders them
@@ -179,6 +181,7 @@ from `tools/regen.py`. A fresh clone runs every step on its first `regen.py`.
 | `assets/pcb-routing.png` | Both copper layers | `render_routing.py` |
 | `assets/assembly-*.png` | Assembly maps: every part's reference on each side of each half, and the power parts enlarged | `render_assembly.py` |
 | `assets/keymap-*.svg` | One picture per keymap layer | `render_keymap.py` |
+| `assets/oled-*.svg` | Each half's OLED status screen, from ZMK's layout and LVGL's fonts (in the ZMK workspace `firmware/build.sh` fetches) | `render_oled.py` |
 | `firmware/boards/shields/keygen/keygen-layouts.dtsi` | ZMK matrix transform and physical layout | `gen_zmk_layout.py` |
 | `tools/regen.lock` | The input hashes each step last ran with | `regen.py` |
 | `blender/keygen-parts.blend` | The Blender parts and materials (gitignored) | `gen_blend.py`, `blend_scene.py` |

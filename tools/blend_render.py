@@ -7,6 +7,7 @@ Writes into <outdir>:
 hero.png              the studio camera, as set up in blender/keygen.blend
 top.png               straight down on both halves
 thumbs.png            close up on the left half's knob, OLED and thumb cluster
+oled.png              close up on the left half's OLED, showing its status screen, and the knob
 side.png              low along the back edge: the case's profile, the USB-C ports and power switches
 bottom.png            straight down on the keyboard turned over on the floor: the case's underside
 leds_####.png         the hero view, a rainbow wave running across the LEDs (a looping GIF's frames)
@@ -24,8 +25,8 @@ from mathutils import Vector
 argv = sys.argv[sys.argv.index("--") + 1:]
 OUT = Path(argv[0])
 PREVIEW = "--preview" in argv
-VIEWS = [a for a in argv[1:] if not a.startswith("--")] or ["hero", "top", "thumbs", "side", "leds", "turntable",
-                                                             "bottom"]
+VIEWS = [a for a in argv[1:] if not a.startswith("--")] or ["hero", "top", "thumbs", "oled", "side", "leds",
+                                                             "turntable", "bottom"]
 
 STILL = dict(width=1920, height=1080, samples=128)
 FRAMES = dict(width=640, height=360, samples=16)
@@ -165,6 +166,11 @@ def main():
         target += Vector((-0.03, -0.03, 0))                  # between the knob and the thumb cluster
         cam = camera("Thumbs", target + Vector((-0.10, -0.26, 0.17)), target, lens=60, fstop=4.0)
         still(scene, "thumbs", cam)
+    if "oled" in VIEWS:
+        screen = next(o for o in col.all_objects if o.name.startswith("OLED left screen"))
+        target = sum((screen.matrix_world @ v.co for v in screen.data.vertices), Vector()) / 4
+        cam = camera("OLED", target + Vector((-0.04, -0.08, 0.15)), target, lens=70, fstop=8.0)
+        still(scene, "oled", cam)
     if "side" in VIEWS:
         target = centre + Vector((0, size.y / 2, size.z * 0.4))
         cam = camera("Side", target + Vector((-0.30, 0.95, 0.06)), target, lens=80, fstop=11.0)

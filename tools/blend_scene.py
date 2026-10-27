@@ -31,6 +31,9 @@ LED_SCHEME = "gradient"
 LED_POWER = 0.06
 LED_SIZE = (1.6, 1.6, 0.5)     # mm, the emitting face of the SK6812MINI-E in its cut-out
 LED_LIGHT_Z = 3.0              # mm above the plate: each LED's light, where it leaves the switch's LED window
+OLED_PX = (128, 64)
+OLED_POWER = 3.0               # emission strength of a lit OLED pixel
+OLED_FILL = 0.84               # a pixel's lit share of its pitch, each way: the dark grid between pixels
 
 
 def log(msg):
@@ -124,6 +127,49 @@ def knob_aluminium():
     return m
 
 
+def oled_material(side, rows):
+    """An OLED's active area showing its status screen: black glass, the lit pixels white, with the
+    dark gaps between pixels. rows: the screen's pixel rows, top first, "1" lit."""
+    w, h = OLED_PX
+    img = bpy.data.images.new(f"OLED {side}", w, h, alpha=False)
+    px = []
+    for row in reversed(rows):                                      # Blender's images start bottom left
+        for c in row:
+            px += [1.0, 1.0, 1.0, 1.0] if c == "1" else [0.0, 0.0, 0.0, 1.0]
+    img.pixels = px
+    img.pack()
+    m, nodes, links, bsdf = material(f"OLED {side} screen", **{
+        "Base Color": (0.004, 0.004, 0.005), "Roughness": 0.03, "Coat Weight": 1.0,
+        "Emission Color": (0.95, 0.97, 1.0), "Emission Strength": OLED_POWER})
+    uv = nodes.new("ShaderNodeTexCoord").outputs["UV"]
+    tex = nodes.new("ShaderNodeTexImage"); tex.image = img; tex.interpolation = "Closest"
+    links.new(uv, tex.inputs["Vector"])
+    cells = nodes.new("ShaderNodeVectorMath"); cells.operation = "MULTIPLY"
+    cells.inputs[1].default_value = (w, h, 0)
+    links.new(uv, cells.inputs[0])
+    frac = nodes.new("ShaderNodeVectorMath"); frac.operation = "FRACTION"
+    links.new(cells.outputs["Vector"], frac.inputs[0])
+    off = nodes.new("ShaderNodeVectorMath"); off.operation = "SUBTRACT"
+    off.inputs[1].default_value = (0.5, 0.5, 0)
+    links.new(frac.outputs["Vector"], off.inputs[0])
+    ab = nodes.new("ShaderNodeVectorMath"); ab.operation = "ABSOLUTE"
+    links.new(off.outputs["Vector"], ab.inputs[0])
+    sep = nodes.new("ShaderNodeSeparateXYZ")
+    links.new(ab.outputs["Vector"], sep.inputs["Vector"])
+    edge = nodes.new("ShaderNodeMath"); edge.operation = "MAXIMUM"
+    links.new(sep.outputs["X"], edge.inputs[0]); links.new(sep.outputs["Y"], edge.inputs[1])
+    inside = nodes.new("ShaderNodeMath"); inside.operation = "LESS_THAN"
+    inside.inputs[1].default_value = OLED_FILL / 2
+    links.new(edge.outputs[0], inside.inputs[0])
+    lit = nodes.new("ShaderNodeMath"); lit.operation = "MULTIPLY"
+    links.new(tex.outputs["Color"], lit.inputs[0]); links.new(inside.outputs[0], lit.inputs[1])
+    strength = nodes.new("ShaderNodeMath"); strength.operation = "MULTIPLY"
+    strength.inputs[1].default_value = OLED_POWER
+    links.new(lit.outputs[0], strength.inputs[0])
+    links.new(strength.outputs[0], bsdf.inputs["Emission Strength"])
+    return m
+
+
 def materials():
     return {
         "keycap": smoke_pbt(),
@@ -144,6 +190,8 @@ def materials():
         "knob": knob_aluminium(),
         "oled_glass": principled("OLED glass", **{"Base Color": (0.01, 0.01, 0.012), "Roughness": 0.03,
                                                   "Coat Weight": 1.0}),
+        "oled_active": principled("OLED active area, off", **{"Base Color": (0.004, 0.004, 0.005),
+                                                                "Roughness": 0.03, "Coat Weight": 1.0}),
         "led": led_material(),
     }
 
@@ -169,6 +217,7 @@ def role(ref, keys, rgb, alpha):
         if near(rgb, srgb((0xB9 / 255, 0xBD / 255, 0xC4 / 255))): return "knob"
     elif ref.startswith("J"):
         if near(rgb, srgb((0x2A / 255, 0x2C / 255, 0x31 / 255)), 0.004): return "oled_glass"
+        if near(rgb, srgb((0x05 / 255, 0x05 / 255, 0x06 / 255)), 0.002): return "oled_active"
     elif not re.match(r"[A-Z]+\d+$", ref):              # the board's own layers (_<board>_copper, ...)
         if alpha < 0.99: return "mask"
         if near(rgb, (0.7, 0.61, 0.0), 0.05) or near(rgb, (0.5, 0.5, 0.5)): return "hasl"
@@ -211,6 +260,39 @@ def import_board(col, mats, keys):
             fr4_top = z if fr4_top is None else max(fr4_top, z)
     log(f"board: {len(col.all_objects)} objects from the GLB, {swapped} materials replaced")
     return fr4_top
+
+
+def oled_screens(col, mats, screens):
+    """Lay each OLED's status screen over its module's active area: a plane just above it, the
+    image upright to the typist (its top toward the back edge, +y)."""
+    found = {}
+    for o in col.all_objects:
+        if o.type != "MESH" or mats["oled_active"] not in list(o.data.materials):
+            continue
+        ref = part_ref(o)
+        idx = list(o.data.materials).index(mats["oled_active"])
+        pts = [o.matrix_world @ o.data.vertices[v].co for p in o.data.polygons if p.material_index == idx
+               for v in p.vertices]
+        found.setdefault(ref, []).extend(pts)
+    if len(found) != 2:
+        raise SystemExit(f"keygen: expected two OLED active areas in the GLB, found {sorted(found)}")
+    for ref, pts in sorted(found.items()):
+        side = "left" if ref[-3] == "1" else "right"
+        x0, x1 = min(p.x for p in pts), max(p.x for p in pts)
+        y0, y1 = min(p.y for p in pts), max(p.y for p in pts)
+        z = max(p.z for p in pts) + 0.005 * MM
+        if not 1.9 < (x1 - x0) / (y1 - y0) < 2.1:
+            raise SystemExit(f"keygen: {ref}'s active area is {(x1 - x0) / MM:.1f} x {(y1 - y0) / MM:.1f} mm, "
+                             "not a 2:1 screen lying along x")
+        me = bpy.data.meshes.new(f"OLED {side} screen")
+        me.from_pydata([(x0, y0, z), (x1, y0, z), (x1, y1, z), (x0, y1, z)], [], [(0, 1, 2, 3)])
+        uv = me.uv_layers.new(name="UVMap")
+        for loop, co in zip(uv.data, ((0, 0), (1, 0), (1, 1), (0, 1))):
+            loop.uv = co
+        me.materials.append(oled_material(side, screens[side]))
+        o = bpy.data.objects.new(f"OLED {side} screen", me)
+        col.objects.link(o)
+    log(f"OLEDs: the status screens on {', '.join(sorted(found))}")
 
 
 # ---------------------------------------------------------------- STL parts
@@ -278,6 +360,7 @@ def build_parts():
     if top is None:
         raise SystemExit("keygen: no FR-4 board body found in the GLB")
     log(f"board top face at z = {top / MM:.3f} mm")
+    oled_screens(cols["Board"], mats, data["oled"])
 
     for side in ("left", "right"):
         for part, col, mat in (("bottom", "Case", "case"), ("top", "Case", "case"), ("plate", "Plate", "plate")):
