@@ -115,7 +115,7 @@ python3 tools/plate_print.py     # case/plate/pdf/keygen-plate-print.pdf
 kicad-cli sch export pdf -o pcb/keygen-schematic.pdf pcb/keygen.kicad_sch
 python3 tools/render_board.py    # assets/render-{hero,top,bottom}.png, and render-bare*.png without parts
 python3 tools/render_routing.py  # assets/pcb-routing.png
-python3 tools/render_assembly.py # assets/assembly-*.png: part references on each side, per half
+python3 tools/render_assembly.py # assets/assembly-*.png: maps, the which-side overview and part close-ups
 python3 tools/render_keymap.py   # assets/keymap-*.svg: one picture per keymap layer
 python3 tools/render_oled.py     # assets/oled-{left,right}.svg: each half's OLED status screen
 python3 tools/gen_zmk_layout.py  # firmware/boards/shields/keygen/keygen-layouts.dtsi
@@ -181,7 +181,7 @@ from `tools/regen.py`. A fresh clone runs every step on its first `regen.py`.
 | `assets/render-*.png` | The board (assembled and bare), case and plate renders | `render_board.py`, `render_case.py` |
 | `assets/render-studio-*` | The Blender stills and GIFs | `render_blender.py`, `blend_render.py` |
 | `assets/pcb-routing.png` | Both copper layers | `render_routing.py` |
-| `assets/assembly-*.png` | Assembly maps: every part's reference on each side of each half, and the power parts enlarged | `render_assembly.py` |
+| `assets/assembly-*.png` | Assembly maps: every part's reference on each side of each half, the power parts enlarged, the overview of which part goes on which side, and a close-up of each part type with its orientation (`assembly-part-*.png`) | `render_assembly.py` |
 | `assets/keymap-*.svg` | One picture per keymap layer | `render_keymap.py` |
 | `assets/oled-*.svg` | Each half's OLED status screen, from ZMK's layout and LVGL's fonts (in the ZMK workspace `firmware/build.sh` fetches) | `render_oled.py` |
 | `firmware/boards/shields/keygen/keygen-layouts.dtsi` | ZMK matrix transform and physical layout | `gen_zmk_layout.py` |

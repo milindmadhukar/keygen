@@ -105,7 +105,7 @@ Renders of the case parts, the plate and the routing are in the [`media` release
 
 | Document | What it covers |
 |---|---|
-| [Assembly instructions](INSTRUCTIONS.md) | Step by step: what to order and when, assembly maps, soldering, flashing, closing the case, troubleshooting |
+| [Build guide](INSTRUCTIONS.md) | Parts list, what to order and when, what goes on which side, one section per part with close-ups, flashing, closing the case, troubleshooting |
 | [Hardware reference](notes/16%20-%20hardware%20reference.md) | Electronics, PCB rules, plate, case, foam and the silkscreen artwork |
 | [Building from source](notes/17%20-%20building%20from%20source.md) | Requirements, the schematic and PCB pipeline, the plate and case, the [Blender scene](notes/17%20-%20building%20from%20source.md#blender-scene), every generated file |
 | [Firmware](firmware/README.md) | ZMK configuration: keymap, hardware support, building and flashing |
@@ -134,7 +134,7 @@ UF2s on every push that changes `firmware/`. The keymap, the build and the flash
 
 ```
 keygen/
-├── INSTRUCTIONS.md Step-by-step assembly
+├── INSTRUCTIONS.md Build guide
 ├── pcb/            KiCad 10 project: schematic (generated), PCB, plate, project footprints and 3D models
 ├── tools/          Python scripts that generate, route, check and export the design
 ├── fab/            Assembly BOMs and ordering notes (the Gerbers are in the build release)
