@@ -89,7 +89,7 @@ From `fab/BOM.md` (left 1xx, right 2xx):
 - Turn and press the encoder: on the left, scroll and middle click; on the right, volume and mute.
 
 ### 10. Battery
-- Tape the pouch into the battery bay in the bottom shell's floor with double-sided tape, its lead end towards the battery connector. The bay keeps it at least 15 mm from the controller's antenna end and 1.4 mm from assumed 2 mm underside parts at full gasket travel, with a 6.1 mm installed battery stack. Placement: [[14 - case & plate requirements#Inside the case (under the PCB)]].
+- Tape the pouch into the battery bay in the bottom shell's floor with double-sided tape, its lead end towards the battery connector. The bay keeps it at least 15 mm from the controller's antenna end and 1.0 mm from assumed 2 mm underside parts at full gasket travel, with a 6.1 mm installed battery stack. Placement: [[14 - case & plate requirements#Inside the case (under the PCB)]].
 - The lead end sits about 40 mm from the connector, so a lead of 60 mm or more reaches it.
 - Never press, fold or puncture the pouch.
 

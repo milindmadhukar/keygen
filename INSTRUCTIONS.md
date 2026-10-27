@@ -340,7 +340,7 @@ hole), and let them cool.
 - Tape the pouch into the bay in the bottom shell's floor with thin double-sided tape, its lead
   end towards the battery connector. With a short lead (step 6), plug it into **BT101 / BT201**
   first, holding the plate-and-PCB unit on its edge beside the shell, then lay the cell in its bay.
-- Check the installed cell, protection board and tape thickness before closing: the modeled 1.4 mm
+- Check the installed cell, protection board and tape thickness before closing: the modeled 1.0 mm
   gap at full gasket travel includes a 6.1 mm battery stack (5.0 mm cell, 0.3 mm thickness tolerance,
   0.5 mm swelling allowance and 0.3 mm tape) and underside parts no taller than 2.0 mm. Excess
   solder or a thicker battery stack uses that gap.
@@ -382,7 +382,7 @@ should give a little when pressed in the middle; if it rattles, a strip has fall
 
 ### Step 21: Feet and tenting
 
-1. **Rubber feet.** Stick four 10 × 4 mm feet on the floor: at the outer top corner, the outer
+1. **Rubber feet.** Stick four 10 × 2.5 mm feet on the floor: at the outer top corner, the outer
    bottom corner and the tip under the thumb cluster, each about 7 mm in from the edges, and at
    the inner top corner, its centre 17 mm below the top edge so it stays clear of the USB-C
    opening. Keep each one clear of the screw counterbores and the reset pinhole.

@@ -31,11 +31,11 @@ updated: 2026-10-22T19:00
   carries the battery current: source on the battery, drain on B+. A 1 MΩ resistor holds the gate
   off between positions. Leave the switch on while charging.
 - **Battery:** a 505080 LiPo pouch (5 × 50 × 80 mm, about 2500 mAh) with a protection board, as
-  the controller has no over-discharge cut-off. It lies in a bay sunk 1 mm into the case floor,
+  the controller has no over-discharge cut-off. It lies in a bay sunk 1.6 mm into the case floor,
   which takes up to a 60 × 88 mm cell with a 6.1 mm installed height envelope, under the outer
   and middle key columns, its lead end towards
   the battery connector. With a 6.1 mm installed battery stack, it clears assumed 2 mm underside
-  parts by 2.9 mm at rest and 1.4 mm at full gasket travel, and stays at least 15 mm from the
+  parts by 2.5 mm at rest and 1.0 mm at full gasket travel, and stays at least 15 mm from the
   controller's antenna end.
 - **LED power:** the LEDs run from the battery (B+) through an AO3401A P-MOSFET, whose gate an
   AO3400A N-MOSFET on P0.08 pulls low to turn them on. 100 kΩ resistors hold both MOSFETs off, and
@@ -87,9 +87,9 @@ References and soldering notes for every part are in `fab/BOM.md`.
   screwed from below only.
 - **Case:** the bottom shell and top frame are screwed together from below with 8 M2 × 16 screws
   per half, up through the walls into heat-set inserts in blind holes in the top frame's underside,
-  none within 15 mm of the controller's antenna end. The heads sit 3 mm up in counterbores in the
-  floor; the top frame has no holes on top. The PCB top sits 14.6 mm
-  above the desk and the plate top 19.6 mm.
+  none within 15 mm of the controller's antenna end. The heads sit 2 mm up in counterbores in the
+  floor; the top frame has no holes on top. The PCB top sits 13.6 mm
+  above the desk and the plate top 18.6 mm.
 - **Top frame deck:** level with the frame's rim, 4.0 mm above the plate top, covering the plate
   everywhere but the keycaps (1.2 mm clear of each, the windows chamfered 0.4 mm at the deck top),
   the OLED window and the encoder. The OLED window opens out towards the thumbs; the glass sits

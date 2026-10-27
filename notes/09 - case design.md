@@ -19,14 +19,14 @@ Designed and generated from the PCB. The flat floor takes rubber feet and a stee
 ## Construction
 
 - **Material: PETG**, plastic all round because the nRF52840's antenna is inside.
-- **Shape:** flat, following the PCB outline 7.5 mm out, with sharp corners. Each half is 175.4 × 143.7 mm and 23.6 mm tall (bottom shell 18.1 mm, top frame 5.5 mm).
+- **Shape:** flat, following the PCB outline 7.5 mm out, with sharp corners. Each half is 175.4 × 143.7 mm and 22.6 mm tall (bottom shell 17.1 mm, top frame 5.5 mm).
 - **Gasket mount:** the plate and PCB are one unit, tied together by M2 standoffs, and touch the case only through the gaskets.
   - The plate has **8 tabs per half**, 12 × 5 mm, spread round its edge and kept clear of the USB-C and power switch.
   - Each tab sits between two **Poron strips, 12 × 4 × 3 mm**, cut from 80 × 4 × 3 mm strips: one on a ledge in the bottom shell, one under the top frame. Closing the case squeezes each strip by 1.0 mm, a third of it, so a part printed 0.2 mm off still leaves it firmly held. That is 16 strips per half.
   - The PCB and plate edges keep 1.0 mm from the walls, and the controller 1.5 mm from the floor, so the unit floats.
-- **Closing the case:** 8 **M2 × 16 socket-head screws** per half go up from the underside, through the bottom shell's walls, into **M2 × 3 heat-set inserts** in blind holes in the top frame's underside. The top frame has no screw holes on top: 1.7 mm of frame covers each insert. The heads sit 3 mm up inside counterbores in the floor. No insert or screw is within 15 mm of the controller's antenna end.
+- **Closing the case:** 8 **M2 × 16 socket-head screws** per half go up from the underside, through the bottom shell's walls, into **M2 × 3 heat-set inserts** in blind holes in the top frame's underside. The top frame has no screw holes on top: 1.7 mm of frame covers each insert. The heads sit 2 mm up inside counterbores in the floor. No insert or screw is within 15 mm of the controller's antenna end.
 - **Top frame deck:** inside the rim, the top frame carries a deck level with it (7.0 to 9.0 mm above the PCB, 4.0 mm over the plate top) that covers the plate everywhere but the keycaps, keeping 1.2 mm clear of each, with a 0.4 mm chamfer round each window's mouth on the deck top. A pressed keycap's skirt sinks about 1 mm into its window, so the clearance takes an 18.4 mm DSA skirt, the plate floating 0.5 mm to one side in its gasket pockets, and cap wobble and print error; the chamfer takes the first-layer squish, as the deck top is printed on the bed. Every web or point of deck narrower than 4 mm is trimmed back to a rounded end, so nothing on the 2 mm printed deck can snap off.
-- **Walls:** 6.5 mm thick, thinned outside across the USB-C and power switch out to the corner: 1.5 mm past the inner wall at the lever, and 1.5 mm in front of the controller's pocket at the USB-C. The floor is 3.0 mm, and 2.0 mm under the battery bay.
+- **Walls:** 6.5 mm thick, thinned outside across the USB-C and power switch out to the corner: 1.5 mm past the inner wall at the lever, and 1.5 mm in front of the controller's pocket at the USB-C. The floor is 3.0 mm, and 1.4 mm under the battery bay.
 
 ## The stack
 
@@ -34,8 +34,8 @@ Heights above the PCB's top surface:
 
 | Layer | From | To |
 |---|---|---|
-| Case floor (battery bay sunk to −12.6 mm) | −14.6 mm | −11.6 mm |
-| Cavity (the controller envelope reaches −10.1 mm) | −11.6 mm | −1.6 mm |
+| Case floor (battery bay sunk to −12.2 mm) | −13.6 mm | −10.6 mm |
+| Cavity (the controller envelope reaches −9.1 mm) | −10.6 mm | −1.6 mm |
 | PCB | −1.6 mm | 0 |
 | Bottom shell walls, up to the joint | | 3.5 mm |
 | Lower gasket strip, on the ledge | 1.5 mm | 3.5 mm |
@@ -45,10 +45,10 @@ Heights above the PCB's top surface:
 | Top frame deck, over the plate | 7.0 mm | 9.0 mm |
 | Poron ring switch pads, on the PCB | 0 | 0.5 mm |
 | EVA plate foam | 0.5 mm | 2.5 mm |
-| EVA case foam, on the floor | −11.6 mm | −6.6 mm |
+| EVA case foam, on the floor | −10.6 mm | −5.6 mm |
 | Knob underside, using the encoder's maximum bushing height | 14.1 mm | |
 
-So the PCB top is 14.6 mm above the desk and the plate top 19.6 mm. Keycap tops are about 34 mm, before tenting and feet.
+So the PCB top is 13.6 mm above the desk and the plate top 18.6 mm. Keycap tops are about 33 mm, before tenting and feet.
 
 ## Openings
 
@@ -70,7 +70,7 @@ Exact sizes and positions: [[14 - case & plate requirements]].
 
 ## Feet, tenting and weight
 
-- **Feet:** four 10 × 4 mm self-adhesive silicone feet per half, near the floor's corners: outer top, outer bottom, the thumb tip and the inner top, the last 17 mm below the top edge to clear the USB-C opening. All clear the screw counterbores and the reset pinhole.
+- **Feet:** four 10 × 2.5 mm self-adhesive silicone feet per half, near the floor's corners: outer top, outer bottom, the thumb tip and the inner top, the last 17 mm below the top edge to clear the USB-C opening. All clear the screw counterbores and the reset pinhole.
 - **Tenting:** a detachable magnetic tenting stand per half, made for split keyboards: a magnetic puck on a height- and angle-adjustable arm. Its puck holds to a 35 × 45 mm self-adhesive steel plate on the inner half of the floor, between the reset pinhole and the thumb cluster, 19 mm from the controller's antenna end. The half tilts on its two outer feet, about 13° with the arm at 30 mm; without the stand it lies flat on its feet.
 - **Weight:** spare steel plates under the battery bay, on the outer half of the floor.
 - Placement is step 21 of `INSTRUCTIONS.md` in the repo.

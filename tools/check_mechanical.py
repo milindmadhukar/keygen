@@ -111,7 +111,7 @@ for side, h in C.halves().items():
           "3D overlaps 0", flush=True)
 
 _, battery_gap, pressed_gap = C.battery_heights()
-require(pressed_gap >= 1.0, "battery contacts underside at full gasket travel")
+require(pressed_gap >= 1.0 - 1e-9, "battery contacts underside at full gasket travel")
 require(C.FLOAT_GAP >= 1.5, "controller has insufficient float travel")
 threads = C.standoff_threads()
 require(abs(threads["standoff and shim short of the plate"]) <= 0.1 + 1e-9, "standoff and shim do not fill the plate gap")
