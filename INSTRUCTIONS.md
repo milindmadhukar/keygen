@@ -387,10 +387,10 @@ should give a little when pressed in the middle; if it rattles, a strip has fall
    inner top corners with their centres 17 mm below the top edge. Lower than that, the outer top
    foot covers a screw counterbore, and the inner one the USB-C opening. Keep each one clear of the
    counterbores and the reset pinhole.
-2. **Steel plate.** Stick a 35 × 45 mm steel plate on the inner half of the floor, between the
-   reset pinhole and the thumb cluster, its near edge about 12 mm from the pinhole: the
-   controller's antenna end is above the pinhole, and no metal goes within 15 mm of it. Spare
-   plates can go under the battery bay, on the outer half, for weight.
+2. **Steel plate.** Stick a 65 × 45 mm steel plate on the inner half of the floor, its long side
+   parallel to the top edge, its top edge 10 mm below the reset pinhole and its inner end 11 mm
+   further in than the pinhole. The controller's antenna end is above the pinhole, and no metal
+   goes within 15 mm of it.
 3. **Stand.** The tenting stand's magnetic puck holds to the plate, and the half tilts on its two
    outer feet. Pull the stand off to lay the half flat on its feet.
 

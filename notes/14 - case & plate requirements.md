@@ -59,7 +59,7 @@ All the ports are on the **top edge** of each half, next to the controller, so o
 ## Ergonomics and feel
 
 - **Weight in the base.** Light halves slide when you press inward (the Wolf and Dactyl builders both said so). Add steel or washers, but **not under the antenna end**.
-- **Tenting.** A detachable magnetic tenting stand per half, its puck on a 35 × 45 mm steel plate on the inner half of the floor, at least 15 mm from the controller's antenna end. The floor stays flat.
+- **Tenting.** A detachable magnetic tenting stand per half, its puck on a 65 × 45 mm steel plate on the inner half of the floor, at least 15 mm from the controller's antenna end. The floor stays flat.
 - **Rubber feet** and **foam** (EVA case foam, Poron switch pads) for a thocky sound. See [[07 - switch & keycap selection]].
 - **Keycaps.** Blank DSA PBT, smoke translucent: 52 × 1u, 14 × 1.25u. Switches: Akko V3 Lavender Purple Pro.
 

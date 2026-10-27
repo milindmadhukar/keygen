@@ -289,7 +289,6 @@ See [[05 - pcb design]].
 - A rounded **USB-C port**, sized for a plug carried by the floating stack, and a **power switch slot** on the top edge, with the wall thinned outside them, and a guided **reset pinhole** in the floor. The reset buttons mirror between the halves (left origin at x 182.85), and so do the pinholes.
 - 7.5 mm under the PCB for the socketed controller, plus 1.5 mm to float; the ≤ 5 mm nominal battery fits with thickness and tape allowances.
 - Foam for a thocky sound: a 0.5 mm Poron ring switch pad under each switch, 2 mm EVA plate foam and 5 mm EVA case foam.
-- **Weight in the base**: spare steel plates under the battery bay; halves slide when you push inward. The Wolf builder's one regret was weight.
 - **Tenting** with a detachable magnetic stand per half, holding to a steel plate on the floor; four rubber feet for flat use.
 
 The case and plate are generated from the PCB by `tools/gen_case.py` and `tools/gen_plate.py`. See [[09 - case design]].
