@@ -35,7 +35,7 @@ name: 11 - learning resources & references
 - [marbastlib](https://github.com/ebastler/marbastlib) (CERN-OHL-P v2) and [Keebio-Parts](https://github.com/keebio/Keebio-Parts.pretty) (MIT): footprint libraries, git submodules in the repo
 - [kiswitch](https://github.com/kiswitch/kiswitch): MX switch 3D model
 - [Freerouting](https://github.com/freerouting/freerouting): autorouter for most of the signal routing
-- [Lion Circuits](https://www.lioncircuits.com/): the fab (Bengaluru)
+- [JLCPCB](https://jlcpcb.com/): the fab
 - [Keyboard PCB guide by Ruiqi Mao](https://github.com/ruiqimao/keyboard-pcb-guide) and [ai03 PCB designer guide](https://wiki.ai03.me/books/pcb-design/chapter/pcb-designer-guide): KiCad keyboard PCB tutorials
 - [GOLEM: keyboard matrix](https://golem.hu/guide/keyboard-matrix/) and [rotary encoders](https://golem.hu/guide/rotary-encoder-programming/)
 

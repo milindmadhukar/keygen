@@ -202,7 +202,7 @@ The left half is the ZMK central. Plugging USB-C into it is the wired mode, and 
 | EC11 encoder (D shaft) + 17 mm knob | 1 | 1 | TH |
 | 0.96 in. SSD1306 I2C OLED module, 128×64 (J101 / J201) | 1 | 1 | TH (module's own header) |
 
-Each half has 34 diodes: 33 for the keys and one for its encoder's push switch, which sits in the key matrix. 3D models of the knob and the OLED module (`pcb/lib/keygen.3dshapes/Knob_17mm.step`, `OLED_096_I2C.step`) are made by `tools/gen_models.py`. Keygen is a single build. Lion Circuits' minimum is 5 per design, so order **5 left + 5 right** boards and keep the rest as spares. Full shopping list: [[13 - bill of materials]].
+Each half has 34 diodes: 33 for the keys and one for its encoder's push switch, which sits in the key matrix. 3D models of the knob and the OLED module (`pcb/lib/keygen.3dshapes/Knob_17mm.step`, `OLED_096_I2C.step`) are made by `tools/gen_models.py`. Keygen is a single build. JLCPCB's minimum is 5 per design, so order **5 left + 5 right** boards and keep the rest as spares. Full shopping list: [[13 - bill of materials]].
 
 ### Keycaps
 
@@ -252,7 +252,7 @@ The one community module needed is `zmk-rgb-matrix` for per-key RGB and indicato
 - **Redox geometry, Keygen's own copper.** Key positions come from Redox; the schematic, placement and most of the routing are generated in KiCad 10 by the scripts in the repo's `tools/`, with footprints from marbastlib and Keebio-Parts.
 - **Separate left and right layouts** (decided 2026-10-20), each with every part on its own side. Both sit in one PCB file as two outlines.
 - Keep **ground pour away from the controller's antenna end**.
-- Fabricate at **Lion Circuits** (Bengaluru, 5–6 days, no customs) with a **HASL** finish. Their DFM limit is 6/6 mil on 1 oz copper.
+- Fabricate at **JLCPCB** with a lead-free **HASL** finish and no order-number mark.
 
 See [[05 - pcb design]].
 
@@ -274,10 +274,10 @@ See [[05 - pcb design]].
   - The ground fill is kept out from under each controller's antenna end.
 - **Rules:**
   - Signal 0.25 mm, power 0.4 mm, 0.2 mm clearance.
-  - Minimum track 0.15 mm and hole-to-hole 0.25 mm, within Lion Circuits' 6/6 mil capability.
-  - Copper-to-edge 0.2 mm, because the reverse-mount LED pads sit 0.25 mm from their light cut-out; check this in Lion Circuits' DFM.
+  - Minimum track 0.15 mm and hole-to-hole 0.25 mm, within JLCPCB's 2-layer capability.
+  - Copper-to-edge 0.2 mm, because the reverse-mount LED pads sit 0.25 mm from their light cut-out; check this in JLCPCB's DFM.
 - **Fabrication files:** made by `tools/export_fab.py` into `fab/`; the Gerber zips are downloaded from the [build release](https://github.com/milindmadhukar/keygen/releases/tag/build):
-  - **`keygen-left-gerbers.zip` and `keygen-right-gerbers.zip`: order these, as two orders of 5.** Per half was cheaper at Lion Circuits.
+  - **`keygen-left-gerbers.zip` and `keygen-right-gerbers.zip`: order these, as two orders of 5.** Per half is how they are ordered.
   - `keygen-gerbers.zip`: both halves in one design, kept in case another fab prices that better.
   - `BOM.md`, `BOM-left.csv`, `BOM-right.csv`: the **assembly BOM** from the schematic, giving every part's references per half, quantities for 1 and 2 keyboards, and soldering notes. Made by `tools/export_bom.py`.
   - `ORDER.md`: the order-form settings. Bare boards, 2 layers, 1.6 mm, HASL lead-free, no assembly, no stencil. You solder everything yourself.
@@ -300,7 +300,7 @@ The case and plate are generated from the PCB by `tools/gen_case.py` and `tools/
 2. Schematic per half, generated and ERC clean. **Done.**
 3. Place and route, DRC clean. **Done.**
 4. **Optional bring-up board:** 4 keys, encoder, OLED, 4 LEDs and an underside controller, to prove every circuit cheaply.
-5. Lion Circuits order (5 left + 5 right), assembly, flash the ZMK left/right UF2s.
+5. JLCPCB order (5 left + 5 right), assembly, flash the ZMK left/right UF2s.
 6. Case, foam, weight, tenting.
 
 ## Pre-order checklist

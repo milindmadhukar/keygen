@@ -9,11 +9,11 @@ Order in two stages. First the PCBs, the electronics and the AliExpress cart; bu
 bench and test it. Then the parts made to fit: the plate and its foam once an OLED module measures
 27.5 × 28 mm or less, and the case and its foam once the controller sockets are measured
 ([INSTRUCTIONS.md](../INSTRUCTIONS.md#1-the-plan-what-to-get-and-when)). Estimated total
-about ₹22,600 (at about ₹55 per AU$), plus the CNC cutting of the plate.
+about ₹20,200 (at about ₹55 per AU$ and ₹88 per US$, with customs on the PCBs), plus the CNC cutting of the plate.
 
 | Got | Item | Qty | Where | Link | Price | Notes |
 |---|---|---|---|---|---|---|
-| [ ] | Main PCBs, black | 5 left + 5 right | Lion Circuits | [quote](https://www.lioncircuits.com/quote) | ₹3,400 per design, ₹6,800 | Settings in [`fab/ORDER.md`](../fab/ORDER.md). Stage 1. JLCPCB quoted US$15.40 per design (black, lead-free HASL) plus about US$14 UPS to India, about ₹6,000 once Indian customs is paid |
+| [ ] | Main PCBs, black | 5 left + 5 right | JLCPCB (in cart, JLCONE) | [quote](https://cart.jlcpcb.com/quote) | US$15.40 per design, US$40.63 with UPS to India | Settings in [`fab/ORDER.md`](../fab/ORDER.md). Stage 1. Indian customs is paid on delivery (18 % IGST or more, and a UPS clearance fee). Lion Circuits is the fallback at ₹3,400 per design |
 | [ ] | Switch plate sheet, clear polycarbonate, 1.5 mm solid, 6 × 24 in. (152 × 610 mm), pack of 2 | 1 | Amazon.in (in cart) | [V-LITE 1.5 mm sheet](https://www.amazon.in/dp/B0GXG2SW48), size 6x24IN | ₹704 | Three halves per strip. Then a CNC router job (not a laser) with [`case/plate/dxf/`](../case/plate/dxf/), 1/8 in. bit or smaller, as [`PLATE.md`](../case/plate/PLATE.md) describes: a local router shop, as no Indian service quotes polycarbonate online. Stage 2. In FR-4 instead, the plate Gerbers are US$16.30 per design at JLCPCB |
 | [ ] | Switches, Akko V3 Lavender Purple Pro | 90 (2 × 45) | StacksKB (in cart) | [pack of 45](https://stackskb.com/store/akko-v3-lavender-purple-pro-switch-pack-of-45/) | ₹2,198 | 24 spare |
 | [ ] | Diodes 1N4148, DO-35 | 100 (10 × 10) | StacksKB (in cart) | [pack of 10](https://stackskb.com/store/1n4148-through-hole-diode/) | ₹150 | |

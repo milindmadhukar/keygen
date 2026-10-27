@@ -5,7 +5,7 @@ name: 05 - pcb design
 ---
 
 > [!success] Decision (2026-10-19)
-> KiCad 10, **one project** (`pcb/keygen.kicad_pro`) with left and right sheets, and both halves in one board file as **two separate outlines**, each ordered on its own. Key geometry comes from **Redox rev1**; the copper is drawn new. Kailh MX hotswap sockets, 1N4148 through-hole diodes, SK6812MINI-E per-key LEDs on the battery through a MOSFET LED power switch, an EC11 encoder and an SSD1306 OLED module on each half, and a LiPo with a slide switch driving a P-MOSFET battery switch. The nice!nano mounts socketed on the underside and provides USB-C. Ground fill stays off each controller's antenna end. Lion Circuits (Bengaluru), HASL, black mask with white silkscreen, 5 + 5 boards. Status 2026-10-20: schematic generated and ERC clean; **PCB fully routed, DRC clean with schematic parity**. See [[12 - final design#Schematic]] and [[12 - final design#Controller pin map]].
+> KiCad 10, **one project** (`pcb/keygen.kicad_pro`) with left and right sheets, and both halves in one board file as **two separate outlines**, each ordered on its own. Key geometry comes from **Redox rev1**; the copper is drawn new. Kailh MX hotswap sockets, 1N4148 through-hole diodes, SK6812MINI-E per-key LEDs on the battery through a MOSFET LED power switch, an EC11 encoder and an SSD1306 OLED module on each half, and a LiPo with a slide switch driving a P-MOSFET battery switch. The nice!nano mounts socketed on the underside and provides USB-C. Ground fill stays off each controller's antenna end. JLCPCB, lead-free HASL, black mask with white silkscreen, 5 + 5 boards. Status 2026-10-20: schematic generated and ERC clean; **PCB fully routed, DRC clean with schematic parity**. See [[12 - final design#Schematic]] and [[12 - final design#Controller pin map]].
 
 ## Board at a glance
 
@@ -77,7 +77,7 @@ Ground is a fill on both layers of each half, kept out from under each controlle
 
 ## Fabrication
 
-- **Lion Circuits** (Bengaluru): 5–6 days, no customs, 6/6 mil capability on 1 oz copper.
+- **JLCPCB**: black mask, lead-free HASL, Remove Mark, shipped to India by UPS.
 - Order [`keygen-left-gerbers.zip`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-left-gerbers.zip) and [`keygen-right-gerbers.zip`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-right-gerbers.zip) (the [build release](https://github.com/milindmadhukar/keygen/releases/tag/build)) as **two orders of 5**: bare boards, 2 layers, 1.6 mm, HASL lead-free. Everything is hand-soldered.
 - Raise with the fab: the LED windows must be milled, and the LED pads sit close to them. Settings: `fab/ORDER.md`. Assembly BOM: `fab/BOM.md`.
 

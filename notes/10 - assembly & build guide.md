@@ -5,7 +5,7 @@ name: 10 - assembly & build guide
 ---
 
 > [!success] Assembly
-> Bare boards from Lion Circuits, everything hand-soldered. All parts sit on the **back** of the PCB except the switches, the encoder and the OLED module. The controller is **socketed** on low-profile machined pins. Firmware is **ZMK**, flashed as a UF2 per half by drag-and-drop. The LED chain is soldered and tested **one column at a time**. Per-part references and soldering notes: `fab/BOM.md` in the repo. Build order and checklist: [[12 - final design#Build order]]. The numbered build steps are `INSTRUCTIONS.md` in the repo.
+> Bare boards from JLCPCB, everything hand-soldered. All parts sit on the **back** of the PCB except the switches, the encoder and the OLED module. The controller is **socketed** on low-profile machined pins. Firmware is **ZMK**, flashed as a UF2 per half by drag-and-drop. The LED chain is soldered and tested **one column at a time**. Per-part references and soldering notes: `fab/BOM.md` in the repo. Build order and checklist: [[12 - final design#Build order]]. The numbered build steps are `INSTRUCTIONS.md` in the repo.
 
 ## Tools
 

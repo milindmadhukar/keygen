@@ -67,7 +67,7 @@ References and soldering notes for every part are in `fab/BOM.md`.
 - **Routed and DRC clean.** DRC with schematic parity shows 0 errors, 0 warnings, 0 unconnected
   items and 0 parity issues.
 - **Rules:** 0.25 mm signal and 0.4 mm power traces, 0.2 mm clearance, 0.15 mm minimum track,
-  0.2 mm copper-to-edge. That is within Lion Circuits' 6/6 mil capability.
+  0.2 mm copper-to-edge. That is within JLCPCB's 2-layer capability.
 - **Routing:** Freerouting does most of the signal routing, then a custom grid maze router
   finishes the rest. All tracks are then straightened into 0/45/90° runs. Ground is a fill on both
   layers. [`pcb-routing.png`](https://github.com/milindmadhukar/keygen/releases/download/media/pcb-routing.png) shows both copper layers.

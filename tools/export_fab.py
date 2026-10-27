@@ -95,7 +95,7 @@ def main():
 
 Place **two orders**: [`keygen-left-gerbers.zip`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-left-gerbers.zip) and
 [`keygen-right-gerbers.zip`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-right-gerbers.zip), 5 of each, from the build release.
-Per half came out cheaper at Lion Circuits than the combined file (checked 2026-10-20).
+Ordered from JLCPCB (2026-10-27): US$15.40 per half, US$40.63 for both with UPS to India, plus customs.
 [`keygen-gerbers.zip`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-gerbers.zip) (both halves in one design) is kept for fabs that price it better.
 
 | Setting | Value |
@@ -105,7 +105,8 @@ Per half came out cheaper at Lion Circuits than the combined file (checked 2026-
 | Copper | 1 oz (35 µm) |
 | Board size | both halves: {W:.1f} × {H:.1f} mm · one half: {w:.1f} × {h:.1f} mm |
 | Quantity | 5 left + 5 right (two orders) |
-| Surface finish | HASL lead-free (cheapest; fine for hand soldering) |
+| Surface finish | HASL lead-free (fine for hand soldering) |
+| Mark on PCB | Remove Mark (keeps the fab's order number off the silkscreen artwork) |
 | Soldermask / silkscreen | **black / white** (the silkscreen artwork is drawn for it; set in the board stackup) |
 | Min track / clearance | 0.15 mm / 0.2 mm (6/8 mil) |
 | Min hole | 0.3 mm (vias); no blind/buried vias |

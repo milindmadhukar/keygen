@@ -16,7 +16,7 @@ Quantities cover **the keyboard with spares**. Prices are what the listings show
 > - **StacksKB:** switches and diodes
 > - **Robu.in:** encoders and small parts
 > - **Amazon.in:** EVA foam
-> - **Lion Circuits (Bengaluru):** the boards
+> - **JLCPCB:** the boards
 >
 > The exact listings are in `bom/CHECKLIST.md` in the repo.
 
@@ -52,9 +52,9 @@ Quantities cover **the keyboard with spares**. Prices are what the listings show
 
 | Part | Spec | Per kb | Buy | India | Import | Price | Status |
 |---|---|---|---|---|---|---|---|
-| Main PCBs | 2-layer FR4, 1.6 mm, HASL, 1 oz, left and right designs (each half ~17 × 13 cm)<br>*Minimum 5 per design, so 5 left + 5 right. Check their DFM limits (6/6 mil on 1 oz) when routing.* | 2 | 5 + 5 | [Lion Circuits](https://lioncircuits.com/) (Bengaluru, instant quote, 5–6 days, no customs) | JLCPCB as a fallback | from ₹799 for 5 (entry offer; quote for full size) | decided |
+| Main PCBs | 2-layer FR4, 1.6 mm, lead-free HASL, 1 oz, black mask, left and right designs (each half ~16 × 13 cm)<br>*Minimum 5 per design, so 5 left + 5 right. Mark on PCB: Remove Mark.* | 2 | 5 + 5 | [Lion Circuits](https://lioncircuits.com/) as a fallback (Bengaluru, ₹3,400 per design) | [JLCPCB](https://cart.jlcpcb.com/quote), UPS to India | US$15.40 per design + US$9.83 shipping, plus customs | in cart |
 | Switch plate | Clear polycarbonate solid sheet, 1.5 mm, 6 × 24 in. (152 × 610 mm), CNC-routed into both halves with case/plate/dxf/<br>*Each half (169.8 × 130.6 mm) needs a 178 × 139 mm piece; a strip holds three. Routed, not laser-cut. Cutting notes in case/plate/PLATE.md. The Gerbers in case/plate/gerber/ order the same plate in FR-4 from a PCB fab instead.* | 2 | 1 pack of 2 sheets | [Amazon.in, V-LITE 1.5 mm](https://www.amazon.in/dp/B0GXG2SW48), size 6x24IN, then a CNC router service |  | ₹704 per 2 | decided |
-| LED assembly (optional) | Lion Circuits / JLCPCB assembly of the SK6812MINI-E only<br>*Avoids hand-soldering 66 LEDs; adds cost and lead time.* | — | optional | — | Lion Circuits or JLCPCB | TBD | optional |
+| LED assembly (optional) | JLCPCB assembly of the SK6812MINI-E only<br>*Avoids hand-soldering 66 LEDs; adds cost and lead time.* | — | optional | — | JLCPCB | TBD | optional |
 
 ## Switches & keycaps
 
