@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 520" role="img" aria-labelledby="title desc">
+  <title id="title">Where the shims and standoffs go</title>
+  <desc id="desc">Two cross sections show a screw through the back of the PCB, a shim and a standoff on the switch side, and the switch plate above. Some holes also receive a top screw.</desc>
+  <style>
+    text { font-family: DejaVu Sans, Arial, sans-serif; fill: #172033; }
+    .title { font-size: 28px; font-weight: 700; }
+    .heading { font-size: 20px; font-weight: 700; }
+    .label { font-size: 17px; }
+    .small { font-size: 15px; }
+    .plate { fill: #acd6e5; stroke: #315b73; stroke-width: 2; }
+    .pcb { fill: #397765; stroke: #174a3c; stroke-width: 2; }
+    .shim { fill: #edb95b; stroke: #8a5c16; stroke-width: 2; }
+    .post { fill: #d9a143; stroke: #8a5c16; stroke-width: 2; }
+    .screw { fill: #718096; stroke: #344054; stroke-width: 2; }
+    .guide { stroke: #65748b; stroke-width: 2; fill: none; }
+  </style>
+  <rect width="1040" height="520" fill="#f8fafc"/>
+  <text x="40" y="48" class="title">One shim + one standoff at every M2 mounting hole</text>
+  <text x="40" y="82" class="label">Five pairs per half. Schematic side view through one mounting hole.</text>
+
+  <text x="120" y="130" class="heading">Hole with a top screw</text>
+  <text x="635" y="130" class="heading">Hole without a top screw</text>
+
+  <g transform="translate(0 0)">
+    <rect class="plate" x="80" y="190" width="370" height="38" rx="4"/>
+    <rect class="post" x="229" y="228" width="72" height="65" rx="5"/>
+    <rect class="shim" x="214" y="293" width="102" height="10" rx="2"/>
+    <rect class="pcb" x="80" y="303" width="370" height="38" rx="3"/>
+    <rect class="screw" x="255" y="164" width="20" height="100" rx="4"/>
+    <rect class="screw" x="242" y="151" width="46" height="14" rx="5"/>
+    <rect class="screw" x="255" y="289" width="20" height="86" rx="4"/>
+    <rect class="screw" x="242" y="375" width="46" height="14" rx="5"/>
+    <text x="118" y="215" class="label">1.5 mm switch plate</text>
+    <text x="90" y="326" class="label" fill="#fff">PCB front ↑</text>
+    <path class="guide" d="M314 253 H427"/>
+    <text x="330" y="246" class="small">3 mm standoff</text>
+    <path class="guide" d="M316 298 H427"/>
+    <text x="330" y="289" class="small">0.5 mm shim</text>
+    <text x="110" y="412" class="small">H102, H103, H105 / H202, H204</text>
+    <text x="108" y="438" class="small">M2 × 3 below + M2 × 3 above</text>
+  </g>
+
+  <g transform="translate(520 0)">
+    <rect class="plate" x="80" y="190" width="370" height="38" rx="4"/>
+    <rect class="post" x="229" y="228" width="72" height="65" rx="5"/>
+    <rect class="shim" x="214" y="293" width="102" height="10" rx="2"/>
+    <rect class="pcb" x="80" y="303" width="370" height="38" rx="3"/>
+    <rect class="screw" x="255" y="276" width="20" height="99" rx="4"/>
+    <rect class="screw" x="242" y="375" width="46" height="14" rx="5"/>
+    <text x="118" y="215" class="label">1.5 mm switch plate</text>
+    <text x="90" y="326" class="label">PCB front ↑</text>
+    <path class="guide" d="M314 253 H427"/>
+    <text x="330" y="246" class="small">3 mm standoff</text>
+    <path class="guide" d="M316 298 H427"/>
+    <text x="330" y="289" class="small">0.5 mm shim</text>
+    <text x="110" y="412" class="small">H101, H104 / H201, H203, H205</text>
+    <text x="128" y="438" class="small">M2 × 4 below only</text>
+  </g>
+
+  <rect x="270" y="465" width="500" height="36" rx="8" fill="#e5ecf4"/>
+  <text x="300" y="489" class="label">PCB top → plate underside: 0.5 + 3 = 3.5 mm</text>
+</svg>

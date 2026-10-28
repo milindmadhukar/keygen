@@ -12,6 +12,7 @@ pcb/*.ses
 pcb/fp-info-cache
 .history/
 firmware/out/
+tmp/
 .playwright-mcp/
 blender/keygen-parts.blend
 blender/*.blend1

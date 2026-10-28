@@ -81,8 +81,9 @@ AON_VTH_MAX = 1.45
 # nRF52840_PS_v1.1.pdf, GPIO electrical specification (p. 157): VOH >= VDD - 0.4 V at 0.5 mA
 # (standard drive). The nice!nano runs the nRF52840 at 3.3 V.
 NRF_VDD, NRF_VOH_DROP = 3.3, 0.4
-# nice!nano charger (pinout image): 100 mA, or 500 mA with the BOOST jumper bridged. LiPo 3.0-4.2 V.
-CHARGE_MA, BOOST_MA, VBAT_MIN, VBAT_MAX = 100, 500, 3.0, 4.2
+# SuperMini charger (vendor schematic, TP4054): 100 mA; the BOOST jumper, left open, gives about
+# 300 mA. SW_MA is the most the battery switch carries, LED current at the brightness cap. LiPo 3.0-4.2 V.
+CHARGE_MA, BOOST_MA, SW_MA, VBAT_MIN, VBAT_MAX = 100, 300, 510, 3.0, 4.2
 # SK6812MINI-E_Opsco_rev02.pdf §4/§5, seen from the lens side:
 #   1 VDD (top left)      4 DIN (top right)
 #   2 DOUT (bottom left)  3 GND (bottom right, chamfered corner)
@@ -267,6 +268,37 @@ for side, d in SIDES.items():
         if order[i:] + order[:i] != SK_LENS_CW: bad.append(f.GetReference())
     ok(not bad, A, f"{side}: all {len(leds)} SK6812MINI-E land VDD/DIN/GND/DOUT where the datasheet puts them",
        f"{side}: rotated/mirrored pinout on {bad}")
+    # The MX electrical pins are on the side opposite the LED window. Verify the actual routed
+    # board, including the 90-degree thumb switches, rather than trusting gen_pcb.py's offset.
+    keys = g.KEYS[side]
+    cells = sorted([(r, c, label, width) for r, c, label, width in keys] +
+                   [(r, c, "encoder", None) for r, c in [g.ENCODER_POS[side]]])
+    cell_number = {(r, c): i for i, (r, c, _, _) in enumerate(cells, 1)}
+    misplaced = []
+    for i, (r, c, _, _) in enumerate(keys, 1):
+        switch = fp(f"SW{d}{cell_number[(r, c)]:02d}")
+        led = fp(f"LED{d}{i:02d}")
+        v = led.GetPosition() - switch.GetPosition()
+        pin_holes = [p for p in switch.Pads() if p.GetNumber() in ("1", "2") and p.GetDrillSize().x > 0]
+        pin_mid = pcbnew.VECTOR2I(sum(p.GetPosition().x for p in pin_holes) // 2,
+                                  sum(p.GetPosition().y for p in pin_holes) // 2)
+        pin_v = pin_mid - switch.GetPosition()
+        cuts = [item.GetBoundingBox() for item in led.GraphicalItems() if item.GetLayer() == pcbnew.Edge_Cuts]
+        if cuts:
+            x0, x1 = min(b.GetLeft() for b in cuts), max(b.GetRight() for b in cuts)
+            y0, y1 = min(b.GetTop() for b in cuts), max(b.GetBottom() for b in cuts)
+            opening = (mm(x1 - x0), mm(y1 - y0))
+            centred = mm(abs(x0 + x1 - 2 * led.GetPosition().x)) < 0.2 and \
+                        mm(abs(y0 + y1 - 2 * led.GetPosition().y)) < 0.2
+        else:
+            opening, centred = (0, 0), False
+        if not (abs(mm(v.EuclideanNorm()) - 5.08) < 0.02 and v.x * pin_v.x + v.y * pin_v.y < 0 and
+                centred and min(opening) >= 3.0):
+            misplaced.append((switch.GetReference(), led.GetReference(), round(mm(v.EuclideanNorm()), 2), opening))
+    ok(not misplaced and len(keys) == len(leds), A,
+       f"{side}: all {len(keys)} LEDs sit 5.08 mm from their switches, opposite the switch pins, "
+       "with centred light openings at least 3.0 mm across",
+       f"{side}: switch/LED opening placement errors: {misplaced}")
     bad = []
     chain = [pad_net(f"LED{d}01", "2")]
     for i in range(1, len(leds) + 1):
@@ -289,8 +321,17 @@ for side, d in SIDES.items():
            "datasheet margin is thin")
     report("PASS", A, f"{side}: {n} LEDs x {SK_MA_PER_LED} mA = {n * SK_MA_PER_LED / 1000:.1f} A at full white is within "
            "the AO3401A's 4 A; firmware caps brightness (CONFIG_ZMK_RGB_UNDERGLOW_BRT_MAX)")
-    report("PASS", A, f"{side}: idle drain {n * SK_STATIC_MA:.0f} mA ({n} x {SK_STATIC_MA:.0f} mA static) is cut "
-           f"by the LED switch (P0.08, ZMK ext-power); R{d}03 keeps it off while the controller boots or sleeps")
+    report("PASS", A, f"{side}: the P0.08 LED switch can cut the {n * SK_STATIC_MA:.0f} mA dark-pixel "
+           f"load ({n} x {SK_STATIC_MA:.0f} mA); R{d}03 holds it off before firmware configures P0.08")
+    capped_white = n * (SK_STATIC_MA + SK_MA_PER_LED * 0.40)
+    report("WARN", A, f"{side}: {n} LEDs at the firmware's 40% cap can draw about {capped_white:.0f} mA "
+           f"for full white at the datasheet's 5 V typical current. The SuperMini charger supplies only "
+           f"about {CHARGE_MA} mA, so a lit half can still discharge its cell while USB is connected; "
+           "the cell/protection-board discharge rating and actual cap brightness require measurement")
+    report("WARN", A, f"{side}: the manufacturer shows a bypass capacitor at every pixel and input "
+           f"protection resistance (SK6812MINI-E datasheet p. 9); this board has only C{d}01/C{d}02 "
+           "at the rail switch and no first-DIN series resistor. Test rail droop and data integrity on a "
+           "fully lit, switching strip")
 
 # --------------------------------------------------------------------------------------
 # 5. Matrix diodes, encoder
@@ -349,14 +390,16 @@ for side, d in SIDES.items():
 # --------------------------------------------------------------------------------------
 A = "power"
 report("PASS", "power", f"the MSK12C02 (rated {MSK_RATED_MA} mA) only switches the MOSFET gate; battery current, including "
-       f"{BOOST_MA} mA BOOST charging and LED current, flows through the AO3401A (4 A)")
-drop = BOOST_MA * AO_RDS_25V_MOHM / 1000
+       f"{CHARGE_MA} mA charging ({BOOST_MA} mA with BOOST) and LED current, flows through the AO3401A (4 A)")
+drop = SW_MA * AO_RDS_25V_MOHM / 1000
 ok(VBAT_MIN > 2.5 and VBAT_MAX < AO_VGS_MAX, "power",
    f"gate to GND gives VGS = -{VBAT_MIN}..-{VBAT_MAX} V: past the -2.5 V rating (RDS(on) < {AO_RDS_25V_MOHM} mOhm, "
-   f"{drop:.0f} mV at {BOOST_MA} mA) and inside +-{AO_VGS_MAX} V")
-heat = AO_VSD_V * BOOST_MA / 1000
-report("WARN", "power", f"switch off with USB plugged in: the charger still fills the cell through the body diode, "
-       f"about {heat:.2f} W at {BOOST_MA} mA, +{heat * AO_RTH_JA:.0f} C on the SOT-23. Leave the switch on while charging")
+   f"{drop:.0f} mV at {SW_MA} mA) and inside +-{AO_VGS_MAX} V")
+heat = AO_VSD_V * CHARGE_MA / 1000
+report("WARN", "power", f"switch off with USB plugged in: charge current can cross the body diode, "
+       f"about {heat:.2f} W at {CHARGE_MA} mA, +{heat * AO_RTH_JA:.0f} C on the SOT-23; "
+       "the charger senses voltage before the diode, so full-charge termination is not assured. "
+       "Leave the switch on while charging")
 report("PASS", "power", f"the 1 MOhm gate resistor costs {VBAT_MAX:.1f} uA at most while on ({VBAT_MAX} V across it)")
 ok(NRF_VDD > AON_VTH_MAX * 2, "power", f"P0.08 high ({NRF_VDD} V) is over twice the AO3400A's {AON_VTH_MAX} V maximum "
    "threshold, so the N-MOSFET turns fully on")

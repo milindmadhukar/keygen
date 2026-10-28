@@ -29,7 +29,8 @@ Each half has 34 diodes: 33 for the keys and one for its encoder's push switch, 
 ## Controller
 
 - **nRF52840 SuperMini**, one per half: a nice!nano v2 clone with the same 24-pin Pro Micro header and pinout, built in ZMK as the nice!nano v2. It provides the nRF52840, the USB-C port and the LiPo charger.
-- **Charging** at about 100 mA; the board has no BOOST jumper.
+- **Charging** at about 100 mA (TP4054). The BOOST jumper on the back, an unfitted 0 Ω link that raises it to about 300 mA, stays open.
+- **Power path:** on USB the controller runs from USB; the LEDs hang on B+ and can draw more from the cell than the roughly 100 mA charge current replaces.
 - **Check before soldering:** B+ (pad 13), GND and VCC (pad 16) with a multimeter, and the charge current.
 - **Socketed** on the PCB underside with USB-C facing the top edge, so a controller can be swapped.
 - Pin map and pin budget: [[12 - final design#Controller pin map]]. Pin restrictions were checked in [[15 - datasheet audit]].
@@ -62,7 +63,7 @@ Each half has 34 diodes: 33 for the keys and one for its encoder's push switch, 
 - **Battery:** 3.7 V 505080 LiPo pouch (5 × 50 × 80 mm, about 2500 mAh), on a JST-PH 2.0 lead, at most 60 × 88 mm including its protection board. The controller has no over-discharge cut-off, so the cell needs a protection board: a cell sold without one gets a DW01A module. It lies in a bay sunk 1.6 mm into the case floor. With a 6.1 mm installed battery stack and assumed 2 mm underside parts, clearance is 2.5 mm at rest and 1.0 mm at full gasket travel; it stays at least 15 mm from the antenna end. Placement: [[12 - final design#Power]] and [[14 - case & plate requirements]].
 - **Polarity:** LiPo packs come wired both ways. Check that the red wire lands on the + pad marked on the silkscreen before plugging in.
 - **Battery switch:** the MSK12C02 (rated 50 mA) only drives the gate of the AO3401A, which carries the battery current, so charging and LED current never pass through the switch contacts. Source to the battery, drain to B+; the 1 MΩ resistor holds the gate off between positions. Leave the switch on while charging.
-- **Charging:** through each half's own USB-C, at about 100 mA: roughly a day for a 2500 mAh cell from empty. A 1-to-2 USB-C cable charges both halves from one charger.
+- **Charging:** through each half's own USB-C, at about 100 mA: roughly a day for a 2500 mAh cell from empty with lighting off. A 1-to-2 USB-C cable supplies both halves from one source. Runtime needs measurement after the LED rail is proven off on battery (see [`docs/logic-audit.md`](../docs/logic-audit.md)).
 
 ## Mounting and case hardware
 

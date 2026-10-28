@@ -142,7 +142,7 @@ flowchart LR
     </tbody>
   </table></div>
   <div class="note prose"><strong>Why no TRRS:</strong> a cable between the halves would only replace the Bluetooth split. ZMK runs one split transport per build (runtime switching needs purpose-built hardware), the cable couldn't charge the right half (the controller has no VBUS pin to pass USB power on), and ZMK warns never to plug or unplug a TRRS cable while either half is powered, which with a battery in each half is always. The jack was removed on 20 Oct 2026.</div>
-  <p class="cap"><strong>Charging:</strong> each half charges from its own USB-C; a 1-to-2 USB-C cable does both from one charger. The right half drains far slower than the left, so it rarely needs it. The controller charges at about 100 mA, roughly a day for an empty 2500 mAh cell.</p>
+  <p class="cap"><strong>Charging:</strong> each half charges from its own USB-C; a 1-to-2 USB-C cable supplies both from one source. The controller charges at about 100 mA, roughly a day for an empty 2500 mAh cell with lighting off, and runs from USB while plugged in. Battery runtime needs a powered-board measurement, especially to confirm that the dark LED rail is actually off.</p>
 
   <h2>Redox rev1 → Keygen: what changes</h2>
   <div class="tablewrap"><table>

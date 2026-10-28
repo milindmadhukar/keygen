@@ -6323,7 +6323,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "60ecbebe-0258-5282-800b-337c88a466df")
   )
-  (text "Switch 2-1: gate to GND, on. Switch 2-3: gate to source, off.\nR1 holds the gate off between positions. Leave the switch on while charging:\noff, USB charges the cell through the body diode (~0.35 W at 500 mA)."
+  (text "Switch 2-1: gate to GND, on. Switch 2-3: gate to source, off.\nR1 holds the gate off between positions. Leave the switch on while charging:\noff, charge current crosses the body diode (~0.07 W at 100 mA); full charge is not assured."
     (exclude_from_sim no)
     (at 335.28 198.12 0)
     (effects (font (size 1.27 1.27)) (justify left top))

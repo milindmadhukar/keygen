@@ -156,10 +156,10 @@ and speed. On battery power it notes that the LEDs light only on USB power.
 | Encoders | EC11 on each half, A on P0.10, B on P0.09 (NFC pins as GPIO); each press at row 0 / column 6 |
 | OLED | 0.96 in. 128 × 64 SSD1306 per half on I2C (SDA P0.17, SCL P0.20, address 0x3C), mounted upside down so the image is turned 180°. ZMK's status screen: output, Bluetooth profile, layer and battery on the left; the right half's battery and link on the right. Blanks when idle. Powered from the nice!nano's 3.3 V output, which P0.13 keeps on |
 | Mouse | Scroll only, for the left knob (ZMK pointing) |
-| LEDs | 33 SK6812MINI-E per half on P0.06, as ZMK underglow, brightness capped at 40 %. They light only while that half has USB power and turn off when idle; ZMK's ext-power switches their supply with them through the board's LED power switch on P0.08, and nothing else |
+| LEDs | 33 SK6812MINI-E per half on P0.06. These are per-key RGB backlights; there is no case underglow. ZMK calls its addressable RGB-strip driver `RGB_UNDERGLOW`, so the chosen node and `&rgb_ug` key bindings use that name. The output is capped at 40 % (fresh-build initial PWM is about 16 % because ZMK scales its 40 % start value by that cap), and P0.08 controls the LED supply MOSFET. The pinned ZMK code enables ext-power at startup and its shared USB/idle state can restore lights on battery after a wake. This needs correction and a rail-current check during bring-up ([logic audit](../docs/logic-audit.md)) |
 | Host | USB-C on the left half or Bluetooth, 5 profiles; USB is used while plugged in |
 | Split | Bluetooth, left half central |
-| Battery | Both halves report their level to the host |
+| Battery | Both halves report their level to the host. On USB the level reads full: ZMK measures the controller's supply (VDDH), which then runs from USB |
 | Sleep | Deep sleep after 15 minutes idle; a key press wakes the half |
 | ZMK Studio | Live remapping over USB on the left half |
 

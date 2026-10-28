@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 640" role="img" aria-labelledby="title desc">
+  <title id="title">OLED, foam and gasket locations in the case</title>
+  <desc id="desc">A simplified side section shows the OLED soldered to the PCB through a window in the switch plate, recessed below the top case, the Poron rings and EVA plate foam between the PCB and plate, EVA case foam on the floor, and gaskets above and below the plate edge tabs.</desc>
+  <style>
+    text { font-family: DejaVu Sans, Arial, sans-serif; fill: #172033; }
+    .title { font-size: 28px; font-weight: 700; }
+    .heading { font-size: 20px; font-weight: 700; }
+    .label { font-size: 16px; }
+    .small { font-size: 14px; }
+    text.on-dark { fill: #fff; }
+    .line { stroke: #52677e; stroke-width: 2; fill: none; }
+  </style>
+  <rect width="1120" height="640" fill="#f8fafc"/>
+  <text x="35" y="48" class="title">Where the display, foam and gaskets sit</text>
+  <text x="35" y="80" class="label">Schematic side section. Vertical spacing is simplified; dimensions are the design values.</text>
+
+  <text x="70" y="125" class="heading">Inside the half</text>
+  <rect x="75" y="160" width="555" height="44" fill="#a2b4c2" stroke="#52677e" stroke-width="2"/>
+  <rect x="260" y="158" width="165" height="50" fill="#f8fafc"/>
+  <text x="78" y="151" class="label">Top case surface</text>
+  <text x="273" y="187" class="small">viewing window</text>
+  <rect x="288" y="254" width="110" height="16" fill="#31343a" stroke="#222" stroke-width="2"/>
+  <rect x="284" y="270" width="118" height="26" fill="#1f6754" stroke="#174a3c" stroke-width="2"/>
+  <text x="75" y="242" class="label">OLED glass: 3.9 mm below case top</text>
+  <rect x="75" y="268" width="206" height="30" fill="#acd6e5" stroke="#315b73" stroke-width="2"/>
+  <rect x="405" y="268" width="225" height="30" fill="#acd6e5" stroke="#315b73" stroke-width="2"/>
+  <text x="77" y="289" class="small">switch plate, 1.5 mm</text>
+  <rect x="334" y="296" width="18" height="69" fill="#d9a143" stroke="#8a5c16" stroke-width="2"/>
+  <text x="365" y="339" class="small">plastic spacer + four header pins</text>
+  <rect x="75" y="345" width="170" height="28" fill="#535861"/>
+  <rect x="435" y="345" width="195" height="28" fill="#535861"/>
+  <text x="79" y="364" class="small on-dark">2 mm EVA plate foam</text>
+  <rect x="105" y="380" width="145" height="9" fill="#8c91a0"/>
+  <text x="269" y="389" class="small">0.5 mm Poron ring at each switch</text>
+  <rect x="75" y="390" width="555" height="31" fill="#397765" stroke="#174a3c" stroke-width="2"/>
+  <text x="82" y="411" class="label on-dark">PCB, 1.6 mm</text>
+  <rect x="75" y="524" width="555" height="42" fill="#a2b4c2" stroke="#52677e" stroke-width="2"/>
+  <rect x="110" y="460" width="150" height="64" fill="#6a6d74"/>
+  <rect x="350" y="460" width="248" height="64" fill="#6a6d74"/>
+  <text x="363" y="487" class="small on-dark">5 mm EVA case foam</text>
+  <text x="363" y="507" class="small on-dark">on bottom shell floor</text>
+  <rect x="261" y="480" width="88" height="44" fill="#dec790" stroke="#946f39" stroke-width="2"/>
+  <text x="268" y="452" class="small">battery bay</text>
+  <text x="79" y="590" class="small">The case foam is cut clear of the bay and underside parts.</text>
+
+  <path class="line" d="M640 158 V565"/>
+  <text x="685" y="125" class="heading">At each plate edge tab</text>
+  <rect x="685" y="160" width="370" height="45" fill="#a2b4c2" stroke="#52677e" stroke-width="2"/>
+  <rect x="775" y="205" width="190" height="49" fill="#8c91a0" stroke="#555b69" stroke-width="2"/>
+  <rect x="740" y="254" width="260" height="30" fill="#acd6e5" stroke="#315b73" stroke-width="2"/>
+  <rect x="775" y="284" width="190" height="49" fill="#8c91a0" stroke="#555b69" stroke-width="2"/>
+  <rect x="685" y="333" width="370" height="185" fill="#a2b4c2" stroke="#52677e" stroke-width="2"/>
+  <text x="789" y="233" class="small">upper Poron gasket</text>
+  <text x="789" y="275" class="small">plate edge tab</text>
+  <text x="789" y="312" class="small">lower Poron gasket</text>
+  <text x="706" y="549" class="label">8 tabs × 2 strips = 16 per half</text>
+  <text x="718" y="577" class="small">Each strip: 12 × 4 × 3 mm before compression</text>
+</svg>

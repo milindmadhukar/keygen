@@ -25,8 +25,12 @@ updated: 2026-10-22T19:00
   lower end with its header along its bottom edge, and the firmware turns the image 180°. It runs
   from the controller's switched 3.3 V output (VCC), which the firmware keeps on through P0.13.
 - **Power and charging:** each half has its own LiPo and charges through its own controller's
-  USB-C at about 100 mA, roughly a day for an empty cell; a 1-to-2 USB-C cable charges both from
-  one charger.
+  USB-C at about 100 mA (TP4054; the BOOST jumper, for about 300 mA, stays open), roughly a day
+  for an empty cell; a 1-to-2 USB-C cable charges both from one charger. On USB the controller
+  and the OLED run from USB through the module's diode and P-MOSFET; the LEDs, on B+, can draw
+  more from the cell than the 100 mA charger replaces. The battery level reads full while
+  plugged in. Battery life has not been measured; confirm the dark LED rail is actually off before
+  estimating runtime (see [`docs/logic-audit.md`](../docs/logic-audit.md)).
 - **Battery switch:** the MSK12C02 slide switch drives the gate of an AO3401A P-MOSFET, which
   carries the battery current: source on the battery, drain on B+. A 1 MΩ resistor holds the gate
   off between positions. Leave the switch on while charging.

@@ -198,7 +198,10 @@ Each half has two foam layers, cut from the 1:1 `keygen-{left,right}-{plate,case
 and a 5 mm EVA case foam. Use the DXF files for a laser cutter. To cut by hand, print the SVG at
 100 % as for the fit test, tape it to the sheet and cut along the lines with a sharp craft knife and
 a steel ruler. Keep each piece the right way up as drawn: they are seen from above and are not
-symmetrical. The Poron switch pads and gasket strips come ready-made.
+symmetrical. Cut only the two EVA sheets per half from these files. The 120-piece Poron ring pack is
+already cut: use 33 rings per half (66 total), one round each switch. The separate Poron gasket
+strips are cut across their length into 12 mm pieces: 16 per half, one below and one above each of
+the plate's eight edge tabs.
 
 ### Case
 
@@ -330,7 +333,8 @@ the lit side down through the cut-out so it shines out of the front.
 - Iron at 320 °C, plenty of flux, 2–3 seconds per pad. Tin one pad, place the LED in its cut-out,
   reheat the tinned pad, then solder the other three. Kapton tape keeps the neighbouring pads clean.
 - Solder them in number order, six or so at a time, then plug in USB and check they light before
-  going on. The LEDs light while the half has USB power; SYS + `A` toggles them.
+  going on. Use SYS + `A` to toggle the lighting. Measure the LED rail and battery current with USB
+  disconnected: the pinned ZMK ext-power driver starts enabled, so a dark strip may still draw power.
 
 > [!NOTE]
 > Data passes from LED to LED in number order, LED101 first, so one bad joint darkens every LED
@@ -380,16 +384,28 @@ The board is done. The rest waits for the plates, the foam and the case.
 
 ## Standoffs
 
-The five mounting holes, **H101–H105 / H201–H205**, are on the front maps.
+The five mounting holes on each PCB are **H101–H105** on the left and **H201–H205** on the right.
+Find them on the [front assembly maps](#assembly-maps); they are the five plain M2 holes, separate
+from the switch holes. Put **one 0.5 mm shim and one M2 × 3 mm female-female standoff at every one**
+of these holes (five pairs per half, ten pairs total). Both sit on the **front/switch side of the
+PCB**, inside the space between PCB and plate. They do not go on the case or its gasket tabs.
+
+At each hole, stack the parts in this order, from bottom to top: screw head against the **back of
+the PCB** → PCB → 0.5 mm shim centred on the hole → 3 mm standoff → underside of the switch
+plate. Drive the bottom screw upward through the PCB and shim into the standoff. The shim plus
+standoff make the required **3.5 mm gap between the PCB top and plate underside**. With the 1.5 mm
+plate, its top is 5.0 mm above the PCB top. The plate must not be pressed flat against the PCB.
+
+![Cross-section showing the shim and standoff between PCB and switch plate, with both screw options](assets/assembly-standoffs.svg)
 
 | Hole | Under the PCB | On top of the plate |
 |---|---|---|
 | H102, H103, H105 (left), H202, H204 (right) | M2 × 3 button head | M2 × 3 button head |
 | H101, H104 (left), H201, H203, H205 (right) | M2 × 4 button head | none: the standoff bears on the plate |
 
-Put a 0.5 mm shim on the front of the PCB over each hole, stand an M2 × 3 mm standoff on it and screw
-it on from the back with the screw in the table. The shorter screws leave room for the plate screws
-that go into the same standoffs from above.
+Install all five shims and standoffs before laying down the plate foam. Use the shorter bottom screws
+where a second screw will enter the same standoff from above. Later, set the plate on the standoffs;
+put top screws only in the five holes listed in the first row of the table.
 
 > [!NOTE]
 > An M2 × 3 from below reaches only about two threads into its standoff. Snug it, don't force it.
@@ -402,21 +418,31 @@ that go into the same standoffs from above.
    notches facing the switch's clips (top and bottom) and its open middle round the pins and the LED
    window. Where a ring's corner meets a standoff (7 rings per half), snip that corner off first.
    Where a ring crosses a diode's two joints, snip a notch in it so it lies flat on the board.
-2. Lay the 2 mm EVA plate foam over them.
+2. Lay the 2 mm EVA plate foam over the pads and round the standoffs. The cut-outs leave room for
+   the switches, OLED and encoder. It sits inside the 3.5 mm plate-to-PCB gap; it is not the spacer
+   that sets that gap.
 
 ---
 
 ## Plate and OLED
 
 1. Set the plate on the standoffs and screw it down with M2 × 3 button heads at the holes in the
-   table above.
+   first row of the table above. The other standoffs touch the plate from below without a top screw.
 2. Check that the pin order printed on the OLED module is GND, VCC, SCL, SDA, the same as the
    footprint. Pass its header pins down through the plate's OLED window into **J101 / J201**, with
    the module resting on its plastic spacer, and solder them from the back. Trim the pins flush on
    the back: the battery lead runs under them.
 3. Power the half and check the status screen appears.
 
+The OLED is held by its four soldered header pins and their plastic spacer; the plate and top frame
+have clearance windows around it. Do not glue the module to the case or solder loose wires for this
+build. Its glass is about level with the switch plate top, **3.9 mm below the top case surface**.
+The current case has a recessed viewing window. Making the glass flush with the case top would
+require changing the OLED mounting height and case geometry before making the parts.
+
 ![OLED header close-up](https://github.com/milindmadhukar/keygen/releases/download/media/assembly-part-oled.png)
+
+![Section through the OLED, foam, switch plate and case gaskets](assets/assembly-stack.svg)
 
 > [!WARNING]
 > A module with GND and VCC swapped is powered backwards. Check the printed order before soldering.
@@ -457,7 +483,9 @@ them cool.
 
 ## Case foam
 
-Lay the 5 mm EVA case foam on the floor of the bottom shell, round the battery in its bay.
+Lay the 5 mm EVA case foam on the floor of the bottom shell, round the battery in its bay and clear
+of the controller, connector, switch, reset tube, encoder and OLED pins. It goes **below the PCB**;
+it does not bridge the battery bay or touch the solder joints.
 
 ---
 
@@ -538,7 +566,7 @@ halves do not pair, flash `settings_reset-nice_nano.uf2` to both, then the norma
 | Half does not run on battery | Red wire on the **+** pad. Battery above 3.0 V. Slide switch on. Q101 / Q201 and R101 / R201 soldered |
 | One key does not work | Switch fully seated, pins straight. Diode present and the right way round. Socket joints. Continuity from the socket to the controller pin |
 | Several keys register at once | A diode missing or reversed, or a short between a row and a column |
-| LEDs dark from one point on | The first dark LED or the one before it: a bad joint, or turned the wrong way. Data from P0.06 reaching the first LED. The LED rail at battery voltage while the LEDs are on; if not, the LED power switch (Q102/Q103, R102/R103) and P0.08. The LEDs only light on USB power |
+| LEDs dark from one point on | The first dark LED or the one before it: a bad joint, or turned the wrong way. Data from P0.06 reaching the first LED. The LED rail at battery voltage while the LEDs are on; if not, the LED power switch (Q102/Q103, R102/R103) and P0.08. SYS + `A` toggles the strip; check its rail voltage, not its visible state alone |
 | OLED blank | Module pin order against the footprint (GND, VCC, SCL, SDA). 3.3 V on VCC, switched on through P0.13. SDA on P0.17, SCL on P0.20, address 0x3C. The screen blanks when idle: press a key |
 | Halves do not connect | Both halves on and charged. Flash `settings_reset` to both, then the normal firmware |
 

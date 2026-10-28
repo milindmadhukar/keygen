@@ -35,7 +35,7 @@ clearances, including the battery stack at full gasket travel.
 | Displays | 0.96 in. 128 × 64 SSD1306 OLED per half (I2C), showing ZMK's status screen |
 | Switches | Akko V3 Lavender Purple Pro (tactile, 5-pin) in Kailh hotswap sockets (CPG151101S11) |
 | Keycaps | Blank DSA PBT, smoke translucent |
-| Lighting | 33 SK6812MINI-E reverse-mount RGB LEDs per half, powered from the battery through a MOSFET switch, on while that half has USB power |
+| Lighting | 33 SK6812MINI-E reverse-mount RGB backlights per half; no case underglow. The LEDs use a switched battery rail and ZMK's addressable RGB driver |
 | Controller | nRF52840 SuperMini (nice!nano v2 clone, Pro Micro format), one per half, socketed on the underside |
 | Connectivity | Host: USB-C (left half) or Bluetooth, 5 profiles. Halves: Bluetooth split |
 | Power | 505080 LiPo pouch per half (5 × 50 × 80 mm, about 2500 mAh) with a protection board, JST-PH connector, slide switch driving a P-MOSFET battery switch. Each half charges from its own USB-C |
@@ -51,7 +51,8 @@ The lit pictures are Cycles renders of the [Blender scene](notes/17%20-%20buildi
 which is rebuilt from the board and the case on request; the case layers and the PCB come from KiCad.
 
 **Per-key lighting.** The SK6812MINI-E LEDs shine up through the switches' clear tops and the smoke
-translucent caps.
+translucent caps. The [logic audit](docs/logic-audit.md) records the current and voltage limits that
+still need a powered prototype test before brightness or battery life can be promised.
 
 ![A rainbow wave running across Keygen's per-key LEDs](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-leds.gif)
 

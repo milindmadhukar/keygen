@@ -28,14 +28,14 @@ name: 06 - split architecture
 ## Power per half
 
 - **LiPo pouch** with a protection board (the controller has no over-discharge cut-off), a JST-PH connector, and a slide switch driving a P-MOSFET. Capacity, size and placement: [[12 - final design#Power]].
-- **Charging:** each half charges from its own USB-C through the controller's charger, at about 100 mA: roughly a day for a 2500 mAh cell from empty. A **1-to-2 USB-C cable** charges both from one charger.
+- **Charging:** each half charges from its own USB-C through the controller's charger, at about 100 mA: roughly a day for a 2500 mAh cell from empty with lights off. On USB the controller runs from USB, while the per-key LEDs still draw from the cell rail. A **1-to-2 USB-C cable** supplies both controllers from one USB source.
 - **Drain:** the right half (peripheral) uses far less than the left (central), so it charges less often.
 
 ### RGB and the battery
 
 The per-key LEDs are the biggest load. Per-key RGB empties a cell in about a day even when dim, so:
 
-- **On battery:** the LEDs light only for status flashes (caps lock, layer, Bluetooth profile, battery level while Fn is held) and are otherwise switched fully off.
+- **On battery:** status flashes (caps lock, layer, Bluetooth profile, battery level while Fn is held) are a future per-key firmware feature. The first ZMK build uses one whole-strip RGB control and requests USB-only lighting; verify its LED rail actually turns off on battery (see [`docs/logic-audit.md`](../docs/logic-audit.md)).
 - **On USB:** full effects. At the desk, the 1-to-2 cable from the laptop lights and charges both halves at once.
 
 The ZMK [power profiler](https://zmk.dev/power-profiler) estimates battery life for a given setup.

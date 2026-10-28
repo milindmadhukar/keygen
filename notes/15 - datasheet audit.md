@@ -8,8 +8,8 @@ updated: 2026-10-22T15:00
 ---
 # Datasheet Audit
 
-> [!success] Result (2026-10-20): no wiring mistakes
-> `tools/check_datasheets.py` in the repo checks the routed PCB against each part's datasheet: **85 pass, 0 fail, 8 warnings** (2026-10-20). Re-run it after any PCB change, with `-v` to list the passes too. The datasheets themselves, with sources and page references, are in `docs/datasheets/`. Design: [[12 - final design]]. Assembly: [[10 - assembly & build guide]].
+> [!note] Result (2026-10-28): connectivity passes, lighting limits remain
+> `tools/check_datasheets.py` checks the routed PCB against component pinouts and electrical limits: **109 pass, 0 fail, 15 warnings**. It now verifies all 66 switch/LED openings and warns about the 40% full-white current and missing per-pixel bypass capacitors. This is not a brightness or battery-life sign-off. The full operating review is in [`docs/logic-audit.md`](../docs/logic-audit.md). Re-run the script after any PCB change, with `-v` to list passes. Datasheets and source pages are in `docs/datasheets/`.
 
 ## How the checking fits together
 
@@ -38,7 +38,7 @@ To prove the test catches real mistakes, I fed it deliberately broken copies of 
 ### nice!nano v2 pinout (the SuperMini)
 - The nRF52840 SuperMini is a nice!nano v2 clone with the same 24-pin header, so the footprint follows the nice!nano v2. Pinout verified pad by pad against the official image. **Mounted on the underside, the component side (chip, USB-C) must face away from the PCB.** That's what the footprint assumes. Soldered the other way, the columns swap and battery + lands on a GPIO.
 - P0.13 *low* cuts VCC on the v2. The "high" wording in the docs is for v1. VCC (pad 16) powers the OLED, so the firmware holds P0.13 high with a gpio-hog. Battery voltage is read internally (VDDH), so it uses no pin.
-- The SuperMini charges at about **100 mA** and has no BOOST jumper: roughly a day for an empty 2500 mAh cell. It has no over-discharge cut-off, so the cell carries its own protection board. Check B+ (pad 13), GND and VCC (pad 16) and the charge current on each board before soldering it.
+- The SuperMini charges at about **100 mA** through a TP4054: roughly a day for an empty 2500 mAh cell. Its BOOST jumper on the back, an unfitted 0 Ω link, raises that to about 300 mA; Keygen leaves it open. On USB a diode feeds the controller (VDDH) from USB and a P-MOSFET takes the battery off it, so ZMK reads the battery as full while plugged in ([vendor schematic](https://img.alicdn.com/imgextra/i1/3009214883/O1CN01dX5XEt1lwSylaBst7_!!3009214883.jpg)). It has no over-discharge cut-off, so the cell carries its own protection board. Check B+ (pad 13), GND and VCC (pad 16) and the charge current on each board before soldering it.
 - No VCC current limit is published, and no antenna position or keep-out. The renders show bare board at the end away from USB-C, so the audit keeps the last 6 mm clear.
 
 ### Parts
@@ -47,7 +47,7 @@ To prove the test catches real mistakes, I fed it deliberately broken copies of 
   - 12 mA per colour, so 33 LEDs at full white ≈ 1.2 A per half. Each LED also draws 1 mA even when dark (≈ 33 mA per half), which is why the LEDs sit behind their own power switch.
 - **MSK12C02-HB power switch:** pin ② is common, and the pins are *not* evenly spaced (③ 1.5 mm ② 3 mm ①). Rated **50 mA at 12 V DC**. So it only drives the gate of an AO3401A P-MOSFET, which carries the battery current, including the charge current.
 - **EC11:** A C B in a row with C (common) in the middle, and the push switch on the other side. Swapping A and B only reverses the rotation direction, which firmware can fix.
-- **AO3401A:** SOT-23 pins 1 G, 2 S, 3 D, matching KiCad's symbol. RDS(on) < 85 mΩ at VGS = −2.5 V, so the battery's −3.0 to −4.2 V gate drive turns it fully on (about 43 mV drop at 500 mA). Its body diode runs drain to source: with the source on the battery and the drain on B+, it blocks the battery when the switch is off. With the switch off and USB in, the charger still fills the cell through that diode, about 0.35 W.
+- **AO3401A:** SOT-23 pins 1 G, 2 S, 3 D, matching KiCad's symbol. RDS(on) < 85 mΩ at VGS = −2.5 V, so the battery's −3.0 to −4.2 V gate drive turns it fully on (about 43 mV drop at 500 mA). Its body diode runs drain to source: with the source on the battery and the drain on B+, it blocks the battery when the switch is off. With the switch off and USB in, charge current can cross that diode, dissipating about 0.07 W at 100 mA. Full-charge termination is not assured with the diode in that path; leave the switch on when charging.
 - **AO3400A:** SOT-23 pins 1 G, 2 S, 3 D, like the AO3401A. VGS(th) 0.65–1.45 V, so P0.08's 3.3 V turns it fully on (RDS(on) < 48 mΩ at VGS = 2.5 V). It pulls the LED switch's gate low, so that AO3401A sees −3.0 to −4.2 V, as the battery switch does.
 - **JST PH:** JST defines no battery polarity, and LiPo packs come wired both ways round.
 
@@ -60,12 +60,12 @@ To prove the test catches real mistakes, I fed it deliberately broken copies of 
 > [!note] Firmware (ZMK)
 > - Both halves: `&uicr { nfct-pins-as-gpios; };`, or the encoder lines (A on P0.10, B on P0.09) read dead.
 > - Hold P0.13 high (gpio-hog) so the OLED keeps its 3.3 V supply.
-> - Cap the LED brightness, and keep ext-power control on so the LED power switch (P0.08) cuts the LEDs when they are off.
+> - Cap LED brightness and check the actual P0.08/LED_VDD state on battery. The pinned ZMK ext-power driver enables the rail at startup, so a dark strip is not proof that its supply is cut.
 > - Matrix: `diode-direction = "col2row"` (cathodes are on the rows).
 
 > [!note] Accepted, but outside datasheet limits
 > - LEDs below their 3.7 V minimum once the cell runs under 3.7 V; LED data has a thin datasheet margin at a full cell (VIH 2.94 V against VOH ≥ 2.9 V).
-> - Switch off with USB plugged in: the cell still charges through the AO3401A's body diode, about 0.35 W (+44 °C on the SOT-23). Leave the switch on while charging.
+> - Switch off with USB plugged in: charge current can cross the AO3401A's body diode, about 0.07 W at 100 mA (+9 °C on the SOT-23). Full-charge termination is not assured. Leave the switch on while charging.
 
 ## Datasheets
 

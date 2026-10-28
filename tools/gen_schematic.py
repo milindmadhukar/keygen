@@ -400,9 +400,9 @@ def build(side, root, sheet):
     sh.text("C1/C2 sit at the LED power switch's output.", PX - 25.4, PY + 33.02)
 
     # ---- battery load switch ---------------------------------------------------------
-    # The MSK12C02 is rated 50 mA, less than the nice!nano's 500 mA (BOOST) charge current, so it
-    # only drives the gate of a P-MOSFET that carries the battery current. Source on the battery,
-    # drain on B+: the body diode (drain -> source) blocks the battery when the switch is off.
+    # The MSK12C02 is rated 50 mA, less than the charge and LED current, so it only drives the gate
+    # of a P-MOSFET that carries the battery current. Source on the battery, drain on B+: the body
+    # diode (drain -> source) blocks the battery when the switch is off.
     QX, QY = 360.68, 185.42
     sh.text("BATTERY SWITCH (P-MOSFET; the slide switch only drives the gate)", QX - 25.4, QY - 15.24, 2)
     sh.symbol("Transistor_FET:AO3401A", R("Q", 1), "AO3401A", QX, QY, FP["fet"],
@@ -410,7 +410,7 @@ def build(side, root, sheet):
     sh.symbol("Device:R", R("R", 1), "1M", QX + 15.24, QY, FP["res"], nets={"1": "BAT_GATE", "2": "BAT_RAW"})
     sh.text("Switch 2-1: gate to GND, on. Switch 2-3: gate to source, off.\n"
             "R1 holds the gate off between positions. Leave the switch on while charging:\n"
-            "off, USB charges the cell through the body diode (~0.35 W at 500 mA).", QX - 25.4, QY + 12.7)
+            "off, charge current crosses the body diode (~0.07 W at 100 mA); full charge is not assured.", QX - 25.4, QY + 12.7)
 
     # ---- LED power switch ------------------------------------------------------------
     # The LEDs run from the battery (B+, after Q1), inside the SK6812MINI-E's 3.7-5.5 V for most of

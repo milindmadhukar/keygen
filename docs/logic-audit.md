@@ -1,0 +1,40 @@
+# Electrical and lighting logic audit
+
+Checked 2026-10-28 against the routed `pcb/keygen.kicad_pcb`, both schematics, the pinned ZMK
+source in `firmware/west.yml`, the component datasheets in `docs/datasheets/`, and the mechanical
+model. This is a design review; brightness, battery current, RF range, and temperature still need a
+powered prototype.
+
+## What checks out
+
+| Area | Result |
+|---|---|
+| Net connectivity | ERC clean; 119 components and 93 nets per half match the design tables. PCB DRC reports 0 violations, 0 unconnected items and 0 schematic-parity errors. |
+| Key matrix | 33 keys and one encoder press per half, 5 rows × 7 columns. Each switch connects to a column and a diode anode; every diode cathode reaches its intended row. The `col2row` firmware direction matches. |
+| Controller and accessories | The 24 SuperMini header pads, underside orientation, reset, OLED GND/VCC/SCL/SDA, encoder A/B/common, and NFC-as-GPIO firmware setting match. OLED VCC is the controller's switched 3.3 V output; the firmware holds P0.13 high. The exact purchased OLED module's supply current and pin marking still need checking. |
+| Battery and LED switches | The slide switch carries gate current only. Q101/Q201 carries the battery path; Q102/Q202 and Q103/Q203 switch the LED rail from P0.08. The 100 kΩ/1 MΩ pulls give defined off states before firmware takes over. The JST-PH connector is rated 2 A with AWG 24 wire, above the estimated capped LED load; the actual pack wiring and protection board rating are not specified. |
+| LED chain | Each half has 33 LEDs in order, first DIN from P0.06 and each DOUT to the next DIN. All VDD pads reach LED_VDD and all VSS pads reach GND. Physical pad positions match the reverse-mount LED's lens-side datasheet view. |
+| Switch and light geometry | All 66 switches have the standard MX centre and two locating holes, the two electrical pin holes, and Kailh hotswap pads. Each LED is 5.08 mm from its switch centre, on the opposite side from the electrical pins, including the rotated thumb switches. Each cut-out is centred under its LED and at least 3.0 mm across; the nominal KiCad cut-out is about 3.4 × 3.0 mm. The 14 mm plate holes and ring pads leave that path open. The case fit check finds no 3D collision. |
+| Firmware build | Left, right and settings-reset UF2 images build at the pinned ZMK revision. The generated configs enable the 33-pixel strip, 40% brightness cap, RGB control of ext-power, OLED, and the matrix. |
+| LED signalling | At 4 MHz, the SPI encodings `0x40` and `0x70` give approximately 0.25 µs and 0.75 µs high pulses in a 2 µs symbol. Both sit inside the SK6812MINI-E datasheet's respective 0/1 high-time ranges; the GRB mapping matches its data order. Actual waveforms still need a powered test. |
+
+## Limits that DRC cannot clear
+
+1. **LED voltage is not guaranteed over the cell's charge range.** SK6812MINI-E specifies 3.7–5.5 V. The LED rail is the LiPo after two AO3401A switches and copper losses; it is below 3.7 V before the cell reaches its normal discharge limit. At about 0.51 A, the two FETs alone can lose up to roughly 0.09 V using the datasheet's 85 mΩ maximum at −2.5 V gate drive. Red, green, blue and white output, especially blue/white, can fade or fail before the keyboard's battery is empty. USB does not provide a regulated LED rail on this board.
+2. **The first LED's data-high margin is not guaranteed at the top of charge.** At 4.2 V LED supply, its specified VIH is 2.94 V, while the nRF52840's specified VOH can be as low as 2.9 V at 0.5 mA. The real GPIO is likely nearer 3.3 V because the LED input is light, but the two worst-case limits do not overlap. This needs a full-cell test; a level-shifted, regulated LED supply would remove the ambiguity.
+3. **Full-strip brightness can outrun charging.** The datasheet gives about 12 mA per colour at 5 V and 1 mA static per LED. At the firmware's 40% PWM cap, all-white load is approximately `33 × (1 + 0.4 × 36) = 508 mA` per half at that typical-current reference. A single saturated colour is about 191 mA. The SuperMini charger is set near 100 mA, so the cell can discharge with USB attached while the backlights are on. Actual current at the board's lower voltage may be less and must be measured. The AO3401A current and dissipation ratings are ample at this estimate; the battery pack/protection rating has not been established. Do not bridge the controller's BOOST link without rechecking charge current, heat, and the pack rating.
+4. **The current ZMK config does not reliably enforce USB-only lighting or an off rail.** In the pinned source, `ext_power_generic_init()` enables P0.08 by default, and `zmk_rgb_underglow_init()` replaces `ON_START=n` with the USB-powered state when `AUTO_OFF_USB=y`. More seriously, `AUTO_OFF_IDLE` and `AUTO_OFF_USB` call the same `rgb_underglow_auto_state()` with one shared saved state: an activity wake after USB removal can restore lighting while on battery. A dark strip still draws roughly 33 mA per half if LED_VDD remains powered. This needs a firmware correction, then measurement of LED_VDD and battery current after battery-only boot, USB removal, idle and wake. Do not use the current settings as proof of battery runtime.
+5. **Optical brightness cannot be signed off from CAD.** The opening and switch positions are correct, but the chosen smoke translucent PBT caps and actual Akko switch housing determine how much light reaches the top. The 40% cap and raw battery rail limit output. The pinned ZMK build starts with `BRT_START=40` and then scales that by `BRT_MAX=40`, so a fresh build initially sends about 16% PWM, even though the maximum reachable with the brightness keys is 40%. Test one fully assembled switch/cap at 4.2 V and near 3.7 V, then all 33 at full white and at the default setting; measure the farthest LED_VDD point and battery current. The renders are illustrative, not brightness evidence.
+6. **LED decoupling is weaker than the manufacturer's example.** Page 9 of the [SK6812MINI-E datasheet](datasheets/README.md) shows a capacitor at every pixel and recommends protection resistance on the data path. This board has one 10 µF and one 100 nF capacitor per half near the rail switch, and no series resistor at the first DIN. DRC cannot prove a 33-pixel chain will tolerate simultaneous colour changes or ESD. If revising the board before fabrication, add local decoupling footprints and an input protection resistor; otherwise test full-white steps and the farthest LED rail with an oscilloscope.
+7. **RF and assembly checks remain.** Ground pour is kept out from under each controller's assumed antenna tip, but 60 left and 39 right trace segments cross that region. Test wireless range. Check the purchased battery connector polarity and OLED header order before applying power. With the battery switch off and USB present, the charger can conduct through Q101/Q201's body diode, so leave the switch on when charging and verify charge termination on the actual controller.
+
+The LEDs are **per-key RGB backlights; there is no underglow LED around or beneath the case**.
+ZMK's `RGB_UNDERGLOW` option, `zmk,underglow` chosen node and `&rgb_ug` bindings are the correct
+stock interface for an addressable RGB strip even when it is used as key backlighting. ZMK's
+`BACKLIGHT` feature is for parallel, single-colour LEDs ([ZMK lighting](https://zmk.dev/docs/features/lighting)).
+
+## Bring-up acceptance measurements
+
+- With a protected, correctly polarised cell and USB disconnected, check VBAT, VCC and LED_VDD at boot, after idle, and in sleep. LED_VDD must be near zero whenever lighting is off.
+- With USB on each half, enable full white at the 40% cap and measure cell current, LED_VDD at the first and last pixels, and Q101/Q102 temperature. Repeat at a cell voltage near 3.7 V. Confirm the protection board and lead can carry the measured current.
+- Look through the real switch and cap at several colours, then verify every LED and both encoders, keys, displays and Bluetooth link. Do not infer visible brightness from the CAD render.

@@ -32,7 +32,7 @@ name: 04 - firmware options
 ### RGB
 - The 33 LEDs per half are driven over SPI (`ws2812-spi`) from P0.06.
 - Per-key status (caps lock, layer, Bluetooth profile, battery level) uses a community per-key RGB module such as `zmk-rgb-matrix`. See [[12 - final design#Status display]] for its current state.
-- On battery the LEDs light only for status; full effects run while USB is plugged in. Brightness is capped in firmware.
+- Per-key battery status flashes are planned. The first ZMK build provides whole-strip effects requested for USB operation, with brightness capped in firmware; verify the LED rail powers down on battery as described in [`docs/logic-audit.md`](../docs/logic-audit.md).
 
 ### Several computers
 - **Bluetooth profiles**: up to 5 hosts, selected from the System layer.
