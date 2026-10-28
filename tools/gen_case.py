@@ -14,7 +14,8 @@ case/foam/step/keygen-{left,right}-{lower,upper}-gaskets.step   the gasket strip
                                                       plate tabs, in place and squeezed as when closed
 case/keygen-case.step                                 all six parts in place
 
-The plate and PCB, tied together by standoffs, float on the plate's gasket tabs. Each tab sits
+The plate and PCB, held together by the switches and spaced by standoffs, float on the plate's
+gasket tabs. Each tab sits
 between two Poron strips: one on a ledge in the bottom shell, one under the top frame. The two
 parts are screwed together from below, up through the walls (M2 x 16 into M2 heat-set inserts in
 blind holes in the top frame's underside), so the top has no holes and the screw heads sit in
@@ -25,12 +26,15 @@ outside both); and a guided pinhole under the reset button. The LiPo lies in a b
 floor, clear of the solder joints above it. The underside is flat.
 
 The top frame's deck is level with its rim and covers the plate everywhere but the keycaps, the
-OLED (a window that opens towards the thumbs) and the encoder (a hole round its bushing, under the
-knob).
+OLED and the encoder (a hole round its bushing, under the knob). The OLED module is held in the top
+frame and plugs into the PCB: its glass sits in a pocket under a thin lip round the window, which
+opens towards the thumbs, and its board on a boss that thickens the deck down to it, with four pegs
+through its corner holes to melt or glue over. Where keycap windows leave a narrow notch of deck
+between them it is cut away, and every edge of the deck is straight.
 
-The foam, from the top: EVA plate foam under the plate, cut round the switches, the encoder, the
-OLED and the standoffs, resting on the Poron ring switch pads stuck on the PCB under each switch
-(the 0.5 mm PE_Z layer: a square ring round each switch, its corner clipped where it meets a
+The foam, from the top: EVA plate foam taped to the plate's underside, cut round the switches
+(notched for their latches), the encoder, the OLED and the standoffs, 1 mm above the Poron ring
+switch pads stuck on the PCB round each switch (the 0.5 mm PE_Z layer: a square ring round each switch, its corner clipped where it meets a
 standoff; they come ready-made, so they have a STEP but no cut file); and EVA case foam on the floor
 round the battery bay, the controller, the tall parts under the PCB and the reset tube. They are
 written as 1:1 DXF and SVG, seen from above.
@@ -73,6 +77,7 @@ LEVER_SLOT_W, LEVER_SLOT_H = 9.0, 3.4
 RESET_HOLE_D, RESET_TUBE_D = 2.0, 5.0  # paperclip hole, and the guide tube round it
 RESET_BUTTON_H = 5.0                   # 6 mm tact switch, 5 mm tall, on the PCB underside
 EPS = 0.01
+NOTCH_FILL = 8.0                       # deck notches between keycap windows narrower than this are cut away
 CASE_COLOUR = Color(0x2E2E33)
 PLATE_COLOUR = Color(0xC8D6DC, alpha=0x60)   # clear polycarbonate, see-through
 FOAM_COLOURS = {"plate": Color(0x3A3B40), "case": Color(0x4A4C52)}   # both black EVA, two greys to tell them apart
@@ -239,7 +244,9 @@ def build(h):
         x, y = xy(p)
         top -= Pos(x, y, C.CEIL_Z - EPS) * Box(
             C.ENC_CUTOUT, C.ENC_CUTOUT, C.ENC_RECESS_TOP - C.CEIL_Z + EPS, align=Z)
-    z0, z1 = C.CEIL_Z - 0.1, C.TOP_Z + 0.1
+    top += oled_mount(h)
+    top -= oled_pockets(h)
+    z0, z1 = C.OLED_Z[1] - 0.1, C.TOP_Z + 0.1
     top -= loft([Pos(0, 0, z0) * rect(C.oled_window(h, z0)), Pos(0, 0, z1) * rect(C.oled_window(h, z1))], ruled=True)
     # chamfer each keycap window's mouth on the deck top, the face printed on the bed
     z0, z1 = C.TOP_Z - C.CAP_CHAMFER, C.TOP_Z + 0.1
@@ -256,26 +263,65 @@ def build(h):
     return bottom, top, plate(h, tab_list), tab_list, screws
 
 
+def oled_mount(h):
+    """The boss that thickens the deck down to the OLED module's top, OLED_BOSS round the module,
+    clear of the keycap windows and the encoder, and four pegs from it through the module's holes,
+    long enough to melt over (or glue) on its back."""
+    x0, y0, x1, y1 = h["oled"]
+    b = C.OLED_BOSS
+    plan = box(x0 - b, y0 - b, x1 + b, y1 + b).difference(
+        unary_union([key_window(k) for k in h["keys"]] + [circ(p, C.ENC_CUTOUT * 1.5) for p in h["enc"]]))
+    z0 = C.OLED_Z[0] + C.OLED_BOARD_T
+    mount = Pos(0, 0, z0) * extrude(to_face(opened(plan, 0.5)), C.CEIL_Z - z0 + EPS, dir=UP)
+    for p in C.oled_holes(h):
+        mount += cylinder(p, C.OLED_PEG_D, C.OLED_Z[0] - C.OLED_PEG_PROUD, z0 + EPS)
+    return mount
+
+
+def oled_pockets(h):
+    """Cut up into the boss and deck: the glass's pocket under the lip, a relief over the module's
+    four solder joints, and one over its far edge where the glass's flex cable wraps round it."""
+    (gx0, gy0, gx1, gy1), _ = C.oled_glass(h)
+    c, z0 = C.OLED_POCKET_CLEAR, C.OLED_Z[0] + C.OLED_BOARD_T - EPS
+    pocket = Pos(0, 0, z0) * extrude(rect((gx0 - c, gy0 - c, gx1 + c, gy1 + c)), C.OLED_Z[1] - z0, dir=UP)
+    hx0, hy0, hx1, hy1 = h["header"]
+    g, d = C.OLED_JOINT_RELIEF
+    pocket += Pos(0, 0, z0) * extrude(rect((hx0 - g, hy0 - g, hx1 + g, hy1 + g)), d + EPS, dir=UP)
+    x0, y0, x1, y1 = h["oled"]
+    cx, w = (x0 + x1) / 2, C.OLED_FPC_W
+    pocket += Pos(0, 0, z0) * extrude(rect((cx - w / 2, y0 - 1.0, cx + w / 2, gy0)), d + EPS, dir=UP)
+    return pocket
+
+
 def key_window(k, grow=0.0):
     """The deck's window round keycap k, CAP_CLEAR all round, grown by `grow` on each side."""
     m = 2 * (C.CAP_CLEAR + grow)
     return sq((k["x"], k["y"]), k["h"] * 19.05 - C.CAP_GAP + m, k["rot"], k["w"] * 19.05 - C.CAP_GAP + m)
 
 
-def deck(h):
-    """The top frame in plan at deck level: the case outline less a window per keycap, the OLED
-    window and the encoder hole. Inside the walls, every web or point of deck narrower than
-    DECK_MIN_WEB is trimmed back to a rounded end, and any island that leaves is dropped; the rim
-    over the walls keeps its sharp corners."""
+def deck_plan(h):
+    """The top frame in plan at deck level, as a shapely polygon: the case outline less the keycap
+    windows, the OLED window and the encoder hole. Where neighbouring keycap windows leave a notch of
+    deck between them narrower than NOTCH_FILL, the notch is cut away along a straight line, and inside
+    the walls every web or point of deck narrower than DECK_MIN_WEB is cut back square; any island
+    that leaves is dropped. Every edge is straight; the rim over the walls keeps its corners."""
     outline = SPoly(h["outline"])
     outer = outline.buffer(C.WALL_OUT, join_style="mitre", mitre_limit=10)
-    holes = [key_window(k) for k in h["keys"]]
-    holes += [circ(p, C.ENC_HOLE_D) for p in h["enc"]]
-    holes.append(box(*C.oled_window(h, C.CEIL_Z)))
+    keys = unary_union([key_window(k) for k in h["keys"]])
+    notches = keys.buffer(NOTCH_FILL / 2).buffer(-NOTCH_FILL / 2).difference(keys)
+    keys = unary_union([keys] + [g.convex_hull for g in getattr(notches, "geoms", [notches]) if g.area > 5.0])
+    holes = [keys] + [circ(p, C.ENC_HOLE_D) for p in h["enc"]] + [box(*C.oled_window(h, C.OLED_Z[1]))]
     raw = outer.difference(unary_union(holes))
+    raw = raw.buffer(0.6, join_style="mitre").buffer(-0.6, join_style="mitre").intersection(raw.buffer(0.6))
     r = C.DECK_MIN_WEB / 2
     rim = raw.difference(outline.buffer(C.WALL_IN, join_style="mitre", mitre_limit=10))
-    return to_face(opened(unary_union([raw.buffer(-r).buffer(r, quad_segs=8).intersection(raw), rim]), 0.05))
+    inside = raw.buffer(-r, join_style="mitre").buffer(r, join_style="mitre", mitre_limit=1.5).intersection(raw)
+    return opened(unary_union([inside, rim]), 0.05)
+
+
+def deck(h):
+    """The deck plan (deck_plan) as a build123d face."""
+    return to_face(deck_plan(h))
 
 
 def foams(h):
@@ -289,9 +335,9 @@ def foams(h):
     encoders = [cut_square(p, C.ENC_CUTOUT + 2 * clear) for p in h["enc"]]
     board = (SPoly(h["outline"]), face(h["outline"]))
 
-    # plate foam, on the switch pads under the plate: the plate's cut-outs, a little larger, and the
-    # drilled pads
-    plate_foam = board_less(board, [cut_square((k["x"], k["y"]), C.FOAM_SWITCH_CUT, k["rot"]) for k in h["keys"]]
+    # plate foam, taped under the plate: the plate's cut-outs, a little larger and notched for the
+    # switch latches, and the drilled pads
+    plate_foam = board_less(board, [cut_switch(k, C.FOAM_SWITCH_CUT, C.SWITCH_PAD_NOTCH) for k in h["keys"]]
                             + pads + standoffs + encoders + [cut_rect(grown(h["oled"], C.OLED_CLEAR + clear))])
 
     # case foam, on the floor: the cavity less the battery bay and everything that hangs below the PCB
@@ -349,6 +395,19 @@ def cut_rect(r):
 def cut_square(p, size, rot=0.0):
     x, y = xy(p)
     return sq(p, size, rot), Pos(x, y) * Rot(0, 0, -rot) * Rectangle(size, size)
+
+
+def cut_switch(k, size, notch):
+    """A key's size x size cut-out, turned like the key, with a notch (width, depth) in the middle
+    of each clip side."""
+    (x, y), nw, nd = xy((k["x"], k["y"])), *notch
+    p, d = (k["x"], k["y"]), size / 2
+    g = unary_union([sq(p, size)] + [box(p[0] - nw / 2, p[1] + s * d - nd, p[0] + nw / 2, p[1] + s * d + nd)
+                                     for s in (1, -1)])
+    f = Rectangle(size, size)
+    for s in (1, -1):
+        f += Pos(0, s * d) * Rectangle(nw, 2 * nd)
+    return rotate(g, k["rot"], origin=p), Pos(x, y) * Rot(0, 0, -k["rot"]) * f
 
 
 def cut_poly(g):
@@ -438,12 +497,15 @@ def fit_check(h, bottom, top, plt, foam):
         sw = Pos(x, y, 0) * Rot(0, 0, -k["rot"]) * Box(C.CUTOUT, C.CUTOUT, C.PLATE_BOT, align=Z)
         caps = cap if caps is None else caps + cap
         switches = sw if switches is None else switches + sw
-    x0, y0, x1, y1 = h["oled"]
-    (ox, oy) = xy(((x0 + x1) / 2, (y0 + y1) / 2))
-    oled = Pos(ox, oy, C.OLED_Z[0]) * Box(x1 - x0, y1 - y0, C.OLED_Z[1] - C.OLED_Z[0], align=Z)
-    x0, y0, x1, y1 = h["header"]
-    (hx, hy) = xy(((x0 + x1) / 2, (y0 + y1) / 2))
-    header = Pos(hx, hy, 0) * Box(x1 - x0, y1 - y0, C.OLED_Z[0], align=Z)
+    # the OLED module in the top frame: the parts on its back, its board with its four holes, and the
+    # glass on it; and the plug in its footprint on the PCB, under it
+    glass_z = C.OLED_Z[0] + C.OLED_BOARD_T
+    (gx0, gy0, gx1, gy1), _ = C.oled_glass(h)
+    oled = (Pos(0, 0, C.OLED_Z[0] - C.OLED_BACK_H) * extrude(rect(h["oled"]), C.OLED_BACK_H + C.OLED_BOARD_T, dir=UP)
+            + Pos(0, 0, glass_z) * extrude(rect((gx0, gy0, gx1, gy1)), C.OLED_Z[1] - glass_z, dir=UP))
+    for p in C.oled_holes(h):
+        oled -= cylinder(p, C.OLED_HOLE_D, C.OLED_Z[0] - C.OLED_BACK_H - 1, glass_z + EPS)
+    plug = Pos(0, 0, 0) * extrude(rect(C.oled_plug(h)), C.OLED_PLUG[2], dir=UP)
     encoder = knob = None
     for p in h["enc"]:
         x, y = xy(p)
@@ -451,14 +513,10 @@ def fit_check(h, bottom, top, plt, foam):
         kn = cylinder(p, C.KNOB_D, C.ENC_BUSHING_TOP, C.ENC_BUSHING_TOP + C.KNOB_H)
         encoder = e if encoder is None else encoder + e
         knob = kn if knob is None else knob + kn
-    kinds = C.standoffs(h)
-    standoffs = heads = None
-    for ref, p in h["holes"].items():
+    standoffs = None
+    for p in h["holes"].values():
         so = cylinder(p, C.SHIM_D, 0, C.SHIM_T) + cylinder(p, C.STANDOFF_D, C.SHIM_T, C.PLATE_BOT)
         standoffs = so if standoffs is None else standoffs + so
-        if kinds[ref][0] == "screwed":
-            hd = cylinder(p, C.SCREW_HEAD_D, C.PLATE_TOP, C.PLATE_TOP + C.SCREW_HEAD_H)
-            heads = hd if heads is None else heads + hd
     x0, y0, x1, y1 = C.battery(h)["cell"]
     (bx, by) = xy(((x0 + x1) / 2, (y0 + y1) / 2))
     cell = lambda lift: Pos(bx, by, C.CAVITY_Z - C.BAY_DEPTH + lift) * Box(
@@ -481,10 +539,16 @@ def fit_check(h, bottom, top, plt, foam):
         check(name, part, (("pcb", pcb), ("plate", plt), ("controller", controller), ("reset button", button),
                            ("reset button, stack pressed down", Pos(0, 0, -C.FLOAT_GAP) * button),
                            ("keycaps", caps), ("oled", oled), ("battery", battery), ("encoder", encoder),
-                           ("knob", knob), ("plate screw heads", heads)))
+                           ("knob", knob)))
     check("plate foam", foam["plate"], (("switches", switches), ("encoder", encoder), ("oled", oled),
-                                        ("oled header", header), ("standoffs", standoffs), ("plate", plt)))
-    check("switch pads", foam["pads"], (("switches", switches), ("encoder", encoder), ("oled header", header),
+                                        ("standoffs", standoffs), ("plate", plt)))
+    # the OLED stays with the top frame while the plate floats in its gasket pockets
+    for dx, dy, dz in ((C.POCKET_CLEAR, 0, C.FLOAT_UP), (-C.POCKET_CLEAR, 0, C.FLOAT_UP),
+                       (0, C.POCKET_CLEAR, C.FLOAT_UP), (0, -C.POCKET_CLEAR, C.FLOAT_UP)):
+        check("oled", oled, ((f"plate floated ({dx:g}, {dy:g}, {dz:g})", Pos(dx, dy, dz) * plt),
+                             (f"plug floated ({dx:g}, {dy:g}, {dz:g})", Pos(dx, dy, dz) * plug)))
+    check("oled plug", plug, (("plate", plt), ("plate foam", foam["plate"]), ("switches", switches), ("encoder", encoder)))
+    check("switch pads", foam["pads"], (("switches", switches), ("encoder", encoder),
                                          ("standoffs", standoffs), ("plate foam", foam["plate"])))
     for g in ("lower gaskets", "upper gaskets"):
         check(g, foam[g], (("bottom", bottom), ("top", top), ("plate", plt), ("pcb", pcb)))
@@ -500,6 +564,9 @@ def fit_check(h, bottom, top, plt, foam):
 
 
 def main():
+    import gen_models
+    if abs(gen_models.LIFT - C.OLED_Z[0]) > 1e-6:
+        sys.exit(f"gen_models.LIFT {gen_models.LIFT} is not case_geometry.OLED_Z[0] {C.OLED_Z[0]:.2f}")
     OUT.mkdir(exist_ok=True)
     parts = []
     for side, h in C.halves().items():

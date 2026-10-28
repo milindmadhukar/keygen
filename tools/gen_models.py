@@ -41,22 +41,23 @@ def knob():
 
 
 # ---------------------------------------------------------------- OLED module
-# A generic 0.96 in. 128x64 SSD1306 module, 27.5 x 28 mm, its 4-pin header along one edge. It is
-# drawn in the board's top view (x right, y up) relative to header pin 1, with the module above the
-# pins (the header along its bottom edge, as on Keygen) and pins 2-4 toward -x, then turned to the
-# 1x4 header footprint's own frame. The header's plastic spacer (2.5 mm, from the footprint's own
-# model) lifts it off the PCB.
-MOD_W, MOD_H, MOD_T, HDR_IN, LIFT = 27.5, 28.0, 1.2, 1.3, 2.5
-GLASS = (26.7, 19.3, 1.4)          # with the active area, 21.7 x 10.9, in its middle
-ACTIVE = (21.7, 10.9)
+# A generic 0.96 in. 128x64 SSD1306 module, 27.5 x 28 mm, its 4-pin row along one edge. It is
+# drawn in the board's top view (x right, y up) relative to pin 1, with the module above the pins
+# (the pin row along its bottom edge, as on Keygen) and pins 2-4 toward -x, then turned to the 1x4
+# footprint's own frame. It sits in the top frame, plugged into the footprint, LIFT above the PCB with
+# the case closed (case_geometry.OLED_Z; gen_case.py checks they agree).
+MOD_W, MOD_H, MOD_T, HDR_IN, LIFT = 27.5, 27.8, 1.2, 1.5, 5.2
+GLASS, GLASS_IN = (26.7, 19.26, 1.6), 4.27     # centred across the module, this far from the pin edge
+ACTIVE, ACTIVE_IN = (21.744, 10.864), 6.37    # likewise
 
 
 def oled():
     cx, cy = -3 * 2.54 / 2, MOD_H / 2 - HDR_IN                 # module centre from pin 1
     board = Pos(cx, cy, LIFT) * Box(MOD_W, MOD_H, MOD_T, align=BOTTOM)
-    gy = cy + MOD_H / 2 - 2.0 - GLASS[1] / 2                    # glass toward the edge away from the header
+    gy = -HDR_IN + GLASS_IN + GLASS[1] / 2                      # from the pin edge
+    ay = -HDR_IN + ACTIVE_IN + ACTIVE[1] / 2
     glass = Pos(cx, gy, LIFT + MOD_T) * Box(*GLASS, align=BOTTOM)
-    active = Pos(cx, gy + 1.0, LIFT + MOD_T + GLASS[2]) * Box(*ACTIVE, 0.02, align=BOTTOM)
+    active = Pos(cx, ay, LIFT + MOD_T + GLASS[2]) * Box(*ACTIVE, 0.02, align=BOTTOM)
     parts = [(board, 0x15161A), (glass, 0x2A2C31), (active, 0x050506)]
     out = []
     for shape, colour in parts:

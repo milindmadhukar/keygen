@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1260 640" role="img" aria-labelledby="title desc">
+  <title id="title">OLED module in the top frame, plugged into the PCB</title>
+  <desc id="desc">The front view shows the module board with its four corner holes, the glass panel, the lit pixel area, the top frame's window and the plate opening, positioned as on the GME12864-11 drawing. The side section shows the module on four pegs in the top frame, its glass in a pocket under a 1 millimetre lip, 1 millimetre below the top surface, and its lead running along its back to a Dupont plug on a right-angle header in the PCB, lying flat under the module.</desc>
+  <style>
+    text { font-family: DejaVu Sans, Arial, sans-serif; fill: #172033; }
+    .title { font-size: 27px; font-weight: 700; }
+    .head { font-size: 19px; font-weight: 700; }
+    .label { font-size: 16px; }
+    .small { font-size: 14px; }
+    .plate { fill: #cde7f0; stroke: #2e6077; stroke-width: 3; }
+    .carrier { fill: #2f6758; stroke: #174436; stroke-width: 2; }
+    .glass { fill: #343a46; stroke: #101820; stroke-width: 2; }
+    .lit { fill: #b5d6f5; stroke: #74a9db; stroke-width: 2; }
+    .pin { fill: #c6a568; stroke: #855b1c; stroke-width: 1.5; }
+    .hole { fill: #f8fafc; stroke: #174436; stroke-width: 1.5; }
+    .case { fill: #a8b7c5; stroke: #566679; stroke-width: 2; }
+    .peg { fill: #a8b7c5; stroke: #566679; stroke-width: 1.5; }
+    .plug { fill: #26282d; stroke: #000; stroke-width: 1.5; }
+    .guide { stroke: #65748b; stroke-width: 1.5; fill: none; }
+    .window { stroke: #172033; stroke-width: 2; stroke-dasharray: 6 4; fill: none; }
+    .wire { fill: none; stroke-width: 2.5; }
+  </style>
+  <rect width="1260" height="640" fill="#f8fafc"/>
+  <text x="30" y="45" class="title">The OLED sits on pegs in the top frame and plugs into the PCB</text>
+  <text x="30" y="73" class="label">Dimensions from the GME12864-11 drawing. Check the delivered OLED before cutting the plate or printing the case.</text>
+  <text x="90" y="119" class="head">Seen from above (10 px per mm)</text>
+  <text x="700" y="119" class="head">Section, heights to scale (20 px per mm)</text>
+
+  <!-- Front view: board 27.5 x 27.8 at (120,192); pin edge at the bottom. -->
+  <rect class="plate" x="110" y="182" width="295" height="298" rx="5"/>
+  <rect class="carrier" x="120" y="192" width="275" height="278" rx="2"/>
+  <circle class="hole" cx="140" cy="212" r="10"/>
+  <circle class="hole" cx="375" cy="212" r="10"/>
+  <circle class="hole" cx="140" cy="450" r="10"/>
+  <circle class="hole" cx="375" cy="450" r="10"/>
+  <rect class="glass" x="124" y="235" width="267" height="193" rx="3"/>
+  <rect class="lit" x="149" y="298" width="217" height="109" rx="2"/>
+  <rect class="window" x="139" y="288" width="237" height="129"/>
+  <circle class="pin" cx="219" cy="455" r="4"/>
+  <circle class="pin" cx="244" cy="455" r="4"/>
+  <circle class="pin" cx="269" cy="455" r="4"/>
+  <circle class="pin" cx="294" cy="455" r="4"/>
+  <text x="168" y="357" class="label">128 × 64 lit pixels</text>
+  <path class="guide" d="M406 190 H440"/>
+  <text x="446" y="194" class="small">Plate window: 29.5 × 29.8 mm</text>
+  <path class="guide" d="M385 212 H440"/>
+  <text x="446" y="216" class="small">Ø 2 mm holes: frame pegs</text>
+  <path class="guide" d="M395 240 H440"/>
+  <text x="446" y="244" class="small">OLED board: 27.5 × 27.8 mm</text>
+  <path class="guide" d="M392 270 H440"/>
+  <text x="446" y="274" class="small">Glass: 26.7 × 19.26 mm, centred</text>
+  <path class="guide" d="M376 300 H440"/>
+  <text x="446" y="304" class="small">Top-frame window (dashed):</text>
+  <text x="446" y="322" class="small">23.7 × 12.9 mm at the lip</text>
+  <path class="guide" d="M366 395 H440"/>
+  <text x="446" y="392" class="small">Lit area: 21.7 × 10.9 mm,</text>
+  <text x="446" y="410" class="small">6.37 mm from the pin edge</text>
+  <path class="guide" d="M294 455 H440"/>
+  <text x="446" y="459" class="small">Four pin holes: the lead</text>
+  <text x="110" y="510" class="small">The window opens at 45° to 25.7 × 14.6 mm on top,</text>
+  <text x="110" y="532" class="small">a little further towards the thumbs.</text>
+
+  <!-- Section: PCB top at y 352; module board 5.2..6.4 (y 248..224); glass 6.4..8.0 (y 224..192);
+       lip 8.0..9.0 (y 192..172); deck underside 7.0 (y 212); boss to 6.4 (y 224); pegs to 4.2 (y 268). -->
+  <path class="case" d="M690 172 H818 L828 192 H806 V224 H780 V212 H690 Z"/>
+  <path class="case" d="M1180 172 H1000 L990 192 H1004 V224 H1100 V212 H1180 Z"/>
+  <rect class="glass" x="808" y="192" width="194" height="32"/>
+  <rect class="carrier" x="800" y="224" width="222" height="24"/>
+  <rect class="peg" x="808" y="224" width="12" height="40"/>
+  <rect class="peg" x="803" y="262" width="22" height="7" rx="3"/>
+  <rect class="peg" x="1002" y="224" width="12" height="40"/>
+  <rect class="peg" x="997" y="262" width="22" height="7" rx="3"/>
+  <rect x="900" y="248" width="24" height="22" fill="#55585e"/>
+  <rect class="plate" x="690" y="252" width="90" height="30"/>
+  <rect class="plate" x="1042" y="252" width="58" height="30"/>
+  <path class="wire" stroke="#c0392b" d="M990 248 V258 H880 C 850 258, 845 270, 845 290 C 845 310, 850 326, 862 326"/>
+  <rect class="plug" x="862" y="300" width="112" height="51" rx="3"/>
+  <rect class="plug" x="974" y="300" width="22" height="52"/>
+  <rect class="pin" x="980" y="352" width="6" height="32"/>
+  <rect class="carrier" x="690" y="352" width="490" height="32"/>
+  <text x="700" y="375" class="label" style="fill:#fff">Keygen PCB, 1.6 mm</text>
+  <text x="705" y="163" class="small">Top frame</text>
+  <path class="guide" d="M820 182 H880 V140 H900"/>
+  <text x="905" y="144" class="small">1.0 mm lip: glass 1.0 mm below the top</text>
+  <path class="guide" d="M1019 266 H1030 V296 H1106"/>
+  <text x="1110" y="292" class="small">pegs, tips</text>
+  <text x="1110" y="309" class="small">melted or glued</text>
+  <path class="guide" d="M996 330 H1106"/>
+  <text x="1110" y="325" class="small">header +</text>
+  <text x="1110" y="342" class="small">plug, 2.8 mm</text>
+  <text x="696" y="300" class="small">plate, floating</text>
+  <text x="700" y="425" class="label">The lead runs along the module's back to the plug.</text>
+  <text x="700" y="450" class="label">Unplug it to lift the top frame off.</text>
+  <text x="700" y="482" class="small">The module stays with the case; the plate and PCB</text>
+  <text x="700" y="502" class="small">float under it, 0.5 mm clear sideways.</text>
+
+  <rect x="80" y="575" width="1100" height="34" rx="7" fill="#e5ecf4"/>
+  <text x="106" y="598" class="small">Remove the module's header if fitted. Mark pin 1 on the plug and beside the header: Dupont plugs fit either way round.</text>
+</svg>

@@ -22,7 +22,7 @@ name: 08 - electronics & components
 | AO3401A P-MOSFET + AO3400A N-MOSFET, SOT-23, + 2 × 100 kΩ, 1206 | 1 + 1 + 2 | 1 + 1 + 2 | Q102, Q103, R102, R103 / Q202, Q203, R202, R203 | LED power switch, back side beside the battery connector |
 | 6 mm reset button | 1 | 1 | SW191 / SW291 | Through-hole, back side; double-tap for the bootloader |
 | EC11 rotary encoder (push switch, 20 mm D shaft) + 17 mm knurled aluminium knob | 1 | 1 | ENC101 / ENC201 | Through-hole, front side; push switch diode D107 / D207 |
-| 0.96 in. 128×64 SSD1306 I2C OLED module | 1 | 1 | J101 / J201 | The module's own header pins, soldered into a 1×4 2.54 mm footprint |
+| 0.96 in. 128×64 SSD1306 I2C OLED module | 1 | 1 | J101 / J201 | In the top frame, plugged into a right-angle header in a 1×4 2.54 mm footprint |
 
 Each half has 34 diodes: 33 for the keys and one for its encoder's push switch, which sits in the key matrix. The generated assembly BOM with every reference and solder note is `fab/BOM.md` in the repo.
 
@@ -56,7 +56,7 @@ Each half has 34 diodes: 33 for the keys and one for its encoder's push switch, 
 - **Module:** a generic 0.96 in. 128×64 SSD1306 I2C module (address 0x3C), 27.5 × 28 mm, using its own pull-ups and regulator. The controller's internal pull-ups are on as well, so the bus still works on a module without them.
 - **Pins:** footprint order GND, VCC, SCL, SDA. Check the module's printed order; some swap GND and VCC.
 - **Wiring:** SDA on P0.17 (pad 5), SCL on P0.20 (pad 6), power from the controller's switched 3.3 V VCC (pad 16), which the firmware keeps on by holding P0.13 high.
-- **Mounting:** its header pins solder straight into the board on their 2.5 mm spacer, so the glass sits about level with the plate top, in the plate's OLED window. Position: [[12 - final design#OLED]].
+- **Mounting:** held in the top frame on four pegs through its corner holes, melted or glued over, its glass in a pocket under a 1 mm lip, 1 mm below the top surface. A 4-pin Dupont lead soldered to it plugs onto a right-angle header in the board's 1×4 footprint, so the top frame comes off; the floating plate never carries the module. Position: [[12 - final design#OLED]].
 
 ## Power
 

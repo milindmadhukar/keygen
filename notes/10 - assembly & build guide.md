@@ -41,7 +41,7 @@ From `fab/BOM.md` (left 1xx, right 2xx):
 | Kailh MX hotswap socket | 33 | back | |
 | EC11 encoder, ENC101/ENC201 | 1 | front | 17 mm knob on the D shaft |
 | MX switch + keycap | 33 | front | tall 1.25u thumb switches turned 90° |
-| 0.96 in. SSD1306 I2C OLED module, J101/J201 | 1 | front | the module's own header pins; goes in after the plate, through its window |
+| 0.96 in. SSD1306 I2C OLED module, J101/J201 | 1 | front | a 1×4 right-angle header; the module goes in the top frame and plugs in |
 
 ## Build sequence (per half)
 
@@ -96,11 +96,11 @@ From `fab/BOM.md` (left 1xx, right 2xx):
 ### Case assembly
 The case is gasket-mounted: the plate and PCB become one unit that floats on Poron strips. Design: [[09 - case design]].
 - Lay the top frame deck-down and press the 8 M2 heat-set inserts into the holes in its underside (about 200–230 °C), flush and no deeper, and let them cool. 1.7 mm of frame covers each hole. [Heat-set insert guide](https://www.youtube.com/watch?v=cyof7fYFcuQ)
-- Put a 0.5 mm shim on the PCB over each mounting hole, stand an M2 × 3 mm standoff on it and screw it on from below: M2 × 3 button heads at H102, H103, H105, H202 and H204, which also take a plate screw from above, and M2 × 4 at the other five.
+- Put a 0.5 mm shim on the PCB over each mounting hole, stand an M2 × 3 mm standoff on it and screw it on from below with an M2 × 5 button head, at all ten holes.
 - Cut the foam from the files in `case/foam/dxf/` or `case/foam/svg/` (DXF for a laser, SVG printed at 100 % as a template): per half a 2 mm EVA plate foam and a 5 mm EVA case foam, each the right way up as drawn.
-- Stick a 0.5 mm Poron ring switch pad on the PCB round each switch, its notches towards the switch clips and its open middle round the pins and the LED window, then lay the plate foam over them. Seven rings per half have a corner snipped off where they meet a standoff.
-- Plate onto the standoffs, with M2 × 3 button-head screws at H102, H103 and H105 (left) and H202 and H204 (right). H101, H104, H201, H203 and H205 get no screw on top; the standoffs bear against the plate there.
-- **OLED module (J101/J201):** check its printed pin order matches the footprint's GND, VCC, SCL, SDA (some modules swap GND and VCC). Pass its header pins down through the plate's OLED window into the board, with the module resting on its 2.5 mm plastic spacer, and solder them from the back. Power the half and check the status screen appears.
+- Stick a 0.5 mm Poron ring switch pad on the PCB round each switch, its notches towards the switch clips and its open middle round the pins and the LED window, then tape the plate foam to the plate's underside, its cut-outs over the plate's and its notches clear for the switch latches. Seven rings per half have a corner snipped off where they meet a standoff.
+- Plate onto the standoffs, foam side down. It is not screwed: the standoffs bear on it and the switches clip it to the PCB.
+- **OLED module (J101/J201):** check its printed pin order matches the footprint's GND, VCC, SCL, SDA (some modules swap GND and VCC). Solder a right-angle header into the board, pins pointing away from the thumbs. Remove the module's header if it has one and solder a 45 mm 4-pin Dupont lead into its holes from the back, matching the header's pin order. Plug it in, power the half and check the status screen appears. When closing the case, seat the module on the top frame's four pegs, melt or glue the peg tips, and plug it in.
 
 ### 11. Switches, then into the case
 - Check each switch's pins are straight, then press it through the plate into its socket, with a hand under the PCB behind the socket. The tall 1.25u thumb switches are turned 90°.

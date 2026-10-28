@@ -22,7 +22,7 @@ seen from above, one closed outline per contour, on three layers:
 - Each cut-out corner has a dogbone (a half circle through the corner) for a router bit of
   3.175 mm (1/8 in.) or smaller, so the switches sit square.
 - 66 square switch cut-outs (33 per half), 14.0 × 14.0 mm, plus a 15 × 15 mm encoder cut-out
-  and a 29.5 × 30 mm OLED window per half. Five 2.2 mm holes per half (M2).
+  and a 29.5 × 29.8 mm OLED window per half. Five 2.2 mm holes per half (M2).
 - Leave the protective film on while cutting; peel it after deburring the edges.
 
 ## The same plate in FR-4 from a PCB fab

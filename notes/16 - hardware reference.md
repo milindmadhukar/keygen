@@ -20,8 +20,9 @@ updated: 2026-10-22T19:00
   P0.06 and the LED power switch on P0.08. The OLED's I2C is on P0.17 (SDA) and P0.20 (SCL), both
   full-speed pins. The encoder is on P0.10 and P0.09, the NFC pins, set up as GPIOs in firmware.
   The full pin table is in the build plan (`plan/index.html`).
-- **OLED:** a generic 0.96 in. SSD1306 module per half, its own header pins soldered into the board
-  (pin order GND, VCC, SCL, SDA), standing in a window in the plate. It sits over the controller's
+- **OLED:** a generic 0.96 in. SSD1306 module per half, held in the top frame on four pegs and
+  plugged into a right-angle header in the board's 1×4 footprint (pin order GND, VCC, SCL, SDA),
+  over a window in the plate. It sits over the controller's
   lower end with its header along its bottom edge, and the firmware turns the image 180°. It runs
   from the controller's switched 3.3 V output (VCC), which the firmware keeps on through P0.13.
 - **Power and charging:** each half has its own LiPo and charges through its own controller's
@@ -82,13 +83,13 @@ References and soldering notes for every part are in `fab/BOM.md`.
 
 ## Plate and case
 
-- **Gasket mount:** the plate and PCB are tied together by M2 × 3 mm standoffs on 0.5 mm shims and touch the
-  case only through Poron strips (12 × 4 × 3 mm, cut from 80 × 4 × 3 mm strips), one above and
+- **Gasket mount:** the plate and PCB are held together by the switches, spaced by M2 × 3 mm standoffs on
+  0.5 mm shims, and touch the case only through Poron strips (12 × 4 × 3 mm, cut from 80 × 4 × 3 mm strips), one above and
   one below each of the plate's 8 tabs per half. Closing the case squeezes each strip by 1.0 mm, a third of it.
 - **Plate:** clear polycarbonate, 1.5 mm, CNC-routed from sheet. 14 × 14 mm cut-outs following each key's
   rotation, a 15 × 15 mm encoder cut-out and a 29.5 × 30 mm OLED window per half, and the PCB's M2
-  holes. Plate screws go in at H102, H103, H105, H202 and H204; the other five standoffs are
-  screwed from below only.
+  holes. Each standoff is screwed to the PCB from below with an M2 × 5 button head; nothing
+  screws into it from above, and its top bears on the plate.
 - **Case:** the bottom shell and top frame are screwed together from below with 8 M2 × 16 screws
   per half, up through the walls into heat-set inserts in blind holes in the top frame's underside,
   none within 15 mm of the controller's antenna end. The heads sit 2 mm up in counterbores in the
@@ -97,7 +98,8 @@ References and soldering notes for every part are in `fab/BOM.md`.
 - **Top frame deck:** level with the frame's rim, 4.0 mm above the plate top, covering the plate
   everywhere but the keycaps (1.2 mm clear of each, the windows chamfered 0.4 mm at the deck top),
   the OLED window and the encoder. The OLED window opens out towards the thumbs; the glass sits
-  3.9 mm below the deck top. The encoder bushing passes through a 9 mm hole under the knob; a 15 mm
+  1.0 mm below the deck top, in a pocket under a 1.0 mm lip; the module sits on a boss under the
+  deck, on four pegs through its holes, 0.5 mm clear of the floating plate's window. The encoder bushing passes through a 9 mm hole under the knob; a 15 mm
   square recess above the encoder body provides 0.6 mm nominal headroom at the tallest published
   body height. The knob underside is 5.1 mm above the deck at the tallest published bushing height.
 - **Foam:** per half, the switch pads and two foam layers, the layers cut from the files in
@@ -105,8 +107,9 @@ References and soldering notes for every part are in `fab/BOM.md`.
   - Poron ring switch pads, 0.5 mm, ready-made: a square ring about 18 mm across with a 14.2 mm
     open middle, notched on the clip sides, one stuck on the PCB round each switch. Seven rings
     per half have a corner snipped off round a standoff.
-  - EVA plate foam, 2 mm, on the switch pads under the plate, with the plate's switch, encoder and
-    OLED cut-outs (switches 14.4 mm) and holes for the pads and standoffs. Up to 2.8 mm fits.
+  - EVA plate foam, 2 mm, taped to the plate's underside, 1.0 mm above the switch pads, with the
+    plate's switch, encoder and OLED cut-outs (switches 14.4 mm, notched for the switch latches)
+    and holes for the pads and standoffs. Up to 3.0 mm fits.
   - EVA case foam, 5 mm, on the case floor round the battery bay, the controller, the
     battery connector, the slide switch, the reset tube and the encoder and OLED pins. It sits
     3.0 mm below the parts under the PCB at rest and 1.5 mm below at full gasket travel.
@@ -115,7 +118,7 @@ References and soldering notes for every part are in `fab/BOM.md`.
   them, and a 2 mm reset pinhole in the floor with a guide
   tube up to the button.
 - **Fit check:** `tools/gen_case.py` checks every case part against the PCB, the plate, the
-  controller, the reset button, the battery, the OLED, the encoder, the knob, the plate screw heads
+  controller, the reset button, the battery, the OLED, the encoder, the knob
   and the keycaps at the bottom of their travel (an 18.4 mm skirt, a recessed stem and the plate
   shifted 0.5 mm in its pockets); each foam layer against the parts beside it; and a 5.5 mm cell and
   the case foam against the parts under the PCB with the stack pressed 1.5 mm down onto its gaskets.

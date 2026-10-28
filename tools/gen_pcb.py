@@ -310,7 +310,10 @@ OLED_MODEL = "${KIPRJMOD}/lib/keygen.3dshapes/OLED_096_I2C.step"   # tools/gen_m
 
 
 def oled_model(fp):
-    """Add the OLED module's 3D model to its header footprint (the stock header has only the pins)."""
+    """Add the OLED module's 3D model to its 1x4 footprint, and hide the footprint's stock pin header:
+    the module sits in the top frame, plugged into a right-angle header in these four holes."""
+    for m in fp.Models():
+        if "PinHeader" in m.m_Filename: m.m_Show = False
     if any(m.m_Filename == OLED_MODEL for m in fp.Models()): return
     m = pcbnew.FP_3DMODEL(); m.m_Filename = OLED_MODEL
     fp.Models().push_back(m)

@@ -146,9 +146,9 @@ The matrix is COL2ROW: each switch connects to its column, and the diode cathode
 ### OLED
 
 - **Module:** a generic 0.96 in. 128×64 **SSD1306 I2C** module per half (address 0x3C), J101 / J201. Its own pull-ups and regulator are used, with the controller's internal pull-ups on as well. The firmware gives the I2C (TWIM) driver a 1025-byte buffer so a whole 1024-byte frame goes out in one transfer, as the SSD1306 needs.
-- **Footprint:** a 1×4 2.54 mm header, pin order **GND, VCC, SCL, SDA**. Check the module's printed order before soldering; some swap GND and VCC.
+- **Footprint:** a 1×4 2.54 mm header footprint, pin order **GND, VCC, SCL, SDA**, with a right-angle header the module's lead plugs onto. Check the module's printed order before soldering; some swap GND and VCC.
 - **Wiring:** SDA on P0.17 (pad 5), SCL on P0.20 (pad 6), both full-speed pins. Power comes from the controller's VCC (pad 16), its switched 3.3 V output, which P0.13 turns on. The firmware holds P0.13 high with a gpio-hog, so the OLED stays powered on battery.
-- **Mounting:** the module's own header pins solder straight into the board, on their 2.5 mm plastic spacer, so the glass sits about level with the plate top (~5 mm above the PCB), in a 29.5 × 30 mm plate window. The module is 27.5 × 28 mm.
+- **Mounting:** the module (27.5 × 27.8 mm) sits in the top frame on four pegs through its Ø 2 mm corner holes, their tips melted over (or glued) on its back. Its glass sits in a pocket under a 1.0 mm lip, 1.0 mm below the top surface, and its board on a boss that thickens the deck down to it, relieved over its solder joints and the glass's flex cable. A 45 mm 4-pin Dupont lead soldered to it plugs onto a right-angle header in J101/J201, lying flat under the module (2.8 mm tall) in the plate's 29.5 × 29.8 mm OLED window, which clears the module by 0.5 mm all round with the plate floated sideways. The module stays with the case while the plate and PCB float, and the top frame comes off by unplugging it.
 - **Position:** over the lower (antenna) end of each controller, in the free area above the knob. Right module x 242–269.5, y 88–116; left x 154–181.5, y 88–116 (board coordinates). The module is 4.6 mm from the nearest keycaps on either half; the nearby M2 holes sit below the reset switches. The header runs along the module's bottom edge, so the firmware draws the text turned 180°. Sitting over the antenna end costs some Bluetooth range, as with a display over a nice!nano on a Corne.
 
 ### Schematic
@@ -200,7 +200,7 @@ The left half is the ZMK central. Plugging USB-C into it is the wired mode, and 
 | AO3401A P-MOSFET, AO3400A N-MOSFET, 2 × 100 kΩ, 1206 (LED power switch) | 1 + 1 + 2 | 1 + 1 + 2 | SMD |
 | 6 mm reset button (pinhole in case) | 1 | 1 | TH |
 | EC11 encoder (D shaft) + 17 mm knob | 1 | 1 | TH |
-| 0.96 in. SSD1306 I2C OLED module, 128×64 (J101 / J201) | 1 | 1 | TH (module's own header) |
+| 0.96 in. SSD1306 I2C OLED module, 128×64 (J101 / J201) | 1 | 1 | TH (right-angle header; the module plugs in) |
 
 Each half has 34 diodes: 33 for the keys and one for its encoder's push switch, which sits in the key matrix. 3D models of the knob and the OLED module (`pcb/lib/keygen.3dshapes/Knob_17mm.step`, `OLED_096_I2C.step`) are made by `tools/gen_models.py`. Keygen is a single build. JLCPCB's minimum is 5 per design, so order **5 left + 5 right** boards and keep the rest as spares. Full shopping list: [[13 - bill of materials]].
 
@@ -285,10 +285,10 @@ See [[05 - pcb design]].
 ## Case
 
 - **3D-printed PETG, closed, gasket-mounted**: a bottom shell and a top frame per half, 175.4 × 143.7 × 22.6 mm. The top frame's deck, level with its rim, covers the plate everywhere but the keycaps, the OLED and the knob. Plastic all round keeps the Bluetooth antenna clear.
-- **Switch plate: 1.5 mm clear polycarbonate**, CNC-routed from solid sheet, three halves per 6 × 24 in. (152 × 610 mm) strip. It is tied to the PCB by M2 × 3 mm standoffs on 0.5 mm shims, and its 8 tabs per half float between Poron strips clamped by the case. Each half's plate has a 15 × 15 mm encoder cut-out and a 29.5 × 30 mm OLED window.
+- **Switch plate: 1.5 mm clear polycarbonate**, CNC-routed from solid sheet, three halves per 6 × 24 in. (152 × 610 mm) strip. It rests on M2 × 3 mm standoffs on 0.5 mm shims, screwed to the PCB from below, and the switches hold it to the PCB; and its 8 tabs per half float between Poron strips clamped by the case. Each half's plate has a 15 × 15 mm encoder cut-out and a 29.5 × 30 mm OLED window.
 - A rounded **USB-C port**, sized for a plug carried by the floating stack, and a **power switch slot** on the top edge, with the wall thinned outside them, and a guided **reset pinhole** in the floor. The reset buttons mirror between the halves (left origin at x 182.85), and so do the pinholes.
 - 7.5 mm under the PCB for the socketed controller, plus 1.5 mm to float; the ≤ 5 mm nominal battery fits with thickness and tape allowances.
-- Foam for a thocky sound: a 0.5 mm Poron ring switch pad under each switch, 2 mm EVA plate foam and 5 mm EVA case foam.
+- Foam for a thocky sound: a 0.5 mm Poron ring switch pad under each switch, 2 mm EVA plate foam taped under the plate and 5 mm EVA case foam.
 - **Tenting** with a detachable magnetic stand per half, holding to a steel plate on the floor; four rubber feet for flat use.
 
 The case and plate are generated from the PCB by `tools/gen_case.py` and `tools/gen_plate.py`. See [[09 - case design]].

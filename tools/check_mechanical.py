@@ -128,17 +128,15 @@ require(abs(C.CBORE_MOUTH_R - (G.CBORE_D / 2 + G.CBORE_CHAMFER)) < 1e-9 and abs(
         "case_geometry's counterbore or pinhole size differs from gen_case's")
 threads = C.standoff_threads()
 require(abs(threads["standoff and shim short of the plate"]) <= 0.1 + 1e-9, "standoff and shim do not fill the plate gap")
-require(min(v for k, v in threads.items() if "into the standoff" in k) >= 0.8, "a plate screw barely reaches its standoff")
-require(threads["between the two screws"] >= 0.2, "the screws above and below a standoff meet")
-# a keycap pressed fully down, its stem recessed, over a plate screw head
-skirt_over_heads = C.CAP_SKIRT - C.CAP_STEM_RECESS - C.KEY_TRAVEL - C.SCREW_HEAD_H
-require(skirt_over_heads >= 0.3, "a pressed keycap reaches the plate screw heads")
+require(threads[f"M2 x {C.SCREW_L:g} from below, into the standoff"] >= 1.25 * 2.0, "a standoff screw has under 1.25 d of thread")
+require(threads["screw tip past the standoff top, longest"] <= C.PLATE_T - 0.5, "a standoff screw's tip reaches the plate top")
+require(C.PLATE_FOAM_Z[0] >= C.PE_Z[1], "the plate foam presses on the switch pads")
+require(C.OLED_Z[1] + C.OLED_LIP == C.TOP_Z and C.OLED_LIP >= 0.8, "the deck lip over the OLED glass is too thin to print")
+require(C.OLED_CLEAR - C.POCKET_CLEAR >= 0.4, "the floating plate can touch the OLED module in its window")
 print(f"battery: {C.BATTERY_STACK_T:.1f} mm installed envelope, {battery_gap:.1f} mm gap at rest, "
       f"{pressed_gap:.1f} mm at full travel; controller: {C.CONTROLLER_DEPTH:.1f} mm envelope "
       f"plus {C.FLOAT_GAP:.1f} mm travel")
 print("standoffs: " + ", ".join(f"{k} {v:.1f} mm" for k, v in threads.items()))
-print(f"keycaps: skirt {C.CAP_SKIRT:.1f} mm above the plate at rest, {skirt_over_heads:.1f} mm over the plate "
-      f"screw heads at full travel with a {C.CAP_STEM_RECESS:.1f} mm recessed stem")
 # the USB-C port: the plug, carried by the floating stack, inside it; the wall closed below it
 port_w, port_z0, port_z1 = C.usb_port()
 plug_low = C.USB_Z - C.PLUG_H / 2 - C.FLOAT_GAP

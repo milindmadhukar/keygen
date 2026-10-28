@@ -31,6 +31,8 @@ Counts are for the whole keyboard (two halves). Stores, links, prices and spares
 | JST-PH side-entry connector (S2B-PH-K-S) | 2 | For the battery |
 | EC11 encoder with switch, 20 mm D shaft | 2 | |
 | 0.96 in. I2C OLED, pins GND VCC SCL SDA | 2 | Some modules swap GND and VCC: don't use those |
+| 1×4 right-angle male pin header, 2.54 mm | 2 | Soldered into J101 / J201; cut from a 1×40 strip |
+| 4-pin Dupont jumper cable, female–female, 2.54 mm, 10 cm | 2 | One 4-pin housing at each end. One end plugs onto the header; the other is cut off and soldered to the OLED |
 | LiPo 505080 (5 × 50 × 80 mm), JST-PH lead | 2 | With a protection board |
 
 ### Switches, keycaps and knobs
@@ -49,12 +51,11 @@ Counts are for the whole keyboard (two halves). Stores, links, prices and spares
 | Switch plate, 1.5 mm clear polycarbonate | 1 + 1 | CNC-routed, see [Order and make the parts](#order-and-make-the-parts) |
 | Case, PETG: bottom shell and top frame | 2 + 2 | 3D-printed |
 | Poron ring switch pad, 0.5 mm | 66 | |
-| EVA foam: 2 mm plate foam, 5 mm case foam | 2 + 2 pieces | Cut from A4 sheets |
+| EVA foam: 2 mm plate foam, 5 mm case foam | 2 + 2 pieces | Cut from A4 sheets; the plate foam is taped under the plate |
 | Poron gasket strip, 12 × 4 × 3 mm | 32 pieces | Cut from 80 × 4 × 3 mm strips |
 | M2 × 3 mm brass standoff, female-female | 10 | |
 | M2 shim, 2 × 5 × 0.5 mm (DIN 988) | 10 | |
-| M2 × 4 mm button-head screw (ISO 7380) | 5 | |
-| M2 × 3 mm button-head screw (ISO 7380) | 10 | |
+| M2 × 5 mm button-head screw (ISO 7380) | 10 | Up through the PCB into the standoffs |
 | M2 × 3 mm heat-set insert, 3.5 mm OD | 16 | |
 | M2 × 16 mm socket-head screw (ISO 4762) | 16 | |
 
@@ -89,8 +90,8 @@ Counts are for the whole keyboard (two halves). Stores, links, prices and spares
 ### What you are building
 
 Two halves, built the same way. Each is a stack, from the bottom: a 3D-printed bottom shell with the
-battery and a foam layer in it; the PCB, with most parts on its underside; foam pads and a foam
-sheet; a clear polycarbonate switch plate on five standoffs, holding the switches; and a 3D-printed
+battery and a foam layer in it; the PCB, with most parts on its underside; foam pads; a clear polycarbonate switch plate on five
+standoffs, holding the switches, with a foam sheet taped under it; and a 3D-printed
 top frame over it all, screwed to the bottom shell. The plate-and-PCB unit rests on small foam
 strips (gaskets) between the shell and the frame, so it floats.
 
@@ -135,14 +136,14 @@ The power parts beside each controller, enlarged:
 
 Most things can be ordered on day one. Two parts are made to fit parts you buy, so they wait until
 those have arrived and been measured: the switch plate (with its foam) waits for the OLED modules,
-and the case (with its foam) for the controller sockets. Soldering needs neither, so the boards can
+and the case (with its foam) for the controller sockets and the OLED modules. Soldering needs neither, so the boards can
 be built and tested while the plate and the case are being made.
 
 | When | Do | Waiting for |
 |---|---|---|
 | Day one | Print the fit test. Order the PCBs and every part above, including the polycarbonate sheet and the EVA foam | Nothing. The parts shipped from abroad and the PCBs take longest: order them first |
 | The OLED modules have arrived | Measure one, then have the plates cut and cut the plate foam | The plate's OLED window is sized for a module of 27.5 × 28 mm or less |
-| The controller sockets have arrived | Measure one, then print the case and cut the case foam | The case's USB-C opening is placed from the socket height |
+| The controller sockets and OLED modules have arrived | Measure both, then print the case and cut the case foam | The case's USB-C opening is placed from the socket height, and the top frame holds the OLED's glass in a pocket |
 | The PCBs and the electronics have arrived | Solder and test both boards, from [Inspect the board](#inspect-the-board) to [Encoder and matrix test](#encoder-and-matrix-test) | Nothing more |
 | The plates and the plate foam are ready | [Standoffs](#standoffs) to [Switches](#switches) | |
 | The case and the case foam are ready | [Heat-set inserts](#heat-set-inserts) to [Feet and tenting](#feet-and-tenting) | |
@@ -175,10 +176,16 @@ order-form settings and what to check in the fab's design check (DFM) report are
 
 ### Switch plates
 
-**When:** once the OLED modules have arrived. Measure one module's board with calipers: it must be
-no larger than 27.5 × 28 mm. If it is larger, the plate and the plate foam have to be redrawn first:
-set `OLED_W` and `OLED_H` in [`tools/case_geometry.py`](tools/case_geometry.py) and run
-`tools/regen.py` (see [Building from source](notes/17%20-%20building%20from%20source.md)).
+**When:** once the OLED modules have arrived. The plate's window and the top frame's OLED mount
+follow the module's drawing ([GME12864-11](https://robu.in/wp-content/uploads/2019/12/GME12864-11.pdf), p. 5):
+a **27.5 × 27.8 × 1.2 mm** board with four **Ø 2.0 mm holes** 2.0 mm in from each edge, its pins
+1.5 mm from one edge, a **26.7 × 19.26 mm glass panel** 4.27 mm in from both the pin edge and the
+far edge, and a **21.744 × 10.864 mm lit area** 6.37 mm from the pin edge. The CAD takes the glass
+and its tape as **1.6 mm** thick. Measure these with calipers before cutting the plates or printing
+the case, especially the height from the board's face to the glass top. If the delivered module
+differs, update the `OLED_*` values in [`tools/case_geometry.py`](tools/case_geometry.py) and run
+`tools/regen.py` (see [Building from source](notes/17%20-%20building%20from%20source.md)) before
+using the generated plate, case or foam files.
 
 Then have both halves CNC-routed (not laser-cut) from the 1.5 mm clear polycarbonate sheet with
 [`keygen-plate-left.dxf`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-plate-left.dxf) and
@@ -190,24 +197,37 @@ settings in [`PLATE.md`](case/plate/PLATE.md).
 
 ### Foam
 
-**When:** the plate foam with the plates, the case foam with the case. Both are needed only once the
-board is soldered, so they can be cut while you solder.
+**When:** the plate foam with the plates, the case foam with the case. Neither is installed until the
+board is soldered, so they can be cut while you solder. The plate foam is taped to the underside of
+the plate; see [Switch pads and plate foam](#switch-pads-and-plate-foam).
 
-Each half has two foam layers, cut from the 1:1 `keygen-{left,right}-{plate,case}-foam` files in the
-[build release](https://github.com/milindmadhukar/keygen/releases/tag/build): a 2 mm EVA plate foam
-and a 5 mm EVA case foam. Use the DXF files for a laser cutter. To cut by hand, print the SVG at
+The [build release](https://github.com/milindmadhukar/keygen/releases/tag/build) has these four
+**different** 1:1 DXFs, all in millimetres. Send each file with its material and thickness to the
+laser cutter; each is seen from above:
+
+| Cut file | Material | Location |
+|---|---|---|
+| [`keygen-left-plate-foam.dxf`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-left-plate-foam.dxf) | 2 mm EVA | Taped under the left switch plate |
+| [`keygen-right-plate-foam.dxf`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-right-plate-foam.dxf) | 2 mm EVA | Taped under the right switch plate |
+| [`keygen-left-case-foam.dxf`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-left-case-foam.dxf) | 5 mm EVA | Left bottom-shell floor |
+| [`keygen-right-case-foam.dxf`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-right-case-foam.dxf) | 5 mm EVA | Right bottom-shell floor |
+
+The matching SVGs have the same names with `.svg` and physical millimetre dimensions. To cut by
+hand, print the SVG at
 100 % as for the fit test, tape it to the sheet and cut along the lines with a sharp craft knife and
 a steel ruler. Keep each piece the right way up as drawn: they are seen from above and are not
 symmetrical. Cut only the two EVA sheets per half from these files. The 120-piece Poron ring pack is
 already cut: use 33 rings per half (66 total), one round each switch. The separate Poron gasket
 strips are cut across their length into 12 mm pieces: 16 per half, one below and one above each of
-the plate's eight edge tabs.
+the plate's eight edge tabs. **Do not laser-cut the polycarbonate switch plate**; its DXF is a
+separate CNC router job.
 
 ### Case
 
-**When:** once the controller sockets have arrived. Measure the height of a female socket strip's
-plastic body with calipers. If it is not 3.0 mm, set `SOCKET_H` in
-[`tools/gen_schematic.py`](tools/gen_schematic.py) and run `tools/regen.py` before printing.
+**When:** once the controller sockets and the OLED modules have arrived. Measure the height of a
+female socket strip's plastic body with calipers. If it is not 3.0 mm, set `SOCKET_H` in
+[`tools/gen_schematic.py`](tools/gen_schematic.py) and run `tools/regen.py` before printing. Check
+the OLED module as in [Switch plates](#switch-plates): the top frame holds its glass.
 
 Print [`keygen-left-bottom.stl`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-left-bottom.stl),
 [`keygen-right-bottom.stl`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-right-bottom.stl),
@@ -392,23 +412,24 @@ PCB**, inside the space between PCB and plate. They do not go on the case or its
 
 At each hole, stack the parts in this order, from bottom to top: screw head against the **back of
 the PCB** → PCB → 0.5 mm shim centred on the hole → 3 mm standoff → underside of the switch
-plate. Drive the bottom screw upward through the PCB and shim into the standoff. The shim plus
-standoff make the required **3.5 mm gap between the PCB top and plate underside**. With the 1.5 mm
-plate, its top is 5.0 mm above the PCB top. The plate must not be pressed flat against the PCB.
+plate. Drive an **M2 × 5 button-head screw** upward through the PCB and shim into the standoff. The
+shim plus standoff make the required **3.5 mm gap between the PCB top and plate underside**; with
+the 1.5 mm plate, its top is 5.0 mm above the PCB top. That gap is set by the MX switch: its housing
+reaches from the plate down to the PCB while its posts and contacts enter the PCB's holes.
 
-![Cross-section showing the shim and standoff between PCB and switch plate, with both screw options](assets/assembly-standoffs.svg)
+The same screw goes in at all ten holes, and **nothing screws into the standoffs from above**. The
+M2 × 5 fills 2.9 mm of the 3 mm standoff, about seven turns of thread, so it holds firmly. Its tip
+ends 0.1 mm below the standoff's top; a screw at the long end of its tolerance pokes up to 0.1 mm
+into the plate's 2.2 mm hole, where it touches nothing. The standoff tops only bear on the plate
+from below. The plate and PCB are held together by the 33 switches per half, each clipped into the
+plate and plugged into its hotswap socket, and the closed case clamps the plate's tabs between the
+gasket strips. No screw goes from the PCB or plate into the case; the eight longer case screws join
+the bottom shell to the top frame around the edge.
 
-| Hole | Under the PCB | On top of the plate |
-|---|---|---|
-| H102, H103, H105 (left), H202, H204 (right) | M2 × 3 button head | M2 × 3 button head |
-| H101, H104 (left), H201, H203, H205 (right) | M2 × 4 button head | none: the standoff bears on the plate |
+![Cross-section showing the shim, standoff and screw between PCB and switch plate, with a switch and the foam](assets/assembly-standoffs.svg)
 
-Install all five shims and standoffs before laying down the plate foam. Use the shorter bottom screws
-where a second screw will enter the same standoff from above. Later, set the plate on the standoffs;
-put top screws only in the five holes listed in the first row of the table.
-
-> [!NOTE]
-> An M2 × 3 from below reaches only about two threads into its standoff. Snug it, don't force it.
+Hold the standoff with your fingers and turn the screw with a small screwdriver until it stops,
+then a little more: snug, not hard. The shim must not spin and the standoff must not rock.
 
 ---
 
@@ -418,29 +439,50 @@ put top screws only in the five holes listed in the first row of the table.
    notches facing the switch's clips (top and bottom) and its open middle round the pins and the LED
    window. Where a ring's corner meets a standoff (7 rings per half), snip that corner off first.
    Where a ring crosses a diode's two joints, snip a notch in it so it lies flat on the board.
-2. Lay the 2 mm EVA plate foam over the pads and round the standoffs. The cut-outs leave room for
-   the switches, OLED and encoder. It sits inside the 3.5 mm plate-to-PCB gap; it is not the spacer
-   that sets that gap.
+2. Tape the 2 mm EVA plate foam to the **underside of the switch plate** with the thin
+   double-sided tape (tissue tape, not foam tape), a few strips across the sheet. The cut file is
+   drawn seen from above, which is how it lies under the plate too: line its cut-outs up with the
+   plate's switch, encoder and OLED cut-outs and its round holes with the plate's standoff holes.
+   The small notches in each switch cut-out are for the switch's latches, which spring out under
+   the plate: keep them clear, or the switches will not clip in.
+   In the 3.5 mm gap the stack is then **0.5 mm Poron on the PCB, 1.0 mm air, 2.0 mm EVA on the
+   plate**. The EVA touches the plate, so it damps it, and it does not press on the PCB, so it
+   does not push the plate and PCB apart.
 
 ---
 
 ## Plate and OLED
 
-1. Set the plate on the standoffs and screw it down with M2 × 3 button heads at the holes in the
-   first row of the table above. The other standoffs touch the plate from below without a top screw.
+1. Set the plate, foam side down, on the standoffs. It is not screwed down: line its standoff
+   holes up over the standoffs and it rests on them. The switches will clip it to the PCB.
 2. Check that the pin order printed on the OLED module is GND, VCC, SCL, SDA, the same as the
-   footprint. Pass its header pins down through the plate's OLED window into **J101 / J201**, with
-   the module resting on its plastic spacer, and solder them from the back. Trim the pins flush on
-   the back: the battery lead runs under them.
-3. Power the half and check the status screen appears.
+   footprint. Some modules swap GND and VCC: don't use those.
+3. The module sits in the top frame, not on the PCB, and plugs into **J101 / J201** on a short lead,
+   so the top frame can come off. Solder a **1×4 right-angle male header** into J101 / J201 from
+   the front, its pins lying flat and pointing **away from the thumb keys**, under where the module
+   will be. Solder it on the back and trim the pins flush there: the battery lead runs under them.
+4. If the module came with a header soldered on, remove it: clip the plastic bar off with flush
+   cutters, then heat each pin and pull it out with tweezers, and clear the holes with solder wick.
+5. Cut one end off the 4-pin Dupont cable, leaving **45 mm** of wire on the other housing. Strip
+   2 mm, push the wires into the module's four holes **from its back** (the side without the
+   glass) and solder them on the glass side, in the same order as the header's pins: hold the
+   housing over the header the way it will plug in and match GND to GND. Trim the joints to 1 mm or
+   less; the top frame has a 1.5 mm relief over them. Lay the wires flat along the module's back,
+   between its parts, towards its far edge, and hold them there with a strip of Kapton tape. Mark
+   pin 1 (GND) on the housing and beside the header with a paint pen: Dupont plugs go on either
+   way round.
+6. Push the plug onto the header and power the half: check the status screen appears. Until the
+   case is closed the module hangs on its lead; don't let it rest on the board while powered.
 
-The OLED is held by its four soldered header pins and their plastic spacer; the plate and top frame
-have clearance windows around it. Do not glue the module to the case or solder loose wires for this
-build. Its glass is about level with the switch plate top, **3.9 mm below the top case surface**.
-The current case has a recessed viewing window. Making the glass flush with the case top would
-require changing the OLED mounting height and case geometry before making the parts.
+The module is mounted in [Top frame](#top-frame). Its glass sits in a pocket under a 1.0 mm lip
+round the window, **1.0 mm below the top surface**, and the window's edges are chamfered at 45°.
+The lip window is 23.7 × 12.9 mm, 1 mm round the lit area, and 25.7 × 14.6 mm at the top, opening
+further towards the thumbs. Under it the header and plug lie flat, 2.8 mm tall, 1.2 mm below the
+parts on the module's back (0.2 mm with the plate floated fully up); the module clears the floating plate's window by
+0.5 mm all round. To take the top frame off later, lift it at the OLED end and pull the plug off
+the header.
 
-![OLED header close-up](https://github.com/milindmadhukar/keygen/releases/download/media/assembly-part-oled.png)
+![OLED module, glass, lit area, top-frame pegs and pocket, and the plug under it](assets/assembly-oled.svg)
 
 ![Section through the OLED, foam, switch plate and case gaskets](assets/assembly-stack.svg)
 
@@ -451,8 +493,18 @@ require changing the OLED mounting height and case geometry before making the pa
 
 ## Switches
 
-- Check each switch's pins are straight, then press it through the plate into its socket while
-  supporting the PCB behind the socket with your other hand.
+- Before fitting all 66, dry-fit one actual Akko switch through the plate into a socketed PCB.
+  Check that both housing clips catch the 1.5 mm plate, the switch bottom sits flat on the PCB,
+  the centre post and two plastic locating pins enter their PCB holes, and both metal contacts
+  enter the hotswap socket on the back. Plug the board in and check that the key registers. The
+  PCB footprint has five holes per switch: a 3.9878 mm centre hole, two 1.75 mm locating holes,
+  and two 3.0 mm holes for the socket contacts. The plate has a 14 × 14 mm opening aligned with
+  each footprint. This geometry follows the [Cherry MX mounting drawing](https://www.farnell.com/datasheets/1792245.pdf)
+  and Akko calls this a [5-pin switch](https://en.akkogear.com/product/akko-v3-lavender-purple-pro-switch-45pcs/),
+  but Akko does not publish a dimensioned pin-length drawing for this specific switch, so the dry
+  fit is the final check before assembly.
+- Check each remaining switch's pins are straight, then press it through the plate into its socket
+  while supporting the PCB behind the socket with your other hand. The switch pins are not soldered.
 - The two tall 1.25u thumb switches per half are turned 90°.
 
 ---
@@ -506,10 +558,21 @@ it does not bridge the battery bay or touch the solder joints.
 
 ## Top frame
 
-Fit the top frame. Holding the two parts together, turn the half over onto a soft cloth and drive the
-8 M2 × 16 screws up through the floor's counterbores evenly, a little at a time: snug, not tight, so
-the gaskets stay soft. The closed half should not rattle when shaken, and the plate should give a
-little when pressed in the middle; if it rattles, a strip has fallen off its ledge.
+1. Mount the OLED module in the top frame. Unplug its lead from the header. Peel the protective
+   film off the glass. Lay the top frame face down, underside up, and lower the module glass-down
+   onto the **four pegs** round its pocket, one through each of its corner holes: the glass drops
+   into the pocket under the lip and the board sits flat on the frame. Check from the front that
+   the lit area is centred in the window.
+2. Fix it on the pegs. Either melt each peg's tip with the soldering iron (about 220 °C): touch it
+   for a second or two and press it flat into a rivet head over the board, or put a small dab of
+   hot glue over each peg's tip. Keep heat and glue off the glass and away from the flex cable
+   that wraps round the far edge. The module must not move when pressed from the front.
+3. Plug the lead back onto the header, pin 1 to pin 1, and fit the top frame, the lead and plug
+   lying flat under the module. Look through the window: the module should not have shifted.
+4. Holding the two parts together, turn the half over onto a soft cloth and drive the 8 M2 × 16
+   screws up through the floor's counterbores evenly, a little at a time: snug, not tight, so the
+   gaskets stay soft. The closed half should not rattle when shaken, and the plate should give a
+   little when pressed in the middle; if it rattles, a strip has fallen off its ledge.
 
 ---
 

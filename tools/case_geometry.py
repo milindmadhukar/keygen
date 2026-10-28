@@ -16,11 +16,13 @@ The stack, bottom to top:
   top frame         SPLIT_Z .. TOP_Z round the edge; inside it a deck, CEIL_Z .. TOP_Z, covers the
                     plate everywhere but the keycaps, the OLED and the encoder
 
-The foam: Poron ring switch pads on the PCB under the switches, EVA plate foam between them and
-the plate, and EVA case foam on the floor round the battery bay (PE_Z, PLATE_FOAM_Z, CASE_FOAM_Z).
+The foam: Poron ring switch pads on the PCB round the switches, EVA plate foam taped to the
+plate's underside, and EVA case foam on the floor round the battery bay (PE_Z, PLATE_FOAM_Z,
+CASE_FOAM_Z).
 
-The plate and PCB are tied together by M2 standoffs and float on the tabs; nothing screws the
-PCB to the case. The bottom shell and the top frame are screwed together from below, up through
+The plate rests on M2 standoffs, each screwed to the PCB from below; the switches, clipped into
+the plate and plugged into the PCB's sockets, hold the two together, and they float on the tabs.
+Nothing screws the plate to the standoffs, or the PCB to the case. The bottom shell and the top frame are screwed together from below, up through
 the walls into heat-set inserts in the top frame.
 
     python3 tools/case_geometry.py      # print the tabs, case screws and plate standoffs
@@ -69,9 +71,8 @@ SWITCH_FLANGE = 15.6           # MX top housing, resting on the plate
 CAP_GAP = 0.95                 # keycap = n * 19.05 - this
 CAP_SIZE_TOL = 0.15            # real DSA skirts are up to 18.4 mm (KeyV2 18.24): this much wider each side
 ENC_CUTOUT = 15.0              # square plate cut-out around the selected HongYan EC11H body
-OLED_W, OLED_H = 27.5, 28.0    # 0.96 in. OLED module, standing in a plate window
-OLED_HDR_IN = 1.3              # its header row from its bottom edge (the module sits above the pins)
-OLED_Z = (2.5, 5.1)            # module bottom and glass top above the PCB (on the header's spacer)
+OLED_W, OLED_H = 27.5, 27.8    # 0.96 in. OLED module (GME12864-11 drawing), held in the top frame over a plate window
+OLED_HDR_IN = 1.5              # its pin row from its pin edge, over the PCB's 1x4 footprint it plugs into
 OLED_CLEAR = 1.0               # module to plate window, each side
 HOLE_D = 2.2
 TAB_W, TAB_D = 12.0, 5.0       # gasket tab: width along the edge, depth beyond the outline
@@ -93,8 +94,6 @@ PORT_R = 2.0                   # port corner radius; overmoulds are rounded at l
 NANO_POCKET_CLEAR = 0.3        # controller end to its pocket in the wall, past the stack's float
 ANTENNA_LEN = 12.0             # chip antenna end of the nice!nano
 ANTENNA_KEEP = 15.0            # no metal (inserts, screws) this close to it
-SCREW_HEAD_D = 3.5             # M2 button head (ISO 7380) on top of the plate
-HEAD_CLEAR = 0.3               # head to switch top housing
 BATTERY_W, BATTERY_L, BATTERY_T = 60.0, 88.0, 5.0   # the largest cell bom.csv allows, protection board included
 BATTERY_SIZE_TOL = 0.3         # delivered cell thickness above its nominal rating
 BATTERY_GROWTH = 0.5           # pouch swelling with age
@@ -126,30 +125,48 @@ ENC_BUSHING_D, ENC_BUSHING_TOP = 7.0, 14.1   # HongYan bushing: 6.5 + 7 mm nomin
 ENC_HOLE_D = 9.0               # deck hole round the bushing; the knob hides it
 ENC_RECESS_TOP = 7.4           # local underside relief: 0.6 mm above the tallest encoder body
 KNOB_D, KNOB_H = 17.0, 13.0    # knob, its underside at ENC_BUSHING_TOP (gen_models.py)
-OLED_GLASS = (26.7, 19.3, 1.4) # glass on the module, 2.0 mm in from the edge away from the header
-OLED_ACTIVE = (21.7, 10.9)     # active area, 1.0 mm off the glass centre away from the header
-OLED_MARGIN = 1.0              # deck window past the active area at the deck's underside
+OLED_GLASS = (26.7, 19.26, 1.6)   # glass with its tape (the drawing allows up to 2.3), centred across the module
+OLED_GLASS_IN = 4.27           # glass from the pin edge (and from the far edge)
+OLED_ACTIVE = (21.744, 10.864) # active area, centred across the module,
+OLED_ACTIVE_IN = 6.37          # this far from the pin edge
+OLED_BOARD_T = 1.2             # the module's PCB
+OLED_BACK_H = 1.2              # parts on the module's back (its regulator, SOT-23)
+OLED_HOLE_D, OLED_HOLE_IN = 2.0, 2.0   # its four mounting holes, centred this far in from each edge
+OLED_FPC_W = 16.0              # the glass's flex cable wraps round the far edge, in a 14 mm notch in the board
+OLED_PEG_D = 1.7               # pegs on the boss through the module's holes, located and held by melting
+OLED_PEG_PROUD = 1.0           # their tips (or hot glue) this far past the module's back
+OLED_PLUG = (19.0, 10.8, 2.8)  # 1x4 right-angle header in J101/J201 and a Dupont plug on it, pointing under the
+                               # module: length from the pin row, width, height above the PCB
+OLED_LIP = 1.0                 # deck over the glass, round the window: the glass sits this far below the top
+OLED_Z = (TOP_Z - OLED_LIP - OLED_GLASS[2] - OLED_BOARD_T, TOP_Z - OLED_LIP)   # module bottom, glass top
+OLED_BOSS = 1.5                # the deck thickens down to the module's top, this far round it: the module is
+                               # taped to it, its glass in a pocket under the lip
+OLED_POCKET_CLEAR = 0.15       # glass to its pocket, each side
+OLED_JOINT_RELIEF = (1.0, 1.5) # over the module's four solder joints: past their pads each side, and deep
+OLED_MARGIN = 1.0              # lip window past the active area at the lip's underside
 OLED_VIEW = 50.0               # degrees from vertical, from the thumb side: the window shows all of
                                # the active area at this angle
-SCREW_HEAD_H = 1.1             # M2 button head (ISO 7380) on the plate
 STANDOFF_D = 4.0               # M2 hex standoff, across the corners
 STANDOFF_L = 3.0               # M2 x 3 female-female; 3.5 mm is not a stock length
 SHIM_T, SHIM_D = 0.5, 5.0      # DIN 988 shim (2 x 5 x 0.5) under each standoff, on the PCB, so
                                # standoff and shim fill the plate gap
-SCREW_L_UNDER = 4.0            # M2 button head into the standoff from below, where there is no plate screw
-SCREW_L_BOTH = 3.0             # both screws, above and below, where there is a plate screw
+SCREW_L = 5.0                  # M2 button head (ISO 7380), up through the PCB and shim into each standoff:
+                               # nearly its whole thread. Its tip ends 0.1 mm under the standoff's top, and
+                               # a long screw's tip goes on up into the plate's 2.2 mm hole
+SCREW_L_TOL = 0.25             # ISO 4762/7380 length tolerance (js15) for a 3-6 mm screw
 
 # ---------------------------------------------------------------- foam (mm)
 PE_T = 0.5                     # Poron ring switch pads on the PCB, one per switch
-PLATE_FOAM_T = 2.0             # EVA plate foam on the switch pads, under the plate (2.8 at most)
+PLATE_FOAM_T = 2.0             # EVA plate foam taped to the plate's underside (3.0 at most, to the switch pads)
 CASE_FOAM_T = 5.0              # EVA case foam on the floor
 PE_Z = (0.0, PE_T)
-PLATE_FOAM_Z = (PE_T, PE_T + PLATE_FOAM_T)
+PLATE_FOAM_Z = (PLATE_BOT - PLATE_FOAM_T, PLATE_BOT)
 SWITCH_PAD = 18.0              # Poron ring switch pad: a square ring this wide outside,
 SWITCH_PAD_BAND = 1.9          # this wide all round (14.2 mm open middle),
 SWITCH_PAD_R = 1.0             # its outer corners rounded,
 SWITCH_PAD_NOTCH = (4.5, 1.0)  # and a notch this wide and deep in the inner edge on the clip sides
-FOAM_SWITCH_CUT = 14.4         # plate foam cut-out per switch
+FOAM_SWITCH_CUT = 14.4         # plate foam cut-out per switch, notched like the switch pads (SWITCH_PAD_NOTCH)
+                               # on the clip sides, where the switch's latches spring out under the plate
 FOAM_HOLE_CLEAR = 0.3          # foam to pins, pads, LED windows and standoffs, each side
 FOAM_PART_CLEAR = 1.0          # case foam to the parts under the PCB and the reset tube, each side
 FOAM_WALL_CLEAR = 0.5          # case foam to the case wall
@@ -496,57 +513,58 @@ def battery_heights():
 
 
 def oled_glass(h):
-    """The OLED's glass and its active area, as (x0, y0, x1, y1) in board mm. The module's header
-    runs along its bottom (larger y) edge; the glass sits toward the top edge."""
+    """The OLED's glass and its active area, as (x0, y0, x1, y1) in board mm. The module's pin row
+    runs along its bottom (larger y) edge."""
     x0, y0, x1, y1 = h["oled"]
-    cx, gw, gh = (x0 + x1) / 2, OLED_GLASS[0], OLED_GLASS[1]
-    glass = (cx - gw / 2, y0 + 2.0, cx + gw / 2, y0 + 2.0 + gh)
-    ay = glass[1] + gh / 2 - 1.0
-    aw, ah = OLED_ACTIVE
-    return glass, (cx - aw / 2, ay - ah / 2, cx + aw / 2, ay + ah / 2)
+    cx, (gw, gh), (aw, ah) = (x0 + x1) / 2, OLED_GLASS[:2], OLED_ACTIVE
+    return ((cx - gw / 2, y1 - OLED_GLASS_IN - gh, cx + gw / 2, y1 - OLED_GLASS_IN),
+            (cx - aw / 2, y1 - OLED_ACTIVE_IN - ah, cx + aw / 2, y1 - OLED_ACTIVE_IN))
+
+
+def oled_holes(h):
+    """The OLED module's four mounting holes, [(x, y)]."""
+    x0, y0, x1, y1 = h["oled"]
+    i = OLED_HOLE_IN
+    return [(x0 + i, y0 + i), (x1 - i, y0 + i), (x0 + i, y1 - i), (x1 - i, y1 - i)]
+
+
+def oled_plug(h):
+    """The right-angle header in the OLED footprint and the plug on it, (x0, y0, x1, y1) in plan:
+    from the footprint's pads toward the module's far edge, under the module."""
+    hx0, hy0, hx1, hy1 = h["header"]
+    cx, cy = (hx0 + hx1) / 2, (hy0 + hy1) / 2
+    length, width, _ = OLED_PLUG
+    return (cx - width / 2, cy - length, cx + width / 2, hy1)
 
 
 def oled_window(h, z):
     """The deck's OLED window at height z, (x0, y0, x1, y1): the active area plus OLED_MARGIN at the
-    deck's underside, opening at 45 degrees on three sides and on the thumb side far enough that a
+    lip's underside (the glass top), opening at 45 degrees on three sides and on the thumb side far enough that a
     line of sight OLED_VIEW degrees from vertical reaches the whole active area."""
     _, (x0, y0, x1, y1) = oled_glass(h)
     glass_top = OLED_Z[1]
-    side = OLED_MARGIN + (z - CEIL_Z)
+    side = OLED_MARGIN + (z - glass_top)
     south = max(OLED_MARGIN, (z - glass_top) * math.tan(math.radians(OLED_VIEW)) + 0.5)
     return (x0 - side, y0 - side, x1 + side, y1 + south)
 
 
 def deck_clearances(h):
-    """{what: mm} for the deck: glass below its top, knob above it, and the plate screw heads below it."""
+    """{what: mm} for the deck: glass below its top, the module's room in the floating plate's window,
+    and the knob above the deck."""
     return {"OLED glass below the deck top": TOP_Z - OLED_Z[1],
-            "knob above the deck top": ENC_BUSHING_TOP - TOP_Z,
-            "plate screw heads below the deck": CEIL_Z - PLATE_TOP - SCREW_HEAD_H}
+            "OLED module to the plate window, plate floated sideways": OLED_CLEAR - POCKET_CLEAR,
+            "knob above the deck top": ENC_BUSHING_TOP - TOP_Z}
 
 
 def standoff_threads():
-    """{what: mm} for the standoffs: how far each screw reaches into its standoff, and the room left
-    between the two screws where one comes from above and one from below."""
-    under = SCREW_L_UNDER - PCB_T - SHIM_T
-    both_under, both_over = SCREW_L_BOTH - PCB_T - SHIM_T, SCREW_L_BOTH - PLATE_T
+    """{what: mm} for the standoffs: the gap the standoff and shim leave under the plate, how far the
+    screw from below reaches into its standoff, and where its tip ends against the standoff's top
+    (negative: below it) at its shortest and longest."""
+    into = SCREW_L - PCB_T - SHIM_T
     return {"standoff and shim short of the plate": PLATE_BOT - STANDOFF_L - SHIM_T,
-            f"M2 x {SCREW_L_UNDER:g} from below, into the standoff": under,
-            f"M2 x {SCREW_L_BOTH:g} from below, into the standoff": both_under,
-            f"M2 x {SCREW_L_BOTH:g} from above, into the standoff": both_over,
-            "between the two screws": STANDOFF_L - both_under - both_over}
-
-
-def standoffs(h):
-    """{hole ref: 'screwed' | 'post'}. A plate screw goes in only where its head clears the switch
-    top housings and the encoder; elsewhere the standoff is screwed from below and its top bears on
-    the plate."""
-    out = {}
-    for ref, p in h["holes"].items():
-        room = min(square_dist(p, k, SWITCH_FLANGE) for k in h["keys"])
-        for ex, ey in h["enc"]:
-            room = min(room, math.hypot(max(abs(p[0] - ex) - ENC_CUTOUT / 2, 0), max(abs(p[1] - ey) - ENC_CUTOUT / 2, 0)))
-        out[ref] = ("screwed" if room >= SCREW_HEAD_D / 2 + HEAD_CLEAR else "post", room)
-    return out
+            f"M2 x {SCREW_L:g} from below, into the standoff": min(into, STANDOFF_L),
+            "screw tip past the standoff top, shortest": into - SCREW_L_TOL - STANDOFF_L,
+            "screw tip past the standoff top, longest": into + SCREW_L_TOL - STANDOFF_L}
 
 
 if __name__ == "__main__":
@@ -555,7 +573,7 @@ if __name__ == "__main__":
         print(f"{side}: usb {h['usb']}, lever {h['lever']}, reset {h['reset']}, antenna {h['antenna']}")
         print(f"  tabs: " + ", ".join(f"({c['centre'][0]:.1f},{c['centre'][1]:.1f})" for c in t))
         print(f"  case screws: " + ", ".join(f"({x:.1f},{y:.1f})" for x, y in case_screws(h, t)))
-        print(f"  standoffs: " + ", ".join(f"{r} {k} ({room:.2f} mm)" for r, (k, room) in sorted(standoffs(h).items())))
+        print(f"  standoffs: " + ", ".join(f"{r} ({x:.1f},{y:.1f})" for r, (x, y) in sorted(h["holes"].items())))
         bt = battery(h); x0, y0, x1, y1 = bt["cell"]
         print(f"  battery: {x1 - x0:g} x {y1 - y0:g} mm cell at ({x0:.1f},{y0:.1f})..({x1:.1f},{y1:.1f}), "
               f"lead end {math.dist(bt['lead_end'], h['battery_jack']):.1f} mm from the connector, "

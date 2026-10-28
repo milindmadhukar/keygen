@@ -435,8 +435,8 @@ def build(side, root, sheet):
                   nets={"A": "ENC_A", "B": "ENC_B", "C": "GND", "S1": f"COL{enc[1]}", "S2": f"K{enc[0]}{enc[1]}"})
 
     # ---- OLED ----------------------------------------------------------------------
-    # A generic 0.96" 128x64 SSD1306 module (I2C, pull-ups and regulator on the module), its own
-    # header pins soldered straight into the board. Pin order as printed on the usual modules.
+    # A generic 0.96" 128x64 SSD1306 module (I2C, pull-ups and regulator on the module), held in the
+    # top frame and plugged into a right-angle header in a 1x4 footprint. Pin order as printed on the usual modules.
     OX, OY = 459.74, 228.6
     sh.text("OLED (0.96 in. 128x64 SSD1306, I2C address 0x3C) - check the module's pin order: GND VCC SCL SDA",
             OX - 25.4, OY - 15.24, 2)
