@@ -153,6 +153,7 @@ def vendor_model(node, base):
 # (switch, keycap) is turned over and pushed through the board so the flip puts it back on top.
 ON_FRONT = dict(rotate=(0, 180, 0))
 CAP_MODEL_Z = 11.5   # keycap model origin above the PCB top; tools/gen_keycaps.py places the cap from it
+KNOB_MODEL_Z = 13.1  # knob underside above the PCB top: case_geometry.KNOB_Z (check_mechanical.py checks)
 
 def wrl_box_mesh(boxes):
     """VRML (KiCad units: 0.1 inch) for a list of (x0,y0,z0,x1,y1,z1,rgb) boxes in mm."""
@@ -222,8 +223,8 @@ def keygen_footprints():
                             ("marbastlib-various.pretty", "ROT_Alps_EC11E-Switch", VENDOR3D["marbastlib"])):
         fp = load(marb / lib, name)
         fp[:] = [n if not (isinstance(n, list) and n and n[0] == "model") else vendor_model(n, base) for n in fp]
-        if name.startswith("ROT_"):         # the knob (tools/gen_models.py), just above the EC11's bushing
-            fp.append(model(f"{SHAPES}/Knob_17mm.step", offset=(0, 0, 14.1)))
+        if name.startswith("ROT_"):         # the knob (tools/gen_models.py) where it sits on the cut shaft
+            fp.append(model(f"{SHAPES}/Knob_17mm.step", offset=(0, 0, KNOB_MODEL_Z)))
             # the common pin C sits 2.5 mm between A and B, which leaves no room for thermal spokes
             # sideways: connect it to the ground pour solid
             for pad in find(fp, "pad"):

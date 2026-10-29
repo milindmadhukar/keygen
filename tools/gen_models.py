@@ -18,12 +18,12 @@ BOTTOM = (Align.CENTER, Align.CENTER, Align.MIN)
 
 # ---------------------------------------------------------------- knob
 # An aluminium knob, 17 mm across and 13 mm tall (a "D halfshaft 17x13" amplifier knob), knurled
-# round its lower part, with an indicator groove on top and a bore for the EC11's 6 mm D-shaft.
-# Origin: shaft centre at the bottom face; the encoder footprint lifts it to just above the EC11's
-# bushing (11 mm above the PCB).
+# round its lower part, with an indicator groove on top and a blind bore for the EC11's 6 mm D-shaft.
+# Origin: shaft centre at the bottom face; the encoder footprint lifts it to where it sits on the cut
+# shaft (case_geometry.KNOB_Z).
 D, H = 17.0, 13.0
 KNURL_N, KNURL_H, KNURL_R = 36, 9.0, 0.45      # grooves round the side, from the bottom up
-BORE_D, BORE_DEPTH, FLAT = 6.0, 12.0, 4.5      # EC11 D-shaft: 6 mm, 4.5 mm across the flat
+BORE_D, BORE_DEPTH, FLAT = 6.0, 11.0, 4.5      # EC11 D-shaft: 6 mm, 4.5 mm across the flat; case_geometry.KNOB_DEPTH
 
 
 def knob():

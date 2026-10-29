@@ -131,6 +131,11 @@ require(abs(threads["standoff and shim short of the plate"]) <= 0.1 + 1e-9, "sta
 require(threads[f"M2 x {C.SCREW_L:g} from below, into the standoff"] >= 1.25 * 2.0, "a standoff screw has under 1.25 d of thread")
 require(threads["screw tip past the standoff top, longest"] <= C.PLATE_T - 0.5, "a standoff screw's tip reaches the plate top")
 require(C.PLATE_FOAM_Z[0] >= C.PE_Z[1], "the plate foam presses on the switch pads")
+require(abs(C.g.KNOB_MODEL_Z - C.KNOB_Z) < 1e-6, "gen_schematic.KNOB_MODEL_Z is not case_geometry.KNOB_Z")
+require(C.KNOB_GAP - C.FLOAT_GAP - C.ENC_PUSH >= 0.5, "the knob reaches the deck with the stack pressed down and the knob pushed")
+require(C.KNOB_Z + C.KNOB_HUB_UP - C.ENC_PUSH >= C.ENC_BUSHING_TOP + 0.3, "the knob's hub reaches the bushing when pushed")
+require(C.deck_clearances(C.halves()["left"])["D flat left inside the knob"] >= 5.0, "under 5 mm of the shaft's D flat inside the knob")
+require(C.ENC_SHAFT_CUT >= 0, "the shaft is too short for the knob height")
 require(C.OLED_Z[1] + C.OLED_LIP == C.TOP_Z and C.OLED_LIP >= 0.8, "the deck lip over the OLED glass is too thin to print")
 require(C.OLED_CLEAR - C.POCKET_CLEAR >= 0.4, "the floating plate can touch the OLED module in its window")
 print(f"battery: {C.BATTERY_STACK_T:.1f} mm installed envelope, {battery_gap:.1f} mm gap at rest, "

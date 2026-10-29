@@ -32,8 +32,9 @@ Counts are for the whole keyboard (two halves). Stores, links, prices and spares
 | EC11 encoder with switch, 20 mm D shaft | 2 | |
 | 0.96 in. I2C OLED, pins GND VCC SCL SDA | 2 | Some modules swap GND and VCC: don't use those |
 | 1×4 right-angle male pin header, 2.54 mm | 2 | Soldered into J101 / J201; cut from a 1×40 strip |
-| 4-pin Dupont jumper cable, female–female, 2.54 mm, 10 cm | 2 | One 4-pin housing at each end. One end plugs onto the header; the other is cut off and soldered to the OLED |
+| Female–female jumper wire, 2.54 mm | 8 | Four per OLED, their plug ends glued into one 4-pin plug; the other ends are cut off and soldered to the OLED |
 | LiPo 505080 (5 × 50 × 80 mm), JST-PH lead | 2 | With a protection board |
+| JST-PH 2.0 plug with 10 cm wires, 2-pin | 2 | For a battery without a JST-PH plug: solder its leads to the plug's wires and heat-shrink each joint |
 
 ### Switches, keycaps and knobs
 
@@ -172,7 +173,20 @@ order-form settings and what to check in the fab's design check (DFM) report are
 - **Batteries:** each cell has a protection board (a small circuit board under the tape at the lead
   end). The controller has no over-discharge cut-off; fit a DW01A module to a cell without one.
 - **Battery connectors:** the side-entry type (S2B-PH-K-S), whose opening faces sideways, not up.
-- **Encoders:** a D-shaped (half-round) shaft, to match the knob.
+- **Encoders:** a D-shaped (half-round) shaft, to match the knob, 20 mm long from the top of the
+  encoder's body (its tip 26.5 mm above the body's base).
+- **Knobs:** measure one with calipers: **A**, from its bottom edge up to the inside of its top,
+  where the shaft stops; and **B**, how far its plastic hub's bottom face is set up inside from the
+  bottom edge. The case assumes A = 11.0 and B = 2.0 mm. Set `KNOB_DEPTH` and `KNOB_HUB_UP` in
+  [`tools/case_geometry.py`](tools/case_geometry.py) to what you measure and run `tools/regen.py`:
+  it works out how high the knob sits and how much to cut off the shaft (`ENC_SHAFT_CUT`, printed
+  by `python3 tools/case_geometry.py`). The case itself doesn't change.
+- **Encoder shafts:** cut them now, before soldering, so no filings get into the board. Uncut,
+  the 20 mm shaft would hold the knob 6.5 mm off the deck and 9 mm above the keys. With A = 11.0
+  and B = 2.0 mm, cut **2.4 mm** off the tip, leaving **24.1 mm** from the bottom of the encoder's
+  body. Wrap the body in tape, hold the shaft in pliers so the cut doesn't turn the encoder, cut
+  with a fine hacksaw or a cutting disc, and file the end flat with a small chamfer. Push a knob on
+  to check it bottoms on the shaft and turns without wobble.
 
 ### Switch plates
 
@@ -463,14 +477,16 @@ then a little more: snug, not hard. The shim must not spin and the standoff must
    will be. Solder it on the back and trim the pins flush there: the battery lead runs under them.
 4. If the module came with a header soldered on, remove it: clip the plastic bar off with flush
    cutters, then heat each pin and pull it out with tweezers, and clear the holes with solder wick.
-5. Cut one end off the 4-pin Dupont cable, leaving **45 mm** of wire on the other housing. Strip
-   2 mm, push the wires into the module's four holes **from its back** (the side without the
-   glass) and solder them on the glass side, in the same order as the header's pins: hold the
-   housing over the header the way it will plug in and match GND to GND. Trim the joints to 1 mm or
-   less; the top frame has a 1.5 mm relief over them. Lay the wires flat along the module's back,
-   between its parts, towards its far edge, and hold them there with a strip of Kapton tape. Mark
-   pin 1 (GND) on the housing and beside the header with a paint pen: Dupont plugs go on either
-   way round.
+5. Take four female–female jumper wires, ideally four colours. Line their plug ends up side by
+   side, in GND, VCC, SCL, SDA order, and glue the four housings together with a thin smear of
+   superglue on their sides (keep it off the openings): they become one 4-pin plug that can only
+   go on in that order. Cut the wires **45 mm** from the plug and strip 2 mm. Push them into the
+   module's four holes **from its back** (the side without the glass) and solder them on the glass
+   side, each to its own pin: hold the plug over the header the way it will go on and match GND to
+   GND. Trim the joints to 1 mm or less; the top frame has a 1.5 mm relief over them. Lay the wires
+   flat along the module's back, between its parts, towards its far edge, and hold them there with
+   a strip of Kapton tape. The plug is not keyed and fits the header either way round, so mark
+   pin 1 (GND) on it and beside the header with a paint pen.
 6. Push the plug onto the header and power the half: check the status screen appears. Until the
    case is closed the module hangs on its lead; don't let it rest on the board while powered.
 
@@ -579,8 +595,10 @@ it does not bridge the battery bay or touch the solder joints.
 ## Keycaps, knob and final test
 
 1. Fit the keycaps: per half, 26 × 1u and 7 × 1.25u (the two tall thumb caps turned 90°).
-2. Push a knob onto each encoder shaft, stopping at least 2.5 mm above the deck so it clears the deck
-   when the plate is pressed down.
+2. Push a knob onto each encoder shaft (cut short in
+   [When the parts arrive](#when-the-parts-arrive)) until the shaft stops inside it. Its underside
+   now sits **4.1 mm above the deck**: it clears the deck with the plate pressed down and the knob
+   clicked, and its top stands 6.7 mm above the keycaps. Press it: it should click without touching the deck.
 3. Turn both halves on together so they pair with each other, then pair the host to Bluetooth
    profile 1 (SYS + `1`: hold both 1.25u thumb keys and press `1`).
 4. Test every key on every layer, both encoders, both OLEDs, the LEDs on USB, and the link between

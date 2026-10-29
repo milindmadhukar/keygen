@@ -56,7 +56,7 @@ Each half has 34 diodes: 33 for the keys and one for its encoder's push switch, 
 - **Module:** a generic 0.96 in. 128×64 SSD1306 I2C module (address 0x3C), 27.5 × 28 mm, using its own pull-ups and regulator. The controller's internal pull-ups are on as well, so the bus still works on a module without them.
 - **Pins:** footprint order GND, VCC, SCL, SDA. Check the module's printed order; some swap GND and VCC.
 - **Wiring:** SDA on P0.17 (pad 5), SCL on P0.20 (pad 6), power from the controller's switched 3.3 V VCC (pad 16), which the firmware keeps on by holding P0.13 high.
-- **Mounting:** held in the top frame on four pegs through its corner holes, melted or glued over, its glass in a pocket under a 1 mm lip, 1 mm below the top surface. A 4-pin Dupont lead soldered to it plugs onto a right-angle header in the board's 1×4 footprint, so the top frame comes off; the floating plate never carries the module. Position: [[12 - final design#OLED]].
+- **Mounting:** held in the top frame on four pegs through its corner holes, melted or glued over, its glass in a pocket under a 1 mm lip, 1 mm below the top surface. A lead of four jumper wires, glued into one 4-pin plug, soldered to it plugs onto a right-angle header in the board's 1×4 footprint, so the top frame comes off; the floating plate never carries the module. Position: [[12 - final design#OLED]].
 
 ## Power
 

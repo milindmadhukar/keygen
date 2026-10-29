@@ -47,6 +47,7 @@ PLATE_TOP = 5.0
 PLATE_BOT = PLATE_TOP - PLATE_T
 CAP_SKIRT = 6.7                # keycap skirt bottom above the plate at rest: the MX slider's shoulder, where
                                # a DSA cap's flush stem seats (SW_Cherry_MX_PCB.stp: 11.74 mm above the PCB)
+CAP_H = 7.67                   # DSA 1u cap, skirt to top (Keycap_DSA_1u.stl)
 CAP_STEM_RECESS = 1.0          # a cap whose stem is recessed into it sits up to this much lower
 KEY_TRAVEL = 4.0               # MX total travel; the Akko V3 is 3.8
 GASKET_T = 3.0                 # Poron strip, uncompressed
@@ -124,7 +125,17 @@ ENC_BODY, ENC_BODY_H = 12.5, 6.8         # HongYan EC11H: 12 x 11.7 plan, 6.5 ta
 ENC_BUSHING_D, ENC_BUSHING_TOP = 7.0, 14.1   # HongYan bushing: 6.5 + 7 mm nominal, plus both tolerances
 ENC_HOLE_D = 9.0               # deck hole round the bushing; the knob hides it
 ENC_RECESS_TOP = 7.4           # local underside relief: 0.6 mm above the tallest encoder body
-KNOB_D, KNOB_H = 17.0, 13.0    # knob, its underside at ENC_BUSHING_TOP (gen_models.py)
+ENC_SHAFT_TOP = 6.5 + 20.0     # HongYan EC11H-...ZD20F10: the 20 mm shaft is measured from the 6.5 mm body's top
+ENC_FLAT_FROM = ENC_SHAFT_TOP - 10.0   # its D flat, the top 10 mm
+ENC_PUSH = 0.7                 # push switch travel, 0.5 +0.2
+KNOB_D, KNOB_H = 17.0, 13.0    # knob: an aluminium cup round a plastic hub with a blind D hole (gen_models.py)
+KNOB_DEPTH = 11.0              # from its bottom edge up to where the shaft stops inside it (measure)
+KNOB_HUB_UP = 2.0              # its hub's bottom face, this far up inside from its bottom edge (measure)
+KNOB_GAP = max(3.0, ENC_BUSHING_TOP + ENC_PUSH + 0.3 - KNOB_HUB_UP - TOP_Z)   # knob above the deck top: clear of
+                               # the deck with the stack pressed down and the knob pushed, and its hub clear of the
+                               # bushing while pushed
+KNOB_Z = TOP_Z + KNOB_GAP      # the knob's underside (gen_schematic.KNOB_MODEL_Z, for the 3D model, matches)
+ENC_SHAFT_CUT = ENC_SHAFT_TOP - (KNOB_Z + KNOB_DEPTH)   # cut this much off the shaft so the knob sits at KNOB_Z
 OLED_GLASS = (26.7, 19.26, 1.6)   # glass with its tape (the drawing allows up to 2.3), centred across the module
 OLED_GLASS_IN = 4.27           # glass from the pin edge (and from the far edge)
 OLED_ACTIVE = (21.744, 10.864) # active area, centred across the module,
@@ -553,7 +564,10 @@ def deck_clearances(h):
     and the knob above the deck."""
     return {"OLED glass below the deck top": TOP_Z - OLED_Z[1],
             "OLED module to the plate window, plate floated sideways": OLED_CLEAR - POCKET_CLEAR,
-            "knob above the deck top": ENC_BUSHING_TOP - TOP_Z}
+            "knob above the deck top": KNOB_GAP,
+            "knob top above the keycap tops": KNOB_Z + KNOB_H - (PLATE_TOP + CAP_SKIRT + CAP_H),
+            "shaft to cut off": ENC_SHAFT_CUT,
+            "D flat left inside the knob": ENC_SHAFT_TOP - ENC_SHAFT_CUT - max(ENC_FLAT_FROM, KNOB_Z + KNOB_HUB_UP)}
 
 
 def standoff_threads():

@@ -248,7 +248,7 @@
     (rotate (xyz 0 0 -90))
   )
   (model "${KIPRJMOD}/lib/keygen.3dshapes/Knob_17mm.step"
-    (offset (xyz 0 0 14.1))
+    (offset (xyz 0 0 13.1))
     (scale (xyz 1 1 1))
     (rotate (xyz 0 0 0))
   )

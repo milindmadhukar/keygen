@@ -510,7 +510,7 @@ def fit_check(h, bottom, top, plt, foam):
     for p in h["enc"]:
         x, y = xy(p)
         e = Pos(x, y, 0) * Box(C.ENC_BODY, C.ENC_BODY, C.ENC_BODY_H, align=Z) + cylinder(p, C.ENC_BUSHING_D, 0, C.ENC_BUSHING_TOP)
-        kn = cylinder(p, C.KNOB_D, C.ENC_BUSHING_TOP, C.ENC_BUSHING_TOP + C.KNOB_H)
+        kn = cylinder(p, C.KNOB_D, C.KNOB_Z, C.KNOB_Z + C.KNOB_H)
         encoder = e if encoder is None else encoder + e
         knob = kn if knob is None else knob + kn
     standoffs = None
@@ -539,7 +539,7 @@ def fit_check(h, bottom, top, plt, foam):
         check(name, part, (("pcb", pcb), ("plate", plt), ("controller", controller), ("reset button", button),
                            ("reset button, stack pressed down", Pos(0, 0, -C.FLOAT_GAP) * button),
                            ("keycaps", caps), ("oled", oled), ("battery", battery), ("encoder", encoder),
-                           ("knob", knob)))
+                           ("knob", knob), ("knob, stack pressed down and knob pushed", Pos(0, 0, -C.FLOAT_GAP - C.ENC_PUSH) * knob)))
     check("plate foam", foam["plate"], (("switches", switches), ("encoder", encoder), ("oled", oled),
                                         ("standoffs", standoffs), ("plate", plt)))
     # the OLED stays with the top frame while the plate floats in its gasket pockets

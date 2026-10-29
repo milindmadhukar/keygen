@@ -46,7 +46,7 @@ Heights above the PCB's top surface:
 | Poron ring switch pads, on the PCB | 0 | 0.5 mm |
 | EVA plate foam, taped under the plate | 1.5 mm | 3.5 mm |
 | EVA case foam, on the floor | −10.6 mm | −5.6 mm |
-| Knob underside, using the encoder's maximum bushing height | 14.1 mm | |
+| Knob underside, on the shaft cut 2.4 mm short | 13.1 mm | |
 
 So the PCB top is 13.6 mm above the desk and the plate top 18.6 mm. Keycap tops are about 33 mm, before tenting and feet.
 
@@ -56,7 +56,7 @@ So the PCB top is 13.6 mm above the desk and the plate top 18.6 mm. Keycap tops 
 - **Power switch:** a 9 × 3.4 mm slot at the lever, through the 1.5 mm wall.
 - **Reset:** a 2 mm pinhole through the floor, countersunk outside, with a guide tube up to 2 mm under the button so a paperclip finds it; the button clears it with the stack pressed 1.5 mm down onto its gaskets. The reset buttons mirror between the halves, and so do the pinholes.
 - **Through the plate:** on each half a 15 × 15 mm encoder cut-out and a 29.5 × 30 mm OLED window, clear of the OLED module above it.
-- **Through the deck:** an OLED window round the display's active area, 1 mm clear at the lip's underside, opening at 45° on three sides and further towards the thumbs, so the whole active area shows at 50° from vertical. The OLED module is held in the top frame: its glass sits in a pocket under a 1.0 mm lip, 1.0 mm below the deck top, and its board sits on a boss that thickens the deck down to 6.4 mm above the PCB, located and held by four Ø 1.7 mm pegs through its corner holes, their tips melted over or glued, with 1.5 mm reliefs over its four solder joints and over the flex cable at its far edge. A 4-pin Dupont lead from it plugs onto a right-angle header in J101/J201, lying flat under it in the plate's window, so the top frame comes off; the module clears the floating plate by 0.5 mm all round. The encoder bushing (7 mm) passes through a 9 mm hole, hidden under the knob; the body has a 15 mm square underside relief to 7.4 mm. The knob's underside is 5.1 mm above the deck using the tallest bushing.
+- **Through the deck:** an OLED window round the display's active area, 1 mm clear at the lip's underside, opening at 45° on three sides and further towards the thumbs, so the whole active area shows at 50° from vertical. The OLED module is held in the top frame: its glass sits in a pocket under a 1.0 mm lip, 1.0 mm below the deck top, and its board sits on a boss that thickens the deck down to 6.4 mm above the PCB, located and held by four Ø 1.7 mm pegs through its corner holes, their tips melted over or glued, with 1.5 mm reliefs over its four solder joints and over the flex cable at its far edge. A 4-wire jumper lead from it plugs onto a right-angle header in J101/J201, lying flat under it in the plate's window, so the top frame comes off; the module clears the floating plate by 0.5 mm all round. The encoder bushing (7 mm) passes through a 9 mm hole, hidden under the knob; the body has a 15 mm square underside relief to 7.4 mm. The knob sits on the shaft cut 2.4 mm short: its underside 13.1 mm above the PCB, 4.1 mm above the deck, so it clears the deck with the stack pressed down and the knob pushed, and its hub clears the bushing; its top is 6.7 mm above the keycap tops, with 7.6 mm of the shaft's D flat inside it.
 
 Exact sizes and positions: [[14 - case & plate requirements]].
 

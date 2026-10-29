@@ -101,7 +101,8 @@ References and soldering notes for every part are in `fab/BOM.md`.
   1.0 mm below the deck top, in a pocket under a 1.0 mm lip; the module sits on a boss under the
   deck, on four pegs through its holes, 0.5 mm clear of the floating plate's window. The encoder bushing passes through a 9 mm hole under the knob; a 15 mm
   square recess above the encoder body provides 0.6 mm nominal headroom at the tallest published
-  body height. The knob underside is 5.1 mm above the deck at the tallest published bushing height.
+  body height. The shaft is cut 2.4 mm short so the knob's
+  underside sits 4.1 mm above the deck and its top 6.7 mm above the keycap tops.
 - **Foam:** per half, the switch pads and two foam layers, the layers cut from the files in
   `case/foam/` (DXF or SVG).
   - Poron ring switch pads, 0.5 mm, ready-made: a square ring about 18 mm across with a 14.2 mm
