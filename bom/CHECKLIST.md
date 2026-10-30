@@ -9,7 +9,7 @@ Order in two stages. First the PCBs, the electronics and the AliExpress cart; bu
 bench and test it. Then the parts made to fit: the plate and its foam once an OLED module measures
 27.5 × 28 mm or less, and the case and its foam once the controller sockets and an OLED module are measured
 ([INSTRUCTIONS.md](../INSTRUCTIONS.md#the-plan)). Estimated total
-about ₹24,000 (at ₹67 per AU$ and ₹95 per US$ on 2026-10-30, with customs on the PCBs and the optional wedges, Y cable and wrist rests), plus the CNC cutting of the plate.
+about ₹23,000 (at ₹67 per AU$ and ₹95 per US$ on 2026-10-30, with customs on the PCBs and the optional wedges, Y cable and wrist rests), plus the CNC cutting of the plate.
 
 | Got | Item | Qty | Where | Link | Price | Notes |
 |---|---|---|---|---|---|---|
