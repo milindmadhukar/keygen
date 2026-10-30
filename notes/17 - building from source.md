@@ -198,6 +198,7 @@ case/
 ├── keygen-case.step                    every part in place, for CAD
 ├── bottom/  stl/  step/                bottom shells (print the STL)
 ├── top/     stl/  step/                top frames (print the STL)
+├── wedge/   stl/  step/                tenting wedges (print the STL)
 ├── plate/   gerber/  dxf/  stl/  step/  pdf/  switch plates: Gerbers to order, CNC/laser cut files, meshes, solids, 1:1 paper print
 │   └── PLATE.md                        plate order-form settings
 └── foam/    dxf/  svg/  step/          plate and case foam: 1:1 cut files, solids; switch pads and

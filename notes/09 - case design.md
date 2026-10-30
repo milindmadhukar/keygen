@@ -9,7 +9,7 @@ name: 09 - case design
 
 ## Status
 
-Designed and generated from the PCB. The floor takes rubber feet, and a steel disc set flush into a pocket for a detachable magnetic tenting stand.
+Designed and generated from the PCB. The floor takes rubber feet, and a steel disc set flush into a pocket, which holds the optional tenting wedge.
 
 - `tools/gen_case.py` (build123d) writes the printable parts to `case/bottom/stl/` and `case/top/stl/` in the repo, with STEP files in each part's `step/` folder. It also runs a fit check against the PCB, plate, controller, reset button, OLED modules and keycaps at full travel, the keycaps taken at their largest and lowest and grown by the plate's float; it reports no overlaps.
 - `tools/gen_plate.py` writes the plate as its own KiCad board, `pcb/plate/keygen-plate.kicad_pcb`, and its Gerbers, `case/plate/gerber/keygen-plate-{left,right}-gerbers.zip`, with the order settings in `case/plate/PLATE.md`.
@@ -71,7 +71,7 @@ Exact sizes and positions: [[14 - case & plate requirements]].
 ## Feet and tenting
 
 - **Feet:** four clear domed silicone bumpers per half, 8 mm across and 3 mm tall, self-adhesive, near the floor's corners: outer bottom and the thumb tip, 7 mm in from the edges, and outer top and inner top, 7 mm in from the side and 17 mm below the top edge, which keeps them clear of the outer top case screw and the USB-C opening. All clear the screw counterbores and the reset pinhole.
-- **Tenting:** a detachable magnetic tenting stand per half, made for split keyboards: a magnetic puck on a height- and angle-adjustable arm. Its puck holds to a 40 mm self-adhesive steel disc in a 1.0 mm pocket in the floor's underside, so it sits flush like the screw heads. `case_geometry.steel_disc()` places it on the inner half, at least 15 mm from the controller's antenna end, 2 mm or more off the battery bay (whose floor is thinner), the counterbores and the reset pinhole, and 12 mm in from the floor's edge, clear of the feet. The floor over the pocket is 2.0 mm. The half tilts on its two outer feet, about 13° with the arm at 30 mm; without the stand it lies flat on its feet.
+- **Tenting:** an optional printed PETG wedge per half, 13°, 4.0 mm thick along the outer edge and 44.5 mm along the inner, following the floor's outline so its walls carry on from the case's. Its top face sits 0.3 mm under the floor, and the half stands on its own rubber feet, which drop into 12 mm recesses in that face 2.7 mm deep. Four 10 × 3 mm N35 magnets, superglued into 10.3 mm pockets on a 13 mm circle, 0.1 mm under the top face, hold to a 40 mm self-adhesive steel disc in a 1.0 mm pocket in the floor's underside, which sits flush like the screw heads. The wedge has four rubber feet of its own on its flat underside. `tools/gen_case.py` writes it to `case/wedge/`, the STL top face down as it prints; 20 % infill, no supports. `case_geometry.steel_disc()` places the disc on the inner half, at least 15 mm from the controller's antenna end, 2 mm or more off the battery bay (whose floor is thinner), the counterbores and the reset pinhole, and 12 mm in from the floor's edge, clear of the feet. The floor over the pocket is 2.0 mm. Off the wedge the half lies flat on its feet.
 - Placement is in the Feet and tenting section of `INSTRUCTIONS.md` in the repo.
 
 ## Assembly

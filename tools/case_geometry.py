@@ -102,12 +102,22 @@ BATTERY_TAPE = 0.3             # double-sided mounting tape
 BATTERY_STACK_T = BATTERY_T + BATTERY_SIZE_TOL + BATTERY_GROWTH + BATTERY_TAPE
 BATTERY_CLEAR = 1.5            # cell to the bay wall, each side
 BAY_DEPTH = 1.6                # the bay is sunk this far into the floor, leaving 1.4 mm under the cell
-STEEL_D, STEEL_T = 40.0, 0.6   # round steel plate for the tenting stand's magnetic puck (LIRAMARK)
+STEEL_D, STEEL_T = 40.0, 0.6   # round steel plate the tenting wedge's magnets hold to (LIRAMARK)
 STEEL_POCKET_D = STEEL_D + 0.6 # its pocket in the floor's underside, 0.3 mm round the plate,
 STEEL_POCKET_DEPTH = 1.0       # deep enough for the plate and its tape (about 0.75 mm) with the pocket's
                                # bridged ceiling sagging a little, so the plate sits flush, like the screws
 STEEL_KEEP = 2.0               # pocket to the battery bay, the screw counterbores and the reset pinhole
 STEEL_EDGE_KEEP = 12.0         # pocket to the floor's edge, which keeps it clear of the feet
+FOOT_D, FOOT_H = 8.0, 3.0      # silicone bumper, stuck on the floor by hand
+FOOT_IN, FOOT_TOP_IN = 7.0, 17.0   # foot centres from the floor's edges, and the top two from its top edge
+WEDGE_ANGLE = 13.0             # the optional tenting wedge lifts the inner edge by this much
+WEDGE_EDGE = 4.0               # its thickness along the outer edge
+WEDGE_GAP = 0.3                # its top face under the floor: the half stands on its feet, in the recesses
+FOOT_RECESS_D = 12.0           # recess round each foot, which takes a foot stuck 2 mm off its mark
+MAGNET_D, MAGNET_T = 10.0, 3.0 # N35 disc magnet, four per wedge, superglued in under the steel disc
+MAGNET_POCKET_D = 10.3         # its pocket in the wedge's top face, with room for the glue
+MAGNET_RECESS = 0.1            # magnet top under the wedge's top face
+MAGNET_R = 13.0                # the magnets' circle round the steel disc's centre: all four under the disc
 CBORE_MOUTH_R = 2.8            # a case screw's counterbore with its chamfered mouth (gen_case.py)
 RESET_MOUTH_R = 2.0            # the reset pinhole's chamfered mouth (gen_case.py)
 UNDERSIDE_H = 2.0             # hotswap sockets (1.85 mm) and DO-35 diodes (1.75 mm body) under the PCB
@@ -485,7 +495,7 @@ def _steel_disc(side):
     best = None
     x0, y0, x1, y1 = floor.bounds
     for x in _steps(x0, x1, 0.5):
-        if x < inner_x: continue                      # the inner half: the puck lifts the inner edge
+        if x < inner_x: continue                      # the inner half, where the wedge is thick
         for y in _steps(y0, y1, 0.5):
             c = Point(x, y)
             edge = floor.exterior.distance(c) - r
@@ -500,12 +510,63 @@ def _steel_disc(side):
 
 
 def steel_disc(h):
-    """The centre (x, y) of the tenting stand's steel disc, set flush into a pocket in the floor's
+    """The centre (x, y) of the steel disc the tenting wedge's magnets hold to, set flush into a pocket in the floor's
     underside: on the inner half, ANTENNA_KEEP from the antenna end, STEEL_EDGE_KEEP in from the
     floor's edge (clear of the feet) and STEEL_KEEP off the battery bay, whose floor is thinner, and
     off the screw counterbores and the reset pinhole, as far from all of them as it can be. The right
     half's is the left's, mirrored."""
     return _steel_disc(h["side"])
+
+
+def floor_outline(h):
+    """The case floor's outline, [(x, y)]: the PCB outline grown by WALL_OUT, with sharp corners."""
+    from shapely.geometry import Polygon
+    return list(Polygon(h["outline"]).buffer(WALL_OUT, join_style=2).exterior.coords)[:-1]
+
+
+def outer_x(h):
+    """The floor's x at its outer edge, the one that stays on the desk."""
+    xs = [p[0] for p in floor_outline(h)]
+    return min(xs) if h["side"] == "left" else max(xs)
+
+
+@functools.lru_cache(maxsize=None)
+def _feet(side):
+    h = halves()[side]
+    if side == "right":
+        return [_mirror(h, p) for p in _feet("left")]
+    from shapely.geometry import LineString, Polygon
+    floor = Polygon(floor_outline(h))
+    inset = floor.buffer(-FOOT_IN, join_style=2)
+    corners = list(inset.exterior.coords)[:-1]
+    mid = (floor.bounds[0] + floor.bounds[2]) / 2
+    outer_bottom = max((p for p in corners if p[0] < mid), key=lambda p: p[1])
+    thumb_tip = max(corners, key=lambda p: p[1])
+    def across_top(pick):
+        """The point FOOT_IN in from the side, FOOT_TOP_IN below the top edge."""
+        x = pick(p[0] for p in corners)
+        top = LineString([(x, floor.bounds[1] - 1), (x, floor.bounds[3] + 1)]).intersection(floor).bounds[1]
+        y = top + FOOT_TOP_IN
+        return pick(LineString([(floor.bounds[0], y), (floor.bounds[2], y)]).intersection(inset).bounds[i] for i in (0, 2)), y
+    return [outer_bottom, thumb_tip, across_top(min), across_top(max)]
+
+
+def feet(h):
+    """The four rubber feet, [(x, y)]: at the outer bottom corner and the tip under the thumbs, FOOT_IN
+    in from the edges, and at the outer and inner top, FOOT_IN from the side and FOOT_TOP_IN below the
+    top edge. The right half's are the left's, mirrored."""
+    return _feet(h["side"])
+
+
+def magnets(h):
+    """The tenting wedge's four magnets, [(x, y)], in a square under the steel disc."""
+    cx, cy = steel_disc(h)
+    return [(cx + MAGNET_R * dx, cy + MAGNET_R * dy) for dx, dy in ((1, 0), (0, 1), (-1, 0), (0, -1))]
+
+
+def wedge_thickness(h, p):
+    """The tenting wedge's thickness at p, measured square to its top face."""
+    return WEDGE_EDGE + abs(p[0] - outer_x(h)) * math.tan(math.radians(WEDGE_ANGLE))
 
 
 def usb_port():

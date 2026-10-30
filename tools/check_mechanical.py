@@ -11,7 +11,7 @@ from pathlib import Path
 
 import pcbnew
 from shapely.affinity import rotate, translate
-from shapely.geometry import Point, box
+from shapely.geometry import Point, Polygon, box
 
 sys.path.insert(0, str(Path(__file__).parent))
 import case_geometry as C
@@ -81,6 +81,21 @@ for side, h in C.halves().items():
     require(disc_bay >= 1.5 and disc_screw >= 1.0 and disc_reset >= 1.0,
             f"{side} steel disc pocket too close to the battery bay, a counterbore or the reset pinhole")
     require(disc_antenna >= 15.0, f"{side} steel disc too close to the antenna")
+    feet = C.feet(h)
+    floor = Polygon(C.floor_outline(h))
+    foot_edge = min(floor.exterior.distance(Point(p)) for p in feet)
+    foot_room = C.FOOT_RECESS_D / 2 - 2.0
+    foot_screw = min(math.dist(p, s) for p in feet for s in C.case_screws(h, C.tabs(h))) - foot_room - G.CBORE_D / 2 - G.CBORE_CHAMFER
+    foot_reset = min(math.dist(p, h["reset"]) for p in feet) - foot_room - G.RESET_HOLE_D
+    foot_disc = min(disc.distance(Point(p)) for p in feet) - foot_room
+    require(foot_edge >= C.FOOT_IN - 0.01 and foot_screw >= 0.0 and foot_reset >= 0.0 and foot_disc >= 0.0,
+            f"{side} a foot is too close to the floor's edge, a counterbore, the pinhole or the steel disc")
+    magnet_disc = min(C.STEEL_D / 2 - math.dist(p, C.steel_disc(h)) - C.MAGNET_D / 2 for p in C.magnets(h))
+    magnet_web = min(math.dist(a, b) for a in C.magnets(h) for b in C.magnets(h) if a != b) - C.MAGNET_POCKET_D
+    magnet_floor = min(C.wedge_thickness(h, p) - C.MAGNET_T - C.MAGNET_RECESS for p in C.magnets(h))
+    recess_floor = min(C.wedge_thickness(h, p) - (C.FOOT_H - C.WEDGE_GAP) for p in feet)
+    require(magnet_disc >= 0.0 and magnet_web >= 2.0, f"{side} wedge magnets off the steel disc, or too close together")
+    require(magnet_floor >= 2.0 and recess_floor >= 2.0, f"{side} wedge too thin under a magnet or a foot")
     encoder = board.FindFootprintByReference("ENC101" if side == "left" else "ENC201")
     pins = {pad.GetNumber(): pad for pad in encoder.Pads() if pad.GetNumber() != "MP"}
     def mm_point(pad):
@@ -117,6 +132,7 @@ for side, h in C.halves().items():
           f"deck window {window_spare:.2f} mm spare after tolerances; "
           f"battery lateral {tall_gap:.1f} mm to parts / {antenna_gap:.1f} mm to antenna; "
           f"steel disc {disc_antenna:.1f} mm from the antenna, {min(disc_bay, disc_screw, disc_reset):.1f} mm off the bay, screws and pinhole; "
+          f"wedge {C.wedge_thickness(h, C.steel_disc(h)):.1f} mm thick at the disc, {recess_floor:.1f} mm under the thinnest foot recess; "
           "3D overlaps 0", flush=True)
 
 _, battery_gap, pressed_gap = C.battery_heights()
@@ -124,6 +140,7 @@ require(pressed_gap >= 1.0 - 1e-9, "battery contacts underside at full gasket tr
 require(C.FLOAT_GAP >= 1.5, "controller has insufficient float travel")
 require(C.FLOOR_T - C.STEEL_POCKET_DEPTH >= 1.8, "floor too thin over the steel disc's pocket")
 require(C.STEEL_POCKET_DEPTH >= C.STEEL_T + 0.1, "steel disc stands proud of the floor")
+require(C.WEDGE_GAP + C.MAGNET_RECESS + C.STEEL_POCKET_DEPTH - C.STEEL_T <= 1.0, "wedge magnets too far from the steel disc")
 require(abs(C.CBORE_MOUTH_R - (G.CBORE_D / 2 + G.CBORE_CHAMFER)) < 1e-9 and abs(C.RESET_MOUTH_R - G.RESET_HOLE_D) < 1e-9,
         "case_geometry's counterbore or pinhole size differs from gen_case's")
 threads = C.standoff_threads()

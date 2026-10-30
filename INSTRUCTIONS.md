@@ -64,9 +64,11 @@ Counts are for the whole keyboard (two halves). Stores, links, prices and spares
 
 | Part | Count | Remarks |
 | :--- | :---: | :--- |
-| Silicone bumper, 8 × 3 mm | 8 | |
+| Silicone bumper, 8 × 3 mm | 16 | 8 without the wedges |
 | Round steel plate, 40 mm, self-adhesive | 2 | Sits flush in a pocket in each floor |
-| Magnetic tenting stand for split keyboards | 2 | Optional |
+| 3D-printed tenting wedge | 2 | Optional |
+| Neodymium disc magnet, 10 × 3 mm | 8 | For the wedges |
+| Superglue | 1 | For the wedges |
 | USB-A to 2 × USB-C cable | 1 | Optional: both halves from one port |
 
 ## Tools
@@ -250,6 +252,11 @@ Print [`keygen-left-bottom.stl`](https://github.com/milindmadhukar/keygen/releas
 in PETG at 0.2 mm layers and 90 % infill, dense for weight and a deeper sound: the bottom shells
 floor-down and the top frames deck-down, without supports (the 40 mm pocket for the steel disc in
 each floor is bridged). A printing service can print from the same settings.
+
+The tenting wedges are optional and can come later:
+[`keygen-left-wedge.stl`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-left-wedge.stl)
+and [`keygen-right-wedge.stl`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-right-wedge.stl),
+in PETG at 0.2 mm layers and 20 % infill, top face down as the STLs lie, without supports.
 
 > [!NOTE]
 > The fits are close: 1.0 mm from the plate edge to the wall, 0.5 mm round each gasket tab.
@@ -615,8 +622,14 @@ it does not bridge the battery bay or touch the solder joints.
    counterbores and the reset pinhole.
 2. **Steel disc.** Press a 40 mm round steel plate, adhesive side down, into the round pocket in the
    floor. It sits flush, like the screw heads.
-3. **Stand.** The tenting stand's magnetic puck holds to the disc, and the half tilts on its two outer
-   feet. Pull the stand off to lay the half flat on its feet.
+3. **Wedges (optional).** Try the half on its wedge first: each foot must drop into its 12 mm recess
+   in the wedge's top face. Then put a drop of superglue in each of the four 10 mm pockets and press
+   in a magnet until it bottoms, one at a time and away from the others so they don't jump together.
+   Let the glue cure with the half off the wedge. Stick four bumpers on the wedge's flat underside,
+   near its corners.
+4. **Tenting.** Set the half on its wedge, thick side towards the middle of the desk. Its feet drop
+   into the recesses and the magnets hold the disc. Lift it off to lay the half flat on its feet, or
+   to reach the reset pinhole.
 
 ![Keygen turned over, showing the underside of both bottom shells](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-bottom.jpg)
 

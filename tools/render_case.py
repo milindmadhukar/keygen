@@ -8,12 +8,16 @@ render-case-exploded.png  bottom shell, case foam, PCB, switch pads, plate foam,
 render-case-parts.png     the printed parts alone: each bottom shell with its top frame above it
 render-case-bottom.png    the case from below: floor, case screw counterbores, reset pinholes, USB-C and
                           switch openings
+render-case-wedge.png     the keyboard tented on its wedges, from the front: each half turned to the wedge's
+                          angle, so the desk runs level under both
+render-case-wedge-parts.png   the wedges alone: the foot recesses and the magnet pockets in their top faces
 render-plate.png          the switch plates, top view
 
 The case views attach the parts from case/*/step/ (run gen_case.py first) to a copy of the board as 3D
 models, with the same opaque black mask as render_board.py; the plate view gives the plate board a pale
 tinted mask for its clear polycarbonate. KiCad only renders a board, so the
-case-only views use a scratch board made of 1 mm squares hidden inside the case walls.
+case-only views use a scratch board made of 1 mm squares hidden inside the case walls. KiCad cannot
+tilt the board either, so the tented view renders it level and turns each half's image.
 
     python3 tools/render_case.py
 """
@@ -50,6 +54,9 @@ CASE_VIEWS = {
                    "--rotate", "-45,0,0", "--zoom", "1.4"],
     "case-bottom": ["-w", "5600", "-h", "2600", "--quality", "basic", "--side", "bottom", "--zoom", "2.1"],
 }
+WEDGE_VIEW = ["-w", "5600", "-h", "3000", "--quality", "basic", "--perspective", "--rotate", "-82,0,0", "--zoom", "1.5"]
+WEDGE_PARTS_VIEW = ["-w", "5600", "-h", "3200", "--quality", "basic", "--perspective", "--rotate", "-42,0,0", "--zoom", "0.42"]
+WEDGE_PARTS_LIFT = 36.0                                   # wedges raised round the scratch board's squares
 
 
 def case_footprint(lifts, parts=("bottom", "plate", "top")):
@@ -73,35 +80,64 @@ def case_footprint(lifts, parts=("bottom", "plate", "top")):
             f'(attr board_only exclude_from_pos_files exclude_from_bom)\n' + "\n".join(models) + ")\n")
 
 
-def render(board, name, args):
+def render(board, name, args, finish=None):
     raw = ROOT / f"assets/_{name}.png"; out = ROOT / f"assets/render-{name}.png"
     subprocess.run(["kicad-cli", "pcb", "render", "-o", str(raw), *args, "--background", "transparent",
                     "--use-board-stackup-colors", str(board)], check=True, capture_output=True)
-    subprocess.run(["magick", str(raw), "-trim", "+repage", "-bordercolor", "none", "-border", "20",
-                    "-resize", "3840x", "-strip", str(out)], check=True)
+    if finish:
+        finish(raw, out)
+    else:
+        subprocess.run(["magick", str(raw), "-trim", "+repage", "-bordercolor", "none", "-border", "20",
+                        "-resize", "3840x", "-strip", str(out)], check=True)
     raw.unlink()
     print(f"wrote {out.relative_to(ROOT)}")
 
 
-def hidden_board():
-    """Board text whose outline is a set of 1 mm squares, one in the middle of each case wall (bar the
-    thin wall by the ports), each as far as it can get from the tab pockets and screw holes. They
-    stay out of sight but span the case, so KiCad frames the view on the whole case."""
+def squares_board(points):
+    """Board text whose outline is a 1 mm square at each point."""
     b = pcbnew.BOARD()
+    for x, y in points:
+        corners = [(x - .5, y - .5), (x + .5, y - .5), (x + .5, y + .5), (x - .5, y + .5)]
+        for (ax, ay), (bx, by) in zip(corners, corners[1:] + corners[:1]):
+            sh = pcbnew.PCB_SHAPE(b); sh.SetShape(pcbnew.SHAPE_T_SEGMENT); sh.SetLayer(pcbnew.Edge_Cuts)
+            sh.SetStart(pcbnew.VECTOR2I(pcbnew.FromMM(ax), pcbnew.FromMM(ay)))
+            sh.SetEnd(pcbnew.VECTOR2I(pcbnew.FromMM(bx), pcbnew.FromMM(by))); b.Add(sh)
+    pcbnew.SaveBoard(str(TMP), b)
+    return TMP.read_text().rstrip()
+
+
+def hidden_board():
+    """Squares in the middle of each case wall (bar the thin wall by the ports), each as far as it
+    can get from the tab pockets and screw holes. They stay out of sight but span the case, so KiCad
+    frames the view on the whole case."""
+    points = []
     for h in C.halves().values():
         tabs = C.tabs(h)
         taken = [t["centre"] for t in tabs] + C.case_screws(h, tabs)
         for e in h["edges"]:
             if e is h["port_edge"] or e.len < 12: continue
             s = max(range(5, int(e.len) - 5), key=lambda s: min(math.dist(e.at(s), p) for p in taken))
-            x, y = e.at(s, C.screw_offset())
-            corners = [(x - .5, y - .5), (x + .5, y - .5), (x + .5, y + .5), (x - .5, y + .5)]
-            for (ax, ay), (bx, by) in zip(corners, corners[1:] + corners[:1]):
-                sh = pcbnew.PCB_SHAPE(b); sh.SetShape(pcbnew.SHAPE_T_SEGMENT); sh.SetLayer(pcbnew.Edge_Cuts)
-                sh.SetStart(pcbnew.VECTOR2I(pcbnew.FromMM(ax), pcbnew.FromMM(ay)))
-                sh.SetEnd(pcbnew.VECTOR2I(pcbnew.FromMM(bx), pcbnew.FromMM(by))); b.Add(sh)
-    pcbnew.SaveBoard(str(TMP), b)
-    return TMP.read_text().rstrip()
+            points.append(e.at(s, C.screw_offset()))
+    return squares_board(points)
+
+
+def wedge_board():
+    """Squares inside the wedges' thick inner parts, once they are lifted WEDGE_PARTS_LIFT."""
+    points = []
+    for h in C.halves().values():
+        xs, ys = zip(*h["outline"])
+        x = max(xs) - 30.0 if h["side"] == "left" else min(xs) + 30.0
+        points += [(x, min(ys) + 30.0), (x, max(ys) - 40.0)]
+    return squares_board(points)
+
+
+def tented(raw, out):
+    """Turn each half of the level render to the wedge's angle, inner edge up, and stand them side by side."""
+    half = lambda crop, angle: ["(", str(raw), "-crop", crop, "+repage", "-trim", "+repage", "-background", "none",
+                                "-rotate", f"{angle:g}", "+repage", "-trim", "+repage", ")"]
+    subprocess.run(["magick", *half("50%x100%+0+0", -C.WEDGE_ANGLE), *half(f"50%x100%+{int(WEDGE_VIEW[1]) // 2}+0", C.WEDGE_ANGLE),
+                    "-background", "none", "-gravity", "south", "+append", "-bordercolor", "none", "-border", "20",
+                    "-resize", "3840x", "-strip", str(out)], check=True)
 
 
 def main():
@@ -113,6 +149,11 @@ def main():
             parts = list(EXPLODE) if exploded else ["bottom", "plate", "top"]
             TMP.write_text(board[:-1] + case_footprint(EXPLODE if exploded else {}, parts) + ")\n")
             render(TMP, name, args)
+        TMP.write_text(base[:-1] + case_footprint({}, ["bottom", "plate", "top", "wedge"]) + ")\n")
+        render(TMP, "case-wedge", WEDGE_VIEW, tented)
+        wedges = wedge_board()
+        TMP.write_text(wedges[:-1] + case_footprint({"wedge": WEDGE_PARTS_LIFT}, ("wedge",)) + ")\n")
+        render(TMP, "case-wedge-parts", WEDGE_PARTS_VIEW)
         empty = hidden_board()
         for name, args in CASE_VIEWS.items():
             lifts = {"top": PARTS_LIFT} if name == "case-parts" else {}

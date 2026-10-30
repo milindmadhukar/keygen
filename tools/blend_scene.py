@@ -351,7 +351,7 @@ def build_parts():
     data = json.loads((TMP / "scene.json").read_text())
     root = bpy.data.collections.new("Keygen"); bpy.context.scene.collection.children.link(root)
     cols = {}
-    for name in ("Board", "Case", "Plate", "Keycaps", "LEDs"):
+    for name in ("Board", "Case", "Wedges", "Plate", "Keycaps", "LEDs"):
         cols[name] = bpy.data.collections.new(name); root.children.link(cols[name])
     mats = materials()
 
@@ -367,7 +367,13 @@ def build_parts():
             o = import_stl(ROOT / f"case/{part}/stl/keygen-{side}-{part}.stl", cols[col], f"{side} {part}")
             o.location.z = top
             o.data.materials.append(mats[mat])
-    log("case: bottom shells, top frames and plates")
+        o = import_stl(ROOT / f"case/wedge/stl/keygen-{side}-wedge.stl", cols["Wedges"], f"{side} wedge")
+        o.data.transform(Matrix.Rotation(math.pi, 4, "X"))    # the STL lies top face down, as it prints
+        o.location.z = top + data["wedge_top"] * MM
+        o.data.materials.append(mats["case"])
+        o["tent_angle"], o["tent_edge"] = data["wedge_angle"], data["wedge_edge"] * MM
+        o.hide_render = o.hide_viewport = True                # blend_render.py shows them for the tented views
+    log("case: bottom shells, top frames, plates and wedges")
 
     caps = {s: keycap_mesh(s) for s in sorted({k["size"] for k in data["keys"]})}
     for me in caps.values():

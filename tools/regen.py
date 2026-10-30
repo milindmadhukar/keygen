@@ -72,9 +72,10 @@ STEPS = [
      ["case/plate/pdf/keygen-case-footprint-portrait.pdf"]),
     ("case", [CAD, "tools/gen_case.py"], [PCB],
      ["case/keygen-case.step", "case/bottom/stl/*.stl", "case/top/stl/*.stl", "case/plate/stl/*.stl", "case/plate/step/*.step",
+      "case/wedge/stl/*.stl", "case/wedge/step/*.step",
       "case/foam/dxf/*.dxf", "case/foam/svg/*.svg", "case/foam/step/*.step"]),
     ("case-renders", [PY, "tools/render_case.py"],
-     [PCB, "pcb/keygen.kicad_pro", "pcb/plate/keygen-plate.kicad_pcb", "case/*.step", "pcb/lib/**", *SUBMODULES],
+     [PCB, "pcb/keygen.kicad_pro", "pcb/plate/keygen-plate.kicad_pcb", "case/*.step", "case/wedge/step/*.step", "pcb/lib/**", *SUBMODULES],
      ["assets/render-case*.png", "assets/render-plate.png"]),
     ("board-renders", [PY, "tools/render_board.py"], [PCB, "pcb/keygen.kicad_pro", "pcb/lib/**", *SUBMODULES],
      ["assets/render-hero.png", "assets/render-top.png", "assets/render-bottom.png",
@@ -90,13 +91,18 @@ STEPS = [
       "tools/blend_scene.py", "tools/blend_render.py", "blender/keygen.blend", "tools/render_oled.py",
       "assets/oled-*.svg"],
      ["assets/render-studio-*.jpg", "assets/render-studio-*.gif"]),
+    ("studio-tented", [PY, "tools/render_blender.py", "--tented"],
+     [PCB, "pcb/keygen.kicad_pro", "pcb/lib/**", *SUBMODULES, "case/*/stl/*.stl", "tools/gen_blend.py",
+      "tools/blend_scene.py", "tools/blend_render.py", "blender/keygen.blend", "tools/render_oled.py",
+      "assets/oled-*.svg"],
+     ["assets/render-studio-tented-*.jpg", "assets/render-studio-tented-*.gif"]),
     ("fab", [PY, "tools/export_fab.py"], [PCB, "pcb/keygen.kicad_pro"],
      ["fab/keygen-gerbers.zip", "fab/keygen-left-gerbers.zip", "fab/keygen-right-gerbers.zip", "fab/ORDER.md"]),
     ("assembly-bom", [PY, "tools/export_bom.py"], ["pcb/*.kicad_sch", "bom/bom.csv"], ["fab/BOM.md", "fab/BOM-*.csv"]),
     ("bom-page", [PY, "tools/render_bom.py"], ["bom/bom.csv"], ["plan/bom.html", "notes/13 - bill of materials.md"]),
 ]
 LOCAL = {"blender"}
-ON_REQUEST = {"blender", "studio-renders"}
+ON_REQUEST = {"blender", "studio-renders", "studio-tented"}
 
 
 def git(*args):

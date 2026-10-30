@@ -14,17 +14,18 @@ leds_####.png         the hero view, a rainbow wave running across the LEDs (a l
 turntable_####.png    one turn round the keyboard (a looping GIF's frames)
 
 The linked parts are swapped for a local copy first, so the LEDs and the camera can be animated.
---preview renders small and noisy, to check a change quickly.
+--preview renders small and noisy, to check a change quickly. --tented stands each half on its wedge.
 """
 import colorsys, math, sys
 from pathlib import Path
 
-import bpy
-from mathutils import Vector
+import bmesh, bpy
+from mathutils import Matrix, Vector
 
 argv = sys.argv[sys.argv.index("--") + 1:]
 OUT = Path(argv[0])
 PREVIEW = "--preview" in argv
+TENTED = "--tented" in argv
 VIEWS = [a for a in argv[1:] if not a.startswith("--")] or ["hero", "top", "thumbs", "oled", "side", "leds",
                                                              "turntable", "bottom"]
 
@@ -59,6 +60,51 @@ def bounds(col):
     lo = Vector((min(p.x for p in pts), min(p.y for p in pts), min(p.z for p in pts)))
     hi = Vector((max(p.x for p in pts), max(p.y for p in pts), max(p.z for p in pts)))
     return lo, hi
+
+
+def split_halves(col, mid):
+    """Cut every mesh that spans the gap between the halves in two, so each half can move on its own."""
+    bpy.context.view_layer.update()
+    for o in [o for o in col.all_objects if o.type == "MESH"]:
+        xs = [(o.matrix_world @ Vector(c)).x for c in o.bound_box]
+        if not min(xs) < mid < max(xs):
+            continue
+        twin = o.copy(); twin.data = o.data.copy()
+        for c in o.users_collection:
+            c.objects.link(twin)
+        for ob, on_left in ((o, True), (twin, False)):
+            bm = bmesh.new(); bm.from_mesh(ob.data)
+            bmesh.ops.delete(bm, geom=[v for v in bm.verts if ((ob.matrix_world @ v.co).x < mid) != on_left], context="VERTS")
+            bm.to_mesh(ob.data); bm.free()
+
+
+def tent(col, floor_z):
+    """Stand each half on its wedge: tilt it about the wedge's outer bottom edge, and set that edge on the floor."""
+    wedges = next(c for c in col.children if c.name.split(".")[0] == "Wedges").objects
+    bpy.context.view_layer.update()
+    box = lambda o: [o.matrix_world @ Vector(c) for o_ in [o] for c in o_.bound_box]
+    left = next(o for o in wedges if o.name.startswith("left"))
+    right = next(o for o in wedges if o.name.startswith("right"))
+    mid = (max(p.x for p in box(left)) + min(p.x for p in box(right))) / 2
+    turn = {}
+    for w, side, sign in ((left, "left", -1), (right, "right", 1)):
+        w.hide_render = w.hide_viewport = False
+        pts = box(w)
+        x = min(p.x for p in pts) if side == "left" else max(p.x for p in pts)
+        pivot = Vector((x, 0, max(p.z for p in pts) - w["tent_edge"]))
+        turn[side] = (Matrix.Translation((x, 0, floor_z)) @ Matrix.Rotation(sign * math.radians(w["tent_angle"]), 4, "Y")
+                      @ Matrix.Translation(-pivot))
+    split_halves(col, mid)
+    bpy.context.view_layer.update()
+    placed = []
+    for o in col.all_objects:
+        pts = box(o) if o.type == "MESH" else [o.matrix_world.translation]
+        placed.append((o, o.matrix_world.copy(), sum(p.x for p in pts) / len(pts) < mid))
+    for o, world, on_left in placed:
+        o.parent = None
+        o.matrix_world = turn["left" if on_left else "right"] @ world
+    bpy.context.view_layer.update()
+    log("tented on the wedges")
 
 
 def turn_over(col, lo, centre):
@@ -150,7 +196,12 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
     scene = bpy.context.scene
     col = localise()
+    if TENTED:
+        floor_z = bounds(col)[0].z
+        tent(col, floor_z)
     lo, hi = bounds(col)
+    if TENTED:
+        lo.z = floor_z
     centre, size = (lo + hi) / 2, hi - lo
     hero = scene.camera
     bpy.context.preferences.edit.keyframe_new_interpolation_type = "LINEAR"

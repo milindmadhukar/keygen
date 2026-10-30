@@ -24,7 +24,7 @@ A one-off, **flat, wireless split keyboard** built on the **Redox** key layout, 
 - **Two nRF52840 controllers**, hidden under the PCB, USB-C through the case
 - **Bluetooth or USB-C** to the computer, **Bluetooth** between halves
 - **ZMK** firmware
-- **Custom PCB** designed in KiCad 10 (the PCB-learning goal), 3D-printed closed case, tented with a stand
+- **Custom PCB** designed in KiCad 10 (the PCB-learning goal), 3D-printed closed case, tented with a printed wedge
 
 No v2 is planned. At most two complete keyboards get built.
 
@@ -289,7 +289,7 @@ See [[05 - pcb design]].
 - A rounded **USB-C port**, sized for a plug carried by the floating stack, and a **power switch slot** on the top edge, with the wall thinned outside them, and a guided **reset pinhole** in the floor. The reset buttons mirror between the halves (left origin at x 182.85), and so do the pinholes.
 - 7.5 mm under the PCB for the socketed controller, plus 1.5 mm to float; the ≤ 5 mm nominal battery fits with thickness and tape allowances.
 - Foam for a thocky sound: a 0.5 mm Poron ring switch pad under each switch, 2 mm EVA plate foam taped under the plate and 5 mm EVA case foam.
-- **Tenting** with a detachable magnetic stand per half, holding to a steel plate on the floor; four rubber feet for flat use.
+- **Tenting** with an optional printed 13° wedge per half, held by four magnets to a steel plate on the floor; four rubber feet for flat use.
 
 The case and plate are generated from the PCB by `tools/gen_case.py` and `tools/gen_plate.py`. See [[09 - case design]].
 

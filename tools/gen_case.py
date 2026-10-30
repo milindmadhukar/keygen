@@ -12,6 +12,8 @@ case/foam/step/keygen-{left,right}-*-foam.step        the same layers as solids,
 case/foam/step/keygen-{left,right}-switch-pads.step   the switch pads, one ring per switch, in place
 case/foam/step/keygen-{left,right}-{lower,upper}-gaskets.step   the gasket strips under and over the
                                                       plate tabs, in place and squeezed as when closed
+case/wedge/{stl,step}/keygen-{left,right}-wedge.*     the optional tenting wedge: the STEP in place under the
+                                                      floor, the STL turned top face down, as it prints
 case/keygen-case.step                                 all six parts in place
 
 The plate and PCB, held together by the switches and spaced by standoffs, float on the plate's
@@ -122,6 +124,24 @@ def rect(r):
     return face([(x0, y0), (x1, y0), (x1, y1), (x0, y1)])
 
 
+def wedge(h):
+    """The tenting wedge under the floor, on the case's axes: the floor's outline, its top face just
+    under the floor and its flat underside tilted WEDGE_ANGLE, so the walls carry on from the case's.
+    The rubber feet stand in recesses in the top face, and the magnets lie in pockets under the
+    steel disc."""
+    top = C.BOTTOM_Z - C.WEDGE_GAP
+    sign = 1 if h["side"] == "left" else -1
+    tall = C.WEDGE_EDGE + 300 * math.tan(math.radians(C.WEDGE_ANGLE))
+    body = Pos(0, 0, top - tall) * extrude(face(C.floor_outline(h)), tall, dir=UP)
+    body -= port_cuts(h, top - tall - 1)[1]
+    body -= Pos(C.outer_x(h), 0, top - C.WEDGE_EDGE) * Rot(0, sign * C.WEDGE_ANGLE, 0) * Box(1000, 1000, 400, align=(Align.CENTER, Align.CENTER, Align.MAX))
+    for p in C.feet(h):
+        body -= cylinder(p, C.FOOT_RECESS_D, C.BOTTOM_Z - C.FOOT_H, top + 1)
+    for p in C.magnets(h):
+        body -= cylinder(p, C.MAGNET_POCKET_D, top - C.MAGNET_RECESS - C.MAGNET_T, top + 1)
+    return body
+
+
 # ---------------------------------------------------------------- plan view, in shapely (board mm, y down)
 def sq(p, size, rot=0.0, w=None):
     """A size x size square (or w x size), turned rot degrees clockwise like a key, centred on p."""
@@ -168,9 +188,9 @@ def nano_pocket(h):
     return (-3.0, along1, NANO_POCKET_W), [(c[0] + side[0], c[1] + side[1]), (c[0] - side[0], c[1] - side[1])]
 
 
-def port_cuts(h):
-    """The thinned wall outside the USB-C and the switch lever, as edge-aligned boxes: PORT_WALL in
-    front of the controller's pocket, and PORT_WALL past the inner wall round the lever."""
+def port_cuts(h, z0=C.BOTTOM_Z - 1):
+    """The thinned wall outside the USB-C and the switch lever, as edge-aligned boxes from z0 up:
+    PORT_WALL in front of the controller's pocket, and PORT_WALL past the inner wall round the lever."""
     e = h["port_edge"]
     s_usb, s_lev = e.s_of(h["usb"]), e.s_of(h["lever"])
     lo, hi = min(s_usb, s_lev) - 10.0, max(s_usb, s_lev) + 8.0
@@ -180,7 +200,7 @@ def port_cuts(h):
     out = lambda p: (p[0] - e.a[0]) * e.n[0] + (p[1] - e.a[1]) * e.n[1]
     deep = max(out(p) for p in corners) + C.PORT_WALL
     ps = sorted(e.s_of(p) for p in corners)
-    z = (C.BOTTOM_Z - 1, C.TOP_Z + 1)
+    z = (z0, C.TOP_Z + 1)
     if s_lev > s_usb:
         boxes = [(lo, ps[1] + C.PORT_WALL, deep), (ps[1] + C.PORT_WALL, hi, C.WALL_IN + C.PORT_WALL)]
     else:
@@ -580,6 +600,15 @@ def main():
                   f"{part.volume / 1000:.1f} cm3, valid {part.is_valid}")
             part.label = f"{side} {name}"
             parts.append(part)
+        tent = wedge(h)
+        tent.color = CASE_COLOUR
+        export_step(tent, str(out_path("wedge", "step", side)))
+        flipped = Rot(180, 0, 0) * tent
+        export_stl(Pos(0, 0, -flipped.bounding_box().min.Z) * flipped, str(out_path("wedge", "stl", side)),
+                   tolerance=0.02, angular_tolerance=0.2)
+        bb = tent.bounding_box()
+        print(f"keygen-{side}-wedge: {bb.size.X:.1f} x {bb.size.Y:.1f} x {bb.size.Z:.1f} mm, {tent.volume / 1000:.1f} cm3, "
+              f"{C.WEDGE_ANGLE:g} degrees, valid {tent.is_valid}")
         foam = foam_solids(h)
         for name, f in foams(h).items():
             w, l = write_foam(side, name, f)
