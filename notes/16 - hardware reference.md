@@ -35,12 +35,12 @@ updated: 2026-10-22T19:00
 - **Battery switch:** the MSK12C02 slide switch drives the gate of an AO3401A P-MOSFET, which
   carries the battery current: source on the battery, drain on B+. A 1 MΩ resistor holds the gate
   off between positions. Leave the switch on while charging.
-- **Battery:** a 505080 LiPo pouch (5 × 50 × 80 mm, about 2500 mAh) with a protection board, as
+- **Battery:** a KP-355085 LiPo pouch (3.5 × 50 × 85 mm, listed 3000 mAh) with a protection board, as
   the controller has no over-discharge cut-off. It lies in a bay sunk 1.6 mm into the case floor,
   which takes up to a 60 × 88 mm cell with a 6.1 mm installed height envelope, under the outer
   and middle key columns, its lead end towards
   the battery connector. With a 6.1 mm installed battery stack, it clears assumed 2 mm underside
-  parts by 2.5 mm at rest and 1.0 mm at full gasket travel, and stays at least 15 mm from the
+  parts by 4.4 mm at rest and 2.9 mm at full gasket travel, and stays at least 15 mm from the
   controller's antenna end.
 - **LED power:** the LEDs run from the battery (B+) through an AO3401A P-MOSFET, whose gate an
   AO3400A N-MOSFET on P0.08 pulls low to turn them on. 100 kΩ resistors hold both MOSFETs off, and
@@ -59,7 +59,7 @@ References and soldering notes for every part are in `fab/BOM.md`.
 | 1N4148 diode (DO-35) | 34 | 34 |
 | SK6812MINI-E RGB LED | 33 | 33 |
 | 10 µF + 100 nF capacitors, 1206 (LED rail) | 1 + 1 | 1 + 1 |
-| 505080 LiPo battery + JST-PH connector | 1 | 1 |
+| KP-355085 LiPo battery + JST-PH connector | 1 | 1 |
 | MSK12C02 power slide switch | 1 | 1 |
 | AO3401A P-MOSFET + 1 MΩ gate resistor, 1206 (battery switch) | 1 + 1 | 1 + 1 |
 | AO3401A P-MOSFET, AO3400A N-MOSFET, 2 × 100 kΩ, 1206 (LED power switch) | 1 + 1 + 2 | 1 + 1 + 2 |
@@ -87,14 +87,14 @@ References and soldering notes for every part are in `fab/BOM.md`.
   0.5 mm shims, and touch the case only through Poron strips (12 × 4 × 3 mm, cut from 80 × 4 × 3 mm strips), one above and
   one below each of the plate's 8 tabs per half. Closing the case squeezes each strip by 1.0 mm, a third of it.
 - **Plate:** clear polycarbonate, 1.5 mm, CNC-routed from sheet. 14 × 14 mm cut-outs following each key's
-  rotation, a 15 × 15 mm encoder cut-out and a 29.5 × 30 mm OLED window per half, and the PCB's M2
+  rotation, a 15 × 15 mm encoder cut-out and a 29.5 × 29.8 mm OLED window per half, and the PCB's M2
   holes. Each standoff is screwed to the PCB from below with an M2 × 5 button head; nothing
   screws into it from above, and its top bears on the plate.
 - **Case:** the bottom shell and top frame are screwed together from below with 8 M2 × 16 screws
   per half, up through the walls into heat-set inserts in blind holes in the top frame's underside,
-  none within 15 mm of the controller's antenna end. The heads sit 2 mm up in counterbores in the
-  floor; the top frame has no holes on top. The PCB top sits 13.6 mm
-  above the desk and the plate top 18.6 mm.
+  none within 15 mm of the controller's antenna end. The heads sit 4 mm up in counterbores in the
+  floor; the top frame has no holes on top. The PCB top sits 15.5 mm
+  above the desk and the plate top 20.5 mm.
 - **Top frame deck:** level with the frame's rim, 4.0 mm above the plate top, covering the plate
   everywhere but the keycaps (1.2 mm clear of each, the windows chamfered 0.4 mm at the deck top),
   the OLED window and the encoder. The OLED window opens out towards the thumbs; the glass sits

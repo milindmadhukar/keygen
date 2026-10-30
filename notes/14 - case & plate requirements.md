@@ -27,13 +27,13 @@ All the ports are on the **top edge** of each half, next to the controller, so o
 
 ## Inside the case (under the PCB)
 
-- **Tallest part: the controller on sockets.** The case reserves **7.5 mm below the PCB** for the socketed controller (the sockets and the board, plus 2.9 mm for its parts, pin tails and spare), plus 1.5 mm of float travel to the floor. The PCB's 3D model uses 3.0 mm sockets (`SOCKET_H` in `tools/gen_schematic.py`) under the 1.6 mm SuperMini with its mid-mount USB-C, and the USB-C port is placed from them: set `SOCKET_H` to the measured socket body before printing the case; the controller envelope and the case depth follow it.
-- **Battery** (decided 2026-10-23): a **505080 LiPo pouch, 80 × 50 × 5 mm, about 2500 mAh**, with a protection board. The bay takes a cell **≤ 5 mm thick and at most 60 × 88 mm** including the protection board. It lies in a **bay sunk 1.6 mm into the case floor**, long side across the board, under the outer and middle key columns, held with double-sided tape. Measure the actual cell before printing.
+- **Tallest part: the controller on sockets.** The case reserves **9.4 mm below the PCB** for the socketed controller (the sockets, the male pins' carrier and the board, plus 2.9 mm for its parts, pin tails and spare), plus 1.5 mm of float travel to the floor. The PCB's 3D model uses 3.0 mm sockets (`SOCKET_H` in `tools/gen_schematic.py`) under the 1.6 mm SuperMini with its mid-mount USB-C, and the USB-C port is placed from them: set `SOCKET_H` to the measured socket body before printing the case; the controller envelope and the case depth follow it.
+- **Battery**: a **KP-355085 LiPo pouch, 85 × 50 × 3.5 mm, listed 3000 mAh**, with a protection board. The bay takes a cell **≤ 5 mm thick and at most 60 × 88 mm** including the protection board. It lies in a **bay sunk 1.6 mm into the case floor**, long side across the board, under the outer and middle key columns, held with double-sided tape. Measure the actual cell before printing.
   - Bay: the cell plus 1.5 mm each side, 63 × 91 mm. Cell position (same coordinates as the table below): left half x 16.7–104.7, y 6.4–66.4; right half x 57.9–145.9, y 6.4–66.4. `tools/case_geometry.py` places it, as near the battery connector as the rules below allow.
   - Keep it **≥ 15 mm from the controller's antenna end** (no foil near the antenna) and ≥ 3 mm from the controller, the JST-PH connector, the slide switch, the reset button, the encoder and the OLED header pins. It has 10 mm.
-  - The lead end faces the side-entry JST-PH next to the controller, about 40 mm away, so a lead of 60 mm or more reaches it.
-  - Height: bay floor 10.6 mm below the PCB's underside. A 6.1 mm installed envelope (5.0 mm nominal cell + 0.3 mm thickness tolerance + 0.5 mm swelling + 0.3 mm tape) leaves 2.5 mm to the sockets and diodes (assumed 2.0 mm under the PCB), and 1.0 mm with the floating stack pressed 1.5 mm down. `tools/gen_case.py` checks the modeled envelope. Solder higher than 2.0 mm uses that gap.
-- **Case height:** 3.0 mm floor + 1.5 mm float gap + 7.5 mm controller envelope + 1.6 mm PCB puts the PCB top 13.6 mm above the desk, the plate top 18.6 mm and keycap tops about 33 mm, before tenting and feet. The full stack is in [[09 - case design#The stack]].
+  - The lead end faces the side-entry JST-PH next to the controller, about 40 mm away, so a lead of 80 mm or more reaches it.
+  - Height: bay floor 12.5 mm below the PCB's underside. A 6.1 mm installed envelope (5.0 mm nominal cell + 0.3 mm thickness tolerance + 0.5 mm swelling + 0.3 mm tape) leaves 4.4 mm to the sockets and diodes (assumed 2.0 mm under the PCB), and 2.9 mm with the floating stack pressed 1.5 mm down. `tools/gen_case.py` checks the modeled envelope. Solder higher than 2.0 mm uses that gap.
+- **Case height:** 3.0 mm floor + 1.5 mm float gap + 9.4 mm controller envelope + 1.6 mm PCB puts the PCB top 15.5 mm above the desk, the plate top 20.5 mm and keycap tops about 35 mm, before tenting and feet. The full stack is in [[09 - case design#The stack]].
 - **Plate standoff screws** under the PCB (M2 button heads, 1.1 mm) are lower than the hotswap sockets.
 - **Other underside parts.** Kailh hotswap sockets (~1.8 mm), through-hole diodes (~2 mm body, leads clipped flush), reverse-mount LEDs (nearly flush) and the switch pins poking through. Allow **≥ 4 mm** clear under the key area.
 - **Bluetooth antenna.** The nRF52840's chip antenna is at the controller's **bottom end** (opposite USB-C). The case must be **plastic**, with **no metal plate, weight or screws** under or right next to that end. The PCB already keeps ground fill out of that area.
@@ -49,7 +49,7 @@ All the ports are on the **top edge** of each half, next to the controller, so o
 - **Plate fixing.** Every standoff's top bears on the plate; the switches, clipped into the plate and plugged into the hotswap sockets, hold the plate to the PCB, and the case clamps the plate's tabs between the gasket strips.
 - **Mounting holes** line up with the PCB's M2 holes (table below), 2.2 mm.
 - **Gasket tabs:** 8 per half, 12 × 5 mm, on the plate edge, kept 22 mm from the USB-C and the switch lever. The right half's are the left's, mirrored.
-- **Encoder cut-out** (15 × 15 mm) and **OLED window** (29.5 × 30 mm) on both halves (see above). The encoder's two plated PCB mounting slots are 2.0 × 2.8 mm, widened from the vendor footprint's 1.5 × 2.8 mm for clearance around HongYan's 1.8–1.9 × 2.1–2.2 mm recommended holes.
+- **Encoder cut-out** (15 × 15 mm) and **OLED window** (29.5 × 29.8 mm) on both halves (see above). The encoder's two plated PCB mounting slots are 2.0 × 2.8 mm, widened from the vendor footprint's 1.5 × 2.8 mm for clearance around HongYan's 1.8–1.9 × 2.1–2.2 mm recommended holes.
 
 ## Lighting
 
@@ -58,7 +58,6 @@ All the ports are on the **top edge** of each half, next to the controller, so o
 
 ## Ergonomics and feel
 
-- **Weight in the base.** Light halves slide when you press inward (the Wolf and Dactyl builders both said so). Add steel or washers, but **not under the antenna end**.
 - **Tenting.** An optional printed 13° wedge per half, its four magnets on a 40 mm steel disc set flush into a 1.0 mm pocket in the inner half of the floor, at least 15 mm from the controller's antenna end and clear of the battery bay.
 - **Rubber feet** and **foam** (EVA case foam, Poron switch pads) for a thocky sound. See [[07 - switch & keycap selection]].
 - **Keycaps.** Blank DSA PBT, smoke translucent: 52 × 1u, 14 × 1.25u. Switches: Akko V3 Lavender Purple Pro.

@@ -2,7 +2,7 @@
 
 Place **two orders**: [`keygen-left-gerbers.zip`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-left-gerbers.zip) and
 [`keygen-right-gerbers.zip`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-right-gerbers.zip), 5 of each, from the build release.
-Ordered from JLCPCB (2026-10-27): US$15.40 per half, US$40.63 for both with UPS to India, plus customs.
+In the JLCPCB cart (2026-10-27): US$15.40 per half, US$40.63 for both with UPS to India, plus customs.
 [`keygen-gerbers.zip`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-gerbers.zip) (both halves in one design) is kept for fabs that price it better.
 
 | Setting | Value |

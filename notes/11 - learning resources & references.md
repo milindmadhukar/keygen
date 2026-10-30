@@ -46,7 +46,6 @@ The full list with prices is in [[13 - bill of materials]].
 - [nRF52840 SuperMini, A+A+A Store](https://www.aliexpress.com/item/1005007383270623.html) (AliExpress): controllers
 - [StacksKB](https://stackskb.com/store/1n4148-through-hole-diode/): 1N4148 diodes
 - [Hongyan EC11, Robu.in](https://robu.in/product/hongyan-ec11h-7ce20p1zd20-rotary-encoder-with-push-button-switch-vertical-plug-in-5-pin/): the encoders
-- [Easylander 505080](https://www.aliexpress.com/item/1005002973787972.html) (AliExpress): LiPo cells
 - Robu.in: JST-PH, MOSFETs, passives, slide switches
 - AliExpress: Poron switch pads and gasket strips; Amazon.in: EVA foam
 - [SZElectronic Store](https://www.aliexpress.com/item/1005008827240220.html) (AliExpress): blank DSA keycaps, every size

@@ -28,7 +28,6 @@ A custom split ergonomic keyboard built from scratch, covering the full hardware
 
 ### Build quality
 - **Creamy, quiet sound** from light tactile switches and foam layers in the case
-- **Weight** in the case base so the halves stay put
 
 ## Multiple hosts
 

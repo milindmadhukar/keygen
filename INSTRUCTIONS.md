@@ -33,7 +33,7 @@ Counts are for the whole keyboard (two halves). Stores, links, prices and spares
 | 0.96 in. I2C OLED, pins GND VCC SCL SDA | 2 | Some modules swap GND and VCC: don't use those |
 | 1×4 right-angle male pin header, 2.54 mm | 2 | Soldered into J101 / J201; cut from a 1×40 strip |
 | Female–female jumper wire, 2.54 mm | 8 | Four per OLED, their plug ends glued into one 4-pin plug; the other ends are cut off and soldered to the OLED |
-| LiPo 505080 (5 × 50 × 80 mm), JST-PH lead | 2 | With a protection board |
+| LiPo KP-355085 (3.5 × 50 × 85 mm) | 2 | With a protection board |
 | JST-PH 2.0 plug with 10 cm wires, 2-pin | 2 | For a battery without a JST-PH plug: solder its leads to the plug's wires and heat-shrink each joint |
 
 ### Switches, keycaps and knobs
@@ -67,23 +67,25 @@ Counts are for the whole keyboard (two halves). Stores, links, prices and spares
 | Silicone bumper, 8 × 3 mm | 16 | 8 without the wedges |
 | Round steel plate, 40 mm, self-adhesive | 2 | Sits flush in a pocket in each floor |
 | 3D-printed tenting wedge | 2 | Optional |
-| Neodymium disc magnet, 10 × 3 mm | 8 | For the wedges |
-| Superglue | 1 | For the wedges |
+| Neodymium disc magnet, 10 × 3 mm, N35 | 8 | For the wedges |
 | USB-A to 2 × USB-C cable | 1 | Optional: both halves from one port |
 
 ## Tools
 
 - A temperature-controlled soldering iron with a fine tip (300–350 °C; 320 °C for the LEDs)
-- Solder, no-clean flux paste in a syringe, desoldering wick
+- Solder, no-clean flux paste in a syringe, desoldering wick, heat-shrink tubing
+- Superglue, for the OLED plug and the wedge magnets, and a paint pen
 - Flush cutters and fine tweezers
 - A multimeter: continuity, polarity, battery voltage, and current for the charge check
-- Calipers, for the OLED module and the controller sockets
+- Calipers, for the OLED module, the controller sockets and their pins
+- A fine hacksaw or cutting disc, pliers and a small file, to cut the encoder shafts
 - Kapton tape
 - Isopropyl alcohol (90 % or more) and an old toothbrush, for flux residue
 - A magnifier, for the LED and SOT-23 joints
 - A USB-C cable and a computer, to flash and test
 - A 1.3 mm hex key (button heads), a 1.5 mm hex key (case screws), and an iron tip or heat-set tool
   for the inserts
+- Hot glue, if you would rather not melt the OLED's pegs
 - Thin double-sided tape for the battery: tissue tape, 0.3 mm or less, not foam tape
 - A keycap and switch puller
 - A craft knife and a steel ruler, to cut the foam by hand
@@ -139,14 +141,14 @@ The power parts beside each controller, enlarged:
 
 Most things can be ordered on day one. Two parts are made to fit parts you buy, so they wait until
 those have arrived and been measured: the switch plate (with its foam) waits for the OLED modules,
-and the case (with its foam) for the controller sockets and the OLED modules. Soldering needs neither, so the boards can
+and the case (with its foam) for the controller sockets, their pins and the OLED modules. Soldering needs neither, so the boards can
 be built and tested while the plate and the case are being made.
 
 | When | Do | Waiting for |
 |---|---|---|
 | Day one | Print the fit test. Order the PCBs and every part above, including the polycarbonate sheet and the EVA foam | Nothing. The parts shipped from abroad and the PCBs take longest: order them first |
 | The OLED modules have arrived | Measure one, then have the plates cut and cut the plate foam | The plate's OLED window is sized for a module of 27.5 × 28 mm or less |
-| The controller sockets and OLED modules have arrived | Measure both, then print the case and cut the case foam | The case's USB-C opening is placed from the socket height, and the top frame holds the OLED's glass in a pocket |
+| The controller sockets, their pins and the OLED modules have arrived | Measure them, then print the case and cut the case foam | The case's floor and USB-C opening are placed from the height of the socket and pin stack, and the top frame holds the OLED's glass in a pocket |
 | The PCBs and the electronics have arrived | Solder and test both boards, from [Inspect the board](#inspect-the-board) to [Encoder and matrix test](#encoder-and-matrix-test) | Nothing more |
 | The plates and the plate foam are ready | [Standoffs](#standoffs) to [Switches](#switches) | |
 | The case and the case foam are ready | [Heat-set inserts](#heat-set-inserts) to [Feet and tenting](#feet-and-tenting) | |
@@ -240,8 +242,10 @@ separate CNC router job.
 
 ### Case
 
-**When:** once the controller sockets and the OLED modules have arrived. Measure the height of a
-female socket strip's plastic body with calipers. If it is not 3.0 mm, set `SOCKET_H` in
+**When:** once the controller sockets, their pins and the OLED modules have arrived. With calipers,
+measure the plastic body of a female socket strip and the plastic carrier of the male pin strip,
+then push the pins into the socket and measure the two together: the controller rests on top of
+that stack. If they are not 3.0 mm and 1.9 mm, set `SOCKET_H` and `PIN_CARRIER_H` in
 [`tools/gen_schematic.py`](tools/gen_schematic.py) and run `tools/regen.py` before printing. Check
 the OLED module as in [Switch plates](#switch-plates): the top frame holds its glass.
 
@@ -256,12 +260,16 @@ each floor is bridged). A printing service can print from the same settings.
 The tenting wedges are optional and can come later:
 [`keygen-left-wedge.stl`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-left-wedge.stl)
 and [`keygen-right-wedge.stl`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-right-wedge.stl),
-in PETG at 0.2 mm layers and 20 % infill, top face down as the STLs lie, without supports.
+in PETG at 0.2 mm layers and 20 % infill, top face down as the STLs lie, without supports. Their
+magnet pockets are printed against the bed: if a magnet won't go in, sand the mouth rather than
+forcing it.
 
 > [!NOTE]
 > The fits are close: 1.0 mm from the plate edge to the wall, 0.5 mm round each gasket tab.
 > Calibrate the printer's flow and dimensions first, and try the plate in each bottom shell before
-> setting the inserts: sand a tight wall or pocket, don't force the plate.
+> setting the inserts: sand a tight wall or pocket, don't force the plate. Check the floor's disc
+> pocket too: its roof is a 40 mm bridge, and a disc that stands proud of it needs the sag scraped
+> flat.
 
 ---
 
@@ -285,7 +293,9 @@ On the back, beside the controller's footprint (see the enlarged power map above
 
 - AO3401A P-MOSFET **Q101 / Q201**, between the controller and the power switch.
 - 1 MΩ resistor **R101 / R201**, below it.
-- MSK12C02 slide switch **SW190 / SW290**, at the top edge.
+- MSK12C02 slide switch **SW190 / SW290**, at the top edge. First cut its pin 3 off with flush
+  cutters, leaving pad 3 empty: R101 / R201 turns the MOSFET off by itself, and without the pin the
+  switch can never join GND to the battery as it slides.
 
 ![MOSFET close-up](https://github.com/milindmadhukar/keygen/releases/download/media/assembly-part-mosfet.png)
 
@@ -338,6 +348,8 @@ upside down compared with most keyboards: chip and USB-C away from the PCB.
    every joint.
 5. Check that the USB-C end lines up with the board's top edge, overhanging it by 1 mm.
 
+Keep the pins' plastic carrier on: it stays between the socket and the controller.
+
 > [!WARNING]
 > Seated chip-side down, the pinout is mirrored and the battery lands on a GPIO.
 
@@ -352,7 +364,7 @@ upside down compared with most keyboards: chip and USB-C away from the PCB.
 4. Plug the battery in and check that the slide switch turns the half on and off. Leave the switch
    on while charging.
 5. **Charge current.** With the multimeter in series with the battery and USB plugged in, confirm
-   about 100 mA. An empty 2500 mAh cell takes roughly a day.
+   about 100 mA. An empty cell takes roughly a day.
 6. **Lead length.** Measure the battery lead from the pouch to the end of the plug. It runs about
    50 mm in the case, from the bay to **BT101 / BT201**; with less than about 80 mm, plug it in
    before taping the cell down (see [Battery](#battery)).
@@ -449,7 +461,7 @@ the bottom shell to the top frame around the edge.
 
 ![Cross-section showing the shim, standoff and screw between PCB and switch plate, with a switch and the foam](assets/assembly-standoffs.svg)
 
-Hold the standoff with your fingers and turn the screw with a small screwdriver until it stops,
+Hold the standoff with your fingers and turn the screw with the 1.3 mm hex key until it stops,
 then a little more: snug, not hard. The shim must not spin and the standoff must not rock.
 
 ---
@@ -474,17 +486,22 @@ then a little more: snug, not hard. The shim must not spin and the standoff must
 
 ## Plate and OLED
 
-1. Set the plate, foam side down, on the standoffs. It is not screwed down: line its standoff
-   holes up over the standoffs and it rests on them. The switches will clip it to the PCB.
-2. Check that the pin order printed on the OLED module is GND, VCC, SCL, SDA, the same as the
+1. Check that the pin order printed on the OLED module is GND, VCC, SCL, SDA, the same as the
    footprint. Some modules swap GND and VCC: don't use those.
-3. The module sits in the top frame, not on the PCB, and plugs into **J101 / J201** on a short lead,
+2. The module sits in the top frame, not on the PCB, and plugs into **J101 / J201** on a short lead,
    so the top frame can come off. Solder a **1×4 right-angle male header** into J101 / J201 from
    the front, its pins lying flat and pointing **away from the thumb keys**, under where the module
    will be. Solder it on the back and trim the pins flush there: the battery lead runs under them.
-4. If the module came with a header soldered on, remove it: clip the plastic bar off with flush
+3. Under the plug's path the front of the board has six socket tails (**U101 pads 7–12 / U201 pads
+   19–24**) and **BT101 / BT201 pad 2**. Trim them flush and keep those joints low, then try a
+   plug on the header: it must lie flat. If it still rides up, leave the plug and the header out
+   and solder the four wires straight into J101 / J201, with enough slack to lay the top frame
+   beside the half.
+4. Set the plate, foam side down, on the standoffs. It is not screwed down: line its standoff
+   holes up over the standoffs and it rests on them. The switches will clip it to the PCB.
+5. If the module came with a header soldered on, remove it: clip the plastic bar off with flush
    cutters, then heat each pin and pull it out with tweezers, and clear the holes with solder wick.
-5. Take four female–female jumper wires, ideally four colours. Line their plug ends up side by
+6. Take four female–female jumper wires, ideally four colours. Line their plug ends up side by
    side, in GND, VCC, SCL, SDA order, and glue the four housings together with a thin smear of
    superglue on their sides (keep it off the openings): they become one 4-pin plug that can only
    go on in that order. Cut the wires **45 mm** from the plug and strip 2 mm. Push them into the
@@ -494,7 +511,7 @@ then a little more: snug, not hard. The shim must not spin and the standoff must
    flat along the module's back, between its parts, towards its far edge, and hold them there with
    a strip of Kapton tape. The plug is not keyed and fits the header either way round, so mark
    pin 1 (GND) on it and beside the header with a paint pen.
-6. Push the plug onto the header and power the half: check the status screen appears. Until the
+7. Push the plug onto the header and power the half: check the status screen appears. Until the
    case is closed the module hangs on its lead; don't let it rest on the board while powered.
 
 The module is mounted in [Top frame](#top-frame). Its glass sits in a pocket under a 1.0 mm lip
@@ -546,7 +563,7 @@ them cool.
   towards the battery connector. With a short lead (see [Bring-up](#bring-up)), plug it into
   **BT101 / BT201** first, holding the plate-and-PCB unit on its edge beside the shell, then lay the
   cell in its bay.
-- Check the installed cell, protection board and tape before closing: the 1.0 mm gap at full gasket
+- Check the installed cell, protection board and tape before closing: the 2.9 mm gap at full gasket
   travel allows a 6.1 mm battery stack (5.0 mm cell, 0.3 mm thickness tolerance, 0.5 mm swelling and
   0.3 mm tape) and underside parts no taller than 2.0 mm. Excess solder or a thicker stack uses that
   gap.
@@ -592,7 +609,8 @@ it does not bridge the battery bay or touch the solder joints.
    that wraps round the far edge. The module must not move when pressed from the front.
 3. Plug the lead back onto the header, pin 1 to pin 1, and fit the top frame, the lead and plug
    lying flat under the module. Look through the window: the module should not have shifted.
-4. Holding the two parts together, turn the half over onto a soft cloth and drive the 8 M2 × 16
+4. Holding the two parts together, turn the half over onto a folded cloth with the bare encoder
+   shaft off its edge, so the half doesn't rest on the shaft, and drive the 8 M2 × 16
    screws up through the floor's counterbores evenly, a little at a time: snug, not tight, so the
    gaskets stay soft. The closed half should not rattle when shaken, and the plate should give a
    little when pressed in the middle; if it rattles, a strip has fallen off its ledge.
@@ -617,7 +635,7 @@ it does not bridge the battery bay or touch the solder joints.
 
 1. **Rubber feet.** Stick four 8 mm silicone bumpers on the floor, centred about 7 mm in from the
    edges: at the outer bottom corner and the tip under the thumb cluster, and at the outer and inner
-   top corners with their centres 17 mm below the top edge. Lower than that, the outer top foot
+   top corners with their centres 17 mm below the top edge. Nearer the edge than that, the outer top foot
    covers a screw counterbore, and the inner one the USB-C opening. Keep each one clear of the
    counterbores and the reset pinhole.
 2. **Steel disc.** Press a 40 mm round steel plate, adhesive side down, into the round pocket in the
@@ -625,7 +643,7 @@ it does not bridge the battery bay or touch the solder joints.
 3. **Wedges (optional).** Try the half on its wedge first: each foot must drop into its 12 mm recess
    in the wedge's top face. Then put a drop of superglue in each of the four 10 mm pockets and press
    in a magnet until it bottoms, one at a time and away from the others so they don't jump together.
-   Let the glue cure with the half off the wedge. Stick four bumpers on the wedge's flat underside,
+   Try the first magnet on the disc before gluing the rest. Let the glue cure with the half off the wedge. Stick four bumpers on the wedge's flat underside,
    near its corners.
 4. **Tenting.** Set the half on its wedge, thick side towards the middle of the desk. Its feet drop
    into the recesses and the magnets hold the disc. Lift it off to lay the half flat on its feet, or

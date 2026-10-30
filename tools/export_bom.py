@@ -117,7 +117,7 @@ DESCR = {
     "MX switch": "Kailh MX hotswap socket (CPG151101S11)",
 }
 def fab_instructions(name, refs):
-    side = "TOP" if name.startswith("EC11") else "BOTTOM"
+    side = "TOP" if name.startswith(("EC11", "OLED")) else "BOTTOM"
     if name.startswith("MX switch"):
         return "Kailh CPG151101S11 hotswap socket, BOTTOM side. Do NOT fit switches (customer installs)."
     if name.startswith("SK6812"):

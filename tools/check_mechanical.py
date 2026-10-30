@@ -174,5 +174,5 @@ for side, h in C.halves().items():
     wall = deep - max((p[0] - e.a[0]) * e.n[0] + (p[1] - e.a[1]) * e.n[1] for p in corners)
     require(wall >= 1.2, f"{side} wall in front of the controller's pocket too thin")
 print(f"usb-c: port {port_w:.1f} x {port_z1 - port_z0:.1f} mm (r {C.PORT_R:g}), centred on the receptacle "
-      f"{-C.USB_Z:.1f} mm under the PCB top with {C.SOCKET_H:g} mm sockets; a {C.PLUG_W:g} x {C.PLUG_H:g} mm "
+      f"{-C.USB_Z:.1f} mm under the PCB top with the controller {C.CONTROLLER_H:g} mm under the PCB; a {C.PLUG_W:g} x {C.PLUG_H:g} mm "
       f"plug keeps {C.PORT_CLEAR:g} mm clear at full float; {port_z0 - C.BOTTOM_Z:.1f} mm of wall below it")

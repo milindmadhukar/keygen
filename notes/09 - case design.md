@@ -19,7 +19,7 @@ Designed and generated from the PCB. The floor takes rubber feet, and a steel di
 ## Construction
 
 - **Material: PETG**, plastic all round because the nRF52840's antenna is inside.
-- **Shape:** flat, following the PCB outline 7.5 mm out, with sharp corners. Each half is 175.4 × 143.7 mm and 22.6 mm tall (bottom shell 17.1 mm, top frame 5.5 mm).
+- **Shape:** flat, following the PCB outline 7.5 mm out, with sharp corners. Each half is 175.4 × 143.7 mm and 24.5 mm tall (bottom shell 19.0 mm, top frame 5.5 mm).
 - **Gasket mount:** the plate and PCB are one unit, held together by the switches and spaced by M2 standoffs, and touch the case only through the gaskets.
   - The plate has **8 tabs per half**, 12 × 5 mm, spread round its edge and kept clear of the USB-C and power switch.
   - Each tab sits between two **Poron strips, 12 × 4 × 3 mm**, cut from 80 × 4 × 3 mm strips: one on a ledge in the bottom shell, one under the top frame. Closing the case squeezes each strip by 1.0 mm, a third of it, so a part printed 0.2 mm off still leaves it firmly held. That is 16 strips per half.
@@ -34,8 +34,8 @@ Heights above the PCB's top surface:
 
 | Layer | From | To |
 |---|---|---|
-| Case floor (battery bay sunk to −12.2 mm) | −13.6 mm | −10.6 mm |
-| Cavity (the controller envelope reaches −9.1 mm) | −10.6 mm | −1.6 mm |
+| Case floor (battery bay sunk to −14.1 mm) | −15.5 mm | −12.5 mm |
+| Cavity (the controller envelope reaches −11.0 mm) | −12.5 mm | −1.6 mm |
 | PCB | −1.6 mm | 0 |
 | Bottom shell walls, up to the joint | | 3.5 mm |
 | Lower gasket strip, on the ledge | 1.5 mm | 3.5 mm |
@@ -45,17 +45,17 @@ Heights above the PCB's top surface:
 | Top frame deck, over the plate | 7.0 mm | 9.0 mm |
 | Poron ring switch pads, on the PCB | 0 | 0.5 mm |
 | EVA plate foam, taped under the plate | 1.5 mm | 3.5 mm |
-| EVA case foam, on the floor | −10.6 mm | −5.6 mm |
+| EVA case foam, on the floor | −12.5 mm | −7.5 mm |
 | Knob underside, on the shaft cut 2.4 mm short | 13.1 mm | |
 
-So the PCB top is 13.6 mm above the desk and the plate top 18.6 mm. Keycap tops are about 33 mm, before tenting and feet.
+So the PCB top is 15.5 mm above the desk and the plate top 20.5 mm. Keycap tops are about 35 mm, before tenting and feet.
 
 ## Openings
 
 - **USB-C:** the controller's end, which overhangs the slanted top edge, sits in a 20 mm pocket inside the wall, open at the top of the bottom shell so the stack drops in straight. A 14.2 × 9.8 mm port with 2 mm corners goes through the wall in front of it, centred on the receptacle: a 12.35 × 6.5 mm plug overmould, moved by the floating stack, keeps 0.4 mm clear of it, so the cable never ties the stack to the case. The port's height comes from the socket height, `SOCKET_H` in `tools/gen_schematic.py`.
 - **Power switch:** a 9 × 3.4 mm slot at the lever, through the 1.5 mm wall.
 - **Reset:** a 2 mm pinhole through the floor, countersunk outside, with a guide tube up to 2 mm under the button so a paperclip finds it; the button clears it with the stack pressed 1.5 mm down onto its gaskets. The reset buttons mirror between the halves, and so do the pinholes.
-- **Through the plate:** on each half a 15 × 15 mm encoder cut-out and a 29.5 × 30 mm OLED window, clear of the OLED module above it.
+- **Through the plate:** on each half a 15 × 15 mm encoder cut-out and a 29.5 × 29.8 mm OLED window, clear of the OLED module above it.
 - **Through the deck:** an OLED window round the display's active area, 1 mm clear at the lip's underside, opening at 45° on three sides and further towards the thumbs, so the whole active area shows at 50° from vertical. The OLED module is held in the top frame: its glass sits in a pocket under a 1.0 mm lip, 1.0 mm below the deck top, and its board sits on a boss that thickens the deck down to 6.4 mm above the PCB, located and held by four Ø 1.7 mm pegs through its corner holes, their tips melted over or glued, with 1.5 mm reliefs over its four solder joints and over the flex cable at its far edge. A 4-wire jumper lead from it plugs onto a right-angle header in J101/J201, lying flat under it in the plate's window, so the top frame comes off; the module clears the floating plate by 0.5 mm all round. The encoder bushing (7 mm) passes through a 9 mm hole, hidden under the knob; the body has a 15 mm square underside relief to 7.4 mm. The knob sits on the shaft cut 2.4 mm short: its underside 13.1 mm above the PCB, 4.1 mm above the deck, so it clears the deck with the stack pressed down and the knob pushed, and its hub clears the bushing; its top is 6.7 mm above the keycap tops, with 7.6 mm of the shaft's D flat inside it.
 
 Exact sizes and positions: [[14 - case & plate requirements]].

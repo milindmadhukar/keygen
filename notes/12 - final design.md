@@ -106,14 +106,14 @@ The per-key LEDs also show status:
 Per-key indicators need the community module [zmk-rgb-matrix](https://github.com/dima-m711/zmk-rgb-matrix). Stock ZMK drives all the LEDs as one strip.
 
 > [!warning] Per-key status comes later (2026-10-20)
-> The first firmware drives the 33 per-key RGB backlights per half as one ZMK lighting strip; there is no case underglow. ZMK's addressable RGB driver is named `RGB_UNDERGLOW` even for per-key lights. Its power-off behavior needs the battery-only measurement in [`docs/logic-audit.md`](../docs/logic-audit.md): 33 dark but powered SK6812s draw about 33 mA per half. The per-key module is [gudzpoz/zmk-rgb-matrix](https://github.com/gudzpoz/zmk-rgb-matrix) (the `dima-m711` repo is a fork); per-key indicators remain future firmware work.
+> The first firmware drives the 33 per-key RGB backlights per half as one ZMK lighting strip. ZMK's addressable RGB driver is named `RGB_UNDERGLOW` even for per-key lights. Its power-off behavior needs the battery-only measurement in [`docs/logic-audit.md`](../docs/logic-audit.md): 33 dark but powered SK6812s draw about 33 mA per half. The per-key module is [gudzpoz/zmk-rgb-matrix](https://github.com/gudzpoz/zmk-rgb-matrix) (the `dima-m711` repo is a fork); per-key indicators remain future firmware work.
 
 ## Electronics
 
 ### Controllers
 
-- **One per half: an nRF52840 SuperMini** (decided 2026-10-23), a nice!nano v2 clone with the same 24-pin Pro Micro header and pinout, built in ZMK as the nice!nano v2. It charges at about 100 mA (TP4054): roughly a day for an empty 2500 mAh cell with lighting off. Its BOOST jumper (about 300 mA) stays open. On USB the controller runs from USB; the LEDs still draw from the cell rail when lit. Before soldering, check B+ (pad 13), GND and VCC (pad 16) with a multimeter, and confirm the charge current.
-- **Hidden:** mounted on the PCB underside near the inner edge, socketed with low-profile Mill-Max pins (adds about 3–4 mm of case depth). USB-C faces the top edge and reaches out through a slot in the case.
+- **One per half: an nRF52840 SuperMini** (decided 2026-10-23), a nice!nano v2 clone with the same 24-pin Pro Micro header and pinout, built in ZMK as the nice!nano v2. It charges at about 100 mA (TP4054): roughly a day for an empty cell with lighting off. Its BOOST jumper (about 300 mA) stays open. On USB the controller runs from USB; the LEDs still draw from the cell rail when lit. Before soldering, check B+ (pad 13), GND and VCC (pad 16) with a multimeter, and confirm the charge current.
+- **Hidden:** mounted on the PCB underside near the inner edge, socketed on machined round pins. USB-C faces the top edge and reaches out through a slot in the case.
 - **Why two:** each half runs on its own battery and radio. More on the controller: [[03 - microcontroller selection]].
 
 ### Controller pin map
@@ -177,9 +177,9 @@ The left half is the ZMK central. Plugging USB-C into it is the wired mode, and 
 
 ### Power
 
-- **LiPo pouch per half: 505080 (5 × 50 × 80 mm), about 2500 mAh**, on a JST-PH 2.0 lead, with a protection board (decided 2026-10-23). It is listed as 3000 mAh; a 505080 holds about 2500. The controller has no over-discharge cut-off, so a cell sold without a protection board gets a DW01A module. The bay takes a cell up to 5 mm thick and 60 × 88 mm including the protection board; a thicker cell would raise the case.
+- **LiPo pouch per half: KP-355085 (3.5 × 50 × 85 mm), listed 3000 mAh**, on a JST-PH 2.0 lead, with a protection board. The controller has no over-discharge cut-off, so a cell sold without a protection board gets a DW01A module. The bay takes a cell up to 5 mm thick and 60 × 88 mm including the protection board; a thicker cell would raise the case.
   - **Where:** in a bay sunk 1.6 mm into the case floor, under the outer and middle key columns (1–4, Q–R, A–F on the left; mirrored on the right), long side across the board, held with double-sided tape. Its lead end faces the JST-PH connector, about 40 mm away. The cell keeps at least 15 mm from the controller's antenna end and 10 mm from the controller, connector, buttons, encoder and OLED pins. `tools/case_geometry.py` places it and `tools/gen_case.py` checks it. Positions: [[14 - case & plate requirements]].
-  - **Height:** the case reserves 7.5 mm below the PCB for the socketed controller plus 1.5 mm of float travel, so the case floor is 9.0 mm below the PCB's underside and the bay 10.6 mm. A 5 mm nominal cell, plus 0.3 mm size tolerance, 0.5 mm swelling and 0.3 mm mounting tape, leaves 2.5 mm to the sockets and diodes above it, and 1.0 mm with the floating stack pressed 1.5 mm down. In the case: PCB top 13.6 mm above the desk, plate top 18.6 mm, keycap tops about 33 mm before tenting.
+  - **Height:** the case reserves 9.4 mm below the PCB for the socketed controller plus 1.5 mm of float travel, so the case floor is 10.9 mm below the PCB's underside and the bay 12.5 mm. A 5 mm nominal cell, plus 0.3 mm size tolerance, 0.5 mm swelling and 0.3 mm mounting tape, leaves 4.4 mm to the sockets and diodes above it, and 2.9 mm with the floating stack pressed 1.5 mm down. In the case: PCB top 15.5 mm above the desk, plate top 20.5 mm, keycap tops about 35 mm before tenting.
 - **Charging:** each half charges from its own USB-C at about 100 mA, roughly a day from empty with lighting off; a 1-to-2 USB-C cable supplies both from one USB source. Battery life has not been measured. On USB the controller and OLED run from USB, while the LEDs on B+ can draw more from the cell than the charger replaces. Confirm LED_VDD is off on battery before estimating runtime (see [`docs/logic-audit.md`](../docs/logic-audit.md)).
 - **Battery switch** (decided 2026-10-20): the MSK12C02 slide switch (rated 50 mA) only drives the gate of an **AO3401A P-MOSFET** that carries the battery current, so charging and LED current never pass through its contacts. Source on the battery, drain on B+, so the body diode blocks the battery when off. A 1 MΩ resistor holds the gate off between positions. Leave the switch on while charging: switched off with USB in, charge current can cross the body diode and the MOSFET warms (~0.07 W at 100 mA), but full-charge termination is not assured. The controller has a charger but no switch.
 - **LEDs powered from the battery through the LED power switch** (Q2/Q3, P0.08; see [[#Schematic]]). Each SK6812 draws about 1 mA even when dark, about 33 mA per half. The pinned ZMK driver enables ext-power at startup, so confirm the rail actually turns off in each battery state. Brightness is capped at 40%, still about 508 mA per half at the datasheet's typical full-white current reference; this can exceed the 100 mA charge rate while USB is connected. See [`docs/logic-audit.md`](../docs/logic-audit.md).
@@ -194,7 +194,7 @@ The left half is the ZMK central. Plugging USB-C into it is the wired mode, and 
 | 1N4148 diode (DO-35) | 34 | 34 | TH |
 | SK6812MINI-E (per-key) | 33 | 33 | SMD (hand-solder or JLC assembly) |
 | 10 µF + 100 nF capacitors, 1206 (LED rail) | 1 + 1 | 1 + 1 | SMD |
-| 505080 LiPo + JST-PH 2-pin | 1 | 1 | TH |
+| KP-355085 LiPo + JST-PH 2-pin | 1 | 1 | TH |
 | MSK12C02 slide switch | 1 | 1 | SMD |
 | AO3401A P-MOSFET + 1 MΩ resistor, 1206 (battery switch) | 1 + 1 | 1 + 1 | SMD |
 | AO3401A P-MOSFET, AO3400A N-MOSFET, 2 × 100 kΩ, 1206 (LED power switch) | 1 + 1 + 2 | 1 + 1 + 2 | SMD |
@@ -284,10 +284,10 @@ See [[05 - pcb design]].
 
 ## Case
 
-- **3D-printed PETG, closed, gasket-mounted**: a bottom shell and a top frame per half, 175.4 × 143.7 × 22.6 mm. The top frame's deck, level with its rim, covers the plate everywhere but the keycaps, the OLED and the knob. Plastic all round keeps the Bluetooth antenna clear.
-- **Switch plate: 1.5 mm clear polycarbonate**, CNC-routed from solid sheet, three halves per 6 × 24 in. (152 × 610 mm) strip. It rests on M2 × 3 mm standoffs on 0.5 mm shims, screwed to the PCB from below, and the switches hold it to the PCB; and its 8 tabs per half float between Poron strips clamped by the case. Each half's plate has a 15 × 15 mm encoder cut-out and a 29.5 × 30 mm OLED window.
+- **3D-printed PETG, closed, gasket-mounted**: a bottom shell and a top frame per half, 175.4 × 143.7 × 24.5 mm. The top frame's deck, level with its rim, covers the plate everywhere but the keycaps, the OLED and the knob. Plastic all round keeps the Bluetooth antenna clear.
+- **Switch plate: 1.5 mm clear polycarbonate**, CNC-routed from solid sheet, three halves per 6 × 24 in. (152 × 610 mm) strip. It rests on M2 × 3 mm standoffs on 0.5 mm shims, screwed to the PCB from below, and the switches hold it to the PCB; and its 8 tabs per half float between Poron strips clamped by the case. Each half's plate has a 15 × 15 mm encoder cut-out and a 29.5 × 29.8 mm OLED window.
 - A rounded **USB-C port**, sized for a plug carried by the floating stack, and a **power switch slot** on the top edge, with the wall thinned outside them, and a guided **reset pinhole** in the floor. The reset buttons mirror between the halves (left origin at x 182.85), and so do the pinholes.
-- 7.5 mm under the PCB for the socketed controller, plus 1.5 mm to float; the ≤ 5 mm nominal battery fits with thickness and tape allowances.
+- 9.4 mm under the PCB for the socketed controller, plus 1.5 mm to float; the ≤ 5 mm nominal battery fits with thickness and tape allowances.
 - Foam for a thocky sound: a 0.5 mm Poron ring switch pad under each switch, 2 mm EVA plate foam taped under the plate and 5 mm EVA case foam.
 - **Tenting** with an optional printed 13° wedge per half, held by four magnets to a steel plate on the floor; four rubber feet for flat use.
 
@@ -298,9 +298,8 @@ The case and plate are generated from the PCB by `tools/gen_case.py` and `tools/
 1. **Fit test:** print [`keygen-plate-print.pdf`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-plate-print.pdf) at 1:1 and check the 2×2 thumbs and the knob spots with your real hand.
 2. Schematic per half, generated and ERC clean. **Done.**
 3. Place and route, DRC clean. **Done.**
-4. **Optional bring-up board:** 4 keys, encoder, OLED, 4 LEDs and an underside controller, to prove every circuit cheaply.
-5. JLCPCB order (5 left + 5 right), assembly, flash the ZMK left/right UF2s.
-6. Case, foam, weight, tenting.
+4. JLCPCB order (5 left + 5 right), assembly, flash the ZMK left/right UF2s.
+5. Case, foam, tenting.
 
 ## Pre-order checklist
 
@@ -313,7 +312,6 @@ The case and plate are generated from the PCB by `tools/gen_case.py` and `tools/
 - [x] "+" marked on the silkscreen next to the battery connector's + pad (2026-10-20, beside pad 1 of BT101/BT201; still check each battery's red wire)
 - [ ] LED chain tested one column at a time (one bad joint kills the rest)
 - [ ] Controller socketed
-- [ ] Weight planned into the case
 
 ## Sources
 

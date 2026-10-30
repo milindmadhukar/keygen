@@ -134,10 +134,12 @@ def flatten(child_lib, child, parent_name):
 SHAPES = "${KIPRJMOD}/lib/keygen.3dshapes"
 VENDOR3D = {"marbastlib": "${KIPRJMOD}/../lib/marbastlib/3dmodels"}
 PCB_T = 1.6        # board thickness, mm
-# The controller on the underside, z down from the PCB's underside. SOCKET_H is the one figure that
-# depends on the sockets bought: measure the socket body once they arrive and set it here, and the
-# case's USB-C port follows (tools/case_geometry.py).
-SOCKET_H = 3.0     # machined female header body under the PCB, which the controller rests on
+# The controller on the underside, z down from the PCB's underside. SOCKET_H and PIN_CARRIER_H are the
+# figures that depend on the parts bought: measure them once they arrive and set them here, and the
+# case's floor and USB-C port follow (tools/case_geometry.py).
+SOCKET_H = 3.0     # machined female header body under the PCB
+PIN_CARRIER_H = 1.9   # plastic carrier of the machined male pins, on the socket; the controller rests on it
+CONTROLLER_H = SOCKET_H + PIN_CARRIER_H   # PCB underside to the controller
 NANO_T = 1.6       # nRF52840 SuperMini board
 USB_C = (8.94, 3.26)   # its mid-mount USB-C receptacle, width x height, centred on the board's thickness
 
@@ -198,13 +200,13 @@ def keygen_footprints():
     # controller: no public model, so a plain block hanging under the board on its header sockets.
     # KiCad turns models of back-side footprints end over end, so the footprint's USB end (-y)
     # is drawn at +y here.
-    b0, b1 = SOCKET_H, SOCKET_H + NANO_T
+    b0, b1 = CONTROLLER_H, CONTROLLER_H + NANO_T
     uw, uh = USB_C
     (shapes / "nRF52840_ProMicro.wrl").write_text(wrl_box_mesh([
         (-9.0, -16.65, b0, 9.0, 16.65, b1, "0.10 0.12 0.30"),            # board
         (-uw / 2, 10.0, (b0 + b1 - uh) / 2, uw / 2, 17.4, (b0 + b1 + uh) / 2, "0.75 0.75 0.78"),   # USB-C (+y: see note above)
         (-3.5, -9.0, b1, 3.5, -2.0, b1 + 0.9, "0.15 0.15 0.15"),         # nRF52840
-    ] + [(x - 1.25, y - 1.25, 0.0, x + 1.25, y + 1.25, SOCKET_H, "0.12 0.12 0.12")    # header sockets
+    ] + [(x - 1.25, y - 1.25, 0.0, x + 1.25, y + 1.25, CONTROLLER_H, "0.12 0.12 0.12")    # header sockets and pin carriers
          for x in (-7.62, 7.62) for y in [(-13.97 + 2.54 * i) for i in range(12)]]))
     fp = load(marb / "marbastlib-xp-promicroish.pretty", "nice_nano_H_USBup")
     fp[:] = [n for n in fp if not (isinstance(n, list) and n and n[0] == "model")]

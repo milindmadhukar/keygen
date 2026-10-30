@@ -66,7 +66,7 @@ From `fab/BOM.md` (left 1xx, right 2xx):
 - **Battery polarity:** JST-PH packs come wired both ways round. With a multimeter, confirm the red wire lands on the PCB's **+** pad before plugging in. Swap the crimps if it doesn't.
 - **Protection board:** check the cell has one; the controller has no over-discharge cut-off. Add a DW01A module to a cell without one.
 - Plug the battery in, then check the slide switch turns the half on and off. Leave the switch **on** while charging.
-- **Charge current:** with the multimeter in series with the battery, confirm about 100 mA on USB. An empty 2500 mAh cell takes roughly a day.
+- **Charge current:** with the multimeter in series with the battery, confirm about 100 mA on USB. An empty cell takes roughly a day.
 
 ### 5. LEDs, one column at a time
 - SK6812MINI-E, reverse-mount on the back, lit side through the cut-out. **Mind the corner mark**.
