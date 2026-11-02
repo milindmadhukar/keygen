@@ -46,7 +46,7 @@ The config is in the repo's `firmware/`. Details: [[12 - final design#Firmware a
 
 - Split enabled, left as central, right as peripheral.
 - External power control on, driving only the LED power switch (P0.08), so it cuts the LED rail when the LEDs are off. A gpio-hog holds P0.13 high so each OLED keeps its 3.3 V supply.
-- Sleep after inactivity; any key wakes the half.
+- Idle after 30 s: OLEDs and LEDs off, Bluetooth connected. Deep sleep after 1 hour, timed by each half on its own and never on that half's USB power. A key or knob press wakes a half by rebooting it; turning a knob does not.
 - Both encoders are defined in the shared `.dtsi`; the right one runs on the peripheral.
 - Each half runs ZMK's status screen on its OLED, blanked when the keyboard goes idle.
 
