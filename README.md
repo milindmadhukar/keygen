@@ -48,22 +48,79 @@ clearances, including the battery stack at full gasket travel.
 
 ## Gallery
 
-The hero above stays inline. Open any extra render below when you need it; the images and animations
-are links, so the README does not download them on page load. They come from the
-[Blender scene](notes/17%20-%20building%20from%20source.md#blender-scene) and KiCad.
+The lit pictures are Cycles renders of the [Blender scene](notes/17%20-%20building%20from%20source.md#blender-scene),
+which is rebuilt from the board and the case on request; the case layers and the PCB come from KiCad.
 
 <details>
 <summary>More renders and animations</summary>
 
-**Motion:** [both OLEDs booting in a closeup](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-bootup.gif) · [per-key LED wave](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-leds.gif) · [turntable](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-turntable.gif). The [logic audit](docs/logic-audit.md) records the LED limits awaiting a powered prototype test.
+**Both OLEDs booting.** A closeup of both screens playing the firmware boot sequence.
 
-**Studio views:** [top](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-top.jpg) · [side](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-side.jpg) · [underside](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-bottom.jpg) · [tented side](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-tented-side.jpg) · [knob and thumb cluster](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-thumbs.jpg) · [OLED status screen](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-oled.jpg).
+![Both Keygen OLEDs playing the boot animation in a Blender closeup](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-bootup.gif)
 
-**Construction:** [exploded case](https://github.com/milindmadhukar/keygen/releases/download/media/render-case-exploded.png) · [wedge parts](https://github.com/milindmadhukar/keygen/releases/download/media/render-case-wedge-parts.png) · [assembled PCB underside](https://github.com/milindmadhukar/keygen/releases/download/media/render-bottom.png) · [encoder mounting concept](assets/encoder-mount-mockup.svg).
+**Per-key lighting.** The SK6812MINI-E LEDs shine up through the switches' clear tops and the smoke
+translucent caps. The [logic audit](docs/logic-audit.md) records the current and voltage limits that
+still need a powered prototype test before brightness or battery life can be promised.
 
-**Bare PCB:** [angle](https://github.com/milindmadhukar/keygen/releases/download/media/render-bare.png) · [top](https://github.com/milindmadhukar/keygen/releases/download/media/render-bare-top.png) · [bottom](https://github.com/milindmadhukar/keygen/releases/download/media/render-bare-bottom.png). See the [silkscreen artwork](notes/16%20-%20hardware%20reference.md#silkscreen-artwork).
+![A rainbow wave running across Keygen's per-key LEDs](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-leds.gif)
 
-[All media assets](https://github.com/milindmadhukar/keygen/releases/tag/media) · [OLED screen details](firmware/README.md#oled-screens)
+**All round.**
+
+![Keygen turning on a turntable](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-turntable.gif)
+
+**From above.** The top frame's deck round the keycaps, the OLED window and the knob.
+
+![Keygen from above](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-top.jpg)
+
+**From the side.** The back edge of each half, with its USB-C port and power switch.
+
+![Keygen from behind at desk level, showing the case profile, the USB-C ports and the power switches](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-side.jpg)
+
+**Underneath.** The bottom shells, with the counterbored case screws and the reset pinhole.
+
+![Keygen turned over, showing the underside of both bottom shells](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-bottom.jpg)
+
+**Tenting.** Each half on its wedge, and the wedges' top faces: four recesses for the rubber feet, and
+four pockets for the magnets under the steel disc.
+
+![Both halves on their 13° wedges, from behind at desk level](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-tented-side.jpg)
+
+![The two wedges, with their foot recesses and magnet pockets](https://github.com/milindmadhukar/keygen/releases/download/media/render-case-wedge-parts.png)
+
+**Knob and thumb cluster.**
+
+![Close up on the left half's knob, OLED window and thumb cluster](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-thumbs.jpg)
+
+**Status screen.** ZMK's status screen on the left OLED: Bluetooth profile, battery and layer. The
+Keygen screens, with their boot animation and lighting menu, are in
+[`firmware/README.md`](firmware/README.md#oled-screens).
+
+![Close up on the left half's OLED showing ZMK's status screen, beside the knob](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-oled.jpg)
+
+**Case layers.** Bottom shell, case foam, PCB, switch pads, plate foam, gasket strips under and
+over the plate tabs, plate and top frame.
+
+![Keygen case, exploded](https://github.com/milindmadhukar/keygen/releases/download/media/render-case-exploded.png)
+
+**Encoder mount concept.** The case boss, nut, floating clearances and five-wire connection.
+
+![Case-mounted encoder section and connector path](assets/encoder-mount-mockup.svg)
+
+**Bare PCB.** Black soldermask with white silkscreen artwork on both sides; see
+[Silkscreen artwork](notes/16%20-%20hardware%20reference.md#silkscreen-artwork).
+
+![The bare Keygen PCB at an angle, black soldermask and white silkscreen](https://github.com/milindmadhukar/keygen/releases/download/media/render-bare.png)
+
+![The bare Keygen PCB from above](https://github.com/milindmadhukar/keygen/releases/download/media/render-bare-top.png)
+
+![The bare Keygen PCB from below](https://github.com/milindmadhukar/keygen/releases/download/media/render-bare-bottom.png)
+
+**PCB underside, assembled.** The controllers, power switches, battery connectors and reset buttons
+sit on the back.
+
+![Keygen PCB underside with its parts](https://github.com/milindmadhukar/keygen/releases/download/media/render-bottom.png)
+
+Renders of the case parts, the plate and the routing are in the [`media` release](https://github.com/milindmadhukar/keygen/releases/tag/media).
 
 </details>
 
