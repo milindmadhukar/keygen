@@ -587,6 +587,12 @@ the header.
 - Check each remaining switch's pins are straight, then press it through the plate into its socket
   while supporting the PCB behind the socket with your other hand. The switch pins are not soldered.
 - The two tall 1.25u thumb switches per half are turned 90°.
+- Check deep sleep while the battery lead can still reach a multimeter. Build the firmware with
+  `CONFIG_ZMK_IDLE_SLEEP_TIMEOUT=60000` in [`firmware/keygen.conf`](firmware/keygen.conf), then with
+  the OLED plugged in, USB disconnected and the meter in series with the battery, leave the half
+  alone for a minute. The LED rail should be near zero and the battery current in the tens to low
+  hundreds of µA, with the encoder at rest in a few positions. A key press wakes the half; turning
+  the encoder does not. Flash the normal firmware afterwards.
 
 ---
 

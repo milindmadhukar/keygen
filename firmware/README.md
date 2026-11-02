@@ -160,7 +160,7 @@ and speed. On battery power it notes that the LEDs light only on USB power.
 | Host | USB-C on the left half or Bluetooth, 5 profiles; USB is used while plugged in |
 | Split | Bluetooth, left half central |
 | Battery | Both halves report their level to the host. On USB the level reads full: ZMK measures the controller's supply (VDDH), which then runs from USB |
-| Sleep | Deep sleep after 15 minutes idle; a key press wakes the half |
+| Sleep | Idle after 30 s: OLEDs and LEDs off, Bluetooth connected. Deep sleep after 1 hour idle, per half, never on that half's USB power. A key or knob press wakes a half from deep sleep by rebooting it; turning a knob does not |
 | ZMK Studio | Live remapping over USB on the left half |
 
 ## Building
