@@ -74,6 +74,9 @@ STEPS = [
      ["case/keygen-case.step", "case/bottom/stl/*.stl", "case/top/stl/*.stl", "case/plate/stl/*.stl", "case/plate/step/*.step",
       "case/wedge/stl/*.stl", "case/wedge/step/*.step",
       "case/foam/dxf/*.dxf", "case/foam/svg/*.svg", "case/foam/step/*.step"]),
+    ("encoder-mockup", [CAD, "tools/mock_encoder_mount.py"], [],
+     ["case/mockup/encoder-mount-assembled.step", "case/mockup/encoder-panel-test.stl",
+      "assets/encoder-mount-mockup.svg"]),
     ("case-renders", [PY, "tools/render_case.py"],
      [PCB, "pcb/keygen.kicad_pro", "pcb/plate/keygen-plate.kicad_pcb", "case/*.step", "case/wedge/step/*.step", "pcb/lib/**", *SUBMODULES],
      ["assets/render-case*.png", "assets/render-plate.png"]),
@@ -89,8 +92,8 @@ STEPS = [
     ("studio-renders", [PY, "tools/render_blender.py"],
      [PCB, "pcb/keygen.kicad_pro", "pcb/lib/**", *SUBMODULES, "case/*/stl/*.stl", "tools/gen_blend.py",
       "tools/blend_scene.py", "tools/blend_render.py", "blender/keygen.blend", "tools/render_oled.py",
-      "assets/oled-*.svg"],
-     ["assets/render-studio-*.jpg", "assets/render-studio-*.gif"]),
+      "assets/oled-*.svg", "firmware/module/src/ui/**", "firmware/module/sim/**"],
+     ["assets/render-studio-*.jpg", "assets/render-studio-*.gif", "assets/render-studio-bootup.gif"]),
     ("studio-tented", [PY, "tools/render_blender.py", "--tented"],
      [PCB, "pcb/keygen.kicad_pro", "pcb/lib/**", *SUBMODULES, "case/*/stl/*.stl", "tools/gen_blend.py",
       "tools/blend_scene.py", "tools/blend_render.py", "blender/keygen.blend", "tools/render_oled.py",
@@ -101,8 +104,8 @@ STEPS = [
     ("assembly-bom", [PY, "tools/export_bom.py"], ["pcb/*.kicad_sch", "bom/bom.csv"], ["fab/BOM.md", "fab/BOM-*.csv"]),
     ("bom-page", [PY, "tools/render_bom.py"], ["bom/bom.csv"], ["plan/bom.html", "notes/13 - bill of materials.md"]),
 ]
-LOCAL = {"blender"}
-ON_REQUEST = {"blender", "studio-renders", "studio-tented"}
+LOCAL = {"blender", "encoder-mockup"}
+ON_REQUEST = {"blender", "encoder-mockup", "studio-renders", "studio-tented"}
 
 
 def git(*args):

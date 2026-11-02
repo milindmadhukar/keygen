@@ -94,13 +94,18 @@ def gif(scene, path):
                disposal=1)
 
 
+def simulate(tmp):
+    """Run the firmware UI simulator into tmp; also used by the Blender bootup render."""
+    exe = Path(tmp) / "kg_sim"
+    sources = [SIM, *sorted(UI.glob("kg_*.c"))]
+    subprocess.run(["gcc", "-std=c11", "-O2", "-Wall", "-Wextra", "-Werror", f"-I{UI}", "-o", exe,
+                    *sources, "-lm"], check=True)
+    subprocess.run([exe, tmp], check=True)
+
+
 def main():
     with tempfile.TemporaryDirectory(prefix="kg-oled-") as tmp:
-        exe = Path(tmp) / "kg_sim"
-        sources = [SIM, *sorted(UI.glob("kg_*.c"))]
-        subprocess.run(["gcc", "-std=c11", "-O2", "-Wall", "-Wextra", "-Werror", f"-I{UI}", "-o", exe,
-                        *sources, "-lm"], check=True)
-        subprocess.run([exe, tmp], check=True)
+        simulate(tmp)
         for side in ("left", "right"):
             out = ROOT / f"assets/oled-{side}.svg"
             out.write_text(svg(frames(Path(tmp) / f"still-{side}.frames")[-1][1]))

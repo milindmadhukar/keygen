@@ -5,7 +5,7 @@
 ![KiCad 10](https://img.shields.io/badge/KiCad-10-314CB0)
 ![nRF52840](https://img.shields.io/badge/MCU-nRF52840-00A9CE)
 ![ZMK](https://img.shields.io/badge/firmware-ZMK-5B4A9E)
-![Status](https://img.shields.io/badge/status-ready%20to%20order-2EA44F)
+![Status](https://img.shields.io/badge/status-encoder%20mount%20study-D8A534)
 
 ![Keygen, both halves in their black PETG case, the per-key LEDs lit under smoke translucent keycaps](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-hero.jpg)
 
@@ -48,68 +48,24 @@ clearances, including the battery stack at full gasket travel.
 
 ## Gallery
 
-The lit pictures are Cycles renders of the [Blender scene](notes/17%20-%20building%20from%20source.md#blender-scene),
-which is rebuilt from the board and the case on request; the case layers and the PCB come from KiCad.
+The hero above stays inline. Open any extra render below when you need it; the images and animations
+are links, so the README does not download them on page load. They come from the
+[Blender scene](notes/17%20-%20building%20from%20source.md#blender-scene) and KiCad.
 
-**Per-key lighting.** The SK6812MINI-E LEDs shine up through the switches' clear tops and the smoke
-translucent caps. The [logic audit](docs/logic-audit.md) records the current and voltage limits that
-still need a powered prototype test before brightness or battery life can be promised.
+<details>
+<summary>More renders and animations</summary>
 
-![A rainbow wave running across Keygen's per-key LEDs](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-leds.gif)
+**Motion:** [both OLEDs booting in a closeup](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-bootup.gif) · [per-key LED wave](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-leds.gif) · [turntable](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-turntable.gif). The [logic audit](docs/logic-audit.md) records the LED limits awaiting a powered prototype test.
 
-**All round.**
+**Studio views:** [top](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-top.jpg) · [side](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-side.jpg) · [underside](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-bottom.jpg) · [tented side](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-tented-side.jpg) · [knob and thumb cluster](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-thumbs.jpg) · [OLED status screen](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-oled.jpg).
 
-![Keygen turning on a turntable](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-turntable.gif)
+**Construction:** [exploded case](https://github.com/milindmadhukar/keygen/releases/download/media/render-case-exploded.png) · [wedge parts](https://github.com/milindmadhukar/keygen/releases/download/media/render-case-wedge-parts.png) · [assembled PCB underside](https://github.com/milindmadhukar/keygen/releases/download/media/render-bottom.png) · [encoder mounting concept](assets/encoder-mount-mockup.svg).
 
-**From above.** The top frame's deck round the keycaps, the OLED window and the knob.
+**Bare PCB:** [angle](https://github.com/milindmadhukar/keygen/releases/download/media/render-bare.png) · [top](https://github.com/milindmadhukar/keygen/releases/download/media/render-bare-top.png) · [bottom](https://github.com/milindmadhukar/keygen/releases/download/media/render-bare-bottom.png). See the [silkscreen artwork](notes/16%20-%20hardware%20reference.md#silkscreen-artwork).
 
-![Keygen from above](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-top.jpg)
+[All media assets](https://github.com/milindmadhukar/keygen/releases/tag/media) · [OLED screen details](firmware/README.md#oled-screens)
 
-**From the side.** The back edge of each half, with its USB-C port and power switch.
-
-![Keygen from behind at desk level, showing the case profile, the USB-C ports and the power switches](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-side.jpg)
-
-**Underneath.** The bottom shells, with the counterbored case screws and the reset pinhole.
-
-![Keygen turned over, showing the underside of both bottom shells](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-bottom.jpg)
-
-**Tenting.** Each half on its wedge, and the wedges' top faces: four recesses for the rubber feet, and
-four pockets for the magnets under the steel disc.
-
-![Both halves on their 13° wedges, from behind at desk level](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-tented-side.jpg)
-
-![The two wedges, with their foot recesses and magnet pockets](https://github.com/milindmadhukar/keygen/releases/download/media/render-case-wedge-parts.png)
-
-**Knob and thumb cluster.**
-
-![Close up on the left half's knob, OLED window and thumb cluster](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-thumbs.jpg)
-
-**Status screen.** ZMK's status screen on the left OLED: Bluetooth profile, battery and layer. The
-Keygen screens, with their boot animation and lighting menu, are in
-[`firmware/README.md`](firmware/README.md#oled-screens).
-
-![Close up on the left half's OLED showing ZMK's status screen, beside the knob](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-oled.jpg)
-
-**Case layers.** Bottom shell, case foam, PCB, switch pads, plate foam, gasket strips under and
-over the plate tabs, plate and top frame.
-
-![Keygen case, exploded](https://github.com/milindmadhukar/keygen/releases/download/media/render-case-exploded.png)
-
-**Bare PCB.** Black soldermask with white silkscreen artwork on both sides; see
-[Silkscreen artwork](notes/16%20-%20hardware%20reference.md#silkscreen-artwork).
-
-![The bare Keygen PCB at an angle, black soldermask and white silkscreen](https://github.com/milindmadhukar/keygen/releases/download/media/render-bare.png)
-
-![The bare Keygen PCB from above](https://github.com/milindmadhukar/keygen/releases/download/media/render-bare-top.png)
-
-![The bare Keygen PCB from below](https://github.com/milindmadhukar/keygen/releases/download/media/render-bare-bottom.png)
-
-**PCB underside, assembled.** The controllers, power switches, battery connectors and reset buttons
-sit on the back.
-
-![Keygen PCB underside with its parts](https://github.com/milindmadhukar/keygen/releases/download/media/render-bottom.png)
-
-Renders of the case parts, the plate and the routing are in the [`media` release](https://github.com/milindmadhukar/keygen/releases/tag/media).
+</details>
 
 ## Documentation
 
@@ -120,6 +76,7 @@ Renders of the case parts, the plate and the routing are in the [`media` release
 | [Building from source](notes/17%20-%20building%20from%20source.md) | Requirements, the schematic and PCB pipeline, the plate and case, the [Blender scene](notes/17%20-%20building%20from%20source.md#blender-scene), every generated file |
 | [Firmware](firmware/README.md) | ZMK configuration: keymap, OLED screens, hardware support, building and flashing |
 | [Design notes](notes/index.md) | The Obsidian design notes: layout, controller, PCB, case, final design, datasheet audit |
+| [Case-mounted encoder mockup](docs/encoder-mount-mockup.md) | A separate CAD study of the encoder boss, knob clearance, PCB opening and five-wire connection |
 | [Build plan](plan/index.html) | Layout drawing, connectivity, parts, pin budget and checklist. Open it in a browser |
 | [Schematic (PDF)](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-schematic.pdf) | A top sheet with left (refs 1xx) and right (refs 2xx) sub-sheets |
 | [KiCad project](pcb/keygen.kicad_pro) | Schematic and PCB, KiCad 10. Both halves are in one board file as two separate outlines |
@@ -170,6 +127,7 @@ keygen/
 - [x] ZMK firmware builds
 - [ ] ZMK firmware tested on the boards
 - [x] Switch plate, gasket-mounted case and tenting wedges designed, fit-checked against the PCB
+- [ ] If the case-mounted encoder study is adopted, revise the PCB, plate and case before ordering them
 - [ ] Case and wedges printed
 
 ## Credits and licenses

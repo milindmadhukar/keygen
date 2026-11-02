@@ -9,8 +9,10 @@ assets/render-studio-side.jpg       low along the back edge: the case's profile 
 assets/render-studio-bottom.jpg     the keyboard turned over: the case's underside
 assets/render-studio-leds.gif       a rainbow wave running across the per-key LEDs
 assets/render-studio-turntable.gif  one turn round the keyboard
+assets/render-studio-bootup.gif     close-up of both OLEDs running the firmware boot animation
 
---tented writes the same set, each half standing on its wedge, as assets/render-studio-tented-*.
+--tented writes the stills, LED wave and turntable with each half on its wedge, as
+assets/render-studio-tented-*. The two-screen bootup is rendered only in the flat pose by default.
 
 Run tools/gen_blend.py first (regen.py does); the views are set up in tools/blend_render.py. The stills are
 1920 x 1080; a full run takes about 25 minutes on the CPU.
@@ -18,39 +20,49 @@ Run tools/gen_blend.py first (regen.py does); the views are set up in tools/blen
     python3 tools/render_blender.py              write the assets
     python3 tools/render_blender.py --tented     the tented set
     python3 tools/render_blender.py --preview    small and noisy, into $TMPDIR/keygen-preview/ instead
+    python3 tools/render_blender.py bootup       just the two-screen boot animation
 
 Uses $KEYGEN_BLENDER as the Blender binary if set, else `blender`.
 """
 import os, subprocess, sys, tempfile
 from pathlib import Path
 
+import render_oled
+
 ROOT = Path(__file__).resolve().parent.parent
 STUDIO = ROOT / "blender/keygen.blend"
 STILLS = ("hero", "top", "thumbs", "oled", "side", "bottom")
-GIFS = {"leds": (12, 256), "turntable": (12, 128)}     # frames per second, colours (the turntable changes
-                                                       # every pixel each frame, so it gets fewer)
+GIFS = {"leds": (12, 256), "turntable": (12, 128), "bootup": (15, 64)}
 
 
 def main():
     preview = "--preview" in sys.argv[1:]
     tented = "--tented" in sys.argv[1:]
+    requested = [a for a in sys.argv[1:] if not a.startswith("--")]
+    views = requested or [*STILLS, *(n for n in GIFS if not (tented and n == "bootup"))]
+    unknown = set(views) - set(STILLS) - set(GIFS)
+    if unknown: sys.exit(f"unknown Blender views: {sorted(unknown)}")
     prefix = "render-studio-tented" if tented else "render-studio"
     out = Path(tempfile.gettempdir()) / "keygen-preview" if preview else ROOT / "assets"
     out.mkdir(parents=True, exist_ok=True)
     blender = os.environ.get("KEYGEN_BLENDER", "blender")
     with tempfile.TemporaryDirectory() as tmp:
+        if "bootup" in views:
+            render_oled.simulate(tmp)
         p = subprocess.run([blender, "-b", str(STUDIO), "--python-exit-code", "1", "--python",
                             str(ROOT / "tools/blend_render.py"), "--", tmp, *(["--preview"] if preview else []),
-                            *(["--tented"] if tented else [])],
+                            *(["--tented"] if tented else []), *views],
                            capture_output=True, text=True)
         print("\n".join(l for l in p.stdout.splitlines() if l.startswith("keygen:")))
         if p.returncode:
             sys.exit(f"blender failed ({p.returncode}):\n{(p.stdout + p.stderr)[-3000:]}")
         for name in STILLS:
+            if name not in views: continue
             dst = out / f"{prefix}-{name}.jpg"
             subprocess.run(["magick", f"{tmp}/{name}.png", "-strip", "-quality", "90", str(dst)], check=True)
             print(f"wrote {dst}")
         for name, (fps, colours) in GIFS.items():
+            if name not in views: continue
             dst = out / f"{prefix}-{name}.gif"
             subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-framerate", str(fps), "-i", f"{tmp}/{name}_%04d.png",
                             "-vf", f"split[a][b];[a]palettegen=max_colors={colours}:stats_mode=diff[p];"

@@ -12,11 +12,13 @@ side.png              low along the back edge: the case's profile, the USB-C por
 bottom.png            straight down on the keyboard turned over on the floor: the case's underside
 leds_####.png         the hero view, a rainbow wave running across the LEDs (a looping GIF's frames)
 turntable_####.png    one turn round the keyboard (a looping GIF's frames)
+bootup_####.png       close-up of both OLEDs showing the firmware boot sequence
 
 The linked parts are swapped for a local copy first, so the LEDs and the camera can be animated.
 --preview renders small and noisy, to check a change quickly. --tented stands each half on its wedge.
 """
-import colorsys, math, sys
+import bisect, colorsys, math, sys
+from array import array
 from pathlib import Path
 
 import bmesh, bpy
@@ -174,6 +176,67 @@ def animation(scene, name, cam, frames):
     log(f"rendered {name}: {scene.frame_end} frames")
 
 
+def boot_frames(side):
+    """Read the firmware simulator's 1-bit 128 x 64 frames, keeping their durations."""
+    raw = (OUT / f"boot-{side}.frames").read_bytes()
+    stride = 2 + 128 * 64 // 8
+    if len(raw) % stride:
+        raise ValueError(f"invalid boot-{side}.frames length")
+    times, images, elapsed = [], [], 0
+    for offset in range(0, len(raw), stride):
+        elapsed += int.from_bytes(raw[offset:offset + 2], "little")
+        times.append(elapsed)
+        images.append(raw[offset + 2:offset + stride])
+    return times, images
+
+
+def show_boot_frame(image, framebuffer):
+    """Update the OLED texture. The framebuffer is top-first; Blender pixels are bottom-first."""
+    pixels = array("f", [0.0]) * (128 * 64 * 4)
+    for y in range(64):
+        src, dst = y * 16, (63 - y) * 128 * 4
+        for x in range(128):
+            value = float((framebuffer[src + x // 8] >> (7 - x % 8)) & 1)
+            i = dst + 4 * x
+            pixels[i] = pixels[i + 1] = pixels[i + 2] = value
+            pixels[i + 3] = 1.0
+    image.pixels.foreach_set(pixels)
+    image.update()
+    image.pack()
+
+
+def bootup(scene, col):
+    screens = [next(o for o in col.all_objects if o.name.startswith(f"OLED {side} screen"))
+               for side in ("left", "right")]
+    points = [sum((screen.matrix_world @ v.co for v in screen.data.vertices), Vector()) / 4
+              for screen in screens]
+    target = (points[0] + points[1]) / 2
+    cam = camera("Both OLEDs booting", target + Vector((0, -0.035, 0.20)), target, lens=60, fstop=11.0)
+    sequences = {side: boot_frames(side) for side in ("left", "right")}
+    duration = max(times[-1] for times, _ in sequences.values())
+    fps = 15
+    count = math.ceil(duration * fps / 1000)
+    settings(scene, FRAMES)
+    scene.cycles.samples = 8
+    if PREVIEW:
+        scene.render.resolution_x, scene.render.resolution_y = 640, 360
+        scene.cycles.samples = 4
+    scene.camera = cam
+    scene.render.use_persistent_data = False
+    output_count = min(count, 6) if PREVIEW else count
+    for frame in range(1, output_count + 1):
+        ms = (frame - 1) * duration / (output_count - 1) if PREVIEW else (frame - 1) * 1000 / fps
+        scene.frame_set(frame)
+        for side, (times, images) in sequences.items():
+            idx = min(bisect.bisect_right(times, ms), len(images) - 1)
+            show_boot_frame(bpy.data.images[f"OLED {side}"], images[idx])
+        scene.render.filepath = str(OUT / f"bootup_{frame:04d}.png")
+        bpy.ops.render.render(write_still=True)
+        if frame % 10 == 0 or frame == count:
+            log(f"bootup frame {frame}/{count}")
+    log(f"rendered bootup: {output_count} frames")
+
+
 def led_wave(col, frames):
     """Keyframe a rainbow running across the keyboard, one full cycle over the loop."""
     leds = [o for o in col.all_objects if "led_color" in o.keys()]
@@ -239,6 +302,8 @@ def main():
     if "leds" in VIEWS:
         led_wave(col, LED_FRAMES)
         animation(scene, "leds", hero, LED_FRAMES)
+    if "bootup" in VIEWS:
+        bootup(scene, col)
     if "bottom" in VIEWS:                                      # last: it moves the keyboard
         turn_over(col, lo, centre)
         bottom = camera("Bottom", centre + Vector((0, 0, 1.0)), centre, ortho=size.x * 1.06)

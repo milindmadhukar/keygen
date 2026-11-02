@@ -70,6 +70,46 @@ Counts are for the whole keyboard (two halves). Stores, links, prices and spares
 | Neodymium disc magnet, 10 × 3 mm, N35 | 8 | For the wedges |
 | USB-A to 2 × USB-C cable | 1 | Optional: both halves from one port |
 
+## Proposed case-mounted encoder revision
+
+The current PCB, switch plate and case files still use an encoder soldered to the PCB. That puts
+encoder press force into the gasket-mounted plate-and-PCB unit. The case-mounted alternative below
+is an **assembly mockup**; do not order its PCB or cut the existing plate from these dimensions yet.
+The [full mockup, STEP coupon and fit assumptions](docs/encoder-mount-mockup.md) describe the
+remaining board and case changes.
+
+![Section, top view and five-wire path for the case-mounted encoder](assets/encoder-mount-mockup.svg)
+
+The encoder body sits below the top frame. A local Ø15 mm boss makes the frame 2.5 mm thick at
+the shaft. Its M7 bushing passes through a Ø7.3 mm hole, then the encoder's supplied washer and
+nut clamp it to the frame. The 19 × 19 mm plate and 18 × 20 mm PCB openings let the gasket-mounted
+unit travel around the fixed encoder. Those openings still require copper rerouting and moving
+D107/D207. Print the [30 mm test coupon](docs/encoder-mount-mockup.md) before making the full case;
+check its hole against the delivered M7 bushing and hardware.
+
+Each encoder needs five insulated leads and a loose cable loop to a **5-pin JST-PH 2.0 mm** board
+header. Proposed pin order is `A / C(GND) / B / S1(COL6) / S2(K06 diode input)`, viewed by the
+connector's numbered pads. Check the actual header and lead's pin 1 before wiring. Keep the switch
+diode on the PCB. Two matching [side-entry headers](https://www.sunrom.com/p/5-pin-jst-ph-20mm-through-hole-header-horizontal-right-angle-side-entry)
+and [prewired female leads](https://www.sunrom.com/p/5-pin-jst-ph-20mm-one-side-female-30cm) are
+listed locally; Robu has a [5-pin PH-compatible header](https://robu.in/product/ph-aw-2mm-5-pin-wafer-male-connector-through-hole-right-angle/),
+but the documented AliExpress cart has no 5-pin harness. BatteriesShop's
+[5-pin XH pair](https://www.batteriesshop.in/products/5-pin-jst-xh-relimate-connector-rmc-male-female-pair-with-wirecable)
+is 2.54 mm pitch and does not mate with PH. The actual placed AliExpress order has not been checked.
+
+Once the production revision and a physical fit test pass, assemble each half in this order:
+
+1. Insulate the five soldered leads at the encoder and provide strain relief on the frame. Leave a
+   flexible loop so the cable cannot pull on the floating PCB.
+2. Insert the encoder from below, add the washer and nut above, and tighten only enough to stop the
+   body rotating. Check that pressing the bare shaft does not flex the gasket-mounted unit.
+3. Measure the knob's bore depth and recessed hub, then test its fully pressed clearance over the
+   nut. The mockup assumes a **1.0 mm** shaft cut and **2.4 mm** pressed knob-to-nut clearance;
+   these are not final cut instructions.
+4. Mate the keyed 5-pin plug while closing the top frame. Check continuity and that the cable loop
+   clears the battery, foam, plate and frame throughout gasket travel.
+5. Test clockwise, counterclockwise and press on both halves before fitting the knobs.
+
 ## Tools
 
 - A temperature-controlled soldering iron with a fine tip (300–350 °C; 320 °C for the LEDs)
@@ -185,12 +225,13 @@ order-form settings and what to check in the fab's design check (DFM) report are
   [`tools/case_geometry.py`](tools/case_geometry.py) to what you measure and run `tools/regen.py`:
   it works out how high the knob sits and how much to cut off the shaft (`ENC_SHAFT_CUT`, printed
   by `python3 tools/case_geometry.py`). The case itself doesn't change.
-- **Encoder shafts:** cut them now, before soldering, so no filings get into the board. Uncut,
-  the 20 mm shaft would hold the knob 6.5 mm off the deck and 9 mm above the keys. With A = 11.0
-  and B = 2.0 mm, cut **2.4 mm** off the tip, leaving **24.1 mm** from the bottom of the encoder's
-  body. Wrap the body in tape, hold the shaft in pliers so the cut doesn't turn the encoder, cut
-  with a fine hacksaw or a cutting disc, and file the end flat with a small chamfer. Push a knob on
-  to check it bottoms on the shaft and turns without wobble.
+- **Encoder shafts:** do a dry fit with the delivered knob, nut and washer **before cutting**. The
+  current PCB-mounted model calculates a 2.4 mm tip cut with A = 11.0 and B = 2.0 mm, but that
+  position may bring the knob's D bore onto the shaft's round section. The proposed case mount
+  instead calculates about 1.0 mm. Neither value is safe as a cut instruction until the physical
+  knob bore, D flat and fully pressed clearance are checked. Once confirmed, cut before soldering:
+  tape the body against filings, hold the shaft so it cannot turn in the encoder, cut with a fine
+  hacksaw or disc, file the end flat with a small chamfer, and dry-fit the knob again.
 
 ### Switch plates
 
