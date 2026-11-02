@@ -157,7 +157,7 @@ black-mask PCB.
   README picture; the other views are set up in `tools/blend_render.py`. Pass a view name, for
   example `python3 tools/render_blender.py bootup`, to render only that asset. `--preview` renders
   small and noisy into `/tmp/keygen-preview/`. The README keeps the hero inline and lists extra
-  media as links inside a dropdown, so opening the README does not request every large asset.
+  media as inline images and animations inside a dropdown.
 
 ## Generated files
 
