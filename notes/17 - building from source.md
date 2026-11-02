@@ -151,10 +151,13 @@ black-mask PCB.
   `rainbow`), and the materials are defined there too.
 - `tools/render_blender.py` (the `studio-renders` step) renders the README's pictures from the
   studio file with Cycles: `assets/render-studio-{hero,top,thumbs,oled,side,bottom}.jpg` at 1920 × 1080,
-  and the `render-studio-{leds,turntable}.gif` loops. The bottom view turns the
+  and the `render-studio-{leds,turntable,bootup}.gif` animations. `bootup` shows both OLEDs in a
+  closeup using frames from the firmware simulator. The bottom view turns the
   keyboard over onto the floor, its LEDs off. The hero uses the studio camera, so moving it moves the
-  README picture; the other views are set up in `tools/blend_render.py`. `--preview` renders them
-  small and noisy into `/tmp/keygen-preview/`.
+  README picture; the other views are set up in `tools/blend_render.py`. Pass a view name, for
+  example `python3 tools/render_blender.py bootup`, to render only that asset. `--preview` renders
+  small and noisy into `/tmp/keygen-preview/`. The README keeps the hero inline and lists extra
+  media as links inside a dropdown, so opening the README does not request every large asset.
 
 ## Generated files
 
