@@ -137,6 +137,10 @@ ENC_HOLE_D = 7.3               # close-fit clearance through the frame for the M
 ENC_BOSS_D = 15.0              # local reinforced frame boss under the nut
 ENC_BOSS_BOTTOM = 6.5          # 2.5 mm clamp thickness up to TOP_Z
 ENC_CHEEK = (1.2, 9.0, 4.5)    # two cheeks either side of the body, stopping it turning: thick, long, down to this z
+ENC_PLUG = (2.7, 1.5 + 2.54 + 14.5 + 2.0, 2.8)   # the encoder lead's glued jumper plug on its right-angle header, under
+                               # the PCB: each housing's width; its reach from the pad row past the header's plastic,
+                               # a 14.5 mm housing and 2 mm for the wires to bend; its depth below the PCB's underside
+SCREW_HEAD_D = 4.0             # an M2 button head under the PCB, at each mounting hole
 ENC_SHAFT_TOP = 6.5 + 20.0     # HongYan EC11H-...ZD20F10: the 20 mm shaft is measured from the 6.5 mm body's top
 ENC_FLAT_FROM = ENC_SHAFT_TOP - 10.0   # its D flat, the top 10 mm
 ENC_PUSH = 0.8                 # push switch travel, 0.5 +0.3
@@ -227,8 +231,8 @@ def local(p, cx, cy, rot):
 
 def encoder_bay(h):
     """The case foam's opening under the encoder's terminals and its cable, up to the header."""
-    (ex, ey), (x0, y0, x1, y1) = h["enc"][0], h["enc_header"]
-    return min(ex - 7, x0), min(ey - 9, y0), max(ex + 7, x1), max(ey + 9, y1)
+    (ex, ey), (x0, y0, x1, y1), (px0, py0, px1, py1) = h["enc"][0], h["enc_header"], h["enc_plug"]
+    return min(ex - 7, x0, px0), min(ey - 9, y0, py0), max(ex + 7, x1, px1), max(ey + 9, y1, py1)
 
 
 def rects_dist(a, b):
@@ -302,9 +306,12 @@ def halves():
                 h["drills"].append((MM(q.x), MM(q.y), w, hh, pad.GetShape() == pcbnew.PAD_SHAPE_CIRCLE))
         if ref.startswith("H"): h["holes"][ref] = (x, y)
         elif ref.startswith("ENC"): h["enc"].append((x, y))
-        elif ref in ("J102", "J202"):           # encoder lead header: on the back, beside the opening
-            bb = fp.GetBoundingBox(False)
+        elif ref in ("J102", "J202"):           # encoder lead header: on the back, beside the opening, its pins
+            bb = fp.GetBoundingBox(False)       # pointing north with the jumper plug on them
             h["enc_header"] = (MM(bb.GetLeft()), MM(bb.GetTop()), MM(bb.GetRight()), MM(bb.GetBottom()))
+            xs = [MM(q.GetPosition().x) for q in fp.Pads()]; py = MM(fp.Pads()[0].GetPosition().y)
+            h["enc_plug"] = (min(xs) - ENC_PLUG[0] / 2, py - ENC_PLUG[1], max(xs) + ENC_PLUG[0] / 2, py)
+            h["tall"].append(h["enc_plug"])
         elif ref in ("J101", "J201"):           # OLED header: the module stands above its pins
             pins = [(MM(p.GetPosition().x), MM(p.GetPosition().y)) for p in fp.Pads()]
             cx = sum(q[0] for q in pins) / len(pins); py = pins[0][1]

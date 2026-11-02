@@ -302,7 +302,7 @@ BAT_PLUS = (3.5, 0.0)                        # "+" beside the battery connector'
 ENCODER_SHAFT = (230.5, 58.5)
 ENC_DIODE = (11.0, -11.0 + 3.81)  # its diode on the back, from the shaft (right half): origin is pad 1, pad 2 north
 ENC_OPENING = (18.0, 20.0)        # the PCB's opening round the encoder, which is fixed to the top frame
-ENC_HEADER = (-19.825, 15.0)      # 1x5 right-angle header on the back, its outer pin from the shaft (right half),
+ENC_HEADER = (-19.225, 20.5)      # 1x5 right-angle header on the back, its outer pin from the shaft (right half),
                                   # pins pointing north on both halves, so the jumper plug lies flat beside the opening
 # OLED: a 0.96 in. module (27.5 x 28 mm) over the controller's lower end, its header along its bottom
 # edge so the text reads upside down (turned in firmware). Right half: module centre, and pin 1 (GND)

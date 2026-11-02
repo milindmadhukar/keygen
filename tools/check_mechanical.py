@@ -108,6 +108,15 @@ for side, h in C.halves().items():
     require(all(str(i) in pins and pins[str(i)].GetNetname().endswith("/" + net)
                 for i, net in enumerate(expected, 1)), f"{side} encoder lead pin order wrong")
     ex, ey = h["enc"][0]
+    plug = box(*h["enc_plug"])
+    require(Polygon(h["outline"]).exterior.distance(plug) >= 1.0 and Polygon(h["outline"]).contains(plug),
+            f"{side} encoder lead plug within 1 mm of the board edge")
+    require(min(plug.distance(Point(p)) for p in h["holes"].values()) - C.SCREW_HEAD_D / 2 >= 1.0,
+            f"{side} encoder lead plug within 1 mm of a screw head")
+    body = box(ex - C.ENC_BODY / 2, ey - C.ENC_BODY / 2, ex + C.ENC_BODY / 2, ey + C.ENC_BODY / 2)
+    require(plug.distance(body) - C.POCKET_CLEAR >= 0.5, f"{side} encoder lead plug within 0.5 mm of the encoder's body or tabs")
+    require(-C.PCB_T - C.ENC_PLUG[2] - C.FLOAT_GAP - (C.CAVITY_Z + C.CASE_FOAM_T) >= 1.0 and
+            box(*C.encoder_bay(h)).contains(plug), f"{side} encoder lead plug outside its foam bay")
     openings = [Polygon(p) for p in h["windows"] if Polygon(p).contains(Point(ex, ey))]
     require(len(openings) == 1, f"{side} encoder PCB opening missing")
     opening = openings[0].bounds
