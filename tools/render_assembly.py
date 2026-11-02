@@ -55,8 +55,8 @@ PARTS = [
      "Body on the back, band towards the square pad marked K."),
     ("socket", "SW101", "back", "Hotswap socket, from the back",
      "It fits its two pads one way. Plenty of solder: it takes every switch insertion."),
-    ("encoder", "J102", "back", "Encoder cable header (JST-PH), from the back",
-     "Side entry: its mouth faces the encoder opening. Solder the five pins on the front."),
+    ("encoder", "J102", "back", "Encoder header, from the back",
+     "Right angle: pins flat, away from the thumb keys. The square pad is pin 1, A."),
     ("oled", "J101", "front", "OLED header, from the front",
      "The square pad is pin 1, GND: the module's pins must read GND, VCC, SCL, SDA."),
 ]

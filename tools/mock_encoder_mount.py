@@ -98,7 +98,7 @@ def write_svg():
           '<text x="764" y="505" class="small">case fixed</text>',
           '<path d="M 950 464 C 984 402, 1006 547, 1040 467" fill="none" stroke="#f0b65e" stroke-width="5"/>',
           '<rect x="1040" y="433" width="120" height="85" rx="10" fill="#245a48" stroke="#6bc3a2"/>',
-          '<text x="1052" y="463" class="small">5-pin PH</text>',
+          '<text x="1052" y="463" class="small">1×5 header</text>',
           '<text x="1052" y="490" class="small">PCB floats</text>',
           '<text x="42" y="607" class="sub">The encoder is fixed to the top frame; the plate and PCB float round it. Its lead plugs into J102 / J202 on the back of the PCB.</text>',
           '</svg>']

@@ -31,7 +31,7 @@ clearances, including the battery stack at full gasket travel.
 | Layout | Column-staggered QWERTY, six columns per hand plus an extra bottom row |
 | Keys | 66 (33 per half): 52 × 1u, 14 × 1.25u |
 | Thumb cluster | 2 × 2 block rotated 30° (two 1u over two 1.25u) plus one 1.25u key per hand |
-| Encoders | HongYan EC11H with a 20 mm D shaft on each half, fixed to the top frame and plugged into the PCB through a 5-pin JST-PH cable, with a 17 mm aluminium D-shaft knob, in the key matrix. Left: scroll wheel, press for middle click. Right: volume, press to mute |
+| Encoders | HongYan EC11H with a 20 mm D shaft on each half, fixed to the top frame and plugged into a pin header on the PCB, with a 17 mm aluminium D-shaft knob, in the key matrix. Left: scroll wheel, press for middle click. Right: volume, press to mute |
 | Displays | 0.96 in. 128 × 64 SSD1306 OLED per half (I2C), held in the top frame and plugged into the PCB, showing ZMK's status screen |
 | Switches | Akko V3 Lavender Purple Pro (tactile, 5-pin) in Kailh hotswap sockets (CPG151101S11) |
 | Keycaps | Blank DSA PBT, smoke translucent |

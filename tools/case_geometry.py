@@ -302,7 +302,7 @@ def halves():
                 h["drills"].append((MM(q.x), MM(q.y), w, hh, pad.GetShape() == pcbnew.PAD_SHAPE_CIRCLE))
         if ref.startswith("H"): h["holes"][ref] = (x, y)
         elif ref.startswith("ENC"): h["enc"].append((x, y))
-        elif ref in ("J102", "J202"):           # encoder cable header: on the back, mouth to the opening
+        elif ref in ("J102", "J202"):           # encoder lead header: on the back, beside the opening
             bb = fp.GetBoundingBox(False)
             h["enc_header"] = (MM(bb.GetLeft()), MM(bb.GetTop()), MM(bb.GetRight()), MM(bb.GetBottom()))
         elif ref in ("J101", "J201"):           # OLED header: the module stands above its pins

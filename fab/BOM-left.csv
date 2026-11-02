@@ -5,7 +5,7 @@ JST-PH 2-pin battery connector,1,BT101,LiPo 3.7V 3000mAh,Connector_JST:JST_PH_S2
 1N4148 diode,34,D101 D102 D103 D104 D105 D106 D107 D108 D109 D110 D111 D112 D113 D114 D115 D116 D117 D118 D119 D120 D121 D122 D123 D124 D125 D126 D127 D128 D129 D130 D131 D132 D133 D134,1N4148,Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal,"through-hole, back side; band (cathode) toward the square pad"
 EC11 rotary encoder,1,ENC101,EC11,keygen:EC11_Case_Mount,"held in the top frame by its M7 nut, 20 mm D shaft"
 OLED 0.96in I2C,1,J101,OLED 0.96in I2C,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical,
-JST-PH 5-pin encoder header,1,J102,"Encoder cable, JST-PH 2.0",Connector_JST:JST_PH_S5B-PH-K_1x05_P2.00mm_Horizontal,"through-hole side-entry, back side, mouth towards the encoder"
+1x5 right-angle pin header,1,J102,"Encoder lead, 1x5 right angle",Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Horizontal,"through-hole, back side, pins lying flat and pointing away from the thumb keys"
 SK6812MINI-E LED,33,LED101 LED102 LED103 LED104 LED105 LED106 LED107 LED108 LED109 LED110 LED111 LED112 LED113 LED114 LED115 LED116 LED117 LED118 LED119 LED120 LED121 LED122 LED123 LED124 LED125 LED126 LED127 LED128 LED129 LED130 LED131 LED132 LED133,SK6812MINI-E,LED_SMD:LED_SK6812MINI-E_3.2x2.8mm_P1.5mm_ReverseMount,"SMD, reverse-mount on the back; mind the corner mark"
 AO3401A P-MOSFET (SOT-23),2,Q101 Q102,AO3401A,Package_TO_SOT_SMD:SOT-23,"SMD, back side: Q1 between the controller and the power switch, Q2 in the LED power switch"
 AO3400A N-MOSFET (SOT-23),1,Q103,AO3400A,Package_TO_SOT_SMD:SOT-23,"SMD, back side, in the LED power switch"

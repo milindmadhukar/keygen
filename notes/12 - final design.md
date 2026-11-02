@@ -77,7 +77,7 @@ The upper two keys stay 1u: with 1.25u lower caps, they can sit 4.76 mm closer t
 
 ### Knobs
 
-Each half has an EC11 encoder (push switch, 20 mm D shaft) with a 17 × 13 mm knurled aluminium knob (a "D halfshaft 17x13" amplifier knob) on its inner edge, fixed to the top frame and wired to the PCB through a 5-pin JST-PH lead, mirrored: the right shaft is at (256.5, 134.5) and the left at (167.0, 134.5) in board coordinates (KiCad mm). On both halves the knob's edge sits 10 mm below the OLED, 5.7 mm from the thumb cluster's top key and 9.1 mm from the G/H column, close enough to reach with the thumb.
+Each half has an EC11 encoder (push switch, 20 mm D shaft) with a 17 × 13 mm knurled aluminium knob (a "D halfshaft 17x13" amplifier knob) on its inner edge, fixed to the top frame and wired to a pin header on the PCB through a five-wire jumper lead, mirrored: the right shaft is at (256.5, 134.5) and the left at (167.0, 134.5) in board coordinates (KiCad mm). On both halves the knob's edge sits 10 mm below the OLED, 5.7 mm from the thumb cluster's top key and 9.1 mm from the G/H column, close enough to reach with the thumb.
 
 | Layer | Left knob | Right knob |
 |---|---|---|
@@ -200,7 +200,7 @@ The left half is the ZMK central. Plugging USB-C into it is the wired mode, and 
 | AO3401A P-MOSFET, AO3400A N-MOSFET, 2 × 100 kΩ, 1206 (LED power switch) | 1 + 1 + 2 | 1 + 1 + 2 | SMD |
 | 6 mm reset button (pinhole in case) | 1 | 1 | TH |
 | EC11 encoder (D shaft) + 17 mm knob | 1 | 1 | Top frame |
-| 5-pin JST-PH header + lead | 1 | 1 | TH |
+| 1×5 right-angle pin header + jumper lead | 1 | 1 | TH |
 | 0.96 in. SSD1306 I2C OLED module, 128×64 (J101 / J201) | 1 | 1 | TH (right-angle header; the module plugs in) |
 
 Each half has 34 diodes: 33 for the keys and one for its encoder's push switch, which sits in the key matrix. 3D models of the knob and the OLED module (`pcb/lib/keygen.3dshapes/Knob_17mm.step`, `OLED_096_I2C.step`) are made by `tools/gen_models.py`. Keygen is a single build. JLCPCB's minimum is 5 per design, so order **5 left + 5 right** boards and keep the rest as spares. Full shopping list: [[13 - bill of materials]].

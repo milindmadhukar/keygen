@@ -37,17 +37,18 @@ at `z = 14.5`. Measure the delivered knob: `KNOB_DEPTH` and `KNOB_HUB_UP` in
 `case/mockup/encoder-mount-assembled.step`. Fit the delivered encoder, washer, nut and knob on it
 before cutting a shaft or printing the case.
 
-## Cable
+## Lead
 
-The header on the PCB is a side-entry 5-pin JST-PH, 2.0 mm pitch,
-[S5B-PH-K-S](https://www.jst.com/wp-content/uploads/2021/09/ePH.pdf) (J102, J202), on the back beside
-the opening with its mouth facing the opening. It takes a PHR-5 plug on a prewired lead, cut to
-100 mm: long enough to plug in with the frame laid beside the half. The spare length folds into the
+The PCB carries a 1×5 right-angle 2.54 mm male pin header (J102, J202) on the back, beside the
+opening, its pins lying flat and pointing away from the thumb keys. The encoder's lead is five
+female–female jumper wires, their plug ends glued side by side into one 5-pin plug, as for the OLED,
+and their other ends cut 100 mm away and soldered to the encoder: long enough to plug in with the
+frame laid beside the half. The plug lies flat under the PCB, and the spare length folds into the
 bay in the case foam under the opening.
 
 | Pin | Encoder terminal | Net |
 |---:|---|---|
-| 1 | A | `ENC_A` |
+| 1 (square pad, outer end) | A | `ENC_A` |
 | 2 | C | `GND` |
 | 3 | B | `ENC_B` |
 | 4 | S1 | `COL6` |

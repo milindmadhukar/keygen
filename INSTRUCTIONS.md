@@ -30,8 +30,8 @@ Counts are for the whole keyboard (two halves). Stores, links, prices and spares
 | 6 × 6 × 5 mm tact switch | 2 | The reset button |
 | JST-PH side-entry connector (S2B-PH-K-S) | 2 | For the battery |
 | EC11 encoder with switch, 20 mm D shaft | 2 | |
-| 5-pin JST-PH 2.0 side-entry header, S5B-PH-K-S | 2 | The encoder's cable, on the PCB |
-| 5-pin JST-PH 2.0 lead, 30 cm, one plug | 2 | Cut to 100 mm |
+| 1×5 right-angle male pin header, 2.54 mm | 2 | Cut from the OLED's header strip |
+| Female–female jumper wires | 10 | Five per half, for the encoder |
 | 0.96 in. I2C OLED, pins GND VCC SCL SDA | 2 | Some modules swap GND and VCC: don't use those |
 | 1×4 right-angle male pin header, 2.54 mm | 2 | Soldered into J101 / J201; cut from a 1×40 strip |
 | Female–female jumper wire, 2.54 mm | 8 | Four per OLED, their plug ends glued into one 4-pin plug; the other ends are cut off and soldered to the OLED |
@@ -188,8 +188,6 @@ order-form settings and what to check in the fab's design check (DFM) report are
   [`tools/case_geometry.py`](tools/case_geometry.py) to what you measure and run `tools/regen.py`:
   it works out how high the knob sits and how much to cut off the shaft (`ENC_SHAFT_CUT`, printed
   by `python3 tools/case_geometry.py`). The case itself doesn't change.
-- **Encoder cable headers:** the side-entry type (S5B-PH-K-S), 2.0 mm pitch. A 5-pin XH part is
-  2.5 mm pitch and does not fit.
 - **Encoder shafts:** with A = 11.0 and B = 2.0 mm the shaft is cut by **1.0 mm**. Print the
   [test coupon](docs/encoder-mount.md#test-coupon) first, and dry-fit the delivered encoder, washer,
   nut and knob on it **before cutting**: the knob's D bore must land on the shaft's flat, with the
@@ -428,26 +426,28 @@ insertion.
 
 ## Encoder and matrix test
 
-5-pin JST-PH header **J102 / J202** on the **back**, beside the encoder opening, its mouth facing
-the opening.
+A 1×5 right-angle header in **J102 / J202** on the **back**, beside the encoder opening.
 
-![Encoder cable header close-up](https://github.com/milindmadhukar/keygen/releases/download/media/assembly-part-encoder.png)
+![Encoder header close-up](https://github.com/milindmadhukar/keygen/releases/download/media/assembly-part-encoder.png)
 
-1. Solder the header's five pins on the front and trim them flush: the switch pads stick down over
-   the joints.
-2. Cut a lead to **100 mm** and strip the free ends. Solder each wire to its encoder terminal, with
-   heat-shrink over each joint:
+1. Cut a 1×5 piece from the right-angle header strip. Solder it into J102 / J202 from the back,
+   its pins lying flat and pointing **away from the thumb keys**, and trim the pins flush on the
+   front: the switch pads stick down over the joints.
+2. Take five female–female jumper wires and glue their plug ends side by side into one 5-pin plug
+   with a thin smear of superglue, as for the OLED. Cut the wires **100 mm** from the plug, strip
+   2 mm, and solder each to its encoder terminal with heat-shrink over each joint:
 
    | J102 / J202 pin | Encoder terminal | Net |
    | :---: | :---: | :--- |
-   | 1 | A | `ENC_A` |
+   | 1, the square pad at the outer end | A | `ENC_A` |
    | 2 | C, the middle pin of the three | `GND` |
    | 3 | B | `ENC_B` |
    | 4 | S1 | `COL6` |
    | 5 | S2 | `K06`, to the diode |
 
-   Pin 1 is the square pad. Check each wire with the meter from the plug to its terminal: A and B
-   swapped only reverses the rotation, but C, S1 or S2 in the wrong place makes the encoder dead.
+   The plug is not keyed: mark pin 1 on it and beside the header with a paint pen. Check each wire
+   with the meter from the plug to its terminal: A and B swapped only reverses the rotation, but C,
+   S1 or S2 in the wrong place makes the encoder dead.
 3. Plug the lead in. Short each socket's two contacts with tweezers and check that the key registers
    (ZMK Studio on the left half, or a key tester such as
    [keyboard-test.space](https://keyboard-test.space)).

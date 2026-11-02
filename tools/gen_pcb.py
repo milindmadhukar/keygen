@@ -302,8 +302,8 @@ BAT_PLUS = (3.5, 0.0)                        # "+" beside the battery connector'
 ENCODER_SHAFT = (230.5, 58.5)
 ENC_DIODE = (11.0, -11.0 + 3.81)  # its diode on the back, from the shaft (right half): origin is pad 1, pad 2 north
 ENC_OPENING = (18.0, 20.0)        # the PCB's opening round the encoder, which is fixed to the top frame
-ENC_HEADER = (-16.825, -1.5)      # JST-PH cable header on the back, pin 1 from the shaft (right half): 2 mm pitch
-                                  # running south, its mouth facing the opening
+ENC_HEADER = (-19.825, 15.0)      # 1x5 right-angle header on the back, its outer pin from the shaft (right half),
+                                  # pins pointing north on both halves, so the jumper plug lies flat beside the opening
 # OLED: a 0.96 in. module (27.5 x 28 mm) over the controller's lower end, its header along its bottom
 # edge so the text reads upside down (turned in firmware). Right half: module centre, and pin 1 (GND)
 # relative to it. Pins run toward -x on both halves, since the modules themselves don't mirror.
@@ -381,8 +381,8 @@ def build():
             B.place(f"{prefix}{base + int(n)}", mir(p["x"]) - p.get("body_dx", 0), p["y"], p.get("rot", 0), back=p["back"])
         if enc:
             hx, hy = ENC_HEADER
-            B.place(f"J{base+2}", sx + hx if side == "right" else sx - hx, sy + (hy if side == "right" else hy + 4 * 2.0),
-                    90 if side == "left" else -90, back=True)
+            B.place(f"J{base+2}", sx + hx + 4 * 2.54 if side == "right" else sx - hx, sy + hy, 90,
+                    back=True).Reference().SetVisible(False)      # its label would sit over the opening
             fp = pcbnew.FootprintLoad(str(FP_DIRS["keygen"]), "EC11_Case_Mount")   # off the netlist: no pads
             fp.SetFPID(pcbnew.LIB_ID("keygen", "EC11_Case_Mount"))
             fp.SetReference(f"ENC{base+1}"); fp.SetValue("EC11"); fp.SetPosition(mm(sx, sy)); B.b.Add(fp)

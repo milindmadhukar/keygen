@@ -78,7 +78,7 @@ FP = {
     "led": "LED_SMD:LED_SK6812MINI-E_3.2x2.8mm_P1.5mm_ReverseMount",
     "cap": "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder",
     "enc": "keygen:EC11_Case_Mount",                 # board-only, no pads: holds the 3D models at the shaft
-    "enc_header": "Connector_JST:JST_PH_S5B-PH-K_1x05_P2.00mm_Horizontal",
+    "enc_header": "Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Horizontal",
     "pwr": "keygen:SW_MSK12C02-HB",
     "fet": "Package_TO_SOT_SMD:SOT-23",
     "res": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
@@ -441,10 +441,10 @@ def build(side, root, sheet):
         enc_nets = {"A": "ENC_A", "B": "ENC_B", "C": "GND", "S1": f"COL{enc[1]}", "S2": f"K{enc[0]}{enc[1]}"}
         sh.symbol("Device:RotaryEncoder_Switch", R("ENC", 1), "EC11", EX, EY, FP["enc"],
                   nets=enc_nets, on_board=False)
-        sh.symbol("Connector_Generic:Conn_01x05", R("J", 2), "Encoder cable, JST-PH 2.0",
+        sh.symbol("Connector_Generic:Conn_01x05", R("J", 2), "Encoder lead, 1x5 right angle",
                   EX + 50.8, EY, FP["enc_header"],
                   nets={"1": "ENC_A", "2": "GND", "3": "ENC_B", "4": f"COL{enc[1]}", "5": f"K{enc[0]}{enc[1]}"})
-        sh.text("PH pin order: A / C(GND) / B / S1(COL6) / S2(diode input).",
+        sh.text("Lead pin order: A / C(GND) / B / S1(COL6) / S2(diode input).",
                 EX + 25.4, EY + 20.32)
 
     # ---- OLED ----------------------------------------------------------------------

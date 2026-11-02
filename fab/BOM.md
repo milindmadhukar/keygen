@@ -13,7 +13,7 @@ The shopping list with spares and prices is `bom/bom.csv` / `plan/bom.html`.
 | 1N4148 diode | 34 | D101–D134 | through-hole, back side; band (cathode) toward the square pad |
 | EC11 rotary encoder | 1 | ENC101 | held in the top frame by its M7 nut, 20 mm D shaft |
 | OLED 0.96in I2C | 1 | J101 |  |
-| JST-PH 5-pin encoder header | 1 | J102 | through-hole side-entry, back side, mouth towards the encoder |
+| 1x5 right-angle pin header | 1 | J102 | through-hole, back side, pins lying flat and pointing away from the thumb keys |
 | SK6812MINI-E LED | 33 | LED101–LED133 | SMD, reverse-mount on the back; mind the corner mark |
 | AO3401A P-MOSFET (SOT-23) | 2 | Q101, Q102 | SMD, back side: Q1 between the controller and the power switch, Q2 in the LED power switch |
 | AO3400A N-MOSFET (SOT-23) | 1 | Q103 | SMD, back side, in the LED power switch |
@@ -35,7 +35,7 @@ The shopping list with spares and prices is `bom/bom.csv` / `plan/bom.html`.
 | 1N4148 diode | 34 | D201–D234 | through-hole, back side; band (cathode) toward the square pad |
 | EC11 rotary encoder | 1 | ENC201 | held in the top frame by its M7 nut, 20 mm D shaft |
 | OLED 0.96in I2C | 1 | J201 |  |
-| JST-PH 5-pin encoder header | 1 | J202 | through-hole side-entry, back side, mouth towards the encoder |
+| 1x5 right-angle pin header | 1 | J202 | through-hole, back side, pins lying flat and pointing away from the thumb keys |
 | SK6812MINI-E LED | 33 | LED201–LED233 | SMD, reverse-mount on the back; mind the corner mark |
 | AO3401A P-MOSFET (SOT-23) | 2 | Q201, Q202 | SMD, back side: Q1 between the controller and the power switch, Q2 in the LED power switch |
 | AO3400A N-MOSFET (SOT-23) | 1 | Q203 | SMD, back side, in the LED power switch |
@@ -57,7 +57,7 @@ The shopping list with spares and prices is `bom/bom.csv` / `plan/bom.html`.
 | 1N4148 diode | 68 | 136 | [StacksKB 1N4148 (10-pack)](https://stackskb.com/store/1n4148-through-hole-diode/) |
 | EC11 rotary encoder | 2 | 4 | [Robu.in, Hongyan EC11](https://robu.in/product/hongyan-ec11h-7ce20p1zd20-rotary-encoder-with-push-button-switch-vertical-plug-in-5-pin/) |
 | OLED 0.96in I2C | 2 | 4 |  |
-| JST-PH 5-pin encoder header | 2 | 4 | [Sunrom header](https://www.sunrom.com/p/5-pin-jst-ph-20mm-through-hole-header-horizontal-right-angle-side-entry) + [Sunrom lead](https://www.sunrom.com/p/5-pin-jst-ph-20mm-one-side-female-30cm) |
+| 1x5 right-angle pin header | 2 | 4 | Already owned |
 | SK6812MINI-E LED | 66 | 132 | Not stocked by Indian stores I checked |
 | AO3401A P-MOSFET (SOT-23) | 4 | 8 | Robu.in / Lamington Road |
 | AO3400A N-MOSFET (SOT-23) | 2 | 4 | Robu.in / Lamington Road |

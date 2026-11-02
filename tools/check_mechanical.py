@@ -102,11 +102,11 @@ for side, h in C.halves().items():
     require(not len(board.FindFootprintByReference("ENC101" if side == "left" else "ENC201").Pads()),
             f"{side} encoder footprint has pads: it is fixed to the top frame, not soldered to the PCB")
     connector = board.FindFootprintByReference("J102" if side == "left" else "J202")
-    require(connector is not None, f"{side} encoder cable connector missing")
+    require(connector is not None, f"{side} encoder lead header missing")
     expected = ("ENC_A", "GND", "ENC_B", "COL6", "K06")
     pins = {p.GetNumber(): p for p in connector.Pads()}
     require(all(str(i) in pins and pins[str(i)].GetNetname().endswith("/" + net)
-                for i, net in enumerate(expected, 1)), f"{side} encoder cable pin order wrong")
+                for i, net in enumerate(expected, 1)), f"{side} encoder lead pin order wrong")
     ex, ey = h["enc"][0]
     openings = [Polygon(p) for p in h["windows"] if Polygon(p).contains(Point(ex, ey))]
     require(len(openings) == 1, f"{side} encoder PCB opening missing")

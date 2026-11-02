@@ -6690,11 +6690,11 @@
     (dnp no)
     (uuid "812d6899-a83b-5f48-921d-3fb689e0639d")
     (property "Reference" "J102" (at 411.48 222.25 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "Encoder cable, JST-PH 2.0"
+    (property "Value" "Encoder lead, 1x5 right angle"
       (at 411.48 234.95 0)
       (effects (font (size 1.27 1.27)))
     )
-    (property "Footprint" "Connector_JST:JST_PH_S5B-PH-K_1x05_P2.00mm_Horizontal"
+    (property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Horizontal"
       (at 411.48 228.6 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
@@ -6738,7 +6738,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "407ef5e8-4db2-5f51-9e64-6e691eb13fc5")
   )
-  (text "PH pin order: A / C(GND) / B / S1(COL6) / S2(diode input)."
+  (text "Lead pin order: A / C(GND) / B / S1(COL6) / S2(diode input)."
     (exclude_from_sim no)
     (at 386.08 248.92 0)
     (effects (font (size 1.27 1.27)) (justify left top))

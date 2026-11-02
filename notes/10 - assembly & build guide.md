@@ -39,7 +39,7 @@ From `fab/BOM.md` (left 1xx, right 2xx):
 | SK6812MINI-E LED | 33 | back | reverse-mount through the board cut-out |
 | 1N4148 diode (DO-35) | 34 | back | band (cathode) toward the square pad; D107/D207 is the encoder's, beside its opening |
 | Kailh MX hotswap socket | 33 | back | |
-| EC11 encoder, ENC101/ENC201 | 1 | top frame | M7 nut on the deck, 17 mm knob on the D shaft, 5-pin JST-PH lead to J102/J202 on the back |
+| EC11 encoder, ENC101/ENC201 | 1 | top frame | M7 nut on the deck, 17 mm knob on the D shaft, five-wire jumper lead to J102/J202 on the back |
 | MX switch + keycap | 33 | front | tall 1.25u thumb switches turned 90° |
 | 0.96 in. SSD1306 I2C OLED module, J101/J201 | 1 | front | a 1×4 right-angle header; the module goes in the top frame and plugs in |
 
@@ -82,7 +82,7 @@ From `fab/BOM.md` (left 1xx, right 2xx):
 - Kailh sockets on the back. Tack one pad while holding the socket flat, solder the other fully, then finish the first. Both joints should be concave.
 
 ### 8. Encoder
-- Solder the 5-pin JST-PH header (J102/J202) on the back of each half, its mouth facing the encoder opening. Solder a 100 mm lead to the EC11's five terminals and plug it in.
+- Solder a 1×5 right-angle header into J102/J202 on the back of each half, pins pointing away from the thumb keys. Glue five female–female jumper wires into one plug, as for the OLED, solder their other ends (100 mm) to the EC11's five terminals and plug it in.
 
 ### 9. Matrix test
 - Short each socket's two contacts with tweezers and check the key registers (an online key tester, or ZMK Studio on the left half).

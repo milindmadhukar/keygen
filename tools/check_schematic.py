@@ -66,8 +66,8 @@ for side in ("left", "right"):
         check(net_of(d, "1") == f"ROW{r}", f"{side} {d} cathode on {net_of(d,'1')}, want ROW{r}")
         mid = net_of(d, "2")
         if w is None:
-            check(net_of("J2", "4") == f"COL{c}", f"{side} encoder cable pin 4 (S1) not on COL{c}")
-            check(net_of("J2", "5") == mid, f"{side} encoder cable pin 5 (S2) not joined to {d} anode")
+            check(net_of("J2", "4") == f"COL{c}", f"{side} encoder lead pin 4 (S1) not on COL{c}")
+            check(net_of("J2", "5") == mid, f"{side} encoder lead pin 5 (S2) not joined to {d} anode")
         else:
             sw = f"SW{n}"
             check(net_of(sw, "1") == f"COL{c}", f"{side} {sw} ({lab}) pin1 on {net_of(sw,'1')}, want COL{c}")

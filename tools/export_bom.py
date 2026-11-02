@@ -25,7 +25,7 @@ KINDS = [
     (r"nice_nano|nRF52840", "nRF52840 SuperMini (nice!nano v2 clone)", "Controller", "on the back, socketed (Mill-Max/low-profile); check B+, GND and VCC first"),
     (r"MSK12C02", "MSK12C02 power slide switch", "Power switch", "SMD, back side at the top edge, lever out"),
     (r"SW_PUSH_6mm", "6 mm reset button", "Reset button", "through-hole, back side"),
-    (r"S5B-PH", "JST-PH 5-pin encoder header", "Encoder cable", "through-hole side-entry, back side, mouth towards the encoder"),
+    (r"PinHeader_1x05", "1x5 right-angle pin header", "Encoder lead", "through-hole, back side, pins lying flat and pointing away from the thumb keys"),
     (r"JST_PH", "JST-PH 2-pin battery connector", "Battery connector", "through-hole side-entry, back side; check battery polarity first"),
     (r"EC11|ROT_Alps", "EC11 rotary encoder", "Rotary encoder", "held in the top frame by its M7 nut, 20 mm D shaft"),
     (r"10uF", "10 µF capacitor (1206)", "LED decoupling", "SMD, back side, beside the LED power switch"),
@@ -111,7 +111,7 @@ MPN = {
     "100 kΩ resistor (1206)": "1206W4F1003T5E (UNI-ROYAL, 100 kΩ 1% 1206)",
     "6 mm reset button": "6x6x5 mm THT tactile switch (e.g. TS-1102S-B-B, any 6x6x5)",
     "JST-PH 2-pin battery connector": "S2B-PH-K-S(LF)(SN) (JST)",
-    "JST-PH 5-pin encoder header": "S5B-PH-K-S(LF)(SN) (JST)",
+    "1x5 right-angle pin header": "1x5 right-angle male pin header, 2.54 mm (any)",
     "EC11 rotary encoder": "EC11 with push switch, 20 mm D shaft (Hongyan EC11)",
     "nRF52840 SuperMini (nice!nano v2 clone)": "Customer supplied: nRF52840 SuperMini (nice!nano v2 clone)",
 }
@@ -131,8 +131,8 @@ def fab_instructions(name, refs):
         return "THT, BOTTOM side. Polarity: band (cathode) to the square pad."
     if name.startswith("EC11"):
         return "DO NOT FIT: not on the PCB; customer mounts it in the case and plugs it into the 5-pin header."
-    if name.startswith("JST-PH 5-pin"):
-        return "THT side-entry, BOTTOM side. Opening toward the encoder opening in the PCB."
+    if name.startswith("1x5 right-angle"):
+        return "THT right angle, BOTTOM side, pins lying flat and pointing away from the thumb keys."
     if name.startswith("JST"):
         return "THT side-entry, BOTTOM side. Opening toward the battery pocket."
     return f"{side} side."
@@ -150,7 +150,6 @@ def export_fab_bom(parts):
                 desc = f"Kailh MX hotswap socket for a {size} key" if kind == "MX switch" else name
                 mpn = "CPG151101S11 (Kailh)" if kind == "MX switch" else MPN.get(name, "")
                 value = ("Kailh hotswap socket" if name.startswith("MX switch") else
-                         "JST-PH 5-pin" if name.startswith("JST-PH 5-pin") else
                          "JST-PH 2-pin" if name.startswith("JST") else e["value"])
                 w.writerow([i, ",".join(e["refs"]), len(e["refs"]), desc, mpn, e["footprint"], value,
                             fab_instructions(name, e["refs"])])
