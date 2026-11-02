@@ -67,8 +67,11 @@ for side, h in C.halves().items():
     require(C.OLED_CLEAR - 0.2 - 0.3 >= 0.5, f"{side} OLED plate opening too small")
     require((C.ENC_CUTOUT - C.ENC_BODY) / 2 - 0.2 - 0.3 >= 0.2,
             f"{side} encoder plate opening too small")
-    require(C.ENC_RECESS_TOP - C.ENC_BODY_H - 0.2 >= 0.19,
-            f"{side} encoder body too close to deck")
+    require(C.TOP_Z - C.ENC_BOSS_BOTTOM >= 2.4 and C.ENC_BOSS_D >= 15.0,
+            f"{side} encoder clamp boss too thin")
+    require((C.ENC_CUTOUT - C.ENC_BODY) / 2 - C.ENC_CHEEK[0] - 0.5 >= 0.5,
+            f"{side} encoder cheeks too close to the floating plate")
+    require(C.ENC_CHEEK[2] - C.FLOAT_UP > 0, f"{side} encoder cheeks reach the PCB")
     battery = C.battery(h)["cell"]
     tall_gap = min(C.rects_dist(battery, part) for part in h["tall"])
     antenna_gap = C.rects_dist(battery, h["antenna"])
@@ -96,29 +99,20 @@ for side, h in C.halves().items():
     recess_floor = min(C.wedge_thickness(h, p) - (C.FOOT_H - C.WEDGE_GAP) for p in feet)
     require(magnet_disc >= 0.0 and magnet_web >= 2.0, f"{side} wedge magnets off the steel disc, or too close together")
     require(magnet_floor >= 2.0 and recess_floor >= 2.0, f"{side} wedge too thin under a magnet or a foot")
-    encoder = board.FindFootprintByReference("ENC101" if side == "left" else "ENC201")
-    pins = {pad.GetNumber(): pad for pad in encoder.Pads() if pad.GetNumber() != "MP"}
-    def mm_point(pad):
-        pos = pad.GetPosition()
-        return pcbnew.ToMM(pos.x), pcbnew.ToMM(pos.y)
-    def pin_distance(a, b):
-        return math.dist(mm_point(pins[a]), mm_point(pins[b]))
-    encoder_row = tuple((a + b) / 2 for a, b in zip(mm_point(pins["A"]), mm_point(pins["B"])))
-    switch_row = tuple((a + b) / 2 for a, b in zip(mm_point(pins["S1"]), mm_point(pins["S2"])))
-    require(abs(pin_distance("A", "B") - 5.0) < 0.01 and
-            abs(pin_distance("S1", "S2") - 5.0) < 0.01 and
-            math.dist(encoder_row, mm_point(pins["C"])) < 0.01 and
-            abs(math.dist(encoder_row, switch_row) - 14.5) < 0.01,
-            f"{side} encoder pin grid differs from HongYan drawing")
-    require(all(min(pcbnew.ToMM(p.GetDrillSize().x), pcbnew.ToMM(p.GetDrillSize().y)) >= 1.0
-                for p in pins.values()), f"{side} encoder signal hole too small")
-    mounting = [pad for pad in encoder.Pads() if pad.GetNumber() == "MP"]
-    require(len(mounting) == 2 and abs(math.dist(*map(mm_point, mounting)) - 11.1) <= 0.5,
-            f"{side} encoder mounting slot pitch differs from HongYan drawing")
-    for pad in mounting:
-        drill = pad.GetDrillSize()
-        require(min(pcbnew.ToMM(drill.x), pcbnew.ToMM(drill.y)) >= 2.0,
-                f"{side} encoder mounting slot too narrow")
+    require(not len(board.FindFootprintByReference("ENC101" if side == "left" else "ENC201").Pads()),
+            f"{side} encoder footprint has pads: it is fixed to the top frame, not soldered to the PCB")
+    connector = board.FindFootprintByReference("J102" if side == "left" else "J202")
+    require(connector is not None, f"{side} encoder cable connector missing")
+    expected = ("ENC_A", "GND", "ENC_B", "COL6", "K06")
+    pins = {p.GetNumber(): p for p in connector.Pads()}
+    require(all(str(i) in pins and pins[str(i)].GetNetname().endswith("/" + net)
+                for i, net in enumerate(expected, 1)), f"{side} encoder cable pin order wrong")
+    ex, ey = h["enc"][0]
+    openings = [Polygon(p) for p in h["windows"] if Polygon(p).contains(Point(ex, ey))]
+    require(len(openings) == 1, f"{side} encoder PCB opening missing")
+    opening = openings[0].bounds
+    require(opening[2] - opening[0] >= 18.0 and opening[3] - opening[1] >= 20.0,
+            f"{side} encoder PCB opening too small")
     bottom, top, plate, tabs, screws = G.build(h)
     require(not G.screw_walls(bottom, top, screws), f"{side} case screw walls too thin")
     foam = G.foam_solids(h)
@@ -149,7 +143,9 @@ require(threads[f"M2 x {C.SCREW_L:g} from below, into the standoff"] >= 1.25 * 2
 require(threads["screw tip past the standoff top, longest"] <= C.PLATE_T - 0.5, "a standoff screw's tip reaches the plate top")
 require(C.PLATE_FOAM_Z[0] >= C.PE_Z[1], "the plate foam presses on the switch pads")
 require(abs(C.g.KNOB_MODEL_Z - C.KNOB_Z) < 1e-6, "gen_schematic.KNOB_MODEL_Z is not case_geometry.KNOB_Z")
-require(C.KNOB_GAP - C.FLOAT_GAP - C.ENC_PUSH >= 0.5, "the knob reaches the deck with the stack pressed down and the knob pushed")
+require(C.KNOB_GAP - C.ENC_PUSH >= 0.5, "the knob reaches the fixed deck when pushed")
+require(C.KNOB_GAP - C.ENC_NUT_H - C.ENC_PUSH >= 0.5, "the knob reaches the encoder's nut when pushed")
+require(C.KNOB_Z + C.KNOB_HUB_UP >= C.ENC_FLAT_FROM - 1e-6, "the knob's D bore starts on the shaft's round section")
 require(C.KNOB_Z + C.KNOB_HUB_UP - C.ENC_PUSH >= C.ENC_BUSHING_TOP + 0.3, "the knob's hub reaches the bushing when pushed")
 require(C.deck_clearances(C.halves()["left"])["D flat left inside the knob"] >= 5.0, "under 5 mm of the shaft's D flat inside the knob")
 require(C.ENC_SHAFT_CUT >= 0, "the shaft is too short for the knob height")

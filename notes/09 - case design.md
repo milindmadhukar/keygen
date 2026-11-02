@@ -46,7 +46,7 @@ Heights above the PCB's top surface:
 | Poron ring switch pads, on the PCB | 0 | 0.5 mm |
 | EVA plate foam, taped under the plate | 1.5 mm | 3.5 mm |
 | EVA case foam, on the floor | −12.5 mm | −7.5 mm |
-| Knob underside, on the shaft cut 2.4 mm short | 13.1 mm | |
+| Knob underside, on the shaft cut 1.0 mm short | 14.5 mm | |
 
 So the PCB top is 15.5 mm above the desk and the plate top 20.5 mm. Keycap tops are about 35 mm, before tenting and feet.
 
@@ -55,7 +55,7 @@ So the PCB top is 15.5 mm above the desk and the plate top 20.5 mm. Keycap tops 
 - **USB-C:** the controller's end, which overhangs the slanted top edge, sits in a 20 mm pocket inside the wall, open at the top of the bottom shell so the stack drops in straight. A 14.2 × 9.8 mm port with 2 mm corners goes through the wall in front of it, centred on the receptacle: a 12.35 × 6.5 mm plug overmould, moved by the floating stack, keeps 0.4 mm clear of it, so the cable never ties the stack to the case. The port's height comes from the socket height, `SOCKET_H` in `tools/gen_schematic.py`.
 - **Power switch:** a 9 × 3.4 mm slot at the lever, through the 1.5 mm wall.
 - **Reset:** a 2 mm pinhole through the floor, countersunk outside, with a guide tube up to 2 mm under the button so a paperclip finds it; the button clears it with the stack pressed 1.5 mm down onto its gaskets. The reset buttons mirror between the halves, and so do the pinholes.
-- **Through the plate:** on each half a 15 × 15 mm encoder cut-out and a 29.5 × 29.8 mm OLED window, clear of the OLED module above it.
+- **Through the plate:** on each half an 18 × 18 mm encoder cut-out and a 29.5 × 29.8 mm OLED window, clear of the OLED module above it.
 - **Through the deck:** an OLED window round the display's active area, 1 mm clear at the lip's underside, opening at 45° on three sides and further towards the thumbs, so the whole active area shows at 50° from vertical. The OLED module is held in the top frame: its glass sits in a pocket under a 1.0 mm lip, 1.0 mm below the deck top, and its board sits on a boss that thickens the deck down to 6.4 mm above the PCB, located and held by four Ø 1.7 mm pegs through its corner holes, their tips melted over or glued, with 1.5 mm reliefs over its four solder joints and over the flex cable at its far edge. A 4-wire jumper lead from it plugs onto a right-angle header in J101/J201, lying flat under it in the plate's window, so the top frame comes off; the module clears the floating plate by 0.5 mm all round. The encoder bushing (7 mm) passes through a 9 mm hole, hidden under the knob; the body has a 15 mm square underside relief to 7.4 mm. The knob sits on the shaft cut 2.4 mm short: its underside 13.1 mm above the PCB, 4.1 mm above the deck, so it clears the deck with the stack pressed down and the knob pushed, and its hub clears the bushing; its top is 6.7 mm above the keycap tops, with 7.6 mm of the shaft's D flat inside it.
 
 Exact sizes and positions: [[14 - case & plate requirements]].
@@ -63,7 +63,7 @@ Exact sizes and positions: [[14 - case & plate requirements]].
 ## Sound
 
 - **Gaskets:** the Poron strips on the tabs carry the whole plate and PCB, which is what gives the soft, deep sound.
-- **Case floor foam:** 5 mm EVA, round the battery bay, the controller, the battery connector, the slide switch, the reset tube and the encoder and OLED pins, 1 mm clear of each and 0.5 mm from the walls. Its top is 3.0 mm below the parts under the PCB, 1.5 mm with the stack pressed down.
+- **Case floor foam:** 5 mm EVA, round the battery bay, the controller, the battery connector, the slide switch, the reset tube, the OLED pins and a bay for the encoder's terminals, lead and header, 1 mm clear of each and 0.5 mm from the walls. Its top is 3.0 mm below the parts under the PCB, 1.5 mm with the stack pressed down.
 - **Between plate and PCB:** the gap is 3.5 mm, filled at each mounting hole by an M2 × 3 mm standoff on a 0.5 mm shim, screwed on from below with an M2 × 5 button head that fills 2.9 mm of its thread. Nothing screws into the standoffs from above: they bear on the plate, and the switches, clipped into the plate and plugged into their sockets, hold plate and PCB together. A 0.5 mm Poron ring switch pad is stuck on the PCB round each switch: a square ring about 18 mm across with a 14.2 mm open middle, notched on the clip sides, which keeps the pins and the LED window clear. Seven rings per half have a corner snipped off round a standoff. The 2 mm EVA plate foam is taped to the plate's underside, 1.0 mm above the rings, so it damps the plate without pressing on the PCB. It has 14.4 mm switch cut-outs, notched 4.5 × 1.0 mm on the clip sides for the switch latches, the plate's encoder and OLED cut-outs and holes for the pads and standoffs. Plate foam up to 3.0 mm thick fits.
 - **Cut files:** the switch pads come ready-made; `gen_case.py` models them in place in `case/foam/step/`. It writes the plate foam and the case foam per half as 1:1 DXF and SVG, seen from above, to `case/foam/dxf/` and `case/foam/svg/` in the repo, for a laser or a printed template. No strip is narrower than 1.5 mm. The fit check covers the foam too.
 - PETG is light and resonant on its own, so the foam and the gaskets do most of the work.

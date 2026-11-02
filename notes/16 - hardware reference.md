@@ -87,7 +87,7 @@ References and soldering notes for every part are in `fab/BOM.md`.
   0.5 mm shims, and touch the case only through Poron strips (12 × 4 × 3 mm, cut from 80 × 4 × 3 mm strips), one above and
   one below each of the plate's 8 tabs per half. Closing the case squeezes each strip by 1.0 mm, a third of it.
 - **Plate:** clear polycarbonate, 1.5 mm, CNC-routed from sheet. 14 × 14 mm cut-outs following each key's
-  rotation, a 15 × 15 mm encoder cut-out and a 29.5 × 29.8 mm OLED window per half, and the PCB's M2
+  rotation, an 18 × 18 mm encoder cut-out and a 29.5 × 29.8 mm OLED window per half, and the PCB's M2
   holes. Each standoff is screwed to the PCB from below with an M2 × 5 button head; nothing
   screws into it from above, and its top bears on the plate.
 - **Case:** the bottom shell and top frame are screwed together from below with 8 M2 × 16 screws
@@ -99,10 +99,10 @@ References and soldering notes for every part are in `fab/BOM.md`.
   everywhere but the keycaps (1.2 mm clear of each, the windows chamfered 0.4 mm at the deck top),
   the OLED window and the encoder. The OLED window opens out towards the thumbs; the glass sits
   1.0 mm below the deck top, in a pocket under a 1.0 mm lip; the module sits on a boss under the
-  deck, on four pegs through its holes, 0.5 mm clear of the floating plate's window. The encoder bushing passes through a 9 mm hole under the knob; a 15 mm
-  square recess above the encoder body provides 0.6 mm nominal headroom at the tallest published
-  body height. The shaft is cut 2.4 mm short so the knob's
-  underside sits 4.1 mm above the deck and its top 6.7 mm above the keycap tops.
+  deck, on four pegs through its holes, 0.5 mm clear of the floating plate's window. The encoder is fixed to the frame: its bushing passes through a
+  7.3 mm hole in a Ø15 mm boss, 2.5 mm thick, two cheeks hold its body square, and its washer and M7
+  nut clamp it from above. The shaft is cut 1.0 mm short so the knob's underside sits 5.5 mm above
+  the deck, 2.4 mm over the nut when pushed, and its top 8.1 mm above the keycap tops.
 - **Foam:** per half, the switch pads and two foam layers, the layers cut from the files in
   `case/foam/` (DXF or SVG).
   - Poron ring switch pads, 0.5 mm, ready-made: a square ring about 18 mm across with a 14.2 mm
@@ -112,7 +112,7 @@ References and soldering notes for every part are in `fab/BOM.md`.
     plate's switch, encoder and OLED cut-outs (switches 14.4 mm, notched for the switch latches)
     and holes for the pads and standoffs. Up to 3.0 mm fits.
   - EVA case foam, 5 mm, on the case floor round the battery bay, the controller, the
-    battery connector, the slide switch, the reset tube and the encoder and OLED pins. It sits
+    battery connector, the slide switch, the reset tube, the OLED pins and a bay for the encoder's terminals, lead and header. It sits
     3.0 mm below the parts under the PCB at rest and 1.5 mm below at full gasket travel.
 - **Openings:** a 14.2 × 9.8 mm rounded USB-C port, in front of a pocket inside the wall for the
   controller's end, and a 9 × 3.4 mm power switch slot on the top edge, with the wall thinned outside

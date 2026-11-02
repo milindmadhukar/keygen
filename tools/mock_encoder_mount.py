@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Concept CAD for a case-mounted EC11, in local coordinates around one shaft.
+"""The case-mounted EC11 in local coordinates around one shaft: a section drawing, a STEP
+assembly, and a printable 30 mm coupon of the frame's boss for checking the delivered encoder.
 
-This is an isolated 30 mm coupon, not a revision of the production case or PCB.
-The companion dimensions and caveats are in docs/encoder-mount-mockup.md.
+The dimensions are in docs/encoder-mount.md; the production parts come from gen_case.py.
 
     ~/.venvs/keygen-cad/bin/python tools/mock_encoder_mount.py
 """
@@ -28,26 +28,29 @@ def part(shape, name, rgb):
 
 def write_svg():
     """Draw the same nominal z stack as a readable section and plan view."""
-    def x(v): return 285 + v * 12
-    def z(v): return 460 - v * 12
+    S = 10.5
+    def x(v): return 330 + v * S
+    def z(v): return 470 - v * S
     def rect(x0, x1, z0, z1, fill, stroke="none", extra=""):
-        return (f'<rect x="{x(x0):.1f}" y="{z(z1):.1f}" width="{(x1-x0)*12:.1f}" '
-                f'height="{(z1-z0)*12:.1f}" fill="{fill}" stroke="{stroke}" {extra}/>')
+        return (f'<rect x="{x(x0):.1f}" y="{z(z1):.1f}" width="{(x1-x0)*S:.1f}" '
+                f'height="{(z1-z0)*S:.1f}" fill="{fill}" stroke="{stroke}" {extra}/>')
 
     a = ['<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650">',
          '<style>text{font-family:DejaVu Sans,Arial,sans-serif;fill:#e9eef2} .sub{fill:#aab6c2;font-size:16px} '
          '.label{font-size:17px} .small{font-size:14px} .hair{stroke:#aab6c2;stroke-width:1.5;fill:none} </style>',
          '<rect width="1200" height="650" fill="#101820"/>',
-         '<text x="42" y="49" font-size="27" font-weight="bold">Case-mounted EC11 · geometry mockup</text>',
+         '<text x="42" y="49" font-size="27" font-weight="bold">Case-mounted EC11</text>',
          '<text x="42" y="76" class="sub">Nominal section through the shaft · dimensions in mm · fixed parts blue, floating parts green</text>',
-         '<text x="92" y="115" class="label">SIDE SECTION</text>']
-    # Fixed deck and its downward boss, relieved only for the M7 bushing.
+         '<text x="30" y="115" class="label">SIDE SECTION</text>']
+    # Fixed deck, its downward boss relieved only for the M7 bushing, and the cheeks beside the body.
     for lo, hi in ((-15, -3.65), (3.65, 15)):
         a.append(rect(lo, hi, 7, 9, "#49718e"))
     for lo, hi in ((-7.5, -3.65), (3.65, 7.5)):
         a.append(rect(lo, hi, 6.5, 7, "#49718e"))
+    for lo, hi in ((-7.45, -6.25), (6.25, 7.45)):
+        a.append(rect(lo, hi, 4.5, 6.5, "#49718e"))
     # Floating plate and PCB; their openings are larger than the case-mounted body and pins.
-    for lo, hi in ((-15, -9.5), (9.5, 15)):
+    for lo, hi in ((-15, -9), (9, 15)):
         a.append(rect(lo, hi, 3.5, 5, "#5ea7a1"))
     for lo, hi in ((-15, -9), (9, 15)):
         a.append(rect(lo, hi, -1.6, 0, "#317d63"))
@@ -61,21 +64,21 @@ def write_svg():
     # The aluminium knob is translucent in section so the shortened shaft can be seen.
     a.append(rect(-8.5, 8.5, 14.5, 27.5, "#d9e0e3", "#f5f7f8", 'opacity="0.58"'))
     a.append(f'<line x1="{x(-15)}" y1="{z(9)}" x2="{x(15)}" y2="{z(9)}" stroke="#b7c8d2" stroke-width="2"/>')
-    # Left labels use leaders instead of packing text into the parts.
-    for y0, px, pz, label in ((183,-8.5,22.5,"17 mm knob"),(277,-4.8,10.3,"M7 nut + washer"),
-                              (360,-8.5,7.5,"2.5 mm case boss"),(408,-11.8,4.2,"19 × 19 plate opening"),
-                              (482,-11.5,-.8,"18 × 20 PCB opening")):
-        a.append(f'<path class="hair" d="M {x(px):.1f} {z(pz):.1f} L 110 {y0-6}"/>')
-        a.append(f'<text x="48" y="{y0}" class="small">{label}</text>')
-    a += ['<text x="493" y="174" class="small">Shaft stays at the</text>',
-          '<text x="493" y="193" class="small">original encoder height.</text>',
-          '<text x="493" y="272" class="small">2.4 mm nominal gap</text>',
-          '<text x="493" y="291" class="small">to nut when pushed 0.8 mm</text>',
-          f'<path class="hair" d="M {x(8.5):.1f} {z(13.7):.1f} L 485 280"/>',
-          '<text x="493" y="368" class="small">Fixed body, clear of plate</text>',
-          '<text x="493" y="387" class="small">and PCB as they float</text>',
-          '<text x="493" y="478" class="small">Five soldered leads enter</text>',
-          '<text x="493" y="497" class="small">a flexible cable</text>',
+    # Each label sits level with its part, joined to it by a short leader.
+    for pz, px, label in ((22, -8.5, "17 mm knob"), (10.3, -5, "M7 nut, washer"), (8, -15, "2.5 mm boss"),
+                          (4.25, -15, "18 × 18 plate"), (-.8, -15, "18 × 20 PCB")):
+        y = z(pz)
+        a.append(f'<path class="hair" d="M {34 + len(label) * 8} {y:.1f} L {x(px):.1f} {y:.1f}"/>')
+        a.append(f'<text x="30" y="{y + 5:.1f}" class="small">{label}</text>')
+    for pz, px, lines in ((22, 8.5, ("Hub on the shaft's D flat",)),
+                          (13.7, 8.5, ("2.4 mm gap to the nut", "when pushed 0.8 mm")),
+                          (5.5, 7.45, ("Cheeks stop the body", "turning with the knob")),
+                          (2, 6, ("Body clear of the plate", "and PCB as they float")),
+                          (-2.5, 5.45, ("Five leads, to the header", "under the PCB"))):
+        y = z(pz)
+        a.append(f'<path class="hair" d="M {x(px):.1f} {y:.1f} L 492 {y:.1f}"/>')
+        a += [f'<text x="498" y="{y + 5 + i * 18:.1f}" class="small">{line}</text>' for i, line in enumerate(lines)]
+    a += [
           '<line x1="705" y1="114" x2="705" y2="550" stroke="#34434d" stroke-width="2"/>',
           '<text x="747" y="115" class="label">TOP VIEW AT SHAFT</text>',
           '<rect x="785" y="148" width="190" height="190" rx="3" fill="none" stroke="#5ea7a1" stroke-width="4"/>',
@@ -84,7 +87,7 @@ def write_svg():
           '<rect x="820" y="184.5" width="120" height="117" rx="5" fill="#777e85" stroke="#c4cbd0" stroke-width="2"/>',
           '<circle cx="880" cy="243" r="35" fill="#a3aab0"/>',
           '<circle cx="880" cy="243" r="57.5" fill="none" stroke="#e3e7e8" stroke-width="3"/>',
-          '<text x="995" y="176" class="small">plate 19 × 19</text>',
+          '<text x="995" y="176" class="small">plate 18 × 18</text>',
           '<text x="995" y="204" class="small">PCB 18 × 20</text>',
           '<text x="995" y="232" class="small">boss Ø15</text>',
           '<text x="995" y="260" class="small">body 12 × 11.7</text>',
@@ -97,7 +100,7 @@ def write_svg():
           '<rect x="1040" y="433" width="120" height="85" rx="10" fill="#245a48" stroke="#6bc3a2"/>',
           '<text x="1052" y="463" class="small">5-pin PH</text>',
           '<text x="1052" y="490" class="small">PCB floats</text>',
-          '<text x="42" y="607" class="sub">Concept only: the production PCB needs a routed opening and D107/D207 moved; the case needs the boss and M7 hole.</text>',
+          '<text x="42" y="607" class="sub">The encoder is fixed to the top frame; the plate and PCB float round it. Its lead plugs into J102 / J202 on the back of the PCB.</text>',
           '</svg>']
     SVG.write_text("\n".join(a) + "\n")
     print(f"wrote {SVG.relative_to(ROOT)}")
@@ -107,10 +110,11 @@ def main():
     # Heights use the production PCB top as z=0. The body remains at its current height.
     deck = Pos(0, 0, 7.0) * Box(30, 30, 2.0, align=Z)
     boss = Pos(0, 0, 6.5) * Cylinder(7.5, 2.5, align=Z)
-    panel = (deck + boss) - Pos(0, 0, 6.4) * Cylinder(3.65, 2.7, align=Z)
+    cheeks = Pos(-6.85, 0, 4.5) * Box(1.2, 9, 2.6, align=Z) + Pos(6.85, 0, 4.5) * Box(1.2, 9, 2.6, align=Z)
+    panel = (deck + boss + cheeks) - Pos(0, 0, 6.4) * Cylinder(3.65, 2.7, align=Z)
 
     plate = Pos(0, 0, 3.5) * Box(30, 30, 1.5, align=Z)
-    plate -= Pos(0, 0, 3.4) * Box(19, 19, 1.7, align=Z)
+    plate -= Pos(0, 0, 3.4) * Box(18, 18, 1.7, align=Z)
     pcb = Pos(0, 0, -1.6) * Box(30, 30, 1.6, align=Z)
     pcb -= Pos(0, 0, -1.7) * Box(18, 20, 1.8, align=Z)
 
@@ -138,7 +142,7 @@ def main():
     knob = Pos(0, 0, 14.5) * knob
 
     shapes = [part(panel, "fixed top deck with M7 boss", 0x39434E),
-              part(plate, "floating switch plate with 19 mm opening", 0xAABFC6),
+              part(plate, "floating switch plate with 18 mm opening", 0xAABFC6),
               part(pcb, "floating PCB with 18 x 20 mm opening", 0x267560),
               part(encoder, "EC11 body bushing and shortened shaft", 0x676D75),
               part(washer, "supplied washer", 0xD2D5D8),

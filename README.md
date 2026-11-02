@@ -5,7 +5,7 @@
 ![KiCad 10](https://img.shields.io/badge/KiCad-10-314CB0)
 ![nRF52840](https://img.shields.io/badge/MCU-nRF52840-00A9CE)
 ![ZMK](https://img.shields.io/badge/firmware-ZMK-5B4A9E)
-![Status](https://img.shields.io/badge/status-encoder%20mount%20study-D8A534)
+![Status](https://img.shields.io/badge/status-PCB%20routed%2C%20DRC%20clean-2EA44F)
 
 ![Keygen, both halves in their black PETG case, the per-key LEDs lit under smoke translucent keycaps](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-hero.jpg)
 
@@ -31,7 +31,7 @@ clearances, including the battery stack at full gasket travel.
 | Layout | Column-staggered QWERTY, six columns per hand plus an extra bottom row |
 | Keys | 66 (33 per half): 52 × 1u, 14 × 1.25u |
 | Thumb cluster | 2 × 2 block rotated 30° (two 1u over two 1.25u) plus one 1.25u key per hand |
-| Encoders | HongYan EC11H with a 20 mm D shaft on each half, with a 17 mm aluminium D-shaft knob, in the key matrix. Left: scroll wheel, press for middle click. Right: volume, press to mute |
+| Encoders | HongYan EC11H with a 20 mm D shaft on each half, fixed to the top frame and plugged into the PCB through a 5-pin JST-PH cable, with a 17 mm aluminium D-shaft knob, in the key matrix. Left: scroll wheel, press for middle click. Right: volume, press to mute |
 | Displays | 0.96 in. 128 × 64 SSD1306 OLED per half (I2C), held in the top frame and plugged into the PCB, showing ZMK's status screen |
 | Switches | Akko V3 Lavender Purple Pro (tactile, 5-pin) in Kailh hotswap sockets (CPG151101S11) |
 | Keycaps | Blank DSA PBT, smoke translucent |
@@ -41,7 +41,7 @@ clearances, including the battery stack at full gasket travel.
 | Power | KP-355085 LiPo pouch per half (3.5 × 50 × 85 mm, listed 3000 mAh) with a protection board, JST-PH connector, slide switch driving a P-MOSFET battery switch. Each half charges from its own USB-C |
 | PCB | 2 layers, FR-4 1.6 mm, 1 oz copper, HASL, black soldermask with white silkscreen. One half is 160.2 × 126.0 mm |
 | Switch plate | Clear polycarbonate 1.5 mm, CNC-routed, with eight gasket tabs per half |
-| Case | 3D-printed PETG, gasket-mounted: a bottom shell and a top frame per half, 175.4 × 143.7 × 24.5 mm. The top frame covers the plate round the keycaps and the knob, and holds the OLED. Rubber feet, and a steel disc set flush into each floor |
+| Case | 3D-printed PETG, gasket-mounted: a bottom shell and a top frame per half, 175.4 × 143.7 × 24.5 mm. The top frame covers the plate round the keycaps and the knob, and holds the OLED and the encoder. Rubber feet, and a steel disc set flush into each floor |
 | Tenting | Optional 3D-printed 13° PETG wedge per half, held by four N35 10 × 3 mm magnets to the steel disc, with the feet standing in recesses in its top face |
 | Foam | Poron ring switch pads (0.5 mm) on the PCB, EVA plate foam (2 mm) taped under the plate, EVA case foam (5 mm) on the case floor |
 | Firmware | [ZMK](https://zmk.dev) `main` (Zephyr 4.1): QWERTY base with Nav, Fn and System layers, ZMK Studio |
@@ -102,10 +102,6 @@ over the plate tabs, plate and top frame.
 
 ![Keygen case, exploded](https://github.com/milindmadhukar/keygen/releases/download/media/render-case-exploded.png)
 
-**Encoder mount concept.** The case boss, nut, floating clearances and five-wire connection.
-
-![Case-mounted encoder section and connector path](assets/encoder-mount-mockup.svg)
-
 **Bare PCB.** Black soldermask with white silkscreen artwork on both sides; see
 [Silkscreen artwork](notes/16%20-%20hardware%20reference.md#silkscreen-artwork).
 
@@ -133,7 +129,7 @@ Renders of the case parts, the plate and the routing are in the [`media` release
 | [Building from source](notes/17%20-%20building%20from%20source.md) | Requirements, the schematic and PCB pipeline, the plate and case, the [Blender scene](notes/17%20-%20building%20from%20source.md#blender-scene), every generated file |
 | [Firmware](firmware/README.md) | ZMK configuration: keymap, OLED screens, hardware support, building and flashing |
 | [Design notes](notes/index.md) | The Obsidian design notes: layout, controller, PCB, case, final design, datasheet audit |
-| [Case-mounted encoder mockup](docs/encoder-mount-mockup.md) | A separate CAD study of the encoder boss, knob clearance, PCB opening and five-wire connection |
+| [Encoder mount](docs/encoder-mount.md) | The encoder boss, knob clearance, the plate and PCB openings, the cable and a printable test coupon |
 | [Build plan](plan/index.html) | Layout drawing, connectivity, parts, pin budget and checklist. Open it in a browser |
 | [Schematic (PDF)](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-schematic.pdf) | A top sheet with left (refs 1xx) and right (refs 2xx) sub-sheets |
 | [KiCad project](pcb/keygen.kicad_pro) | Schematic and PCB, KiCad 10. Both halves are in one board file as two separate outlines |
@@ -184,7 +180,6 @@ keygen/
 - [x] ZMK firmware builds
 - [ ] ZMK firmware tested on the boards
 - [x] Switch plate, gasket-mounted case and tenting wedges designed, fit-checked against the PCB
-- [ ] If the case-mounted encoder study is adopted, revise the PCB, plate and case before ordering them
 - [ ] Case and wedges printed
 
 ## Credits and licenses

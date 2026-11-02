@@ -51,7 +51,8 @@ def board_data():
             leds.append(at)
     oled = {side: ["".join(map(str, row)) for row in render_oled.read_svg(ROOT / f"assets/oled-{side}.svg")]
             for side in ("left", "right")}
-    return dict(keys=keys, leds=leds, oled=oled, pcb_t=C.PCB_T, plate_top=C.PLATE_TOP, cap_skirt=C.CAP_SKIRT,
+    encoders = [dict(side=side, x=x, y=y) for side, h in C.halves().items() for x, y in h["enc"]]
+    return dict(keys=keys, leds=leds, oled=oled, encoders=encoders, deck_z=C.TOP_Z, pcb_t=C.PCB_T, plate_top=C.PLATE_TOP, cap_skirt=C.CAP_SKIRT,
                 wedge_top=C.BOTTOM_Z - C.WEDGE_GAP, wedge_edge=C.WEDGE_EDGE, wedge_angle=C.WEDGE_ANGLE)
 
 

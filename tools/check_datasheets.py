@@ -347,11 +347,10 @@ for side, d in SIDES.items():
     ok(not bad, A, f"{side}: all {len(sws)} hotswap sockets have one side on a COL", f"{side}: {bad}")
     rows = {pad_net(f"U{d}01", str(p)) for p in range(7, 12)}
     ok(rows == {f"ROW{i}" for i in range(5)}, A, f"{side}: 5 rows and 7 columns all reach the controller")
-    if fp(f"ENC{d}01"):
-        e = pads(f"ENC{d}01")
-        mid = sorted(("A", "B", "C"), key=lambda k: mm(e[k].GetPosition().x))[1]
-        ok(mid == "C" and net(e["C"]) == "GND", A, f"{side}: EC11 common C is the middle pin and on GND (Alps EC11E)")
-        ok({net(e["A"]), net(e["B"])} == {"ENC_A", "ENC_B"}, A, f"{side}: EC11 A/B on ENC_A/ENC_B (inputs with internal pull-ups)")
+    e = pads(f"J{d}02")
+    ok(net(e["2"]) == "GND", A, f"{side}: encoder cable pin 2 (EC11 common C, the middle pin) on GND")
+    ok((net(e["1"]), net(e["3"])) == ("ENC_A", "ENC_B"), A, f"{side}: encoder cable pins 1 and 3 on ENC_A/ENC_B (inputs with internal pull-ups)")
+    ok(re.match(r"COL\d$", net(e["4"])) and re.match(r"K\d+$", net(e["5"])), A, f"{side}: encoder cable pins 4 and 5 are the push switch, COL and diode")
 
 # --------------------------------------------------------------------------------------
 # 6. Antenna

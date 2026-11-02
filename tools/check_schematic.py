@@ -66,8 +66,8 @@ for side in ("left", "right"):
         check(net_of(d, "1") == f"ROW{r}", f"{side} {d} cathode on {net_of(d,'1')}, want ROW{r}")
         mid = net_of(d, "2")
         if w is None:
-            check(net_of("ENC1", "S1") == f"COL{c}", f"{side} encoder S1 not on COL{c}")
-            check(net_of("ENC1", "S2") == mid, f"{side} encoder S2 not joined to {d} anode")
+            check(net_of("J2", "4") == f"COL{c}", f"{side} encoder cable pin 4 (S1) not on COL{c}")
+            check(net_of("J2", "5") == mid, f"{side} encoder cable pin 5 (S2) not joined to {d} anode")
         else:
             sw = f"SW{n}"
             check(net_of(sw, "1") == f"COL{c}", f"{side} {sw} ({lab}) pin1 on {net_of(sw,'1')}, want COL{c}")
@@ -112,9 +112,9 @@ for side in ("left", "right"):
         "RST": {("U1", "15"), ("SW91", "1")},
     }
     if enc:
-        expect["GND"].add(("ENC1", "C"))
-        expect["ENC_A"] = {("U1", "23"), ("ENC1", "A")}
-        expect["ENC_B"] = {("U1", "24"), ("ENC1", "B")}
+        expect["GND"].add(("J2", "2"))
+        expect["ENC_A"] = {("U1", "23"), ("J2", "1")}
+        expect["ENC_B"] = {("U1", "24"), ("J2", "3")}
     for net, want in expect.items():
         have = {p for p in nets.get(net, set()) if not p[0].startswith("#")}
         if net == "GND": have = {p for p in have if not p[0].startswith("LED")}

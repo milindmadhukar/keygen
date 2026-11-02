@@ -362,6 +362,16 @@ def build_parts():
     log(f"board top face at z = {top / MM:.3f} mm")
     oled_screens(cols["Board"], mats, data["oled"])
 
+    # The encoder's M7 nut, on the deck under the knob: the GLB has no hardware that isn't on the PCB.
+    for enc in data["encoders"]:
+        bpy.ops.mesh.primitive_cylinder_add(vertices=6, radius=5.8 * MM, depth=2.0 * MM,
+                                            location=(enc["x"] * MM, -enc["y"] * MM, top + (data["deck_z"] + 1.0) * MM))
+        o = bpy.context.object
+        o.name = f"{enc['side']} encoder nut"
+        for c in list(o.users_collection): c.objects.unlink(o)
+        cols["Board"].objects.link(o)
+        o.data.materials.append(mats["hasl"])
+
     for side in ("left", "right"):
         for part, col, mat in (("bottom", "Case", "case"), ("top", "Case", "case"), ("plate", "Plate", "plate")):
             o = import_stl(ROOT / f"case/{part}/stl/keygen-{side}-{part}.stl", cols[col], f"{side} {part}")

@@ -77,7 +77,7 @@ The upper two keys stay 1u: with 1.25u lower caps, they can sit 4.76 mm closer t
 
 ### Knobs
 
-Each half has an EC11 encoder (push switch, 20 mm D shaft) with a 17 × 13 mm knurled aluminium knob (a "D halfshaft 17x13" amplifier knob) on its inner edge, mirrored: the right shaft is at (256.5, 134.5) and the left at (167.0, 134.5) in board coordinates (KiCad mm). On both halves the knob's edge sits 10 mm below the OLED, 5.7 mm from the thumb cluster's top key and 9.1 mm from the G/H column, close enough to reach with the thumb.
+Each half has an EC11 encoder (push switch, 20 mm D shaft) with a 17 × 13 mm knurled aluminium knob (a "D halfshaft 17x13" amplifier knob) on its inner edge, fixed to the top frame and wired to the PCB through a 5-pin JST-PH lead, mirrored: the right shaft is at (256.5, 134.5) and the left at (167.0, 134.5) in board coordinates (KiCad mm). On both halves the knob's edge sits 10 mm below the OLED, 5.7 mm from the thumb cluster's top key and 9.1 mm from the G/H column, close enough to reach with the thumb.
 
 | Layer | Left knob | Right knob |
 |---|---|---|
@@ -140,7 +140,7 @@ The matrix is COL2ROW: each switch connects to its column, and the diode cathode
 
 - **Column 6** holds Alt (row 2), Ctrl (row 3) and the 1.25u centre-side thumb key (row 4).
 - **Row 4** holds the extra bottom row and the thumbs.
-- **Both halves:** each encoder's push switch sits at row 0 / column 6, with its own 1N4148 (D107 left, D207 right, on the back beside the encoder).
+- **Both halves:** each encoder's push switch sits at row 0 / column 6, with its own 1N4148 (D107 left, D207 right, on the back beside the encoder's opening).
 - **Left references:** the left keys are SW101–SW106 and SW108–SW134, with diodes D101–D106 and D108–D134.
 
 ### OLED
@@ -199,7 +199,8 @@ The left half is the ZMK central. Plugging USB-C into it is the wired mode, and 
 | AO3401A P-MOSFET + 1 MΩ resistor, 1206 (battery switch) | 1 + 1 | 1 + 1 | SMD |
 | AO3401A P-MOSFET, AO3400A N-MOSFET, 2 × 100 kΩ, 1206 (LED power switch) | 1 + 1 + 2 | 1 + 1 + 2 | SMD |
 | 6 mm reset button (pinhole in case) | 1 | 1 | TH |
-| EC11 encoder (D shaft) + 17 mm knob | 1 | 1 | TH |
+| EC11 encoder (D shaft) + 17 mm knob | 1 | 1 | Top frame |
+| 5-pin JST-PH header + lead | 1 | 1 | TH |
 | 0.96 in. SSD1306 I2C OLED module, 128×64 (J101 / J201) | 1 | 1 | TH (right-angle header; the module plugs in) |
 
 Each half has 34 diodes: 33 for the keys and one for its encoder's push switch, which sits in the key matrix. 3D models of the knob and the OLED module (`pcb/lib/keygen.3dshapes/Knob_17mm.step`, `OLED_096_I2C.step`) are made by `tools/gen_models.py`. Keygen is a single build. JLCPCB's minimum is 5 per design, so order **5 left + 5 right** boards and keep the rest as spares. Full shopping list: [[13 - bill of materials]].
@@ -284,7 +285,7 @@ See [[05 - pcb design]].
 
 ## Case
 
-- **3D-printed PETG, closed, gasket-mounted**: a bottom shell and a top frame per half, 175.4 × 143.7 × 24.5 mm. The top frame's deck, level with its rim, covers the plate everywhere but the keycaps, the OLED and the knob. Plastic all round keeps the Bluetooth antenna clear.
+- **3D-printed PETG, closed, gasket-mounted**: a bottom shell and a top frame per half, 175.4 × 143.7 × 24.5 mm. The top frame's deck, level with its rim, covers the plate everywhere but the keycaps, the OLED and the knob, and carries the encoder. Plastic all round keeps the Bluetooth antenna clear.
 - **Switch plate: 1.5 mm clear polycarbonate**, CNC-routed from solid sheet, three halves per 6 × 24 in. (152 × 610 mm) strip. It rests on M2 × 3 mm standoffs on 0.5 mm shims, screwed to the PCB from below, and the switches hold it to the PCB; and its 8 tabs per half float between Poron strips clamped by the case. Each half's plate has a 15 × 15 mm encoder cut-out and a 29.5 × 29.8 mm OLED window.
 - A rounded **USB-C port**, sized for a plug carried by the floating stack, and a **power switch slot** on the top edge, with the wall thinned outside them, and a guided **reset pinhole** in the floor. The reset buttons mirror between the halves (left origin at x 182.85), and so do the pinholes.
 - 9.4 mm under the PCB for the socketed controller, plus 1.5 mm to float; the ≤ 5 mm nominal battery fits with thickness and tape allowances.

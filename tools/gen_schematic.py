@@ -77,7 +77,8 @@ FP = {
     "diode": "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal",
     "led": "LED_SMD:LED_SK6812MINI-E_3.2x2.8mm_P1.5mm_ReverseMount",
     "cap": "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder",
-    "enc": "keygen:ROT_Alps_EC11E-Switch",           # marbastlib, origin at the shaft
+    "enc": "keygen:EC11_Case_Mount",                 # board-only, no pads: holds the 3D models at the shaft
+    "enc_header": "Connector_JST:JST_PH_S5B-PH-K_1x05_P2.00mm_Horizontal",
     "pwr": "keygen:SW_MSK12C02-HB",
     "fet": "Package_TO_SOT_SMD:SOT-23",
     "res": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
@@ -155,7 +156,7 @@ def vendor_model(node, base):
 # (switch, keycap) is turned over and pushed through the board so the flip puts it back on top.
 ON_FRONT = dict(rotate=(0, 180, 0))
 CAP_MODEL_Z = 11.5   # keycap model origin above the PCB top; tools/gen_keycaps.py places the cap from it
-KNOB_MODEL_Z = 13.1  # knob underside above the PCB top: case_geometry.KNOB_Z (check_mechanical.py checks)
+KNOB_MODEL_Z = 14.5  # knob underside above the PCB top: case_geometry.KNOB_Z (check_mechanical.py checks)
 
 def wrl_box_mesh(boxes):
     """VRML (KiCad units: 0.1 inch) for a list of (x0,y0,z0,x1,y1,z1,rgb) boxes in mm."""
@@ -221,22 +222,24 @@ def keygen_footprints():
             first(n, "at")[2] = {"USB": -14.75, "topside": -12.65}[n[2]]
     fp.append(model(f"{SHAPES}/nRF52840_ProMicro.wrl")); save(fp, "nice_nano_H_USBup")
 
-    for lib, name, base in (("marbastlib-various.pretty", "SW_MSK12C02-HB", VENDOR3D["marbastlib"]),
-                            ("marbastlib-various.pretty", "ROT_Alps_EC11E-Switch", VENDOR3D["marbastlib"])):
-        fp = load(marb / lib, name)
-        fp[:] = [n if not (isinstance(n, list) and n and n[0] == "model") else vendor_model(n, base) for n in fp]
-        if name.startswith("ROT_"):         # the knob (tools/gen_models.py) where it sits on the cut shaft
-            fp.append(model(f"{SHAPES}/Knob_17mm.step", offset=(0, 0, KNOB_MODEL_Z)))
-            # the common pin C sits 2.5 mm between A and B, which leaves no room for thermal spokes
-            # sideways: connect it to the ground pour solid
-            for pad in find(fp, "pad"):
-                if pad[1] == "C": pad.append([S("zone_connect"), 2])
-                # The selected HongYan EC11H calls for 1.8-1.9 mm wide mounting holes. Give
-                # the plated slots 0.1 mm width margin and retain 0.2 mm copper annular width.
-                if pad[1] == "MP":
-                    first(pad, "size")[1:] = [3.4, 2.4]
-                    first(pad, "drill")[2:] = [2.8, 2.0]
-        save(fp, name)
+    fp = load(marb / "marbastlib-various.pretty", "SW_MSK12C02-HB")
+    fp[:] = [n if not (isinstance(n, list) and n and n[0] == "model") else vendor_model(n, VENDOR3D["marbastlib"]) for n in fp]
+    save(fp, "SW_MSK12C02-HB")
+
+    # The encoder is fixed to the top frame, over the PCB's opening. Its footprint has no pads: it
+    # marks the shaft and carries the encoder and knob models, with the terminals' envelope on F.Fab.
+    fp = load(marb / "marbastlib-various.pretty", "ROT_Alps_EC11E-Switch")
+    fp[:] = [n for n in fp if not (isinstance(n, list) and n and n[0] in
+                                   ("pad", "fp_line", "fp_rect", "fp_circle", "fp_arc", "fp_poly", "fp_text"))]
+    fp[:] = [n if not (isinstance(n, list) and n and n[0] == "model") else vendor_model(n, VENDOR3D["marbastlib"]) for n in fp]
+    fp[1] = "EC11_Case_Mount"
+    first(next(p for p in find(fp, "property") if p[1] == "Reference"), "layer")[1] = "F.Fab"
+    next(p for p in find(fp, "property") if p[1] == "Value")[2] = "EC11_Case_Mount"
+    first(fp, "attr")[1:] = [S("board_only"), S("exclude_from_pos_files"), S("exclude_from_bom")]
+    fp.append([S("fp_rect"), [S("start"), -7.0, -8.75], [S("end"), 7.0, 9.0], [S("stroke"), [S("width"), 0.1], [S("type"), S("solid")]],
+               [S("fill"), S("no")], [S("layer"), "F.Fab"]])
+    fp.append(model(f"{SHAPES}/Knob_17mm.step", offset=(0, 0, KNOB_MODEL_Z)))
+    save(fp, "EC11_Case_Mount")
 
 def keygen_lib():
     lib = [S("kicad_symbol_lib"), [S("version"), 20241209], [S("generator"), "keygen_gen_schematic"],
@@ -260,6 +263,7 @@ LIBSYMS = {
     "power:PWR_FLAG": lambda: lib_symbol(STOCK / "power.kicad_sym", "PWR_FLAG"),
     "Mechanical:MountingHole": lambda: lib_symbol(STOCK / "Mechanical.kicad_sym", "MountingHole"),
     "Connector_Generic:Conn_01x04": lambda: lib_symbol(STOCK / "Connector_Generic.kicad_sym", "Conn_01x04"),
+    "Connector_Generic:Conn_01x05": lambda: lib_symbol(STOCK / "Connector_Generic.kicad_sym", "Conn_01x05"),
 }
 _cache = {}
 def libsym(lib_id):
@@ -432,10 +436,16 @@ def build(side, root, sheet):
     # ---- encoder -------------------------------------------------------------------
     if enc:
         EX, EY = 360.68, 228.6
-        sh.text("ROTARY ENCODER (EC11) - push switch in the matrix at "
+        sh.text("CASE-MOUNTED ROTARY ENCODER (EC11) - push switch in the matrix at "
                 f"ROW{enc[0]}/COL{enc[1]}", EX - 25.4, EY - 15.24, 2)
+        enc_nets = {"A": "ENC_A", "B": "ENC_B", "C": "GND", "S1": f"COL{enc[1]}", "S2": f"K{enc[0]}{enc[1]}"}
         sh.symbol("Device:RotaryEncoder_Switch", R("ENC", 1), "EC11", EX, EY, FP["enc"],
-                  nets={"A": "ENC_A", "B": "ENC_B", "C": "GND", "S1": f"COL{enc[1]}", "S2": f"K{enc[0]}{enc[1]}"})
+                  nets=enc_nets, on_board=False)
+        sh.symbol("Connector_Generic:Conn_01x05", R("J", 2), "Encoder cable, JST-PH 2.0",
+                  EX + 50.8, EY, FP["enc_header"],
+                  nets={"1": "ENC_A", "2": "GND", "3": "ENC_B", "4": f"COL{enc[1]}", "5": f"K{enc[0]}{enc[1]}"})
+        sh.text("PH pin order: A / C(GND) / B / S1(COL6) / S2(diode input).",
+                EX + 25.4, EY + 20.32)
 
     # ---- OLED ----------------------------------------------------------------------
     # A generic 0.96" 128x64 SSD1306 module (I2C, pull-ups and regulator on the module), held in the

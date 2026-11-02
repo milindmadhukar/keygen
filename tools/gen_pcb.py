@@ -237,7 +237,11 @@ def _mounting_holes(self, hull, side):
             raise RuntimeError(f"{side}: fixed mounting hole H{(100 if side == 'left' else 200) + i} is obstructed")
         fp = pcbnew.FootprintLoad("/usr/share/kicad/footprints/MountingHole.pretty", "MountingHole_2.2mm_M2")
         fp.SetFPID(pcbnew.LIB_ID("MountingHole", "MountingHole_2.2mm_M2"))
-        fp.SetReference(f"H{(100 if side == 'left' else 200) + i}"); fp.SetValue("M2")
+        ref = f"H{(100 if side == 'left' else 200) + i}"
+        fp.SetReference(ref); fp.SetValue("M2")
+        if ref in self.comps:
+            fp.SetPath(pcbnew.KIID_PATH(self.comps[ref]["path"]))
+        self.placed.add(ref)
         fp.SetPosition(mm(x, y)); self.b.Add(fp)
     print(f"{side}: mounting holes at " + ", ".join(f"({x:.1f},{y:.1f})" for x, y in chosen))
 
@@ -296,8 +300,10 @@ BAT_PLUS = (3.5, 0.0)                        # "+" beside the battery connector'
 # Encoders: one per half, mirrored. The right half's shaft, on the front below the controller and its
 # OLED: a 17 mm knob clears the OLED by 10 mm, the thumb cluster's top keycap by 5.7 mm and H by 9.1 mm.
 ENCODER_SHAFT = (230.5, 58.5)
-ENC_ORIGIN_TO_SHAFT = (0.0, 0.0)                          # marbastlib EC11: origin at the shaft
-ENC_DIODE = (9.0, -11.0 + 3.81)   # its diode on the back, from the shaft (right half): origin is pad 1, pad 2 north
+ENC_DIODE = (11.0, -11.0 + 3.81)  # its diode on the back, from the shaft (right half): origin is pad 1, pad 2 north
+ENC_OPENING = (18.0, 20.0)        # the PCB's opening round the encoder, which is fixed to the top frame
+ENC_HEADER = (-16.825, -1.5)      # JST-PH cable header on the back, pin 1 from the shaft (right half): 2 mm pitch
+                                  # running south, its mouth facing the opening
 # OLED: a 0.96 in. module (27.5 x 28 mm) over the controller's lower end, its header along its bottom
 # edge so the text reads upside down (turned in firmware). Right half: module centre, and pin 1 (GND)
 # relative to it. Pins run toward -x on both halves, since the modules themselves don't mirror.
@@ -374,7 +380,12 @@ def build():
             prefix, n = re.match(r"([A-Z]+)(\d+)$", key).groups()
             B.place(f"{prefix}{base + int(n)}", mir(p["x"]) - p.get("body_dx", 0), p["y"], p.get("rot", 0), back=p["back"])
         if enc:
-            B.place(f"ENC{base+1}", sx - ENC_ORIGIN_TO_SHAFT[0], sy - ENC_ORIGIN_TO_SHAFT[1], 0, back=False)
+            hx, hy = ENC_HEADER
+            B.place(f"J{base+2}", sx + hx if side == "right" else sx - hx, sy + (hy if side == "right" else hy + 4 * 2.0),
+                    90 if side == "left" else -90, back=True)
+            fp = pcbnew.FootprintLoad(str(FP_DIRS["keygen"]), "EC11_Case_Mount")   # off the netlist: no pads
+            fp.SetFPID(pcbnew.LIB_ID("keygen", "EC11_Case_Mount"))
+            fp.SetReference(f"ENC{base+1}"); fp.SetValue("EC11"); fp.SetPosition(mm(sx, sy)); B.b.Add(fp)
         ox, oy = rmir(OLED_CENTRE[0]), OLED_CENTRE[1]
         oled_model(B.place(f"J{base+1}", ox + OLED_PIN1[0], oy + OLED_PIN1[1], 0, back=False, extra=OLED_PIN_TURN))
         # outline: keys + controller ear
@@ -384,6 +395,16 @@ def build():
         if enc:
             outline_pts += [(sx - 10, sy + 9), (sx + 10, sy + 9)]
         B.outline(outline_pts)
+        if enc:
+            w, h = ENC_OPENING
+            corners = [(sx-w/2, sy-h/2), (sx+w/2, sy-h/2),
+                       (sx+w/2, sy+h/2), (sx-w/2, sy+h/2)]
+            for a, b in zip(corners, corners[1:] + corners[:1]):
+                edge = pcbnew.PCB_SHAPE(B.b)
+                edge.SetShape(pcbnew.SHAPE_T_SEGMENT)
+                edge.SetStart(mm(*a)); edge.SetEnd(mm(*b))
+                edge.SetLayer(pcbnew.Edge_Cuts); edge.SetWidth(pcbnew.FromMM(0.1))
+                B.b.Add(edge)
         B.mounting_holes(convex_hull(outline_pts), side)
 
     battery_plus(B.b)

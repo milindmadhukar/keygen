@@ -5,7 +5,7 @@ name: 10 - assembly & build guide
 ---
 
 > [!success] Assembly
-> Bare boards from JLCPCB, everything hand-soldered. All parts sit on the **back** of the PCB except the switches, the encoder and the OLED module. The controller is **socketed** on low-profile machined pins. Firmware is **ZMK**, flashed as a UF2 per half by drag-and-drop. The LED chain is soldered and tested **one column at a time**. Per-part references and soldering notes: `fab/BOM.md` in the repo. Build order and checklist: [[12 - final design#Build order]]. The numbered build steps are `INSTRUCTIONS.md` in the repo.
+> Bare boards from JLCPCB, everything hand-soldered. All parts sit on the **back** of the PCB except the switches and the OLED header; the encoder and the OLED module are held in the top frame and plug into the PCB. The controller is **socketed** on low-profile machined pins. Firmware is **ZMK**, flashed as a UF2 per half by drag-and-drop. The LED chain is soldered and tested **one column at a time**. Per-part references and soldering notes: `fab/BOM.md` in the repo. Build order and checklist: [[12 - final design#Build order]]. The numbered build steps are `INSTRUCTIONS.md` in the repo.
 
 ## Tools
 
@@ -37,9 +37,9 @@ From `fab/BOM.md` (left 1xx, right 2xx):
 | 6 mm reset button, SW191/SW291 | 1 | back | labelled GENERATE |
 | nRF52840 SuperMini, U101/U201 | 1 | back | socketed; check B+, GND and VCC first |
 | SK6812MINI-E LED | 33 | back | reverse-mount through the board cut-out |
-| 1N4148 diode (DO-35) | 34 | back | band (cathode) toward the square pad; D107/D207 is the encoder's, beside it |
+| 1N4148 diode (DO-35) | 34 | back | band (cathode) toward the square pad; D107/D207 is the encoder's, beside its opening |
 | Kailh MX hotswap socket | 33 | back | |
-| EC11 encoder, ENC101/ENC201 | 1 | front | 17 mm knob on the D shaft |
+| EC11 encoder, ENC101/ENC201 | 1 | top frame | M7 nut on the deck, 17 mm knob on the D shaft, 5-pin JST-PH lead to J102/J202 on the back |
 | MX switch + keycap | 33 | front | tall 1.25u thumb switches turned 90° |
 | 0.96 in. SSD1306 I2C OLED module, J101/J201 | 1 | front | a 1×4 right-angle header; the module goes in the top frame and plugs in |
 
@@ -75,14 +75,14 @@ From `fab/BOM.md` (left 1xx, right 2xx):
 
 ### 6. Diodes
 - 1N4148 through-hole, body on the back, **band toward the square pad** (cathode to the row, COL2ROW).
-- Include the encoder's diode (D107 left, D207 right) on the back beside the encoder.
+- Include the encoder's diode (D107 left, D207 right) on the back beside its opening.
 - Trim the legs flush so nothing touches a switch.
 
 ### 7. Hotswap sockets
 - Kailh sockets on the back. Tack one pad while holding the socket flat, solder the other fully, then finish the first. Both joints should be concave.
 
 ### 8. Encoder
-- EC11 on the front of each half: solder all five pins and the mounting tabs.
+- Solder the 5-pin JST-PH header (J102/J202) on the back of each half, its mouth facing the encoder opening. Solder a 100 mm lead to the EC11's five terminals and plug it in.
 
 ### 9. Matrix test
 - Short each socket's two contacts with tweezers and check the key registers (an online key tester, or ZMK Studio on the left half).
@@ -107,6 +107,7 @@ The case is gasket-mounted: the plate and PCB become one unit that floats on Por
 - Case foam onto the floor of the bottom shell, round the battery in its bay.
 - Poron strips (12 × 4 × 3 mm, cut from 80 × 4 × 3 mm strips) on the 8 ledges, then the plate-and-PCB unit onto them with the controller's end down into its pocket behind the USB-C port, then a strip on top of each tab.
 - Top frame on. Holding the two parts together, turn the half over onto a soft cloth and drive the 8 M2 × 16 screws up through the floor evenly: snug, not tight, so the gaskets stay soft.
+- Fix each encoder in the top frame with its washer and M7 nut, its body between the boss's cheeks, before closing the case. Plug its lead into J102/J202 with the plate and PCB on edge beside the shell, then lower the unit in and fit the frame.
 - Fit the keycaps (52 × 1u, 14 × 1.25u) and push a knob onto each encoder shaft.
 - Final test: every key on every layer, both encoders, both OLEDs, the LEDs on USB, and Bluetooth between the halves on battery.
 

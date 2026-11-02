@@ -55,8 +55,8 @@ PARTS = [
      "Body on the back, band towards the square pad marked K."),
     ("socket", "SW101", "back", "Hotswap socket, from the back",
      "It fits its two pads one way. Plenty of solder: it takes every switch insertion."),
-    ("encoder", "ENC101", "front", "Encoder (EC11), from the front",
-     "On the front. Solder its five pins and both mounting tabs on the back."),
+    ("encoder", "J102", "back", "Encoder cable header (JST-PH), from the back",
+     "Side entry: its mouth faces the encoder opening. Solder the five pins on the front."),
     ("oled", "J101", "front", "OLED header, from the front",
      "The square pad is pin 1, GND: the module's pins must read GND, VCC, SCL, SDA."),
 ]
@@ -66,12 +66,12 @@ PART_SPAN = 16.0              # mm, the square each close-up shows (more for the
 # the overview's part groups: name, colour, which side they sit on, references
 GROUPS = [
     ("Switches (from the front)", "#4C78A8", "front", re.compile(r"^SW\d+$"), lambda r: int(r[2:]) % 100 < 90),
-    ("Encoder and OLED", "#F58518", "front", re.compile(r"^(ENC|J)\d+$"), None),
+    ("OLED header", "#F58518", "front", re.compile(r"^J[12]01$"), None),
     ("Hotswap sockets", "#4C78A8", "back", re.compile(r"^SW\d+$"), lambda r: int(r[2:]) % 100 < 90),
     ("LEDs", "#E45756", "back", re.compile(r"^LED\d+$"), None),
     ("Diodes", "#54A24B", "back", re.compile(r"^D\d+$"), None),
     ("Power parts: MOSFETs, resistors, capacitors", "#B279A2", "back", re.compile(r"^(Q|R|C)\d+$"), None),
-    ("Battery connector, power switch, reset", "#9D755D", "back", re.compile(r"^(BT\d+|SW[12]9[01])$"), None),
+    ("Battery and encoder connectors, power switch, reset", "#9D755D", "back", re.compile(r"^(BT\d+|J[12]02|SW[12]9[01])$"), None),
     ("Controller (socketed)", "#72B7B2", "back", re.compile(r"^U\d+$"), None),
 ]
 

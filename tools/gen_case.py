@@ -258,12 +258,16 @@ def build(h):
     # the plate, level with the rim, with windows for the keycaps and the OLED and a hole for the encoder
     top = Pos(0, 0, C.SPLIT_Z) * extrude(outer - inner, C.CEIL_Z - C.SPLIT_Z, dir=UP)
     top += Pos(0, 0, C.CEIL_Z) * extrude(deck(h), C.TOP_Z - C.CEIL_Z, dir=UP)
-    # The selected HongYan encoder body can reach 6.8 mm above the PCB; relieve the underside
-    # locally while keeping the smaller bushing opening on the visible face of the deck.
+    # The encoder is fixed to this frame: the washer and M7 nut clamp its bushing through a
+    # 2.5 mm thick local boss, and two cheeks hold its body square so it can't turn with the knob.
+    # The gasket-mounted PCB and plate have independent openings.
     for p in h["enc"]:
         x, y = xy(p)
-        top -= Pos(x, y, C.CEIL_Z - EPS) * Box(
-            C.ENC_CUTOUT, C.ENC_CUTOUT, C.ENC_RECESS_TOP - C.CEIL_Z + EPS, align=Z)
+        top += cylinder(p, C.ENC_BOSS_D, C.ENC_BOSS_BOTTOM, C.CEIL_Z + EPS)
+        cheek_t, cheek_l, cheek_z = C.ENC_CHEEK
+        for sign in (-1, 1):
+            top += Pos(x + sign * (C.ENC_BODY + cheek_t) / 2, y, cheek_z) * Box(cheek_t, cheek_l, C.CEIL_Z + EPS - cheek_z, align=Z)
+        top -= cylinder(p, C.ENC_HOLE_D, C.ENC_BOSS_BOTTOM - EPS, C.TOP_Z + EPS)
     top += oled_mount(h)
     top -= oled_pockets(h)
     z0, z1 = C.OLED_Z[1] - 0.1, C.TOP_Z + 0.1
@@ -366,6 +370,7 @@ def foams(h):
     under = [cut_rect(C.battery(h)["bay"]), cut_rect(grown(h["controller"], C.FOAM_PART_CLEAR)),
              cut_circle(h["reset"], RESET_TUBE_D + 2 * C.FOAM_PART_CLEAR)]
     under += [cut_rect(grown(t, C.FOAM_PART_CLEAR)) for t in h["tall"]]
+    under += [cut_rect(grown(C.encoder_bay(h), C.FOAM_PART_CLEAR))]
     case_foam = board_less(cavity, under)
     return {"plate": plate_foam, "case": case_foam}
 
@@ -503,6 +508,8 @@ def fit_check(h, bottom, top, plt, foam):
     should be 0. The keycaps are taken at their largest (CAP_SIZE_TOL) and lowest (a recessed stem),
     and grown by the plate's float in its gasket pockets, so the deck clears them wherever it settles."""
     pcb = Pos(0, 0, -C.PCB_T) * extrude(face(h["outline"]), C.PCB_T, dir=UP)
+    for opening in h["windows"]:
+        pcb -= Pos(0, 0, -C.PCB_T - EPS) * extrude(face(opening), C.PCB_T + 2 * EPS, dir=UP)
     x0, y0, x1, y1 = h["controller"]
     (cx, cy) = xy(((x0 + x1) / 2, (y0 + y1) / 2))
     controller = Pos(cx, cy, -C.PCB_T - C.CONTROLLER_DEPTH) * Box(x1 - x0, y1 - y0, C.CONTROLLER_DEPTH, align=Z)
@@ -529,7 +536,7 @@ def fit_check(h, bottom, top, plt, foam):
     encoder = knob = None
     for p in h["enc"]:
         x, y = xy(p)
-        e = Pos(x, y, 0) * Box(C.ENC_BODY, C.ENC_BODY, C.ENC_BODY_H, align=Z) + cylinder(p, C.ENC_BUSHING_D, 0, C.ENC_BUSHING_TOP)
+        e = Pos(x, y, C.ENC_BOSS_BOTTOM - C.ENC_BODY_H) * Box(C.ENC_BODY, C.ENC_BODY, C.ENC_BODY_H, align=Z) + cylinder(p, C.ENC_BUSHING_D, C.ENC_BOSS_BOTTOM, C.ENC_BUSHING_TOP)
         kn = cylinder(p, C.KNOB_D, C.KNOB_Z, C.KNOB_Z + C.KNOB_H)
         encoder = e if encoder is None else encoder + e
         knob = kn if knob is None else knob + kn
@@ -559,7 +566,10 @@ def fit_check(h, bottom, top, plt, foam):
         check(name, part, (("pcb", pcb), ("plate", plt), ("controller", controller), ("reset button", button),
                            ("reset button, stack pressed down", Pos(0, 0, -C.FLOAT_GAP) * button),
                            ("keycaps", caps), ("oled", oled), ("battery", battery), ("encoder", encoder),
-                           ("knob", knob), ("knob, stack pressed down and knob pushed", Pos(0, 0, -C.FLOAT_GAP - C.ENC_PUSH) * knob)))
+                           ("knob", knob), ("knob pushed", Pos(0, 0, -C.ENC_PUSH) * knob)))
+    for lift in (-C.FLOAT_GAP, C.FLOAT_UP):
+        check("encoder", encoder, ((f"pcb travelled {lift:g} mm", Pos(0, 0, lift) * pcb),
+                                   (f"plate travelled {lift:g} mm", Pos(0, 0, lift) * plt)))
     check("plate foam", foam["plate"], (("switches", switches), ("encoder", encoder), ("oled", oled),
                                         ("standoffs", standoffs), ("plate", plt)))
     # the OLED stays with the top frame while the plate floats in its gasket pockets

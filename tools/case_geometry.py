@@ -71,7 +71,7 @@ CUTOUT_R = 0.5                 # its corner radius (the fab's router bit)
 SWITCH_FLANGE = 15.6           # MX top housing, resting on the plate
 CAP_GAP = 0.95                 # keycap = n * 19.05 - this
 CAP_SIZE_TOL = 0.15            # real DSA skirts are up to 18.4 mm (KeyV2 18.24): this much wider each side
-ENC_CUTOUT = 15.0              # square plate cut-out around the selected HongYan EC11H body
+ENC_CUTOUT = 18.0              # floating plate opening around the fixed encoder body
 OLED_W, OLED_H = 27.5, 27.8    # 0.96 in. OLED module (GME12864-11 drawing), held in the top frame over a plate window
 OLED_HDR_IN = 1.5              # its pin row from its pin edge, over the PCB's 1x4 footprint it plugs into
 OLED_CLEAR = 1.0               # module to plate window, each side
@@ -133,17 +133,19 @@ DECK_MIN_WEB = 4.0             # narrowest web or finger of deck between the win
                                # is trimmed back to a rounded end, so no point of the printed deck snaps off
 ENC_BODY, ENC_BODY_H = 12.5, 6.8         # HongYan EC11H: 12 x 11.7 plan, 6.5 tall; include drawing tolerances
 ENC_BUSHING_D, ENC_BUSHING_TOP = 7.0, 14.1   # HongYan bushing: 6.5 + 7 mm nominal, plus both tolerances
-ENC_HOLE_D = 9.0               # deck hole round the bushing; the knob hides it
-ENC_RECESS_TOP = 7.4           # local underside relief: 0.6 mm above the tallest encoder body
+ENC_HOLE_D = 7.3               # close-fit clearance through the frame for the M7 bushing
+ENC_BOSS_D = 15.0              # local reinforced frame boss under the nut
+ENC_BOSS_BOTTOM = 6.5          # 2.5 mm clamp thickness up to TOP_Z
+ENC_CHEEK = (1.2, 9.0, 4.5)    # two cheeks either side of the body, stopping it turning: thick, long, down to this z
 ENC_SHAFT_TOP = 6.5 + 20.0     # HongYan EC11H-...ZD20F10: the 20 mm shaft is measured from the 6.5 mm body's top
 ENC_FLAT_FROM = ENC_SHAFT_TOP - 10.0   # its D flat, the top 10 mm
-ENC_PUSH = 0.7                 # push switch travel, 0.5 +0.2
+ENC_PUSH = 0.8                 # push switch travel, 0.5 +0.3
 KNOB_D, KNOB_H = 17.0, 13.0    # knob: an aluminium cup round a plastic hub with a blind D hole (gen_models.py)
 KNOB_DEPTH = 11.0              # from its bottom edge up to where the shaft stops inside it (measure)
 KNOB_HUB_UP = 2.0              # its hub's bottom face, this far up inside from its bottom edge (measure)
-KNOB_GAP = max(3.0, ENC_BUSHING_TOP + ENC_PUSH + 0.3 - KNOB_HUB_UP - TOP_Z)   # knob above the deck top: clear of
-                               # the deck with the stack pressed down and the knob pushed, and its hub clear of the
-                               # bushing while pushed
+ENC_NUT_H = 2.3                # the encoder's washer and M7 nut, on the deck under the knob
+KNOB_GAP = max(ENC_FLAT_FROM, ENC_BUSHING_TOP + ENC_PUSH + 0.3) - KNOB_HUB_UP - TOP_Z   # knob above the deck top:
+                               # its hub starts on the shaft's D flat, and stays clear of the bushing while pushed
 KNOB_Z = TOP_Z + KNOB_GAP      # the knob's underside (gen_schematic.KNOB_MODEL_Z, for the 3D model, matches)
 ENC_SHAFT_CUT = ENC_SHAFT_TOP - (KNOB_Z + KNOB_DEPTH)   # cut this much off the shaft so the knob sits at KNOB_Z
 OLED_GLASS = (26.7, 19.26, 1.6)   # glass with its tape (the drawing allows up to 2.3), centred across the module
@@ -223,6 +225,12 @@ def local(p, cx, cy, rot):
     return dx * math.cos(a) + dy * math.sin(a), -dx * math.sin(a) + dy * math.cos(a)
 
 
+def encoder_bay(h):
+    """The case foam's opening under the encoder's terminals and its cable, up to the header."""
+    (ex, ey), (x0, y0, x1, y1) = h["enc"][0], h["enc_header"]
+    return min(ex - 7, x0), min(ey - 9, y0), max(ex + 7, x1), max(ey + 9, y1)
+
+
 def rects_dist(a, b):
     """Gap between two axis-aligned rectangles (x0, y0, x1, y1); 0 if they touch or overlap."""
     return math.hypot(max(b[0] - a[2], a[0] - b[2], 0), max(b[1] - a[3], a[1] - b[3], 0))
@@ -294,7 +302,10 @@ def halves():
                 h["drills"].append((MM(q.x), MM(q.y), w, hh, pad.GetShape() == pcbnew.PAD_SHAPE_CIRCLE))
         if ref.startswith("H"): h["holes"][ref] = (x, y)
         elif ref.startswith("ENC"): h["enc"].append((x, y))
-        elif ref[0] == "J":                     # OLED header: the module stands above its pins
+        elif ref in ("J102", "J202"):           # encoder cable header: on the back, mouth to the opening
+            bb = fp.GetBoundingBox(False)
+            h["enc_header"] = (MM(bb.GetLeft()), MM(bb.GetTop()), MM(bb.GetRight()), MM(bb.GetBottom()))
+        elif ref in ("J101", "J201"):           # OLED header: the module stands above its pins
             pins = [(MM(p.GetPosition().x), MM(p.GetPosition().y)) for p in fp.Pads()]
             cx = sum(q[0] for q in pins) / len(pins); py = pins[0][1]
             h["oled"] = (cx - OLED_W / 2, py + OLED_HDR_IN - OLED_H, cx + OLED_W / 2, py + OLED_HDR_IN)

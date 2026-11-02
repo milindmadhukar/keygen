@@ -30,6 +30,8 @@ Counts are for the whole keyboard (two halves). Stores, links, prices and spares
 | 6 × 6 × 5 mm tact switch | 2 | The reset button |
 | JST-PH side-entry connector (S2B-PH-K-S) | 2 | For the battery |
 | EC11 encoder with switch, 20 mm D shaft | 2 | |
+| 5-pin JST-PH 2.0 side-entry header, S5B-PH-K-S | 2 | The encoder's cable, on the PCB |
+| 5-pin JST-PH 2.0 lead, 30 cm, one plug | 2 | Cut to 100 mm |
 | 0.96 in. I2C OLED, pins GND VCC SCL SDA | 2 | Some modules swap GND and VCC: don't use those |
 | 1×4 right-angle male pin header, 2.54 mm | 2 | Soldered into J101 / J201; cut from a 1×40 strip |
 | Female–female jumper wire, 2.54 mm | 8 | Four per OLED, their plug ends glued into one 4-pin plug; the other ends are cut off and soldered to the OLED |
@@ -70,46 +72,6 @@ Counts are for the whole keyboard (two halves). Stores, links, prices and spares
 | Neodymium disc magnet, 10 × 3 mm, N35 | 8 | For the wedges |
 | USB-A to 2 × USB-C cable | 1 | Optional: both halves from one port |
 
-## Proposed case-mounted encoder revision
-
-The current PCB, switch plate and case files still use an encoder soldered to the PCB. That puts
-encoder press force into the gasket-mounted plate-and-PCB unit. The case-mounted alternative below
-is an **assembly mockup**; do not order its PCB or cut the existing plate from these dimensions yet.
-The [full mockup, STEP coupon and fit assumptions](docs/encoder-mount-mockup.md) describe the
-remaining board and case changes.
-
-![Section, top view and five-wire path for the case-mounted encoder](assets/encoder-mount-mockup.svg)
-
-The encoder body sits below the top frame. A local Ø15 mm boss makes the frame 2.5 mm thick at
-the shaft. Its M7 bushing passes through a Ø7.3 mm hole, then the encoder's supplied washer and
-nut clamp it to the frame. The 19 × 19 mm plate and 18 × 20 mm PCB openings let the gasket-mounted
-unit travel around the fixed encoder. Those openings still require copper rerouting and moving
-D107/D207. Print the [30 mm test coupon](docs/encoder-mount-mockup.md) before making the full case;
-check its hole against the delivered M7 bushing and hardware.
-
-Each encoder needs five insulated leads and a loose cable loop to a **5-pin JST-PH 2.0 mm** board
-header. Proposed pin order is `A / C(GND) / B / S1(COL6) / S2(K06 diode input)`, viewed by the
-connector's numbered pads. Check the actual header and lead's pin 1 before wiring. Keep the switch
-diode on the PCB. Two matching [side-entry headers](https://www.sunrom.com/p/5-pin-jst-ph-20mm-through-hole-header-horizontal-right-angle-side-entry)
-and [prewired female leads](https://www.sunrom.com/p/5-pin-jst-ph-20mm-one-side-female-30cm) are
-listed locally; Robu has a [5-pin PH-compatible header](https://robu.in/product/ph-aw-2mm-5-pin-wafer-male-connector-through-hole-right-angle/),
-but the documented AliExpress cart has no 5-pin harness. BatteriesShop's
-[5-pin XH pair](https://www.batteriesshop.in/products/5-pin-jst-xh-relimate-connector-rmc-male-female-pair-with-wirecable)
-is 2.54 mm pitch and does not mate with PH. The actual placed AliExpress order has not been checked.
-
-Once the production revision and a physical fit test pass, assemble each half in this order:
-
-1. Insulate the five soldered leads at the encoder and provide strain relief on the frame. Leave a
-   flexible loop so the cable cannot pull on the floating PCB.
-2. Insert the encoder from below, add the washer and nut above, and tighten only enough to stop the
-   body rotating. Check that pressing the bare shaft does not flex the gasket-mounted unit.
-3. Measure the knob's bore depth and recessed hub, then test its fully pressed clearance over the
-   nut. The mockup assumes a **1.0 mm** shaft cut and **2.4 mm** pressed knob-to-nut clearance;
-   these are not final cut instructions.
-4. Mate the keyed 5-pin plug while closing the top frame. Check continuity and that the cable loop
-   clears the battery, foam, plate and frame throughout gasket travel.
-5. Test clockwise, counterclockwise and press on both halves before fitting the knobs.
-
 ## Tools
 
 - A temperature-controlled soldering iron with a fine tip (300–350 °C; 320 °C for the LEDs)
@@ -144,8 +106,9 @@ strips (gaskets) between the shell and the frame, so it floats.
 
 ### What goes where
 
-Everything sits on the back of the PCB except the switches, the encoder and the OLED. The right
-half is the left half mirrored.
+Everything sits on the back of the PCB except the switches and the OLED header. The encoder and
+the OLED module are held in the top frame and plug into the PCB. The right half is the left half
+mirrored.
 
 ![Which side each part goes on, left half from the front and from the back](https://github.com/milindmadhukar/keygen/releases/download/media/assembly-overview.png)
 
@@ -155,8 +118,8 @@ half is the left half mirrored.
   for the hotswap sockets.
 - **Left and right.** The left half's parts are numbered 1xx and the right half's 2xx: Q101 on the
   left is Q201 on the right. Below, the left reference comes first. To tell the bare boards apart,
-  lay them front up: the left half has its encoder and OLED holes along its right-hand (inner) edge,
-  the right half along its left-hand edge.
+  lay them front up: the left half has its encoder opening and OLED holes along its right-hand
+  (inner) edge, the right half along its left-hand edge.
 - **Through-hole** parts have legs that go through the board; you solder them on the opposite side
   and trim the legs. **Surface-mount (SMD)** parts sit on pads on one side.
 - **References** (Q101, D107, H102) name each part's place on the board. The silkscreen is artwork
@@ -191,7 +154,7 @@ be built and tested while the plate and the case are being made.
 | The controller sockets, their pins and the OLED modules have arrived | Measure them, then print the case and cut the case foam | The case's floor and USB-C opening are placed from the height of the socket and pin stack, and the top frame holds the OLED's glass in a pocket |
 | The PCBs and the electronics have arrived | Solder and test both boards, from [Inspect the board](#inspect-the-board) to [Encoder and matrix test](#encoder-and-matrix-test) | Nothing more |
 | The plates and the plate foam are ready | [Standoffs](#standoffs) to [Switches](#switches) | |
-| The case and the case foam are ready | [Heat-set inserts](#heat-set-inserts) to [Feet and tenting](#feet-and-tenting) | |
+| The case and the case foam are ready | [Heat-set inserts](#heat-set-inserts) to [Feet and tenting](#feet-and-tenting), including [the encoder](#encoder-in-the-top-frame) | |
 
 Every file to order, print or cut is in the [build release](https://github.com/milindmadhukar/keygen/releases/tag/build).
 Cut and print everything from the same release, so the plate, the foam and the case match.
@@ -225,13 +188,14 @@ order-form settings and what to check in the fab's design check (DFM) report are
   [`tools/case_geometry.py`](tools/case_geometry.py) to what you measure and run `tools/regen.py`:
   it works out how high the knob sits and how much to cut off the shaft (`ENC_SHAFT_CUT`, printed
   by `python3 tools/case_geometry.py`). The case itself doesn't change.
-- **Encoder shafts:** do a dry fit with the delivered knob, nut and washer **before cutting**. The
-  current PCB-mounted model calculates a 2.4 mm tip cut with A = 11.0 and B = 2.0 mm, but that
-  position may bring the knob's D bore onto the shaft's round section. The proposed case mount
-  instead calculates about 1.0 mm. Neither value is safe as a cut instruction until the physical
-  knob bore, D flat and fully pressed clearance are checked. Once confirmed, cut before soldering:
-  tape the body against filings, hold the shaft so it cannot turn in the encoder, cut with a fine
-  hacksaw or disc, file the end flat with a small chamfer, and dry-fit the knob again.
+- **Encoder cable headers:** the side-entry type (S5B-PH-K-S), 2.0 mm pitch. A 5-pin XH part is
+  2.5 mm pitch and does not fit.
+- **Encoder shafts:** with A = 11.0 and B = 2.0 mm the shaft is cut by **1.0 mm**. Print the
+  [test coupon](docs/encoder-mount.md#test-coupon) first, and dry-fit the delivered encoder, washer,
+  nut and knob on it **before cutting**: the knob's D bore must land on the shaft's flat, with the
+  knob clear of the nut when pushed. Then cut: tape the body against filings, hold the shaft so it
+  cannot turn in the encoder, cut with a fine hacksaw or disc, file the end flat with a small
+  chamfer, and dry-fit the knob again.
 
 ### Switch plates
 
@@ -438,7 +402,8 @@ the lit side down through the cut-out so it shines out of the front.
 
 ## Diodes
 
-1N4148 **D101–D134 / D201–D234**, body on the back. **D107 / D207** is the encoder's, beside it.
+1N4148 **D101–D134 / D201–D234**, body on the back. **D107 / D207** is the encoder's, beside its
+opening.
 
 ![Diode close-up](https://github.com/milindmadhukar/keygen/releases/download/media/assembly-part-diode.png)
 
@@ -463,14 +428,31 @@ insertion.
 
 ## Encoder and matrix test
 
-EC11 encoder **ENC101 / ENC201** on the **front**.
+5-pin JST-PH header **J102 / J202** on the **back**, beside the encoder opening, its mouth facing
+the opening.
 
-![Encoder close-up](https://github.com/milindmadhukar/keygen/releases/download/media/assembly-part-encoder.png)
+![Encoder cable header close-up](https://github.com/milindmadhukar/keygen/releases/download/media/assembly-part-encoder.png)
 
-1. Solder all five pins and both mounting tabs on the back.
-2. Short each socket's two contacts with tweezers and check that the key registers (ZMK Studio on the
-   left half, or a key tester such as [keyboard-test.space](https://keyboard-test.space)).
-3. Turn and press the encoder. Left: scroll and middle click. Right: volume and mute.
+1. Solder the header's five pins on the front and trim them flush: the switch pads stick down over
+   the joints.
+2. Cut a lead to **100 mm** and strip the free ends. Solder each wire to its encoder terminal, with
+   heat-shrink over each joint:
+
+   | J102 / J202 pin | Encoder terminal | Net |
+   | :---: | :---: | :--- |
+   | 1 | A | `ENC_A` |
+   | 2 | C, the middle pin of the three | `GND` |
+   | 3 | B | `ENC_B` |
+   | 4 | S1 | `COL6` |
+   | 5 | S2 | `K06`, to the diode |
+
+   Pin 1 is the square pad. Check each wire with the meter from the plug to its terminal: A and B
+   swapped only reverses the rotation, but C, S1 or S2 in the wrong place makes the encoder dead.
+3. Plug the lead in. Short each socket's two contacts with tweezers and check that the key registers
+   (ZMK Studio on the left half, or a key tester such as
+   [keyboard-test.space](https://keyboard-test.space)).
+4. Turn and press the encoder. Left: scroll and middle click. Right: volume and mute.
+5. Unplug the lead.
 
 The board is done. The rest waits for the plates, the foam and the case.
 
@@ -560,8 +542,8 @@ round the window, **1.0 mm below the top surface**, and the window's edges are c
 The lip window is 23.7 × 12.9 mm, 1 mm round the lit area, and 25.7 × 14.6 mm at the top, opening
 further towards the thumbs. Under it the header and plug lie flat, 2.8 mm tall, 1.2 mm below the
 parts on the module's back (0.2 mm with the plate floated fully up); the module clears the floating plate's window by
-0.5 mm all round. To take the top frame off later, lift it at the OLED end and pull the plug off
-the header.
+0.5 mm all round. To take the top frame off later, lift it at the OLED end, pull the plug off
+the header, then lift the plate-and-PCB unit out with the frame to reach J102 / J202 on its back.
 
 ![OLED module, glass, lit area, top-frame pegs and pocket, and the plug under it](assets/assembly-oled.svg)
 
@@ -617,8 +599,28 @@ them cool.
 ## Case foam
 
 Lay the 5 mm EVA case foam on the floor of the bottom shell, round the battery in its bay and clear
-of the controller, connector, switch, reset tube, encoder and OLED pins. It goes **below the PCB**;
-it does not bridge the battery bay or touch the solder joints.
+of the controller, connector, switch, reset tube and OLED pins. Its opening by the encoder is the
+bay for the encoder's terminals, its lead and J102 / J202. It goes **below the PCB**; it does not
+bridge the battery bay or touch the solder joints.
+
+---
+
+## Encoder in the top frame
+
+The encoder is fixed to the top frame, so pressing the knob loads the case rather than the floating
+plate and PCB. The plate and PCB have openings that clear it as they float. Details are in
+[the encoder mount](docs/encoder-mount.md).
+
+![Section through the encoder, frame, plate and PCB, with its five-wire lead](assets/encoder-mount-mockup.svg)
+
+1. Check the shafts are cut ([When the parts arrive](#when-the-parts-arrive)) and the lead is
+   soldered ([Encoder and matrix test](#encoder-and-matrix-test)).
+2. Lay the top frame deck-down. From the underside, push the encoder's bushing into the 7.3 mm hole
+   in the boss, its body between the boss's two cheeks, the terminals pointing up and the three
+   terminals A, C and B towards the thumb keys.
+3. Turn the frame over. Add the washer and the M7 nut from above and tighten until the encoder
+   can't move in the boss, no further: the nut can crush printed PETG.
+4. Press the bare shaft hard: the frame should not flex, and the switch should click.
 
 ---
 
@@ -628,12 +630,15 @@ it does not bridge the battery bay or touch the solder joints.
    ledge's outer end.
 2. Plug the battery lead into **BT101 / BT201**, leaving it a loose loop: the unit floats, and a tight
    lead holds it down on one side.
-3. Lower the unit onto the strips, the controller's end down into its pocket behind the USB-C port
-   and the slide switch in its opening. Hold the unit away from the top edge as it goes down: the
-   switch lever clears that wall by only 0.2 mm.
-4. Press the plate down near each tab: it should sink evenly on the strips and spring back, with
-   nothing under it (the lead, a strip off its ledge) pressing on it or holding it.
-5. Put a second piece on top of each plate tab.
+3. With the unit on its edge beside the shell and the top frame beside the unit, feed the encoder's
+   plug through the plate's encoder cut-out and the PCB's opening, and plug it into **J102 / J202**
+   on the back. The frame and the unit are now joined by the lead until the case is closed.
+4. Lower the unit onto the strips, the controller's end down into its pocket behind the USB-C port
+   and the slide switch in its opening, the encoder lead folded into its bay in the foam. Hold the
+   unit away from the top edge as it goes down: the switch lever clears that wall by only 0.2 mm.
+5. Press the plate down near each tab: it should sink evenly on the strips and spring back, with
+   nothing under it (the leads, a strip off its ledge) pressing on it or holding it.
+6. Put a second piece on top of each plate tab.
 
 ---
 
@@ -649,8 +654,11 @@ it does not bridge the battery bay or touch the solder joints.
    hot glue over each peg's tip. Keep heat and glue off the glass and away from the flex cable
    that wraps round the far edge. The module must not move when pressed from the front.
 3. Plug the lead back onto the header, pin 1 to pin 1, and fit the top frame, the lead and plug
-   lying flat under the module. Look through the window: the module should not have shifted.
-4. Holding the two parts together, turn the half over onto a folded cloth with the bare encoder
+   lying flat under the module, the encoder's body dropping through the plate and the PCB and its
+   lead tucked below the PCB. Look through the window: the module should not have shifted.
+4. Press the plate down near the encoder: it should move freely, with the encoder not touching the
+   plate or the PCB and its lead not pulling on either.
+5. Holding the two parts together, turn the half over onto a folded cloth with the bare encoder
    shaft off its edge, so the half doesn't rest on the shaft, and drive the 8 M2 × 16
    screws up through the floor's counterbores evenly, a little at a time: snug, not tight, so the
    gaskets stay soft. The closed half should not rattle when shaken, and the plate should give a
@@ -663,8 +671,8 @@ it does not bridge the battery bay or touch the solder joints.
 1. Fit the keycaps: per half, 26 × 1u and 7 × 1.25u (the two tall thumb caps turned 90°).
 2. Push a knob onto each encoder shaft (cut short in
    [When the parts arrive](#when-the-parts-arrive)) until the shaft stops inside it. Its underside
-   now sits **4.1 mm above the deck**: it clears the deck with the plate pressed down and the knob
-   clicked, and its top stands 6.7 mm above the keycaps. Press it: it should click without touching the deck.
+   now sits **5.5 mm above the deck**, over the nut: it clears the nut by 2.4 mm with the knob
+   clicked, and its top stands 8.1 mm above the keycaps. Press it: it should click without touching the nut.
 3. Turn both halves on together so they pair with each other, then pair the host to Bluetooth
    profile 1 (SYS + `1`: hold both 1.25u thumb keys and press `1`).
 4. Test every key on every layer, both encoders, both OLEDs, the LEDs on USB, and the link between
