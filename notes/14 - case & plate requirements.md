@@ -20,7 +20,7 @@ All the ports are on the **top edge** of each half, next to the controller, so o
 | Opening | Where | Size / notes |
 |---|---|---|
 | **USB-C** | Top wall, at the controller | The controller (18 mm wide) hangs **under** the PCB on sockets, and its USB-C end reaches ~1 mm past the PCB edge; the edge is slanted, so one corner reaches ~1.6 mm. The controller's end sits in a **20 mm pocket inside the wall**, open at the top of the bottom shell so the stack drops in straight, behind 1.5 mm of wall. Through that wall, a **14.2 × 9.8 mm port** with 2 mm corners is centred on the mid-mount receptacle (5.4 mm under the PCB top with 3.0 mm sockets): it takes a 12.35 × 6.5 mm plug overmould, the largest the USB-C spec recommends, moved by the floating stack 0.5 mm sideways, 1.5 mm down and 1.0 mm up, with 0.4 mm to spare, so a plugged cable never touches the case. 3.1 mm of wall stays below it. |
-| **Power switch** (MSK12C02, side-actuated) | Top wall, near the USB-C | The lever pokes out past the PCB edge, at the PCB's underside. A **9 × 3.4 mm slot** at the lever. Outside, the wall is thinned from 10 mm before the USB-C to the corner past the switch: to **1.5 mm** past the inner wall round the lever, so a fingernail reaches it, and to 1.5 mm in front of the controller's pocket across the USB-C. |
+| **Power switch** (SK12D07VG5, right-angle) | Top wall, near the USB-C | The 2 × 2 mm knob comes out of the body 2.55 mm under the PCB's underside (centre) and reaches 4 mm past the PCB edge, through a **9 × 5.3 mm slot**, 1.5 mm proud of the wall (1.0–2.0 mm as the stack floats). The bottom shell's slot is open up to the split, so the stack drops in with the knob through the wall, and a tongue on the top frame fills it above the knob, 0.4 mm clear at full float. Outside, the wall is thinned from 10 mm before the USB-C to the corner past the switch: to **1.5 mm** past the inner wall round the knob, and to 1.5 mm in front of the controller's pocket across the USB-C. |
 | **Reset pinhole** | Case **floor**, under the reset button | The 6 × 6 mm, 5 mm-tall button sits on the PCB underside. You press it with a **paperclip** through a **Ø 2 mm hole**, countersunk outside, with a guide tube (Ø 5 mm) up to 1 mm under the button. ZMK can also enter the bootloader from a key combo. |
 | **Rotary encoder knob** (both halves, mirrored) | Top: through the switch plate | The encoder is fixed to the top frame and the plate and PCB float round it. The selected HongYan EC11H body is 12 × 11.7 mm and up to 6.8 mm tall. The plate has an **18 × 18 mm cut-out** and the PCB an **18 × 20 mm opening**; the top frame has a Ø15 mm boss, 2.5 mm thick, with a 7.3 mm hole for the 7 mm bushing, and two 1.2 × 9 mm cheeks that keep the body from turning. The washer and M7 nut clamp it from above. The encoder's 20 mm shaft is measured from its 6.5 mm body, so its tip is 26.5 mm above the PCB; it is cut 1.0 mm short so the knob (11 mm deep inside, its hub 2 mm up inside it) sits 5.5 mm above the deck, with its hub on the shaft's D flat and 2.4 mm clear of the nut while pushed. The knob is Ø 17 mm, its edge 10 mm below the OLED, 5.7 mm from the thumb cluster's top key and 9.1 mm from the G/H column. Shafts at (167.0, 134.5) left and (256.5, 134.5) right, in board coordinates (KiCad mm). |
 | **OLED window** (both halves) | Top: through the switch plate, above the knob | The 27.5 × 27.8 mm SSD1306 module (GME12864-11 drawing) is held in the top frame on **four Ø 1.7 mm pegs** through its corner holes, melted or glued over on its back, and plugs into a right-angle header in J101/J201 on a 4-wire jumper lead. Its glass sits in a pocket under a **1.0 mm lip**, 1.0 mm below the deck top, and its board 5.2–6.4 mm above the PCB on a boss that thickens the deck down to it, with 1.5 mm reliefs over its four joints and over the flex cable at its far edge. The lip's window is 1 mm round the active area at its underside, chamfered at 45° and opening towards the thumbs. The header and plug lie flat under the module, 2.8 mm tall. The plate has a **29.5 × 29.8 mm window** round the module, 1 mm per side, so the floating plate clears it by 0.5 mm. Module at x 154–181.5, y 88–116 (left) and x 242–269.5, y 88–116 (right), in board coordinates, over the controller's antenna end and 4.6 mm from the nearest keycaps. `tools/gen_case.py` checks the case against the modules. |
@@ -48,7 +48,7 @@ All the ports are on the **top edge** of each half, next to the controller, so o
 - **Plate-to-PCB gap.** The plate top sits 5.0 mm above the PCB top (MX standard), so the gap is 3.5 mm. At all five holes per half an **M2 × 3 mm female-female standoff** stands on a **0.5 mm DIN 988 shim** (2 × 5 mm) on the PCB, screwed on from below with an M2 × 5 button head: 2.9 mm into the 3 mm standoff, its tip within ±0.25 mm of the standoff top and free in the plate's 2.2 mm hole if it pokes past.
 - **Plate fixing.** Every standoff's top bears on the plate; the switches, clipped into the plate and plugged into the hotswap sockets, hold the plate to the PCB, and the case clamps the plate's tabs between the gasket strips.
 - **Mounting holes** line up with the PCB's M2 holes (table below), 2.2 mm.
-- **Gasket tabs:** 8 per half, 12 × 5 mm, on the plate edge, kept 22 mm from the USB-C and the switch lever. The right half's are the left's, mirrored.
+- **Gasket tabs:** 8 per half, 12 × 5 mm, on the plate edge, kept 22 mm from the USB-C and the power switch. The right half's are the left's, mirrored.
 - **Encoder cut-out** (18 × 18 mm) and **OLED window** (29.5 × 29.8 mm) on both halves (see above).
 
 ## Lighting
@@ -79,7 +79,8 @@ Measured from the top-left corner of each half's bounding box, looking at the sw
 | H104 | M2 mounting hole | 136.1 | 121.3 |
 | H105 | M2 mounting hole | 23.5 | 8.5 |
 | J101 | OLED wiring pin 1 (top); the module is above it, in the top frame | 141.2 | 39.1 |
-| SW190 | Power slide switch (underside), lever out of the top edge | 150.6 | 7.0 |
+| J102 | Encoder lead header pin 1 (underside) | 155.9 | 79.4 |
+| SW190 | Power slide switch (underside), knob through the top wall | 149.6 | 7.0 |
 | SW191 | Reset button (underside) -> floor pinhole | 152.6 | 41.2 |
 | U101 | Controller (underside), USB-C at the top edge | 129.1 | 20.8 |
 
@@ -95,7 +96,8 @@ Measured from the top-left corner of each half's bounding box, looking at the sw
 | H204 | M2 mounting hole | 155.6 | 85.5 |
 | H205 | M2 mounting hole | 138.1 | 9.0 |
 | J201 | OLED wiring pin 1 (top); the module is above it, in the top frame | 26.6 | 39.1 |
-| SW290 | Power slide switch (underside), lever out of the top edge | 9.7 | 7.0 |
+| J202 | Encoder lead header pin 1 (underside) | 14.5 | 79.4 |
+| SW290 | Power slide switch (underside), knob through the top wall | 10.7 | 7.0 |
 | SW291 | Reset button (underside) -> floor pinhole | 14.2 | 41.2 |
 | U201 | Controller (underside), USB-C at the top edge | 31.2 | 20.8 |
 

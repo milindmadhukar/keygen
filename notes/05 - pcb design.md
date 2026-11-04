@@ -51,7 +51,7 @@ A generic **0.96 in. 128×64 SSD1306 I2C module** per half (J101 / J201), on a 1
 
 ### Power
 - **Battery:** JST-PH 2-pin side-entry connector (BT101/BT201) on the back. A "+" on the silkscreen marks the + pad.
-- **Battery switch:** the MSK12C02 slide switch (top edge, lever out) drives the gate of an **AO3401A P-MOSFET** (source on the battery, drain on B+), with a 1 MΩ resistor holding the gate off between positions.
+- **Battery switch:** the SK12D07VG5 right-angle slide switch (through-hole, top edge, knob out) drives the gate of an **AO3401A P-MOSFET** (source on the battery, drain on B+), with a 1 MΩ resistor holding the gate at the source when it is off. Its pin 3 is unconnected: the switch makes before it breaks.
 - **Reset:** a 6 mm button on the back, labelled GENERATE, mirrored between the halves. Double-tap enters the bootloader.
 
 ## Routing

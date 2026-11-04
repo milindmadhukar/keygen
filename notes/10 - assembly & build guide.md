@@ -32,7 +32,7 @@ From `fab/BOM.md` (left 1xx, right 2xx):
 | AO3401A P-MOSFET + AO3400A N-MOSFET (SOT-23), Q1x2/Q1x3 | 1 + 1 | back | LED power switch, between the battery connector and the board edge |
 | 100 kΩ resistors (1206), R1x2/R1x3 | 2 | back | LED power switch, below each MOSFET |
 | 10 µF + 100 nF capacitors (1206), C1x1/C1x2 | 1 + 1 | back | beside the LED power switch |
-| MSK12C02 power slide switch, SW190/SW290 | 1 | back | top edge, lever out |
+| SK12D07VG5 power slide switch (through-hole), SW190/SW290 | 1 | back | top edge, knob out; solder and trim on the front |
 | JST-PH 2-pin side-entry, BT101/BT201 | 1 | back | battery connector; + marked on the silkscreen |
 | 6 mm reset button, SW191/SW291 | 1 | back | labelled GENERATE |
 | nRF52840 SuperMini, U101/U201 | 1 | back | socketed; check B+, GND and VCC first |
@@ -50,7 +50,7 @@ From `fab/BOM.md` (left 1xx, right 2xx):
 - Continuity: no short between B+, the LED rail and GND.
 
 ### 2. Power parts
-- AO3401A and its 1 MΩ gate resistor, then the MSK12C02 slide switch at the top edge.
+- AO3401A and its 1 MΩ gate resistor. The SK12D07VG5 slide switch at the top edge goes on with the through-hole parts.
 - The 10 µF and 100 nF LED-rail capacitors next to the first LED.
 - JST-PH connector and the reset button.
 - These are the small SMD parts; doing them first keeps the board flat on the mat.

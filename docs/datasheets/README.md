@@ -12,7 +12,7 @@ The files are in the [datasheets release](https://github.com/milindmadhukar/keyg
 | [`nice-nano-v2-pinout.png`](https://github.com/milindmadhukar/keygen/releases/download/datasheets/nice-nano-v2-pinout.png) | nice!nano v2 pinout | [nicekeyboards.com](https://nicekeyboards.com/docs/nice-nano/pinout-schematic) | Pad order (the nRF52840 SuperMini shares it), high- and low-frequency pins, P0.13 VCC cut-off |
 | [`nice-nano-v2-schematic.png`](https://github.com/milindmadhukar/keygen/releases/download/datasheets/nice-nano-v2-schematic.png) | nice!nano v2 schematic | same page | Internal pins: P0.13 drives the XC6220 VCC regulator's enable, P0.15 is the LED, P0.00/P0.01 the 32 kHz crystal; BQ24075 charger |
 | [`SK6812MINI-E_Opsco_rev02.pdf`](https://github.com/milindmadhukar/keygen/releases/download/datasheets/SK6812MINI-E_Opsco_rev02.pdf) | SK6812MINI-E reverse-mount RGB LED | [Adafruit](https://cdn-shop.adafruit.com/product-files/4960/4960_SK6812MINI-E_REV02_EN.pdf) | §4/§5 pinout (1 VDD, 2 DOUT, 3 GND, 4 DIN, viewed from the lens side). §8 VDD 3.7–5.5 V. §9 12 mA per colour. §10 1 mA static, VIH = 0.7 VDD. p. 9 example circuit shows a bypass capacitor at each LED and input protection resistance |
-| [`MSK12C02-HB_ShouHan.pdf`](https://github.com/milindmadhukar/keygen/releases/download/datasheets/MSK12C02-HB_ShouHan.pdf) | MSK12C02-HB power slide switch | [LCSC C431541](https://www.lcsc.com/product-detail/C431541.html) | Pin 2 is common. Rated 50 mA at 12 V DC, which is why it only drives the MOSFET's gate. **Notes in Chinese**: translated below |
+| [`SK12D07VG5_ShouHan.pdf`](https://github.com/milindmadhukar/keygen/releases/download/datasheets/SK12D07VG5_ShouHan.pdf) | Shou Han SK12D07VG5 right-angle power slide switch | [LCSC C431548](https://www.lcsc.com/product-detail/C431548.html) | p. 4: body 8.7 × 4.4 × 4.7 mm; three pins at 2 mm pitch and two mounting tabs 8.3 mm apart, in one row under the middle of the body; middle pin common, make-before-break ("SHORTING"); 2 × 2 mm knob, 4 mm out of the body and centred 2.55 mm off the board, 2 mm travel. p. 2: rated 300 mA at 50 V DC, 130–330 gf. p. 3: 5,000 cycles. **Notes partly in Chinese**: translated below |
 | [`AO3401A_AOS.pdf`](https://github.com/milindmadhukar/keygen/releases/download/datasheets/AO3401A_AOS.pdf) | AO3401A P-channel MOSFET (battery switch, LED power switch) | [Alpha & Omega](https://www.aosmd.com/res/datasheets/AO3401A.pdf) | p. 1: SOT-23 pinout (1 G, 2 S, 3 D), body diode D to S, VGS ±12 V, ID −4 A, RθJA 125 °C/W. p. 2: VGS(th) −0.5 to −1.3 V, RDS(on) < 85 mΩ at VGS = −2.5 V, VSD 0.7 V typ |
 | [`AO3400A_AOS.pdf`](https://github.com/milindmadhukar/keygen/releases/download/datasheets/AO3400A_AOS.pdf) | AO3400A N-channel MOSFET (LED power switch driver) | [Alpha & Omega](https://www.aosmd.com/res/datasheets/AO3400A.pdf) | p. 1: SOT-23 pinout (1 G, 2 S, 3 D), VGS ±12 V, ID 5.7 A. p. 2: VGS(th) 0.65 to 1.45 V, RDS(on) < 48 mΩ at VGS = 2.5 V |
 | [`Alps_EC11E.pdf`](https://github.com/milindmadhukar/keygen/releases/download/datasheets/Alps_EC11E.pdf) | Alps EC11E rotary encoder | [Alps Alpine](https://tech.alpsalpine.com/cms.media/product_catalog_ec_01_ec11e_en_611f078659.pdf) | Terminal row A C B (C = common, in the middle); switch D/E on the opposite side |
@@ -45,17 +45,19 @@ Facts with no datasheet behind them, from the vendors' own docs and source code:
 - **Antenna.** nicekeyboards publishes no antenna position or keep-out. The renders show bare
   board at the end away from USB-C, so the check keeps the last 6 mm of that end clear.
 
-## MSK12C02-HB, English translation of the drawing notes
+## SK12D07VG5, English translation of the Chinese notes
 
-- Title (七脚波动): 7-pin slide switch, MSK12C02-HB. 电路图: circuit diagram (pin ② is the common
-  contact, joined to ③ or ① by the slider; ④ is the metal shell). 安装参考图: recommended PCB layout.
-- 技术要求, technical requirements:
-  1. Part surfaces free of scratches, water marks and deformation; no defects in appearance or
-     function.
-  2. Rated current 50 mA at 12 V DC. Insulation resistance 100 MΩ min at 100 V DC. Dielectric
-     strength 250 V AC for 1 min. Contact resistance 100 mΩ max. After 260 °C reflow, contact
-     resistance changes by at most 20 % of its initial value.
-  3. Clear switching feel with distinct positions and no sticking. Returns promptly when released.
-- Parts list: A clip (phosphor bronze, nickel/silver plated), B base (LCP, black), C knob
-  (high-temperature nylon, black), D spring (stainless steel), E contact spring (beryllium copper,
-  silver plated), F cover (phosphor bronze, nickel/white plated).
+- Title (拨动开关): slide switch, SK12D07VG5. Specification, 2nd edition, 17 June 2020.
+- p. 2, general: rated 300 mA at 50 V DC; used at −25 to +70 °C; tested at 5–35 °C, 45–85 %
+  humidity and 86–106 kPa unless stated otherwise.
+- p. 2, electrical: contact resistance (接触电阻) 30 mΩ max, measured at 1 kHz below 100 mA.
+  Insulation resistance (绝缘电阻) 250 MΩ min at 100 V DC for 1 min, between terminals and between
+  the body and the pins. Withstand voltage (耐电压) 250 V AC for 1 min with a 0.5 mA trip current,
+  without breakdown.
+- p. 2, mechanical: operating force (动作力) 130–330 gf ±80 gf. Travel (动作行程) 2 ± 0.2 mm,
+  measured moving the knob from one position to the next with twice the operating force. Knob
+  strength (操作部强度): 500 gf on the knob's tip along its travel for 30 s leaves it working.
+- p. 3, durability (耐久性): 5,000 cycles without load at 15–18 per minute, contact resistance
+  500 mΩ max afterwards.
+- p. 4, drawing: “*” marks the three key dimensions (注：“*”表示关键尺寸(3个)): a, the knob's
+  length (4 mm); b, its travel (2 mm); c, the pin spacing (4 mm across the outer pins).

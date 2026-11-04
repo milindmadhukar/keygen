@@ -26,7 +26,7 @@ Counts are for the whole keyboard (two halves). Stores, links, prices and spares
 | 1 MΩ resistor, 1206 | 2 | |
 | 100 kΩ resistor, 1206 | 4 | |
 | 10 µF and 100 nF capacitors, 1206 | 2 + 2 | |
-| MSK12C02 slide switch | 2 | The power switch |
+| SK12D07VG5 right-angle slide switch | 2 | The power switch |
 | 6 × 6 × 5 mm tact switch | 2 | The reset button |
 | JST-PH side-entry connector (S2B-PH-K-S) | 2 | For the battery |
 | EC11 encoder with switch, 20 mm D shaft | 2 | |
@@ -296,15 +296,12 @@ On the back, beside the controller's footprint (see the enlarged power map above
 
 - AO3401A P-MOSFET **Q101 / Q201**, between the controller and the power switch.
 - 1 MΩ resistor **R101 / R201**, below it.
-- MSK12C02 slide switch **SW190 / SW290**, at the top edge. First cut its pin 3 off with flush
-  cutters, leaving pad 3 empty: R101 / R201 turns the MOSFET off by itself, and without the pin the
-  switch can never join GND to the battery as it slides.
+
+The power switch beside them is through-hole: it goes on with the battery connector.
 
 ![MOSFET close-up](https://github.com/milindmadhukar/keygen/releases/download/media/assembly-part-mosfet.png)
 
 ![Resistor close-up](https://github.com/milindmadhukar/keygen/releases/download/media/assembly-part-resistor.png)
-
-![Power switch close-up](https://github.com/milindmadhukar/keygen/releases/download/media/assembly-part-slide-switch.png)
 
 ---
 
@@ -321,16 +318,21 @@ On the back, beside the controller's footprint (see the enlarged power map above
 
 ---
 
-## Battery connector and reset button
+## Battery connector, reset button and power switch
 
-Both are through-hole: place them on the back and solder them on the front.
+All three are through-hole: place them on the back and solder them on the front.
 
 - JST-PH side-entry connector **BT101 / BT201**, turned to match its outline on the map.
 - 6 mm reset button **SW191 / SW291**, the one labelled GENERATE.
+- SK12D07VG5 slide switch **SW190 / SW290**, at the top edge, its body flat on the board and its knob
+  out over the edge. Solder the three pins and the two mounting tabs, then trim them flush on the
+  front. Pad 3 is unconnected.
 
 ![Battery connector close-up](https://github.com/milindmadhukar/keygen/releases/download/media/assembly-part-battery.png)
 
 ![Reset button close-up](https://github.com/milindmadhukar/keygen/releases/download/media/assembly-part-reset.png)
+
+![Power switch close-up](https://github.com/milindmadhukar/keygen/releases/download/media/assembly-part-slide-switch.png)
 
 ---
 
@@ -640,8 +642,8 @@ plate and PCB. The plate and PCB have openings that clear it as they float. Deta
    plug through the plate's encoder cut-out and the PCB's opening, and plug it into **J102 / J202**
    on the back. The frame and the unit are now joined by the lead until the case is closed.
 4. Lower the unit onto the strips, the controller's end down into its pocket behind the USB-C port
-   and the slide switch in its opening, the encoder lead folded into its bay in the foam. Hold the
-   unit away from the top edge as it goes down: the switch lever clears that wall by only 0.2 mm.
+   and the power switch's knob down into its slot in the top wall, the encoder lead folded into its
+   bay in the foam. The slot is open at the top; the top frame closes it above the knob.
 5. Press the plate down near each tab: it should sink evenly on the strips and spring back, with
    nothing under it (the leads, a strip off its ledge) pressing on it or holding it.
 6. Put a second piece on top of each plate tab.
@@ -661,7 +663,8 @@ plate and PCB. The plate and PCB have openings that clear it as they float. Deta
    that wraps round the far edge. The module must not move when pressed from the front.
 3. Plug the lead back onto the header, pin 1 to pin 1, and fit the top frame, the lead and plug
    lying flat under the module, the encoder's body dropping through the plate and the PCB and its
-   lead tucked below the PCB. Look through the window: the module should not have shifted.
+   lead tucked below the PCB, and the frame's tongue dropping into the power switch's slot above
+   the knob. Slide the switch both ways: the knob must move freely. Look through the window: the module should not have shifted.
 4. Press the plate down near the encoder: it should move freely, with the encoder not touching the
    plate or the PCB and its lead not pulling on either.
 5. Holding the two parts together, turn the half over onto a folded cloth with the bare encoder

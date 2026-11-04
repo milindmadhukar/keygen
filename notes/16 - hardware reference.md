@@ -32,9 +32,10 @@ updated: 2026-10-22T19:00
   more from the cell than the 100 mA charger replaces. The battery level reads full while
   plugged in. Battery life has not been measured; confirm the dark LED rail is actually off before
   estimating runtime (see [`docs/logic-audit.md`](../docs/logic-audit.md)).
-- **Battery switch:** the MSK12C02 slide switch drives the gate of an AO3401A P-MOSFET, which
-  carries the battery current: source on the battery, drain on B+. A 1 MΩ resistor holds the gate
-  off between positions. Leave the switch on while charging.
+- **Battery switch:** the SK12D07VG5 right-angle slide switch drives the gate of an AO3401A
+  P-MOSFET, which carries the battery current: source on the battery, drain on B+. A 1 MΩ resistor
+  holds the gate at the source when the switch is off; the switch's pin 3 is unconnected. Leave the
+  switch on while charging.
 - **Battery:** a KP-355085 LiPo pouch (3.5 × 50 × 85 mm, listed 3000 mAh) with a protection board, as
   the controller has no over-discharge cut-off. It lies in a bay sunk 1.6 mm into the case floor,
   which takes up to a 60 × 88 mm cell with a 6.1 mm installed height envelope, under the outer
@@ -60,7 +61,7 @@ References and soldering notes for every part are in `fab/BOM.md`.
 | SK6812MINI-E RGB LED | 33 | 33 |
 | 10 µF + 100 nF capacitors, 1206 (LED rail) | 1 + 1 | 1 + 1 |
 | KP-355085 LiPo battery + JST-PH connector | 1 | 1 |
-| MSK12C02 power slide switch | 1 | 1 |
+| SK12D07VG5 power slide switch | 1 | 1 |
 | AO3401A P-MOSFET + 1 MΩ gate resistor, 1206 (battery switch) | 1 + 1 | 1 + 1 |
 | AO3401A P-MOSFET, AO3400A N-MOSFET, 2 × 100 kΩ, 1206 (LED power switch) | 1 + 1 + 2 | 1 + 1 + 2 |
 | 6 mm reset button | 1 | 1 |
@@ -115,8 +116,8 @@ References and soldering notes for every part are in `fab/BOM.md`.
     battery connector, the slide switch, the reset tube, the OLED pins and a bay for the encoder's terminals, lead and header. It sits
     3.0 mm below the parts under the PCB at rest and 1.5 mm below at full gasket travel.
 - **Openings:** a 14.2 × 9.8 mm rounded USB-C port, in front of a pocket inside the wall for the
-  controller's end, and a 9 × 3.4 mm power switch slot on the top edge, with the wall thinned outside
-  them, and a 2 mm reset pinhole in the floor with a guide
+  controller's end, and a 9 × 5.3 mm slot on the top edge for the power switch's knob, closed above
+  the knob by a tongue on the top frame, with the wall thinned outside them, and a 2 mm reset pinhole in the floor with a guide
   tube up to the button.
 - **Fit check:** `tools/gen_case.py` checks every case part against the PCB, the plate, the
   controller, the reset button, the battery, the OLED, the encoder, the knob

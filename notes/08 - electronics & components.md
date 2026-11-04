@@ -5,7 +5,7 @@ name: 08 - electronics & components
 ---
 
 > [!success] Decision (2026-10-19)
-> Each half carries an nRF52840 SuperMini (a nice!nano v2 clone), 33 MX switches in Kailh hotswap sockets, 1N4148 through-hole diodes, 33 per-key **SK6812MINI-E** LEDs, a LiPo on a JST-PH connector, an MSK12C02 slide switch driving an AO3401A P-MOSFET battery switch, a reset button, an EC11 encoder (D shaft) with a 17 mm knob, and a 0.96 in. SSD1306 I2C OLED module. USB-C comes from the controller module, and the LEDs run from the battery through an AO3401A/AO3400A MOSFET power switch. The per-half table is in [[12 - final design#Parts per half]]; the shopping list is [[13 - bill of materials]].
+> Each half carries an nRF52840 SuperMini (a nice!nano v2 clone), 33 MX switches in Kailh hotswap sockets, 1N4148 through-hole diodes, 33 per-key **SK6812MINI-E** LEDs, a LiPo on a JST-PH connector, an SK12D07VG5 slide switch driving an AO3401A P-MOSFET battery switch, a reset button, an EC11 encoder (D shaft) with a 17 mm knob, and a 0.96 in. SSD1306 I2C OLED module. USB-C comes from the controller module, and the LEDs run from the battery through an AO3401A/AO3400A MOSFET power switch. The per-half table is in [[12 - final design#Parts per half]]; the shopping list is [[13 - bill of materials]].
 
 ## Parts per half
 
@@ -17,7 +17,7 @@ name: 08 - electronics & components
 | SK6812MINI-E RGB LED | 33 | 33 | LED1xx / LED2xx | Reverse-mount on the back, shining through a PCB cut-out |
 | 10 µF + 100 nF capacitors, 1206 | 1 + 1 | 1 + 1 | C101–C102 / C201–C202 | LED rail, at the LED power switch's output |
 | KP-355085 LiPo pouch + JST-PH 2-pin side-entry connector (S2B-PH-K-S) | 1 | 1 | BT101 / BT201 | Connector on the back |
-| MSK12C02 slide switch | 1 | 1 | SW190 / SW290 | Back side at the top edge, lever out |
+| SK12D07VG5 right-angle slide switch | 1 | 1 | SW190 / SW290 | Through-hole, back side at the top edge, knob out |
 | AO3401A P-MOSFET, SOT-23 + 1 MΩ resistor, 1206 | 1 + 1 | 1 + 1 | Q101, R101 / Q201, R201 | Battery switch |
 | AO3401A P-MOSFET + AO3400A N-MOSFET, SOT-23, + 2 × 100 kΩ, 1206 | 1 + 1 + 2 | 1 + 1 + 2 | Q102, Q103, R102, R103 / Q202, Q203, R202, R203 | LED power switch, back side beside the battery connector |
 | 6 mm reset button | 1 | 1 | SW191 / SW291 | Through-hole, back side; double-tap for the bootloader |
@@ -62,7 +62,7 @@ Each half has 34 diodes: 33 for the keys and one for its encoder's push switch, 
 
 - **Battery:** 3.7 V KP-355085 LiPo pouch (3.5 × 50 × 85 mm, listed 3000 mAh), on a JST-PH 2.0 lead, at most 60 × 88 mm including its protection board. The controller has no over-discharge cut-off, so the cell needs a protection board: a cell sold without one gets a DW01A module. It lies in a bay sunk 1.6 mm into the case floor. With a 6.1 mm installed battery stack and assumed 2 mm underside parts, clearance is 2.5 mm at rest and 1.0 mm at full gasket travel; it stays at least 15 mm from the antenna end. Placement: [[12 - final design#Power]] and [[14 - case & plate requirements]].
 - **Polarity:** LiPo packs come wired both ways. Check that the red wire lands on the + pad marked on the silkscreen before plugging in.
-- **Battery switch:** the MSK12C02 (rated 50 mA) only drives the gate of the AO3401A, which carries the battery current, so charging and LED current never pass through the switch contacts. Source to the battery, drain to B+; the 1 MΩ resistor holds the gate off between positions. Leave the switch on while charging.
+- **Battery switch:** the SK12D07VG5 only drives the gate of the AO3401A, which carries the battery current, so charging and LED current never pass through the switch contacts. Source to the battery, drain to B+; the 1 MΩ resistor holds the gate at the source when the switch is off, and the switch's pin 3 is unconnected, since it makes before it breaks. The knob, 2 × 2 mm, stands 4 mm out of the body and slides 2 mm. Leave the switch on while charging.
 - **Charging:** through each half's own USB-C, at about 100 mA: roughly a day for an empty cell with lighting off. A 1-to-2 USB-C cable supplies both halves from one source. Runtime needs measurement after the LED rail is proven off on battery (see [`docs/logic-audit.md`](../docs/logic-audit.md)).
 
 ## Mounting and case hardware
