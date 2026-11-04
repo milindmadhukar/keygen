@@ -91,6 +91,14 @@ USB_Z = -PCB_T - CONTROLLER_H - NANO_T / 2   # the USB-C receptacle's centre, on
 PLUG_W, PLUG_H = 12.35, 6.5    # USB-C cable overmould: the largest the USB-C spec recommends
 FLOAT_UP = 1.0                 # the floating stack lifting, the upper gasket strips squeezed further
 PORT_CLEAR = 0.4               # plug to port at the end of its float, each side: print error
+# The power switch's knob runs through the top wall in a slot, 9 mm wide: the bottom shell's slot is
+# open up to the split so the stack drops in, and a tongue on the top frame closes it above the knob.
+LEVER_Z = (-PCB_T - g.SLIDE_KNOB_Z - g.SLIDE_KNOB[2] / 2,
+           -PCB_T - g.SLIDE_KNOB_Z + g.SLIDE_KNOB[2] / 2)   # the knob, bottom and top, at rest
+LEVER_CLEAR = 0.4              # knob to the slot at full float, top and bottom: print error
+LEVER_SLOT_W = 9.0
+LEVER_SLOT_Z = (LEVER_Z[0] - FLOAT_GAP - LEVER_CLEAR, LEVER_Z[1] + FLOAT_UP + LEVER_CLEAR)
+LEVER_TONGUE_CLEAR = 0.2       # the top frame's tongue to the sides of the bottom shell's slot
 PORT_R = 2.0                   # port corner radius; overmoulds are rounded at least this much
 NANO_POCKET_CLEAR = 0.3        # controller end to its pocket in the wall, past the stack's float
 ANTENNA_LEN = 12.0             # chip antenna end of the nice!nano
@@ -336,6 +344,7 @@ def halves():
             bb = fp.GetBoundingBox(False)
             c = (MM(bb.GetCenter().x), MM(bb.GetCenter().y))
             h["lever"] = c
+            h["slide"] = _pads_centre(fp)        # its pin row, 2.2 mm behind the body's front face
         elif ref.startswith("SW") and ref[-2:] == "91":
             h["reset"] = _pads_centre(fp)
     for h in out.values():

@@ -279,7 +279,9 @@ MCU_X = 7.0 * U                   # centre of Redox's removed inner column
 # Keys are references without the half's 100/200 base; rot is clockwise degrees.
 LEFT_PARTS = {
     "U1":  dict(x=MCU_X, y=TOP_EDGE + 16.65 - 1.0, back=True),     # USB-C overhangs the edge by 1 mm
-    "SW90": dict(x=MCU_X + 9.0 + 1.2 + 6.1 + 1.5 + 3.7, y=TOP_EDGE + 1.8, back=True),  # power slide, lever up
+    # power slide switch: its pin row 2.2 mm in from the sloped top edge, so the body's front face meets
+    # the edge at its middle and the knob reaches 4 mm past it; its outer tab hole is 1.7 mm off the side edge
+    "SW90": dict(x=MCU_X + 20.5, y=TOP_EDGE + 1.8, back=True),
     "BT1": dict(x=MCU_X + 9.0 + 5.5, y=TOP_EDGE + 23.0, back=True),          # JST-PH battery
     # battery load switch: P-MOSFET and its gate resistor, between the controller and the slide switch
     "Q1":  dict(x=MCU_X + 12.25, y=TOP_EDGE + 8.0, back=True),

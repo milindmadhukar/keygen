@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Write the case-relevant positions from pcb/keygen.kicad_pcb into the vault note
-'14 - case & plate requirements.md' (between the case-refs markers), so the case and plate
+"""Write the case-relevant positions from pcb/keygen.kicad_pcb into the note
+notes/14 - case & plate requirements.md (between the case-refs markers), so the case and plate
 design always uses the current PCB. Positions are mm from the top-left corner of each half's
 bounding box, looking at the top (switch side) of the board."""
 import re
@@ -9,15 +9,17 @@ from pathlib import Path
 import pcbnew
 
 ROOT = Path(__file__).resolve().parent.parent
-NOTE = Path.home() / "Documents/Obsidian Vault/01 - Projects/Hardware & Electronics/Keygen Custom Keyboard/14 - case & plate requirements.md"
-WHAT = {"U": "Controller (underside), USB-C at the top edge", "SW90": "Power slide switch (underside), lever out of the top edge", "SW91": "Reset button (underside) -> floor pinhole",
+NOTE = ROOT / "notes/14 - case & plate requirements.md"   # tools/sync_notes.sh copies it to the vault
+WHAT = {"U": "Controller (underside), USB-C at the top edge", "SW90": "Power slide switch (underside), knob through the top wall", "SW91": "Reset button (underside) -> floor pinhole",
         "BT": "Battery JST-PH connector (underside)", "ENC": "Rotary encoder shaft (top)", "H": "M2 mounting hole",
-        "J": "OLED header pin 1 (top), or the encoder lead header (underside)"}
+        "J[12]01": "OLED wiring pin 1 (top); the module is above it, in the top frame",
+        "J[12]02": "Encoder lead header pin 1 (underside)"}
 
 def describe(ref):
     for k, v in WHAT.items():
         if k.startswith("SW") and ref.startswith("SW") and ref[-2:] == k[-2:]: return v
-        if not k.startswith("SW") and re.match(rf"{k}\d+$", ref): return v
+        if k.startswith("J") and re.fullmatch(k, ref): return v
+        if not k.startswith(("SW", "J")) and re.match(rf"{k}\d+$", ref): return v
     return None
 
 def table():

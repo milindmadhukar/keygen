@@ -178,6 +178,21 @@ for side, h in C.halves().items():
     e = h["port_edge"]
     wall = deep - max((p[0] - e.a[0]) * e.n[0] + (p[1] - e.a[1]) * e.n[1] for p in corners)
     require(wall >= 1.2, f"{side} wall in front of the controller's pocket too thin")
+# the power switch: its knob, carried by the floating stack, through the slot and proud of the wall
+g = C.g
+(_, bd, _), (kw, kl, _) = g.SLIDE_BODY, g.SLIDE_KNOB
+for side, h in C.halves().items():
+    e = h["port_edge"]
+    front = (h["slide"][0] - e.a[0]) * e.n[0] + (h["slide"][1] - e.a[1]) * e.n[1] + bd / 2   # body face, past the edge
+    proud = front + kl - (C.WALL_IN + C.PORT_WALL)
+    require(proud - C.POCKET_CLEAR >= 0.8, f"{side} power switch knob not proud of the wall with the stack floated inward")
+    require(front + C.POCKET_CLEAR <= C.WALL_IN - 0.2, f"{side} power switch body can touch the wall")
+    side_gap = C.LEVER_SLOT_W / 2 - C.LEVER_TONGUE_CLEAR - (kw + g.SLIDE_TRAVEL) / 2 - C.POCKET_CLEAR
+    require(side_gap >= 0.5, f"{side} power switch knob can touch the sides of its slot")
+require(C.LEVER_SLOT_Z[0] - C.BOTTOM_Z >= 3.0, "too little wall under the power switch's slot")
+print(f"power switch: knob {proud:.1f} mm proud of the wall ({proud - C.POCKET_CLEAR:.1f}-{proud + C.POCKET_CLEAR:.1f} as the stack "
+      f"floats), in a {C.LEVER_SLOT_W:g} x {C.LEVER_SLOT_Z[1] - C.LEVER_SLOT_Z[0]:.1f} mm slot with {C.LEVER_CLEAR:g} mm "
+      f"above and below it at full float and {side_gap:.1f} mm each side at the end of its travel")
 print(f"usb-c: port {port_w:.1f} x {port_z1 - port_z0:.1f} mm (r {C.PORT_R:g}), centred on the receptacle "
       f"{-C.USB_Z:.1f} mm under the PCB top with the controller {C.CONTROLLER_H:g} mm under the PCB; a {C.PLUG_W:g} x {C.PLUG_H:g} mm "
       f"plug keeps {C.PORT_CLEAR:g} mm clear at full float; {port_z0 - C.BOTTOM_Z:.1f} mm of wall below it")

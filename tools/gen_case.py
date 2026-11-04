@@ -23,8 +23,9 @@ parts are screwed together from below, up through the walls (M2 x 16 into M2 hea
 blind holes in the top frame's underside), so the top has no holes and the screw heads sit in
 counterbores, below the flat underside. The bottom shell
 has a rounded USB-C port, sized for a cable's plug wherever the floating stack carries it, in front of a
-pocket inside the wall for the controller's end; a slot for the power switch lever (the wall thinned
-outside both); and a guided pinhole under the reset button. The LiPo lies in a bay sunk into the
+pocket inside the wall for the controller's end; a slot for the power switch's knob, open up to the
+split and closed above the knob by a tongue on the top frame (the wall thinned outside both); and a
+guided pinhole under the reset button. The LiPo lies in a bay sunk into the
 floor, clear of the solder joints above it. The underside is flat.
 
 The top frame's deck is level with its rim and covers the plate everywhere but the keycaps, the
@@ -75,7 +76,6 @@ CBORE_D, HEAD_H = 4.4, 2.0             # its counterbore in the floor, and its h
 CBORE_CHAMFER = 0.6
 CBORE_TOP = C.SPLIT_Z + INSERT_L - SCREW_L   # the head's seat: the screw ends level with the insert's top
 NANO_POCKET_W = C.NANO_W + 2.0         # the controller's end, which overhangs the slanted edge, floating sideways
-LEVER_SLOT_W, LEVER_SLOT_H = 9.0, 3.4
 RESET_HOLE_D, RESET_TUBE_D = 2.0, 5.0  # paperclip hole, and the guide tube round it
 RESET_BUTTON_H = 5.0                   # 6 mm tact switch, 5 mm tall, on the PCB underside
 EPS = 0.01
@@ -234,9 +234,9 @@ def build(h):
     cuts.append(dir_box(h["usb"], u, a0, a1, w, C.CAVITY_Z, C.SPLIT_Z + 1))
     pw, pz0, pz1 = C.usb_port()
     cuts.append(dir_port(h["usb"], u, -3.0, C.WALL_OUT + 5.0, pw, pz0, pz1, C.PORT_R))
-    # power switch lever
-    cuts.append(edge_box(e, s_lev - LEVER_SLOT_W / 2, s_lev + LEVER_SLOT_W / 2, -2.0, C.WALL_OUT + 3.0,
-                         -C.PCB_T - LEVER_SLOT_H, -C.PCB_T))
+    # power switch knob: its slot, open up to the split so the stack drops in with the knob through the wall
+    cuts.append(edge_box(e, s_lev - C.LEVER_SLOT_W / 2, s_lev + C.LEVER_SLOT_W / 2, -2.0, C.WALL_OUT + 3.0,
+                         C.LEVER_SLOT_Z[0], C.SPLIT_Z + 1))
     bx0, by0, bx1, by1 = C.battery(h)["bay"]          # battery bay, sunk into the floor
     (bcx, bcy) = xy(((bx0 + bx1) / 2, (by0 + by1) / 2))
     cuts.append(Pos(bcx, bcy, C.CAVITY_Z - C.BAY_DEPTH) * Box(bx1 - bx0, by1 - by0, C.BAY_DEPTH + 1, align=Z))
@@ -284,7 +284,14 @@ def build(h):
         cuts.append(cylinder(p, INSERT_D, C.SPLIT_Z - 1, C.SPLIT_Z + INSERT_DEPTH))
     for c in cuts:
         top -= c
+    top += lever_tongue(h)
     return bottom, top, plate(h, tab_list), tab_list, screws
+
+
+def lever_tongue(h):
+    """The top frame's tongue down into the bottom shell's lever slot, filling it above the knob."""
+    e, s, t = h["port_edge"], h["port_edge"].s_of(h["lever"]), C.LEVER_SLOT_W / 2 - C.LEVER_TONGUE_CLEAR
+    return edge_box(e, s - t, s + t, C.WALL_IN, C.WALL_IN + C.PORT_WALL, C.LEVER_SLOT_Z[1], C.SPLIT_Z + EPS)
 
 
 def oled_mount(h):

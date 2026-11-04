@@ -50,7 +50,7 @@ STEPS = [
      ["pcb/lib/keygen.3dshapes/Keycap_*.wrl", "pcb/lib/keygen.3dshapes/Keycap_*.stl"]),
     ("schematic", [PY, "tools/gen_schematic.py"], [*SUBMODULES],
      ["pcb/keygen.kicad_sch", "pcb/left.kicad_sch", "pcb/right.kicad_sch", "pcb/lib/keygen.kicad_sym",
-      "pcb/lib/keygen.pretty/*.kicad_mod"]),
+      "pcb/lib/keygen.pretty/*.kicad_mod", "pcb/lib/keygen.3dshapes/SW_SK12D07VG5.wrl"]),
     ("schematic-pdf", ["kicad-cli", "sch", "export", "pdf", "-o", "pcb/keygen-schematic.pdf", "pcb/keygen.kicad_sch"],
      ["pcb/*.kicad_sch", "pcb/keygen.kicad_pro", "pcb/lib/keygen.kicad_sym"], ["pcb/keygen-schematic.pdf"]),
     ("zmk-layout", [PY, "tools/gen_zmk_layout.py"], [],

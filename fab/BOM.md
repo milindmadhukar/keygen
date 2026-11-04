@@ -21,7 +21,7 @@ The shopping list with spares and prices is `bom/bom.csv` / `plan/bom.html`.
 | 100 kΩ resistor (1206) | 2 | R102, R103 | SMD, back side, in the LED power switch |
 | MX switch, 1.25u key | 7 | SW101, SW108, SW114, SW121, SW132–SW134 | Kailh socket on the back; switch + 1.25u keycap (the two tall thumb keys turned 90°) |
 | MX switch, 1u key | 26 | SW102–SW106, SW109–SW113, SW115–SW120, SW122–SW131 | Kailh socket on the back; switch + 1u keycap on top |
-| MSK12C02 power slide switch | 1 | SW190 | SMD, back side at the top edge, lever out |
+| SK12D07VG5 power slide switch | 1 | SW190 | through-hole, back side at the top edge, knob out; pins trimmed flush on the front |
 | 6 mm reset button | 1 | SW191 | through-hole, back side |
 | nRF52840 SuperMini (nice!nano v2 clone) | 1 | U101 | on the back, socketed (Mill-Max/low-profile); check B+, GND and VCC first |
 
@@ -43,7 +43,7 @@ The shopping list with spares and prices is `bom/bom.csv` / `plan/bom.html`.
 | 100 kΩ resistor (1206) | 2 | R202, R203 | SMD, back side, in the LED power switch |
 | MX switch, 1.25u key | 7 | SW201, SW208, SW214, SW221, SW232–SW234 | Kailh socket on the back; switch + 1.25u keycap (the two tall thumb keys turned 90°) |
 | MX switch, 1u key | 26 | SW202–SW206, SW209–SW213, SW215–SW220, SW222–SW231 | Kailh socket on the back; switch + 1u keycap on top |
-| MSK12C02 power slide switch | 1 | SW290 | SMD, back side at the top edge, lever out |
+| SK12D07VG5 power slide switch | 1 | SW290 | through-hole, back side at the top edge, knob out; pins trimmed flush on the front |
 | 6 mm reset button | 1 | SW291 | through-hole, back side |
 | nRF52840 SuperMini (nice!nano v2 clone) | 1 | U201 | on the back, socketed (Mill-Max/low-profile); check B+, GND and VCC first |
 
@@ -65,7 +65,7 @@ The shopping list with spares and prices is `bom/bom.csv` / `plan/bom.html`.
 | 100 kΩ resistor (1206) | 4 | 8 | Robu.in / Lamington Road |
 | MX switch, 1.25u key | 14 | 28 | Kailh sockets: you own 100 (enough for keyboard 1). Switches: still to choose |
 | MX switch, 1u key | 52 | 104 | Kailh sockets: you own 100 (enough for keyboard 1). Switches: still to choose |
-| MSK12C02 power slide switch | 2 | 4 | Robu.in / AliExpress "MSK12C02" |
+| SK12D07VG5 power slide switch | 2 | 4 | Robu.in "SK12D07VG5" |
 | 6 mm reset button | 2 | 4 | Robu.in / StacksKB |
 | nRF52840 SuperMini (nice!nano v2 clone) | 2 | 4 | [AliExpress, A+A+A Store](https://www.aliexpress.com/item/1005007383270623.html) |
 

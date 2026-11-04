@@ -35,6 +35,7 @@ pcb/lib/keygen.3dshapes/Keycap_*
 pcb/lib/keygen.3dshapes/Knob_17mm.step
 pcb/lib/keygen.3dshapes/OLED_096_I2C.step
 pcb/lib/keygen.3dshapes/nRF52840_ProMicro.wrl
+pcb/lib/keygen.3dshapes/SW_SK12D07VG5.wrl
 # The part datasheets live in the "datasheets" release: python3 tools/publish.py --fetch datasheets
 docs/datasheets/*.pdf
 docs/datasheets/*.png

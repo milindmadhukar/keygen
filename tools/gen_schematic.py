@@ -79,7 +79,7 @@ FP = {
     "cap": "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder",
     "enc": "keygen:EC11_Case_Mount",                 # board-only, no pads: holds the 3D models at the shaft
     "enc_header": "Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Horizontal",
-    "pwr": "keygen:SW_MSK12C02-HB",
+    "pwr": "keygen:SW_SK12D07VG5",
     "fet": "Package_TO_SOT_SMD:SOT-23",
     "res": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
     "rst": "Button_Switch_THT:SW_PUSH_6mm_H5mm",
@@ -143,6 +143,14 @@ PIN_CARRIER_H = 1.9   # plastic carrier of the machined male pins, on the socket
 CONTROLLER_H = SOCKET_H + PIN_CARRIER_H   # PCB underside to the controller
 NANO_T = 1.6       # nRF52840 SuperMini board
 USB_C = (8.94, 3.26)   # its mid-mount USB-C receptacle, width x height, centred on the board's thickness
+# The power switch, a Shou Han SK12D07VG5 right-angle slide switch (LCSC C431548 drawing, p. 4), on
+# the underside at the top edge. Its pins stand in one row under the middle of the body; the knob comes
+# out of the front face, parallel to the board. tools/case_geometry.py sizes the case's slot from these.
+SLIDE_BODY = (8.7, 4.4, 4.7)      # along the pin row, front to back, and height off the board
+SLIDE_KNOB = (2.0, 4.0, 2.0)      # across, out of the front face, and thick
+SLIDE_KNOB_Z = 2.55               # knob centre off the board
+SLIDE_TRAVEL = 2.0
+SLIDE_PIN_L = 2.6                 # pins and mounting tabs past the body's seat
 
 def model(path, offset=(0, 0, 0), rotate=(0, 0, 0)):
     return [S("model"), path, [S("offset"), [S("xyz"), *offset]], [S("scale"), [S("xyz"), 1, 1, 1]],
@@ -168,6 +176,48 @@ def wrl_box_mesh(boxes):
         out.append(f"Shape {{ appearance Appearance {{ material Material {{ diffuseColor {rgb} }} }} "
                    f"geometry IndexedFaceSet {{ coord Coordinate {{ point [{pts}] }} coordIndex [{faces}] }} }}")
     return "\n".join(out) + "\n"
+
+def slide_switch():
+    """SK12D07VG5 footprint, origin on the middle pin (2, the common pole). The knob points to -y.
+    The box model is drawn with -y at +y: KiCad turns back-side models end over end."""
+    (bw, bd, bh), (kw, kl, kt) = SLIDE_BODY, SLIDE_KNOB
+    k = iter(range(100))
+    uid = lambda: [S("uuid"), U(f"fp:SW_SK12D07VG5:{next(k)}")]
+    text = lambda size: [S("effects"), [S("font"), [S("size"), size, size], [S("thickness"), 0.15]]]
+    def line(a, b, layer, w):
+        return [S("fp_line"), [S("start"), *a], [S("end"), *b], [S("stroke"), [S("width"), w], [S("type"), S("solid")]],
+                [S("layer"), layer], uid()]
+    def rect(x0, y0, x1, y1, layer, w):
+        c = [(x0, y0), (x1, y0), (x1, y1), (x0, y1)]
+        return [line(a, b, layer, w) for a, b in zip(c, c[1:] + c[:1])]
+    fp = [S("footprint"), "SW_SK12D07VG5", [S("version"), 20240108], [S("generator"), "keygen_gen_schematic"],
+          [S("layer"), "F.Cu"],
+          [S("descr"), "Shou Han SK12D07VG5 slide switch, SPDT, right angle, 4 mm knob, 2 mm travel (LCSC C431548)"],
+          [S("tags"), "switch slide SPDT right angle"],
+          [S("property"), "Reference", "REF**", [S("at"), 0, bd / 2 + 1.4, 0], [S("layer"), "F.SilkS"], uid(), text(1)],
+          [S("property"), "Value", "SW_SK12D07VG5", [S("at"), 0, bd / 2 + 2.8, 0], [S("layer"), "F.Fab"], uid(), text(1)],
+          [S("attr"), S("through_hole")]]
+    fp += rect(-bw / 2, -bd / 2, bw / 2, bd / 2, "F.Fab", 0.1)
+    fp += rect(-kw / 2 - SLIDE_TRAVEL / 2, -bd / 2 - kl, kw / 2 + SLIDE_TRAVEL / 2, -bd / 2, "F.Fab", 0.1)   # knob, both positions
+    fp += rect(-bw / 2 - 0.25, -bd / 2 - 0.25, bw / 2 + 0.25, bd / 2 + 0.25, "F.CrtYd", 0.05)
+    s0 = bd / 2 + 0.2                                                    # silkscreen behind the pads
+    fp += [line((-bw / 2 - 0.1, 1.6), (-bw / 2 - 0.1, s0), "F.SilkS", 0.12),
+           line((-bw / 2 - 0.1, s0), (bw / 2 + 0.1, s0), "F.SilkS", 0.12),
+           line((bw / 2 + 0.1, s0), (bw / 2 + 0.1, 1.6), "F.SilkS", 0.12)]
+    for n, x in (("1", -2.0), ("2", 0.0), ("3", 2.0)):                 # 0.5 x 0.3 mm pins
+        fp.append([S("pad"), n, S("thru_hole"), S("rect" if n == "1" else "circle"), [S("at"), x, 0], [S("size"), 1.4, 1.4],
+                   [S("drill"), 0.9], [S("layers"), "*.Cu", "*.Mask"], uid()])
+    for x in (-4.15, 4.15):                                              # 0.4 x 1.2 mm mounting tabs, 8.3 apart
+        fp.append([S("pad"), "", S("thru_hole"), S("oval"), [S("at"), x, 0], [S("size"), 1.2, 2.2],
+                   [S("drill"), S("oval"), 0.7, 1.7], [S("layers"), "*.Cu", "*.Mask"], uid()])
+    fp.append(model(f"{SHAPES}/SW_SK12D07VG5.wrl"))
+    zk = SLIDE_KNOB_Z
+    (PCB / "lib/keygen.3dshapes/SW_SK12D07VG5.wrl").write_text(wrl_box_mesh([
+        (-bw / 2, -bd / 2, 0.0, bw / 2, bd / 2, bh, "0.10 0.10 0.10"),                         # body
+        (-kw / 2, bd / 2, zk - kt / 2, kw / 2, bd / 2 + kl, zk + kt / 2, "0.12 0.12 0.12"),   # knob (front: see docstring)
+    ] + [(x - 0.25, -0.15, -SLIDE_PIN_L, x + 0.25, 0.15, 0.0, "0.80 0.80 0.80") for x in (-2.0, 0.0, 2.0)]
+      + [(x - 0.2, -0.6, -SLIDE_PIN_L, x + 0.2, 0.6, 0.0, "0.80 0.80 0.80") for x in (-4.15, 4.15)]))
+    return fp
 
 def keygen_footprints():
     """pcb/lib/keygen.pretty + keygen.3dshapes: project copies of the vendored footprints with
@@ -222,9 +272,7 @@ def keygen_footprints():
             first(n, "at")[2] = {"USB": -14.75, "topside": -12.65}[n[2]]
     fp.append(model(f"{SHAPES}/nRF52840_ProMicro.wrl")); save(fp, "nice_nano_H_USBup")
 
-    fp = load(marb / "marbastlib-various.pretty", "SW_MSK12C02-HB")
-    fp[:] = [n if not (isinstance(n, list) and n and n[0] == "model") else vendor_model(n, VENDOR3D["marbastlib"]) for n in fp]
-    save(fp, "SW_MSK12C02-HB")
+    save(slide_switch(), "SW_SK12D07VG5")
 
     # The encoder is fixed to the top frame, over the PCB's opening. Its footprint has no pads: it
     # marks the shaft and carries the encoder and knob models, with the terminals' envelope on F.Fab.
@@ -397,8 +445,9 @@ def build(side, root, sheet):
     sh.text("POWER", PX - 25.4, PY - 17.78, 2)
     sh.symbol("Device:Battery_Cell", R("BT", 1), "LiPo 3.7V 3000mAh", PX - 20.32, PY, FP["bat"],
               nets={"1": "BAT_RAW", "2": "GND"})
-    sh.symbol("Switch:SW_SPDT", R("SW", 90), "MSK12C02 power", PX, PY, FP["pwr"],
-              nets={"1": "GND", "2": "BAT_GATE", "3": "BAT_RAW"})
+    # pin 3 stays unconnected: the switch makes before it breaks, so mid-slide it would join 1 and 3
+    sh.symbol("Switch:SW_SPDT", R("SW", 90), "SK12D07VG5 power", PX, PY, FP["pwr"],
+              nets={"1": "GND", "2": "BAT_GATE"})
     sh.symbol("Switch:SW_Push", R("SW", 91), "Reset", PX + 25.4, PY, FP["rst"], nets={"1": "RST", "2": "GND"})
     sh.symbol("Device:C", R("C", 1), "10uF", PX - 20.32, PY + 22.86, FP["cap"], nets={"1": "LED_VDD", "2": "GND"})
     sh.symbol("Device:C", R("C", 2), "100nF", PX - 7.62, PY + 22.86, FP["cap"], nets={"1": "LED_VDD", "2": "GND"})
@@ -407,16 +456,15 @@ def build(side, root, sheet):
     sh.text("C1/C2 sit at the LED power switch's output.", PX - 25.4, PY + 33.02)
 
     # ---- battery load switch ---------------------------------------------------------
-    # The MSK12C02 is rated 50 mA, less than the charge and LED current, so it only drives the gate
-    # of a P-MOSFET that carries the battery current. Source on the battery, drain on B+: the body
-    # diode (drain -> source) blocks the battery when the switch is off.
+    # The slide switch only drives the gate of a P-MOSFET that carries the battery current. Source on
+    # the battery, drain on B+: the body diode (drain -> source) blocks the battery when the switch is off.
     QX, QY = 360.68, 185.42
     sh.text("BATTERY SWITCH (P-MOSFET; the slide switch only drives the gate)", QX - 25.4, QY - 15.24, 2)
     sh.symbol("Transistor_FET:AO3401A", R("Q", 1), "AO3401A", QX, QY, FP["fet"],
               nets={"1": "BAT_GATE", "2": "BAT_RAW", "3": "VBAT"})
     sh.symbol("Device:R", R("R", 1), "1M", QX + 15.24, QY, FP["res"], nets={"1": "BAT_GATE", "2": "BAT_RAW"})
-    sh.text("Switch 2-1: gate to GND, on. Switch 2-3: gate to source, off.\n"
-            "R1 holds the gate off between positions. Leave the switch on while charging:\n"
+    sh.text("Switch 2-1: gate to GND, on. Switch 2-3 (pin 3 unconnected): R1 holds the gate at\n"
+            "the source, off. Leave the switch on while charging:\n"
             "off, charge current crosses the body diode (~0.07 W at 100 mA); full charge is not assured.", QX - 25.4, QY + 12.7)
 
     # ---- LED power switch ------------------------------------------------------------

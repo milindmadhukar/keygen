@@ -67,9 +67,9 @@ def role(net):
     if net in ("OLED_SDA", "OLED_SCL"): return "fast", "OLED I2C (400 kHz)"
     return None, net
 
-# MSK12C02-HB_ShouHan.pdf (drawing; Chinese notes translated in docs/datasheets/README.md): pin 2 is
-# the common pole, joined to 1 in one position and 3 in the other. Rated 50 mA at 12 V DC.
-MSK_COMMON, MSK_RATED_MA = "2", 50
+# SK12D07VG5_ShouHan.pdf (p. 4 drawing): the middle pin (2) is the common pole, joined to 1 in one
+# position and 3 in the other, and it makes before it breaks ("SHORTING"). Rated 300 mA at 50 V DC (p. 2).
+SLIDE_COMMON, SLIDE_RATED_MA = "2", 300
 # AO3401A_AOS.pdf (p. 1): SOT-23, top view G bottom left (1), S bottom right (2), D top (3). Body diode
 # anode on D, cathode on S. VDS -30 V, VGS +-12 V, ID -4 A, VGS(th) -0.5..-1.3 V, RDS(on) < 85 mOhm at
 # VGS = -2.5 V, VSD up to 1 V, RthJA 125 C/W (steady state, max).
@@ -207,11 +207,11 @@ for side, d in SIDES.items():
     qpins = lib_pins("Transistor_FET.kicad_sym", "AO3401A")
     ok(qpins == AO_PINS and len(pads(q)) == 3, A, f"{side}: AO3401A symbol pins 1 G / 2 S / 3 D match the datasheet's SOT-23",
        f"{side}: AO3401A symbol pins {qpins}, datasheet {AO_PINS}")
-    ok(nodes(side, "BAT_RAW") == {(bt, plus), (q, "2"), (sw, "3"), (r, "2")}, A,
+    ok(nodes(side, "BAT_RAW") == {(bt, plus), (q, "2"), (r, "2")}, A,
        f"{side}: battery + (JST pad {plus}) on the MOSFET's source; the body diode (D -> S) blocks it from B+ when off",
        f"{side}: BAT_RAW = {sorted(nodes(side, 'BAT_RAW'))}")
-    ok(nodes(side, "BAT_GATE") == {(q, "1"), (sw, MSK_COMMON), (r, "1")}, A,
-       f"{side}: gate on the slide switch's common pin ({MSK_COMMON}, per MSK12C02 drawing) and the gate resistor",
+    ok(nodes(side, "BAT_GATE") == {(q, "1"), (sw, SLIDE_COMMON), (r, "1")}, A,
+       f"{side}: gate on the slide switch's common pin ({SLIDE_COMMON}, per SK12D07VG5 drawing) and the gate resistor",
        f"{side}: BAT_GATE = {sorted(nodes(side, 'BAT_GATE'))}")
     ok(pad_net(sw, "1") == "GND", A, f"{side}: switch 2-1 grounds the gate (on)")
     ok(pad_net(bt, "2") == "GND", A, f"{side}: battery - (JST pad 2) on GND")
@@ -222,7 +222,10 @@ for side, d in SIDES.items():
     ok(silk, A, f"{side}: '+' printed next to the battery connector's + pad",
        f"{side}: nothing on the silkscreen marks which JST pad is + (pad {plus}); LiPo packs come wired both "
        "ways round and a reversed pack kills the charger", warn=True)
-    ok(pad_net(sw, "3") == "BAT_RAW", A, f"{side}: switch 2-3 ties the gate to the source (off)")
+    ok(not pad_net(sw, "3") or pad_net(sw, "3").startswith("unconnected-"), A,
+       f"{side}: switch pin 3 unconnected, so its make-before-break slide never joins GND to the battery; "
+       f"off, R{d}01 holds the gate at the source",
+       f"{side}: switch pin 3 is on {pad_net(sw, '3')}: mid-slide the switch joins pins 1 and 3")
     q2, r2, q3, r3 = f"Q{d}02", f"R{d}02", f"Q{d}03", f"R{d}03"
     npins = lib_pins("Transistor_FET.kicad_sym", "AO3400A")
     ok(npins == AO_PINS and len(pads(q3)) == 3, A, f"{side}: AO3400A symbol pins 1 G / 2 S / 3 D match the datasheet's SOT-23",
@@ -388,7 +391,7 @@ for side, d in SIDES.items():
 # 7. Current through the power switch
 # --------------------------------------------------------------------------------------
 A = "power"
-report("PASS", "power", f"the MSK12C02 (rated {MSK_RATED_MA} mA) only switches the MOSFET gate; battery current, including "
+report("PASS", "power", f"the SK12D07VG5 (rated {SLIDE_RATED_MA} mA) only switches the MOSFET gate; battery current, including "
        f"{CHARGE_MA} mA charging ({BOOST_MA} mA with BOOST) and LED current, flows through the AO3401A (4 A)")
 drop = SW_MA * AO_RDS_25V_MOHM / 1000
 ok(VBAT_MIN > 2.5 and VBAT_MAX < AO_VGS_MAX, "power",

@@ -6127,8 +6127,8 @@
     (dnp no)
     (uuid "54d7f3fd-a656-5d1f-beb9-2ca35105ebcc")
     (property "Reference" "SW190" (at 360.68 125.73 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "MSK12C02 power" (at 360.68 138.43 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "keygen:SW_MSK12C02-HB"
+    (property "Value" "SK12D07VG5 power" (at 360.68 138.43 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "keygen:SW_SK12D07VG5"
       (at 360.68 132.08 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
@@ -6155,11 +6155,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "f8a8a029-d5f4-57d8-9d2f-a7f572b48dcb")
   )
-  (label "BAT_RAW"
-    (at 365.76 134.62 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid "ffddd593-74ef-5fad-9630-b986bde134f1")
-  )
+  (no_connect (at 365.76 134.62) (uuid "ffddd593-74ef-5fad-9630-b986bde134f1"))
   (symbol
     (lib_id "Switch:SW_Push")
     (at 386.08 132.08 0)
@@ -6447,7 +6443,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid "60ecbebe-0258-5282-800b-337c88a466df")
   )
-  (text "Switch 2-1: gate to GND, on. Switch 2-3: gate to source, off.\nR1 holds the gate off between positions. Leave the switch on while charging:\noff, charge current crosses the body diode (~0.07 W at 100 mA); full charge is not assured."
+  (text "Switch 2-1: gate to GND, on. Switch 2-3 (pin 3 unconnected): R1 holds the gate at\nthe source, off. Leave the switch on while charging:\noff, charge current crosses the body diode (~0.07 W at 100 mA); full charge is not assured."
     (exclude_from_sim no)
     (at 335.28 198.12 0)
     (effects (font (size 1.27 1.27)) (justify left top))
