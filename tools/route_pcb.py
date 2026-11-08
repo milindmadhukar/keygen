@@ -73,7 +73,8 @@ def ground_pours(b):
             z = pcbnew.ZONE(b)
             z.SetLayer(layer); z.SetNet(net); z.SetZoneName(f"GND-{side}")
             z.SetLocalClearance(mm(0.2)); z.SetMinThickness(mm(0.2))   # reach into tight gaps
-            z.SetPadConnection(pcbnew.ZONE_CONNECTION_THT_THERMAL)   # SMD pads solid, TH pads thermal
+            z.SetPadConnection(pcbnew.ZONE_CONNECTION_THERMAL)   # every pad on spokes, so hand soldering
+            # heats the pad, not the plane; pcb/keygen.kicad_dru lets an LED pad with room for one take one
             z.SetIslandRemovalMode(pcbnew.ISLAND_REMOVAL_MODE_ALWAYS)  # no floating copper islands
             z.SetThermalReliefGap(mm(0.4)); z.SetThermalReliefSpokeWidth(mm(0.4))
             o = z.Outline(); o.NewOutline()

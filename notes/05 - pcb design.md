@@ -67,7 +67,7 @@ The board is generated and routed by the scripts in `tools/` of the repo, so eve
 7. `sync_pcb.py` relinks footprints to the schematic.
 8. `silkscreen_art.py` writes the black-mask stackup and the silkscreen artwork.
 
-Ground is a fill on both layers of each half, kept out from under each controller's antenna end by keep-out areas that survive every re-pour.
+Ground is a fill on both layers of each half, on thermal spokes to every pad, kept out from under each controller's antenna end by keep-out areas that survive every re-pour.
 
 ## Checks
 

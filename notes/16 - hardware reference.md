@@ -76,7 +76,9 @@ References and soldering notes for every part are in `fab/BOM.md`.
   0.2 mm copper-to-edge. That is within JLCPCB's 2-layer capability.
 - **Routing:** Freerouting does most of the signal routing, then a custom grid maze router
   finishes the rest. All tracks are then straightened into 0/45/90° runs. Ground is a fill on both
-  layers. [`pcb-routing.png`](https://github.com/milindmadhukar/keygen/releases/download/media/pcb-routing.png) shows both copper layers.
+  layers, joined to every pad through thermal spokes so a hand iron heats the pad rather than the
+  plane. Two spokes per pad at least, one on the few LED ground pads with room for only one
+  (`pcb/keygen.kicad_dru`). [`pcb-routing.png`](https://github.com/milindmadhukar/keygen/releases/download/media/pcb-routing.png) shows both copper layers.
 - **Datasheet audit:** `tools/check_datasheets.py` checks the routed
   board against each part's datasheet: pinouts, orientations, nRF52840 pin restrictions, the battery
   path, antenna clearance and the current budget. The datasheets are in

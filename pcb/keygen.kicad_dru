@@ -1,0 +1,7 @@
+(version 1)
+
+# The ground fill reaches every pad through thermal spokes (tools/route_pcb.py). A few reverse-mount
+# LED ground pads sit so close to their cut-out and neighbouring tracks that only one spoke fits.
+(rule "LED ground pads: one spoke"
+  (condition "A.memberOfFootprint('LED*') || B.memberOfFootprint('LED*')")
+  (constraint min_resolved_spokes 1))
