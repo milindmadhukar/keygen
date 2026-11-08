@@ -9,10 +9,10 @@ script draws those pieces on the free board between each controller and its thum
   top, left half       the window, upright beside the controller: title bar, KEY over GEN, moon,
                        stars, serial, a stacked frame
   top, right half      crescent moon, STMPD emblem and stars beside the encoder
-  bottom, both halves  [emblem] GENERATE [emblem] under the reset button (double-tap: bootloader)
-  bottom, left half    the logo and the repo link, in a column under GENERATE
+  bottom, both halves  the STMPD emblem over a GENERATE button and the flashing hint, under the
+                       reset button (double-tap: bootloader), beside the encoder opening
+  bottom, left half    the logo and the repo link along the bottom edge
   bottom, right half   the maker's line along the bottom edge
-  bottom, right half   a small keygen.exe window with the flashing hint
   everywhere else      stars, on both faces, wherever the board is free
 
 It also writes a board stackup with black mask, white silkscreen and HASL, which is what
@@ -269,10 +269,12 @@ def button(label, h=1.3, pad=(1.6, 1.1), line=0.25):
     w, hh = tw + 2 * pad[0], h + 2 * pad[1]
     return union([rect(-w / 2, -hh / 2, w / 2, hh / 2, line), text(label, 0, 0, h, w=0.22, gap=2.0)]), w
 
-def generate_row(h=5.6):
-    b, w = button("GENERATE", h=1.1)
-    c = w / 2 + 0.7 + h * 573 / 658 / 2
-    return union([b, place(stmpd(h, 0.15), -c, 0), place(stmpd(h, 0.15), c, 0)])
+def generate_stack():
+    """The STMPD emblem over a GENERATE button over the flashing hint, 10.3 mm wide and 11.9 mm
+    tall, centred on the button: narrow enough for the strip between an encoder opening and the edge."""
+    b, _ = button("GENERATE", h=1.0, pad=(1.0, 0.9))
+    return union([place(stmpd(5.0, 0.15), 0, -4.7), b,
+                  text("PRESS TWICE", 0, 2.7, 0.8, w=0.15), text("TO FLASH", 0, 4.3, 0.8, w=0.15)])
 
 def sparkle(R):
     pts = []
@@ -416,8 +418,8 @@ def artwork(b):
 
     # top, right half: moon, STMPD emblem, stars
     m = place(moon(5.4, [(-0.6, 0.1, 0.12), (-0.38, -0.5, 0.08), (-0.5, 0.52, 0.1), (-0.78, -0.25, 0.05)]), 243.3, 106.0)
-    c = place(stmpd(11.0, 0.2), 242.4, 133.4)
-    lbl = text("STMPD RCRDS", 242.4, 141.9, 1.0, w=0.18, gap=2.0)
+    c = place(stmpd(10.0, 0.2), 241.2, 134.0)          # between the mounting hole H202, the edge and
+    lbl = text("STMPD RCRDS", 241.2, 141.9, 1.0, w=0.18, gap=2.0)   # the encoder opening
     tr = union([m, c, lbl])
     sky_r = union([poly([(228.0, 86.0), (256.0, 86.0), (256.0, 124.0), (228.0, 124.0)]),
                    poly([(226.0, 124.0), (255.0, 124.0), (255.0, 146.0), (226.0, 146.0)]),
@@ -428,27 +430,20 @@ def artwork(b):
     # Each piece below sits where nothing clips it: clear of the board edge, the pads and holes (the
     # encoder's pins and mounting slots among them) and the footprints' own silkscreen.
 
-    # bottom, both halves: GENERATE under the reset button; on the left half it heads a column with
-    # the logo and the link below it, all on one centre line
-    art["B"].append(place(generate_row(), 176.0, 130.5, mirror=True))
-    art["B"].append(place(generate_row(), 246.9, 130.7, mirror=True))
+    # bottom, both halves: under the reset button, in the strip between the encoder opening, the
+    # mounting hole above it and the board edge
+    art["B"].append(place(generate_stack(), 182.1, 137.7, mirror=True))
+    art["B"].append(place(generate_stack(), 241.55, 137.7, mirror=True))
 
-    # bottom, left half: the logo and the link
+    # bottom, left half: the logo and the link, along the bottom edge below the third and fourth
+    # columns, level with the maker's line on the right half
     lg_line_s, _ = logo(3.8, 0.684, 0.18)
-    art["B"].append(place(lg_line_s, 176.0, 138.5, mirror=True))
-    link = union([text("GITHUB.COM/MILINDMADHUKAR/KEYGEN", 0, -1.035, 0.9, w=0.16),
-                  text("REV 0.1", 0, 1.035, 0.9, w=0.16)])
-    art["B"].append(place(link, 176.0, 145.0, mirror=True))
+    art["B"].append(place(lg_line_s, 106.5, 172.6, mirror=True))
+    art["B"].append(place(text("GITHUB.COM/MILINDMADHUKAR/KEYGEN", 0, 0, 0.8, w=0.15), 106.5, 176.0, mirror=True))
 
     # bottom, right half: the maker's line along the bottom edge
     maker = union([text("KEYGEN REV 0.1", 0, -1.68, 1.4, w=0.22), text("DESIGNED BY MILIND MADHUKAR", 0, 1.68, 1.4, w=0.22)])
     art["B"].append(place(maker, 328.25, 174.0, mirror=True))
-
-    # bottom, right half: keygen.exe window with the flashing hint
-    w2, _ = window(22.0, 13.0, "KEYGEN.EXE", stacked=1)
-    hint = union([w2, text("PRESS GENERATE TWICE", 0, 0.9, 1.0, w=0.18),
-                  text("TO FLASH FIRMWARE", 0, 3.3, 1.0, w=0.18)])
-    art["B"].append(place(hint, 249.8, 143.3, mirror=True))
     return art
 
 
