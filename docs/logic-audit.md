@@ -9,7 +9,7 @@ powered prototype.
 
 | Area | Result |
 |---|---|
-| Net connectivity | ERC clean; 119 components and 93 nets per half match the design tables. PCB DRC reports 0 violations, 0 unconnected items and 0 schematic-parity errors. |
+| Net connectivity | ERC clean; 158 components and 97 nets per half match the design tables. PCB DRC reports 0 violations, 0 unconnected items and 0 schematic-parity errors. |
 | Key matrix | 33 keys and one encoder press per half, 5 rows × 7 columns. Each switch connects to a column and a diode anode; every diode cathode reaches its intended row. The `col2row` firmware direction matches. |
 | Controller and accessories | The 24 SuperMini header pads, underside orientation, reset, OLED GND/VCC/SCL/SDA, encoder A/B/common, and NFC-as-GPIO firmware setting match. OLED VCC is the controller's switched 3.3 V output; the firmware holds P0.13 high. The exact purchased OLED module's supply current and pin marking still need checking. |
 | Battery switch and LED boost | The slide switch carries gate current only; Q101/Q201 carries the battery path. U102/U202 (TPS61023) boost B+ to 0.595 V × (1 + 732k/100k) = 4.95 V (4.83–5.08 V over the reference tolerance), inside the SK6812MINI-E's 3.7–5.5 V for any cell voltage. P0.08 drives the boost's enable directly (≥ 2.9 V against a 1.2 V threshold) and the 100 kΩ R103/R203 holds it off before firmware takes over; shut down, the converter disconnects its output (0.1 µA). The inductor, output and input capacitors sit within 7 mm of the IC, laid out as the datasheet's example. The JST-PH connector is rated 2 A with AWG 24 wire, above the estimated capped LED load; the actual pack wiring and protection board rating are not specified. |
