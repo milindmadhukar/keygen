@@ -28,11 +28,6 @@ powered prototype.
 6. **LED decoupling is weaker than the manufacturer's example.** Page 9 of the [SK6812MINI-E datasheet](datasheets/README.md) shows a capacitor at every pixel and recommends protection resistance on the data path. This board has one 10 µF and one 100 nF capacitor per half near the rail switch, and no series resistor at the first DIN. DRC cannot prove a 33-pixel chain will tolerate simultaneous colour changes or ESD. If revising the board before fabrication, add local decoupling footprints and an input protection resistor; otherwise test full-white steps and the farthest LED rail with an oscilloscope.
 7. **RF and assembly checks remain.** Ground pour is kept out from under each controller's assumed antenna tip, but 60 left and 39 right trace segments cross that region. Test wireless range. Check the purchased battery connector polarity and OLED header order before applying power. With the battery switch off and USB present, the charger can conduct through Q101/Q201's body diode, so leave the switch on when charging and verify charge termination on the actual controller.
 
-The LEDs are **per-key RGB backlights; there is no underglow LED around or beneath the case**.
-ZMK's `RGB_UNDERGLOW` option, `zmk,underglow` chosen node and `&rgb_ug` bindings are the correct
-stock interface for an addressable RGB strip even when it is used as key backlighting. ZMK's
-`BACKLIGHT` feature is for parallel, single-colour LEDs ([ZMK lighting](https://zmk.dev/docs/features/lighting)).
-
 ## Bring-up acceptance measurements
 
 - With a protected, correctly polarised cell and USB disconnected, check VBAT, VCC and LED_VDD at boot, after idle, and in sleep. LED_VDD must be near zero whenever lighting is off.

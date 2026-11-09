@@ -106,7 +106,7 @@ The per-key LEDs also show status:
 Per-key indicators need the community module [zmk-rgb-matrix](https://github.com/dima-m711/zmk-rgb-matrix). Stock ZMK drives all the LEDs as one strip.
 
 > [!warning] Per-key status comes later (2026-10-20)
-> The first firmware drives the 33 per-key RGB backlights per half as one ZMK lighting strip. ZMK's addressable RGB driver is named `RGB_UNDERGLOW` even for per-key lights. Its power-off behavior needs the battery-only measurement in [`docs/logic-audit.md`](../docs/logic-audit.md): 33 dark but powered SK6812s draw about 33 mA per half. The per-key module is [gudzpoz/zmk-rgb-matrix](https://github.com/gudzpoz/zmk-rgb-matrix) (the `dima-m711` repo is a fork); per-key indicators remain future firmware work.
+> The first firmware drives the 33 per-key RGB backlights per half as one ZMK lighting strip. Its power-off behavior needs the battery-only measurement in [`docs/logic-audit.md`](../docs/logic-audit.md): 33 dark but powered SK6812s draw about 33 mA per half. The per-key module is [gudzpoz/zmk-rgb-matrix](https://github.com/gudzpoz/zmk-rgb-matrix) (the `dima-m711` repo is a fork); per-key indicators remain future firmware work.
 
 ## Electronics
 

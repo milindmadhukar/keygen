@@ -20,7 +20,7 @@ enum kg_profile { KG_PROFILE_OPEN, KG_PROFILE_PAIRED };
 enum kg_field { KG_FIELD_POWER, KG_FIELD_EFFECT, KG_FIELD_HUE, KG_FIELD_SAT, KG_FIELD_BRIGHT,
                 KG_FIELD_SPEED, KG_FIELD_COUNT };
 
-/* ZMK's underglow: effect is SOLID, BREATHE, SPECTRUM or SWIRL, hue 0-359, sat 0-100, brt
+/* ZMK's RGB lighting: effect is SOLID, BREATHE, SPECTRUM or SWIRL, hue 0-359, sat 0-100, brt
  * 0-brt_max. The speed can't be read back, so only the direction of its last change is kept. */
 struct kg_light {
     bool on;

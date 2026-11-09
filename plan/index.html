@@ -152,7 +152,7 @@ flowchart LR
       <tr><td>Controller</td><td>Pro Micro (ATmega32U4)</td><td>nRF52840 SuperMini (nice!nano v2 clone) mounted on the underside under the old inner column, USB-C facing the top edge, plus pads for its 3 extra inner pins</td></tr>
       <tr><td>Switches</td><td>MX/Alps, solder-in</td><td>Kailh MX hotswap sockets</td></tr>
       <tr><td>Diodes</td><td>1N4148, through-hole, dual-sided</td><td>1N4148 through-hole (DO-35) kept</td></tr>
-      <tr><td>RGB</td><td>optional 14 WS2812B underglow via wires</td><td>SK6812MINI-E under every key, on one chain. No underglow: the battery sits under the PCB and would hide it.</td></tr>
+      <tr><td>RGB</td><td>none</td><td>SK6812MINI-E under every key, on one chain</td></tr>
       <tr><td>Link</td><td>TRRS serial</td><td>Bluetooth split; no cable between the halves</td></tr>
       <tr><td>Power</td><td>USB only</td><td>LiPo per half, power slide switch, LED power cut-off</td></tr>
       <tr><td>New</td><td>none</td><td>An EC11 knob and a 0.96 in. SSD1306 OLED on each half's inner edge.</td></tr>
@@ -204,13 +204,13 @@ flowchart LR
         <li>An encoder on each half; peripheral encoders are supported since Oct 2023</li>
         <li>ZMK's status screen on each half's OLED: output, Bluetooth profile, layer and battery</li>
         <li>ZMK Studio for live remapping, which the Dactyl CC builder calls a must-have</li>
-        <li>RGB lighting (ZMK's <code>rgb_underglow</code> driver runs the per-key chain as one strip), with external power cut-off and auto-off when idle</li>
+        <li>Per-key RGB lighting (ZMK's RGB driver runs the chain as one strip), with external power cut-off and auto-off when idle</li>
       </ul>
     </div>
     <div>
       <h3>Needs community modules or care</h3>
       <ul>
-        <li><strong>Per-key RGB effects:</strong> official ZMK treats all LEDs as one underglow strip. For per-key or reactive effects use <a href="https://github.com/dima-m711/zmk-rgb-matrix" target="_blank" rel="noopener">zmk-rgb-matrix</a> or <a href="https://github.com/jagonmo/zmk-pro-rgb" target="_blank" rel="noopener">zmk-pro-rgb</a>.</li>
+        <li><strong>Per-key RGB effects:</strong> official ZMK treats all LEDs as one strip. For per-key or reactive effects use <a href="https://github.com/dima-m711/zmk-rgb-matrix" target="_blank" rel="noopener">zmk-rgb-matrix</a> or <a href="https://github.com/jagonmo/zmk-pro-rgb" target="_blank" rel="noopener">zmk-pro-rgb</a>.</li>
         <li><strong>Per-key indicators:</strong> lighting specific keys for status (layer colour, which Bluetooth profile is active, battery level while Fn is held) uses the indicator overlays in <a href="https://github.com/dima-m711/zmk-rgb-matrix" target="_blank" rel="noopener">zmk-rgb-matrix</a>.</li>
         <li><strong>Battery and RGB:</strong> per-key RGB drains a battery in hours, not weeks. Plan to light it only when USB is plugged in.</li>
         <li><strong>Encoders on both halves:</strong> define both in the shared <code>.dtsi</code>, disabled, and enable each in its half's overlay; the keymap's sensor bindings list them left then right.</li>
