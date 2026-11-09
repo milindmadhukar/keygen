@@ -98,7 +98,7 @@
     };
 };
 
-/* ext-power drives only the LED power switch on P0.08, so the LEDs can go off on battery */
+/* ext-power drives only the LED boost's enable on P0.08: off, the LED supply is at 0 V */
 &{/EXT_POWER} {
     control-gpios = <&gpio0 8 GPIO_ACTIVE_HIGH>;
 };

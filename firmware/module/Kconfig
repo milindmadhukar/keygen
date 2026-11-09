@@ -1,0 +1,29 @@
+config KEYGEN_BATTERY_LIGHTING
+    bool "Per-key lighting on battery: opt-in, dimmer, and off on a low cell"
+    default y
+    depends on ZMK_RGB_UNDERGLOW
+    help
+      On USB the lighting behaves as ZMK's own. On battery it stays off unless lighting on
+      battery is allowed (&kg_bl, saved across restarts); when allowed it is capped at
+      KEYGEN_BATTERY_LIGHTING_BRT percent of the brightness scale, halved below
+      KEYGEN_BATTERY_LIGHTING_DIM_BELOW percent charge and off below
+      KEYGEN_BATTERY_LIGHTING_OFF_BELOW. Whenever the lighting is off, the LED supply is off too.
+
+if KEYGEN_BATTERY_LIGHTING
+
+config KEYGEN_BATTERY_LIGHTING_BRT
+    int "Brightness ceiling on battery, percent of the brightness scale"
+    range 1 100
+    default 50
+
+config KEYGEN_BATTERY_LIGHTING_DIM_BELOW
+    int "Halve the lighting below this charge, percent"
+    range 0 100
+    default 20
+
+config KEYGEN_BATTERY_LIGHTING_OFF_BELOW
+    int "Turn the lighting off below this charge, percent"
+    range 0 100
+    default 10
+
+endif

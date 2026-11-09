@@ -19,10 +19,13 @@ firmware/
     ├── keygen-layouts.dtsi         matrix transform and physical layout, from tools/gen_zmk_layout.py
     ├── keygen_left.overlay         left encoder
     ├── keygen_right.overlay        column offset, right encoder
-    ├── boards/nice_nano_nrf52840_zmk.overlay   LED chain on P0.06 and its power switch on P0.08,
+    ├── boards/nice_nano_nrf52840_zmk.overlay   LED chain on P0.06 and its boost's enable on P0.08,
     │                                           OLED on I2C (P0.17/P0.20), P0.13 held on for its power
     └── Kconfig.*, keygen.zmk.yml
-module/
+module/                             a ZMK module, loaded through ../zephyr/module.yml
+├── CMakeLists.txt, Kconfig         KEYGEN_BATTERY_LIGHTING and its limits
+├── dts/bindings/behaviors/         keygen,behavior-battery-lighting (&kg_bl)
+├── src/power/battery_lighting.c    the lighting on battery, built into both halves
 ├── src/ui/                         the OLED screens: plain C on a 128 × 64, 1-bit framebuffer
 │   ├── kg_ui.c, kg_ui.h            status screens and the lighting menu, from one kg_state
 │   ├── kg_boot.c                   the boot animation
@@ -98,6 +101,7 @@ python3 tools/render_keymap.py   # assets/keymap-*.svg, with keymap-drawer throu
 | `=` | Forget the current Bluetooth profile's pairing |
 | `Q` `W` `E` | Output to USB, to Bluetooth, toggle |
 | `A` `S` `D` `F` `G` | LEDs on/off, effect, hue, brighter, dimmer |
+| `Z` | Lighting on battery: allow or forbid (saved, forbidden at first) |
 | `Esc` | Unlock ZMK Studio |
 | `T` / `Y` | Reset the left / right half |
 | `B` / `N` | Bootloader on the left / right half |
@@ -156,7 +160,7 @@ and speed. On battery power it notes that the LEDs light only on USB power.
 | Encoders | EC11 on each half, A on P0.10, B on P0.09 (NFC pins as GPIO); each press at row 0 / column 6 |
 | OLED | 0.96 in. 128 × 64 SSD1306 per half on I2C (SDA P0.17, SCL P0.20, address 0x3C), mounted upside down so the image is turned 180°. ZMK's status screen: output, Bluetooth profile, layer and battery on the left; the right half's battery and link on the right. Blanks when idle. Powered from the nice!nano's 3.3 V output, which P0.13 keeps on |
 | Mouse | Scroll only, for the left knob (ZMK pointing) |
-| LEDs | 33 SK6812MINI-E per half on P0.06. ZMK's addressable RGB driver (`CONFIG_ZMK_RGB_UNDERGLOW`, `&rgb_ug`) runs them as one strip. The output is capped at 40 % (fresh-build initial PWM is about 16 % because ZMK scales its 40 % start value by that cap), and P0.08 controls the LED supply MOSFET. The pinned ZMK code enables ext-power at startup and its shared USB/idle state can restore lights on battery after a wake. This needs correction and a rail-current check during bring-up ([logic audit](../docs/logic-audit.md)) |
+| LEDs | 33 SK6812MINI-E per half on P0.06. ZMK's addressable RGB driver (`CONFIG_ZMK_RGB_UNDERGLOW`, `&rgb_ug`) runs them as one strip. The output is capped at 40 % (fresh-build initial PWM is about 16 % because ZMK scales its 40 % start value by that cap), and P0.08 (ext-power) enables the 5 V LED boost. The Keygen module ([`battery_lighting.c`](module/src/power/battery_lighting.c)) sets the lighting on battery: off unless SYS + `Z` allows it; when allowed, capped at half the brightness scale (20 % PWM), halved below 20 % charge and off below 10 %. On USB the lighting is ZMK's own. Whenever the lighting is off, the module turns the boost off too. Check the rail voltage and current during bring-up ([logic audit](../docs/logic-audit.md)) |
 | Host | USB-C on the left half or Bluetooth, 5 profiles; USB is used while plugged in |
 | Split | Bluetooth, left half central |
 | Battery | Both halves report their level to the host. On USB the level reads full: ZMK measures the controller's supply (VDDH), which then runs from USB |
@@ -175,7 +179,9 @@ To build locally with Docker:
 firmware/build.sh          # UF2s in firmware/out/
 ```
 
-The first run downloads ZMK and Zephyr (several GB) into `~/.cache/keygen-zmk`.
+The first run downloads ZMK and Zephyr (several GB) into `~/.cache/keygen-zmk`. Both builds load
+the Keygen module from the repository root's [`zephyr/module.yml`](../zephyr/module.yml): CI through
+ZMK's workflow, `build.sh` through `-DZMK_EXTRA_MODULES`.
 
 ## Flashing
 

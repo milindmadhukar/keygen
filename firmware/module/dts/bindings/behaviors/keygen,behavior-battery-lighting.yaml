@@ -1,0 +1,5 @@
+description: Allows or forbids the per-key lighting on battery (Keygen); the choice is saved.
+
+compatible: "keygen,behavior-battery-lighting"
+
+include: zero_param.yaml

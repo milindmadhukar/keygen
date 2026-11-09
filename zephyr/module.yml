@@ -1,0 +1,8 @@
+# Keygen's ZMK module: the code in firmware/module (lighting on battery). ZMK's build-user-config
+# workflow loads a module from the repository root; firmware/build.sh passes it the same way.
+name: keygen
+build:
+  cmake: firmware/module
+  kconfig: firmware/module/Kconfig
+  settings:
+    dts_root: firmware/module

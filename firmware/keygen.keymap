@@ -43,6 +43,12 @@
             bindings = <&msc SCRL_DOWN>, <&msc SCRL_UP>;
             tap-ms = <30>;
         };
+
+        /* lighting on battery: allowed or off, saved (module/src/power/battery_lighting.c) */
+        kg_bl: kg_bl {
+            compatible = "keygen,behavior-battery-lighting";
+            #binding-cells = <0>;
+        };
     };
 
     conditional_layers {
@@ -114,13 +120,14 @@
         sys_layer {
             display-name = "System";
 // = clears the current Bluetooth profile, 1-5 select it. Q W E = USB / BLE / toggle output.
-// A S D F G = RGB on-off / effect / hue / brighter / dimmer. Esc = ZMK Studio unlock.
+// A S D F G = RGB on-off / effect / hue / brighter / dimmer. Z = lighting on battery, allowed or off.
+// Esc = ZMK Studio unlock.
 // T / Y reset, B / N bootloader, each on its own half.
             bindings = <
     &bt BT_CLR &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4    &trans &trans    &trans &trans &trans &trans &trans &trans
     &trans &out OUT_USB &out OUT_BLE &out OUT_TOG &trans &sys_reset                         &sys_reset &trans &trans &trans &trans &trans
     &studio_unlock &rgb_ug RGB_TOG &rgb_ug RGB_EFF &rgb_ug RGB_HUI &rgb_ug RGB_BRI &rgb_ug RGB_BRD    &trans &trans &trans &trans &trans &trans
-    &trans &trans &trans &trans &trans &bootloader                                          &bootloader &trans &trans &trans &trans &trans
+    &trans &kg_bl &trans &trans &trans &bootloader                                          &bootloader &trans &trans &trans &trans &trans
     &trans &trans &trans &trans                                                                         &trans &trans &trans &trans
                          &trans &trans                                                      &trans &trans
                   &trans &trans &trans                                                      &trans &trans &trans

@@ -290,8 +290,9 @@ path.combo { stroke: #7f7f7f; }
 <g transform="translate(35, 217)" class="key trans keypos-38">
 <rect rx="6" ry="6" x="-33" y="-26" width="66" height="52" class="key trans"/>
 </g>
-<g transform="translate(98, 217)" class="key trans keypos-39">
-<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key trans"/>
+<g transform="translate(98, 217)" class="key keypos-39">
+<rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key"/>
+<text x="0" y="0" class="key tap">&amp;kg_bl</text>
 </g>
 <g transform="translate(154, 203)" class="key trans keypos-40">
 <rect rx="6" ry="6" x="-26" y="-26" width="52" height="52" class="key trans"/>

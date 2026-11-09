@@ -10,6 +10,11 @@ mkdir -p "$ws" "$here/out"
 rm -rf "$ws/firmware"
 mkdir "$ws/firmware"
 tar -C "$here" --exclude=./out -cf - . | tar -C "$ws/firmware" -xf -
+# the Keygen ZMK module, laid out as in the repository (zephyr/module.yml at its root), as CI loads it
+rm -rf "$ws/keygen-module"
+mkdir -p "$ws/keygen-module/firmware"
+cp -r "$here/../zephyr" "$ws/keygen-module/"
+cp -r "$here/module" "$ws/keygen-module/firmware/"
 
 docker run --rm -i -u "$(id -u):$(id -g)" -e HOME=/tmp \
     -v "$ws:/work" -v "$here/out:/out" -w /work "$image" python3 - <<'PY'
@@ -28,7 +33,8 @@ for t in yaml.safe_load(open("firmware/build.yaml"))["include"]:
     name = t["shield"]
     cmd = ["west", "build", "-p", "auto", "-s", "zmk/app", "-d", f"build/{name}", "-b", t["board"]]
     if "snippet" in t: cmd += ["-S", t["snippet"]]
-    cmd += ["--", "-DZMK_CONFIG=/work/firmware", f"-DSHIELD={name}", *t.get("cmake-args", "").split()]
+    cmd += ["--", "-DZMK_CONFIG=/work/firmware", "-DZMK_EXTRA_MODULES=/work/keygen-module", f"-DSHIELD={name}",
+            *t.get("cmake-args", "").split()]
     print(f"\n=== {name}", flush=True)
     if subprocess.run(cmd).returncode:
         failed.append(name); continue
