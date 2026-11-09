@@ -21,11 +21,16 @@ Counts are for the whole keyboard (two halves). Stores, links, prices and spares
 | SK6812MINI-E LED | 66 | Reverse-mount, one per key. The fiddliest part: buy spares |
 | 1N4148 diode, DO-35 | 68 | 34 per half: one per key and one for each encoder's push switch |
 | Kailh hotswap socket (CPG151101S11) | 66 | |
-| AO3401A P-MOSFET, SOT-23 | 4 | The battery switch and the LED power switch |
-| AO3400A N-MOSFET, SOT-23 | 2 | The LED power switch |
+| AO3401A P-MOSFET, SOT-23 | 2 | The battery switch |
 | 1 MΩ resistor, 1206 | 2 | |
-| 100 kΩ resistor, 1206 | 4 | |
-| 10 µF and 100 nF capacitors, 1206 | 2 + 2 | |
+| TPS61023 boost converter, SOT-563 | 2 | The LED boost. 0.5 mm pitch |
+| 1 µH inductor, 1210 (TDK TMS322512ALM-1R0MTAA) | 2 | For the boost |
+| 22 µF capacitor, 16 V X7R, 1206 | 4 | The boost's output |
+| 10 µF capacitor, 1206 | 4 | The boost's input and the last LED |
+| 732 kΩ and 100 kΩ resistors, 1 %, 1206 | 2 + 4 | The boost's feedback divider and enable pull-down |
+| SN74LV1T125 buffer, SOT-23-5 | 2 | The LED data buffer |
+| 330 Ω resistor, 0805 | 2 | Beside the first LED |
+| 100 nF capacitor, 0805 | 18 | At the buffer and beside every fourth LED; the other 50 footprints are optional |
 | SK12D07VG5 right-angle slide switch | 2 | The power switch |
 | 6 × 6 × 5 mm tact switch | 2 | The reset button |
 | JST-PH side-entry connector (S2B-PH-K-S) | 2 | For the battery |
@@ -280,7 +285,7 @@ forcing it.
 
 - Tell the front from the back and the left half from the right ([Words used here](#words-used-here)).
 - Check that the 33 LED cut-outs are milled cleanly and nothing is bridged.
-- With the multimeter, check there is no short between B+, the LED rail and GND.
+- With the multimeter, check there is no short between B+, the LED rail, the boost's SW node and GND.
 
 > [!WARNING]
 > Keep the battery unplugged whenever you solder. Clean off flux with isopropyl alcohol as you go.
@@ -305,16 +310,34 @@ The power switch beside them is through-hole: it goes on with the battery connec
 
 ---
 
-## LED power switch
+## LED boost and data buffer
 
-- AO3401A P-MOSFET **Q102 / Q202** and AO3400A N-MOSFET **Q103 / Q203**, between the battery
-  connector and the board edge.
-- 100 kΩ resistors **R102, R103 / R202, R203**, below each MOSFET.
-- 10 µF capacitor **C101 / C201** and 100 nF capacitor **C102 / C202**, beside the switch.
+The LED boost, on the back between the battery connector and the board edge (on the right half the
+group is turned half a turn and sits higher):
+
+- TPS61023 boost **U102 / U202**. Its pins are 0.5 mm apart: flux the pads, tin one corner pad,
+  place the part with pin 1 on the footprint's mark, then drag the other pins with a fine tip, or
+  reflow it with hot air. Check for bridges under a loupe.
+- 1 µH inductor **L101 / L201**, beside it.
+- 22 µF capacitors **C101, C104 / C201, C204** and 10 µF capacitor **C103 / C203**.
+- 732 kΩ resistor **R102 / R202** and 100 kΩ resistor **R104 / R204**, the feedback divider beside
+  it, and 100 kΩ resistor **R103 / R203** below it (above it on the right half).
+
+The data buffer and the LED capacitors:
+
+- SN74LV1T125 buffer **U103 / U203**, its 100 nF capacitor **C102 / C202** and the 330 Ω resistor
+  **R105 / R205**, beside the first LED (LED101 / LED201).
+- 10 µF capacitor **C105 / C205**, beside the last LED.
+- 100 nF capacitors beside LEDs 4, 8, … 32: **C114, C118, … C142 / C214, C218, … C242**. The
+  footprints beside the other LEDs are optional.
+
+![LED boost close-up](https://github.com/milindmadhukar/keygen/releases/download/media/assembly-part-boost.png)
+
+![LED data buffer close-up](https://github.com/milindmadhukar/keygen/releases/download/media/assembly-part-buffer.png)
 
 > [!WARNING]
-> The two MOSFET types look alike, and ceramic capacitors carry no marking. Keep each in its labelled
-> bag and take it out only as you place it.
+> Ceramic capacitors carry no marking. Keep each value in its labelled bag and take it out only as
+> you place it.
 
 ---
 
@@ -342,7 +365,8 @@ The controller (**U101 / U201**) plugs into sockets on the back, so it can be sw
 upside down compared with most keyboards: chip and USB-C away from the PCB.
 
 1. Before soldering, check the SuperMini with the multimeter: **B+** (pad 13), **GND** and **VCC**
-   (pad 16).
+   (pad 16). Then bridge its **BOOST** link, the two pads of the unfitted 0 Ω link on its back, with a
+   solder blob or a 0 Ω resistor: the charger then charges at about 300 mA.
 2. Cut two 12-pin lengths of the female socket strip and two of the round male pins. Push the socket
    strips into the footprint from the back, push the male pins into the sockets, and lay the
    controller on the pins.
@@ -369,7 +393,8 @@ Keep the pins' plastic carrier on: it stays between the socket and the controlle
 4. Plug the battery in and check that the slide switch turns the half on and off. Leave the switch
    on while charging.
 5. **Charge current.** With the multimeter in series with the battery and USB plugged in, confirm
-   about 100 mA. An empty cell takes roughly a day.
+   about 300 mA. An empty cell takes about ten hours. With no battery fitted, the keys, OLED and
+   Bluetooth run from USB, but the lighting has no supply.
 6. **Lead length.** Measure the battery lead from the pouch to the end of the plug. It runs about
    50 mm in the case, from the bay to **BT101 / BT201**; with less than about 80 mm, plug it in
    before taping the cell down (see [Battery](#battery)).
@@ -391,8 +416,10 @@ the lit side down through the cut-out so it shines out of the front.
 - Iron at 320 °C, plenty of flux, 2–3 seconds per pad. Tin one pad, place the LED in its cut-out,
   reheat the tinned pad, then solder the other three. Kapton tape keeps the neighbouring pads clean.
 - Solder them in number order, six or so at a time, then plug in USB and check they light before
-  going on. Use SYS + `A` to toggle the lighting. Measure the LED rail and battery current with USB
-  disconnected: the pinned ZMK ext-power driver starts enabled, so a dark strip may still draw power.
+  going on. Use SYS + `A` to toggle the lighting. The LED rail reads about 4.95 V with the lighting
+  on and near 0 V with it off. On battery the lighting stays off until SYS + `Z` allows it. Measure
+  the LED rail and battery current with USB disconnected, since a dark strip may still draw power if
+  the boost is on.
 
 > [!NOTE]
 > Data passes from LED to LED in number order, LED101 first, so one bad joint darkens every LED
@@ -736,7 +763,7 @@ halves do not pair, flash `settings_reset-nice_nano.uf2` to both, then the norma
 | Half does not run on battery | Red wire on the **+** pad. Battery above 3.0 V. Slide switch on. Q101 / Q201 and R101 / R201 soldered |
 | One key does not work | Switch fully seated, pins straight. Diode present and the right way round. Socket joints. Continuity from the socket to the controller pin |
 | Several keys register at once | A diode missing or reversed, or a short between a row and a column |
-| LEDs dark from one point on | The first dark LED or the one before it: a bad joint, or turned the wrong way. Data from P0.06 reaching the first LED. The LED rail at battery voltage while the LEDs are on; if not, the LED power switch (Q102/Q103, R102/R103) and P0.08. SYS + `A` toggles the strip; check its rail voltage, not its visible state alone |
+| LEDs dark from one point on | The first dark LED or the one before it: a bad joint, or turned the wrong way. Data from P0.06 through the buffer (U103 / U203) and R105 / R205 reaching the first LED. The LED rail at about 4.95 V while the LEDs are on; if not, the boost (U102 / U202, its inductor, capacitors and divider), its enable (P0.08, R103 / R203) and B+. SYS + `A` toggles the strip, and on battery SYS + `Z` must allow it; check the rail voltage, not its visible state alone |
 | OLED blank | Module pin order against the footprint (GND, VCC, SCL, SDA). 3.3 V on VCC, switched on through P0.13. SDA on P0.17, SCL on P0.20, address 0x3C. The screen blanks when idle: press a key |
 | Halves do not connect | Both halves on and charged. Flash `settings_reset` to both, then the normal firmware |
 

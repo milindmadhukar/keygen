@@ -29,9 +29,15 @@ From `fab/BOM.md` (left 1xx, right 2xx):
 |---|---|---|---|
 | AO3401A P-MOSFET (SOT-23), Q101/Q201 | 1 | back | between the controller and the power switch |
 | 1 MΩ resistor (1206), R101/R201 | 1 | back | below the MOSFET |
-| AO3401A P-MOSFET + AO3400A N-MOSFET (SOT-23), Q1x2/Q1x3 | 1 + 1 | back | LED power switch, between the battery connector and the board edge |
-| 100 kΩ resistors (1206), R1x2/R1x3 | 2 | back | LED power switch, below each MOSFET |
-| 10 µF + 100 nF capacitors (1206), C1x1/C1x2 | 1 + 1 | back | beside the LED power switch |
+| TPS61023 boost (SOT-563), U102/U202 | 1 | back | LED boost, between the battery connector and the board edge; 0.5 mm pitch |
+| 1 µH inductor (1210), L101/L201 | 1 | back | beside the boost |
+| 22 µF capacitors (1206), C1x1/C1x4 | 2 | back | boost output |
+| 10 µF capacitors (1206), C1x3/C1x5 | 2 | back | boost input; beside the last LED |
+| 732 kΩ + 100 kΩ resistors, 1 % (1206), R1x2/R1x4 | 1 + 1 | back | boost feedback, beside the boost |
+| 100 kΩ resistor, 1 % (1206), R103/R203 | 1 | back | boost enable pull-down, below the boost |
+| SN74LV1T125 buffer (SOT-23-5) + 100 nF (0805), U1x3/C1x2 | 1 + 1 | back | LED data buffer, beside the first LED |
+| 330 Ω resistor (0805), R105/R205 | 1 | back | beside the first LED's DIN |
+| 100 nF capacitors (0805), every fourth of C111–C143 / C211–C243 | 8 | back | beside LEDs 4, 8, … 32; the other footprints are optional |
 | SK12D07VG5 power slide switch (through-hole), SW190/SW290 | 1 | back | top edge, knob out; solder and trim on the front |
 | JST-PH 2-pin side-entry, BT101/BT201 | 1 | back | battery connector; + marked on the silkscreen |
 | 6 mm reset button, SW191/SW291 | 1 | back | labelled GENERATE |
@@ -47,16 +53,18 @@ From `fab/BOM.md` (left 1xx, right 2xx):
 
 ### 1. Inspect the board
 - Check the LED cut-outs are milled cleanly and nothing is bridged.
-- Continuity: no short between B+, the LED rail and GND.
+- Continuity: no short between B+, the LED rail, the boost's SW node and GND.
 
 ### 2. Power parts
 - AO3401A and its 1 MΩ gate resistor. The SK12D07VG5 slide switch at the top edge goes on with the through-hole parts.
-- The 10 µF and 100 nF LED-rail capacitors next to the first LED.
+- The LED boost first: the TPS61023 (0.5 mm pitch: flux, then a fine tip or hot air; pin 1 to the footprint's mark), its inductor, capacitors and resistors.
+- The SN74LV1T125 buffer, its 100 nF and the 330 Ω beside the first LED, the 10 µF beside the last LED and the 100 nF beside every fourth LED.
 - JST-PH connector and the reset button.
 - These are the small SMD parts; doing them first keeps the board flat on the mat.
 
 ### 3. Controller
 - Before soldering, check the SuperMini with a multimeter: B+ (pad 13), GND and VCC (pad 16).
+- Bridge the BOOST link on the SuperMini's back (a solder blob or a 0 Ω resistor across its two pads) for about 300 mA charging.
 - Solder the low-profile machined socket strips to the PCB, and the matching round pins to the controller.
 - Seat the controller with its **chip and USB-C facing away from the PCB**. The footprint assumes this. Seated the other way, the pinout is mirrored and battery + lands on a GPIO ([[15 - datasheet audit]]).
 - Check the USB-C end lines up with the board's top edge.
@@ -66,7 +74,8 @@ From `fab/BOM.md` (left 1xx, right 2xx):
 - **Battery polarity:** JST-PH packs come wired both ways round. With a multimeter, confirm the red wire lands on the PCB's **+** pad before plugging in. Swap the crimps if it doesn't.
 - **Protection board:** check the cell has one; the controller has no over-discharge cut-off. Add a DW01A module to a cell without one.
 - Plug the battery in, then check the slide switch turns the half on and off. Leave the switch **on** while charging.
-- **Charge current:** with the multimeter in series with the battery, confirm about 100 mA on USB. An empty cell takes roughly a day.
+- **Charge current:** with the multimeter in series with the battery, confirm about 300 mA on USB. An empty cell takes about ten hours.
+- **LED rail:** about 4.95 V at the boost's output with the lighting on, near 0 V with it off.
 
 ### 5. LEDs, one column at a time
 - SK6812MINI-E, reverse-mount on the back, lit side through the cut-out. **Mind the corner mark**.
@@ -156,9 +165,9 @@ Key testers: [keyboard-test.space](https://keyboard-test.space), [keyboardchecke
 
 ### LEDs dark from one point on
 - The first dark LED, or the one before it, has a bad joint or is turned the wrong way.
-- Data from P0.06 reaching the first LED.
-- The LED rail (Q2's drain) at battery voltage while the LEDs are on; if not, check the LED power switch (Q2, Q3, R2, R3) and P0.08.
-- LED power comes through the LED power switch (P0.08), so it is off whenever the firmware has the LEDs off. On battery they only light for status.
+- Data from P0.06 through the buffer (U3) and R5 reaching the first LED; the buffer needs the LED rail to run.
+- The LED rail at about 4.95 V while the LEDs are on; if not, check the boost (U2, L1, its capacitors, R2/R4), its enable (P0.08, R3) and B+.
+- LED power comes from the boost, which is off whenever the firmware has the LEDs off. On battery the lighting stays off unless the System-layer Z key allows it.
 
 ### OLED blank
 - Module pin order against the footprint (GND, VCC, SCL, SDA); a module with GND and VCC swapped gets reverse power.

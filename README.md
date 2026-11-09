@@ -35,10 +35,10 @@ clearances, including the battery stack at full gasket travel.
 | Displays | 0.96 in. 128 × 64 SSD1306 OLED per half (I2C), held in the top frame and plugged into the PCB, showing ZMK's status screen |
 | Switches | Akko V3 Lavender Purple Pro (tactile, 5-pin) in Kailh hotswap sockets (CPG151101S11) |
 | Keycaps | Blank DSA PBT, smoke translucent |
-| Lighting | 33 SK6812MINI-E reverse-mount RGB backlights per half. The LEDs use a switched battery rail and ZMK's addressable RGB driver |
+| Lighting | 33 SK6812MINI-E reverse-mount RGB backlights per half, on a 5 V rail from a TPS61023 boost that the firmware switches off with the lighting. An SN74LV1T125 buffer drives their data at 5 V. ZMK's addressable RGB driver; on battery the lighting is optional (a System-layer key), dimmer, and off on a low cell |
 | Controller | nRF52840 SuperMini (nice!nano v2 clone, Pro Micro format), one per half, socketed on the underside |
 | Connectivity | Host: USB-C (left half) or Bluetooth, 5 profiles. Halves: Bluetooth split |
-| Power | KP-355085 LiPo pouch per half (3.5 × 50 × 85 mm, listed 3000 mAh) with a protection board, JST-PH connector, slide switch driving a P-MOSFET battery switch. Each half charges from its own USB-C |
+| Power | KP-355085 LiPo pouch per half (3.5 × 50 × 85 mm, listed 3000 mAh) with a protection board, JST-PH connector, slide switch driving a P-MOSFET battery switch. Each half charges from its own USB-C at about 300 mA |
 | PCB | 2 layers, FR-4 1.6 mm, 1 oz copper, HASL, black soldermask with white silkscreen. One half is 160.2 × 126.0 mm |
 | Switch plate | Clear polycarbonate 1.5 mm, CNC-routed, with eight gasket tabs per half |
 | Case | 3D-printed PETG, gasket-mounted: a bottom shell and a top frame per half, 175.4 × 143.7 × 24.5 mm. The top frame covers the plate round the keycaps and the knob, and holds the OLED and the encoder. Rubber feet, and a steel disc set flush into each floor |

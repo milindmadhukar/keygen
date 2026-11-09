@@ -28,14 +28,14 @@ name: 06 - split architecture
 ## Power per half
 
 - **LiPo pouch** with a protection board (the controller has no over-discharge cut-off), a JST-PH connector, and a slide switch driving a P-MOSFET. Capacity, size and placement: [[12 - final design#Power]].
-- **Charging:** each half charges from its own USB-C through the controller's charger, at about 100 mA: roughly a day for an empty cell with lights off. On USB the controller runs from USB, while the per-key LEDs still draw from the cell rail. A **1-to-2 USB-C cable** supplies both controllers from one USB source.
+- **Charging:** each half charges from its own USB-C through the controller's charger, at about 300 mA with its BOOST link bridged: about ten hours for an empty cell with lights off. On USB the controller runs from USB, while the LED boost still draws from the cell rail. With no battery fitted, the keys, OLED and Bluetooth run from USB and the lighting has no supply. A **1-to-2 USB-C cable** supplies both controllers from one USB source.
 - **Drain:** the right half (peripheral) uses far less than the left (central), so it charges less often.
 
 ### RGB and the battery
 
 The per-key LEDs are the biggest load. Per-key RGB empties a cell in about a day even when dim, so:
 
-- **On battery:** status flashes (caps lock, layer, Bluetooth profile, battery level while Fn is held) are a future per-key firmware feature. The first ZMK build uses one whole-strip RGB control and requests USB-only lighting; verify its LED rail actually turns off on battery (see [`docs/logic-audit.md`](../docs/logic-audit.md)).
+- **On battery:** the lighting stays off unless a System-layer key allows it (saved, off by default). When allowed it is capped at half the brightness scale, halved below 20 % charge and off below 10 %. Status flashes (caps lock, layer, Bluetooth profile, battery level while Fn is held) are a future per-key firmware feature. Verify the LED rail turns off on battery (see [`docs/logic-audit.md`](../docs/logic-audit.md)).
 - **On USB:** full effects. At the desk, the 1-to-2 cable from the laptop lights and charges both halves at once.
 
 The ZMK [power profiler](https://zmk.dev/power-profiler) estimates battery life for a given setup.
@@ -45,7 +45,7 @@ The ZMK [power profiler](https://zmk.dev/power-profiler) estimates battery life 
 The config is in the repo's `firmware/`. Details: [[12 - final design#Firmware as built (2026-10-20)]].
 
 - Split enabled, left as central, right as peripheral.
-- External power control on, driving only the LED power switch (P0.08), so it cuts the LED rail when the LEDs are off. A gpio-hog holds P0.13 high so each OLED keeps its 3.3 V supply.
+- External power control on, driving only the LED boost's enable (P0.08), so it cuts the LED rail when the LEDs are off. A Keygen module sets the lighting policy on battery. A gpio-hog holds P0.13 high so each OLED keeps its 3.3 V supply.
 - Idle after 30 s: OLEDs and LEDs off, Bluetooth connected. Deep sleep after 1 hour, timed by each half on its own and never on that half's USB power. A key or knob press wakes a half by rebooting it; turning a knob does not.
 - Both encoders are defined in the shared `.dtsi`; the right one runs on the peripheral.
 - Each half runs ZMK's status screen on its OLED, blanked when the keyboard goes idle.

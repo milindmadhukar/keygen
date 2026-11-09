@@ -18,7 +18,7 @@ name: 04 - firmware options
 - **Bluetooth split**: the left half is the central, the right half the peripheral. One firmware build per half.
 - **Host connection**: USB-C on the left half, or Bluetooth with up to 5 paired hosts. Plugging USB in makes it the output.
 - **Power management**: deep sleep and low-power BLE, which give weeks to months per charge with the LEDs off.
-- **External power control**: drives only the board's LED power switch (P0.08), turning it and the LED rail off when the LEDs are off.
+- **External power control**: drives only the LED boost's enable (P0.08), turning the boost and the LED rail off when the LEDs are off.
 - **Encoders on both halves**: both defined in the shared `.dtsi`, the right one running on the peripheral. The left knob scrolls through ZMK's mouse emulation (`CONFIG_ZMK_POINTING`); the right one sends volume, page and brightness keys. Mapping: [[12 - final design#Knobs]].
 - **Displays**: ZMK's status screen on each half's SSD1306 OLED (`CONFIG_ZMK_DISPLAY`). The left shows output, Bluetooth profile, layer and battery; the right its own battery and link. It blanks when the keyboard goes idle (`CONFIG_ZMK_DISPLAY_BLANK_ON_IDLE`). A gpio-hog holds P0.13 high so the OLED keeps its 3.3 V supply.
 - **ZMK Studio**: live keymap changes over USB or Bluetooth, no reflash needed.
@@ -32,7 +32,7 @@ name: 04 - firmware options
 ### RGB
 - The 33 LEDs per half are driven over SPI (`ws2812-spi`) from P0.06.
 - Per-key status (caps lock, layer, Bluetooth profile, battery level) uses a community per-key RGB module such as `zmk-rgb-matrix`. See [[12 - final design#Status display]] for its current state.
-- Per-key battery status flashes are planned. The first ZMK build provides whole-strip effects requested for USB operation, with brightness capped in firmware; verify the LED rail powers down on battery as described in [`docs/logic-audit.md`](../docs/logic-audit.md).
+- Per-key battery status flashes are planned. The first ZMK build provides whole-strip effects with brightness capped in firmware. A Keygen module (`firmware/module/src/power/battery_lighting.c`) makes lighting on battery optional: a System-layer key allows or forbids it (saved, off by default); when allowed it is capped at half the brightness scale, halved below 20 % charge and off below 10 %, and the boost is off whenever the lighting is. Verify the LED rail powers down on battery as described in [`docs/logic-audit.md`](../docs/logic-audit.md).
 
 ### Several computers
 - **Bluetooth profiles**: up to 5 hosts, selected from the System layer.

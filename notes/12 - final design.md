@@ -106,13 +106,13 @@ The per-key LEDs also show status:
 Per-key indicators need the community module [zmk-rgb-matrix](https://github.com/dima-m711/zmk-rgb-matrix). Stock ZMK drives all the LEDs as one strip.
 
 > [!warning] Per-key status comes later (2026-10-20)
-> The first firmware drives the 33 per-key RGB backlights per half as one ZMK lighting strip. Its power-off behavior needs the battery-only measurement in [`docs/logic-audit.md`](../docs/logic-audit.md): 33 dark but powered SK6812s draw about 33 mA per half. The per-key module is [gudzpoz/zmk-rgb-matrix](https://github.com/gudzpoz/zmk-rgb-matrix) (the `dima-m711` repo is a fork); per-key indicators remain future firmware work.
+> The first firmware drives the 33 per-key RGB backlights per half as one ZMK lighting strip. A Keygen module sets the lighting on battery (optional, dimmer, off on a low cell) and turns the boost off with the lighting; its power-off behavior needs the battery-only measurement in [`docs/logic-audit.md`](../docs/logic-audit.md): 33 dark but powered SK6812s draw about 33 mA per half. The per-key module is [gudzpoz/zmk-rgb-matrix](https://github.com/gudzpoz/zmk-rgb-matrix) (the `dima-m711` repo is a fork); per-key indicators remain future firmware work.
 
 ## Electronics
 
 ### Controllers
 
-- **One per half: an nRF52840 SuperMini** (decided 2026-10-23), a nice!nano v2 clone with the same 24-pin Pro Micro header and pinout, built in ZMK as the nice!nano v2. It charges at about 100 mA (TP4054): roughly a day for an empty cell with lighting off. Its BOOST jumper (about 300 mA) stays open. On USB the controller runs from USB; the LEDs still draw from the cell rail when lit. Before soldering, check B+ (pad 13), GND and VCC (pad 16) with a multimeter, and confirm the charge current.
+- **One per half: an nRF52840 SuperMini** (decided 2026-10-23), a nice!nano v2 clone with the same 24-pin Pro Micro header and pinout, built in ZMK as the nice!nano v2. It charges at about 300 mA (TP4054, with its BOOST link bridged): about ten hours for an empty cell with lighting off. On USB the controller runs from USB; the LEDs still draw from the cell rail when lit. Before soldering, check B+ (pad 13), GND and VCC (pad 16) with a multimeter, and confirm the charge current.
 - **Hidden:** mounted on the PCB underside near the inner edge, socketed on machined round pins. USB-C faces the top edge and reaches out through a slot in the case.
 - **Why two:** each half runs on its own battery and radio. More on the controller: [[03 - microcontroller selection]].
 
@@ -123,14 +123,14 @@ Identical on both halves. Every one of the 18 edge pins is used. The pad numbers
 | Pad | Pin | Left | Right |
 |---|---|---|---|
 | 1 | P0.06 | LED data | LED data |
-| 2 | P0.08 | LED power switch | LED power switch |
+| 2 | P0.08 | LED boost enable | LED boost enable |
 | 5 | P0.17 | OLED SDA (full speed) | OLED SDA (full speed) |
 | 6 | P0.20 | OLED SCL (full speed) | OLED SCL (full speed) |
 | 7–11 | P0.22, P0.24, P1.00, P0.11, P1.04 | ROW0–ROW4 | ROW0–ROW4 |
 | 12, 22, 21, 20, 19, 18, 17 | P1.06, P1.11, P1.13, P1.15, P0.02, P0.29, P0.31 | COL0–COL6 | COL0–COL6 |
 | 23 | P0.10 (NFC) | encoder A (`nfct-pins-as-gpios`) | encoder A (`nfct-pins-as-gpios`) |
 | 24 | P0.09 (NFC) | encoder B (`nfct-pins-as-gpios`) | encoder B (`nfct-pins-as-gpios`) |
-| 13 / 14 / 15 / 16 | B+ / GND / RST / VCC | battery via switch, LED power switch / GND / reset button / OLED power (switched 3.3 V, on via P0.13) | same |
+| 13 / 14 / 15 / 16 | B+ / GND / RST / VCC | battery via switch, LED boost input / GND / reset button / OLED power (switched 3.3 V, on via P0.13) | same |
 
 The three inner pads (P1.01, P1.02, P1.07) are unused.
 
@@ -163,7 +163,7 @@ Everything lives in **one KiCad project**, `pcb/keygen.kicad_pro`:
 - **Datasheet audit:** `tools/check_datasheets.py` checks the routed PCB against each part's datasheet (`docs/datasheets/`): 109 pass, 15 warnings, 0 fail as of 2026-10-28. Operating limits: [`docs/logic-audit.md`](../docs/logic-audit.md). Findings and learnings: [[15 - datasheet audit]].
 
 > [!note] LED supply
-> The LEDs run from the battery (B+, 3.0–4.2 V) through a high-side **AO3401A P-MOSFET** (Q2). An **AO3400A N-MOSFET** (Q3), driven from P0.08, pulls Q2's gate low to turn them on. A 100 kΩ resistor from Q2's gate to its source (R2) and one from Q3's gate to GND (R3) hold both off before firmware configures the output. The SK6812MINI-E is rated for **VDD 3.7–5.5 V**, so this raw battery rail cannot keep it in specification over the full discharge range. The 10 µF + 100 nF capacitors sit at Q2's output, rather than one bypass capacitor per LED as in the manufacturer's example. The controller's switched 3.3 V VCC output powers only the OLED. All the resistors and capacitors are 1206, for hand soldering.
+> The LEDs run from a 4.95 V rail (LED_VDD), made from the battery (B+, 3.0–4.2 V) by a **TI TPS61023** synchronous boost (U2, SOT-563), inside the SK6812MINI-E's **VDD 3.7–5.5 V** over the whole charge. P0.08 drives its enable directly and a 100 kΩ resistor (R3) holds it off before firmware configures the output; shut down, it disconnects its output, so the rail sits at 0 V. A 1 µH inductor (L1), 2 × 22 µF at the output (C1, C4), 10 µF at the input (C3) and a 732 kΩ / 100 kΩ divider (R2, R4) set and filter it. P0.06 drives the chain through an **SN74LV1T125** buffer (U3) on the LED rail, with 100 nF (C2) at its supply, and a 330 Ω resistor (R5), all beside the first LED. Every LED has a 0805 100 nF footprint beside it, every fourth fitted, and a 10 µF capacitor (C5) sits beside the last LED. The controller's switched 3.3 V VCC output powers only the OLED. The resistors and capacitors are 1206 and 0805, for hand soldering.
 
 ### Connectivity
 
@@ -180,9 +180,9 @@ The left half is the ZMK central. Plugging USB-C into it is the wired mode, and 
 - **LiPo pouch per half: KP-355085 (3.5 × 50 × 85 mm), listed 3000 mAh**, on a JST-PH 2.0 lead, with a protection board. The controller has no over-discharge cut-off, so a cell sold without a protection board gets a DW01A module. The bay takes a cell up to 5 mm thick and 60 × 88 mm including the protection board; a thicker cell would raise the case.
   - **Where:** in a bay sunk 1.6 mm into the case floor, under the outer and middle key columns (1–4, Q–R, A–F on the left; mirrored on the right), long side across the board, held with double-sided tape. Its lead end faces the JST-PH connector, about 40 mm away. The cell keeps at least 15 mm from the controller's antenna end and 10 mm from the controller, connector, buttons, encoder and OLED pins. `tools/case_geometry.py` places it and `tools/gen_case.py` checks it. Positions: [[14 - case & plate requirements]].
   - **Height:** the case reserves 9.4 mm below the PCB for the socketed controller plus 1.5 mm of float travel, so the case floor is 10.9 mm below the PCB's underside and the bay 12.5 mm. A 5 mm nominal cell, plus 0.3 mm size tolerance, 0.5 mm swelling and 0.3 mm mounting tape, leaves 4.4 mm to the sockets and diodes above it, and 2.9 mm with the floating stack pressed 1.5 mm down. In the case: PCB top 15.5 mm above the desk, plate top 20.5 mm, keycap tops about 35 mm before tenting.
-- **Charging:** each half charges from its own USB-C at about 100 mA, roughly a day from empty with lighting off; a 1-to-2 USB-C cable supplies both from one USB source. Battery life has not been measured. On USB the controller and OLED run from USB, while the LEDs on B+ can draw more from the cell than the charger replaces. Confirm LED_VDD is off on battery before estimating runtime (see [`docs/logic-audit.md`](../docs/logic-audit.md)).
+- **Charging:** each half charges from its own USB-C at about 300 mA, about ten hours from empty with lighting off; a 1-to-2 USB-C cable supplies both from one USB source. Battery life has not been measured. On USB the controller and OLED run from USB, while the LED boost on B+ can draw more from the cell than the charger replaces at full white. With no battery fitted, the keys, OLED and Bluetooth run from USB and the lighting has no supply. Confirm LED_VDD is off on battery before estimating runtime (see [`docs/logic-audit.md`](../docs/logic-audit.md)).
 - **Battery switch** (decided 2026-10-20; the switch is the SK12D07VG5 since 2026-11-04): the slide switch only drives the gate of an **AO3401A P-MOSFET** that carries the battery current, so charging and LED current never pass through its contacts. Source on the battery, drain on B+, so the body diode blocks the battery when off. A 1 MΩ resistor holds the gate at the source when the switch is off; the switch's pin 3 is unconnected, since it makes before it breaks. Its knob runs through a slot in the case's top wall. Leave the switch on while charging: switched off with USB in, charge current can cross the body diode and the MOSFET warms (~0.07 W at 100 mA), but full-charge termination is not assured. The controller has a charger but no switch.
-- **LEDs powered from the battery through the LED power switch** (Q2/Q3, P0.08; see [[#Schematic]]). Each SK6812 draws about 1 mA even when dark, about 33 mA per half. The pinned ZMK driver enables ext-power at startup, so confirm the rail actually turns off in each battery state. Brightness is capped at 40%, still about 508 mA per half at the datasheet's typical full-white current reference; this can exceed the 100 mA charge rate while USB is connected. See [`docs/logic-audit.md`](../docs/logic-audit.md).
+- **LEDs on a 5 V boost** (U2, enabled from P0.08; see [[#Schematic]]). Each SK6812 draws about 1 mA even when dark, about 33 mA per half, so the boost turns off with the lighting. On battery the lighting is optional: a System-layer key allows it (saved, off by default), it is capped at half the brightness scale, halved below 20 % charge and off below 10 %. Brightness is capped at 40 % PWM, still about 508 mA per half at the datasheet's typical full-white current reference; that can exceed the 300 mA charge rate while USB is connected. See [`docs/logic-audit.md`](../docs/logic-audit.md).
 - Per-key status flashes on battery are planned firmware work. The first ZMK build has whole-strip effects only, requested for USB operation; battery-only rail-off behavior needs the measurement in [`docs/logic-audit.md`](../docs/logic-audit.md).
 
 ### Parts per half
@@ -193,11 +193,12 @@ The left half is the ZMK central. Plugging USB-C into it is the wired mode, and 
 | MX switch + Kailh MX hotswap socket | 33 | 33 | hand-solder |
 | 1N4148 diode (DO-35) | 34 | 34 | TH |
 | SK6812MINI-E (per-key) | 33 | 33 | SMD (hand-solder or JLC assembly) |
-| 10 µF + 100 nF capacitors, 1206 (LED rail) | 1 + 1 | 1 + 1 | SMD |
 | KP-355085 LiPo + JST-PH 2-pin | 1 | 1 | TH |
 | SK12D07VG5 slide switch | 1 | 1 | TH |
 | AO3401A P-MOSFET + 1 MΩ resistor, 1206 (battery switch) | 1 + 1 | 1 + 1 | SMD |
-| AO3401A P-MOSFET, AO3400A N-MOSFET, 2 × 100 kΩ, 1206 (LED power switch) | 1 + 1 + 2 | 1 + 1 + 2 | SMD |
+| TPS61023 boost (SOT-563), 1 µH inductor (1210), 2 × 22 µF + 10 µF, 732 kΩ + 2 × 100 kΩ, 1206 (LED boost) | 1 + 1 + 3 + 3 | 1 + 1 + 3 + 3 | SMD |
+| SN74LV1T125 buffer (SOT-23-5), 100 nF + 330 Ω, 0805 (LED data) | 1 + 2 | 1 + 2 | SMD |
+| 100 nF, 0805 (beside every fourth LED; 25 more optional) + 10 µF, 1206 (last LED) | 8 + 1 | 8 + 1 | SMD |
 | 6 mm reset button (pinhole in case) | 1 | 1 | TH |
 | EC11 encoder (D shaft) + 17 mm knob | 1 | 1 | Top frame |
 | 1×5 right-angle pin header + jumper lead | 1 | 1 | TH |
@@ -220,11 +221,11 @@ Each half has 34 diodes: 33 for the keys and one for its encoder's push switch, 
 | Matrix (5 rows × 7 cols) | 12 | 12 |
 | Encoder A/B | 2 | 2 |
 | RGB data | 1 | 1 |
-| LED power switch | 1 | 1 |
+| LED boost enable | 1 | 1 |
 | OLED SDA/SCL | 2 | 2 |
 | **Total** | **18** | **18** |
 
-These use all 18 GPIO along the standard Pro Micro edge pads on both halves: 12 matrix, LED data (P0.06), LED power switch (P0.08), OLED (P0.17, P0.20) and encoder (P0.10, P0.09). The encoder lines are on the two NFC pins, which work as GPIO once `nfct-pins-as-gpios` is set on both halves; they are slow inputs. The three inner pads (P1.01, P1.02, P1.07) stay unused. They're "low-frequency" pins, fine for matrix lines but not for LED data or UART.
+These use all 18 GPIO along the standard Pro Micro edge pads on both halves: 12 matrix, LED data (P0.06), LED boost enable (P0.08), OLED (P0.17, P0.20) and encoder (P0.10, P0.09). The encoder lines are on the two NFC pins, which work as GPIO once `nfct-pins-as-gpios` is set on both halves; they are slow inputs. The three inner pads (P1.01, P1.02, P1.07) stay unused. They're "low-frequency" pins, fine for matrix lines but not for LED data or UART.
 
 ## Firmware: ZMK
 
@@ -236,7 +237,7 @@ ZMK brings:
 - A status screen on each half's OLED
 - Mouse emulation, for the left knob's scroll
 - ZMK Studio for live remapping, which the [Dactyl CC](https://www.reddit.com/r/ErgoMechKeyboards/comments/1tp0r9s/) builder calls a must-have
-- External power control for the LED power switch
+- External power control for the LED boost
 
 The one community module needed is `zmk-rgb-matrix` for per-key RGB and indicators. See [[04 - firmware options]].
 
@@ -246,7 +247,7 @@ The one community module needed is `zmk-rgb-matrix` for per-key RGB and indicato
 - Zephyr 4.1 changes that mattered: NFC pins as GPIO is `&uicr { nfct-pins-as-gpios; };` (the Kconfig option is gone), EC11 needs `CONFIG_EC11_TRIGGER_GLOBAL_THREAD=y`.
 - The config lives in `firmware/` of the hardware repo. ZMK's reusable workflow can't handle a nested config path (issue #3006), so `config_path: firmware` with the shield under `firmware/boards/`; that board root is deprecated but works.
 - The physical layout for ZMK Studio is generated from the PCB's KLE by `tools/gen_zmk_layout.py`.
-- Both halves set `&uicr { nfct-pins-as-gpios; };` for the encoder lines. ZMK's ext-power drives only the LED power switch (P0.08); a gpio-hog holds P0.13 high so the OLED keeps its power. `CONFIG_ZMK_DISPLAY` runs the status screen, and `CONFIG_ZMK_POINTING` the left knob's scroll.
+- Both halves set `&uicr { nfct-pins-as-gpios; };` for the encoder lines. ZMK's ext-power drives only the LED boost's enable (P0.08); a gpio-hog holds P0.13 high so the OLED keeps its power. `CONFIG_ZMK_DISPLAY` runs the status screen, and `CONFIG_ZMK_POINTING` the left knob's scroll.
 
 ## PCB
 
@@ -306,7 +307,7 @@ The case and plate are generated from the PCB by `tools/gen_case.py` and `tools/
 
 - [ ] Controller footprint includes the 3 inner pads
 - [x] Pin functions checked (Modular-build lesson: "not all pins are created equal"). Done 2026-10-20 in [[15 - datasheet audit]]: LED data on a full-speed pin, only slow signals on low-frequency pins, no bootloader-sampled pins
-- [x] LEDs behind their own power switch (P0.08), off with the LEDs; brightness capped in firmware
+- [x] LEDs on their own 5 V boost (enable on P0.08), off with the LEDs; brightness capped in firmware
 - [x] Each half is self-contained on its own battery; nothing is wired between the halves
 - [x] USB-C lines up with the case slot: `tools/gen_case.py` checks the case against the controller, and [`render-case.png`](https://github.com/milindmadhukar/keygen/releases/download/media/render-case.png) shows it (2026-10-22)
 - [x] Antenna end clear of ground pour; plastic case. Keep-out rule areas restored on the board 2026-10-20, and the PCB scripts now keep them through every re-pour

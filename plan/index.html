@@ -142,7 +142,7 @@ flowchart LR
     </tbody>
   </table></div>
   <div class="note prose"><strong>Why no TRRS:</strong> a cable between the halves would only replace the Bluetooth split. ZMK runs one split transport per build (runtime switching needs purpose-built hardware), the cable couldn't charge the right half (the controller has no VBUS pin to pass USB power on), and ZMK warns never to plug or unplug a TRRS cable while either half is powered, which with a battery in each half is always. The jack was removed on 20 Oct 2026.</div>
-  <p class="cap"><strong>Charging:</strong> each half charges from its own USB-C; a 1-to-2 USB-C cable supplies both from one source. The controller charges at about 100 mA, roughly a day for an empty cell with lighting off, and runs from USB while plugged in. Battery runtime needs a powered-board measurement, especially to confirm that the dark LED rail is actually off.</p>
+  <p class="cap"><strong>Charging:</strong> each half charges from its own USB-C; a 1-to-2 USB-C cable supplies both from one source. The controller charges at about 300 mA with its BOOST link bridged, about ten hours for an empty cell with lighting off, and runs from USB while plugged in. With no battery fitted, the keys, OLED and Bluetooth run from USB and the lighting has no supply. Battery runtime needs a powered-board measurement, especially to confirm that the dark LED rail is actually off.</p>
 
   <h2>Redox rev1 → Keygen: what changes</h2>
   <div class="tablewrap"><table>
@@ -154,7 +154,7 @@ flowchart LR
       <tr><td>Diodes</td><td>1N4148, through-hole, dual-sided</td><td>1N4148 through-hole (DO-35) kept</td></tr>
       <tr><td>RGB</td><td>none</td><td>SK6812MINI-E under every key, on one chain</td></tr>
       <tr><td>Link</td><td>TRRS serial</td><td>Bluetooth split; no cable between the halves</td></tr>
-      <tr><td>Power</td><td>USB only</td><td>LiPo per half, power slide switch, LED power cut-off</td></tr>
+      <tr><td>Power</td><td>USB only</td><td>LiPo per half, power slide switch, 5 V LED boost that turns off with the lighting</td></tr>
       <tr><td>New</td><td>none</td><td>An EC11 knob and a 0.96 in. SSD1306 OLED on each half's inner edge.</td></tr>
       <tr><td>PCB</td><td>one reversible board for both halves</td><td>separate left and right boards, because the halves have different parts</td></tr>
       <tr><td>Case</td><td>rev1 3D-printed cases</td><td>closed, gasket-mounted PETG case: a bottom shell and a top frame per half, with a USB-C slot and power switch slot on the top edge and a battery bay in the floor. The top frame's deck covers the plate round the keycaps, the OLED and the knob. The FR-4 switch plate floats on Poron gaskets, with PE switch foam and Poron plate foam under it and case foam on the floor, cut from <code>case/foam/</code>. Both are generated from the PCB by <code>tools/gen_case.py</code> and <code>tools/gen_plate.py</code>.</td></tr>
@@ -165,14 +165,15 @@ flowchart LR
   <div class="tablewrap"><table>
     <thead><tr><th>Part</th><th>Left</th><th>Right</th><th>Mount</th><th>Notes</th></tr></thead>
     <tbody>
-      <tr><td>nRF52840 SuperMini (nice!nano v2 clone)</td><td class="num">1</td><td class="num">1</td><td><span class="pill th">header</span></td><td>On the back of the PCB, components facing down, socketed with low-profile Mill-Max pins (about 3–4 mm). The case needs that much depth. It charges at about 100 mA. Before soldering, check B+ (pad 13), GND and VCC (pad 16) with a multimeter, and confirm the charge current.</td></tr>
+      <tr><td>nRF52840 SuperMini (nice!nano v2 clone)</td><td class="num">1</td><td class="num">1</td><td><span class="pill th">header</span></td><td>On the back of the PCB, components facing down, socketed with low-profile Mill-Max pins (about 3–4 mm). The case needs that much depth. It charges at about 300 mA with its BOOST link bridged. Before soldering, check B+ (pad 13), GND and VCC (pad 16) with a multimeter; after bridging, confirm the charge current.</td></tr>
       <tr><td>Akko V3 Lavender Purple Pro switch + Kailh hotswap socket</td><td class="num">33</td><td class="num">33</td><td><span class="pill smd">hand-solder</span></td><td>Big pads, easy with an iron.</td></tr>
       <tr><td>1N4148 diode</td><td class="num">33</td><td class="num">34</td><td><span class="pill th">TH</span></td><td>DO-35, as Redox already uses.</td></tr>
       <tr><td>SK6812MINI-E LED</td><td class="num">33</td><td class="num">33</td><td><span class="pill smd">SMD</span></td><td>Per-key only. The one unavoidably SMD part. Hand-solder as in the Corne video, or have JLCPCB assemble these.</td></tr>
       <tr><td>LiPo cell + JST-PH 2-pin</td><td class="num">1</td><td class="num">1</td><td><span class="pill th">TH</span></td><td>KP-355085 pouch (3.5 × 50 × 85 mm, listed 3000 mAh) with a protection board, as the controller has no over-discharge cut-off; the bay takes up to 5 mm thick and 60 × 88 mm. It lies in a bay sunk 1 mm into the case floor under the outer and middle key columns, held with double-sided tape, 2.5 mm below the solder joints under the PCB and at least 15 mm from the controller's antenna end. The socketed controller already needs about 7.5 mm below the PCB, so the cell adds no case height.</td></tr>
       <tr><td>Battery switch: AO3401A P-MOSFET + 1 MΩ</td><td class="num">1 + 1</td><td class="num">1 + 1</td><td><span class="pill smd">SMD</span></td><td>SOT-23 and 1206 on the back. The slide switch only drives the gate, so the battery current (charging and LEDs) never passes through its 50 mA contacts.</td></tr>
-      <tr><td>LED power switch: AO3401A P-MOSFET, AO3400A N-MOSFET, 2 × 100 kΩ</td><td class="num">1 + 1 + 2</td><td class="num">1 + 1 + 2</td><td><span class="pill smd">SMD</span></td><td>SOT-23 and 1206 on the back, between the battery connector and the board edge. Feeds the LEDs from the battery (B+), inside their 3.7–5.5 V rating; P0.08 turns it on.</td></tr>
-      <tr><td>LED rail capacitors: 10 µF + 100 nF</td><td class="num">1 + 1</td><td class="num">1 + 1</td><td><span class="pill smd">SMD</span></td><td>1206 on the back, at the LED power switch's output.</td></tr>
+      <tr><td>LED boost: TPS61023, 1 µH, 2 × 22 µF + 10 µF, 732 kΩ + 2 × 100 kΩ</td><td class="num">1 + 1 + 3 + 3</td><td class="num">1 + 1 + 3 + 3</td><td><span class="pill smd">SMD</span></td><td>SOT-563, 1210 and 1206 on the back, between the battery connector and the board edge. Boosts the battery (B+) to 4.95 V for the LEDs, inside their 3.7–5.5 V rating; P0.08 enables it.</td></tr>
+      <tr><td>LED data: SN74LV1T125 buffer, 100 nF, 330 Ω</td><td class="num">1 + 1 + 1</td><td class="num">1 + 1 + 1</td><td><span class="pill smd">SMD</span></td><td>SOT-23-5 and 0805 on the back: beside the first LED: the buffer drives the chain at 5 V through the resistor.</td></tr>
+      <tr><td>LED capacitors: 100 nF beside every fourth LED, 10 µF beside the last</td><td class="num">8 + 1</td><td class="num">8 + 1</td><td><span class="pill smd">SMD</span></td><td>0805 and 1206 on the back. Every LED has a 100 nF footprint; the other 25 are optional.</td></tr>
       <tr><td>Slide power switch (SK12D07VG5)</td><td class="num">1</td><td class="num">1</td><td><span class="pill th">TH</span></td><td>Right angle, knob out through the case's top wall; switches the battery MOSFET's gate. The controller has a charger but no switch.</td></tr>
       <tr><td>Reset button 6 mm</td><td class="num">1</td><td class="num">1</td><td><span class="pill th">TH</span></td><td>Reachable through a pinhole in the case. ZMK can also enter the bootloader from a key, so you rarely need it.</td></tr>
       <tr><td>EC11 rotary encoder + knob</td><td class="num">1</td><td class="num">1</td><td><span class="pill th">TH</span></td><td>One per half. ZMK has supported encoders on the peripheral half since PR #1841 (Oct 2023). Each push switch goes into its half's key matrix as one extra position. A 20 mm D shaft puts a 17 × 13 mm knob a few millimetres above the keycaps.</td></tr>
@@ -189,11 +190,11 @@ flowchart LR
       <tr><td>Encoder A/B (push switch is in the matrix)</td><td class="num">2</td><td class="num">2</td></tr>
       <tr><td>OLED I2C (SDA, SCL)</td><td class="num">2</td><td class="num">2</td></tr>
       <tr><td>RGB data</td><td class="num">1</td><td class="num">1</td></tr>
-      <tr><td>LED power switch</td><td class="num">1</td><td class="num">1</td></tr>
+      <tr><td>LED boost enable</td><td class="num">1</td><td class="num">1</td></tr>
       <tr class="total"><td>Total</td><td class="num">18</td><td class="num">18</td></tr>
     </tbody>
   </table></div>
-  <div class="note prose"><strong>Every edge pad in use.</strong> The Pro Micro edge has 18 GPIO, and both halves use all of them with the same map. The encoder takes the two NFC pins (P0.10 for A, P0.09 for B), which work as GPIO once <code>nfct-pins-as-gpios</code> is set; an encoder is slow enough for them. The OLED's I2C is on P0.17 (SDA) and P0.20 (SCL), both full-speed. P0.06 carries LED data and P0.08 drives the LED power switch. The inner pads (P1.01, P1.02, P1.07) stay unused.</div>
+  <div class="note prose"><strong>Every edge pad in use.</strong> The Pro Micro edge has 18 GPIO, and both halves use all of them with the same map. The encoder takes the two NFC pins (P0.10 for A, P0.09 for B), which work as GPIO once <code>nfct-pins-as-gpios</code> is set; an encoder is slow enough for them. The OLED's I2C is on P0.17 (SDA) and P0.20 (SCL), both full-speed. P0.06 carries LED data and P0.08 enables the LED boost. The inner pads (P1.01, P1.02, P1.07) stay unused.</div>
 
   <h2>Firmware: ZMK</h2>
   <div class="cols">
@@ -222,7 +223,7 @@ flowchart LR
   <ol class="steps">
     <li><strong>Fit test.</strong> Print the Redox layout 1:1 from <code>redox-layout.json</code> (keyboard-layout-editor.com renders it). Rest your hand on it and confirm the 2×2 thumb block and the knob position work for your hands. Read the "15 geometries vs hand anatomy" post first if you can.</li>
     <li><strong>Open Redox in KiCad 10.</strong> Clone <a href="https://github.com/mattdibi/redox-keyboard" target="_blank" rel="noopener">mattdibi/redox-keyboard</a> and open <code>redox/pcb/rev1.0/kicad_files</code>. KiCad upgrades the 2018 files. Use it to copy the outline and mounting holes, and to see how Mattia routed the matrix.</li>
-    <li><strong>New schematic, per half.</strong> Use the Scotto KiCad library: hotswap MX + 1N4148 matrix, the SK6812 chain on the battery through a P-MOSFET LED power switch (driven from P0.08 through an N-MOSFET) with a 10 µF + 100 nF capacitor, the controller on the back with all 21 pins, encoder (right), battery JST, power switch, reset.</li>
+    <li><strong>New schematic, per half.</strong> Use the Scotto KiCad library: hotswap MX + 1N4148 matrix, the SK6812 chain on a 5 V TPS61023 boost (enabled from P0.08) with an SN74LV1T125 data buffer and a 100 nF footprint beside every LED, the controller on the back with all 21 pins, encoder (right), battery JST, power switch, reset.</li>
     <li><strong>Place and route.</strong> Place keys from the KLE file with KB Placer, then delete the inner column, put the controller footprint on the back where it was, and put a knob and an OLED header on each half's front. Keep ground pour away from the controller's antenna end. Route rows on the front and columns on the back. Run DRC.</li>
     <li><strong>Bring-up board first, optional.</strong> If you'd rather not risk the full order, a small board with 4 keys, the encoder, 4 LEDs and an underside-mounted controller costs a few dollars and tests every circuit.</li>
     <li><strong>Order and build.</strong> Lion Circuits (Bengaluru), HASL finish, 5 + 5 boards, LED assembly optional. Flash the left and right ZMK UF2 files.</li>
@@ -235,7 +236,7 @@ flowchart LR
     <tbody>
       <tr><td>Footprint includes the nRF52840's extra pins</td><td>The plain Pro Micro footprint leaves you 3 pins short.</td><td>Pin budget</td></tr>
       <tr><td>Pin functions checked</td><td>"Not all pins are created equal." That includes the NFC pins and which pins can drive the LED data line.</td><td>Modular build</td></tr>
-      <tr><td>LEDs behind their own power switch</td><td>P0.08 turns the LED power switch off with the LEDs. Otherwise they drain the battery (1 mA each) even when dark.</td><td>SK6812 idle current</td></tr>
+      <tr><td>LEDs on their own boost</td><td>P0.08 turns the LED boost off with the LEDs. Otherwise they drain the battery (1 mA each) even when dark.</td><td>SK6812 idle current</td></tr>
       <tr><td>No cable between the halves</td><td>Each half has its own battery and charger, so nothing ties the two batteries together, and there is no TRRS jack to hot-plug.</td><td>Design choice</td></tr>
       <tr><td>USB-C lines up with the case slot</td><td>The controller is hidden, so the port position is set by the PCB. Check it in the KiCad 3D view against the case before ordering.</td><td>Hidden controller</td></tr>
       <tr><td>Test the LED chain one column at a time</td><td>One bad SK6812 joint kills every LED after it.</td><td>Corne guide</td></tr>

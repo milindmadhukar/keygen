@@ -5,7 +5,7 @@ name: 05 - pcb design
 ---
 
 > [!success] Decision (2026-10-19)
-> KiCad 10, **one project** (`pcb/keygen.kicad_pro`) with left and right sheets, and both halves in one board file as **two separate outlines**, each ordered on its own. Key geometry comes from **Redox rev1**; the copper is drawn new. Kailh MX hotswap sockets, 1N4148 through-hole diodes, SK6812MINI-E per-key LEDs on the battery through a MOSFET LED power switch, an EC11 encoder and an SSD1306 OLED module on each half, and a LiPo with a slide switch driving a P-MOSFET battery switch. The nice!nano mounts socketed on the underside and provides USB-C. Ground fill stays off each controller's antenna end. JLCPCB, lead-free HASL, black mask with white silkscreen, 5 + 5 boards. Status 2026-10-20: schematic generated and ERC clean; **PCB fully routed, DRC clean with schematic parity**. See [[12 - final design#Schematic]] and [[12 - final design#Controller pin map]].
+> KiCad 10, **one project** (`pcb/keygen.kicad_pro`) with left and right sheets, and both halves in one board file as **two separate outlines**, each ordered on its own. Key geometry comes from **Redox rev1**; the copper is drawn new. Kailh MX hotswap sockets, 1N4148 through-hole diodes, SK6812MINI-E per-key LEDs on a 5 V boost from the battery, an EC11 encoder and an SSD1306 OLED module on each half, and a LiPo with a slide switch driving a P-MOSFET battery switch. The nice!nano mounts socketed on the underside and provides USB-C. Ground fill stays off each controller's antenna end. JLCPCB, lead-free HASL, black mask with white silkscreen, 5 + 5 boards. Status 2026-10-20: schematic generated and ERC clean; **PCB fully routed, DRC clean with schematic parity**. See [[12 - final design#Schematic]] and [[12 - final design#Controller pin map]].
 
 ## Board at a glance
 
@@ -17,7 +17,7 @@ name: 05 - pcb design
 | Stackup | 2 layers, FR-4 1.6 mm, 1 oz copper, HASL, black soldermask, white silkscreen |
 | Footprints | marbastlib (MX hotswap, EC11, nice!nano) and Keebio-Parts, as git submodules in `lib/` |
 | Mounting | 5 M2 holes per half, placed where nothing else is |
-| Rules | 0.25 mm signal, 0.4 mm power, 0.2 mm clearance, 0.15 mm minimum track, 0.2 mm copper-to-edge |
+| Rules | 0.25 mm signal, 0.4 mm power, 0.2 mm clearance (0.15 mm at the LED boost's 0.5 mm pitch pins), 0.15 mm minimum track, 0.2 mm copper-to-edge |
 
 ## Key matrix
 
@@ -38,10 +38,11 @@ Each half is **5 rows × 7 columns, COL2ROW**: each switch connects to its colum
 
 ### Per-key RGB: SK6812MINI-E
 - Reverse-mount on the back, shining up through a window under each switch. Each half has 33 windows (about 3.5 × 3.2 mm) that the fab mills; the LED pads sit about 0.25 mm from them.
-- One daisy chain per half: data runs from the controller (P0.06, a full-speed pin) through every LED in turn.
-- **Power:** the LED rail runs from the battery (B+) through an AO3401A P-MOSFET switch, turned on from P0.08 through an AO3400A N-MOSFET. A 10 µF and a 100 nF capacitor sit at the switch's output, next to it on the back between the battery connector and the board edge.
-- **Current:** 12 mA per colour, so 36 mA per LED at full white, about 1.2 A for 33 LEDs. Brightness is capped in firmware. Each LED draws about 1 mA even when dark, which the LED power switch removes.
-- The datasheet's VDD range is 3.7–5.5 V; the cell supplies 3.0–4.2 V and sits near 4.2 V on USB power, when the LEDs light. See [[12 - final design#Schematic]].
+- One daisy chain per half: data runs from the controller (P0.06, a full-speed pin) along the data line to an **SN74LV1T125** buffer (U103/U203, SOT-23-5) on the LED rail beside the first LED, then through a 330 Ω resistor (R105/R205, 0805) into the first LED and through every LED in turn. The buffer reads 3.3 V as high (2.03 V threshold at 5 V) and drives the chain at 5 V.
+- **Power:** the LED rail (LED_VDD) is 4.95 V from a **TI TPS61023** boost (U102/U202, SOT-563) on B+, its enable driven directly from P0.08 and held low by a 100 kΩ resistor. Shut down, it disconnects its output, so the rail sits at 0 V. A 1 µH 1210 inductor, 2 × 22 µF at the output, 10 µF at the input and a 732 kΩ / 100 kΩ feedback divider sit around it on the back between the battery connector and the board edge (on the right half the group is turned half a turn and sits higher), laid out as the datasheet's example.
+- **Decoupling:** a 0805 100 nF footprint beside every LED (C111–C143, C211–C243), every fourth fitted, and a 10 µF capacitor (C105/C205) beside the last LED.
+- **Current:** 12 mA per colour, so 36 mA per LED at full white, about 1.2 A for 33 LEDs. Brightness is capped in firmware. Each LED draws about 1 mA even when dark; the boost is off whenever the lighting is.
+- The datasheet's VDD range is 3.7–5.5 V; the boost holds the rail at 4.95 V over the cell's whole 3.0–4.2 V. See [[12 - final design#Schematic]].
 
 ### Rotary encoders
 **EC11** with a push switch and a 20 mm D shaft on each half, fixed to the top frame over an 18 × 20 mm opening in the PCB, below the controller, mirrored: shafts at (167.0, 134.5) left and (256.5, 134.5) right, in board coordinates. A press on the knob goes into the case, not into the gasket-mounted plate and PCB. ENC101 and ENC201 are board-only footprints with no pads, which carry the encoder and knob 3D models. Each encoder connects through a five-wire jumper lead to a 1×5 right-angle 2.54 mm pin header on the back (J102, J202), beside the opening, its pins pointing away from the thumb keys: A, C (GND), B, S1 (COL6), S2 (K06). Each takes a 17 × 13 mm knurled aluminium knob, whose edge sits 10 mm below the OLED, 5.7 mm from the thumb cluster's top key and 9.1 mm from the G/H column. On both halves A is on P0.10 (pad 23) and B on P0.09 (pad 24), both NFC pins used as GPIO. Each push switch is in its half's matrix at row 0 / column 6, with its own 1N4148 (D107, D207) on the back beside the opening.

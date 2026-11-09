@@ -15,10 +15,10 @@ name: 03 - microcontroller selection
 - **USB:** USB-C on the module, which is the keyboard's USB port
 - **Format:** Pro Micro footprint (marbastlib's `nice_nano_H_USBup`), with USB facing the top edge
 - **Firmware:** ZMK builds it as the nice!nano v2 (target `nice_nano//zmk`); flashing is drag-and-drop UF2 after a double-tap of reset
-- **Charger:** an on-board TP4054 LiPo charger at about 100 mA: roughly a day to charge an empty cell. A BOOST jumper on the back (an unfitted 0 Ω link) raises it to about 300 mA; Keygen leaves it open. It has no over-discharge cut-off, so the battery carries its own protection board.
-- **Power path:** on USB, the controller runs from USB through a diode, and a P-MOSFET takes the battery out of its supply. The per-key LEDs still use the cell rail, so a bright strip can draw more than the roughly 100 mA charger supplies. The battery level reads full while plugged in, since ZMK measures the controller supply (VDDH).
-- **Check on arrival:** before soldering, check B+ (pad 13), GND and VCC (pad 16) with a multimeter, and confirm the charge current.
-- **Switched VCC:** an on-board MOSFET on P0.13 cuts the 3.3 V VCC rail. Keygen's VCC (pad 16) powers only the OLED, and the firmware holds P0.13 high with a gpio-hog so it stays on. The LEDs run from the battery through their own power switch on P0.08.
+- **Charger:** an on-board TP4054 LiPo charger, at about 300 mA with the BOOST link on the back (an unfitted 0 Ω link) bridged, as Keygen has it: about ten hours for an empty cell. It has no over-discharge cut-off, so the battery carries its own protection board.
+- **Power path:** on USB, the controller runs from USB through a diode, and a P-MOSFET takes the battery out of its supply. The LED boost runs from the cell rail (B+), so bright white lighting can draw more than the charger supplies. With no battery fitted, the keys, OLED and Bluetooth run from USB and the lighting has no supply. The battery level reads full while plugged in, since ZMK measures the controller supply (VDDH).
+- **Check on arrival:** before soldering, check B+ (pad 13), GND and VCC (pad 16) with a multimeter. After bridging the BOOST link, confirm the charge current.
+- **Switched VCC:** an on-board MOSFET on P0.13 cuts the 3.3 V VCC rail. Keygen's VCC (pad 16) powers only the OLED, and the firmware holds P0.13 high with a gpio-hog so it stays on. The LEDs run from a 5 V boost on the battery, enabled from P0.08.
 - **Mounting:** socketed with low-profile machined round-pin headers, so a controller can be swapped. It sits about 7.5 mm below the PCB, which sets the case depth.
 
 ## Pin budget
@@ -30,7 +30,7 @@ name: 03 - microcontroller selection
 | Matrix (5 rows × 7 cols) | 12 | 12 |
 | Encoder A/B | 2 | 2 |
 | RGB data | 1 | 1 |
-| LED power switch | 1 | 1 |
+| LED boost enable | 1 | 1 |
 | OLED SDA/SCL | 2 | 2 |
 | **Total** | **18** | **18** |
 
@@ -39,7 +39,7 @@ Every one of the 18 edge pins is used on both halves; the three inner pads stay 
 - LED data is on **P0.06**, a full-speed pin.
 - The OLED's I2C is on **P0.17** (SDA, pad 5) and **P0.20** (SCL, pad 6), both full-speed pins.
 - The encoder is on the NFC pins, the same on both halves: A on **P0.10** (pad 23), B on **P0.09** (pad 24), set up as GPIO with `nfct-pins-as-gpios`.
-- **P0.08** drives the LED power switch.
+- **P0.08** enables the LED boost.
 - The pin restrictions were checked against the nRF52840 datasheet in [[15 - datasheet audit]]. Full pin map: [[12 - final design#Controller pin map]].
 
 ## Related notes

@@ -17,7 +17,7 @@ updated: 2026-10-22T19:00
 - **Matrix:** 5 rows × 7 columns per half, COL2ROW, with a 1N4148 diode per key. Each half's
   encoder push switch sits in its matrix at row 0 / column 6.
 - **Controller pins:** both halves use the same pin map, with every edge pin in use. LED data is on
-  P0.06 and the LED power switch on P0.08. The OLED's I2C is on P0.17 (SDA) and P0.20 (SCL), both
+  P0.06 and the LED boost's enable on P0.08. The OLED's I2C is on P0.17 (SDA) and P0.20 (SCL), both
   full-speed pins. The encoder is on P0.10 and P0.09, the NFC pins, set up as GPIOs in firmware.
   The full pin table is in the build plan (`plan/index.html`).
 - **OLED:** a generic 0.96 in. SSD1306 module per half, held in the top frame on four pegs and
@@ -26,12 +26,13 @@ updated: 2026-10-22T19:00
   lower end with its header along its bottom edge, and the firmware turns the image 180°. It runs
   from the controller's switched 3.3 V output (VCC), which the firmware keeps on through P0.13.
 - **Power and charging:** each half has its own LiPo and charges through its own controller's
-  USB-C at about 100 mA (TP4054; the BOOST jumper, for about 300 mA, stays open), roughly a day
-  for an empty cell; a 1-to-2 USB-C cable charges both from one charger. On USB the controller
-  and the OLED run from USB through the module's diode and P-MOSFET; the LEDs, on B+, can draw
-  more from the cell than the 100 mA charger replaces. The battery level reads full while
-  plugged in. Battery life has not been measured; confirm the dark LED rail is actually off before
-  estimating runtime (see [`docs/logic-audit.md`](../docs/logic-audit.md)).
+  USB-C at about 300 mA (TP4054, with the controller's BOOST link bridged), about ten hours for an
+  empty cell; a 1-to-2 USB-C cable charges both from one charger. On USB the controller and the
+  OLED run from USB through the module's diode and P-MOSFET; the LED boost runs from B+, so bright
+  white lighting can still draw more from the cell than the charger replaces. The battery level
+  reads full while plugged in. With no battery fitted, the keys, OLED and Bluetooth run from USB
+  and the lighting has no supply. Battery life has not been measured (see
+  [`docs/logic-audit.md`](../docs/logic-audit.md)).
 - **Battery switch:** the SK12D07VG5 right-angle slide switch drives the gate of an AO3401A
   P-MOSFET, which carries the battery current: source on the battery, drain on B+. A 1 MΩ resistor
   holds the gate at the source when the switch is off; the switch's pin 3 is unconnected. Leave the
@@ -43,9 +44,19 @@ updated: 2026-10-22T19:00
   the battery connector. With a 6.1 mm installed battery stack, it clears assumed 2 mm underside
   parts by 4.4 mm at rest and 2.9 mm at full gasket travel, and stays at least 15 mm from the
   controller's antenna end.
-- **LED power:** the LEDs run from the battery (B+) through an AO3401A P-MOSFET, whose gate an
-  AO3400A N-MOSFET on P0.08 pulls low to turn them on. 100 kΩ resistors hold both MOSFETs off, and
-  a 10 µF + 100 nF pair sits at the switch's output.
+- **LED power:** a TI TPS61023 synchronous boost (SOT-563) turns B+ into a 4.95 V LED rail
+  (LED_VDD), inside the SK6812MINI-E's 3.7–5.5 V over the whole charge. P0.08 drives its enable
+  directly (ZMK's ext-power), and a 100 kΩ resistor holds it off while the controller boots or
+  sleeps; shut down, the converter disconnects its output, so the rail sits at 0 V. A 1 µH, 1210
+  inductor (TDK TMS322512ALM-1R0MTAA), 2 × 22 µF at the output, 10 µF at the input and a 732 kΩ /
+  100 kΩ feedback divider complete it, laid out as the datasheet's example. Its switch limit is
+  2.7–3.7 A.
+- **LED data:** P0.06 drives an SN74LV1T125 single buffer beside the first LED, powered from the
+  LED rail; its input threshold is 2.03 V at 5 V, so the controller's 3.3 V data drives the chain
+  at 5 V, through a 330 Ω resistor into the first LED's DIN. Its inputs take 5.5 V with no supply,
+  so the controller can't back-power the dark rail.
+- **LED decoupling:** every LED has a 0805 100 nF footprint beside it; every fourth is fitted
+  (LEDs 4, 8, … 32), the others are optional. A 10 µF capacitor sits beside the last LED.
 - **Antenna:** each controller's antenna end is kept clear of the ground fill, and the case is
   plastic.
 
@@ -59,11 +70,15 @@ References and soldering notes for every part are in `fab/BOM.md`.
 | Akko V3 Lavender Purple Pro switch + Kailh hotswap socket | 33 | 33 |
 | 1N4148 diode (DO-35) | 34 | 34 |
 | SK6812MINI-E RGB LED | 33 | 33 |
-| 10 µF + 100 nF capacitors, 1206 (LED rail) | 1 + 1 | 1 + 1 |
+| TPS61023 boost (SOT-563), 1 µH inductor (1210) | 1 + 1 | 1 + 1 |
+| 22 µF capacitors, 1206 (boost output) | 2 | 2 |
+| 10 µF capacitors, 1206 (boost input, last LED) | 2 | 2 |
+| 732 kΩ + 2 × 100 kΩ resistors, 1206 (feedback, enable) | 1 + 2 | 1 + 2 |
+| SN74LV1T125 buffer (SOT-23-5), 330 Ω resistor (0805) | 1 + 1 | 1 + 1 |
+| 100 nF capacitors, 0805 (buffer, every fourth LED; 25 optional) | 9 | 9 |
 | KP-355085 LiPo battery + JST-PH connector | 1 | 1 |
 | SK12D07VG5 power slide switch | 1 | 1 |
 | AO3401A P-MOSFET + 1 MΩ gate resistor, 1206 (battery switch) | 1 + 1 | 1 + 1 |
-| AO3401A P-MOSFET, AO3400A N-MOSFET, 2 × 100 kΩ, 1206 (LED power switch) | 1 + 1 + 2 | 1 + 1 + 2 |
 | 6 mm reset button | 1 | 1 |
 | EC11 encoder (20 mm D shaft) + knob | 1 | 1 |
 | 0.96 in. SSD1306 OLED module, I2C | 1 | 1 |
