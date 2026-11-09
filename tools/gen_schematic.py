@@ -81,7 +81,7 @@ FP = {
     "enc_header": "Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Horizontal",
     "pwr": "keygen:SW_SK12D07VG5",
     "fet": "Package_TO_SOT_SMD:SOT-23",
-    "boost": "Package_TO_SOT_SMD:SOT-563",
+    "boost": "keygen:SOT-563_HandSolder",
     "buf": "Package_TO_SOT_SMD:SOT-23-5_HandSoldering",
     "ind": "Inductor_SMD:L_1210_3225Metric_Pad1.42x2.65mm_HandSolder",
     "cap_led": "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder",   # one beside each LED
@@ -314,6 +314,22 @@ def keygen_footprints():
                [S("fill"), S("no")], [S("layer"), "F.Fab"]])
     fp.append(model(f"{SHAPES}/Knob_17mm.step", offset=(0, 0, KNOB_MODEL_Z)))
     save(fp, "EC11_Case_Mount")
+
+    # SOT-563 for hand soldering (the LED boost): KiCad's pads, each 0.4 mm longer outwards, so an
+    # iron tip has 0.6 mm of pad beyond the leads; the inner edges and the 0.5 mm pitch stay
+    fp = load(Path("/usr/share/kicad/footprints/Package_TO_SOT_SMD.pretty"), "SOT-563")
+    for pad in find(fp, "pad"):
+        at, size = first(pad, "at"), first(pad, "size")
+        x = float(str(at[1])); at[1] = round(x + (0.2 if x > 0 else -0.2), 4)
+        size[1] = round(float(str(size[1])) + 0.4, 4)
+    for ln in find(fp, "fp_line"):
+        if first(ln, "layer")[1] == "F.CrtYd":
+            for k in ("start", "end"):
+                pt = first(ln, k)
+                x = float(str(pt[1]))
+                if abs(abs(x) - 1.2) < 1e-6: pt[1] = 1.6 if x > 0 else -1.6
+    for d in find(fp, "descr"): d[1] = d[1] + " (Keygen: pads 0.4 mm longer outwards, for hand soldering)"
+    save(fp, "SOT-563_HandSolder")
 
 def keygen_lib():
     lib = [S("kicad_symbol_lib"), [S("version"), 20241209], [S("generator"), "keygen_gen_schematic"],

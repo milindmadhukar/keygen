@@ -315,9 +315,10 @@ The power switch beside them is through-hole: it goes on with the battery connec
 The LED boost, on the back between the battery connector and the board edge (on the right half the
 group is turned half a turn and sits higher):
 
-- TPS61023 boost **U102 / U202**. Its pins are 0.5 mm apart: flux the pads, tin one corner pad,
-  place the part with pin 1 on the footprint's mark, then drag the other pins with a fine tip, or
-  reflow it with hot air. Check for bridges under a loupe.
+- TPS61023 boost **U102 / U202**. Its pins are 0.5 mm apart, and its pads reach 0.6 mm past the
+  leads for the iron: flux the pads, tin one corner pad, place the part with pin 1 on the
+  footprint's mark, then touch each lead's pad tip with a fine tip, or reflow it with hot air.
+  Check for bridges under a loupe; wick removes one.
 - 1 µH inductor **L101 / L201**, beside it.
 - 22 µF capacitors **C101, C104 / C201, C204** and 10 µF capacitor **C103 / C203**.
 - 732 kΩ resistor **R102 / R202** and 100 kΩ resistor **R104 / R204**, the feedback divider beside

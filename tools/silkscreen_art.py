@@ -315,6 +315,18 @@ def obstacles(b, side):
     pads.Simplify(); fsilk.Simplify()
     return pads, fsilk
 
+def controllers(b):
+    """The area each controller covers, grown 1 mm, on both faces: no stars between or under its
+    header rows, where they only crowd the pins and the socket."""
+    out = empty()
+    for ref in ("U101", "U201"):
+        fp = b.FindFootprintByReference(ref)
+        if fp is None: continue
+        xs = [p.GetPosition().x / 1e6 for p in fp.Pads()]; ys = [p.GetPosition().y / 1e6 for p in fp.Pads()]
+        out.BooleanAdd(poly([(min(xs) - 2.0, min(ys) - 4.0), (max(xs) + 2.0, min(ys) - 4.0),
+                             (max(xs) + 2.0, max(ys) + 2.5), (min(xs) - 2.0, max(ys) + 2.5)]))
+    return out
+
 def starfield(region, avoid, rng, n, big=0.06, nebula=None):
     """Scatter n stars (dots, a few four-point sparkles) inside region, each clear of avoid.
     nebula=(x, y, sx, sy) packs most of them into a Gaussian cloud there, as on the cover."""
@@ -412,18 +424,13 @@ def artwork(b):
     stars = starfield(sky, avoid, rng, 70, big=0.03, nebula=(0.0, gy - 1.0, 4.0, 5.0))
     art["F"].append(place(union([win, stars]), WX, WY))
 
-    # top, left half: stars between the controller's header rows
-    strip = poly([(152.3, 82.5), (166.0, 82.5), (166.0, 110.0), (152.3, 110.0)])
-    art["F"].append(starfield(strip, union(list(obs["F"])), rng, 28))
-
     # top, right half: moon, STMPD emblem, stars
     m = place(moon(5.4, [(-0.6, 0.1, 0.12), (-0.38, -0.5, 0.08), (-0.5, 0.52, 0.1), (-0.78, -0.25, 0.05)]), 243.3, 106.0)
     c = place(stmpd(10.0, 0.2), 241.2, 134.0)          # between the mounting hole H202, the edge and
     lbl = text("STMPD RCRDS", 241.2, 141.9, 1.0, w=0.18, gap=2.0)   # the encoder opening
     tr = union([m, c, lbl])
     sky_r = union([poly([(228.0, 86.0), (256.0, 86.0), (256.0, 124.0), (228.0, 124.0)]),
-                   poly([(226.0, 124.0), (255.0, 124.0), (255.0, 146.0), (226.0, 146.0)]),
-                   poly([(258.0, 82.5), (270.0, 82.5), (270.0, 110.0), (258.0, 110.0)])])
+                   poly([(226.0, 124.0), (255.0, 124.0), (255.0, 146.0), (226.0, 146.0)])])
     sky_r.BooleanIntersection(inside)
     art["F"].append(union([tr, starfield(sky_r, union([grow(tr, 0.35)] + list(obs["F"])), rng, 85)]))
 
@@ -566,7 +573,7 @@ def main():
         layer = pcbnew.F_SilkS if side == "F" else pcbnew.B_SilkS
         pads, fsilk = obstacles(b, side)
         art = union(pieces)
-        free = minus(minus(minus(inside, pads), fsilk), grow(art, 0.4))
+        free = minus(minus(minus(minus(inside, pads), fsilk), grow(art, 0.4)), controllers(b))
         bb = board.BBox()
         rng = random.Random(406 if side == "F" else 4927)
         clusters = [(rng.uniform(bb.GetLeft() / 1e6, bb.GetRight() / 1e6), rng.uniform(bb.GetTop() / 1e6, bb.GetBottom() / 1e6),

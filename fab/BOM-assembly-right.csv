@@ -20,5 +20,5 @@ Item Number,Designator,Unit Quantity,Description,Manufacturer Part Number,Footpr
 19,SW290,1,SK12D07VG5 power slide switch,"SK12D07VG5 (Shou Han, LCSC C431548)",keygen:SW_SK12D07VG5,SK12D07VG5 power,BOTTOM side.
 20,SW291,1,6 mm reset button,"6x6x5 mm THT tactile switch (e.g. TS-1102S-B-B, any 6x6x5)",Button_Switch_THT:SW_PUSH_6mm_H5mm,Reset,BOTTOM side.
 21,U201,1,nRF52840 SuperMini (nice!nano v2 clone),Customer supplied: nRF52840 SuperMini (nice!nano v2 clone),keygen:nice_nano_H_USBup,nRF52840 Pro Micro,DO NOT FIT: customer solders sockets + controller (BOTTOM side).
-22,U202,1,TPS61023 boost converter (SOT-563),TPS61023DRLR (Texas Instruments),Package_TO_SOT_SMD:SOT-563,TPS61023,BOTTOM side.
+22,U202,1,TPS61023 boost converter (SOT-563),TPS61023DRLR (Texas Instruments),keygen:SOT-563_HandSolder,TPS61023,BOTTOM side.
 23,U203,1,SN74LV1T125 buffer (SOT-23-5),SN74LV1T125DBVR (Texas Instruments),Package_TO_SOT_SMD:SOT-23-5_HandSoldering,SN74LV1T125,BOTTOM side.

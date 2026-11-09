@@ -44,7 +44,8 @@ updated: 2026-10-22T19:00
   the battery connector. With a 6.1 mm installed battery stack, it clears assumed 2 mm underside
   parts by 4.4 mm at rest and 2.9 mm at full gasket travel, and stays at least 15 mm from the
   controller's antenna end.
-- **LED power:** a TI TPS61023 synchronous boost (SOT-563) turns B+ into a 4.95 V LED rail
+- **LED power:** a TI TPS61023 synchronous boost (SOT-563, on pads 0.4 mm longer than KiCad's for
+  hand soldering) turns B+ into a 4.95 V LED rail
   (LED_VDD), inside the SK6812MINI-E's 3.7–5.5 V over the whole charge. P0.08 drives its enable
   directly (ZMK's ext-power), and a 100 kΩ resistor holds it off while the controller boots or
   sleeps; shut down, the converter disconnects its output, so the rail sits at 0 V. A 1 µH, 1210
@@ -85,15 +86,16 @@ References and soldering notes for every part are in `fab/BOM.md`.
 
 ## PCB
 
-- **Routed and DRC clean.** DRC with schematic parity shows 0 errors, 0 warnings, 0 unconnected
-  items and 0 parity issues.
-- **Rules:** 0.25 mm signal and 0.4 mm power traces, 0.2 mm clearance, 0.15 mm minimum track,
-  0.2 mm copper-to-edge. That is within JLCPCB's 2-layer capability.
+- **Routed and DRC clean.** DRC with schematic parity shows 0 errors, 0 unconnected items and 0
+  parity issues, with 3 silkscreen warnings.
+- **Rules:** 0.25 mm signal and 0.4 mm power traces, 0.2 mm clearance (0.15 mm at the LED boost's
+  0.5 mm-pitch pins), 0.15 mm minimum track, 0.2 mm copper-to-edge. That is within JLCPCB's
+  2-layer capability.
 - **Routing:** Freerouting does most of the signal routing, then a custom grid maze router
   finishes the rest. All tracks are then straightened into 0/45/90° runs. Ground is a fill on both
   layers, joined to every pad through thermal spokes so a hand iron heats the pad rather than the
-  plane. Two spokes per pad at least, one on the few LED ground pads with room for only one
-  (`pcb/keygen.kicad_dru`). [`pcb-routing.png`](https://github.com/milindmadhukar/keygen/releases/download/media/pcb-routing.png) shows both copper layers.
+  plane. Two spokes per pad at least, one on the LED, buffer and capacitor ground pads with room
+  for only one (`pcb/keygen.kicad_dru`). [`pcb-routing.png`](https://github.com/milindmadhukar/keygen/releases/download/media/pcb-routing.png) shows both copper layers.
 - **Datasheet audit:** `tools/check_datasheets.py` checks the routed
   board against each part's datasheet: pinouts, orientations, nRF52840 pin restrictions, the battery
   path, antenna clearance and the current budget. The datasheets are in

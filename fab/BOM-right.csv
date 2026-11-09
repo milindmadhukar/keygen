@@ -20,5 +20,5 @@ AO3401A P-MOSFET (SOT-23),1,Q201,AO3401A,Package_TO_SOT_SMD:SOT-23,"SMD, back si
 SK12D07VG5 power slide switch,1,SW290,SK12D07VG5 power,keygen:SW_SK12D07VG5,"through-hole, back side at the top edge, knob out; pins trimmed flush on the front"
 6 mm reset button,1,SW291,Reset,Button_Switch_THT:SW_PUSH_6mm_H5mm,"through-hole, back side"
 nRF52840 SuperMini (nice!nano v2 clone),1,U201,nRF52840 Pro Micro,keygen:nice_nano_H_USBup,"on the back, socketed (Mill-Max/low-profile); check B+, GND and VCC first"
-TPS61023 boost converter (SOT-563),1,U202,TPS61023,Package_TO_SOT_SMD:SOT-563,"SMD, back side, beside the battery connector; 0.5 mm pitch: flux, then a fine tip or hot air. Pin 1 to the footprint's mark"
+TPS61023 boost converter (SOT-563),1,U202,TPS61023,keygen:SOT-563_HandSolder,"SMD, back side, beside the battery connector; 0.5 mm pitch: flux, then a fine tip or hot air. Pin 1 to the footprint's mark"
 SN74LV1T125 buffer (SOT-23-5),1,U203,SN74LV1T125,Package_TO_SOT_SMD:SOT-23-5_HandSoldering,"SMD, back side, beside the first LED"

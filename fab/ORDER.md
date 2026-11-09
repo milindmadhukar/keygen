@@ -15,7 +15,7 @@ In the JLCPCB cart (2026-10-27): US$15.40 per half, US$40.63 for both with UPS t
 | Surface finish | HASL lead-free (fine for hand soldering) |
 | Mark on PCB | Remove Mark (keeps the fab's order number off the silkscreen artwork) |
 | Soldermask / silkscreen | **black / white** (the silkscreen artwork is drawn for it; set in the board stackup) |
-| Min track / clearance | 0.15 mm / 0.2 mm (6/8 mil) |
+| Min track / clearance | 0.15 mm / 0.15 mm (6/6 mil; 0.15 mm only between the LED boost's pins, 0.2 mm elsewhere) |
 | Min hole | 0.3 mm (vias); no blind/buried vias |
 | Assembly | none (bare boards) |
 | Stencil | not needed |
