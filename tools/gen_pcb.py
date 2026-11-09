@@ -286,18 +286,54 @@ LEFT_PARTS = {
     # battery load switch: P-MOSFET and its gate resistor, between the controller and the slide switch
     "Q1":  dict(x=MCU_X + 12.25, y=TOP_EDGE + 8.0, back=True),
     "R1":  dict(x=MCU_X + 12.25, y=TOP_EDGE + 13.5, back=True),
-    # LED power switch and the LED rail's capacitors: two columns between the battery connector
-    # and the board edge, clear of mounting hole H103/H202 and the reset button
-    "Q2":  dict(x=MCU_X + 21.25, y=TOP_EDGE + 14.75, back=True),
-    "R2":  dict(x=MCU_X + 21.25, y=TOP_EDGE + 19.75, back=True, rot=90),
-    "Q3":  dict(x=MCU_X + 21.25, y=TOP_EDGE + 24.75, back=True),
-    "R3":  dict(x=MCU_X + 21.25, y=TOP_EDGE + 29.5, back=True, rot=90),
-    "C1":  dict(x=MCU_X + 25.25, y=TOP_EDGE + 18.25, back=True, rot=90),
-    "C2":  dict(x=MCU_X + 25.25, y=TOP_EDGE + 24.25, back=True, rot=90),
+    # the LED boost's enable pull-down: below the boost on the left, above it on the right, where
+    # that half's boost group is turned half a turn (right= gives the right half's own position)
+    "R3":  dict(x=MCU_X + 21.25, y=TOP_EDGE + 29.5, back=True, rot=270, right=dict(x=215.0, y=12.4, rot=0)),
     # reset: x is the body's centre, so the two halves' buttons mirror; its origin (pad 1) sits
     # 3.25 mm off the centre, toward +x on both halves once flipped to the back
     "SW91": dict(x=MCU_X + 20.25, y=TOP_EDGE + 36.0, back=True, body_dx=-3.25),
 }
+# The LED boost (U2, TPS61023) and its parts, between the battery connector and the board edge.
+# Offsets from U2 in mm; the layout follows the datasheet's example (section 10.2): the inductor
+# beside the IC with the SW trace between its pin rows, the output capacitors across VOUT and GND,
+# the input capacitor across VIN and GND. U2's pinout isn't symmetric, so the right half turns the
+# whole group half a turn instead of mirroring it, and sits higher, clear of its battery connector.
+BOOST = [   # (ref, dx, dy, rot)
+    ("U2", 0.0, 0.0, 90), ("L1", -2.6, 0.0, 90),
+    ("C1", -0.9, -3.65, 0), ("C4", -0.9, -6.05, 0),       # 2 x 22 uF at VOUT
+    ("C3", -0.9, 3.6, 180),                                # 10 uF at VIN
+    ("R2", 2.75, -2.3, 270), ("R4", 2.75, 2.6, 270),       # feedback divider
+]
+BOOST_AT = {"left": (155.4, 23.5), "right": (216.3, 18.6)}  # U2, KLE frame (board mm minus OFF)
+# The 100 nF beside each LED (C111-C143, C211-C243): (x, y) in the key's frame from the switch
+# centre, and its turn relative to the key. Each spot is clear of the routed copper, within reach of
+# the LED rail and as close to its LED's VDD pad as the board allows.
+LED_CAPS = {
+    "left": {1: (-4.75, 6.83, 270), 2: (-5.75, 5.58, 0), 3: (-4.75, 3.08, 90), 4: (-5.75, 4.83, 0), 5: (-6, 3.33, 0),
+             6: (-6, 6.08, 0), 7: (-4.5, 2.08, 0), 8: (-4.75, 2.83, 90), 9: (-4.75, 3.83, 90), 10: (-3.75, 2.08, 0),
+             11: (-5.25, 8.58, 270), 12: (-3.25, 9.58, 180), 13: (-4.75, 3.58, 90), 14: (-3.75, 2.08, 0),
+             15: (-4.75, 6.58, 270), 16: (-5, 2.83, 90), 17: (3.75, 2.08, 180), 18: (-4.75, 2.83, 90),
+             19: (-4.75, 3.33, 90), 20: (-5, 2.83, 90), 21: (4.5, 2.08, 180), 22: (-4.75, 6.58, 270),
+             23: (-5, 7.33, 270), 24: (-4.75, 3.83, 90), 25: (-3.75, 2.08, 0), 26: (-4.75, 3.58, 90),
+             27: (-3.75, 2.08, 0), 28: (-4.75, 2.83, 90), 29: (-4.75, 3.33, 90), 30: (-5.75, 2.83, 0),
+             31: (-5.75, 3.33, 0), 32: (-4.75, 5.83, 270), 33: (-4.75, 3.33, 90)},
+    "right": {1: (-4.75, 4.08, 90), 2: (-4.75, 2.83, 90), 3: (-4.75, 2.83, 90), 4: (-3, 8.83, 270), 5: (-5.25, 2.83, 90),
+              6: (-5.25, 4.33, 90), 7: (-4.5, 2.08, 0), 8: (-5.25, 5.08, 270), 9: (-3.75, 2.08, 0),
+              10: (-4.75, 2.83, 90), 11: (-4.5, 2.08, 0), 12: (-4.25, 2.08, 0), 13: (-4.5, 2.08, 0),
+              14: (-5.75, 5.08, 0), 15: (-4.75, 3.08, 90), 16: (-4.75, 2.83, 90), 17: (-5.25, 3.33, 90),
+              18: (-1, 9.58, 270), 19: (-4.75, 4.08, 90), 20: (-2.75, 8.08, 180), 21: (-4.5, 2.08, 0),
+              22: (-4.75, 5.83, 270), 23: (-4, 2.08, 0), 24: (-6, 5.08, 270), 25: (-4.75, 3.58, 90),
+              26: (-4.75, 3.83, 90), 27: (-5.25, 4.08, 270), 28: (-4.75, 6.58, 270), 29: (-5.75, 3.58, 0),
+              30: (-4.75, 2.83, 90), 31: (-4.75, 3.08, 90), 32: (-4.75, 5.33, 270), 33: (-4.75, 5.33, 270)},
+}
+# The LED data buffer (U3), its 100 nF (C2) and the data resistor (R5), beside the first LED: the
+# controller's 3.3 V data crosses the board as before and the buffer drives the first LED's DIN at
+# 5 V from a few millimetres away. (x, y, rot), KLE frame.
+BUFFER = {
+    "left": {"U3": (22.14, 21.0, 90), "C2": (23.84, 16.65, 90), "R5": (19.69, 16.65, 270)},
+    "right": {"U3": (360.28, 20.75, 90), "C2": (363.23, 20.15, 270), "R5": (357.83, 16.4, 270)},
+}
+LED_BULK = {"left": (-8.25, 4.33, 0), "right": (-6.25, 2.08, 0)}   # C5, 10 uF, in the last LED's key frame
 BAT_PLUS = (3.5, 0.0)                        # "+" beside the battery connector's pad 1, outside its outline
 # Encoders: one per half, mirrored. The right half's shaft, on the front below the controller and its
 # OLED: a 17 mm knob clears the OLED by 10 mm, the thumb cluster's top keycap by 5.7 mm and H by 9.1 mm.
@@ -365,6 +401,15 @@ def build():
             lx, ly = rot(LED_OFFSET, ro)
             li = [i for i, k in enumerate(keys) if (k[0], k[1]) == (r, c)][0]
             B.place(f"LED{base+li+1}", cx + lx, cy + ly, ro, back=True)
+            kx, ky, rel = LED_CAPS[side][li + 1]
+            px, py = rot((kx, ky), ro)
+            cap = B.place(f"C{base + g.LED_CAP_BASE + li + 1}", cx + px, cy + py, ro + rel, back=True)
+            cap.Reference().SetVisible(False)      # 33 more labels would only clutter the silkscreen
+            cap.SetDNP(not g.led_cap_fitted(li + 1))
+            if li == len(keys) - 1:
+                kx, ky, rel = LED_BULK[side]
+                px, py = rot((kx, ky), ro)
+                B.place(f"C{base + 5}", cx + px, cy + py, ro + rel, back=True)
             east = (span * U / 2 - 1.225, DIODE_PAD1[1]) if span > 1 else DIODE_PAD1
             dx, dy = rot(east, ro)
             B.place(f"D{base+n}", cx + dx, cy + dy, ro, back=True, extra=90)
@@ -380,7 +425,17 @@ def build():
         mir = (lambda x: MIRROR_X - x) if side == "right" else (lambda x: x)
         for key, p in LEFT_PARTS.items():
             prefix, n = re.match(r"([A-Z]+)(\d+)$", key).groups()
+            if side == "right" and "right" in p:
+                q = p["right"]; B.place(f"{prefix}{base + int(n)}", q["x"], q["y"], q["rot"], back=p["back"]); continue
             B.place(f"{prefix}{base + int(n)}", mir(p["x"]) - p.get("body_dx", 0), p["y"], p.get("rot", 0), back=p["back"])
+        ax, ay = BOOST_AT[side]
+        for ref, dx, dy, r in BOOST:
+            if side == "right": dx, dy, r = -dx, -dy, r + 180
+            prefix, n = re.match(r"([A-Z]+)(\d+)$", ref).groups()
+            B.place(f"{prefix}{base + int(n)}", ax + dx, ay + dy, r, back=True)
+        for ref, (x, y, r) in BUFFER[side].items():
+            prefix, n = re.match(r"([A-Z]+)(\d+)$", ref).groups()
+            B.place(f"{prefix}{base + int(n)}", x, y, r, back=True)
         if enc:
             hx, hy = ENC_HEADER
             B.place(f"J{base+2}", sx + hx + 4 * 2.54 if side == "right" else sx - hx, sy + hy, 90,

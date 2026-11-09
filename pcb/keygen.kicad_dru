@@ -5,3 +5,15 @@
 (rule "LED ground pads: one spoke"
   (condition "A.memberOfFootprint('LED*') || B.memberOfFootprint('LED*')")
   (constraint min_resolved_spokes 1))
+
+# The LED boost (TPS61023, SOT-563) has 0.5 mm pitch pins with 0.15 mm between pads; JLCPCB's
+# two-layer minimum is 0.127 mm.
+(rule "LED boost pin pitch"
+  (condition "A.memberOfFootprint('U102') || A.memberOfFootprint('U202') || B.memberOfFootprint('U102') || B.memberOfFootprint('U202')")
+  (constraint clearance (min 0.15mm)))
+
+# The LED data buffer's ground pins and a few LED capacitors sit between tracks, where only one
+# spoke of the fill reaches them.
+(rule "Small parts: one spoke"
+  (condition "A.memberOfFootprint('U?03') || A.memberOfFootprint('C???') || B.memberOfFootprint('U?03') || B.memberOfFootprint('C???')")
+  (constraint min_resolved_spokes 1))

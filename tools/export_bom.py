@@ -29,22 +29,29 @@ KINDS = [
     (r"PinHeader_1x05", "1x5 right-angle pin header", "Encoder lead", "through-hole, back side, pins lying flat and pointing away from the thumb keys"),
     (r"JST_PH", "JST-PH 2-pin battery connector", "Battery connector", "through-hole side-entry, back side; check battery polarity first"),
     (r"EC11|ROT_Alps", "EC11 rotary encoder", "Rotary encoder", "held in the top frame by its M7 nut, 20 mm D shaft"),
-    (r"10uF", "10 µF capacitor (1206)", "LED decoupling", "SMD, back side, beside the LED power switch"),
-    (r"100nF", "100 nF capacitor (1206)", "LED decoupling", "SMD, back side, beside the LED power switch"),
-    (r"AO3401A", "AO3401A P-MOSFET (SOT-23)", "P-channel MOSFETs",
-     "SMD, back side: Q1 between the controller and the power switch, Q2 in the LED power switch"),
-    (r"AO3400A", "AO3400A N-MOSFET (SOT-23)", "LED switch N-MOSFET", "SMD, back side, in the LED power switch"),
+    (r"TPS61023", "TPS61023 boost converter (SOT-563)", "LED boost converter",
+     "SMD, back side, beside the battery connector; 0.5 mm pitch: flux, then a fine tip or hot air. Pin 1 to the footprint's mark"),
+    (r"SN74LV1T125", "SN74LV1T125 buffer (SOT-23-5)", "LED data buffer", "SMD, back side, beside the first LED"),
+    (r"^1uH$", "1 µH inductor (1210)", "LED boost inductor", "SMD, back side, beside the boost"),
+    (r"^22uF$", "22 µF capacitor (1206)", "LED boost capacitors", "SMD, back side, at the boost's output"),
+    (r"^10uF$", "10 µF capacitor (1206)", "10 µF capacitors", "SMD, back side: C3 at the boost's input, C5 at the last LED"),
+    (r"C_0805.*|^100nF$", "100 nF capacitor (0805)", "LED capacitors", "SMD, back side: C2 at the data buffer, and beside every fourth LED"),
+    (r"^732k$", "732 kΩ resistor, 1 % (1206)", "Boost feedback resistors", "SMD, back side, beside the boost"),
+    (r"^100k$", "100 kΩ resistor, 1 % (1206)", "Boost feedback resistors", "SMD, back side: R3 below the boost (enable), R4 beside it (feedback)"),
+    (r"^330$", "330 Ω resistor (0805)", "Data resistor", "SMD, back side, beside the data buffer and the first LED"),
+    (r"AO3401A", "AO3401A P-MOSFET (SOT-23)", "P-channel MOSFETs", "SMD, back side, between the controller and the power switch"),
     (r"^1M$", "1 MΩ resistor (1206)", "Gate resistor", "SMD, back side, below the battery MOSFET"),
-    (r"^100k$", "100 kΩ resistor (1206)", "LED switch resistors", "SMD, back side, in the LED power switch"),
 ]
+OPTIONAL = ("100 nF capacitor (0805), optional", "LED capacitors",
+            "Not fitted: footprints beside the other LEDs, for extra decoupling if the chain flickers")
 SKIP = re.compile(r"^(#|H\d)")          # power flags, mounting holes (not parts)
 
 
 def schematic_parts():
     with tempfile.TemporaryDirectory() as d:
         out = Path(d) / "bom.csv"
-        subprocess.run(["kicad-cli", "sch", "export", "bom", "--fields", "Reference,Value,Footprint",
-                        "--labels", "Ref,Value,Footprint", "--ref-range-delimiter", "", "-o", str(out), str(SCH)],
+        subprocess.run(["kicad-cli", "sch", "export", "bom", "--fields", "Reference,Value,Footprint,${DNP}",
+                        "--labels", "Ref,Value,Footprint,DNP", "--ref-range-delimiter", "", "-o", str(out), str(SCH)],
                        check=True, capture_output=True)
         rows = list(csv.DictReader(out.open()))
     parts = []
@@ -52,11 +59,13 @@ def schematic_parts():
         for ref in r["Ref"].split(","):
             ref = ref.strip()
             if ref and not SKIP.match(ref):
-                parts.append((ref, r["Value"], r["Footprint"]))
+                parts.append((ref, r["Value"], r["Footprint"], bool(r["DNP"].strip())))
     return parts
 
 
-def kind_of(value, footprint):
+def kind_of(value, footprint, dnp=False):
+    if dnp:
+        return OPTIONAL
     for pat, name, bomrow, note in KINDS:
         if re.search(pat, footprint) or re.search(pat, value):
             return name, bomrow, note
@@ -71,10 +80,10 @@ def natural(ref):
 def group(parts, side):
     lo, hi = (100, 200) if side == "left" else (200, 300)
     g = OrderedDict()
-    for ref, value, fp in sorted(parts, key=lambda p: natural(p[0])):
+    for ref, value, fp, dnp in sorted(parts, key=lambda p: natural(p[0])):
         n = natural(ref)[1]
         if not lo <= n < hi: continue
-        name, bomrow, note = kind_of(value, fp)
+        name, bomrow, note = kind_of(value, fp, dnp)
         e = g.setdefault(name, {"refs": [], "value": value, "footprint": fp, "bomrow": bomrow, "note": note})
         e["refs"].append(ref)
     return g
@@ -104,12 +113,17 @@ MPN = {
     "1N4148 diode": "1N4148 (DO-35, e.g. onsemi 1N4148)",
     "SK6812MINI-E LED": "SK6812MINI-E (OPSCO, LCSC C5149201)",
     "10 µF capacitor (1206)": "CL31A106KBHNNNE (Samsung, 10 µF 50 V X5R 1206)",
-    "100 nF capacitor (1206)": "CL31B104KBCNNNC (Samsung, 100 nF 50 V X7R 1206)",
+    "22 µF capacitor (1206)": "CS3216X7R226K160NRI (Samwha, 22 µF 16 V X7R 1206)",
+    "100 nF capacitor (0805)": "100 nF 50 V X7R 0805 (any)",
+    "TPS61023 boost converter (SOT-563)": "TPS61023DRLR (Texas Instruments)",
+    "SN74LV1T125 buffer (SOT-23-5)": "SN74LV1T125DBVR (Texas Instruments)",
+    "1 µH inductor (1210)": "TMS322512ALM-1R0MTAA (TDK)",
+    "732 kΩ resistor, 1 % (1206)": "RC1206FR-07732KL (Yageo)",
+    "100 kΩ resistor, 1 % (1206)": "RC1206FR-07100KL (Yageo)",
+    "330 Ω resistor (0805)": "RC0805FR-07330RL (Yageo)",
     "SK12D07VG5 power slide switch": "SK12D07VG5 (Shou Han, LCSC C431548)",
     "AO3401A P-MOSFET (SOT-23)": "AO3401A (Alpha & Omega, SOT-23)",
-    "AO3400A N-MOSFET (SOT-23)": "AO3400A (Alpha & Omega, SOT-23)",
     "1 MΩ resistor (1206)": "1206W4F1004T5E (UNI-ROYAL, 1 MΩ 1% 1206)",
-    "100 kΩ resistor (1206)": "1206W4F1003T5E (UNI-ROYAL, 100 kΩ 1% 1206)",
     "6 mm reset button": "6x6x5 mm THT tactile switch (e.g. TS-1102S-B-B, any 6x6x5)",
     "JST-PH 2-pin battery connector": "S2B-PH-K-S(LF)(SN) (JST)",
     "1x5 right-angle pin header": "1x5 right-angle male pin header, 2.54 mm (any)",
@@ -128,6 +142,8 @@ def fab_instructions(name, refs):
                 "Match the corner mark to the footprint's pin-1 mark.")
     if name.startswith("nRF52840"):
         return "DO NOT FIT: customer solders sockets + controller (BOTTOM side)."
+    if name.endswith("optional"):
+        return "DO NOT FIT: optional footprints."
     if name.startswith("1N4148"):
         return "THT, BOTTOM side. Polarity: band (cathode) to the square pad."
     if name.startswith("EC11"):

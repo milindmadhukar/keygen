@@ -94,19 +94,27 @@ for side in ("left", "right"):
         # KiCad stock SK6812MINI-E numbering (mirrored datasheet view for reverse mount)
         pins = {nm: net_of(L, num) for num, nm in (("1", "VSS"), ("2", "DIN"), ("3", "VDD"), ("4", "DOUT"))}
         check(pins["VDD"] == "LED_VDD" and pins["VSS"] == "GND", f"{side} {L} power {pins}")
-        want_in = "LED_DIN" if i == 1 else net_of(f"LED{i-1}", "4")
+        want_in = "LED_D0" if i == 1 else net_of(f"LED{i-1}", "4")
         check(pins["DIN"] == want_in and want_in, f"{side} {L} DIN {pins['DIN']} not fed by previous LED ({want_in})")
     check(("U1", "1") in nets["LED_DIN"], f"{side} LED_DIN not driven by U1 pad 1")
+    caps = [f"C{g.LED_CAP_BASE + i}" for i in range(1, nled + 1)]
+    for C in caps:
+        check(net_of(C, "1") == "LED_VDD" and net_of(C, "2") == "GND", f"{side} {C} not across LED_VDD/GND")
+        check(fps[C].endswith("C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"), f"{side} {C} footprint {fps[C]}")
 
     expect = {
         "GND": {("U1", "3"), ("U1", "4"), ("U1", "14"), ("BT1", "2"), ("SW91", "2"), ("C1", "2"), ("C2", "2"), ("SW90", "1"),
-                ("Q3", "2"), ("R3", "2"), ("J1", "1")},
+                ("R3", "2"), ("J1", "1"), ("C3", "2"), ("C4", "2"), ("C5", "2"), ("R4", "2"), ("U2", "4"),
+                ("U3", "1"), ("U3", "3")} | {(f"C{g.LED_CAP_BASE + i}", "2") for i in range(1, len(keys) + 1)},
         "VCC": {("U1", "16"), ("J1", "2")},
         "OLED_SCL": {("U1", "6"), ("J1", "3")},
         "OLED_SDA": {("U1", "5"), ("J1", "4")},
-        "VBAT": {("U1", "13"), ("Q1", "3"), ("Q2", "2"), ("R2", "2")},
-        "LED_GATE": {("Q2", "1"), ("R2", "1"), ("Q3", "3")},
-        "LED_EN": {("U1", "2"), ("Q3", "1"), ("R3", "1")},
+        "VBAT": {("U1", "13"), ("Q1", "3"), ("U2", "3"), ("L1", "1"), ("C3", "1")},
+        "LED_EN": {("U1", "2"), ("U2", "2"), ("R3", "1")},
+        "LED_SW": {("U2", "5"), ("L1", "2")},
+        "LED_FB": {("U2", "1"), ("R2", "2"), ("R4", "1")},
+        "LED_DIN": {("U1", "1"), ("U3", "2")},
+        "LED_DY": {("U3", "4"), ("R5", "1")},
         "BAT_RAW": {("BT1", "1"), ("Q1", "2"), ("R1", "2")},
         "BAT_GATE": {("Q1", "1"), ("SW90", "2"), ("R1", "1")},
         "RST": {("U1", "15"), ("SW91", "1")},
@@ -120,8 +128,11 @@ for side in ("left", "right"):
         if net == "GND": have = {p for p in have if not p[0].startswith("LED")}
         check(have == want, f"{side} {net}: extra {sorted(have - want)} missing {sorted(want - have)}")
     check(len([p for p in nets["LED_VDD"] if p[0].startswith("LED")]) == nled, f"{side} LED_VDD LED count")
-    check({p for p in nets["LED_VDD"] if not p[0].startswith(("LED", "#"))} == {("Q2", "3"), ("C1", "1"), ("C2", "1")},
-          f"{side} LED_VDD: fed only by Q2's drain, with C1/C2")
+    check({p for p in nets["LED_VDD"] if not p[0].startswith(("LED", "#"))}
+          == {("U2", "6"), ("C1", "1"), ("C4", "1"), ("C2", "1"), ("C5", "1"), ("R2", "1"), ("U3", "5")}
+          | {(f"C{g.LED_CAP_BASE + i}", "1") for i in range(1, nled + 1)},
+          f"{side} LED_VDD: fed only by the boost's VOUT (U2 pin 6), with its caps, divider and the buffer")
+    check(set(nets["LED_D0"]) == {("R5", "2"), ("LED1", "2")}, f"{side} LED_D0: R5 to the first LED only")
     for ref, fp in fps.items():
         check(ref.startswith("#") or fp, f"{side} {ref} has no footprint")
     print(f"{side}: {len(fps)} parts, {len(nets)} nets checked")

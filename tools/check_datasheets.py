@@ -63,7 +63,7 @@ def role(net):
     if re.match(r"ROW\d$", net): return "slow", "matrix row (input, ~1 kHz)"
     if re.match(r"COL\d$", net): return "slow", "matrix column (output, ~1 kHz)"
     if net.startswith("ENC_"): return "slow", "encoder (input, < 1 kHz)"
-    if net == "LED_EN": return "slow", "LED power switch (output, changes when the LEDs turn on or off)"
+    if net == "LED_EN": return "slow", "LED boost enable (output, changes when the LEDs turn on or off)"
     if net in ("OLED_SDA", "OLED_SCL"): return "fast", "OLED I2C (400 kHz)"
     return None, net
 
@@ -75,15 +75,24 @@ SLIDE_COMMON, SLIDE_RATED_MA = "2", 300
 # VGS = -2.5 V, VSD up to 1 V, RthJA 125 C/W (steady state, max).
 AO_PINS = {"1": "G", "2": "S", "3": "D"}
 AO_RDS_25V_MOHM, AO_VGS_MAX, AO_VSD_V, AO_RTH_JA = 85, 12, 0.7, 125
-# AO3400A_AOS.pdf (p. 1): SOT-23 with the same pinout (1 G, 2 S, 3 D), VDS 30 V, VGS +-12 V, ID 5.7 A.
-# p. 2: VGS(th) 0.65-1.45 V, RDS(on) < 48 mOhm at VGS = 2.5 V.
-AON_VTH_MAX = 1.45
+# TPS61023_TI.pdf: SOT-563 (DRL), p. 3: 1 FB, 2 EN, 3 VIN, 4 GND, 5 SW, 6 VOUT. p. 5: VREF 580-610 mV
+# (595 typ, PWM), EN high above 1.2 V, valley switch limit 2.7-3.7 A, shutdown 0.1 uA with VOUT
+# disconnected, VOUT 2.2-5.5 V, OVP 5.5-6.0 V. p. 4: L 0.37-2.9 uH, C_OUT >= 4 uF effective.
+# p. 12: VOUT = VREF x (1 + R1/R2); p. 18: layout example.
+BOOST_PINS = {"1": "FB", "2": "EN", "3": "VIN", "4": "GND", "5": "SW", "6": "VOUT"}
+BOOST_VREF = (0.580, 0.595, 0.610)
+BOOST_EN_HIGH, BOOST_ILIM_A, BOOST_EFF = 1.2, 2.7, 0.9
+# SN74LV1T125_TI.pdf: SOT-23-5 (DBV), p. 3: 1 OE (active low), 2 A, 3 GND, 4 Y, 5 VCC. p. 6: VIH 2.03 V
+# at VCC 4.5-5.0 V, 2.11 V at 5.5 V. p. 1: inputs 5.0 V tolerant, also with VCC at 0 V.
+BUF_PINS = {"1": "OE", "2": "A", "3": "GND", "4": "Y", "5": "VCC"}
+BUF_VIH_5V = 2.11
 # nRF52840_PS_v1.1.pdf, GPIO electrical specification (p. 157): VOH >= VDD - 0.4 V at 0.5 mA
 # (standard drive). The nice!nano runs the nRF52840 at 3.3 V.
 NRF_VDD, NRF_VOH_DROP = 3.3, 0.4
-# SuperMini charger (vendor schematic, TP4054): 100 mA; the BOOST jumper, left open, gives about
-# 300 mA. SW_MA is the most the battery switch carries, LED current at the brightness cap. LiPo 3.0-4.2 V.
-CHARGE_MA, BOOST_MA, SW_MA, VBAT_MIN, VBAT_MAX = 100, 300, 510, 3.0, 4.2
+# SuperMini charger (vendor schematic, TP4054): 100 mA; with its BOOST link bridged, as Keygen's
+# build does, about 300 mA. SW_MA is the most the battery switch carries: the boost's input at the
+# LED brightness cap from a 3.0 V cell. LiPo 3.0-4.2 V.
+CHARGE_MA, VBAT_MIN, VBAT_MAX = 300, 3.0, 4.2
 # SK6812MINI-E_Opsco_rev02.pdf §4/§5, seen from the lens side:
 #   1 VDD (top left)      4 DIN (top right)
 #   2 DOUT (bottom left)  3 GND (bottom right, chamfered corner)
@@ -127,6 +136,21 @@ def lib_pins(lib, name):
     s = syms[name]
     if first(s, "extends"): s = syms[first(s, "extends")[1]]
     return {first(p, "number")[1]: first(p, "name")[1] for u in find(s, "symbol") for p in find(u, "pin")}
+
+def pin_names(ref):
+    """pin number -> name of a placed part's schematic symbol (stock or the project's own library),
+    if its footprint has a pad for every pin."""
+    v = fp(ref).GetValue()
+    if "TPS61023" in v:
+        tree = parse((ROOT / "pcb/lib/keygen.kicad_sym").read_text())
+        sym = next(x for x in find(tree, "symbol") if x[1] == "TPS61023")
+        names = {first(q, "number")[1]: first(q, "name")[1] for u in find(sym, "symbol") for q in find(u, "pin")}
+    elif "LV1T125" in v:
+        names = lib_pins("Logic_LevelTranslator.kicad_sym", "SN74LV1T125DBV")
+    else:
+        return {}
+    names = {k: n.replace("~{", "").replace("}", "") for k, n in names.items()}
+    return names if set(names) == set(pads(ref)) else {}
 
 # --------------------------------------------------------------------------------------
 # 1. Controller pinout and orientation
@@ -226,30 +250,43 @@ for side, d in SIDES.items():
        f"{side}: switch pin 3 unconnected, so its make-before-break slide never joins GND to the battery; "
        f"off, R{d}01 holds the gate at the source",
        f"{side}: switch pin 3 is on {pad_net(sw, '3')}: mid-slide the switch joins pins 1 and 3")
-    q2, r2, q3, r3 = f"Q{d}02", f"R{d}02", f"Q{d}03", f"R{d}03"
-    npins = lib_pins("Transistor_FET.kicad_sym", "AO3400A")
-    ok(npins == AO_PINS and len(pads(q3)) == 3, A, f"{side}: AO3400A symbol pins 1 G / 2 S / 3 D match the datasheet's SOT-23",
-       f"{side}: AO3400A symbol pins {npins}, datasheet {AO_PINS}")
-    ok(nodes(side, "VBAT") == {(u, "13"), (q, "3"), (q2, "2"), (r2, "2")}, A,
-       f"{side}: B+ is fed only by the battery MOSFET's drain (Q{d}01 pin 3) and feeds the controller, the LED switch's "
-       f"source (Q{d}02 pin 2) and its gate pull-up",
+    U2, L1, R2, R3, R4 = f"U{d}02", f"L{d}01", f"R{d}02", f"R{d}03", f"R{d}04"
+    ok(pin_names(U2) == BOOST_PINS, A, f"{side}: TPS61023 symbol pins {BOOST_PINS} match the datasheet's SOT-563",
+       f"{side}: TPS61023 symbol pins {pin_names(U2)}, datasheet {BOOST_PINS}")
+    ok(nodes(side, "VBAT") == {(u, "13"), (q, "3"), (U2, "3"), (L1, "1"), (f"C{d}03", "1")}, A,
+       f"{side}: B+ is fed only by the battery MOSFET's drain (Q{d}01 pin 3) and feeds the controller and the "
+       f"boost's VIN, inductor and input capacitor",
        f"{side}: VBAT = {sorted(nodes(side, 'VBAT'))}")
-    rail = {r for r, _ in nodes(side, "LED_VDD")}
-    ok(nodes(side, "LED_VDD") - {(r, p) for r, p in nodes(side, "LED_VDD") if r.startswith("LED")}
-       == {(q2, "3"), (f"C{d}01", "1"), (f"C{d}02", "1")} and all(re.match(r"(LED|C|Q)\d+$", r) for r in rail), A,
-       f"{side}: LED_VDD is fed only by the P-MOSFET's drain (Q{d}02 pin 3), with the 10 uF + 100 nF",
-       f"{side}: LED_VDD = {sorted(rail)}")
-    ok(nodes(side, "LED_GATE") == {(q2, "1"), (r2, "1"), (q3, "3")}, A,
-       f"{side}: Q{d}02's gate: pulled up to its source by R{d}02, pulled down by Q{d}03's drain",
-       f"{side}: LED_GATE = {sorted(nodes(side, 'LED_GATE'))}")
-    ok(nodes(side, "LED_EN") == {(u, "2"), (q3, "1"), (r3, "1")} and pad_net(q3, "2") == "GND" and pad_net(r3, "2") == "GND", A,
-       f"{side}: P0.08 (pad 2) drives Q{d}03's gate, R{d}03 holds it low; Q{d}03's source on GND",
+    ok(nodes(side, "LED_SW") == {(U2, "5"), (L1, "2")}, A, f"{side}: the inductor joins VIN to the boost's SW pin",
+       f"{side}: LED_SW = {sorted(nodes(side, 'LED_SW'))}")
+    feeders = {(r_, p_) for r_, p_ in nodes(side, "LED_VDD") if not re.match(r"(LED|C)\d+$", r_)}
+    ok(feeders == {(U2, "6"), (R2, "1"), (f"U{d}03", "5")}, A,
+       f"{side}: LED_VDD is driven only by the boost's VOUT (U{d}02 pin 6); it feeds the LEDs, the buffer and the divider",
+       f"{side}: LED_VDD non-capacitor nodes {sorted(feeders)}")
+    ok(nodes(side, "LED_FB") == {(U2, "1"), (R2, "2"), (R4, "1")} and pad_net(R4, "2") == "GND", A,
+       f"{side}: feedback divider R{d}02 (VOUT to FB) and R{d}04 (FB to GND)")
+    vals = {fp(R2).GetValue(), fp(R4).GetValue()}
+    r_top, r_bot = (732e3, 100e3) if vals == {"732k", "100k"} else (None, None)
+    if r_top:
+        vout = [v * (1 + r_top / r_bot) for v in BOOST_VREF]
+        ok(SK_VDD_MIN <= vout[0] and vout[2] <= 5.5, A,
+           f"{side}: VOUT = VREF x (1 + 732k/100k) = {vout[1]:.2f} V ({vout[0]:.2f}-{vout[2]:.2f} V over VREF's "
+           f"tolerance), inside the SK6812MINI-E's {SK_VDD_MIN}-5.5 V",
+           f"{side}: VOUT {vout[0]:.2f}-{vout[2]:.2f} V outside {SK_VDD_MIN}-5.5 V")
+    else:
+        report("FAIL", A, f"{side}: feedback divider values {vals}, expected 732k / 100k")
+    ok(nodes(side, "LED_EN") == {(u, "2"), (U2, "2"), (R3, "1")} and pad_net(R3, "2") == "GND", A,
+       f"{side}: P0.08 (pad 2) drives the boost's EN; R{d}03 holds it low before firmware configures P0.08",
        f"{side}: LED_EN = {sorted(nodes(side, 'LED_EN'))}")
+    ok(NRF_VDD - NRF_VOH_DROP > BOOST_EN_HIGH, A,
+       f"{side}: P0.08 high (>= {NRF_VDD - NRF_VOH_DROP:.1f} V) is above the TPS61023's {BOOST_EN_HIGH} V EN threshold")
+    ok(fp(L1).GetValue() == "1uH", A, f"{side}: 1 uH inductor, inside the datasheet's 0.37-2.9 uH")
+    near = [r_ for r_ in (L1, f"C{d}01", f"C{d}04", f"C{d}03")
+            if mm((fp(r_).GetPosition() - fp(U2).GetPosition()).EuclideanNorm()) > 7]
+    ok(not near, A, f"{side}: inductor and input/output capacitors within 7 mm of the boost",
+       f"{side}: {near} far from U{d}02")
     ok(nodes(side, "RST") == {(u, "15"), (rst, "1")} and pad_net(rst, "2") == "GND", A,
        f"{side}: RST pad -> reset button -> GND")
-    caps = {fp(f"C{d}0{i}").GetValue(): fp(f"C{d}0{i}") for i in (1, 2)}
-    far = [v for v, cp in caps.items() if mm((cp.GetPosition() - fp(q2).GetPosition()).EuclideanNorm()) > 12]
-    ok(not far, A, f"{side}: 10 uF + 100 nF within 12 mm of the LED switch's output", f"{side}: caps {far} far from Q{d}02")
 
 # --------------------------------------------------------------------------------------
 # 4. LEDs: physical pinout against the datasheet, chain order
@@ -309,32 +346,42 @@ for side, d in SIDES.items():
         if P["VDD"] != "LED_VDD" or P["VSS"] != "GND": bad.append(f"LED{d}{i:02d} power")
         if P["DIN"] != chain[-1]: bad.append(f"LED{d}{i:02d} DIN")
         chain.append(P["DOUT"])
-    ok(chain[0] == "LED_DIN" and not bad, A, f"{side}: one chain from P0.06 through all {len(leds)} LEDs, all on LED_VDD/GND",
+    U3, R5 = f"U{d}03", f"R{d}05"
+    ok(pin_names(U3) == BUF_PINS, A, f"{side}: SN74LV1T125 symbol pins {BUF_PINS} match the datasheet's SOT-23-5",
+       f"{side}: SN74LV1T125 symbol pins {pin_names(U3)}, datasheet {BUF_PINS}")
+    ok(nodes(side, "LED_DIN") == {(f"U{d}01", "1"), (U3, "2")} and pad_net(U3, "1") == "GND" and
+       pad_net(U3, "5") == "LED_VDD", A,
+       f"{side}: P0.06 drives the buffer's input; its OE is tied low and it runs from LED_VDD",
+       f"{side}: LED_DIN = {sorted(nodes(side, 'LED_DIN'))}, OE {pad_net(U3, '1')}, VCC {pad_net(U3, '5')}")
+    ok(nodes(side, "LED_DY") == {(U3, "4"), (R5, "1")} and nodes(side, "LED_D0") == {(R5, "2"), (f"LED{d}01", "2")}, A,
+       f"{side}: buffer output -> R{d}05 -> the first LED's DIN")
+    ok(mm((fp(R5).GetPosition() - fp(f"LED{d}01").GetPosition()).EuclideanNorm()) < 8, A,
+       f"{side}: R{d}05 sits beside the first LED, at the far end of the data line")
+    ok(chain[0] == "LED_D0" and not bad, A, f"{side}: one chain from the buffer through all {len(leds)} LEDs, all on LED_VDD/GND",
        f"{side}: chain problems {bad}")
     ok(chain[-1] is None, A, f"{side}: last DOUT left open")
 
     n = len(leds)
-    report("PASS", A, f"{side}: LEDs run from the battery: {SK_VDD_MIN}-{VBAT_MAX} V is inside the SK6812MINI-E's "
-           f"{SK_VDD_MIN}-5.5 V. The firmware lights them only on USB power, when the cell sits near {VBAT_MAX} V")
-    report("WARN", A, f"{side}: once the cell drops below {SK_VDD_MIN} V the LEDs are under spec: blue and "
-           "white dim first")
-    vih, voh = 0.7 * VBAT_MAX, NRF_VDD - NRF_VOH_DROP
-    report("WARN", A, f"{side}: LED data at a full cell: VIH = 0.7 x {VBAT_MAX} V = {vih:.2f} V; the nRF52840 guarantees "
-           f"VOH >= {voh:.1f} V at 0.5 mA. The LED input draws microamps, so P0.06 sits near {NRF_VDD} V, but the "
-           "datasheet margin is thin")
-    report("PASS", A, f"{side}: {n} LEDs x {SK_MA_PER_LED} mA = {n * SK_MA_PER_LED / 1000:.1f} A at full white is within "
-           "the AO3401A's 4 A; firmware caps brightness (CONFIG_ZMK_RGB_UNDERGLOW_BRT_MAX)")
-    report("PASS", A, f"{side}: the P0.08 LED switch can cut the {n * SK_STATIC_MA:.0f} mA dark-pixel "
-           f"load ({n} x {SK_STATIC_MA:.0f} mA); R{d}03 holds it off before firmware configures P0.08")
+    caps = [fp(f"C{d}{g.LED_CAP_BASE + i}") for i in range(1, n + 1)]
+    far = [c.GetReference() for c, l in zip(caps, leds) if mm((c.GetPosition() - l.GetPosition()).EuclideanNorm()) > 10]
+    fitted = [c.GetReference() for c in caps if not c.IsDNP()]
+    ok(not far and len(fitted) == n // g.LED_CAP_EVERY, A,
+       f"{side}: a 100 nF footprint beside each of the {n} LEDs (within 10 mm), {len(fitted)} fitted",
+       f"{side}: LED capacitors far from their LED {far}, fitted {fitted}")
+    vih = BUF_VIH_5V
+    ok(NRF_VDD - NRF_VOH_DROP > vih, A,
+       f"{side}: LED data: the buffer's VIH is {vih} V at VCC 5.5 V; the nRF52840 guarantees VOH >= "
+       f"{NRF_VDD - NRF_VOH_DROP:.1f} V. The buffer drives the chain at the rail, so the first LED's 0.7 x VDD is met")
+    report("PASS", A, f"{side}: the boost holds the LEDs at about 4.95 V over the whole cell range ({VBAT_MIN}-{VBAT_MAX} V)")
     capped_white = n * (SK_STATIC_MA + SK_MA_PER_LED * 0.40)
-    report("WARN", A, f"{side}: {n} LEDs at the firmware's 40% cap can draw about {capped_white:.0f} mA "
-           f"for full white at the datasheet's 5 V typical current. The SuperMini charger supplies only "
-           f"about {CHARGE_MA} mA, so a lit half can still discharge its cell while USB is connected; "
-           "the cell/protection-board discharge rating and actual cap brightness require measurement")
-    report("WARN", A, f"{side}: the manufacturer shows a bypass capacitor at every pixel and input "
-           f"protection resistance (SK6812MINI-E datasheet p. 9); this board has only C{d}01/C{d}02 "
-           "at the rail switch and no first-DIN series resistor. Test rail droop and data integrity on a "
-           "fully lit, switching strip")
+    i_in = 4.95 * capped_white / (BOOST_EFF * VBAT_MIN)
+    ok(i_in < BOOST_ILIM_A * 1000, A,
+       f"{side}: {n} LEDs at the firmware's 40% cap draw about {capped_white:.0f} mA at 5 V for full white, "
+       f"about {i_in:.0f} mA from a {VBAT_MIN} V cell, under the TPS61023's {BOOST_ILIM_A} A minimum switch limit",
+       f"{side}: capped full white needs {i_in:.0f} mA from the cell, at the boost's limit")
+    report("WARN", A, f"{side}: full white at the 40% cap draws about {4.95 * capped_white / (BOOST_EFF * 3.8):.0f} mA "
+           f"from a 3.8 V cell, more than the {CHARGE_MA} mA charger replaces: a white strip can discharge the cell "
+           "while USB is connected. Saturated colours and effects stay under it; measure at bring-up")
 
 # --------------------------------------------------------------------------------------
 # 5. Matrix diodes, encoder
@@ -391,23 +438,23 @@ for side, d in SIDES.items():
 # 7. Current through the power switch
 # --------------------------------------------------------------------------------------
 A = "power"
+n = len(g.KEYS["left"])
+SW_MA = 4.95 * n * (SK_STATIC_MA + SK_MA_PER_LED * 0.40) / (BOOST_EFF * VBAT_MIN)
 report("PASS", "power", f"the SK12D07VG5 (rated {SLIDE_RATED_MA} mA) only switches the MOSFET gate; battery current, including "
-       f"{CHARGE_MA} mA charging ({BOOST_MA} mA with BOOST) and LED current, flows through the AO3401A (4 A)")
+       f"{CHARGE_MA} mA charging and the LED boost's input, flows through the AO3401A (4 A)")
 drop = SW_MA * AO_RDS_25V_MOHM / 1000
 ok(VBAT_MIN > 2.5 and VBAT_MAX < AO_VGS_MAX, "power",
    f"gate to GND gives VGS = -{VBAT_MIN}..-{VBAT_MAX} V: past the -2.5 V rating (RDS(on) < {AO_RDS_25V_MOHM} mOhm, "
-   f"{drop:.0f} mV at {SW_MA} mA) and inside +-{AO_VGS_MAX} V")
+   f"{drop:.0f} mV at {SW_MA:.0f} mA) and inside +-{AO_VGS_MAX} V")
 heat = AO_VSD_V * CHARGE_MA / 1000
 report("WARN", "power", f"switch off with USB plugged in: charge current can cross the body diode, "
        f"about {heat:.2f} W at {CHARGE_MA} mA, +{heat * AO_RTH_JA:.0f} C on the SOT-23; "
        "the charger senses voltage before the diode, so full-charge termination is not assured. "
        "Leave the switch on while charging")
 report("PASS", "power", f"the 1 MOhm gate resistor costs {VBAT_MAX:.1f} uA at most while on ({VBAT_MAX} V across it)")
-ok(NRF_VDD > AON_VTH_MAX * 2, "power", f"P0.08 high ({NRF_VDD} V) is over twice the AO3400A's {AON_VTH_MAX} V maximum "
-   "threshold, so the N-MOSFET turns fully on")
-ok(VBAT_MIN > 2.5 and VBAT_MAX < AO_VGS_MAX, "power",
-   f"the LED switch's gate pulled to GND gives VGS = -{VBAT_MIN}..-{VBAT_MAX} V: past the AO3401A's -2.5 V rating")
-report("PASS", "power", f"the 100 kOhm LED-switch pull-up costs {VBAT_MAX / 100 * 1000:.0f} uA only while the LEDs are on")
+report("PASS", "power", "with the lighting off, the boost is shut down (0.1 uA) and its output disconnected, so the "
+       f"{n} dark LEDs ({n * SK_STATIC_MA:.0f} mA) draw nothing; the 100 kOhm enable pull-down costs "
+       f"{NRF_VDD / 100 * 1000:.0f} uA only while the lighting is on")
 
 # --------------------------------------------------------------------------------------
 order = {"FAIL": 0, "WARN": 1, "PASS": 2}

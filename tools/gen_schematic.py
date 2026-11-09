@@ -42,7 +42,7 @@ MCU_TYPES = {"GND": "power_in", "B+": "power_in", "VCC": "power_out", "RST": "in
 # Net on each MCU pad (both halves). Pads not listed get a no-connect flag.
 MCU_NETS = {
     1: "LED_DIN",            # SK6812 data via SPI MOSI (ZMK led_strip)
-    2: "LED_EN",             # P0.08: LED power switch (ZMK ext-power), high = LEDs powered
+    2: "LED_EN",             # P0.08: LED boost enable (ZMK ext-power), high = LEDs powered
     3: "GND", 4: "GND", 14: "GND",
     5: "OLED_SDA", 6: "OLED_SCL",   # P0.17, P0.20: the OLED's I2C (both full speed)
     13: "VBAT", 15: "RST",
@@ -81,6 +81,12 @@ FP = {
     "enc_header": "Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Horizontal",
     "pwr": "keygen:SW_SK12D07VG5",
     "fet": "Package_TO_SOT_SMD:SOT-23",
+    "boost": "Package_TO_SOT_SMD:SOT-563",
+    "buf": "Package_TO_SOT_SMD:SOT-23-5_HandSoldering",
+    "ind": "Inductor_SMD:L_1210_3225Metric_Pad1.42x2.65mm_HandSolder",
+    "cap_led": "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder",   # one beside each LED
+    "cap_small": "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder",  # beside the LED data buffer
+    "res_small": "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder",
     "res": "Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder",
     "rst": "Button_Switch_THT:SW_PUSH_6mm_H5mm",
     "bat": "Connector_JST:JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal",
@@ -117,6 +123,26 @@ def nice_nano_symbol():
             prop("Datasheet", "https://nicekeyboards.com/docs/nice-nano/pinout-schematic", hide=True),
             prop("Description", "nRF52840 Pro Micro-format board, nice!nano v2 pinout (24 edge pads)", hide=True),
             body, pinunit, [S("embedded_fonts"), S("no")]]
+
+def tps61023_symbol():
+    """TI TPS61023 synchronous boost, SOT-563 (DRL): 1 FB, 2 EN, 3 VIN, 4 GND, 5 SW, 6 VOUT."""
+    body = [S("symbol"), "TPS61023_0_1",
+            [S("rectangle"), [S("start"), -7.62, 5.08], [S("end"), 7.62, -5.08],
+             [S("stroke"), [S("width"), 0.254], [S("type"), S("default")]], [S("fill"), [S("type"), S("background")]]]]
+    pins = [S("symbol"), "TPS61023_1_1",
+            make_pin("power_in", -10.16, 2.54, 0, "VIN", "3"),
+            make_pin("input", -10.16, -2.54, 0, "EN", "2"),
+            make_pin("passive", 10.16, 2.54, 180, "SW", "5"),
+            make_pin("power_out", 10.16, 0, 180, "VOUT", "6"),
+            make_pin("input", 10.16, -2.54, 180, "FB", "1"),
+            make_pin("power_in", 0, -7.62, 90, "GND", "4")]
+    return [S("symbol"), "TPS61023", [S("pin_names"), [S("offset"), 1.016]],
+            [S("exclude_from_sim"), S("no")], [S("in_bom"), S("yes")], [S("on_board"), S("yes")],
+            prop("Reference", "U", 0, 7.62), prop("Value", "TPS61023", 0, -10.16),
+            prop("Footprint", FP["boost"], hide=True),
+            prop("Datasheet", "https://www.ti.com/lit/ds/symlink/tps61023.pdf", hide=True),
+            prop("Description", "3.7 A synchronous boost converter, 0.5-5.5 V in, 2.2-5.5 V out, SOT-563", hide=True),
+            body, pins, [S("embedded_fonts"), S("no")]]
 
 def flatten(child_lib, child, parent_name):
     """Inline an `extends` symbol: the parent's graphics/pins with the child's properties."""
@@ -291,19 +317,22 @@ def keygen_footprints():
 
 def keygen_lib():
     lib = [S("kicad_symbol_lib"), [S("version"), 20241209], [S("generator"), "keygen_gen_schematic"],
-           [S("generator_version"), "9.0"], nice_nano_symbol()]
+           [S("generator_version"), "9.0"], nice_nano_symbol(), tps61023_symbol()]
     (PCB / "lib").mkdir(parents=True, exist_ok=True)
     (PCB / "lib/keygen.kicad_sym").write_text(dump(lib) + "\n")
 
 LIBSYMS = {
     "keygen:nice_nano_v2": lambda: nice_nano_symbol(),
+    "keygen:TPS61023": lambda: tps61023_symbol(),
+    "Device:L": lambda: lib_symbol(STOCK / "Device.kicad_sym", "L"),
+    "Logic_LevelTranslator:SN74LV1T125DBV": lambda: flatten(STOCK / "Logic_LevelTranslator.kicad_sym",
+                                                              "SN74LV1T125DBV", "SN74LV1T125DCK"),
     "marbastlib-mx:MX_SW_HS_CPG151101S11": lambda: lib_symbol(MARB / "marbastlib-mx.kicad_sym", "MX_SW_HS_CPG151101S11"),
     "LED:SK6812MINI-E": lambda: flatten(STOCK / "LED.kicad_sym", "SK6812MINI-E", "SK6812"),
     "Device:D": lambda: lib_symbol(STOCK / "Device.kicad_sym", "D"),
     "Device:C": lambda: lib_symbol(STOCK / "Device.kicad_sym", "C"),
     "Device:R": lambda: lib_symbol(STOCK / "Device.kicad_sym", "R"),
     "Transistor_FET:AO3401A": lambda: flatten(STOCK / "Transistor_FET.kicad_sym", "AO3401A", "TP0610T"),
-    "Transistor_FET:AO3400A": lambda: flatten(STOCK / "Transistor_FET.kicad_sym", "AO3400A", "Q_NMOS_GSD"),
     "Device:RotaryEncoder_Switch": lambda: lib_symbol(STOCK / "Device.kicad_sym", "RotaryEncoder_Switch"),
     "Device:Battery_Cell": lambda: lib_symbol(STOCK / "Device.kicad_sym", "Battery_Cell"),
     "Switch:SW_SPDT": lambda: lib_symbol(STOCK / "Switch.kicad_sym", "SW_SPDT"),
@@ -334,14 +363,15 @@ class Sheet:
         self.title = title
         self.nets = {}          # net -> [(ref, pin)]
 
-    def symbol(self, lib_id, ref, value, x, y, footprint="", unconnected=(), nets=None, in_bom=True, fields=(), on_board=None):
+    def symbol(self, lib_id, ref, value, x, y, footprint="", unconnected=(), nets=None, in_bom=True, fields=(), on_board=None,
+               dnp=False):
         """Place a symbol and connect pins by net name. nets: {pin_number: net}."""
         if lib_id not in self.used: self.used.append(lib_id)
         sym = libsym(lib_id)
         pl = pins(sym)
         node = [S("symbol"), [S("lib_id"), lib_id], [S("at"), x, y, 0], [S("unit"), 1],
                 [S("exclude_from_sim"), S("no")], [S("in_bom"), S("yes" if in_bom else "no")],
-                [S("on_board"), S("yes" if (in_bom if on_board is None else on_board) else "no")], [S("dnp"), S("no")], [S("uuid"), U(f"symbol:{self.path}:{ref}")],
+                [S("on_board"), S("yes" if (in_bom if on_board is None else on_board) else "no")], [S("dnp"), S("yes" if dnp else "no")], [S("uuid"), U(f"symbol:{self.path}:{ref}")],
                 [S("property"), "Reference", ref, [S("at"), x, y - 6.35, 0], font()],
                 [S("property"), "Value", value, [S("at"), x, y + 6.35, 0], font()],
                 [S("property"), "Footprint", footprint, [S("at"), x, y, 0], hidden()],
@@ -390,6 +420,11 @@ class Sheet:
 
 PROJECT = "keygen"
 BASE = {"left": 100, "right": 200}          # reference numbering: SW101.. left, SW201.. right
+LED_CAP_BASE = 10        # the 100 nF beside LED n is C(base + 10 + n): C111-C143 on the left
+LED_CAP_EVERY = 4        # every 4th is fitted (LED 4, 8, ... 32); the others are DNP footprints
+
+def led_cap_fitted(n):
+    return n % LED_CAP_EVERY == 0
 
 def build(side, root, sheet):
     sh = Sheet(PROJECT, f"Keygen - {side} half", root, sheet)
@@ -419,16 +454,23 @@ def build(side, root, sheet):
     # ---- LED chain -----------------------------------------------------------------
     LX0, LY0, LDX, LDY, PER = 30.48, 215.9, 38.1, 30.48, 8
     nled = len(keys)
-    sh.text(f"PER-KEY LEDs  ({nled}) - powered from the battery through the LED power switch (Q2, LED_VDD)",
-            LX0 - 15.24, LY0 - 20.32, 2)
+    sh.text(f"PER-KEY LEDs  ({nled}) - 5 V rail LED_VDD from the boost (U2); data from the buffer (U3, R5).\n"
+            f"A 100 nF footprint beside every LED (C{base + LED_CAP_BASE + 1}-C{base + LED_CAP_BASE + nled}); "
+            f"every {LED_CAP_EVERY}th is fitted, the rest are DNP.", LX0 - 15.24, LY0 - 20.32, 2)
     for i in range(nled):
         x, y = LX0 + (i % PER) * LDX, LY0 + (i // PER) * LDY
-        din = "LED_DIN" if i == 0 else f"LED_D{i}"
+        din = "LED_D0" if i == 0 else f"LED_D{i}"
         dout = f"LED_D{i+1}" if i < nled - 1 else None
         nets = {"VDD": "LED_VDD", "VSS": "GND", "DIN": din}
         if dout: nets["DOUT"] = dout
         sh.symbol("LED:SK6812MINI-E", R("LED", i + 1), "SK6812MINI-E", x, y, FP["led"], nets=nets,
                   fields=[("Position", keys[i][2])])
+        sh.symbol("Device:C", R("C", LED_CAP_BASE + i + 1), "100nF", x + 15.24, y + 7.62, FP["cap_led"],
+                  nets={"1": "LED_VDD", "2": "GND"}, dnp=not led_cap_fitted(i + 1))
+    sh.symbol("Device:C", R("C", 5), "10uF", LX0 + PER * LDX, LY0 + ((nled - 1) // PER) * LDY, FP["cap"],
+              nets={"1": "LED_VDD", "2": "GND"})
+    sh.text(f"C5: bulk capacitor at the chain's far end, beside LED{base + nled}.",
+            LX0 + PER * LDX - 7.62, LY0 + ((nled - 1) // PER) * LDY + 10.16)
 
     # ---- controller ----------------------------------------------------------------
     MX, MY = 360.68, 60.96
@@ -436,7 +478,7 @@ def build(side, root, sheet):
     mnets = {str(k): v for k, v in MCU_NETS.items()}
     sh.symbol("keygen:nice_nano_v2", R("U", 1), "nRF52840 Pro Micro", MX, MY, FP["mcu"], nets=mnets)
     sh.text("Encoder A/B on P0.10/P0.09 (NFC pins): set nfct-pins-as-gpios.\n"
-            "P0.08: LED power switch. P0.17/P0.20: OLED SDA/SCL.\n"
+            "P0.08: LED boost enable. P0.17/P0.20: OLED SDA/SCL.\n"
             "VCC (pad 16, switched by P0.13): OLED power; firmware holds P0.13 high.",
             MX + 25.4, MY - 15.24)
 
@@ -449,11 +491,8 @@ def build(side, root, sheet):
     sh.symbol("Switch:SW_SPDT", R("SW", 90), "SK12D07VG5 power", PX, PY, FP["pwr"],
               nets={"1": "GND", "2": "BAT_GATE"})
     sh.symbol("Switch:SW_Push", R("SW", 91), "Reset", PX + 25.4, PY, FP["rst"], nets={"1": "RST", "2": "GND"})
-    sh.symbol("Device:C", R("C", 1), "10uF", PX - 20.32, PY + 22.86, FP["cap"], nets={"1": "LED_VDD", "2": "GND"})
-    sh.symbol("Device:C", R("C", 2), "100nF", PX - 7.62, PY + 22.86, FP["cap"], nets={"1": "LED_VDD", "2": "GND"})
-    for i, net in enumerate(("GND", "VBAT", "LED_VDD")):
+    for i, net in enumerate(("GND", "VBAT")):
         sh.symbol("power:PWR_FLAG", f"#FLG{base + i + 1}", "PWR_FLAG", PX + 12.7 + i * 12.7, PY + 22.86, nets={"1": net}, in_bom=False)
-    sh.text("C1/C2 sit at the LED power switch's output.", PX - 25.4, PY + 33.02)
 
     # ---- battery load switch ---------------------------------------------------------
     # The slide switch only drives the gate of a P-MOSFET that carries the battery current. Source on
@@ -465,21 +504,41 @@ def build(side, root, sheet):
     sh.symbol("Device:R", R("R", 1), "1M", QX + 15.24, QY, FP["res"], nets={"1": "BAT_GATE", "2": "BAT_RAW"})
     sh.text("Switch 2-1: gate to GND, on. Switch 2-3 (pin 3 unconnected): R1 holds the gate at\n"
             "the source, off. Leave the switch on while charging:\n"
-            "off, charge current crosses the body diode (~0.07 W at 100 mA); full charge is not assured.", QX - 25.4, QY + 12.7)
+            "off, charge current crosses the body diode (~0.21 W at 300 mA); full charge is not assured.", QX - 25.4, QY + 12.7)
 
-    # ---- LED power switch ------------------------------------------------------------
-    # The LEDs run from the battery (B+, after Q1), inside the SK6812MINI-E's 3.7-5.5 V for most of
-    # the charge, through a high-side P-MOSFET. P0.08 can't hold Q2's gate at the source (up to
-    # 4.2 V), so it drives an N-MOSFET that pulls the gate down. R2 holds Q2 off, R3 holds Q3 off
-    # while the controller boots or sleeps.
+    # ---- LED boost (5 V) -------------------------------------------------------------
+    # The LEDs run from a 5 V rail, inside the SK6812MINI-E's 3.7-5.5 V over the whole charge. A TI
+    # TPS61023 boosts B+ (VBAT) to 5 V; P0.08 drives its EN directly (high above 1.2 V), and R3 holds
+    # it off while the controller boots or sleeps. Shut down, the converter disconnects its output
+    # from the input (0.1 uA), so LED_VDD sits at 0 V and the dark LEDs draw nothing.
+    # VOUT = VREF x (1 + R2/R4) = 0.595 V x (1 + 732k/100k) = 4.95 V (datasheet section 8.2).
     LX, LY = 459.74, 132.08
-    sh.text("LED POWER SWITCH (P0.08 high = LEDs on)", LX - 25.4, LY - 15.24, 2)
-    sh.symbol("Transistor_FET:AO3401A", R("Q", 2), "AO3401A", LX, LY, FP["fet"],
-              nets={"1": "LED_GATE", "2": "VBAT", "3": "LED_VDD"})
-    sh.symbol("Device:R", R("R", 2), "100k", LX + 20.32, LY, FP["res"], nets={"1": "LED_GATE", "2": "VBAT"})
-    sh.symbol("Transistor_FET:AO3400A", R("Q", 3), "AO3400A", LX, LY + 25.4, FP["fet"],
-              nets={"1": "LED_EN", "2": "GND", "3": "LED_GATE"})
-    sh.symbol("Device:R", R("R", 3), "100k", LX + 20.32, LY + 25.4, FP["res"], nets={"1": "LED_EN", "2": "GND"})
+    sh.text("LED BOOST, 5 V (P0.08 high = LEDs powered)", LX - 25.4, LY - 15.24, 2)
+    sh.symbol("keygen:TPS61023", R("U", 2), "TPS61023", LX, LY, FP["boost"],
+              nets={"3": "VBAT", "2": "LED_EN", "5": "LED_SW", "6": "LED_VDD", "1": "LED_FB", "4": "GND"})
+    sh.symbol("Device:L", R("L", 1), "1uH", LX, LY - 10.16, FP["ind"], nets={"1": "VBAT", "2": "LED_SW"})
+    sh.symbol("Device:C", R("C", 3), "10uF", LX - 20.32, LY + 2.54, FP["cap"], nets={"1": "VBAT", "2": "GND"})
+    sh.symbol("Device:C", R("C", 1), "22uF", LX + 20.32, LY + 2.54, FP["cap"], nets={"1": "LED_VDD", "2": "GND"})
+    sh.symbol("Device:C", R("C", 4), "22uF", LX + 30.48, LY + 2.54, FP["cap"], nets={"1": "LED_VDD", "2": "GND"})
+    sh.symbol("Device:R", R("R", 2), "732k", LX + 20.32, LY + 15.24, FP["res"], nets={"1": "LED_VDD", "2": "LED_FB"})
+    sh.symbol("Device:R", R("R", 4), "100k", LX + 30.48, LY + 15.24, FP["res"], nets={"1": "LED_FB", "2": "GND"})
+    sh.symbol("Device:R", R("R", 3), "100k", LX - 20.32, LY + 15.24, FP["res"], nets={"1": "LED_EN", "2": "GND"})
+    sh.text("L1: 1 uH, 1210, saturation above the 3.7 A switch limit (TDK TMS322512ALM-1R0MTAA).\n"
+            "C1/C4: 2 x 22 uF at VOUT. C3: 10 uF at VIN. R2/R4 set 4.95 V. R3 holds EN low.",
+            LX - 25.4, LY + 25.4)
+
+    # ---- LED data buffer -------------------------------------------------------------
+    # P0.06 drives 3.3 V; the first LED wants 0.7 x VDD = 3.5 V. An SN74LV1T125 on the 5 V rail reads
+    # 2.03 V as high and drives the chain at the rail; its inputs take 5 V with VCC at 0 V, so the
+    # controller can't feed the dark rail. R5 limits the current into the first LED's input.
+    BX, BY = 459.74, 185.42
+    sh.text("LED DATA BUFFER (3.3 V to 5 V)", BX - 25.4, BY - 15.24, 2)
+    sh.symbol("Logic_LevelTranslator:SN74LV1T125DBV", R("U", 3), "SN74LV1T125", BX, BY, FP["buf"],
+              nets={"1": "GND", "2": "LED_DIN", "3": "GND", "4": "LED_DY", "5": "LED_VDD"})
+    sh.symbol("Device:C", R("C", 2), "100nF", BX - 20.32, BY, FP["cap_small"], nets={"1": "LED_VDD", "2": "GND"})
+    sh.symbol("Device:R", R("R", 5), "330", BX + 20.32, BY, FP["res_small"], nets={"1": "LED_DY", "2": "LED_D0"})
+    sh.text("OE tied low: always enabled. C2 at U3's VCC. R5 in series with the first LED's DIN.",
+            BX - 25.4, BY + 12.7)
 
     # ---- encoder -------------------------------------------------------------------
     if enc:

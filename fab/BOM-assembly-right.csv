@@ -1,18 +1,24 @@
 Item Number,Designator,Unit Quantity,Description,Manufacturer Part Number,Footprint,Value,Assembly Instructions
 1,BT201,1,JST-PH 2-pin battery connector,S2B-PH-K-S(LF)(SN) (JST),Connector_JST:JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal,JST-PH 2-pin,"THT side-entry, BOTTOM side. Opening toward the battery pocket."
-2,C201,1,10 µF capacitor (1206),"CL31A106KBHNNNE (Samsung, 10 µF 50 V X5R 1206)",Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder,10uF,BOTTOM side.
-3,C202,1,100 nF capacitor (1206),"CL31B104KBCNNNC (Samsung, 100 nF 50 V X7R 1206)",Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder,100nF,BOTTOM side.
-4,"D201,D202,D203,D204,D205,D206,D207,D208,D209,D210,D211,D212,D213,D214,D215,D216,D217,D218,D219,D220,D221,D222,D223,D224,D225,D226,D227,D228,D229,D230,D231,D232,D233,D234",34,1N4148 diode,"1N4148 (DO-35, e.g. onsemi 1N4148)",Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal,1N4148,"THT, BOTTOM side. Polarity: band (cathode) to the square pad."
-5,ENC201,1,EC11 rotary encoder,"EC11 with push switch, 20 mm D shaft (Hongyan EC11)",keygen:EC11_Case_Mount,EC11,DO NOT FIT: not on the PCB; customer mounts it in the case and plugs it into the 5-pin header.
-6,J201,1,OLED 0.96in I2C,,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical,OLED 0.96in I2C,TOP side.
-7,J202,1,1x5 right-angle pin header,"1x5 right-angle male pin header, 2.54 mm (any)",Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Horizontal,"Encoder lead, 1x5 right angle","THT right angle, BOTTOM side, pins lying flat and pointing away from the thumb keys."
-8,"LED201,LED202,LED203,LED204,LED205,LED206,LED207,LED208,LED209,LED210,LED211,LED212,LED213,LED214,LED215,LED216,LED217,LED218,LED219,LED220,LED221,LED222,LED223,LED224,LED225,LED226,LED227,LED228,LED229,LED230,LED231,LED232,LED233",33,SK6812MINI-E LED,"SK6812MINI-E (OPSCO, LCSC C5149201)",LED_SMD:LED_SK6812MINI-E_3.2x2.8mm_P1.5mm_ReverseMount,SK6812MINI-E,"Reverse-mount LED, BOTTOM side, body through the PCB cut-out. Match the corner mark to the footprint's pin-1 mark."
-9,"Q201,Q202",2,AO3401A P-MOSFET (SOT-23),"AO3401A (Alpha & Omega, SOT-23)",Package_TO_SOT_SMD:SOT-23,AO3401A,BOTTOM side.
-10,Q203,1,AO3400A N-MOSFET (SOT-23),"AO3400A (Alpha & Omega, SOT-23)",Package_TO_SOT_SMD:SOT-23,AO3400A,BOTTOM side.
-11,R201,1,1 MΩ resistor (1206),"1206W4F1004T5E (UNI-ROYAL, 1 MΩ 1% 1206)",Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder,1M,BOTTOM side.
-12,"R202,R203",2,100 kΩ resistor (1206),"1206W4F1003T5E (UNI-ROYAL, 100 kΩ 1% 1206)",Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder,100k,BOTTOM side.
-13,"SW201,SW208,SW214,SW221,SW232,SW233,SW234",7,Kailh MX hotswap socket for a 1.25u key,CPG151101S11 (Kailh),keygen:SW_MX_HS_CPG151101S11_1.25u,Kailh hotswap socket,"Kailh CPG151101S11 hotswap socket, BOTTOM side. Do NOT fit switches (customer installs)."
-14,"SW202,SW203,SW204,SW205,SW206,SW209,SW210,SW211,SW212,SW213,SW215,SW216,SW217,SW218,SW219,SW220,SW222,SW223,SW224,SW225,SW226,SW227,SW228,SW229,SW230,SW231",26,Kailh MX hotswap socket for a 1u key,CPG151101S11 (Kailh),keygen:SW_MX_HS_CPG151101S11_1u,Kailh hotswap socket,"Kailh CPG151101S11 hotswap socket, BOTTOM side. Do NOT fit switches (customer installs)."
-15,SW290,1,SK12D07VG5 power slide switch,"SK12D07VG5 (Shou Han, LCSC C431548)",keygen:SW_SK12D07VG5,SK12D07VG5 power,BOTTOM side.
-16,SW291,1,6 mm reset button,"6x6x5 mm THT tactile switch (e.g. TS-1102S-B-B, any 6x6x5)",Button_Switch_THT:SW_PUSH_6mm_H5mm,Reset,BOTTOM side.
-17,U201,1,nRF52840 SuperMini (nice!nano v2 clone),Customer supplied: nRF52840 SuperMini (nice!nano v2 clone),keygen:nice_nano_H_USBup,nRF52840 Pro Micro,DO NOT FIT: customer solders sockets + controller (BOTTOM side).
+2,"C201,C204",2,22 µF capacitor (1206),"CS3216X7R226K160NRI (Samwha, 22 µF 16 V X7R 1206)",Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder,22uF,BOTTOM side.
+3,"C202,C214,C218,C222,C226,C230,C234,C238,C242",9,100 nF capacitor (0805),100 nF 50 V X7R 0805 (any),Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder,100nF,BOTTOM side.
+4,"C203,C205",2,10 µF capacitor (1206),"CL31A106KBHNNNE (Samsung, 10 µF 50 V X5R 1206)",Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder,10uF,BOTTOM side.
+5,"C211,C212,C213,C215,C216,C217,C219,C220,C221,C223,C224,C225,C227,C228,C229,C231,C232,C233,C235,C236,C237,C239,C240,C241,C243",25,"100 nF capacitor (0805), optional",,Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder,100nF,DO NOT FIT: optional footprints.
+6,"D201,D202,D203,D204,D205,D206,D207,D208,D209,D210,D211,D212,D213,D214,D215,D216,D217,D218,D219,D220,D221,D222,D223,D224,D225,D226,D227,D228,D229,D230,D231,D232,D233,D234",34,1N4148 diode,"1N4148 (DO-35, e.g. onsemi 1N4148)",Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal,1N4148,"THT, BOTTOM side. Polarity: band (cathode) to the square pad."
+7,ENC201,1,EC11 rotary encoder,"EC11 with push switch, 20 mm D shaft (Hongyan EC11)",keygen:EC11_Case_Mount,EC11,DO NOT FIT: not on the PCB; customer mounts it in the case and plugs it into the 5-pin header.
+8,J201,1,OLED 0.96in I2C,,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical,OLED 0.96in I2C,TOP side.
+9,J202,1,1x5 right-angle pin header,"1x5 right-angle male pin header, 2.54 mm (any)",Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Horizontal,"Encoder lead, 1x5 right angle","THT right angle, BOTTOM side, pins lying flat and pointing away from the thumb keys."
+10,L201,1,1 µH inductor (1210),TMS322512ALM-1R0MTAA (TDK),Inductor_SMD:L_1210_3225Metric_Pad1.42x2.65mm_HandSolder,1uH,BOTTOM side.
+11,"LED201,LED202,LED203,LED204,LED205,LED206,LED207,LED208,LED209,LED210,LED211,LED212,LED213,LED214,LED215,LED216,LED217,LED218,LED219,LED220,LED221,LED222,LED223,LED224,LED225,LED226,LED227,LED228,LED229,LED230,LED231,LED232,LED233",33,SK6812MINI-E LED,"SK6812MINI-E (OPSCO, LCSC C5149201)",LED_SMD:LED_SK6812MINI-E_3.2x2.8mm_P1.5mm_ReverseMount,SK6812MINI-E,"Reverse-mount LED, BOTTOM side, body through the PCB cut-out. Match the corner mark to the footprint's pin-1 mark."
+12,Q201,1,AO3401A P-MOSFET (SOT-23),"AO3401A (Alpha & Omega, SOT-23)",Package_TO_SOT_SMD:SOT-23,AO3401A,BOTTOM side.
+13,R201,1,1 MΩ resistor (1206),"1206W4F1004T5E (UNI-ROYAL, 1 MΩ 1% 1206)",Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder,1M,BOTTOM side.
+14,R202,1,"732 kΩ resistor, 1 % (1206)",RC1206FR-07732KL (Yageo),Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder,732k,BOTTOM side.
+15,"R203,R204",2,"100 kΩ resistor, 1 % (1206)",RC1206FR-07100KL (Yageo),Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder,100k,BOTTOM side.
+16,R205,1,330 Ω resistor (0805),RC0805FR-07330RL (Yageo),Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder,330,BOTTOM side.
+17,"SW201,SW208,SW214,SW221,SW232,SW233,SW234",7,Kailh MX hotswap socket for a 1.25u key,CPG151101S11 (Kailh),keygen:SW_MX_HS_CPG151101S11_1.25u,Kailh hotswap socket,"Kailh CPG151101S11 hotswap socket, BOTTOM side. Do NOT fit switches (customer installs)."
+18,"SW202,SW203,SW204,SW205,SW206,SW209,SW210,SW211,SW212,SW213,SW215,SW216,SW217,SW218,SW219,SW220,SW222,SW223,SW224,SW225,SW226,SW227,SW228,SW229,SW230,SW231",26,Kailh MX hotswap socket for a 1u key,CPG151101S11 (Kailh),keygen:SW_MX_HS_CPG151101S11_1u,Kailh hotswap socket,"Kailh CPG151101S11 hotswap socket, BOTTOM side. Do NOT fit switches (customer installs)."
+19,SW290,1,SK12D07VG5 power slide switch,"SK12D07VG5 (Shou Han, LCSC C431548)",keygen:SW_SK12D07VG5,SK12D07VG5 power,BOTTOM side.
+20,SW291,1,6 mm reset button,"6x6x5 mm THT tactile switch (e.g. TS-1102S-B-B, any 6x6x5)",Button_Switch_THT:SW_PUSH_6mm_H5mm,Reset,BOTTOM side.
+21,U201,1,nRF52840 SuperMini (nice!nano v2 clone),Customer supplied: nRF52840 SuperMini (nice!nano v2 clone),keygen:nice_nano_H_USBup,nRF52840 Pro Micro,DO NOT FIT: customer solders sockets + controller (BOTTOM side).
+22,U202,1,TPS61023 boost converter (SOT-563),TPS61023DRLR (Texas Instruments),Package_TO_SOT_SMD:SOT-563,TPS61023,BOTTOM side.
+23,U203,1,SN74LV1T125 buffer (SOT-23-5),SN74LV1T125DBVR (Texas Instruments),Package_TO_SOT_SMD:SOT-23-5_HandSoldering,SN74LV1T125,BOTTOM side.

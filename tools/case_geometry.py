@@ -130,7 +130,7 @@ CBORE_MOUTH_R = 2.8            # a case screw's counterbore with its chamfered m
 RESET_MOUTH_R = 2.0            # the reset pinhole's chamfered mouth (gen_case.py)
 UNDERSIDE_H = 2.0             # hotswap sockets (1.85 mm) and DO-35 diodes (1.75 mm body) under the PCB
 TALL_CLEAR = 3.0               # cell to the controller, battery connector, buttons, encoder and OLED pins
-TALL_REFS = ("U", "BT", "ENC", "J")   # and the slide switch and reset button (SWx90, SWx91)
+TALL_REFS = ("U", "BT", "ENC", "J")   # U: the controller only; and the slide switch and reset button (SWx90, SWx91)
 
 # ---------------------------------------------------------------- top frame deck (mm)
 CAP_CLEAR = 1.2                # keycap to its window in the deck, each side: covers CAP_SIZE_TOL, the plate
@@ -303,7 +303,8 @@ def halves():
         ref = fp.GetReference(); p = fp.GetPosition(); x, y = MM(p.x), MM(p.y)
         h = next((h for h in out.values() if inside((x, y), h["outline"])), None)
         if h is None: continue
-        if ref.rstrip("0123456789") in TALL_REFS or ref.startswith("SW") and ref[-2:] in ("90", "91"):
+        low_u = ref.startswith("U") and ref not in ("U101", "U201")   # the LED boost and buffer: low SMD parts
+        if (ref.rstrip("0123456789") in TALL_REFS and not low_u) or ref.startswith("SW") and ref[-2:] in ("90", "91"):
             bb = fp.GetBoundingBox(False)
             h["tall"].append((MM(bb.GetLeft()), MM(bb.GetTop()), MM(bb.GetRight()), MM(bb.GetBottom())))
         if ref.startswith("BT"): h["battery_jack"] = _pads_centre(fp)
@@ -326,7 +327,7 @@ def halves():
             h["oled"] = (cx - OLED_W / 2, py + OLED_HDR_IN - OLED_H, cx + OLED_W / 2, py + OLED_HDR_IN)
             bb = fp.GetBoundingBox(False)
             h["header"] = (MM(bb.GetLeft()), MM(bb.GetTop()), MM(bb.GetRight()), MM(bb.GetBottom()))
-        elif ref[0] == "U":
+        elif ref in ("U101", "U201"):           # the controller (U102/U103: the LED boost and buffer)
             bb = fp.GetBoundingBox(False)
             x0, y0, x1, y1 = MM(bb.GetLeft()), MM(bb.GetTop()), MM(bb.GetRight()), MM(bb.GetBottom())
             cx = MM(p.x)

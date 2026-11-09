@@ -8,66 +8,84 @@ The shopping list with spares and prices is `bom/bom.csv` / `plan/bom.html`.
 | Part | Qty | References | Solder notes |
 |---|---|---|---|
 | JST-PH 2-pin battery connector | 1 | BT101 | through-hole side-entry, back side; check battery polarity first |
-| 10 µF capacitor (1206) | 1 | C101 | SMD, back side, beside the LED power switch |
-| 100 nF capacitor (1206) | 1 | C102 | SMD, back side, beside the LED power switch |
+| 22 µF capacitor (1206) | 2 | C101, C104 | SMD, back side, at the boost's output |
+| 100 nF capacitor (0805) | 9 | C102, C114, C118, C122, C126, C130, C134, C138, C142 | SMD, back side: C2 at the data buffer, and beside every fourth LED |
+| 10 µF capacitor (1206) | 2 | C103, C105 | SMD, back side: C3 at the boost's input, C5 at the last LED |
+| 100 nF capacitor (0805), optional | 25 | C111–C113, C115–C117, C119–C121, C123–C125, C127–C129, C131–C133, C135–C137, C139–C141, C143 | Not fitted: footprints beside the other LEDs, for extra decoupling if the chain flickers |
 | 1N4148 diode | 34 | D101–D134 | through-hole, back side; band (cathode) toward the square pad |
 | EC11 rotary encoder | 1 | ENC101 | held in the top frame by its M7 nut, 20 mm D shaft |
 | OLED 0.96in I2C | 1 | J101 |  |
 | 1x5 right-angle pin header | 1 | J102 | through-hole, back side, pins lying flat and pointing away from the thumb keys |
+| 1 µH inductor (1210) | 1 | L101 | SMD, back side, beside the boost |
 | SK6812MINI-E LED | 33 | LED101–LED133 | SMD, reverse-mount on the back; mind the corner mark |
-| AO3401A P-MOSFET (SOT-23) | 2 | Q101, Q102 | SMD, back side: Q1 between the controller and the power switch, Q2 in the LED power switch |
-| AO3400A N-MOSFET (SOT-23) | 1 | Q103 | SMD, back side, in the LED power switch |
+| AO3401A P-MOSFET (SOT-23) | 1 | Q101 | SMD, back side, between the controller and the power switch |
 | 1 MΩ resistor (1206) | 1 | R101 | SMD, back side, below the battery MOSFET |
-| 100 kΩ resistor (1206) | 2 | R102, R103 | SMD, back side, in the LED power switch |
+| 732 kΩ resistor, 1 % (1206) | 1 | R102 | SMD, back side, beside the boost |
+| 100 kΩ resistor, 1 % (1206) | 2 | R103, R104 | SMD, back side: R3 below the boost (enable), R4 beside it (feedback) |
+| 330 Ω resistor (0805) | 1 | R105 | SMD, back side, beside the data buffer and the first LED |
 | MX switch, 1.25u key | 7 | SW101, SW108, SW114, SW121, SW132–SW134 | Kailh socket on the back; switch + 1.25u keycap (the two tall thumb keys turned 90°) |
 | MX switch, 1u key | 26 | SW102–SW106, SW109–SW113, SW115–SW120, SW122–SW131 | Kailh socket on the back; switch + 1u keycap on top |
 | SK12D07VG5 power slide switch | 1 | SW190 | through-hole, back side at the top edge, knob out; pins trimmed flush on the front |
 | 6 mm reset button | 1 | SW191 | through-hole, back side |
 | nRF52840 SuperMini (nice!nano v2 clone) | 1 | U101 | on the back, socketed (Mill-Max/low-profile); check B+, GND and VCC first |
+| TPS61023 boost converter (SOT-563) | 1 | U102 | SMD, back side, beside the battery connector; 0.5 mm pitch: flux, then a fine tip or hot air. Pin 1 to the footprint's mark |
+| SN74LV1T125 buffer (SOT-23-5) | 1 | U103 | SMD, back side, beside the first LED |
 
 ## Right half
 
 | Part | Qty | References | Solder notes |
 |---|---|---|---|
 | JST-PH 2-pin battery connector | 1 | BT201 | through-hole side-entry, back side; check battery polarity first |
-| 10 µF capacitor (1206) | 1 | C201 | SMD, back side, beside the LED power switch |
-| 100 nF capacitor (1206) | 1 | C202 | SMD, back side, beside the LED power switch |
+| 22 µF capacitor (1206) | 2 | C201, C204 | SMD, back side, at the boost's output |
+| 100 nF capacitor (0805) | 9 | C202, C214, C218, C222, C226, C230, C234, C238, C242 | SMD, back side: C2 at the data buffer, and beside every fourth LED |
+| 10 µF capacitor (1206) | 2 | C203, C205 | SMD, back side: C3 at the boost's input, C5 at the last LED |
+| 100 nF capacitor (0805), optional | 25 | C211–C213, C215–C217, C219–C221, C223–C225, C227–C229, C231–C233, C235–C237, C239–C241, C243 | Not fitted: footprints beside the other LEDs, for extra decoupling if the chain flickers |
 | 1N4148 diode | 34 | D201–D234 | through-hole, back side; band (cathode) toward the square pad |
 | EC11 rotary encoder | 1 | ENC201 | held in the top frame by its M7 nut, 20 mm D shaft |
 | OLED 0.96in I2C | 1 | J201 |  |
 | 1x5 right-angle pin header | 1 | J202 | through-hole, back side, pins lying flat and pointing away from the thumb keys |
+| 1 µH inductor (1210) | 1 | L201 | SMD, back side, beside the boost |
 | SK6812MINI-E LED | 33 | LED201–LED233 | SMD, reverse-mount on the back; mind the corner mark |
-| AO3401A P-MOSFET (SOT-23) | 2 | Q201, Q202 | SMD, back side: Q1 between the controller and the power switch, Q2 in the LED power switch |
-| AO3400A N-MOSFET (SOT-23) | 1 | Q203 | SMD, back side, in the LED power switch |
+| AO3401A P-MOSFET (SOT-23) | 1 | Q201 | SMD, back side, between the controller and the power switch |
 | 1 MΩ resistor (1206) | 1 | R201 | SMD, back side, below the battery MOSFET |
-| 100 kΩ resistor (1206) | 2 | R202, R203 | SMD, back side, in the LED power switch |
+| 732 kΩ resistor, 1 % (1206) | 1 | R202 | SMD, back side, beside the boost |
+| 100 kΩ resistor, 1 % (1206) | 2 | R203, R204 | SMD, back side: R3 below the boost (enable), R4 beside it (feedback) |
+| 330 Ω resistor (0805) | 1 | R205 | SMD, back side, beside the data buffer and the first LED |
 | MX switch, 1.25u key | 7 | SW201, SW208, SW214, SW221, SW232–SW234 | Kailh socket on the back; switch + 1.25u keycap (the two tall thumb keys turned 90°) |
 | MX switch, 1u key | 26 | SW202–SW206, SW209–SW213, SW215–SW220, SW222–SW231 | Kailh socket on the back; switch + 1u keycap on top |
 | SK12D07VG5 power slide switch | 1 | SW290 | through-hole, back side at the top edge, knob out; pins trimmed flush on the front |
 | 6 mm reset button | 1 | SW291 | through-hole, back side |
 | nRF52840 SuperMini (nice!nano v2 clone) | 1 | U201 | on the back, socketed (Mill-Max/low-profile); check B+, GND and VCC first |
+| TPS61023 boost converter (SOT-563) | 1 | U202 | SMD, back side, beside the battery connector; 0.5 mm pitch: flux, then a fine tip or hot air. Pin 1 to the footprint's mark |
+| SN74LV1T125 buffer (SOT-23-5) | 1 | U203 | SMD, back side, beside the first LED |
 
 ## Totals
 
 | Part | 1 keyboard | 2 keyboards | Where to buy |
 |---|---|---|---|
 | JST-PH 2-pin battery connector | 2 | 4 | Robu.in "JST PH 2.0 2 pin" |
-| 10 µF capacitor (1206) | 2 | 4 | Robu.in / Lamington Road |
-| 100 nF capacitor (1206) | 2 | 4 | Robu.in / Lamington Road |
+| 22 µF capacitor (1206) | 4 | 8 | [Robu.in, CS3216X7R226K160NRI](https://robu.in/product/cs3216x7r226k160nri-samwha-16v-22uf-x7r-%c2%b110-1206-multilayer-ceramic-capacitors-mlcc-smd-smt-rohs/) |
+| 100 nF capacitor (0805) | 18 | 36 | Robu.in |
+| 10 µF capacitor (1206) | 4 | 8 | Robu.in / Lamington Road |
+| 100 nF capacitor (0805), optional | 50 | 100 | Robu.in |
 | 1N4148 diode | 68 | 136 | [StacksKB 1N4148 (10-pack)](https://stackskb.com/store/1n4148-through-hole-diode/) |
 | EC11 rotary encoder | 2 | 4 | [Robu.in, Hongyan EC11](https://robu.in/product/hongyan-ec11h-7ce20p1zd20-rotary-encoder-with-push-button-switch-vertical-plug-in-5-pin/) |
 | OLED 0.96in I2C | 2 | 4 |  |
 | 1x5 right-angle pin header | 2 | 4 | Already owned |
+| 1 µH inductor (1210) | 2 | 4 | [Robu.in, TMS322512ALM-1R0MTAA](https://robu.in/product/tms322512alm-1r0mtaa-tdk-4a-1uh-%c2%b120-4-6a-37m%cf%89-1210-inductors-smd-rohs/) |
 | SK6812MINI-E LED | 66 | 132 | Not stocked by Indian stores I checked |
-| AO3401A P-MOSFET (SOT-23) | 4 | 8 | Robu.in / Lamington Road |
-| AO3400A N-MOSFET (SOT-23) | 2 | 4 | Robu.in / Lamington Road |
+| AO3401A P-MOSFET (SOT-23) | 2 | 4 | Robu.in / Lamington Road |
 | 1 MΩ resistor (1206) | 2 | 4 | Robu.in / Lamington Road |
-| 100 kΩ resistor (1206) | 4 | 8 | Robu.in / Lamington Road |
+| 732 kΩ resistor, 1 % (1206) | 2 | 4 | [Robu.in, 732 kΩ](https://robu.in/product/rc1206fr-07732kl-yageo-250mw-thick-film-resistors-200v-%c2%b1100ppm-%e2%84%83-%c2%b11-732k%cf%89-1206-chip-resistor-surface-mount-rohs/), [100 kΩ 1 %](https://robu.in/product/rc1206fr-07100kl-yageo-res-thick-film-1206-100k-ohm-1-0-25w1-4w-%c2%b1100ppm-c-pad-smd-t-r/) |
+| 100 kΩ resistor, 1 % (1206) | 4 | 8 | [Robu.in, 732 kΩ](https://robu.in/product/rc1206fr-07732kl-yageo-250mw-thick-film-resistors-200v-%c2%b1100ppm-%e2%84%83-%c2%b11-732k%cf%89-1206-chip-resistor-surface-mount-rohs/), [100 kΩ 1 %](https://robu.in/product/rc1206fr-07100kl-yageo-res-thick-film-1206-100k-ohm-1-0-25w1-4w-%c2%b1100ppm-c-pad-smd-t-r/) |
+| 330 Ω resistor (0805) | 2 | 4 | Robu.in |
 | MX switch, 1.25u key | 14 | 28 | Kailh sockets: you own 100 (enough for keyboard 1). Switches: still to choose |
 | MX switch, 1u key | 52 | 104 | Kailh sockets: you own 100 (enough for keyboard 1). Switches: still to choose |
 | SK12D07VG5 power slide switch | 2 | 4 | Robu.in "SK12D07VG5" |
 | 6 mm reset button | 2 | 4 | Robu.in / StacksKB |
 | nRF52840 SuperMini (nice!nano v2 clone) | 2 | 4 | [AliExpress, A+A+A Store](https://www.aliexpress.com/item/1005007383270623.html) |
+| TPS61023 boost converter (SOT-563) | 2 | 4 | [Robu.in, TPS61023DRLR](https://robu.in/product/tps61023drlr-texas-instruments-boost-type-adjustable-2-2v5-5v-3a-500mv5-5v-sot-563-dc-dc-converters-rohs/) |
+| SN74LV1T125 buffer (SOT-23-5) | 2 | 4 | [Robu.in, SN74LV1T125DBVR](https://robu.in/product/sn74lv1t125dbvr-texas-instruments-buffer-74lv1t125-1-6-v-to-5-5-v-sot-23-5/) |
 
 **Switches and keycaps:** 66 switches per keyboard. Keycaps per keyboard: 14 × 1.25u, 52 × 1u. Not in the schematic as separate parts (the switch footprint stands for socket + switch).
 
