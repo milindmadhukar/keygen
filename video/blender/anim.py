@@ -94,7 +94,53 @@ class Kit:
         for o in self.sub["Board"].all_objects:
             if o.type == "MESH":
                 self.by_ref.setdefault(part_ref(o), []).append(o)
+        self.smd_diodes()
         self.ref_of = {o: r for r, objs in self.by_ref.items() for o in objs}   # survives reparenting
+
+    def smd_diodes(self):
+        """The SOD-123 diodes have no 3D model on the board: build each body between its pads, on the back,
+        with the cathode band at pad 1. Any diode meshes left over from an older board are dropped."""
+        path = Path(__file__).resolve().parent / "diodes.json"
+        if not path.exists():
+            return
+        for r in [r for r in self.by_ref if re.fullmatch(r"D\d{3}", r)]:
+            for o in self.by_ref.pop(r):
+                o.hide_render = o.hide_viewport = True
+        body = bpy.data.materials.new("SOD-123 body")
+        body.diffuse_color = (0.02, 0.02, 0.022, 1)
+        band = bpy.data.materials.new("SOD-123 band")
+        band.diffuse_color = (0.75, 0.75, 0.78, 1)
+        lead = bpy.data.materials.new("SOD-123 lead")
+        lead.diffuse_color = (0.8, 0.8, 0.82, 1)
+        for m, rgb, rough, metal in ((body, (0.02, 0.02, 0.022), 0.5, 0.0), (band, (0.75, 0.75, 0.78), 0.5, 0.0),
+                                     (lead, (0.8, 0.8, 0.82), 0.3, 1.0)):
+            if bpy.app.version < (5, 0, 0): m.use_nodes = True
+            b = m.node_tree.nodes["Principled BSDF"]
+            b.inputs["Base Color"].default_value = (*rgb, 1); b.inputs["Roughness"].default_value = rough
+            b.inputs["Metallic"].default_value = metal
+        board = self.sub["Board"]
+        for ref, pads in json.loads(path.read_text()).items():
+            p1 = Vector((pads["1"][0] * MM, -pads["1"][1] * MM, 0))
+            p2 = Vector((pads["2"][0] * MM, -pads["2"][1] * MM, 0))
+            axis = (p2 - p1).normalized()
+            mid = (p1 + p2) / 2
+            ang = math.atan2(axis.y, axis.x)
+            objs = []
+            for name, length, width, height, along, z, mat in (
+                    ("body", 2.7, 1.6, 1.1, 0.0, -0.63, body),
+                    ("band", 0.45, 1.62, 1.12, -0.95, -0.63, band),
+                    ("lead1", 0.9, 0.7, 0.15, -1.55, -0.16, lead),
+                    ("lead2", 0.9, 0.7, 0.15, 1.55, -0.16, lead)):
+                me = box_mesh(f"{ref} {name}", length * MM, width * MM, height * MM)
+                me.materials.append(mat)
+                o = bpy.data.objects.new(f"{ref} {name}", me)
+                o.location = mid + axis * along * MM + Vector((0, 0, z * MM))
+                o.rotation_euler.z = ang
+                board.objects.link(o)
+                objs.append(o)
+            self.by_ref[ref] = objs
+        bpy.context.view_layer.update()
+        self.meshes = [o for o in self.col.all_objects if o.type == "MESH"]
 
     def is_left(self, o):
         if o.type == "LIGHT":
@@ -134,6 +180,17 @@ class Kit:
 
     def led_lights(self):
         return [o for o in self.sub["LEDs"].objects if o.type == "LIGHT"]
+
+
+def box_mesh(name, sx, sy, sz):
+    """A box centred on the origin."""
+    bm = bmesh.new()
+    bmesh.ops.create_cube(bm, size=1.0)
+    for v in bm.verts:
+        v.co.x *= sx; v.co.y *= sy; v.co.z *= sz
+    me = bpy.data.meshes.new(name)
+    bm.to_mesh(me); bm.free()
+    return me
 
 
 def set_visible(objs, on, frame=None):
