@@ -65,9 +65,9 @@ The shopping list with spares and prices is `bom/bom.csv` / `plan/bom.html`.
 |---|---|---|---|
 | JST-PH 2-pin battery connector | 2 | 4 | Robu.in "JST PH 2.0 2 pin" |
 | 22 µF capacitor (1206) | 4 | 8 | [Robu.in, CS3216X7R226K160NRI](https://robu.in/product/cs3216x7r226k160nri-samwha-16v-22uf-x7r-%c2%b110-1206-multilayer-ceramic-capacitors-mlcc-smd-smt-rohs/) |
-| 100 nF capacitor (0805) | 2 | 4 | Robu.in |
+| 100 nF capacitor (0805) | 2 | 4 | [Robu.in, CC0805KKX7R0BB104](https://robu.in/product/cc0805kkx7r0bb104-yageo-100v-100nf-x7r-%c2%b110-0805-multilayer-ceramic-capacitors-mlcc-smd-smt-rohs/) |
 | 10 µF capacitor (1206) | 4 | 8 | Robu.in / Lamington Road |
-| 100 nF capacitor (0805), optional | 66 | 132 | Robu.in |
+| 100 nF capacitor (0805), optional | 66 | 132 | [Robu.in, CC0805KKX7R0BB104](https://robu.in/product/cc0805kkx7r0bb104-yageo-100v-100nf-x7r-%c2%b110-0805-multilayer-ceramic-capacitors-mlcc-smd-smt-rohs/) |
 | 1N4148 diode | 68 | 136 | [StacksKB 1N4148 (10-pack)](https://stackskb.com/store/1n4148-through-hole-diode/) |
 | EC11 rotary encoder | 2 | 4 | [Robu.in, Hongyan EC11](https://robu.in/product/hongyan-ec11h-7ce20p1zd20-rotary-encoder-with-push-button-switch-vertical-plug-in-5-pin/) |
 | OLED 0.96in I2C | 2 | 4 |  |
@@ -76,9 +76,9 @@ The shopping list with spares and prices is `bom/bom.csv` / `plan/bom.html`.
 | SK6812MINI-E LED | 66 | 132 | Not stocked by Indian stores I checked |
 | AO3401A P-MOSFET (SOT-23) | 2 | 4 | Robu.in / Lamington Road |
 | 1 MΩ resistor (1206) | 2 | 4 | Robu.in / Lamington Road |
-| 732 kΩ resistor, 1 % (1206) | 2 | 4 | [Robu.in, 732 kΩ](https://robu.in/product/rc1206fr-07732kl-yageo-250mw-thick-film-resistors-200v-%c2%b1100ppm-%e2%84%83-%c2%b11-732k%cf%89-1206-chip-resistor-surface-mount-rohs/), [100 kΩ 1 %](https://robu.in/product/rc1206fr-07100kl-yageo-res-thick-film-1206-100k-ohm-1-0-25w1-4w-%c2%b1100ppm-c-pad-smd-t-r/) |
-| 100 kΩ resistor, 1 % (1206) | 4 | 8 | [Robu.in, 732 kΩ](https://robu.in/product/rc1206fr-07732kl-yageo-250mw-thick-film-resistors-200v-%c2%b1100ppm-%e2%84%83-%c2%b11-732k%cf%89-1206-chip-resistor-surface-mount-rohs/), [100 kΩ 1 %](https://robu.in/product/rc1206fr-07100kl-yageo-res-thick-film-1206-100k-ohm-1-0-25w1-4w-%c2%b1100ppm-c-pad-smd-t-r/) |
-| 330 Ω resistor (0805) | 2 | 4 | Robu.in |
+| 732 kΩ resistor, 1 % (1206) | 2 | 4 | [Robu.in, 732 kΩ](https://robu.in/product/rc1206fr-07732kl-yageo-250mw-thick-film-resistors-200v-%c2%b1100ppm-%e2%84%83-%c2%b11-732k%cf%89-1206-chip-resistor-surface-mount-rohs/), [100 kΩ 1 %](https://robu.in/product/rc1206fr-13100kl-yageo-250mw-thick-film-resistors-%c2%b1100ppm-%e2%84%83-%c2%b11-100k%cf%89-1206-chip-resistor-surface-mount-rohs/) |
+| 100 kΩ resistor, 1 % (1206) | 4 | 8 | [Robu.in, 732 kΩ](https://robu.in/product/rc1206fr-07732kl-yageo-250mw-thick-film-resistors-200v-%c2%b1100ppm-%e2%84%83-%c2%b11-732k%cf%89-1206-chip-resistor-surface-mount-rohs/), [100 kΩ 1 %](https://robu.in/product/rc1206fr-13100kl-yageo-250mw-thick-film-resistors-%c2%b1100ppm-%e2%84%83-%c2%b11-100k%cf%89-1206-chip-resistor-surface-mount-rohs/) |
+| 330 Ω resistor (0805) | 2 | 4 | [Robu.in, RC0805FR-07330RL](https://robu.in/product/rc0805fr-07330rl-yageo-res-thick-film-0805-330-ohm-1-0-125w1-8w-%c2%b1100ppm-c-pad-smd-t-r/) |
 | MX switch, 1.25u key | 14 | 28 | Kailh sockets: you own 100 (enough for keyboard 1). Switches: still to choose |
 | MX switch, 1u key | 52 | 104 | Kailh sockets: you own 100 (enough for keyboard 1). Switches: still to choose |
 | SK12D07VG5 power slide switch | 2 | 4 | Robu.in "SK12D07VG5" |

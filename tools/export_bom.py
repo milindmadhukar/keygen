@@ -119,7 +119,7 @@ MPN = {
     "SN74LV1T125 buffer (SOT-23-5)": "SN74LV1T125DBVR (Texas Instruments)",
     "1 µH inductor (1210)": "TMS322512ALM-1R0MTAA (TDK)",
     "732 kΩ resistor, 1 % (1206)": "RC1206FR-07732KL (Yageo)",
-    "100 kΩ resistor, 1 % (1206)": "RC1206FR-07100KL (Yageo)",
+    "100 kΩ resistor, 1 % (1206)": "RC1206FR-13100KL (Yageo)",
     "330 Ω resistor (0805)": "RC0805FR-07330RL (Yageo)",
     "SK12D07VG5 power slide switch": "SK12D07VG5 (Shou Han, LCSC C431548)",
     "AO3401A P-MOSFET (SOT-23)": "AO3401A (Alpha & Omega, SOT-23)",

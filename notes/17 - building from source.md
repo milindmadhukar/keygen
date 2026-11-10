@@ -57,6 +57,7 @@ Run these in order. Each step is a script in `tools/`.
 | 3 | `route_pcb.py` | Routes signals with Freerouting, leaving ground to the fill |
 | 4 | `finish_route.py` | Grid maze router for whatever Freerouting leaves (`--include-gnd`, `--pads-to-ground REF.PAD`) |
 | 5 | `smooth_route.py` | Straightens tracks into 0/45/90° runs |
+| 5b | `widen_power.py` | Widens the battery and LED supply tracks to 0.4–0.6 mm wherever clearance allows (in the keygen-cad venv: it needs shapely) |
 | 6 | `stitch_gnd.py`, `cleanup_pcb.py` | Ground stitching vias; removes dangling copper |
 | 7 | `sync_pcb.py` | Relinks footprints to the schematic; redraws any `keygen` library footprint whose graphics changed in the library |
 | 8 | `silkscreen_art.py` | Moves footprint labels off the edge, pads and other silkscreen, then the black-mask stackup and the silkscreen artwork; rerunnable, replaces its previous output (about 2 minutes) |

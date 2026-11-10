@@ -86,11 +86,13 @@ References and soldering notes for every part are in `fab/BOM.md`.
 
 ## PCB
 
-- **Routed and DRC clean.** DRC with schematic parity shows 0 errors, 0 unconnected items and 0
-  parity issues, with 3 silkscreen warnings.
-- **Rules:** 0.25 mm signal and 0.4 mm power traces, 0.2 mm clearance (0.15 mm at the LED boost's
-  0.5 mm-pitch pins), 0.15 mm minimum track, 0.2 mm copper-to-edge. That is within JLCPCB's
-  2-layer capability.
+- **Routed and DRC clean.** DRC with schematic parity shows 0 errors, 0 warnings, 0 unconnected
+  items and 0 parity issues.
+- **Rules:** 0.25 mm signal traces; the battery and LED supply traces 0.4–0.6 mm (0.6 mm for most of
+  them) wherever clearance allows. 0.2 mm clearance (0.15 mm at the LED boost's 0.5 mm-pitch pins),
+  0.15 mm minimum track, 0.2 mm copper-to-edge. That is within JLCPCB's 2-layer capability.
+- **Mounting holes:** no copper, tracks, vias or ground fill within 3 mm of each M2 hole on either
+  face, where the shim, the brass standoff and the screw head bear on the board.
 - **Routing:** Freerouting does most of the signal routing, then a custom grid maze router
   finishes the rest, paying for every bend so its paths run straight. All tracks are then
   straightened into 0/45/90° runs.

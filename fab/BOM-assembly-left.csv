@@ -13,7 +13,7 @@ Item Number,Designator,Unit Quantity,Description,Manufacturer Part Number,Footpr
 12,Q101,1,AO3401A P-MOSFET (SOT-23),"AO3401A (Alpha & Omega, SOT-23)",Package_TO_SOT_SMD:SOT-23,AO3401A,BOTTOM side.
 13,R101,1,1 MΩ resistor (1206),"1206W4F1004T5E (UNI-ROYAL, 1 MΩ 1% 1206)",Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder,1M,BOTTOM side.
 14,R102,1,"732 kΩ resistor, 1 % (1206)",RC1206FR-07732KL (Yageo),Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder,732k,BOTTOM side.
-15,"R103,R104",2,"100 kΩ resistor, 1 % (1206)",RC1206FR-07100KL (Yageo),Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder,100k,BOTTOM side.
+15,"R103,R104",2,"100 kΩ resistor, 1 % (1206)",RC1206FR-13100KL (Yageo),Resistor_SMD:R_1206_3216Metric_Pad1.30x1.75mm_HandSolder,100k,BOTTOM side.
 16,R105,1,330 Ω resistor (0805),RC0805FR-07330RL (Yageo),Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder,330,BOTTOM side.
 17,"SW101,SW108,SW114,SW121,SW132,SW133,SW134",7,Kailh MX hotswap socket for a 1.25u key,CPG151101S11 (Kailh),keygen:SW_MX_HS_CPG151101S11_1.25u,Kailh hotswap socket,"Kailh CPG151101S11 hotswap socket, BOTTOM side. Do NOT fit switches (customer installs)."
 18,"SW102,SW103,SW104,SW105,SW106,SW109,SW110,SW111,SW112,SW113,SW115,SW116,SW117,SW118,SW119,SW120,SW122,SW123,SW124,SW125,SW126,SW127,SW128,SW129,SW130,SW131",26,Kailh MX hotswap socket for a 1u key,CPG151101S11 (Kailh),keygen:SW_MX_HS_CPG151101S11_1u,Kailh hotswap socket,"Kailh CPG151101S11 hotswap socket, BOTTOM side. Do NOT fit switches (customer installs)."
