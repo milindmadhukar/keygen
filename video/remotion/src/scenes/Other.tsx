@@ -1,5 +1,5 @@
 import React from "react";
-import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
+import { AbsoluteFill, Img, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 import { activeStep, clips, SceneSpec, Timing } from "../data";
 import { C, mono, sans } from "../theme";
 import { Clip } from "../components/Media";
@@ -215,7 +215,7 @@ export const Timeline: React.FC<{ spec: SceneSpec; t: Timing }> = ({ spec, t }) 
   const f = useCurrentFrame();
   const active = activeStep(t, f);
   const steps = spec.steps ?? [];
-  const x0 = 150, x1 = 1770, y = 520;
+  const x0 = 200, x1 = 1720, y = 520;
   const step = (x1 - x0) / (steps.length - 1);
   const fill = active < 0 ? 0 : active / (steps.length - 1);
   return (
@@ -261,11 +261,22 @@ export const Timeline: React.FC<{ spec: SceneSpec; t: Timing }> = ({ spec, t }) 
   );
 };
 
+/** The lit Cycles studio render, slowly pushed in. */
+const HeroStill: React.FC = () => {
+  const f = useCurrentFrame();
+  const sc = interpolate(f, [0, 400], [1.0, 1.08], { extrapolateRight: "clamp" });
+  return (
+    <AbsoluteFill style={{ overflow: "hidden" }}>
+      <Img src={staticFile("assets/render-studio-hero.jpg")} style={{ width: "100%", height: "100%", objectFit: "cover", transform: `scale(${sc})` }} />
+    </AbsoluteFill>
+  );
+};
+
 export const Outro: React.FC<{ spec: SceneSpec; t: Timing }> = () => {
   const a = useEnter(20);
   return (
     <AbsoluteFill>
-      <Clip name="wave" />
+      <HeroStill />
       <Shade dir="0deg" strength={0.9} />
       <div style={{ position: "absolute", left: 0, right: 0, bottom: 200, textAlign: "center", opacity: a }}>
         <div style={{ fontFamily: sans, fontSize: 120, fontWeight: 800, color: C.text, letterSpacing: -3 }}>Keygen</div>

@@ -17,6 +17,7 @@ CLIPS = ["hero", "explode", "back_power", "back_boost", "back_buffer", "back_thr
 BLENDER = os.environ.get("KEYGEN_BLENDER", str(Path.home() / ".local/opt/blender-5.2.2-linux-x64/blender"))
 FRAMES = Path(os.environ.get("TMPDIR", "/var/tmp")) / "keygen-video-frames"
 PUBLIC = ROOT / "video/remotion/public/clips"
+subprocess.run([sys.executable, str(ROOT / "video/blender/diodes.py")], check=True)
 
 
 def main():

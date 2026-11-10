@@ -392,6 +392,7 @@
    "heading": "Connector, reset, power switch",
    "visuals": [
     "clip:back_thru",
+    "image:assembly-part-reset.png",
     "image:assembly-part-slide-switch.png"
    ],
    "side": "back",
@@ -689,7 +690,8 @@
    "heading": "Plate foam and plate",
    "visuals": [
     "diagram:gap",
-    "clip:front"
+    "clip:front",
+    "diagram:gap"
    ],
    "steps": [
     "2 mm EVA taped under the plate",
@@ -876,7 +878,7 @@
    "kind": "steps",
    "heading": "Feet and tenting",
    "visuals": [
-    "image:render-studio-bottom.jpg",
+    "image:render-case-bottom.png",
     "clip:tent"
    ],
    "steps": [

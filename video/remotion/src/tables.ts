@@ -46,7 +46,7 @@ export const TABLES: Record<string, Tbl> = {
   trouble: {
     head: ["Symptom", "Check"],
     columns: "520px 1fr",
-    size: 24,
+    size: 28,
     rows: [
       ["Not detected over USB", "Another cable and port. Controller chip-out, fully seated. Reset double-press brings up the bootloader"],
       ["Won't run on battery", "Red wire on +. Cell above 3.0 V. Slide switch on. Q101 and R101 soldered"],
