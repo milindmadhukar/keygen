@@ -1,0 +1,949 @@
+{
+ "voice": "en_US-ryan-high",
+ "lengthScale": 1.0,
+ "scenes": [
+  {
+   "id": "intro",
+   "kind": "title",
+   "visual": "clip:hero",
+   "title": "Keygen",
+   "subtitle": "Build guide",
+   "say": [
+    "This is Keygen: a wireless, split, ergonomic keyboard, with sixty-six keys, a rotary encoder and an OLED screen on each half, and a light under every key.",
+    "Let's build one, step by step, from bare boards to a finished, tented keyboard."
+   ]
+  },
+  {
+   "id": "ch1",
+   "kind": "chapter",
+   "number": "01",
+   "title": "What you are building"
+  },
+  {
+   "id": "stack",
+   "kind": "explode",
+   "visual": "clip:explode",
+   "heading": "Each half is a stack",
+   "steps": [
+    "Bottom shell",
+    "PCB",
+    "Switch plate",
+    "Switches",
+    "Top frame",
+    "Keycaps"
+   ],
+   "say": [
+    [
+     "Each half is a stack.",
+     -1
+    ],
+    [
+     "A printed bottom shell holds the battery and a layer of foam.",
+     0
+    ],
+    [
+     "Above it, the PCB, with almost every part on its underside.",
+     1
+    ],
+    [
+     "A clear polycarbonate plate rests on brass standoffs, with foam taped under it.",
+     2
+    ],
+    [
+     "The switches clip into the plate, and plug into hotswap sockets on the PCB.",
+     3
+    ],
+    [
+     "A printed top frame holds the OLED and the encoder, and screws down over everything.",
+     4
+    ],
+    [
+     "Foam gaskets between the shell and the frame let the whole typing surface float.",
+     5
+    ]
+   ]
+  },
+  {
+   "id": "where",
+   "kind": "steps",
+   "heading": "What goes where",
+   "visuals": [
+    "image:assembly-overview.png",
+    "image:assembly-left-back.png",
+    "image:assembly-power.png"
+   ],
+   "steps": [
+    "Back: almost everything",
+    "Left 1xx, right 2xx",
+    "Find it on the map first"
+   ],
+   "say": [
+    [
+     "Everything goes on the back of the board, except the switches and the OLED header.",
+     0
+    ],
+    [
+     "The right half mirrors the left. Left parts are numbered in the one-hundreds, right parts in the two-hundreds: Q101 on the left is Q201 on the right.",
+     1
+    ],
+    [
+     "Find each part on its assembly map before you solder it.",
+     2
+    ]
+   ]
+  },
+  {
+   "id": "ch2",
+   "kind": "chapter",
+   "number": "02",
+   "title": "Parts and the plan"
+  },
+  {
+   "id": "parts1",
+   "kind": "table",
+   "table": "electronics",
+   "heading": "Electronics, both halves",
+   "say": [
+    "For both halves, you need two PCBs, two nRF52840 SuperMini controllers, sixty-six reverse-mount LEDs, sixty-eight diodes, and sixty-six hotswap sockets.",
+    "Plus a small power section per half, two encoders, two OLEDs, and two LiPo pouches with protection boards."
+   ]
+  },
+  {
+   "id": "parts2",
+   "kind": "table",
+   "table": "mechanical",
+   "heading": "Switches, case and hardware",
+   "say": [
+    "Sixty-six Akko Lavender Purple switches, blank DSA keycaps, and two aluminium knobs.",
+    "A polycarbonate plate, a PETG case, Poron and EVA foam, M2 hardware, feet, and the optional magnetic wedges."
+   ]
+  },
+  {
+   "id": "tools",
+   "kind": "tools",
+   "heading": "Tools",
+   "say": [
+    "For tools: a temperature-controlled iron with a fine tip, flux, wick, fine tweezers, a multimeter, calipers and a magnifier."
+   ]
+  },
+  {
+   "id": "plan",
+   "kind": "timeline",
+   "heading": "The plan",
+   "steps": [
+    "Day one",
+    "OLEDs arrive",
+    "Sockets, pins, OLEDs arrive",
+    "PCBs and electronics",
+    "Boards tested",
+    "Plates ready",
+    "Case ready"
+   ],
+   "details": [
+    "Fit test. Order PCBs and every part",
+    "Measure. Cut plates and plate foam",
+    "Measure. Print case, cut case foam",
+    "Solder and test both boards",
+    "OLED lead, standoffs, switch pads",
+    "Plate foam, plate, switches",
+    "Inserts, battery, encoder, close"
+   ],
+   "say": [
+    [
+     "Some parts are made to fit others, so the order matters.",
+     -1
+    ],
+    [
+     "On day one, print the fit test and order everything.",
+     0
+    ],
+    [
+     "When the OLEDs arrive, measure one, then cut the plates and the plate foam.",
+     1
+    ],
+    [
+     "When the sockets and pins are in too, measure them, then print the case and cut its foam.",
+     2
+    ],
+    [
+     "Meanwhile, solder and test both boards.",
+     3
+    ],
+    [
+     "Then the OLED lead, the standoffs and the switch pads,",
+     4
+    ],
+    [
+     "the plate and switches,",
+     5
+    ],
+    [
+     "and finally, the case.",
+     6
+    ]
+   ]
+  },
+  {
+   "id": "order",
+   "kind": "steps",
+   "heading": "Fit test and PCBs",
+   "visuals": [
+    "diagram:fittest",
+    "image:render-bare-bottom.png"
+   ],
+   "steps": [
+    "Print the fit test at 100 %",
+    "Order the PCBs"
+   ],
+   "say": [
+    [
+     "Print the fit test at actual size, and check that its ruler measures exactly one hundred millimetres. Rest your hands on it to check the thumb keys and the knob.",
+     0
+    ],
+    [
+     "Then order the PCBs: two orders of five, one per half, with black solder mask.",
+     1
+    ]
+   ]
+  },
+  {
+   "id": "arrive",
+   "kind": "steps",
+   "heading": "When the parts arrive",
+   "visuals": [
+    "diagram:oledpins",
+    "diagram:battery",
+    "svg:encoder-mount-mockup.svg"
+   ],
+   "steps": [
+    "OLED pin order",
+    "Battery and connector",
+    "Encoder shaft"
+   ],
+   "say": [
+    [
+     "When the parts arrive, check that the OLED's pins read GND, VCC, SCL, SDA. Modules with GND and VCC swapped are no good.",
+     0
+    ],
+    [
+     "Each battery needs a protection board, and the connector must be the side-entry type.",
+     1
+    ],
+    [
+     "Dry-fit the encoder and knob on the test coupon, before cutting the shaft by one millimetre.",
+     2
+    ]
+   ]
+  },
+  {
+   "id": "make",
+   "kind": "steps",
+   "heading": "Plates, foam and case",
+   "visuals": [
+    "image:render-plate.png",
+    "diagram:foam",
+    "image:render-case-parts.png"
+   ],
+   "steps": [
+    "Switch plates: CNC-routed",
+    "Foam: four cut files",
+    "Case: PETG, 90 % infill"
+   ],
+   "say": [
+    [
+     "Have both plates CNC-routed from one-and-a-half millimetre clear polycarbonate. Not laser-cut.",
+     0
+    ],
+    [
+     "Cut the foam from its four files: two-millimetre EVA for the plates, five-millimetre for the case floors.",
+     1
+    ],
+    [
+     "Print the shells and frames in PETG, at ninety percent infill, without supports. The fits are close, so calibrate the printer first.",
+     2
+    ]
+   ],
+   "note": {
+    "at": 3,
+    "text": "Fits are close: 1.0 mm plate to wall, 0.5 mm round each gasket tab."
+   }
+  },
+  {
+   "id": "ch3",
+   "kind": "chapter",
+   "number": "03",
+   "title": "Soldering the board"
+  },
+  {
+   "id": "inspect",
+   "kind": "steps",
+   "heading": "Inspect, then solder",
+   "visuals": [
+    "image:render-bare-top.png",
+    "diagram:solder"
+   ],
+   "steps": [
+    "Inspect the bare board",
+    "Tin, place, reflow, finish"
+   ],
+   "say": [
+    [
+     "Before soldering, check the bare board for clean LED cut-outs, and use the meter to check that the power rails aren't shorted to ground.",
+     0
+    ],
+    [
+     "Every small surface-mount part goes on the same way: tin one pad, place the part and reheat it, solder the rest, then touch up the first.",
+     1
+    ]
+   ],
+   "warning": {
+    "at": 1,
+    "text": "Keep the battery unplugged whenever you solder."
+   }
+  },
+  {
+   "id": "power",
+   "kind": "steps",
+   "heading": "Battery switch",
+   "visuals": [
+    "clip:back_power"
+   ],
+   "side": "back",
+   "steps": [
+    "Q101 / Q201  AO3401A P-MOSFET",
+    "R101 / R201  1 MΩ, below it"
+   ],
+   "say": [
+    [
+     "Start on the back, beside the controller: the AO3401A MOSFET at Q101,",
+     0
+    ],
+    [
+     "and the one-megohm resistor R101, just below it.",
+     1
+    ]
+   ]
+  },
+  {
+   "id": "boost",
+   "kind": "steps",
+   "heading": "LED boost converter",
+   "visuals": [
+    "clip:back_boost",
+    "image:assembly-part-boost.png"
+   ],
+   "side": "back",
+   "steps": [
+    "U102  TPS61023, 0.5 mm pitch",
+    "L101 1 µH · C101, C104 22 µF · C103 10 µF",
+    "R102 732 k · R104 100 k · R103 100 k"
+   ],
+   "say": [
+    [
+     "Next, the LED boost. U102 is a TPS61023, with half-millimetre pins: flux the pads, line up pin one, touch each pad, and check for bridges.",
+     0
+    ],
+    [
+     "Then the inductor L101, and the capacitors C101, C104 and C103.",
+     1
+    ],
+    [
+     "And the feedback divider, R102 and R104, with the pull-down R103.",
+     2
+    ]
+   ],
+   "warning": {
+    "at": 2,
+    "text": "Ceramic capacitors carry no marking. Keep each value in its labelled bag."
+   }
+  },
+  {
+   "id": "buffer",
+   "kind": "steps",
+   "heading": "LED data buffer",
+   "visuals": [
+    "clip:back_buffer",
+    "image:assembly-part-buffer.png"
+   ],
+   "side": "back",
+   "steps": [
+    "U103 SN74LV1T125 · C102 100 nF · R105 330 Ω",
+    "C105 10 µF, by the last LED",
+    "C111–C143 stay empty"
+   ],
+   "say": [
+    [
+     "The data buffer, U103, goes beside the first LED, with C102 and R105.",
+     0
+    ],
+    [
+     "C105 goes beside the last LED.",
+     1
+    ],
+    [
+     "The small footprints beside each LED stay empty.",
+     2
+    ]
+   ]
+  },
+  {
+   "id": "thru",
+   "kind": "steps",
+   "heading": "Connector, reset, power switch",
+   "visuals": [
+    "clip:back_thru",
+    "image:assembly-part-slide-switch.png"
+   ],
+   "side": "back",
+   "steps": [
+    "BT101  JST-PH, side entry",
+    "SW191  reset, labelled GENERATE",
+    "SW190  slide switch, knob over the edge"
+   ],
+   "say": [
+    [
+     "The battery connector, BT101,",
+     0
+    ],
+    [
+     "the reset button, SW191,",
+     1
+    ],
+    [
+     "and the slide switch, SW190, its knob out over the top edge, are through-hole: place them on the back, solder them on the front, and trim flush.",
+     2
+    ]
+   ]
+  },
+  {
+   "id": "controller",
+   "kind": "steps",
+   "heading": "Controller",
+   "visuals": [
+    "diagram:supermini",
+    "diagram:socketstack",
+    "clip:back_controller",
+    "clip:back_controller"
+   ],
+   "side": "back",
+   "steps": [
+    "Check 3.3 V, bridge BOOST",
+    "Sockets, pins, controller",
+    "Chip up, USB-C at the top edge",
+    "Solder, then check every joint"
+   ],
+   "say": [
+    [
+     "Before fitting the controller, check that VCC reads three point three volts on USB, and bridge its BOOST link for faster charging.",
+     0
+    ],
+    [
+     "Push the socket strips into the footprint, the machined pins into the sockets, and lay the controller on top.",
+     1
+    ],
+    [
+     "Chip side up, away from the PCB, with the USB-C at the top edge.",
+     2
+    ],
+    [
+     "Solder the pins to the controller, then the sockets on the front.",
+     3
+    ]
+   ],
+   "warning": {
+    "at": 3,
+    "text": "Seated chip-side down, the pinout is mirrored and the battery lands on a GPIO."
+   }
+  },
+  {
+   "id": "ch4",
+   "kind": "chapter",
+   "number": "04",
+   "title": "Bring-up and lighting"
+  },
+  {
+   "id": "bringup",
+   "kind": "steps",
+   "heading": "Bring-up",
+   "visuals": [
+    "diagram:flash",
+    "diagram:polarity",
+    "diagram:meter-rail",
+    "diagram:meter-charge"
+   ],
+   "steps": [
+    "Flash, check USB",
+    "Battery polarity",
+    "LED rail 4.83–5.08 V",
+    "Charge ≈ 300 mA"
+   ],
+   "say": [
+    [
+     "Now bring the half up, before any LED goes on. Flash the firmware, and check that it shows up over USB.",
+     0
+    ],
+    [
+     "Confirm the red battery wire lands on the plus pad.",
+     1
+    ],
+    [
+     "With the LED test build, the LED rail at C101 should read between four point eight three and five point oh eight volts.",
+     2
+    ],
+    [
+     "And the charge current should be about three hundred milliamps.",
+     3
+    ]
+   ],
+   "warning": {
+    "at": 2,
+    "text": "JST-PH packs come wired both ways round. Check the polarity every time."
+   }
+  },
+  {
+   "id": "leds",
+   "kind": "steps",
+   "heading": "LEDs",
+   "visuals": [
+    "clip:back_leds",
+    "image:assembly-part-led.png",
+    "clip:back_leds",
+    "diagram:ledchain"
+   ],
+   "side": "back",
+   "steps": [
+    "LED101–LED133, reverse-mount",
+    "Cut corner = GND = pad 1",
+    "In order, six at a time",
+    "Test as you go"
+   ],
+   "say": [
+    [
+     "The thirty-three LEDs mount upside down on the back, shining through their cut-outs.",
+     0
+    ],
+    [
+     "The cut corner marks ground, on pad one. Use three hundred and twenty degrees, and plenty of flux.",
+     1
+    ],
+    [
+     "Solder them in number order, six or so at a time,",
+     2
+    ],
+    [
+     "and test as you go: one bad joint darkens every LED after it.",
+     3
+    ]
+   ]
+  },
+  {
+   "id": "diodes",
+   "kind": "steps",
+   "heading": "Diodes and hotswap sockets",
+   "visuals": [
+    "clip:back_diodes",
+    "clip:back_sockets"
+   ],
+   "side": "back",
+   "steps": [
+    "D101–D134  band to pad 1",
+    "33 hotswap sockets"
+   ],
+   "say": [
+    [
+     "Then the diodes, D101 to D134, each with its band towards pad one.",
+     0
+    ],
+    [
+     "And the thirty-three hotswap sockets: held flat, with plenty of solder.",
+     1
+    ]
+   ]
+  },
+  {
+   "id": "encoder",
+   "kind": "steps",
+   "heading": "Encoder lead and matrix test",
+   "visuals": [
+    "clip:back_header",
+    "diagram:encoder",
+    "image:render-bare-bottom.png"
+   ],
+   "side": "back",
+   "steps": [
+    "J102  1×5 right-angle header",
+    "Five-wire lead, 100 mm",
+    "Test every key and the encoder"
+   ],
+   "say": [
+    [
+     "Solder a five-pin right-angle header into J102, beside the encoder opening, pointing away from the thumb keys.",
+     0
+    ],
+    [
+     "Make a five-wire lead, a hundred millimetres long, to the encoder's A, C, B, S1 and S2 pins, and mark pin one.",
+     1
+    ],
+    [
+     "Plug it in, short each socket with tweezers to test every key, then turn and press the encoder.",
+     2
+    ]
+   ]
+  },
+  {
+   "id": "oled",
+   "kind": "steps",
+   "heading": "OLED header and lead",
+   "visuals": [
+    "image:assembly-left-front.png",
+    "diagram:oledlead",
+    "svg:assembly-oled.svg"
+   ],
+   "steps": [
+    "J101  1×4 header from the front",
+    "Four-wire lead, 45 mm",
+    "Power up: status screen"
+   ],
+   "say": [
+    [
+     "The last soldering: a four-pin right-angle header in J101, from the front.",
+     0
+    ],
+    [
+     "Make a four-wire lead, forty-five millimetres long, in GND, VCC, SCL, SDA order, soldered to the module from its back.",
+     1
+    ],
+    [
+     "Plug it in and power up: the status screen should appear.",
+     2
+    ]
+   ],
+   "warning": {
+    "at": 1,
+    "text": "A module with GND and VCC swapped is powered backwards."
+   }
+  },
+  {
+   "id": "ch5",
+   "kind": "chapter",
+   "number": "05",
+   "title": "Plate and switches"
+  },
+  {
+   "id": "standoffs",
+   "kind": "steps",
+   "heading": "Standoffs",
+   "visuals": [
+    "svg:assembly-standoffs.svg",
+    "diagram:gap"
+   ],
+   "steps": [
+    "Shim, standoff, screw from below",
+    "3.5 mm PCB-to-plate gap"
+   ],
+   "say": [
+    [
+     "Five standoffs per half: a half-millimetre shim, an M2 standoff, and a screw driven up from the back. Snug, not hard.",
+     0
+    ],
+    [
+     "Together, they make the three-and-a-half millimetre gap between the PCB and the plate.",
+     1
+    ]
+   ]
+  },
+  {
+   "id": "pads",
+   "kind": "steps",
+   "heading": "Switch pads",
+   "visuals": [
+    "svg:assembly-switch-pads.svg"
+   ],
+   "steps": [
+    "On the PCB, never the plate",
+    "Notches to the clips",
+    "Snip round 7 shims"
+   ],
+   "say": [
+    [
+     "Then a Poron ring round each switch position, on the PCB, never on the plate.",
+     0
+    ],
+    [
+     "Clean the board, line each ring's notches up with the switch clips, and press it down.",
+     1
+    ],
+    [
+     "Where a ring meets a standoff's shim, snip that bite out.",
+     2
+    ]
+   ],
+   "warning": {
+    "at": 0,
+    "text": "No more soldering once the rings are on: a hot iron melts them."
+   }
+  },
+  {
+   "id": "plate",
+   "kind": "steps",
+   "heading": "Plate foam and plate",
+   "visuals": [
+    "diagram:gap",
+    "clip:front"
+   ],
+   "steps": [
+    "2 mm EVA taped under the plate",
+    "Plate rests on the standoffs",
+    "0.5 Poron · 1.0 air · 2.0 EVA"
+   ],
+   "say": [
+    [
+     "Tape the plate foam under the plate with thin tissue tape, keeping the latch notches clear.",
+     0
+    ],
+    [
+     "Then rest the plate on the standoffs. The switches will hold it.",
+     1
+    ],
+    [
+     "That leaves half a millimetre of Poron, a millimetre of air, and two of EVA.",
+     2
+    ]
+   ]
+  },
+  {
+   "id": "switches",
+   "kind": "steps",
+   "heading": "Switches",
+   "visuals": [
+    "clip:front"
+   ],
+   "steps": [
+    "Dry-fit one switch first",
+    "Press in, support the socket",
+    "Check deep sleep"
+   ],
+   "say": [
+    [
+     "Dry-fit one switch first.",
+     0
+    ],
+    [
+     "Then press each one through the plate into its socket, supporting the PCB behind it. The tall thumb switches turn ninety degrees.",
+     1
+    ],
+    [
+     "While you can still reach the battery lead, check the sleep current: tens to low hundreds of microamps.",
+     2
+    ]
+   ]
+  },
+  {
+   "id": "ch6",
+   "kind": "chapter",
+   "number": "06",
+   "title": "Closing the case"
+  },
+  {
+   "id": "caseprep",
+   "kind": "steps",
+   "heading": "Inserts, battery, case foam",
+   "visuals": [
+    "image:render-case-parts.png",
+    "diagram:battery",
+    "image:render-case-exploded.png"
+   ],
+   "steps": [
+    "8 heat-set inserts in the top frame",
+    "Battery in its bay",
+    "5 mm case foam"
+   ],
+   "say": [
+    [
+     "Press the eight heat-set inserts into the top frame's underside, flush with the surface.",
+     0
+    ],
+    [
+     "Tape the battery into its bay, with the lead towards the connector.",
+     1
+    ],
+    [
+     "And lay the case foam on the floor, round the battery.",
+     2
+    ]
+   ],
+   "warning": {
+    "at": 1,
+    "text": "Never press, fold or puncture the pouch."
+   }
+  },
+  {
+   "id": "encmount",
+   "kind": "steps",
+   "heading": "Encoder in the top frame",
+   "visuals": [
+    "svg:encoder-mount-mockup.svg"
+   ],
+   "steps": [
+    "Bushing into the boss",
+    "Washer and M7 nut, gently",
+    "Press: the frame must not flex"
+   ],
+   "say": [
+    [
+     "The encoder mounts in the top frame: its bushing through the boss, terminals A, C and B towards the thumbs.",
+     0
+    ],
+    [
+     "Washer and M7 nut on top, only just tight: the nut can crush PETG.",
+     1
+    ],
+    [
+     "Press the shaft hard: the frame shouldn't flex.",
+     2
+    ]
+   ]
+  },
+  {
+   "id": "close",
+   "kind": "steps",
+   "heading": "Close the case",
+   "visuals": [
+    "clip:close"
+   ],
+   "steps": [
+    "Gaskets on the 8 ledges",
+    "Unit in, leads plugged",
+    "OLED on its pegs, frame on",
+    "8 × M2×16, snug"
+   ],
+   "say": [
+    [
+     "Put a gasket strip on each of the eight ledges, and plug in the battery with a loose loop.",
+     0
+    ],
+    [
+     "Plug in the encoder lead, lower the plate and PCB onto the gaskets, and add a second gasket on each tab.",
+     1
+    ],
+    [
+     "Fix the OLED on the frame's four pegs, plug it in, and lower the frame.",
+     2
+    ],
+    [
+     "Drive the eight screws up through the floor, evenly, and only snug, so the gaskets stay soft.",
+     3
+    ]
+   ]
+  },
+  {
+   "id": "ch7",
+   "kind": "chapter",
+   "number": "07",
+   "title": "Finishing"
+  },
+  {
+   "id": "final",
+   "kind": "steps",
+   "heading": "Keycaps, knob and final test",
+   "visuals": [
+    "image:render-studio-top.jpg",
+    "svg:keymap-base.svg",
+    "image:render-studio-oled.jpg"
+   ],
+   "steps": [
+    "26 × 1u, 7 × 1.25u per half",
+    "Pair: SYS + 1",
+    "Test every key and layer"
+   ],
+   "say": [
+    [
+     "Fit the keycaps, the tall thumb caps turned ninety degrees, and push on the knobs.",
+     0
+    ],
+    [
+     "Turn both halves on together to pair them, then pair your computer on profile one.",
+     1
+    ],
+    [
+     "And test every key, on every layer.",
+     2
+    ]
+   ]
+  },
+  {
+   "id": "feet",
+   "kind": "steps",
+   "heading": "Feet and tenting",
+   "visuals": [
+    "image:render-studio-bottom.jpg",
+    "clip:tent"
+   ],
+   "steps": [
+    "Feet and steel disc",
+    "Magnetic 13° wedges"
+   ],
+   "say": [
+    [
+     "Stick four feet on each floor, and press the steel disc into its pocket.",
+     0
+    ],
+    [
+     "For tenting, glue four magnets into each wedge: they hold the disc, at thirteen degrees.",
+     1
+    ]
+   ]
+  },
+  {
+   "id": "flashing",
+   "kind": "steps",
+   "heading": "Flashing",
+   "visuals": [
+    "diagram:flash"
+   ],
+   "steps": [
+    "Plug in over USB-C",
+    "Double-press reset",
+    "Copy the UF2",
+    "Won't pair? settings_reset"
+   ],
+   "say": [
+    [
+     "To flash firmware, plug the half in over USB-C,",
+     0
+    ],
+    [
+     "double-press reset, through the pinhole in the case,",
+     1
+    ],
+    [
+     "and copy the UF2 file onto the NICENANO drive.",
+     2
+    ],
+    [
+     "If the halves won't pair, flash settings reset to both.",
+     3
+    ]
+   ]
+  },
+  {
+   "id": "trouble",
+   "kind": "table",
+   "table": "trouble",
+   "heading": "Troubleshooting",
+   "say": [
+    "If a key is dead, check its switch, its diode and its socket. If the LEDs go dark from one point on, check the first dark LED, or the one before it.",
+    "And watch for the classics: a reversed diode or battery, the controller upside down, bent pins, and cold joints."
+   ]
+  },
+  {
+   "id": "outro",
+   "kind": "outro",
+   "visual": "clip:wave",
+   "say": [
+    "And that's Keygen: built, flashed and tented.",
+    "Every file, every part and the full written guide are in the repository."
+   ]
+  }
+ ]
+}
