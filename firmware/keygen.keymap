@@ -17,6 +17,8 @@
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/outputs.h>
+/* one wheel step per knob detent: at ZMK's default speed (10) a short tap rounds down to nothing */
+#define ZMK_POINTING_DEFAULT_SCRL_VAL 100
 #include <dt-bindings/zmk/pointing.h>
 #include <dt-bindings/zmk/rgb.h>
 
@@ -41,12 +43,13 @@
             compatible = "zmk,behavior-sensor-rotate";
             #sensor-binding-cells = <0>;
             bindings = <&msc SCRL_DOWN>, <&msc SCRL_UP>;
-            tap-ms = <30>;
+            tap-ms = <20>;
         };
 
         /* lighting on battery: allowed or off, saved (module/src/power/battery_lighting.c) */
         kg_bl: kg_bl {
             compatible = "keygen,behavior-battery-lighting";
+            display-name = "Battery Lighting";
             #binding-cells = <0>;
         };
     };

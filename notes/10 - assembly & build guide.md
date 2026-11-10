@@ -103,7 +103,7 @@ From `fab/BOM.md` (left 1xx, right 2xx):
 
 ### Case assembly
 The case is gasket-mounted: the plate and PCB become one unit that floats on Poron strips. Design: [[09 - case design]].
-- Lay the top frame deck-down and press the 8 M2 heat-set inserts into the holes in its underside (about 200–230 °C), flush and no deeper, and let them cool. 1.7 mm of frame covers each hole. [Heat-set insert guide](https://www.youtube.com/watch?v=cyof7fYFcuQ)
+- Lay the top frame deck-down and press the 8 M2 heat-set inserts into the holes in its underside (about 230–245 °C), flush and no deeper, and let them cool. 1.7 mm of frame covers each hole. [Heat-set insert guide](https://www.youtube.com/watch?v=cyof7fYFcuQ)
 - Put a 0.5 mm shim on the PCB over each mounting hole, stand an M2 × 3 mm standoff on it and screw it on from below with an M2 × 5 button head, at all ten holes.
 - Cut the foam from the files in `case/foam/dxf/` or `case/foam/svg/` (DXF for a laser, SVG printed at 100 % as a template): per half a 2 mm EVA plate foam and a 5 mm EVA case foam, each the right way up as drawn.
 - Stick a 0.5 mm Poron ring switch pad on the PCB round each switch, its notches towards the switch clips and its open middle round the pins and the LED window, then tape the plate foam to the plate's underside, its cut-outs over the plate's and its notches clear for the switch latches. Seven rings per half have a corner snipped off where they meet a standoff.

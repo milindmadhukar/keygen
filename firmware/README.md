@@ -101,7 +101,7 @@ python3 tools/render_keymap.py   # assets/keymap-*.svg, with keymap-drawer throu
 | `=` | Forget the current Bluetooth profile's pairing |
 | `Q` `W` `E` | Output to USB, to Bluetooth, toggle |
 | `A` `S` `D` `F` `G` | LEDs on/off, effect, hue, brighter, dimmer |
-| `Z` | Lighting on battery: allow or forbid (saved, forbidden at first) |
+| `Z` | Lighting on battery: allow or forbid (saved, forbidden at first; shown in ZMK Studio as Battery Lighting) |
 | `Esc` | Unlock ZMK Studio |
 | `T` / `Y` | Reset the left / right half |
 | `B` / `N` | Bootloader on the left / right half |
@@ -160,7 +160,7 @@ and speed. On battery power it notes that the LEDs light only on USB power.
 | Encoders | EC11 on each half, A on P0.10, B on P0.09 (NFC pins as GPIO); each press at row 0 / column 6 |
 | OLED | 0.96 in. 128 × 64 SSD1306 per half on I2C (SDA P0.17, SCL P0.20, address 0x3C), mounted upside down so the image is turned 180°. ZMK's status screen: output, Bluetooth profile, layer and battery on the left; the right half's battery and link on the right. Blanks when idle. Powered from the nice!nano's 3.3 V output, which P0.13 keeps on |
 | Mouse | Scroll only, for the left knob (ZMK pointing) |
-| LEDs | 33 SK6812MINI-E per half on P0.06. ZMK's addressable RGB driver (`CONFIG_ZMK_RGB_UNDERGLOW`, `&rgb_ug`) runs them as one strip. The output is capped at 40 % (fresh-build initial PWM is about 16 % because ZMK scales its 40 % start value by that cap), and P0.08 (ext-power) enables the 5 V LED boost. The Keygen module ([`battery_lighting.c`](module/src/power/battery_lighting.c)) sets the lighting on battery: off unless SYS + `Z` allows it; when allowed, capped at half the brightness scale (20 % PWM), halved below 20 % charge and off below 10 %. On USB the lighting is ZMK's own. Whenever the lighting is off, the module turns the boost off too. Check the rail voltage and current during bring-up ([logic audit](../docs/logic-audit.md)) |
+| LEDs | 33 SK6812MINI-E per half on P0.06. ZMK's addressable RGB driver (`CONFIG_ZMK_RGB_UNDERGLOW`, `&rgb_ug`) runs them as one strip. The output is capped at 40 % (fresh-build initial PWM is about 16 % because ZMK scales its 40 % start value by that cap), and P0.08 (ext-power) enables the 5 V LED boost. The Keygen module ([`battery_lighting.c`](module/src/power/battery_lighting.c)) alone turns the lighting on and off, and saves what you set (on or off, brightness, lighting on battery): off when idle; on USB as you set it; on battery off unless SYS + `Z` allows it, and when allowed capped at half the brightness scale (20 % PWM), halved below 20 % charge and off below 10 %, each with 5 % of hysteresis. Each half follows its own USB and cell, so the halves can differ. Whenever the lighting is off, the module turns the boost off too. Check the rail voltage and current during bring-up ([logic audit](../docs/logic-audit.md)) |
 | Host | USB-C on the left half or Bluetooth, 5 profiles; USB is used while plugged in |
 | Split | Bluetooth, left half central |
 | Battery | Both halves report their level to the host. On USB the level reads full: ZMK measures the controller's supply (VDDH), which then runs from USB |

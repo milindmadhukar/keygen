@@ -1,6 +1,6 @@
 /*
- * Per-key SK6812MINI-E chain: 33 per half, data on P0.06 (pad 1), driven as one strip. The chain
- * runs from the battery through the board's LED power switch (Q2/Q3), which P0.08 (pad 2) turns on.
+ * Per-key SK6812MINI-E chain: 33 per half, data on P0.06 (pad 1) through a buffer, driven as one
+ * strip. The chain runs from a 5 V boost, which P0.08 (pad 2) enables.
  *
  * OLED: a 0.96 in. 128x64 SSD1306 per half on I2C, SDA P0.17 (pad 5), SCL P0.20 (pad 6), powered
  * from the nice!nano's switched 3.3 V (VCC, pad 16), which P0.13 turns on.

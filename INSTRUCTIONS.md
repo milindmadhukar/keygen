@@ -611,7 +611,7 @@ the header, then lift the plate-and-PCB unit out with the frame to reach J102 / 
 ## Heat-set inserts
 
 Lay the top frame deck-down and press the 8 M2 heat-set inserts into the blind holes in its underside
-at about 200–230 °C, flush with the surface and no deeper (1.7 mm of frame covers each hole). Let
+at about 230–245 °C, flush with the surface and no deeper (1.7 mm of frame covers each hole). Let
 them cool.
 
 ---
