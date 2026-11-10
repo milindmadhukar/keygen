@@ -94,6 +94,7 @@ class Kit:
         for o in self.sub["Board"].all_objects:
             if o.type == "MESH":
                 self.by_ref.setdefault(part_ref(o), []).append(o)
+        self.ref_of = {o: r for r, objs in self.by_ref.items() for o in objs}   # survives reparenting
 
     def is_left(self, o):
         if o.type == "LIGHT":
@@ -492,18 +493,24 @@ def clip_back(scene, kit, which):
     floor_at(-8 * MM)
     objs = groups[idx][1]
     mode = BACK_GROUPS[idx][2]
-    c = centre_of(objs)
-    n = 150 if mode == "close" else 170
-    if which == "back_leds":                               # in number order, as they are soldered
-        order = sorted(roots(objs), key=lambda o: part_ref(o))
-        for k, o in enumerate(order):
+    frame_on = kit.refs(r"U103|C102|R105") if which == "back_buffer" else objs   # C105 is far off, by the last LED
+    c = centre_of(frame_on)
+    n = 150
+    path = []
+    if mode == "wide":                                     # one part at a time, in soldering order
+        parts = {}
+        for o in roots(objs):
+            parts.setdefault(kit.ref_of.get(o, o.name), []).append(o)
+        if which == "back_leds":                           # in number order, as they are soldered
+            refs = sorted(parts)
+        else:
+            refs = sorted(parts, key=lambda r: (-centre_of(parts[r]).y, centre_of(parts[r]).x))
+        path = [centre_of(parts[r]) for r in refs]
+        for k, r in enumerate(refs):
             f0 = 15 + k * 3
-            move(o, Vector((0, 0, 10 * MM)), f0, f0 + 12)
-    elif which in ("back_diodes", "back_sockets"):
-        order = sorted(roots(objs), key=lambda o: (-o.matrix_world.translation.y, o.matrix_world.translation.x))
-        for k, o in enumerate(order):
-            f0 = 15 + k * 3
-            move(o, Vector((0, 0, 12 * MM)), f0, f0 + 12)
+            for o in parts[r]:
+                move(o, Vector((0, 0, 10 * MM)), f0, f0 + 12)
+        n = 15 + len(refs) * 3 + 12 + 50
     else:
         for k, o in enumerate(roots(objs)):
             f0 = 15 + k * 6
@@ -513,16 +520,23 @@ def clip_back(scene, kit, which):
     studio_lights_around(Vector((bc.x, bc.y, 0)))
     cam, tgt = make_camera(lens=50, fstop=None if mode == "wide" else 16.0)
     if mode == "close":
-        glo, ghi = wbox(objs)
+        glo, ghi = wbox(frame_on)
         ext = max(ghi.x - glo.x, ghi.y - glo.y, 0.008)
         d = max(0.06, ext * 2.6)                       # frame the group: small parts get a close camera
         cam_key(cam, tgt, 1, c + Vector((0.30, -0.55, 0.85)).normalized() * d * 1.08, c)
         cam_key(cam, tgt, n, c + Vector((0.15, -0.60, 0.90)).normalized() * d, c)
         flash(c + Vector((0, 0, 0.015)), 18, length=40, energy=0.03, radius=0.01)
     else:
+        # follow the parts going on at close range, then pull back to the whole board
+        off = Vector((0.20, -0.55, 0.80)).normalized() * 0.15
+        m = len(path)
+        for q in (0.0, 0.25, 0.5, 0.75, 1.0):
+            k = min(m - 1, int(q * (m - 1)))
+            near = path[max(0, k - 3):k + 4]
+            aim = sum(near, Vector()) / len(near)
+            cam_key(cam, tgt, 15 + k * 3 + 4, aim + off, aim)
         aim = Vector((bc.x, bc.y, 0.002))
-        cam_key(cam, tgt, 1, aim + Vector((0.05, -0.20, 0.24)), aim)
-        cam_key(cam, tgt, n, aim + Vector((0.00, -0.22, 0.26)), aim)
+        cam_key(cam, tgt, n, aim + Vector((0.00, -0.21, 0.25)), aim)
     ease([cam, tgt])
     render(scene, n, anchors={"group": c, "board": bc})
 
