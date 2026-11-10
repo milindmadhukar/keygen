@@ -162,37 +162,45 @@ def via_ok(g, iy, ix, net, cache):
     return ok
 
 
+TURN_45, TURN_90 = 3.0, 7.0      # cost of a bend, in grid steps: straight runs with few corners
+
 def astar(g, net, starts, goals, max_expand=3_000_000):
-    """starts/goals: lists of (layer_index, iy, ix). Returns list of (li, iy, ix) or None."""
+    """starts/goals: lists of (layer_index, iy, ix). Returns list of (li, iy, ix) or None.
+    A bend costs TURN_45 (45 degrees) or TURN_90 (90 or more), so paths run straight between few
+    corners instead of stair-stepping across the grid."""
     own = g.own
     goalset = set(goals)
     gy = np.mean([q[1] for q in goals]); gx = np.mean([q[2] for q in goals])
     h = lambda iy, ix: math.hypot(iy - gy, ix - gx) * STEP
+    nb = [(-1, 0, STEP), (-1, 1, DIAG), (0, 1, STEP), (1, 1, DIAG), (1, 0, STEP), (1, -1, DIAG), (0, -1, STEP), (-1, -1, DIAG)]
+    def bend(d0, d1):
+        if d0 < 0: return 0.0
+        k = min((d1 - d0) % 8, (d0 - d1) % 8)
+        return 0.0 if k == 0 else TURN_45 if k == 1 else TURN_90
     openh, came, cost = [], {}, {}
-    for s in starts:
-        cost[s] = 0.0; heapq.heappush(openh, (h(s[1], s[2]), 0.0, s))
-    nb = [(-1, 0, STEP), (1, 0, STEP), (0, -1, STEP), (0, 1, STEP), (-1, -1, DIAG), (-1, 1, DIAG), (1, -1, DIAG), (1, 1, DIAG)]
+    for st in starts:
+        s0 = (st, -1); cost[s0] = 0.0; heapq.heappush(openh, (h(st[1], st[2]), 0.0, s0))
     vcache, n = {}, 0
     while openh:
         f, c, s = heapq.heappop(openh)
         if c > cost.get(s, 1e18): continue
-        if s in goalset:
-            path = [s]
-            while s in came: s = came[s]; path.append(s)
+        (li, iy, ix), d = s
+        if (li, iy, ix) in goalset:
+            path = [(li, iy, ix)]
+            while s in came: s = came[s]; path.append(s[0])
             return path[::-1]
         n += 1
         if n > max_expand: return None
-        li, iy, ix = s
-        for dy, dx, sc in nb:
+        for k, (dy, dx, sc) in enumerate(nb):
             y2, x2 = iy + dy, ix + dx
             if not (0 <= y2 < g.ny and 0 <= x2 < g.nx): continue
             o = own[li, y2, x2]
             if o != FREE and o != net: continue
             if dy and dx and ((own[li, iy, x2] not in (FREE, net)) or (own[li, y2, ix] not in (FREE, net))): continue
-            t = (li, y2, x2); nc = c + sc
+            t = ((li, y2, x2), k); nc = c + sc + bend(d, k)
             if nc < cost.get(t, 1e18):
                 cost[t] = nc; came[t] = s; heapq.heappush(openh, (nc + h(y2, x2), nc, t))
-        t = (1 - li, iy, ix)
+        t = ((1 - li, iy, ix), -1)
         if own[1 - li, iy, ix] in (FREE, net) and via_ok(g, iy, ix, net, vcache):
             nc = c + VIA_COST
             if nc < cost.get(t, 1e18):

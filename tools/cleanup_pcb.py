@@ -27,42 +27,28 @@ def drc():
 
 
 def junk(data):
-    vias, tracks = [], []
+    """UUIDs of the dangling vias and track stubs DRC reports, and of GND vias too close to something.
+    By UUID, not position: a stub's dangling end can lie on a junction, and matching by position
+    would take the live tracks at that junction with it."""
+    ids = set()
     for v in data["violations"]:
         for i in v["items"]:
-            p = (i["pos"]["x"], i["pos"]["y"])
             d = i["description"]
-            if v["type"] == "via_dangling" and d.startswith("Via"):
-                vias.append(p)
-            elif v["type"] == "track_dangling" and d.startswith("Track"):
-                tracks.append(p)
+            if (v["type"] == "via_dangling" and d.startswith("Via")) or (v["type"] == "track_dangling" and d.startswith("Track")):
+                ids.add(i["uuid"])
             elif v["type"] in ("clearance", "hole_clearance", "hole_to_hole") and d.startswith("Via [") and "/GND]" in d:
-                vias.append(p)
-    return vias, tracks
+                ids.add(i["uuid"])
+    return ids
 
 
-def on_segment(p, a, b, tol=0.02):
-    vx, vy = b[0] - a[0], b[1] - a[1]
-    L2 = vx * vx + vy * vy
-    t = 0 if L2 == 0 else max(0, min(1, ((p[0] - a[0]) * vx + (p[1] - a[1]) * vy) / L2))
-    return math.hypot(p[0] - a[0] - t * vx, p[1] - a[1] - t * vy) < tol
-
-
-def prune(vias, tracks):
+def prune(ids):
     tree = parse(PCB.read_text())
     keep, rv, rt = [], 0, 0
     for n in tree:
-        if isinstance(n, list) and n and n[0] == "via":
-            at = first(n, "at")
-            if any(abs(float(at[1]) - x) < 0.01 and abs(float(at[2]) - y) < 0.01 for x, y in vias):
-                rv += 1
-                continue
-        if isinstance(n, list) and n and n[0] == "segment":
-            s, e = first(n, "start"), first(n, "end")
-            a, c = (float(s[1]), float(s[2])), (float(e[1]), float(e[2]))
-            if any(on_segment(p, a, c) for p in tracks):
-                rt += 1
-                continue
+        if isinstance(n, list) and n and n[0] in ("via", "segment", "arc") and first(n, "uuid")[1] in ids:
+            if n[0] == "via": rv += 1
+            else: rt += 1
+            continue
         keep.append(n)
     tree[:] = keep
     PCB.write_text(dump(tree) + "\n")
@@ -72,10 +58,10 @@ def prune(vias, tracks):
 def main():
     total_v = total_t = 0
     for _ in range(6):
-        vias, tracks = junk(drc())
-        if not vias and not tracks:
+        ids = junk(drc())
+        if not ids:
             break
-        rv, rt = prune(vias, tracks)
+        rv, rt = prune(ids)
         total_v += rv
         total_t += rt
         if rv == rt == 0:
