@@ -4,12 +4,8 @@ import { clips } from "../data";
 import { C, mono } from "../theme";
 import { Diagram } from "./Diagrams";
 
-/** A rendered Blender clip; it holds its last frame once it ends. */
-export const Clip: React.FC<{ name: string; fit?: "cover" | "contain"; startFrom?: number }> = ({
-  name,
-  fit = "cover",
-  startFrom = 0,
-}) => {
+/** A rendered Blender clip, slowed (to half speed at most) to fill `span` frames; then it holds its last frame. */
+export const Clip: React.FC<{ name: string; fit?: "cover" | "contain"; span?: number }> = ({ name, fit = "cover", span }) => {
   const f = useCurrentFrame();
   const meta = clips[name];
   if (!meta) {
@@ -21,15 +17,16 @@ export const Clip: React.FC<{ name: string; fit?: "cover" | "contain"; startFrom
       </AbsoluteFill>
     );
   }
+  const rate = span ? Math.max(0.5, Math.min(1, meta.frames / Math.max(1, span - 20))) : 1;
   const video = (
     <OffthreadVideo
       src={staticFile(`clips/${name}.mp4`)}
-      startFrom={startFrom}
+      playbackRate={rate}
       muted
       style={{ width: "100%", height: "100%", objectFit: fit }}
     />
   );
-  const last = meta.frames - 1 - startFrom;
+  const last = Math.floor((meta.frames - 2) / rate);
   return f >= last ? <Freeze frame={last}>{video}</Freeze> : video;
 };
 
@@ -58,7 +55,7 @@ export const Picture: React.FC<{ file: string; frames: number; w: number; h: num
 /** Any visual named in scenes.json: clip:<name>, image:<file>, svg:<file>, diagram:<name>. */
 export const Visual: React.FC<{ spec: string; frames: number; w: number; h: number }> = ({ spec, frames, w, h }) => {
   const [kind, name] = spec.split(":");
-  if (kind === "clip") return <Clip name={name} />;
+  if (kind === "clip") return <Clip name={name} span={frames} />;
   if (kind === "image" || kind === "svg") return <Picture file={name} frames={frames} w={w} h={h} />;
   if (kind === "diagram") return <Diagram name={name} w={w} h={h} />;
   return null;

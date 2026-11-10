@@ -4,3 +4,4 @@ Config.setVideoImageFormat("jpeg");
 Config.setJpegQuality(92);
 Config.setConcurrency(4);
 Config.setOverwriteOutput(true);
+Config.setCrf(16);

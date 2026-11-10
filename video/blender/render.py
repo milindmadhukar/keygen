@@ -13,7 +13,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 CLIPS = ["hero", "explode", "back_power", "back_boost", "back_buffer", "back_thru", "back_controller",
-         "back_leds", "back_diodes", "back_sockets", "back_header", "front", "close", "tent", "wave"]
+         "back_leds", "back_diodes", "back_sockets", "back_header", "front", "close", "tent"]
 BLENDER = os.environ.get("KEYGEN_BLENDER", str(Path.home() / ".local/opt/blender-5.2.2-linux-x64/blender"))
 FRAMES = Path(os.environ.get("TMPDIR", "/var/tmp")) / "keygen-video-frames"
 PUBLIC = ROOT / "video/remotion/public/clips"

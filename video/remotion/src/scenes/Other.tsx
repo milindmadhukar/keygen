@@ -17,15 +17,21 @@ const Shade: React.FC<{ dir?: string; strength?: number }> = ({ dir = "90deg", s
   />
 );
 
-export const Title: React.FC<{ spec: SceneSpec; t: Timing }> = ({ spec }) => {
+export const Title: React.FC<{ spec: SceneSpec; t: Timing }> = ({ spec, t }) => {
   const f = useCurrentFrame();
   const a = useEnter(15);
   const b = useEnter(35);
   const chips = ["66 keys", "Wireless split", "nRF52840 · ZMK", "Per-key RGB", "Encoder + OLED per half"];
   return (
     <AbsoluteFill>
-      <AbsoluteFill style={{ transform: "translateX(230px) scale(1.25)" }}>
-        <Clip name="hero" />
+      <AbsoluteFill
+        style={{
+          transform: "translateX(420px)",
+          maskImage: "linear-gradient(90deg, transparent 0%, black 30%)",
+          WebkitMaskImage: "linear-gradient(90deg, transparent 0%, black 30%)",
+        }}
+      >
+        <Clip name="hero" span={t.frames} />
       </AbsoluteFill>
       <Shade />
       <div style={{ position: "absolute", left: 120, top: 330 }}>
@@ -112,11 +118,13 @@ export const Explode: React.FC<{ spec: SceneSpec; t: Timing }> = ({ spec, t }) =
   const meta = clips["explode"];
   const anchors = meta?.anchors ?? {};
   const labelX = 1450;
-  const show = interpolate(f, [100, 120], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const span = Math.round(t.frames * 0.45);
+  const rate = meta ? Math.max(0.5, Math.min(1, meta.frames / Math.max(1, span - 20))) : 1;
+  const show = interpolate(f, [100 / rate, 120 / rate], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const names = spec.steps ?? [];
   return (
     <AbsoluteFill>
-      <Clip name="explode" />
+      <Clip name="explode" span={span} />
       <AbsoluteFill style={{ background: "linear-gradient(270deg, rgba(8,9,12,0.8) 0%, rgba(8,9,12,0) 35%)" }} />
       <div style={{ position: "absolute", left: 80, top: 110, fontFamily: sans, fontSize: 56, fontWeight: 800, color: C.text }}>
         {spec.heading}
