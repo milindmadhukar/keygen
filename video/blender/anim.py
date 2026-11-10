@@ -367,7 +367,7 @@ def render(scene, frames, anchors=None):
         bpy.ops.render.render(write_still=True)
         log(f"{CLIP}: still {STILL}")
         return
-    scene.render.filepath = str(d / "")
+    scene.render.filepath = str(d) + "/"
     scene.render.use_overwrite = False      # resumable: frames already on disk are skipped
     scene.render.use_placeholder = False
     if "--frames" in argv:
@@ -405,7 +405,7 @@ def clip_hero(scene, kit):
     c = (lo + hi) / 2
     size = hi - lo
     n = 300
-    for f, a, h, d in ((1, -0.42, 0.62, 1.32), (n, 0.30, 0.50, 1.18)):
+    for f, a, h, d in ((1, -0.35, 0.85, 1.80), (n, 0.25, 0.70, 1.62)):
         off = Vector((math.sin(a) * size.x * d, -math.cos(a) * size.x * d, size.x * h))
         cam_key(cam, tgt, f, c + off, c + Vector((0, 0, 0.004)))
     ease([cam, tgt])
@@ -419,7 +419,7 @@ def clip_explode(scene, kit):
     pcb = (kit.board_body() + [o for r, objs in kit.by_ref.items() if re.fullmatch(r"[A-Z]+1\d\d", r)
                                and not r.startswith(("SW1", "ENC", "J101")) for o in objs] +
            kit.sockets() + kit.refs(r"SW19[01]") + [o for o in kit.led_emitters() if kit.is_left(o)])
-    pcb = [o for o in pcb if o not in top_frame_set(kit)]
+    pcb = [o for o in pcb if o not in top_frame_set(kit) and kit.is_left(o)]
     layers = [("Bottom shell", kit.case("bottom"), -55),
               ("PCB", pcb, 0),
               ("Switch plate", kit.plate(), 26),
@@ -511,11 +511,14 @@ def clip_back(scene, kit, which):
     ease(roots(objs))
     bc = Vector((at.x, at.y, 0.0))
     studio_lights_around(Vector((bc.x, bc.y, 0)))
-    cam, tgt = make_camera(lens=50, fstop=None if mode == "wide" else 9.0)
+    cam, tgt = make_camera(lens=50, fstop=None if mode == "wide" else 16.0)
     if mode == "close":
-        cam_key(cam, tgt, 1, c + Vector((0.030, -0.060, 0.085)), c)
-        cam_key(cam, tgt, n, c + Vector((0.015, -0.068, 0.095)), c)
-        flash(c + Vector((0, 0, 0.012)), 18, length=40, energy=0.35, radius=0.01)
+        glo, ghi = wbox(objs)
+        ext = max(ghi.x - glo.x, ghi.y - glo.y, 0.008)
+        d = max(0.06, ext * 2.6)                       # frame the group: small parts get a close camera
+        cam_key(cam, tgt, 1, c + Vector((0.30, -0.55, 0.85)).normalized() * d * 1.08, c)
+        cam_key(cam, tgt, n, c + Vector((0.15, -0.60, 0.90)).normalized() * d, c)
+        flash(c + Vector((0, 0, 0.015)), 18, length=40, energy=0.03, radius=0.01)
     else:
         aim = Vector((bc.x, bc.y, 0.002))
         cam_key(cam, tgt, 1, aim + Vector((0.05, -0.20, 0.24)), aim)
