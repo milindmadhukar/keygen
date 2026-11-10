@@ -38,12 +38,16 @@ def main():
         frames = sorted((FRAMES / name).glob("*.png"))
         if frames:                                   # the last frame may have been cut off mid-write
             frames[-1].unlink()
-        p = subprocess.run([BLENDER, "-b", str(ROOT / "blender/keygen.blend"), "--python-exit-code", "1",
-                            "--python", str(ROOT / "video/blender/anim.py"), "--", name, str(FRAMES), *extra],
-                           capture_output=True, text=True, env=env)
-        print("\n".join(l for l in p.stdout.splitlines() if l.startswith("keygen:")), flush=True)
+        log = FRAMES / f"{name}.log"                 # tail -f this to watch a clip render
+        FRAMES.mkdir(parents=True, exist_ok=True)
+        with open(log, "w") as fh:
+            p = subprocess.run([BLENDER, "-b", str(ROOT / "blender/keygen.blend"), "--python-exit-code", "1",
+                                "--python", str(ROOT / "video/blender/anim.py"), "--", name, str(FRAMES), *extra],
+                               stdout=fh, stderr=subprocess.STDOUT, text=True, env=env)
+        text = log.read_text()
+        print("\n".join(l for l in text.splitlines() if l.startswith("keygen:")), flush=True)
         if p.returncode:
-            sys.exit(f"blender failed on {name}:\n{(p.stdout + p.stderr)[-3000:]}")
+            sys.exit(f"blender failed on {name}:\n{text[-3000:]}")
         if still:
             continue
         subprocess.run(["ffmpeg", "-v", "error", "-y", "-framerate", "30", "-i", str(FRAMES / name / "%04d.png"),

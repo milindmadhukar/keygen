@@ -1,0 +1,879 @@
+{
+ "fps": 30,
+ "frames": 17736,
+ "scenes": [
+  {
+   "id": "intro",
+   "start": 0,
+   "frames": 535,
+   "sentences": [
+    {
+     "text": "This is Keygen: a wireless, split, ergonomic keyboard, with sixty-six keys, a rotary encoder and an OLED screen on each half, and a light under every key.",
+     "step": null,
+     "start": 66,
+     "end": 354
+    },
+    {
+     "text": "Let's build one, step by step, from bare boards to a finished, tented keyboard.",
+     "step": null,
+     "start": 366,
+     "end": 505
+    }
+   ]
+  },
+  {
+   "id": "ch1",
+   "start": 535,
+   "frames": 78,
+   "sentences": []
+  },
+  {
+   "id": "stack",
+   "start": 613,
+   "frames": 896,
+   "sentences": [
+    {
+     "text": "Each half is a stack.",
+     "step": -1,
+     "start": 628,
+     "end": 665
+    },
+    {
+     "text": "A printed bottom shell holds the battery and a layer of foam.",
+     "step": 0,
+     "start": 677,
+     "end": 771
+    },
+    {
+     "text": "Above it, the PCB, with almost every part on its underside.",
+     "step": 1,
+     "start": 783,
+     "end": 905
+    },
+    {
+     "text": "A clear polycarbonate plate rests on brass standoffs, with foam taped under it.",
+     "step": 2,
+     "start": 917,
+     "end": 1047
+    },
+    {
+     "text": "The switches clip into the plate, and plug into hotswap sockets on the PCB.",
+     "step": 3,
+     "start": 1059,
+     "end": 1189
+    },
+    {
+     "text": "A printed top frame holds the OLED and the encoder, and screws down over everything.",
+     "step": 4,
+     "start": 1201,
+     "end": 1346
+    },
+    {
+     "text": "Foam gaskets between the shell and the frame let the whole typing surface float.",
+     "step": 5,
+     "start": 1358,
+     "end": 1479
+    }
+   ]
+  },
+  {
+   "id": "where",
+   "start": 1509,
+   "frames": 529,
+   "sentences": [
+    {
+     "text": "Everything goes on the back of the board, except the switches and the OLED header.",
+     "step": 0,
+     "start": 1524,
+     "end": 1653
+    },
+    {
+     "text": "The right half mirrors the left. Left parts are numbered in the one-hundreds, right parts in the two-hundreds: Q101 on the left is Q201 on the right.",
+     "step": 1,
+     "start": 1665,
+     "end": 1913
+    },
+    {
+     "text": "Find each part on its assembly map before you solder it.",
+     "step": 2,
+     "start": 1925,
+     "end": 2008
+    }
+   ]
+  },
+  {
+   "id": "ch2",
+   "start": 2038,
+   "frames": 78,
+   "sentences": []
+  },
+  {
+   "id": "parts1",
+   "start": 2116,
+   "frames": 602,
+   "sentences": [
+    {
+     "text": "For both halves, you need two PCBs, two nRF52840 SuperMini controllers, sixty-six reverse-mount LEDs, sixty-eight diodes, and sixty-six hotswap sockets.",
+     "step": null,
+     "start": 2131,
+     "end": 2477
+    },
+    {
+     "text": "Plus a small power section per half, two encoders, two OLEDs, and two LiPo pouches with protection boards.",
+     "step": null,
+     "start": 2489,
+     "end": 2688
+    }
+   ]
+  },
+  {
+   "id": "parts2",
+   "start": 2718,
+   "frames": 485,
+   "sentences": [
+    {
+     "text": "Sixty-six Akko Lavender Purple switches, blank DSA keycaps, and two aluminium knobs.",
+     "step": null,
+     "start": 2733,
+     "end": 2921
+    },
+    {
+     "text": "A polycarbonate plate, a PETG case, Poron and EVA foam, M2 hardware, feet, and the optional magnetic wedges.",
+     "step": null,
+     "start": 2933,
+     "end": 3173
+    }
+   ]
+  },
+  {
+   "id": "tools",
+   "start": 3203,
+   "frames": 288,
+   "sentences": [
+    {
+     "text": "For tools: a temperature-controlled iron with a fine tip, flux, wick, fine tweezers, a multimeter, calipers and a magnifier.",
+     "step": null,
+     "start": 3218,
+     "end": 3461
+    }
+   ]
+  },
+  {
+   "id": "plan",
+   "start": 3491,
+   "frames": 836,
+   "sentences": [
+    {
+     "text": "Some parts are made to fit others, so the order matters.",
+     "step": -1,
+     "start": 3506,
+     "end": 3594
+    },
+    {
+     "text": "On day one, print the fit test and order everything.",
+     "step": 0,
+     "start": 3606,
+     "end": 3692
+    },
+    {
+     "text": "When the OLEDs arrive, measure one, then cut the plates and the plate foam.",
+     "step": 1,
+     "start": 3704,
+     "end": 3819
+    },
+    {
+     "text": "When the sockets and pins are in too, measure them, then print the case and cut its foam.",
+     "step": 2,
+     "start": 3831,
+     "end": 3973
+    },
+    {
+     "text": "Meanwhile, solder and test both boards.",
+     "step": 3,
+     "start": 3985,
+     "end": 4065
+    },
+    {
+     "text": "Then the OLED lead, the standoffs and the switch pads,",
+     "step": 4,
+     "start": 4077,
+     "end": 4196
+    },
+    {
+     "text": "the plate and switches,",
+     "step": 5,
+     "start": 4208,
+     "end": 4245
+    },
+    {
+     "text": "and finally, the case.",
+     "step": 6,
+     "start": 4257,
+     "end": 4297
+    }
+   ]
+  },
+  {
+   "id": "order",
+   "start": 4327,
+   "frames": 448,
+   "sentences": [
+    {
+     "text": "Print the fit test at actual size, and check that its ruler measures exactly one hundred millimetres. Rest your hands on it to check the thumb keys and the knob.",
+     "step": 0,
+     "start": 4342,
+     "end": 4577
+    },
+    {
+     "text": "Then order the PCBs: two orders of five, one per half, with black solder mask.",
+     "step": 1,
+     "start": 4589,
+     "end": 4745
+    }
+   ]
+  },
+  {
+   "id": "arrive",
+   "start": 4775,
+   "frames": 614,
+   "sentences": [
+    {
+     "text": "When the parts arrive, check that the OLED's pins read GND, VCC, SCL, SDA. Modules with GND and VCC swapped are no good.",
+     "step": 0,
+     "start": 4790,
+     "end": 5053
+    },
+    {
+     "text": "Each battery needs a protection board, and the connector must be the side-entry type.",
+     "step": 1,
+     "start": 5065,
+     "end": 5195
+    },
+    {
+     "text": "Dry-fit the encoder and knob on the test coupon, before cutting the shaft by one millimetre.",
+     "step": 2,
+     "start": 5207,
+     "end": 5359
+    }
+   ]
+  },
+  {
+   "id": "make",
+   "start": 5389,
+   "frames": 633,
+   "sentences": [
+    {
+     "text": "Have both plates CNC-routed from one-and-a-half millimetre clear polycarbonate. Not laser-cut.",
+     "step": 0,
+     "start": 5404,
+     "end": 5564
+    },
+    {
+     "text": "Cut the foam from its four files: two-millimetre EVA for the plates, five-millimetre for the case floors.",
+     "step": 1,
+     "start": 5576,
+     "end": 5758
+    },
+    {
+     "text": "Print the shells and frames in PETG, at ninety percent infill, without supports. The fits are close, so calibrate the printer first.",
+     "step": 2,
+     "start": 5770,
+     "end": 5992
+    }
+   ]
+  },
+  {
+   "id": "ch3",
+   "start": 6022,
+   "frames": 78,
+   "sentences": []
+  },
+  {
+   "id": "inspect",
+   "start": 6100,
+   "frames": 502,
+   "sentences": [
+    {
+     "text": "Before soldering, check the bare board for clean LED cut-outs, and use the meter to check that the power rails aren't shorted to ground.",
+     "step": 0,
+     "start": 6115,
+     "end": 6327
+    },
+    {
+     "text": "Every small surface-mount part goes on the same way: tin one pad, place the part and reheat it, solder the rest, then touch up the first.",
+     "step": 1,
+     "start": 6339,
+     "end": 6572
+    }
+   ]
+  },
+  {
+   "id": "power",
+   "start": 6602,
+   "frames": 315,
+   "sentences": [
+    {
+     "text": "Start on the back, beside the controller: the AO3401A MOSFET at Q101,",
+     "step": 0,
+     "start": 6617,
+     "end": 6779
+    },
+    {
+     "text": "and the one-megohm resistor R101, just below it.",
+     "step": 1,
+     "start": 6791,
+     "end": 6887
+    }
+   ]
+  },
+  {
+   "id": "boost",
+   "start": 6917,
+   "frames": 796,
+   "sentences": [
+    {
+     "text": "Next, the LED boost. U102 is a TPS61023, with half-millimetre pins: flux the pads, line up pin one, touch each pad, and check for bridges.",
+     "step": 0,
+     "start": 6932,
+     "end": 7283
+    },
+    {
+     "text": "Then the inductor L101, and the capacitors C101, C104 and C103.",
+     "step": 1,
+     "start": 7295,
+     "end": 7496
+    },
+    {
+     "text": "And the feedback divider, R102 and R104, with the pull-down R103.",
+     "step": 2,
+     "start": 7508,
+     "end": 7683
+    }
+   ]
+  },
+  {
+   "id": "buffer",
+   "start": 7713,
+   "frames": 427,
+   "sentences": [
+    {
+     "text": "The data buffer, U103, goes beside the first LED, with C102 and R105.",
+     "step": 0,
+     "start": 7728,
+     "end": 7922
+    },
+    {
+     "text": "C105 goes beside the last LED.",
+     "step": 1,
+     "start": 7934,
+     "end": 8013
+    },
+    {
+     "text": "The small footprints beside each LED stay empty.",
+     "step": 2,
+     "start": 8025,
+     "end": 8110
+    }
+   ]
+  },
+  {
+   "id": "thru",
+   "start": 8140,
+   "frames": 487,
+   "sentences": [
+    {
+     "text": "The battery connector, BT101,",
+     "step": 0,
+     "start": 8155,
+     "end": 8224
+    },
+    {
+     "text": "the reset button, SW191,",
+     "step": 1,
+     "start": 8236,
+     "end": 8323
+    },
+    {
+     "text": "and the slide switch, SW190, its knob out over the top edge, are through-hole: place them on the back, solder them on the front, and trim flush.",
+     "step": 2,
+     "start": 8335,
+     "end": 8597
+    }
+   ]
+  },
+  {
+   "id": "controller",
+   "start": 8627,
+   "frames": 698,
+   "sentences": [
+    {
+     "text": "Before fitting the controller, check that VCC reads three point three volts on USB, and bridge its BOOST link for faster charging.",
+     "step": 0,
+     "start": 8642,
+     "end": 8852
+    },
+    {
+     "text": "Push the socket strips into the footprint, the machined pins into the sockets, and lay the controller on top.",
+     "step": 1,
+     "start": 8864,
+     "end": 9025
+    },
+    {
+     "text": "Chip side up, away from the PCB, with the USB-C at the top edge.",
+     "step": 2,
+     "start": 9037,
+     "end": 9178
+    },
+    {
+     "text": "Solder the pins to the controller, then the sockets on the front.",
+     "step": 3,
+     "start": 9190,
+     "end": 9295
+    }
+   ]
+  },
+  {
+   "id": "ch4",
+   "start": 9325,
+   "frames": 78,
+   "sentences": []
+  },
+  {
+   "id": "bringup",
+   "start": 9403,
+   "frames": 679,
+   "sentences": [
+    {
+     "text": "Now bring the half up, before any LED goes on. Flash the firmware, and check that it shows up over USB.",
+     "step": 0,
+     "start": 9418,
+     "end": 9605
+    },
+    {
+     "text": "Confirm the red battery wire lands on the plus pad.",
+     "step": 1,
+     "start": 9617,
+     "end": 9695
+    },
+    {
+     "text": "With the LED test build, the LED rail at C101 should read between four point eight three and five point oh eight volts.",
+     "step": 2,
+     "start": 9707,
+     "end": 9956
+    },
+    {
+     "text": "And the charge current should be about three hundred milliamps.",
+     "step": 3,
+     "start": 9968,
+     "end": 10052
+    }
+   ]
+  },
+  {
+   "id": "leds",
+   "start": 10082,
+   "frames": 593,
+   "sentences": [
+    {
+     "text": "The thirty-three LEDs mount upside down on the back, shining through their cut-outs.",
+     "step": 0,
+     "start": 10097,
+     "end": 10220
+    },
+    {
+     "text": "The cut corner marks ground, on pad one. Use three hundred and twenty degrees, and plenty of flux.",
+     "step": 1,
+     "start": 10232,
+     "end": 10410
+    },
+    {
+     "text": "Solder them in number order, six or so at a time,",
+     "step": 2,
+     "start": 10422,
+     "end": 10516
+    },
+    {
+     "text": "and test as you go: one bad joint darkens every LED after it.",
+     "step": 3,
+     "start": 10528,
+     "end": 10645
+    }
+   ]
+  },
+  {
+   "id": "diodes",
+   "start": 10675,
+   "frames": 349,
+   "sentences": [
+    {
+     "text": "Then the diodes, D101 to D134, each with its band towards pad one.",
+     "step": 0,
+     "start": 10690,
+     "end": 10855
+    },
+    {
+     "text": "And the thirty-three hotswap sockets: held flat, with plenty of solder.",
+     "step": 1,
+     "start": 10867,
+     "end": 10994
+    }
+   ]
+  },
+  {
+   "id": "encoder",
+   "start": 11024,
+   "frames": 681,
+   "sentences": [
+    {
+     "text": "Solder a five-pin right-angle header into J102, beside the encoder opening, pointing away from the thumb keys.",
+     "step": 0,
+     "start": 11039,
+     "end": 11235
+    },
+    {
+     "text": "Make a five-wire lead, a hundred millimetres long, to the encoder's A, C, B, S1 and S2 pins, and mark pin one.",
+     "step": 1,
+     "start": 11247,
+     "end": 11496
+    },
+    {
+     "text": "Plug it in, short each socket with tweezers to test every key, then turn and press the encoder.",
+     "step": 2,
+     "start": 11508,
+     "end": 11675
+    }
+   ]
+  },
+  {
+   "id": "oled",
+   "start": 11705,
+   "frames": 544,
+   "sentences": [
+    {
+     "text": "The last soldering: a four-pin right-angle header in J101, from the front.",
+     "step": 0,
+     "start": 11720,
+     "end": 11850
+    },
+    {
+     "text": "Make a four-wire lead, forty-five millimetres long, in GND, VCC, SCL, SDA order, soldered to the module from its back.",
+     "step": 1,
+     "start": 11862,
+     "end": 12117
+    },
+    {
+     "text": "Plug it in and power up: the status screen should appear.",
+     "step": 2,
+     "start": 12129,
+     "end": 12219
+    }
+   ]
+  },
+  {
+   "id": "ch5",
+   "start": 12249,
+   "frames": 78,
+   "sentences": []
+  },
+  {
+   "id": "standoffs",
+   "start": 12327,
+   "frames": 415,
+   "sentences": [
+    {
+     "text": "Five standoffs per half: a half-millimetre shim, an M2 standoff, and a screw driven up from the back. Snug, not hard.",
+     "step": 0,
+     "start": 12342,
+     "end": 12565
+    },
+    {
+     "text": "Together, they make the three-and-a-half millimetre gap between the PCB and the plate.",
+     "step": 1,
+     "start": 12577,
+     "end": 12712
+    }
+   ]
+  },
+  {
+   "id": "pads",
+   "start": 12742,
+   "frames": 426,
+   "sentences": [
+    {
+     "text": "Then a Poron ring round each switch position, on the PCB, never on the plate.",
+     "step": 0,
+     "start": 12757,
+     "end": 12901
+    },
+    {
+     "text": "Clean the board, line each ring's notches up with the switch clips, and press it down.",
+     "step": 1,
+     "start": 12913,
+     "end": 13043
+    },
+    {
+     "text": "Where a ring meets a standoff's shim, snip that bite out.",
+     "step": 2,
+     "start": 13055,
+     "end": 13138
+    }
+   ]
+  },
+  {
+   "id": "plate",
+   "start": 13168,
+   "frames": 434,
+   "sentences": [
+    {
+     "text": "Tape the plate foam under the plate with thin tissue tape, keeping the latch notches clear.",
+     "step": 0,
+     "start": 13183,
+     "end": 13315
+    },
+    {
+     "text": "Then rest the plate on the standoffs. The switches will hold it.",
+     "step": 1,
+     "start": 13327,
+     "end": 13419
+    },
+    {
+     "text": "That leaves half a millimetre of Poron, a millimetre of air, and two of EVA.",
+     "step": 2,
+     "start": 13431,
+     "end": 13572
+    }
+   ]
+  },
+  {
+   "id": "switches",
+   "start": 13602,
+   "frames": 485,
+   "sentences": [
+    {
+     "text": "Dry-fit one switch first.",
+     "step": 0,
+     "start": 13617,
+     "end": 13666
+    },
+    {
+     "text": "Then press each one through the plate into its socket, supporting the PCB behind it. The tall thumb switches turn ninety degrees.",
+     "step": 1,
+     "start": 13678,
+     "end": 13884
+    },
+    {
+     "text": "While you can still reach the battery lead, check the sleep current: tens to low hundreds of microamps.",
+     "step": 2,
+     "start": 13896,
+     "end": 14057
+    }
+   ]
+  },
+  {
+   "id": "ch6",
+   "start": 14087,
+   "frames": 78,
+   "sentences": []
+  },
+  {
+   "id": "caseprep",
+   "start": 14165,
+   "frames": 385,
+   "sentences": [
+    {
+     "text": "Press the eight heat-set inserts into the top frame's underside, flush with the surface.",
+     "step": 0,
+     "start": 14180,
+     "end": 14320
+    },
+    {
+     "text": "Tape the battery into its bay, with the lead towards the connector.",
+     "step": 1,
+     "start": 14332,
+     "end": 14430
+    },
+    {
+     "text": "And lay the case foam on the floor, round the battery.",
+     "step": 2,
+     "start": 14442,
+     "end": 14520
+    }
+   ]
+  },
+  {
+   "id": "encmount",
+   "start": 14550,
+   "frames": 484,
+   "sentences": [
+    {
+     "text": "The encoder mounts in the top frame: its bushing through the boss, terminals A, C and B towards the thumbs.",
+     "step": 0,
+     "start": 14565,
+     "end": 14749
+    },
+    {
+     "text": "Washer and M7 nut on top, only just tight: the nut can crush PETG.",
+     "step": 1,
+     "start": 14761,
+     "end": 14918
+    },
+    {
+     "text": "Press the shaft hard: the frame shouldn't flex.",
+     "step": 2,
+     "start": 14930,
+     "end": 15004
+    }
+   ]
+  },
+  {
+   "id": "close",
+   "start": 15034,
+   "frames": 686,
+   "sentences": [
+    {
+     "text": "Put a gasket strip on each of the eight ledges, and plug in the battery with a loose loop.",
+     "step": 0,
+     "start": 15049,
+     "end": 15183
+    },
+    {
+     "text": "Plug in the encoder lead, lower the plate and PCB onto the gaskets, and add a second gasket on each tab.",
+     "step": 1,
+     "start": 15195,
+     "end": 15384
+    },
+    {
+     "text": "Fix the OLED on the frame's four pegs, plug it in, and lower the frame.",
+     "step": 2,
+     "start": 15396,
+     "end": 15517
+    },
+    {
+     "text": "Drive the eight screws up through the floor, evenly, and only snug, so the gaskets stay soft.",
+     "step": 3,
+     "start": 15529,
+     "end": 15690
+    }
+   ]
+  },
+  {
+   "id": "ch7",
+   "start": 15720,
+   "frames": 78,
+   "sentences": []
+  },
+  {
+   "id": "final",
+   "start": 15798,
+   "frames": 395,
+   "sentences": [
+    {
+     "text": "Fit the keycaps, the tall thumb caps turned ninety degrees, and push on the knobs.",
+     "step": 0,
+     "start": 15813,
+     "end": 15951
+    },
+    {
+     "text": "Turn both halves on together to pair them, then pair your computer on profile one.",
+     "step": 1,
+     "start": 15963,
+     "end": 16083
+    },
+    {
+     "text": "And test every key, on every layer.",
+     "step": 2,
+     "start": 16095,
+     "end": 16163
+    }
+   ]
+  },
+  {
+   "id": "feet",
+   "start": 16193,
+   "frames": 324,
+   "sentences": [
+    {
+     "text": "Stick four feet on each floor, and press the steel disc into its pocket.",
+     "step": 0,
+     "start": 16208,
+     "end": 16325
+    },
+    {
+     "text": "For tenting, glue four magnets into each wedge: they hold the disc, at thirteen degrees.",
+     "step": 1,
+     "start": 16337,
+     "end": 16487
+    }
+   ]
+  },
+  {
+   "id": "flashing",
+   "start": 16517,
+   "frames": 427,
+   "sentences": [
+    {
+     "text": "To flash firmware, plug the half in over USB-C,",
+     "step": 0,
+     "start": 16532,
+     "end": 16630
+    },
+    {
+     "text": "double-press reset, through the pinhole in the case,",
+     "step": 1,
+     "start": 16642,
+     "end": 16721
+    },
+    {
+     "text": "and copy the UF2 file onto the NICENANO drive.",
+     "step": 2,
+     "start": 16733,
+     "end": 16820
+    },
+    {
+     "text": "If the halves won't pair, flash settings reset to both.",
+     "step": 3,
+     "start": 16832,
+     "end": 16914
+    }
+   ]
+  },
+  {
+   "id": "trouble",
+   "start": 16944,
+   "frames": 537,
+   "sentences": [
+    {
+     "text": "If a key is dead, check its switch, its diode and its socket. If the LEDs go dark from one point on, check the first dark LED, or the one before it.",
+     "step": null,
+     "start": 16959,
+     "end": 17228
+    },
+    {
+     "text": "And watch for the classics: a reversed diode or battery, the controller upside down, bent pins, and cold joints.",
+     "step": null,
+     "start": 17240,
+     "end": 17451
+    }
+   ]
+  },
+  {
+   "id": "outro",
+   "start": 17481,
+   "frames": 255,
+   "sentences": [
+    {
+     "text": "And that's Keygen: built, flashed and tented.",
+     "step": null,
+     "start": 17496,
+     "end": 17582
+    },
+    {
+     "text": "Every file, every part and the full written guide are in the repository.",
+     "step": null,
+     "start": 17594,
+     "end": 17706
+    }
+   ]
+  }
+ ]
+}
