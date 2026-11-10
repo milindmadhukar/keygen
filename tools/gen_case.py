@@ -12,6 +12,9 @@ case/foam/step/keygen-{left,right}-*-foam.step        the same layers as solids,
 case/foam/step/keygen-{left,right}-switch-pads.step   the switch pads, one ring per switch, in place
 case/foam/step/keygen-{left,right}-{lower,upper}-gaskets.step   the gasket strips under and over the
                                                       plate tabs, in place and squeezed as when closed
+case/hardware/step/keygen-{left,right}-{standoffs,screws}.step   the shim and brass standoff on the
+                                                      PCB at each mounting hole, and the M2 x 5 button head
+                                                      under it, in place
 case/wedge/{stl,step}/keygen-{left,right}-wedge.*     the optional tenting wedge: the STEP in place under the
                                                       floor, the STL turned top face down, as it prints
 case/keygen-case.step                                 all six parts in place
@@ -84,6 +87,9 @@ CASE_COLOUR = Color(0x2E2E33)
 PLATE_COLOUR = Color(0xC8D6DC, alpha=0x60)   # clear polycarbonate, see-through
 FOAM_COLOURS = {"plate": Color(0x3A3B40), "case": Color(0x4A4C52)}   # both black EVA, two greys to tell them apart
 PAD_COLOUR = Color(0x6A6C73)                                          # black Poron rings, lighter to show on the PCB
+BRASS_COLOUR = Color(0xC9A24A)                                        # the shims and brass standoffs
+SCREW_COLOUR = Color(0x9AA0A8)                                        # the M2 button heads
+BUTTON_HEAD = (3.5, 1.1)                                              # ISO 7380 M2: head diameter and height
 
 xy = lambda p: (p[0], -p[1])           # KiCad y points down; the CAD model's y points up
 Z = (Align.CENTER, Align.CENTER, Align.MIN)
@@ -403,6 +409,20 @@ def switch_pads(h):
     return Compound(children=pads), clipped
 
 
+def hardware(h):
+    """(standoffs, screws) at the PCB's mounting holes: a shim on the PCB's front with a standoff on
+    it, up to the plate's underside, and under the PCB an M2 button head whose thread runs up through
+    the board and the shim into the standoff."""
+    standoffs = screws = None
+    for p in h["holes"].values():
+        so = cylinder(p, C.SHIM_D, 0, C.SHIM_T) + cylinder(p, C.STANDOFF_D, C.SHIM_T, C.PLATE_BOT)
+        sc = (cylinder(p, BUTTON_HEAD[0], -C.PCB_T - BUTTON_HEAD[1], -C.PCB_T)
+              + cylinder(p, 2.0, -C.PCB_T, -C.PCB_T + C.SCREW_L))
+        standoffs = so if standoffs is None else standoffs + so
+        screws = sc if screws is None else screws + sc
+    return standoffs, screws
+
+
 def gaskets(tab_list):
     """The Poron gasket strips, squeezed as when the case is closed: {'lower': on the ledges under
     the plate tabs, 'upper': on the tabs under the top frame}, each a compound of strips."""
@@ -547,10 +567,7 @@ def fit_check(h, bottom, top, plt, foam):
         kn = cylinder(p, C.KNOB_D, C.KNOB_Z, C.KNOB_Z + C.KNOB_H)
         encoder = e if encoder is None else encoder + e
         knob = kn if knob is None else knob + kn
-    standoffs = None
-    for p in h["holes"].values():
-        so = cylinder(p, C.SHIM_D, 0, C.SHIM_T) + cylinder(p, C.STANDOFF_D, C.SHIM_T, C.PLATE_BOT)
-        standoffs = so if standoffs is None else standoffs + so
+    standoffs, _ = hardware(h)
     x0, y0, x1, y1 = C.battery(h)["cell"]
     (bx, by) = xy(((x0 + x1) / 2, (y0 + y1) / 2))
     cell = lambda lift: Pos(bx, by, C.CAVITY_Z - C.BAY_DEPTH + lift) * Box(
@@ -639,6 +656,11 @@ def main():
         print(f"keygen-{side}-switch-pads: {len(h['keys'])} Poron rings, {C.SWITCH_PAD:g} mm, "
               f"{clipped} clipped round a standoff, z {C.PE_Z[0]:.1f}..{C.PE_Z[1]:.1f}")
         foam["pads"] = pads
+        for name, part, colour in zip(("standoffs", "screws"), hardware(h), (BRASS_COLOUR, SCREW_COLOUR)):
+            part.color = colour; part.label = f"{side} {name}"
+            export_step(part, str(out_path("hardware", "step", side, name)))
+        print(f"keygen-{side}-standoffs: {len(h['holes'])} x M2 x {C.STANDOFF_L:g} standoff on a {C.SHIM_T:g} mm shim, "
+              f"M2 x {C.SCREW_L:g} button head from below")
         for name, g in gaskets(tab_list).items():
             g.color = PAD_COLOUR; g.label = f"{side} {name} gaskets"
             export_step(g, str(out_path("foam", "step", side, f"{name}-gaskets")))

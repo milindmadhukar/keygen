@@ -76,7 +76,7 @@ Exact sizes and positions: [[14 - case & plate requirements]].
 
 ## Assembly
 
-Plate foam taped under the plate, plate on its standoffs on the PCB, the OLED's right-angle header in, switches in, then the unit onto the lower gaskets in the bottom shell, upper gaskets on the tabs, and the top frame, with the OLED module pegged into it and plugged in, screwed down. Steps: [[10 - assembly & build guide#Case assembly]].
+The OLED's right-angle header in, the standoffs screwed to the PCB, a switch pad stuck on the PCB round each switch, plate foam taped under the plate, plate on its standoffs, switches in, then the unit onto the lower gaskets in the bottom shell, upper gaskets on the tabs, and the top frame, with the OLED module pegged into it and plugged in, screwed down. Steps: [[10 - assembly & build guide#Case assembly]].
 
 ## Related notes
 - [[14 - case & plate requirements]]: openings, clearances, plate and positions

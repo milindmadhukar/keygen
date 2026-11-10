@@ -97,8 +97,8 @@ Keygen screens, with their boot animation and lighting menu, are in
 
 ![Close up on the left half's OLED showing ZMK's status screen, beside the knob](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-oled.jpg)
 
-**Case layers.** Bottom shell, case foam, PCB, switch pads, plate foam, gasket strips under and
-over the plate tabs, plate and top frame.
+**Case layers.** Bottom shell, case foam, standoff screws, PCB, switch pads, shims and standoffs,
+plate foam, gasket strips under and over the plate tabs, plate and top frame.
 
 ![Keygen case, exploded](https://github.com/milindmadhukar/keygen/releases/download/media/render-case-exploded.png)
 
@@ -162,7 +162,7 @@ keygen/
 ├── bom/            Bill of materials with sources (bom.csv) and the shopping checklist
 ├── plan/           Build plan and parts list as HTML
 ├── docs/           Datasheet index (the PDFs are in the datasheets release)
-├── assets/         Keymap pictures (the renders are in the media release)
+├── assets/         Keymap pictures and assembly figures (the renders are in the media release)
 ├── blender/        Blender studio scene with the materials and the lit LEDs; it links the generated parts
 ├── notes/          Design notes, hardware reference and build pipeline (Obsidian Markdown)
 ├── firmware/       ZMK configuration: shield, keymap, builds

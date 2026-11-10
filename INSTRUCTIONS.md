@@ -58,11 +58,11 @@ Counts are for the whole keyboard (two halves). Stores, links, prices and spares
 | :--- | :---: | :--- |
 | Switch plate, 1.5 mm clear polycarbonate | 1 + 1 | CNC-routed, see [Order and make the parts](#order-and-make-the-parts) |
 | Case, PETG: bottom shell and top frame | 2 + 2 | 3D-printed |
-| Poron ring switch pad, 0.5 mm | 66 | |
+| Poron ring switch pad, 0.5 mm | 66 | Ready-cut rings on a backing sheet, pack of 120; stuck on the PCB round each switch |
 | EVA foam: 2 mm plate foam, 5 mm case foam | 2 + 2 pieces | Cut from A4 sheets; the plate foam is taped under the plate |
 | Poron gasket strip, 12 × 4 × 3 mm | 32 pieces | Cut from 80 × 4 × 3 mm strips |
-| M2 × 3 mm brass standoff, female-female | 10 | |
-| M2 shim, 2 × 5 × 0.5 mm (DIN 988) | 10 | |
+| M2 × 3 mm brass standoff, female-female | 10 | On the PCB's front, one per mounting hole |
+| M2 shim, 2 × 5 × 0.5 mm (DIN 988) | 10 | Under each standoff |
 | M2 × 5 mm button-head screw (ISO 7380) | 10 | Up through the PCB into the standoffs |
 | M2 × 3 mm heat-set insert, 3.5 mm OD | 16 | |
 | M2 × 16 mm socket-head screw (ISO 4762) | 16 | |
@@ -82,7 +82,7 @@ Counts are for the whole keyboard (two halves). Stores, links, prices and spares
 - A temperature-controlled soldering iron with a fine tip (300–350 °C; 320 °C for the LEDs)
 - Solder, no-clean flux paste in a syringe, desoldering wick, heat-shrink tubing
 - Superglue, for the OLED plug and the wedge magnets, and a paint pen
-- Flush cutters and fine tweezers
+- Flush cutters, fine tweezers, and small sharp scissors for the switch pads
 - A multimeter: continuity, polarity, battery voltage, and current for the charge check
 - Calipers, for the OLED module, the controller sockets and their pins
 - A fine hacksaw or cutting disc, pliers and a small file, to cut the encoder shafts
@@ -93,7 +93,7 @@ Counts are for the whole keyboard (two halves). Stores, links, prices and spares
 - A 1.3 mm hex key (button heads), a 1.5 mm hex key (case screws), and an iron tip or heat-set tool
   for the inserts
 - Hot glue, if you would rather not melt the OLED's pegs
-- Thin double-sided tape for the battery: tissue tape, 0.3 mm or less, not foam tape
+- Thin double-sided tape for the battery and the plate foam: tissue tape, 0.3 mm or less, not foam tape
 - A keycap and switch puller
 - A craft knife and a steel ruler, to cut the foam by hand
 
@@ -102,12 +102,13 @@ Counts are for the whole keyboard (two halves). Stores, links, prices and spares
 ### What you are building
 
 Two halves, built the same way. Each is a stack, from the bottom: a 3D-printed bottom shell with the
-battery and a foam layer in it; the PCB, with most parts on its underside; foam pads; a clear polycarbonate switch plate on five
+battery and a foam layer in it; the PCB, with most parts on its underside, a foam ring stuck round
+each switch and five brass standoffs screwed to it; a clear polycarbonate switch plate resting on the
 standoffs, holding the switches, with a foam sheet taped under it; and a 3D-printed
 top frame over it all, screwed to the bottom shell. The plate-and-PCB unit rests on small foam
 strips (gaskets) between the shell and the frame, so it floats.
 
-![The case layers, exploded: bottom shell, case foam, PCB, switch pads, plate foam, gasket strips, plate and top frame](https://github.com/milindmadhukar/keygen/releases/download/media/render-case-exploded.png)
+![The case layers, exploded: bottom shell, case foam, standoff screws, PCB, switch pads, shims and standoffs, plate foam, gasket strips, plate and top frame](https://github.com/milindmadhukar/keygen/releases/download/media/render-case-exploded.png)
 
 ### What goes where
 
@@ -158,7 +159,8 @@ be built and tested while the plate and the case are being made.
 | The OLED modules have arrived | Measure one, then have the plates cut and cut the plate foam | The plate's OLED window is sized for a module of 27.5 × 28 mm or less |
 | The controller sockets, their pins and the OLED modules have arrived | Measure them, then print the case and cut the case foam | The case's floor and USB-C opening are placed from the height of the socket and pin stack, and the top frame holds the OLED's glass in a pocket |
 | The PCBs and the electronics have arrived | Solder and test both boards, from [Inspect the board](#inspect-the-board) to [Encoder and matrix test](#encoder-and-matrix-test) | Nothing more |
-| The plates and the plate foam are ready | [Standoffs](#standoffs) to [Switches](#switches) | |
+| The boards are tested, and the OLED modules, standoffs and switch pads have arrived | [OLED header and lead](#oled-header-and-lead), [Standoffs](#standoffs) and [Switch pads](#switch-pads) | Nothing: none of them needs the plate |
+| The plates and the plate foam are ready | [Plate foam and plate](#plate-foam-and-plate) and [Switches](#switches) | |
 | The case and the case foam are ready | [Heat-set inserts](#heat-set-inserts) to [Feet and tenting](#feet-and-tenting), including [the encoder](#encoder-in-the-top-frame) | |
 
 Every file to order, print or cut is in the [build release](https://github.com/milindmadhukar/keygen/releases/tag/build).
@@ -225,7 +227,7 @@ settings in [`PLATE.md`](case/plate/PLATE.md).
 
 **When:** the plate foam with the plates, the case foam with the case. Neither is installed until the
 board is soldered, so they can be cut while you solder. The plate foam is taped to the underside of
-the plate; see [Switch pads and plate foam](#switch-pads-and-plate-foam).
+the plate; see [Plate foam and plate](#plate-foam-and-plate).
 
 The [build release](https://github.com/milindmadhukar/keygen/releases/tag/build) has these four
 **different** 1:1 DXFs, all in millimetres. Send each file with its material and thickness to the
@@ -243,7 +245,8 @@ hand, print the SVG at
 100 % as for the fit test, tape it to the sheet and cut along the lines with a sharp craft knife and
 a steel ruler. Keep each piece the right way up as drawn: they are seen from above and are not
 symmetrical. Cut only the two EVA sheets per half from these files. The 120-piece Poron ring pack is
-already cut: use 33 rings per half (66 total), one round each switch. The separate Poron gasket
+already cut: use 33 rings per half (66 total), one round each switch on the PCB (see
+[Switch pads](#switch-pads)). The separate Poron gasket
 strips are cut across their length into 12 mm pieces: 16 per half, one below and one above each of
 the plate's eight edge tabs. **Do not laser-cut the polycarbonate switch plate**; its DXF is a
 separate CNC router job.
@@ -447,8 +450,8 @@ opening.
 
 - Band towards the square pad, marked K on the maps.
 - Bend the leads to the footprint spacing, insert, splay the legs, solder on the front, and trim the
-  legs flush so nothing touches a switch. Keep the joints on the front low: the switch pads stick
-  down over them.
+  legs flush so nothing touches a switch. Keep the joints on the front low, 1 mm at most: on most
+  keys a [switch pad](#switch-pads) lies over them.
 
 ---
 
@@ -472,7 +475,7 @@ A 1×5 right-angle header in **J102 / J202** on the **back**, beside the encoder
 
 1. Cut a 1×5 piece from the right-angle header strip. Solder it into J102 / J202 from the back,
    its pins lying flat and pointing **away from the thumb keys**, and trim the pins flush on the
-   front: the switch pads stick down over the joints.
+   front.
 2. Take five female–female jumper wires and glue their plug ends side by side into one 5-pin plug
    with a thin smear of superglue, as for the OLED. Cut the wires **100 mm** from the plug, strip
    2 mm, and solder each to its encoder terminal with heat-shrink over each joint:
@@ -494,60 +497,15 @@ A 1×5 right-angle header in **J102 / J202** on the **back**, beside the encoder
 4. Turn and press the encoder. Left: scroll and middle click. Right: volume and mute.
 5. Unplug the lead.
 
-The board is done. The rest waits for the plates, the foam and the case.
+The board is soldered and tested. The OLED header, the standoffs and the switch pads come next; none
+of them needs the plate, so they can go on while the plates are being cut.
 
 ---
 
-## Standoffs
+## OLED header and lead
 
-The five mounting holes on each PCB are **H101–H105** on the left and **H201–H205** on the right.
-Find them on the [front assembly maps](#assembly-maps); they are the five plain M2 holes, separate
-from the switch holes. Put **one 0.5 mm shim and one M2 × 3 mm female-female standoff at every one**
-of these holes (five pairs per half, ten pairs total). Both sit on the **front/switch side of the
-PCB**, inside the space between PCB and plate. They do not go on the case or its gasket tabs.
-
-At each hole, stack the parts in this order, from bottom to top: screw head against the **back of
-the PCB** → PCB → 0.5 mm shim centred on the hole → 3 mm standoff → underside of the switch
-plate. Drive an **M2 × 5 button-head screw** upward through the PCB and shim into the standoff. The
-shim plus standoff make the required **3.5 mm gap between the PCB top and plate underside**; with
-the 1.5 mm plate, its top is 5.0 mm above the PCB top. That gap is set by the MX switch: its housing
-reaches from the plate down to the PCB while its posts and contacts enter the PCB's holes.
-
-The same screw goes in at all ten holes, and **nothing screws into the standoffs from above**. The
-M2 × 5 fills 2.9 mm of the 3 mm standoff, about seven turns of thread, so it holds firmly. Its tip
-ends 0.1 mm below the standoff's top; a screw at the long end of its tolerance pokes up to 0.1 mm
-into the plate's 2.2 mm hole, where it touches nothing. The standoff tops only bear on the plate
-from below. The plate and PCB are held together by the 33 switches per half, each clipped into the
-plate and plugged into its hotswap socket, and the closed case clamps the plate's tabs between the
-gasket strips. No screw goes from the PCB or plate into the case; the eight longer case screws join
-the bottom shell to the top frame around the edge.
-
-![Cross-section showing the shim, standoff and screw between PCB and switch plate, with a switch and the foam](assets/assembly-standoffs.svg)
-
-Hold the standoff with your fingers and turn the screw with the 1.3 mm hex key until it stops,
-then a little more: snug, not hard. The shim must not spin and the standoff must not rock.
-
----
-
-## Switch pads and plate foam
-
-1. Stick a 0.5 mm Poron ring switch pad on the front of the PCB round each switch position (33), its
-   notches facing the switch's clips (top and bottom) and its open middle round the pins and the LED
-   window. Where a ring's corner meets a standoff (7 rings per half), snip that corner off first.
-   Where a ring crosses a diode's two joints, snip a notch in it so it lies flat on the board.
-2. Tape the 2 mm EVA plate foam to the **underside of the switch plate** with the thin
-   double-sided tape (tissue tape, not foam tape), a few strips across the sheet. The cut file is
-   drawn seen from above, which is how it lies under the plate too: line its cut-outs up with the
-   plate's switch, encoder and OLED cut-outs and its round holes with the plate's standoff holes.
-   The small notches in each switch cut-out are for the switch's latches, which spring out under
-   the plate: keep them clear, or the switches will not clip in.
-   In the 3.5 mm gap the stack is then **0.5 mm Poron on the PCB, 1.0 mm air, 2.0 mm EVA on the
-   plate**. The EVA touches the plate, so it damps it, and it does not press on the PCB, so it
-   does not push the plate and PCB apart.
-
----
-
-## Plate and OLED
+**When:** once the board passes the tests above and the OLED modules have arrived. This is the
+last soldering on the board, so do it before the switch pads go on: a hot iron melts the rings.
 
 1. Check that the pin order printed on the OLED module is GND, VCC, SCL, SDA, the same as the
    footprint. Some modules swap GND and VCC: don't use those.
@@ -560,11 +518,9 @@ then a little more: snug, not hard. The shim must not spin and the standoff must
    plug on the header: it must lie flat. If it still rides up, leave the plug and the header out
    and solder the four wires straight into J101 / J201, with enough slack to lay the top frame
    beside the half.
-4. Set the plate, foam side down, on the standoffs. It is not screwed down: line its standoff
-   holes up over the standoffs and it rests on them. The switches will clip it to the PCB.
-5. If the module came with a header soldered on, remove it: clip the plastic bar off with flush
+4. If the module came with a header soldered on, remove it: clip the plastic bar off with flush
    cutters, then heat each pin and pull it out with tweezers, and clear the holes with solder wick.
-6. Take four female–female jumper wires, ideally four colours. Line their plug ends up side by
+5. Take four female–female jumper wires, ideally four colours. Line their plug ends up side by
    side, in GND, VCC, SCL, SDA order, and glue the four housings together with a thin smear of
    superglue on their sides (keep it off the openings): they become one 4-pin plug that can only
    go on in that order. Cut the wires **45 mm** from the plug and strip 2 mm. Push them into the
@@ -574,8 +530,9 @@ then a little more: snug, not hard. The shim must not spin and the standoff must
    flat along the module's back, between its parts, towards its far edge, and hold them there with
    a strip of Kapton tape. The plug is not keyed and fits the header either way round, so mark
    pin 1 (GND) on it and beside the header with a paint pen.
-7. Push the plug onto the header and power the half: check the status screen appears. Until the
+6. Push the plug onto the header and power the half: check the status screen appears. Until the
    case is closed the module hangs on its lead; don't let it rest on the board while powered.
+   Unplug it again before the next steps.
 
 The module is mounted in [Top frame](#top-frame). Its glass sits in a pocket under a 1.0 mm lip
 round the window, **1.0 mm below the top surface**, and the window's edges are chamfered at 45°.
@@ -591,6 +548,92 @@ the header, then lift the plate-and-PCB unit out with the frame to reach J102 / 
 
 > [!WARNING]
 > A module with GND and VCC swapped is powered backwards. Check the printed order before soldering.
+
+---
+
+## Standoffs
+
+**When:** after [OLED header and lead](#oled-header-and-lead), with all the soldering done and
+tested. They go on before the switch pads, which are snipped round them, and before the plate,
+which rests on them.
+
+**Per half:** five 0.5 mm shims, five M2 × 3 mm female-female standoffs, five M2 × 5 button-head
+screws, and the 1.3 mm hex key.
+
+![How to fit a shim, standoff and screw at a mounting hole, and the fitted section under the plate](assets/assembly-standoffs.svg)
+
+1. Find the five mounting holes, **H101–H105** on the left and **H201–H205** on the right, on the
+   [front assembly maps](#assembly-maps): the plain 2.2 mm holes with bare board round them, apart
+   from the switch holes.
+2. Lay the board front up, near the edge of the bench so you can reach under it. Put a shim on the
+   first hole, centred, and stand a standoff on the shim.
+3. Hold the standoff down with a finger. From the back, push a screw up through the hole and the
+   shim into the standoff and turn it a few times by hand.
+4. Tighten it with the hex key until it stops, then a little more: snug, not hard. The shim must not
+   spin and the standoff must not rock.
+5. Do the other four holes the same way, then the other half.
+
+Every hole gets the same three parts, and **nothing screws into the standoffs from above**. The
+shim and standoff make the **3.5 mm gap between the PCB's top and the plate's underside** that the
+MX switches are made for, so the plate's top is 5.0 mm above the PCB's. The M2 × 5 fills 2.9 mm of
+the standoff's thread, about seven turns, and its tip stops 0.1 mm under the standoff's top. The
+plate only rests on the standoffs: the 33 switches per half, clipped into the plate and plugged into
+their sockets, hold it to the PCB, and the closed case clamps its tabs between the gasket strips.
+No screw goes from the PCB or the plate into the case.
+
+---
+
+## Switch pads
+
+**When:** straight after the standoffs, before the plate. The board must be finished: no more
+soldering on it once the rings are on.
+
+**Where:** on the **front of the PCB**, one ring round each switch position, 33 per half. Never on
+the plate: a ring there sits between the switch and the plate, and the switch's clips no longer
+catch the plate.
+
+**Per half:** 33 rings from the 120-piece pack (the PORON option, 0.5 mm), fine tweezers, and small
+sharp scissors.
+
+![Peeling a switch pad off its sheet, placing it round a switch, snipping it beside a standoff, and the section under the plate](assets/assembly-switch-pads.svg)
+
+1. Wipe the front of the board with isopropyl alcohol where the rings go and let it dry: flux
+   residue stops them sticking.
+2. Lift a ring off the blue backing sheet with the tweezers, gripping its outer edge. The side
+   that was on the sheet is the side that goes down. Don't stretch it.
+3. Hold it over a switch position before it touches the board. Line it up: its open middle round
+   the five switch holes and the LED window, and its two notches at the top and bottom of the
+   opening, the sides the switch's clips are on. Lower it and press it down all round with a
+   fingertip.
+4. On 26 of the 33 positions per half, a side of the ring lies over a diode's two joints. Leave it
+   whole and press it down round them: the joints are trimmed flush in [Diodes](#diodes).
+5. On 7 positions per half, a corner of the ring meets a standoff's shim. Hold the ring over its
+   place first, see where it would ride up on the shim, and snip that bite out with the scissors,
+   just clear of the shim. Then stick it down beside the shim, flat.
+6. Check before going on: no ring lies on a shim, a switch hole or an LED window, and no two
+   overlap.
+
+If a batch comes without adhesive, lay the rings in place dry: the switches and the plate foam hold
+them there.
+
+---
+
+## Plate foam and plate
+
+**When:** once the plates and the plate foam are cut, and the switch pads are on.
+
+1. Tape the 2 mm EVA plate foam to the **underside of the switch plate** with the thin
+   double-sided tape (tissue tape, not foam tape), a few strips across the sheet. The cut file is
+   drawn seen from above, which is how it lies under the plate too: line its cut-outs up with the
+   plate's switch, encoder and OLED cut-outs and its round holes with the plate's standoff holes.
+   The small notches in each switch cut-out are for the switch's latches, which spring out under
+   the plate: keep them clear, or the switches will not clip in.
+2. Set the plate, foam side down, on the standoffs. It is not screwed down: line its standoff
+   holes up over the standoffs and it rests on them. The switches will clip it to the PCB.
+
+In the 3.5 mm gap the stack is then **0.5 mm Poron on the PCB, 1.0 mm air, 2.0 mm EVA on the
+plate**. The EVA touches the plate, so it damps it, and it does not press on the PCB, so it does
+not push the plate and PCB apart.
 
 ---
 

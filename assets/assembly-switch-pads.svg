@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1010" role="img" aria-labelledby="title desc">
+  <title id="title">Sticking the switch pads on the PCB</title>
+  <desc id="desc">Four steps: peel each Poron ring off its blue backing sheet with tweezers; stick it on the PCB's front round a switch's footprint, its notches on the switch's clip sides, over the diode joints; snip the corner off a ring that meets a standoff; and a section with the 0.5 millimetre ring on the PCB, 1 millimetre of air, and the plate foam under the plate.</desc>
+  <style>
+    text { font-family: DejaVu Sans, Arial, sans-serif; fill: #182234; }
+    .title { font-size: 27px; font-weight: 700; }
+    .head { font-size: 19px; font-weight: 700; }
+    .lab { font-size: 16px; }
+    .small { font-size: 14px; }
+    .num { font-size: 17px; font-weight: 700; fill: #fff; }
+    .white { fill: #fff; }
+    .plate { fill: #acd6e5; stroke: #315b73; stroke-width: 2; }
+    .ghost { fill: #acd6e5; fill-opacity: 0.35; stroke: #315b73; stroke-width: 1.5; stroke-dasharray: 6 4; }
+    .pcb { fill: #397765; stroke: #174a3c; stroke-width: 2; }
+    .copper { fill: #c98a3c; }
+    .bare { fill: #5f9a87; }
+    .eva { fill: #626a76; stroke: #454c57; stroke-width: 1.5; }
+    .ring { fill: #4b505b; stroke: #2b2f36; stroke-width: 1.5; }
+    .liner { fill: #39b8d8; stroke: #1f7f99; stroke-width: 1.5; }
+    .brass { fill: #d9a143; stroke: #8a5c16; stroke-width: 2; }
+    .screw { fill: #8592a6; stroke: #344054; stroke-width: 2; }
+    .switch { fill: #bd9ecb; stroke: #6a4879; stroke-width: 2; }
+    .hole { fill: #f8fafc; stroke: #174a3c; stroke-width: 1.5; }
+    .joint { fill: #c8ccd2; stroke: #6b7280; stroke-width: 1.5; }
+    .led { fill: #f8fafc; stroke: #174a3c; stroke-width: 1.5; }
+    .outline { fill: none; stroke: #6a4879; stroke-width: 1.5; stroke-dasharray: 6 4; }
+    .axis { stroke: #a0acba; stroke-width: 1.5; stroke-dasharray: 5 5; fill: none; }
+    .dim { stroke: #182234; stroke-width: 1.2; fill: none; }
+    .lead { stroke: #182234; stroke-width: 1.2; fill: none; }
+    .arrow { stroke: #c2410c; stroke-width: 3; fill: none; marker-end: url(#tip); }
+    .cut { stroke: #c2410c; stroke-width: 2.5; fill: none; }
+    .tool { fill: #b8c0cc; stroke: #4b5563; stroke-width: 1.5; }
+    .badge { fill: #c2410c; }
+    .note { fill: #e7eef6; }
+    .no { stroke: #b91c1c; stroke-width: 4; fill: none; }
+  </style>
+  <defs>
+    <marker id="tip" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#c2410c"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="1010" fill="#f8fafc"/>
+  <text x="35.0" y="45.0" class="title">Switch pads: a Poron ring round each switch, stuck on the PCB</text>
+  <text x="35.0" y="75.0" class="lab">33 per half on the front of the PCB, after the standoffs and before the plate. Never on the plate.</text>
+  <circle cx="55.0" cy="120.0" r="14" class="badge"/><text x="55.0" y="126.0" class="num" text-anchor="middle">1</text>
+  <text x="80.0" y="126.0" class="head">Peel</text>
+  <rect x="50.0" y="165.0" width="300.0" height="205.0" class="liner" rx="6"/>
+  <path d="M71.4 182.2 H138.6 Q142.8 182.2 142.8 186.4 V253.6 Q142.8 257.8 138.6 257.8 H71.4 Q67.2 257.8 67.2 253.6 V186.4 Q67.2 182.2 71.4 182.2 Z M75.2 190.2 H95.5 V186.0 H114.5 V190.2 H134.8 V249.8 H114.5 V254.0 H95.5 V249.8 H75.2 Z" fill-rule="evenodd" class="ring"/>
+  <path d="M166.4 182.2 H233.6 Q237.8 182.2 237.8 186.4 V253.6 Q237.8 257.8 233.6 257.8 H166.4 Q162.2 257.8 162.2 253.6 V186.4 Q162.2 182.2 166.4 182.2 Z M170.2 190.2 H190.6 V186.0 H209.4 V190.2 H229.8 V249.8 H209.4 V254.0 H190.6 V249.8 H170.2 Z" fill-rule="evenodd" class="ring"/>
+  <path d="M71.4 277.2 H138.6 Q142.8 277.2 142.8 281.4 V348.6 Q142.8 352.8 138.6 352.8 H71.4 Q67.2 352.8 67.2 348.6 V281.4 Q67.2 277.2 71.4 277.2 Z M75.2 285.2 H95.5 V281.0 H114.5 V285.2 H134.8 V344.8 H114.5 V349.0 H95.5 V344.8 H75.2 Z" fill-rule="evenodd" class="ring"/>
+  <path d="M166.4 277.2 H233.6 Q237.8 277.2 237.8 281.4 V348.6 Q237.8 352.8 233.6 352.8 H166.4 Q162.2 352.8 162.2 348.6 V281.4 Q162.2 277.2 166.4 277.2 Z M170.2 285.2 H190.6 V281.0 H209.4 V285.2 H229.8 V344.8 H209.4 V349.0 H190.6 V344.8 H170.2 Z" fill-rule="evenodd" class="ring"/>
+  <path d="M261.4 277.2 H328.6 Q332.8 277.2 332.8 281.4 V348.6 Q332.8 352.8 328.6 352.8 H261.4 Q257.2 352.8 257.2 348.6 V281.4 Q257.2 277.2 261.4 277.2 Z M265.2 285.2 H285.6 V281.0 H304.4 V285.2 H324.8 V344.8 H304.4 V349.0 H285.6 V344.8 H265.2 Z" fill-rule="evenodd" class="ring"/>
+  <g transform="rotate(-18 300 210)"><path d="M266.4 172.2 H333.6 Q337.8 172.2 337.8 176.4 V243.6 Q337.8 247.8 333.6 247.8 H266.4 Q262.2 247.8 262.2 243.6 V176.4 Q262.2 172.2 266.4 172.2 Z M270.2 180.2 H290.6 V176.0 H309.4 V180.2 H329.8 V239.8 H309.4 V244.0 H290.6 V239.8 H270.2 Z" fill-rule="evenodd" class="ring"/></g>
+  <path d="M330 178 L405 122 L412 130 L338 186 Z" class="tool"/>
+  <path d="M335 187 L412 144 L416 153 L341 195 Z" class="tool"/>
+  <text x="45.0" y="405.0" class="small">Lift each ring off the blue backing</text>
+  <text x="45.0" y="424.0" class="small">sheet with tweezers, by its outer edge.</text>
+  <text x="45.0" y="443.0" class="small">The side that was on the sheet goes</text>
+  <text x="45.0" y="462.0" class="small">down on the PCB. Don't stretch it.</text>
+  <circle cx="435.0" cy="120.0" r="14" class="badge"/><text x="435.0" y="126.0" class="num" text-anchor="middle">2</text>
+  <text x="460.0" y="126.0" class="head">Place</text>
+  <rect x="458.0" y="188.0" width="264.0" height="264.0" class="pcb" rx="4"/>
+  <circle cx="590" cy="320" r="23.9" class="hole"/>
+  <circle cx="529.0" cy="320" r="10.5" class="hole"/>
+  <circle cx="651.0" cy="320" r="10.5" class="hole"/>
+  <circle cx="544.3" cy="289.5" r="18.0" class="hole"/>
+  <circle cx="620.5" cy="259.0" r="18.0" class="hole"/>
+  <rect x="569.6" y="363.0" width="40.8" height="36.0" class="led"/>
+  <rect x="506.0" y="236.0" width="168.0" height="168.0" class="outline"/>
+  <path d="M494.0 212.0 H686.0 Q698.0 212.0 698.0 224.0 V416.0 Q698.0 428.0 686.0 428.0 H494.0 Q482.0 428.0 482.0 416.0 V224.0 Q482.0 212.0 494.0 212.0 Z M504.8 234.8 H563.0 V222.8 H617.0 V234.8 H675.2 V405.2 H617.0 V417.2 H563.0 V405.2 H504.8 Z" fill-rule="evenodd" class="ring"/>
+  <circle cx="689.6" cy="399.2" r="9.6" class="joint" fill-opacity="0.75" stroke-dasharray="4 3"/>
+  <circle cx="689.6" cy="307.8" r="9.6" class="joint" fill-opacity="0.75" stroke-dasharray="4 3"/>
+  <path d="M590 228.8 L620.0 178.4 H750" class="lead"/>
+  <text x="760.0" y="183.4" class="small">notch: on a clip side of the switch</text>
+  <path d="M640.4 341.6 L750 293.6" class="lead"/>
+  <text x="760.0" y="298.6" class="small">open middle: round the pins</text>
+  <text x="760.0" y="316.6" class="small">and the LED window</text>
+  <path d="M699.2 399.2 L750 399.2" class="lead"/>
+  <text x="760.0" y="404.2" class="small">diode joints: trim them flush;</text>
+  <text x="760.0" y="422.2" class="small">the ring sits over them</text>
+  <path d="M590 411.2 L620.0 461.6 H750" class="lead"/>
+  <text x="760.0" y="466.6" class="small">notch: the other clip side</text>
+  <text x="435.0" y="495.0" class="small">Shown: SW120, from the front. Dashed: where the switch's housing goes. Press the ring</text>
+  <text x="435.0" y="514.0" class="small">down all round. 26 of the 33 rings per half lie over a diode's joints.</text>
+  <circle cx="55.0" cy="580.0" r="14" class="badge"/><text x="55.0" y="586.0" class="num" text-anchor="middle">3</text>
+  <text x="80.0" y="586.0" class="head">Next to a standoff</text>
+  <clipPath id="snip"><path d="M0 0 H1200 V1010 H0 Z M191.0 735.0 a56.0 56.0 0 1 0 -112.0 0 a56.0 56.0 0 1 0 112.0 0 Z" clip-rule="evenodd"/></clipPath>
+  <clipPath id="win"><rect x="60.0" y="625.0" width="250.0" height="360.0" class="pcb" rx="6"/></clipPath>
+  <g clip-path="url(#win)"><rect x="-45.9" y="604.6" width="640.0" height="640.0" class="pcb" rx="4"/><circle cx="274.1" cy="924.6" r="39.9" class="hole"/><circle cx="172.5" cy="924.6" r="17.5" class="hole"/><circle cx="375.7" cy="924.6" r="17.5" class="hole"/><circle cx="197.9" cy="873.8" r="30.0" class="hole"/><circle cx="324.9" cy="823.0" r="30.0" class="hole"/><rect x="240.1" y="996.2" width="68.0" height="60.0" class="led"/><rect x="134.1" y="784.6" width="280.0" height="280.0" class="outline"/><g clip-path="url(#snip)"><path d="M114.1 744.6 H434.1 Q454.1 744.6 454.1 764.6 V1084.6 Q454.1 1104.6 434.1 1104.6 H114.1 Q94.1 1104.6 94.1 1084.6 V764.6 Q94.1 744.6 114.1 744.6 Z M132.1 782.6 H229.1 V762.6 H319.1 V782.6 H416.1 V1066.6 H319.1 V1086.6 H229.1 V1066.6 H132.1 Z" fill-rule="evenodd" class="ring"/></g><circle cx="59.1" cy="1009.0" r="16.0" class="joint" fill-opacity="0.75" stroke-dasharray="4 3"/><circle cx="59.1" cy="856.6" r="16.0" class="joint" fill-opacity="0.75" stroke-dasharray="4 3"/><circle cx="440.1" cy="1056.6" r="16.0" class="joint" fill-opacity="0.75" stroke-dasharray="4 3"/><circle cx="440.1" cy="904.2" r="16.0" class="joint" fill-opacity="0.75" stroke-dasharray="4 3"/><clipPath id="bite"><path d="M191.0 735.0 a56.0 56.0 0 1 0 -112.0 0 a56.0 56.0 0 1 0 112.0 0 Z"/></clipPath><g clip-path="url(#bite)"><path d="M114.1 744.6 H434.1 Q454.1 744.6 454.1 764.6 V1084.6 Q454.1 1104.6 434.1 1104.6 H114.1 Q94.1 1104.6 94.1 1084.6 V764.6 Q94.1 744.6 114.1 744.6 Z M132.1 782.6 H229.1 V762.6 H319.1 V782.6 H416.1 V1066.6 H319.1 V1086.6 H229.1 V1066.6 H132.1 Z" fill-rule="evenodd" class="ring" fill-opacity="0.35" stroke-dasharray="3 3"/></g><circle cx="135.0" cy="735.0" r="50.0" class="brass" fill-opacity="0.55"/><circle cx="135.0" cy="735.0" r="40.0" class="brass" fill-opacity="0.55"/><path d="M191.0 735.0 a56.0 56.0 0 1 0 -112.0 0 a56.0 56.0 0 1 0 112.0 0 Z" class="cut" stroke-dasharray="6 4"/></g>
+  <rect x="60.0" y="625.0" width="250.0" height="360.0" class="dim" rx="6"/>
+  <text x="330.0" y="660.0" class="small">Shown: part of SW125. 7 rings</text>
+  <text x="330.0" y="679.0" class="small">per half meet a standoff. Before</text>
+  <text x="330.0" y="698.0" class="small">you peel one, snip the bite out</text>
+  <text x="330.0" y="717.0" class="small">along the dashed line, so it lies</text>
+  <text x="330.0" y="736.0" class="small">flat beside the shim and clear of</text>
+  <text x="330.0" y="755.0" class="small">the plate foam's hole round the</text>
+  <text x="330.0" y="774.0" class="small">standoff.</text>
+  <circle cx="615.0" cy="580.0" r="14" class="badge"/><text x="615.0" y="586.0" class="num" text-anchor="middle">4</text>
+  <text x="640.0" y="586.0" class="head">In the gap, once the plate is on</text>
+  <path d="M630.0 860 H1090.0 M630.0 790.0 H1090.0" class="axis"/>
+  <rect x="630.0" y="860.0" width="460.0" height="32.0" class="pcb" rx="3"/>
+  <rect x="630.0" y="790.0" width="86.0" height="40.0" class="eva"/>
+  <rect x="1004.0" y="790.0" width="86.0" height="40.0" class="eva"/>
+  <rect x="630.0" y="760.0" width="90.0" height="30.0" class="plate" rx="3"/>
+  <rect x="1000.0" y="760.0" width="90.0" height="30.0" class="plate" rx="3"/>
+  <rect x="732.0" y="734.0" width="256.0" height="26.0" class="switch" rx="4"/>
+  <rect x="704.0" y="760.0" width="312.0" height="30.0" class="switch" rx="3"/>
+  <rect x="720.0" y="790.0" width="280.0" height="70.0" class="switch" rx="4"/>
+  <path d="M720 790.0 L708.0 804.0 L720 810.0 Z" class="switch"/>
+  <path d="M1000 790.0 L1012.0 804.0 L1000 810.0 Z" class="switch"/>
+  <rect x="680.0" y="850.0" width="38.0" height="10.0" class="ring"/>
+  <rect x="1002.0" y="850.0" width="38.0" height="10.0" class="ring"/>
+  <text x="638.0" y="880.0" class="lab white">PCB, 1.6 mm</text>
+  <text x="638.0" y="786.0" class="small">plate</text>
+  <text x="638.0" y="818.0" class="small white">plate foam</text>
+  <text x="860.0" y="828.0" class="lab" text-anchor="middle">switch</text>
+  <path d="M1040.0 855.0 H1098.0" class="lead"/>
+  <text x="1102.0" y="860.0" class="small">0.5 mm ring</text>
+  <path d="M642.0 850.0 H654.0 M642.0 830.0 H654.0 M648.0 850.0 V830.0" class="dim"/>
+  <text x="658.0" y="845.0" class="small">1 mm</text>
+  <rect x="1040.0" y="750.0" width="40.0" height="10.0" class="ring"/>
+  <path d="M1034.0 732.0 L1086.0 766.0 M1086.0 732.0 L1034.0 766.0" class="no"/>
+  <text x="1102.0" y="752.0" class="small">not here</text>
+  <text x="615.0" y="920.0" class="small">The ring lies on the PCB round the switch's housing, not under it,</text>
+  <text x="615.0" y="939.0" class="small">1 mm below the plate foam, so nothing presses the plate and PCB</text>
+  <text x="615.0" y="958.0" class="small">apart. On the plate it would hold the switch's clips off the plate.</text>
+</svg>

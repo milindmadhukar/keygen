@@ -1,98 +1,108 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
-  <title id="title">Switch, foam, plate, PCB and standoff in one section</title>
-  <desc id="desc">At left an MX switch clips into the 1.5 millimetre plate. Two metal contacts and three plastic locating posts descend into five matching PCB holes; the metal contacts reach the hot-swap socket on the PCB back. The 2 millimetre EVA plate foam is taped under the plate, 1 millimetre above the 0.5 millimetre Poron ring on the PCB. At right a 3 millimetre standoff on a 0.5 millimetre shim separates the plate and PCB, held by one M2 by 5 screw from below; nothing screws into it from above.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 790" role="img" aria-labelledby="title desc">
+  <title id="title">Fitting the standoffs at the mounting holes</title>
+  <desc id="desc">How to fit each of the ten mounting-hole stacks: a 0.5 millimetre shim on the PCB's front over the hole, an M2 by 3 standoff on it, and an M2 by 5 button-head screw driven up from the back into the standoff. The section shows the 3.5 millimetre gap they make under the plate.</desc>
   <style>
     text { font-family: DejaVu Sans, Arial, sans-serif; fill: #182234; }
     .title { font-size: 27px; font-weight: 700; }
     .head { font-size: 19px; font-weight: 700; }
     .lab { font-size: 16px; }
     .small { font-size: 14px; }
+    .num { font-size: 17px; font-weight: 700; fill: #fff; }
     .white { fill: #fff; }
     .plate { fill: #acd6e5; stroke: #315b73; stroke-width: 2; }
+    .ghost { fill: #acd6e5; fill-opacity: 0.35; stroke: #315b73; stroke-width: 1.5; stroke-dasharray: 6 4; }
     .pcb { fill: #397765; stroke: #174a3c; stroke-width: 2; }
+    .copper { fill: #c98a3c; }
+    .bare { fill: #5f9a87; }
     .eva { fill: #626a76; stroke: #454c57; stroke-width: 1.5; }
-    .ring { fill: #9296a5; stroke: #606675; stroke-width: 1.5; }
+    .ring { fill: #4b505b; stroke: #2b2f36; stroke-width: 1.5; }
+    .liner { fill: #39b8d8; stroke: #1f7f99; stroke-width: 1.5; }
     .brass { fill: #d9a143; stroke: #8a5c16; stroke-width: 2; }
-    .screw { fill: #718096; stroke: #344054; stroke-width: 2; }
+    .screw { fill: #8592a6; stroke: #344054; stroke-width: 2; }
     .switch { fill: #bd9ecb; stroke: #6a4879; stroke-width: 2; }
-    .plastic { fill: #bba2c6; stroke: #6a4879; stroke-width: 1.5; }
-    .metal { fill: #d89e4d; stroke: #895d25; stroke-width: 1.5; }
-    .dash { stroke: #a0acba; stroke-width: 1.5; stroke-dasharray: 5 5; }
-    .dim { stroke: #182234; stroke-width: 1.2; }
+    .hole { fill: #f8fafc; stroke: #174a3c; stroke-width: 1.5; }
+    .joint { fill: #c8ccd2; stroke: #6b7280; stroke-width: 1.5; }
+    .led { fill: #f8fafc; stroke: #174a3c; stroke-width: 1.5; }
+    .outline { fill: none; stroke: #6a4879; stroke-width: 1.5; stroke-dasharray: 6 4; }
+    .axis { stroke: #a0acba; stroke-width: 1.5; stroke-dasharray: 5 5; fill: none; }
+    .dim { stroke: #182234; stroke-width: 1.2; fill: none; }
+    .lead { stroke: #182234; stroke-width: 1.2; fill: none; }
+    .arrow { stroke: #c2410c; stroke-width: 3; fill: none; marker-end: url(#tip); }
+    .cut { stroke: #c2410c; stroke-width: 2.5; fill: none; }
+    .tool { fill: #b8c0cc; stroke: #4b5563; stroke-width: 1.5; }
+    .badge { fill: #c2410c; }
+    .note { fill: #e7eef6; }
+    .no { stroke: #b91c1c; stroke-width: 4; fill: none; }
   </style>
-  <rect width="1200" height="720" fill="#f8fafc"/>
-  <text x="35" y="45" class="title">The switch and standoff share the 3.5 mm plate-to-PCB gap</text>
-  <text x="35" y="75" class="lab">Section, heights to scale (30 px per mm). Pin positions are grouped to show all five; the footprint sets where they are.</text>
-  <text x="90" y="125" class="head">At a switch</text>
-  <text x="730" y="125" class="head">At a mounting hole (all ten the same)</text>
-
-  <!-- Heights: plate 240..285 (1.5), EVA 285..345 (2.0), air 345..375 (1.0), ring/shim 375..390 (0.5), PCB 390..438 (1.6). -->
-  <path class="dash" d="M65 240 H1135 M65 285 H1135 M65 390 H1135 M65 438 H1135"/>
-
-  <!-- A switch clips into the plate. -->
-  <rect class="plate" x="90" y="240" width="205" height="45" rx="3"/>
-  <rect class="plate" x="545" y="240" width="155" height="45" rx="3"/>
-  <rect class="switch" x="280" y="200" width="280" height="40" rx="5"/>
-  <rect class="switch" x="307" y="240" width="226" height="45" rx="3"/>
-  <rect class="switch" x="325" y="285" width="190" height="105" rx="4"/>
-  <rect class="switch" x="394" y="160" width="54" height="40" rx="4"/>
-  <path class="switch" d="M307 285 L295 300 L325 312 Z"/>
-  <path class="switch" d="M533 285 L545 300 L515 312 Z"/>
-  <text x="314" y="226" class="lab">switch housing clips to plate</text>
-  <text x="99" y="270" class="lab">1.5 mm plate</text>
-  <text x="552" y="270" class="small">14 × 14 mm cut-out</text>
-
-  <!-- Plate foam taped under the plate, notched where the latches spring out. Ring on the PCB. -->
-  <rect class="eva" x="90" y="285" width="190" height="60"/>
-  <rect class="eva" x="560" y="285" width="140" height="60"/>
-  <rect class="ring" x="260" y="375" width="35" height="15"/>
-  <rect class="ring" x="545" y="375" width="35" height="15"/>
-  <text x="98" y="310" class="small white">2.0 mm EVA plate foam,</text>
-  <text x="98" y="331" class="small white">taped under the plate</text>
-  <text x="98" y="366" class="small">1.0 mm air</text>
-  <text x="566" y="320" class="small white">EVA</text>
-
-  <!-- Pins and PCB. The 2 metal pins reach the socket below, 3 plastic locating posts enter holes. -->
-  <rect class="plastic" x="340" y="390" width="13" height="43" rx="3"/>
-  <rect class="plastic" x="412" y="390" width="17" height="44" rx="3"/>
-  <rect class="plastic" x="487" y="390" width="13" height="43" rx="3"/>
-  <rect class="metal" x="375" y="390" width="12" height="68" rx="2"/>
-  <rect class="metal" x="458" y="390" width="12" height="68" rx="2"/>
-  <rect class="pcb" x="90" y="390" width="230" height="48" rx="2"/>
-  <rect class="pcb" x="515" y="390" width="185" height="48" rx="2"/>
-  <text x="99" y="421" class="lab white">PCB, 1.6 mm</text>
-  <rect x="354" y="438" width="138" height="39" rx="4" fill="#38475b"/>
-  <text x="109" y="503" class="lab">3 plastic posts enter PCB holes; 2 metal contacts</text>
-  <text x="109" y="527" class="lab">pass through into the hotswap socket on its back.</text>
-  <text x="109" y="556" class="small">Switch pins plug in; they are not soldered.</text>
-  <text x="109" y="578" class="small">The foam's switch cut-out is notched where the latches</text>
-  <text x="109" y="597" class="small">spring out under the plate. 0.5 mm Poron ring on the PCB.</text>
-
-  <!-- Mounting hole: standoff on shim, one M2 x 5 from below, its tip 0.1 mm under the standoff top. -->
-  <rect class="plate" x="730" y="240" width="405" height="45" rx="3"/>
-  <rect x="918" y="240" width="30" height="45" fill="#f8fafc" stroke="#315b73" stroke-width="1"/>
-  <rect class="eva" x="730" y="285" width="140" height="60"/>
-  <rect class="eva" x="996" y="285" width="139" height="60"/>
-  <rect class="brass" x="896" y="285" width="74" height="90" rx="5"/>
-  <rect class="brass" x="882" y="375" width="102" height="15" rx="2"/>
-  <rect class="pcb" x="730" y="390" width="405" height="48" rx="2"/>
-  <rect class="screw" x="924" y="288" width="18" height="150" rx="3"/>
-  <rect class="screw" x="907" y="438" width="52" height="33" rx="10"/>
-  <text x="1000" y="268" class="small">2.2 mm plate hole</text>
-  <text x="738" y="370" class="small">foam cut clear</text>
-  <text x="1000" y="365" class="lab">3.0 mm standoff</text>
-  <text x="1000" y="386" class="small">0.5 mm shim</text>
-  <text x="968" y="462" class="lab">M2 × 5 button head</text>
-  <text x="751" y="510" class="small">The screw fills 2.9 mm of the standoff's 3 mm thread;</text>
-  <text x="751" y="530" class="small">its tip stops 0.1 mm under the standoff top.</text>
-  <text x="751" y="556" class="small">Nothing screws in from above: the standoff bears</text>
-  <text x="751" y="576" class="small">on the plate, and the switches hold plate to PCB.</text>
-
-  <!-- 3.5 mm dimension -->
-  <path class="dim" d="M1150 285 V390 M1142 285 H1158 M1142 390 H1158"/>
-  <text x="1160" y="343" class="small">3.5</text>
-
-  <rect x="140" y="620" width="920" height="59" rx="9" fill="#e5ecf4"/>
-  <text x="169" y="646" class="lab">PCB top → plate underside: 3.5 mm = 0.5 mm shim + 3.0 mm standoff.</text>
-  <text x="169" y="668" class="lab">At the switch: 0.5 mm Poron + 1.0 mm air + 2.0 mm EVA under the plate = 3.5 mm.</text>
+  <defs>
+    <marker id="tip" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 Z" fill="#c2410c"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="790" fill="#f8fafc"/>
+  <text x="35.0" y="45.0" class="title">Standoffs: a shim, a standoff and a screw at each mounting hole</text>
+  <text x="35.0" y="75.0" class="lab">H101–H105 and H201–H205, all ten the same. Fit them once the board is soldered and tested, before the switch pads.</text>
+  <text x="40.0" y="130.0" class="head">Fit it</text>
+  <text x="640.0" y="130.0" class="head">Fitted, to scale (30 px per mm)</text>
+  <path d="M400 160 V700" class="axis"/>
+  <rect x="246.0" y="430.0" width="308.0" height="36.0" class="pcb" rx="3"/>
+  <rect x="246.0" y="426.0" width="63.8" height="4.0" class="copper"/>
+  <rect x="490.2" y="426.0" width="63.8" height="4.0" class="copper"/>
+  <rect x="309.8" y="426.0" width="180.4" height="4.0" class="bare"/>
+  <rect x="246.0" y="466.0" width="63.8" height="4.0" class="copper"/>
+  <rect x="490.2" y="466.0" width="63.8" height="4.0" class="copper"/>
+  <rect x="309.8" y="466.0" width="180.4" height="4.0" class="bare"/>
+  <rect x="375.8" y="426.0" width="48.4" height="44.0" class="hole"/>
+  <text x="254.0" y="454.0" class="lab white">PCB, front up</text>
+  <text x="246.0" y="496.0" class="small">no copper round the hole,</text>
+  <text x="246.0" y="514.0" class="small">on both faces</text>
+  <rect x="356.0" y="180.0" width="88.0" height="90.0" class="brass" rx="3"/>
+  <path d="M378.0 186 V264 M422.0 186 V264" class="axis"/>
+  <path d="M480 280 V345" class="arrow"/>
+  <circle cx="60.0" cy="190.0" r="14" class="badge"/><text x="60.0" y="196.0" class="num" text-anchor="middle">2</text>
+  <text x="85.0" y="196.0" class="small">M2 × 3 mm standoff</text>
+  <text x="85.0" y="214.0" class="small">on the shim; hold it</text>
+  <text x="85.0" y="232.0" class="small">with your fingers</text>
+  <rect x="345.0" y="360.0" width="110.0" height="10.0" class="brass" rx="2"/>
+  <rect x="375.8" y="359.0" width="48.4" height="12.0" class="hole"/>
+  <path d="M480 378 V418" class="arrow"/>
+  <circle cx="60.0" cy="365.0" r="14" class="badge"/><text x="60.0" y="371.0" class="num" text-anchor="middle">1</text>
+  <text x="85.0" y="371.0" class="small">0.5 mm shim on the</text>
+  <text x="85.0" y="389.0" class="small">front, centred on</text>
+  <text x="85.0" y="407.0" class="small">the hole</text>
+  <rect x="378.0" y="540.0" width="44.0" height="100.0" class="screw"/>
+  <rect x="361.5" y="640.0" width="77.0" height="26.0" class="screw" rx="10"/>
+  <path d="M480 650 V480" class="arrow"/>
+  <circle cx="60.0" cy="630.0" r="14" class="badge"/><text x="60.0" y="636.0" class="num" text-anchor="middle">3</text>
+  <text x="85.0" y="636.0" class="small">M2 × 5 button head,</text>
+  <text x="85.0" y="654.0" class="small">up from the back with</text>
+  <text x="85.0" y="672.0" class="small">the 1.3 mm hex key:</text>
+  <text x="85.0" y="690.0" class="small">snug, not hard</text>
+  <text x="40.0" y="735.0" class="small">Done when the shim doesn't spin and the standoff doesn't rock.</text>
+  <text x="40.0" y="754.0" class="small">Nothing screws into the standoffs from above.</text>
+  <path d="M655.0 500 H1000.0 M655.0 395.0 H1000.0" class="axis"/>
+  <rect x="655.0" y="500.0" width="345.0" height="48.0" class="pcb" rx="2"/>
+  <rect x="787.0" y="500.0" width="66.0" height="48.0" class="hole"/>
+  <rect x="655.0" y="395.0" width="81.0" height="60.0" class="eva"/>
+  <rect x="904.0" y="395.0" width="96.0" height="60.0" class="eva"/>
+  <rect x="655.0" y="350.0" width="132.0" height="45.0" class="plate" rx="2"/>
+  <rect x="853.0" y="350.0" width="147.0" height="45.0" class="plate" rx="2"/>
+  <rect x="745.0" y="485.0" width="150.0" height="15.0" class="brass" rx="2"/>
+  <rect x="760.0" y="395.0" width="120.0" height="90.0" class="brass" rx="3"/>
+  <rect x="790.0" y="398.0" width="60.0" height="150.0" class="screw"/>
+  <rect x="767.5" y="548.0" width="105.0" height="33.0" class="screw" rx="8"/>
+  <text x="663.0" y="533.0" class="lab white">PCB, 1.6 mm</text>
+  <text x="1012.0" y="377.5" class="small">plate, 1.5 mm (later)</text>
+  <text x="1012.0" y="430.0" class="small">plate foam (later)</text>
+  <path d="M880.0 467.0 H1008.0" class="lead"/>
+  <text x="1012.0" y="472.0" class="small">3 mm standoff</text>
+  <path d="M895.0 492.5 H1008.0" class="lead"/>
+  <text x="1012.0" y="497.5" class="small">0.5 mm shim</text>
+  <path d="M872.5 564.5 H1008.0" class="lead"/>
+  <text x="1012.0" y="569.5" class="small">M2 × 5 button head</text>
+  <path d="M628.0 500.0 H640.0 M628.0 395.0 H640.0 M634.0 500.0 V395.0" class="dim"/>
+  <text x="624.0" y="452.5" class="small" text-anchor="end">3.5 mm</text>
+  <text x="640.0" y="640.0" class="small">The screw fills 2.9 mm of the standoff's 3 mm thread and stops</text>
+  <text x="640.0" y="659.0" class="small">0.1 mm under its top. The plate goes on later: it only rests on</text>
+  <text x="640.0" y="678.0" class="small">the standoffs, and the switches hold it to the PCB.</text>
 </svg>

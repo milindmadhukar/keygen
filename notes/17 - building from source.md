@@ -101,7 +101,7 @@ steps and what they run:
 python3 tools/gen_keycaps.py                        # keycaps: pcb/lib/keygen.3dshapes/Keycap_*: DSA 1u and 1.25u from KeyV2
 python3 tools/gen_schematic.py                      # schematic: pcb/*.kicad_sch, pcb/lib/
 python3 tools/gen_plate.py                          # plate: pcb/plate/, case/plate/{gerber,dxf}/, case/plate/PLATE.md
-~/.venvs/keygen-cad/bin/python tools/gen_case.py    # case: case/{bottom,top}/, case/plate/{stl,step}/, case/foam/, the fit check
+~/.venvs/keygen-cad/bin/python tools/gen_case.py    # case: case/{bottom,top}/, case/plate/{stl,step}/, case/foam/, case/hardware/, the fit check
 ~/.venvs/keygen-cad/bin/python tools/check_mechanical.py  # pairwise and tolerance clearances, plus the 3D fit check
 python3 tools/render_case.py                        # case-renders: assets/render-case*.png, assets/render-plate.png
 ~/.venvs/keygen-cad/bin/python tools/gen_models.py  # models: pcb/lib/keygen.3dshapes/: the knob and OLED 3D models
@@ -118,6 +118,7 @@ kicad-cli sch export pdf -o pcb/keygen-schematic.pdf pcb/keygen.kicad_sch
 python3 tools/render_board.py    # assets/render-{hero,top,bottom}.png, and render-bare*.png without parts
 python3 tools/render_routing.py  # assets/pcb-routing.png
 python3 tools/render_assembly.py # assets/assembly-*.png: maps, the which-side overview and part close-ups
+python3 tools/draw_assembly.py   # assets/assembly-{standoffs,switch-pads}.svg: fitting the standoffs and switch pads
 python3 tools/render_keymap.py   # assets/keymap-*.svg: one picture per keymap layer
 python3 tools/gen_oled_assets.py # firmware/module/src/ui/kg_assets.{c,h}: the OLED fonts, icons and logo
 python3 tools/render_oled.py     # assets/oled-*.gif, oled-{left,right}.svg: the OLED screens (gcc, Pillow)
@@ -188,6 +189,7 @@ from `tools/regen.py`. A fresh clone runs every step on its first `regen.py`.
 | `assets/render-studio-*` | The Blender stills and GIFs | `render_blender.py`, `blend_render.py` |
 | `assets/pcb-routing.png` | Both copper layers | `render_routing.py` |
 | `assets/assembly-*.png` | Assembly maps: every part's reference on each side of each half, the power parts enlarged, the overview of which part goes on which side, and a close-up of each part type with its orientation (`assembly-part-*.png`) | `render_assembly.py` |
+| `assets/assembly-standoffs.svg`, `assets/assembly-switch-pads.svg` | How to fit the standoffs and stick the switch pads, drawn from the board and `case_geometry.py` | `draw_assembly.py` |
 | `assets/keymap-*.svg` | One picture per keymap layer | `render_keymap.py` |
 | `assets/oled-*.gif`, `assets/oled-*.svg` | The OLED screens: the boot animation, both status screens and the lighting menu as GIFs, and each half's status screen as an SVG for Blender; from the screen code in `firmware/module/src/ui`, built for the PC | `render_oled.py` |
 | `firmware/module/src/ui/kg_assets.{c,h}` | The OLED fonts, icons and logo | `gen_oled_assets.py` |
@@ -205,12 +207,14 @@ case/
 ├── wedge/   stl/  step/                tenting wedges (print the STL)
 ├── plate/   gerber/  dxf/  stl/  step/  pdf/  switch plates: Gerbers to order, CNC/laser cut files, meshes, solids, 1:1 paper print
 │   └── PLATE.md                        plate order-form settings
-└── foam/    dxf/  svg/  step/          plate and case foam: 1:1 cut files, solids; switch pads and
-                                        gasket strips: solids
+├── foam/    dxf/  svg/  step/          plate and case foam: 1:1 cut files, solids; switch pads and
+│                                       gasket strips: solids
+└── hardware/  step/                    the shims and standoffs on the PCB, and the screws under it: solids
 ```
 
 Every file is named `keygen-{left,right}-<part>` (the foam `keygen-{left,right}-{plate,case}-foam`,
-the pads and strips `keygen-{left,right}-{switch-pads,lower-gaskets,upper-gaskets}`, the plate
+the pads and strips `keygen-{left,right}-{switch-pads,lower-gaskets,upper-gaskets}`, the hardware
+`keygen-{left,right}-{standoffs,screws}`, the plate
 Gerbers `keygen-plate-{left,right}-gerbers.zip`).
 
 ## Related notes

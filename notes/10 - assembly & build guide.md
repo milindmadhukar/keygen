@@ -84,7 +84,7 @@ From `fab/BOM.md` (left 1xx, right 2xx):
 ### 6. Diodes
 - 1N4148 through-hole, body on the back, **band toward the square pad** (cathode to the row, COL2ROW).
 - Include the encoder's diode (D107 left, D207 right) on the back beside its opening.
-- Trim the legs flush so nothing touches a switch.
+- Trim the legs flush so nothing touches a switch. On 26 of the 33 keys per half a switch pad lies over the two joints, so keep them 1 mm tall at most.
 
 ### 7. Hotswap sockets
 - Kailh sockets on the back. Tack one pad while holding the socket flat, solder the other fully, then finish the first. Both joints should be concave.
@@ -103,12 +103,13 @@ From `fab/BOM.md` (left 1xx, right 2xx):
 
 ### Case assembly
 The case is gasket-mounted: the plate and PCB become one unit that floats on Poron strips. Design: [[09 - case design]].
+- **OLED module (J101/J201):** check its printed pin order matches the footprint's GND, VCC, SCL, SDA (some modules swap GND and VCC). Solder a right-angle header into the board (the last soldering, before any foam goes on), pins pointing away from the thumbs. Remove the module's header if it has one and solder a 45 mm lead of four jumper wires (their plugs glued into one 4-pin plug) into its holes from the back, matching the header's pin order. Plug it in, power the half and check the status screen appears. When closing the case, seat the module on the top frame's four pegs, melt or glue the peg tips, and plug it in.
 - Lay the top frame deck-down and press the 8 M2 heat-set inserts into the holes in its underside (about 230–245 °C), flush and no deeper, and let them cool. 1.7 mm of frame covers each hole. [Heat-set insert guide](https://www.youtube.com/watch?v=cyof7fYFcuQ)
-- Put a 0.5 mm shim on the PCB over each mounting hole, stand an M2 × 3 mm standoff on it and screw it on from below with an M2 × 5 button head, at all ten holes.
+- With the board soldered and tested, put a 0.5 mm shim on the PCB's front over each mounting hole, stand an M2 × 3 mm standoff on it and screw it on from below with an M2 × 5 button head, snug, at all ten holes. They need no plate.
 - Cut the foam from the files in `case/foam/dxf/` or `case/foam/svg/` (DXF for a laser, SVG printed at 100 % as a template): per half a 2 mm EVA plate foam and a 5 mm EVA case foam, each the right way up as drawn.
-- Stick a 0.5 mm Poron ring switch pad on the PCB round each switch, its notches towards the switch clips and its open middle round the pins and the LED window, then tape the plate foam to the plate's underside, its cut-outs over the plate's and its notches clear for the switch latches. Seven rings per half have a corner snipped off where they meet a standoff.
+- The switch pads go on the PCB's front, not the plate: peel each 0.5 mm Poron ring off its backing sheet with tweezers and stick it round a switch, its notches towards the switch clips and its open middle round the pins and the LED window, over the diode joints. Seven rings per half have a bite snipped out where they meet a standoff's shim.
+- Tape the plate foam to the plate's underside, its cut-outs over the plate's and its notches clear for the switch latches.
 - Plate onto the standoffs, foam side down. It is not screwed: the standoffs bear on it and the switches clip it to the PCB.
-- **OLED module (J101/J201):** check its printed pin order matches the footprint's GND, VCC, SCL, SDA (some modules swap GND and VCC). Solder a right-angle header into the board, pins pointing away from the thumbs. Remove the module's header if it has one and solder a 45 mm lead of four jumper wires (their plugs glued into one 4-pin plug) into its holes from the back, matching the header's pin order. Plug it in, power the half and check the status screen appears. When closing the case, seat the module on the top frame's four pegs, melt or glue the peg tips, and plug it in.
 
 ### 11. Switches, then into the case
 - Check each switch's pins are straight, then press it through the plate into its socket, with a hand under the PCB behind the socket. The tall 1.25u thumb switches are turned 90°.
