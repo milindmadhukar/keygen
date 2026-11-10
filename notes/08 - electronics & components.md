@@ -21,7 +21,7 @@ name: 08 - electronics & components
 | 732 kΩ + 2 × 100 kΩ resistors, 1 %, 1206 | 1 + 2 | 1 + 2 | R102, R103, R104 / R202, R203, R204 | Feedback divider (R2/R4); enable pull-down (R3) |
 | SN74LV1T125 buffer (SOT-23-5) + 100 nF, 0805 | 1 + 1 | 1 + 1 | U103, C102 / U203, C202 | LED data buffer, beside the first LED |
 | 330 Ω resistor, 0805 | 1 | 1 | R105 / R205 | Beside the first LED's DIN |
-| 100 nF capacitors, 0805 | 8 (+ 25 optional) | 8 (+ 25 optional) | C111–C143 / C211–C243 | One footprint beside every LED; every fourth fitted |
+| 100 nF capacitors, 0805 | 0 (33 optional) | 0 (33 optional) | C111–C143 / C211–C243 | One footprint beside every LED, left empty |
 | KP-355085 LiPo pouch + JST-PH 2-pin side-entry connector (S2B-PH-K-S) | 1 | 1 | BT101 / BT201 | Connector on the back |
 | SK12D07VG5 right-angle slide switch | 1 | 1 | SW190 / SW290 | Through-hole, back side at the top edge, knob out |
 | AO3401A P-MOSFET, SOT-23 + 1 MΩ resistor, 1206 | 1 + 1 | 1 + 1 | Q101, R101 / Q201, R201 | Battery switch |
@@ -54,7 +54,7 @@ Each half has 34 diodes: 33 for the keys and one for its encoder's push switch, 
 - **Idle drain:** about 1 mA per LED even when dark. ZMK's external power control (P0.08) turns the LED boost off when the LEDs are off, and the boost then disconnects its output.
 - On battery the lighting is optional: off unless a System-layer key allows it, then capped at half the brightness scale, halved below 20 % charge and off below 10 %.
 - **Supply voltage:** the datasheet asks for VDD 3.7–5.5 V; the boost holds the rail at 4.95 V over the whole charge. See [[12 - final design#Schematic]].
-- **Decoupling:** a 0805 100 nF footprint beside every LED, every fourth fitted, and 10 µF beside the last LED.
+- **Decoupling:** 10 µF beside the last LED, and an optional 0805 100 nF footprint beside every LED, left empty.
 - **Soldering:** mind the corner mark on each LED, and test the chain one column at a time, since one bad joint stops every LED after it.
 
 ## OLED

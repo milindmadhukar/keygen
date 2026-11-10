@@ -163,7 +163,7 @@ Everything lives in **one KiCad project**, `pcb/keygen.kicad_pro`:
 - **Datasheet audit:** `tools/check_datasheets.py` checks the routed PCB against each part's datasheet (`docs/datasheets/`): 109 pass, 15 warnings, 0 fail as of 2026-10-28. Operating limits: [`docs/logic-audit.md`](../docs/logic-audit.md). Findings and learnings: [[15 - datasheet audit]].
 
 > [!note] LED supply
-> The LEDs run from a 4.95 V rail (LED_VDD), made from the battery (B+, 3.0–4.2 V) by a **TI TPS61023** synchronous boost (U2, SOT-563), inside the SK6812MINI-E's **VDD 3.7–5.5 V** over the whole charge. P0.08 drives its enable directly and a 100 kΩ resistor (R3) holds it off before firmware configures the output; shut down, it disconnects its output, so the rail sits at 0 V. A 1 µH inductor (L1), 2 × 22 µF at the output (C1, C4), 10 µF at the input (C3) and a 732 kΩ / 100 kΩ divider (R2, R4) set and filter it. P0.06 drives the chain through an **SN74LV1T125** buffer (U3) on the LED rail, with 100 nF (C2) at its supply, and a 330 Ω resistor (R5), all beside the first LED. Every LED has a 0805 100 nF footprint beside it, every fourth fitted, and a 10 µF capacitor (C5) sits beside the last LED. The controller's switched 3.3 V VCC output powers only the OLED. The resistors and capacitors are 1206 and 0805, for hand soldering.
+> The LEDs run from a 4.95 V rail (LED_VDD), made from the battery (B+, 3.0–4.2 V) by a **TI TPS61023** synchronous boost (U2, SOT-563), inside the SK6812MINI-E's **VDD 3.7–5.5 V** over the whole charge. P0.08 drives its enable directly and a 100 kΩ resistor (R3) holds it off before firmware configures the output; shut down, it disconnects its output, so the rail sits at 0 V. A 1 µH inductor (L1), 2 × 22 µF at the output (C1, C4), 10 µF at the input (C3) and a 732 kΩ / 100 kΩ divider (R2, R4) set and filter it. P0.06 drives the chain through an **SN74LV1T125** buffer (U3) on the LED rail, with 100 nF (C2) at its supply, and a 330 Ω resistor (R5), all beside the first LED. A 10 µF capacitor (C5) sits beside the last LED, and every LED has an optional 0805 100 nF footprint beside it, left empty. The controller's switched 3.3 V VCC output powers only the OLED. The resistors and capacitors are 1206 and 0805, for hand soldering.
 
 ### Connectivity
 
@@ -198,7 +198,7 @@ The left half is the ZMK central. Plugging USB-C into it is the wired mode, and 
 | AO3401A P-MOSFET + 1 MΩ resistor, 1206 (battery switch) | 1 + 1 | 1 + 1 | SMD |
 | TPS61023 boost (SOT-563), 1 µH inductor (1210), 2 × 22 µF + 10 µF, 732 kΩ + 2 × 100 kΩ, 1206 (LED boost) | 1 + 1 + 3 + 3 | 1 + 1 + 3 + 3 | SMD |
 | SN74LV1T125 buffer (SOT-23-5), 100 nF + 330 Ω, 0805 (LED data) | 1 + 2 | 1 + 2 | SMD |
-| 100 nF, 0805 (beside every fourth LED; 25 more optional) + 10 µF, 1206 (last LED) | 8 + 1 | 8 + 1 | SMD |
+| 10 µF, 1206 (last LED); 100 nF, 0805, optional beside every LED | 1 | 1 | SMD |
 | 6 mm reset button (pinhole in case) | 1 | 1 | TH |
 | EC11 encoder (D shaft) + 17 mm knob | 1 | 1 | Top frame |
 | 1×5 right-angle pin header + jumper lead | 1 | 1 | TH |

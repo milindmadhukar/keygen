@@ -1,9 +1,9 @@
 Part,Qty,References,Value,Footprint,Notes
 JST-PH 2-pin battery connector,1,BT201,LiPo 3.7V 3000mAh,Connector_JST:JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal,"through-hole side-entry, back side; check battery polarity first"
 22 µF capacitor (1206),2,C201 C204,22uF,Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder,"SMD, back side, at the boost's output"
-100 nF capacitor (0805),9,C202 C214 C218 C222 C226 C230 C234 C238 C242,100nF,Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder,"SMD, back side: C2 at the data buffer, and beside every fourth LED"
+100 nF capacitor (0805),1,C202,100nF,Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder,"SMD, back side, beside the data buffer"
 10 µF capacitor (1206),2,C203 C205,10uF,Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder,"SMD, back side: C3 at the boost's input, C5 at the last LED"
-"100 nF capacitor (0805), optional",25,C211 C212 C213 C215 C216 C217 C219 C220 C221 C223 C224 C225 C227 C228 C229 C231 C232 C233 C235 C236 C237 C239 C240 C241 C243,100nF,Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder,"Not fitted: footprints beside the other LEDs, for extra decoupling if the chain flickers"
+"100 nF capacitor (0805), optional",33,C211 C212 C213 C214 C215 C216 C217 C218 C219 C220 C221 C222 C223 C224 C225 C226 C227 C228 C229 C230 C231 C232 C233 C234 C235 C236 C237 C238 C239 C240 C241 C242 C243,100nF,Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder,"Not fitted: a footprint beside every LED, for extra decoupling if the chain glitches on full white"
 1N4148 diode,34,D201 D202 D203 D204 D205 D206 D207 D208 D209 D210 D211 D212 D213 D214 D215 D216 D217 D218 D219 D220 D221 D222 D223 D224 D225 D226 D227 D228 D229 D230 D231 D232 D233 D234,1N4148,Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal,"through-hole, back side; band (cathode) toward the square pad"
 EC11 rotary encoder,1,ENC201,EC11,keygen:EC11_Case_Mount,"held in the top frame by its M7 nut, 20 mm D shaft"
 OLED 0.96in I2C,1,J201,OLED 0.96in I2C,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical,

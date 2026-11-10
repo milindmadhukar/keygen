@@ -1,9 +1,9 @@
 Item Number,Designator,Unit Quantity,Description,Manufacturer Part Number,Footprint,Value,Assembly Instructions
 1,BT101,1,JST-PH 2-pin battery connector,S2B-PH-K-S(LF)(SN) (JST),Connector_JST:JST_PH_S2B-PH-K_1x02_P2.00mm_Horizontal,JST-PH 2-pin,"THT side-entry, BOTTOM side. Opening toward the battery pocket."
 2,"C101,C104",2,22 µF capacitor (1206),"CS3216X7R226K160NRI (Samwha, 22 µF 16 V X7R 1206)",Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder,22uF,BOTTOM side.
-3,"C102,C114,C118,C122,C126,C130,C134,C138,C142",9,100 nF capacitor (0805),100 nF 50 V X7R 0805 (any),Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder,100nF,BOTTOM side.
+3,C102,1,100 nF capacitor (0805),100 nF 50 V X7R 0805 (any),Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder,100nF,BOTTOM side.
 4,"C103,C105",2,10 µF capacitor (1206),"CL31A106KBHNNNE (Samsung, 10 µF 50 V X5R 1206)",Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder,10uF,BOTTOM side.
-5,"C111,C112,C113,C115,C116,C117,C119,C120,C121,C123,C124,C125,C127,C128,C129,C131,C132,C133,C135,C136,C137,C139,C140,C141,C143",25,"100 nF capacitor (0805), optional",,Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder,100nF,DO NOT FIT: optional footprints.
+5,"C111,C112,C113,C114,C115,C116,C117,C118,C119,C120,C121,C122,C123,C124,C125,C126,C127,C128,C129,C130,C131,C132,C133,C134,C135,C136,C137,C138,C139,C140,C141,C142,C143",33,"100 nF capacitor (0805), optional",,Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder,100nF,DO NOT FIT: optional footprints.
 6,"D101,D102,D103,D104,D105,D106,D107,D108,D109,D110,D111,D112,D113,D114,D115,D116,D117,D118,D119,D120,D121,D122,D123,D124,D125,D126,D127,D128,D129,D130,D131,D132,D133,D134",34,1N4148 diode,"1N4148 (DO-35, e.g. onsemi 1N4148)",Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal,1N4148,"THT, BOTTOM side. Polarity: band (cathode) to the square pad."
 7,ENC101,1,EC11 rotary encoder,"EC11 with push switch, 20 mm D shaft (Hongyan EC11)",keygen:EC11_Case_Mount,EC11,DO NOT FIT: not on the PCB; customer mounts it in the case and plugs it into the 5-pin header.
 8,J101,1,OLED 0.96in I2C,,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical,OLED 0.96in I2C,TOP side.

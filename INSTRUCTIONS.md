@@ -30,7 +30,7 @@ Counts are for the whole keyboard (two halves). Stores, links, prices and spares
 | 732 kΩ and 100 kΩ resistors, 1 %, 1206 | 2 + 4 | The boost's feedback divider and enable pull-down |
 | SN74LV1T125 buffer, SOT-23-5 | 2 | The LED data buffer |
 | 330 Ω resistor, 0805 | 2 | Beside the first LED |
-| 100 nF capacitor, 0805 | 18 | At the buffer and beside every fourth LED; the other 50 footprints are optional |
+| 100 nF capacitor, 0805 | 2 | At the buffers. The 66 footprints beside the LEDs are optional |
 | SK12D07VG5 right-angle slide switch | 2 | The power switch |
 | 6 × 6 × 5 mm tact switch | 2 | The reset button |
 | JST-PH side-entry connector (S2B-PH-K-S) | 2 | For the battery |
@@ -329,8 +329,8 @@ The data buffer and the LED capacitors:
 - SN74LV1T125 buffer **U103 / U203**, its 100 nF capacitor **C102 / C202** and the 330 Ω resistor
   **R105 / R205**, beside the first LED (LED101 / LED201).
 - 10 µF capacitor **C105 / C205**, beside the last LED.
-- 100 nF capacitors beside LEDs 4, 8, … 32: **C114, C118, … C142 / C214, C218, … C242**. The
-  footprints beside the other LEDs are optional.
+- The footprints beside each LED (**C111–C143 / C211–C243**) stay empty. Fit 100 nF in a few of
+  them only if the chain glitches on a full-white step.
 
 ![LED boost close-up](https://github.com/milindmadhukar/keygen/releases/download/media/assembly-part-boost.png)
 

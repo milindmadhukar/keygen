@@ -35,7 +35,7 @@ KINDS = [
     (r"^1uH$", "1 µH inductor (1210)", "LED boost inductor", "SMD, back side, beside the boost"),
     (r"^22uF$", "22 µF capacitor (1206)", "LED boost capacitors", "SMD, back side, at the boost's output"),
     (r"^10uF$", "10 µF capacitor (1206)", "10 µF capacitors", "SMD, back side: C3 at the boost's input, C5 at the last LED"),
-    (r"C_0805.*|^100nF$", "100 nF capacitor (0805)", "LED capacitors", "SMD, back side: C2 at the data buffer, and beside every fourth LED"),
+    (r"C_0805.*|^100nF$", "100 nF capacitor (0805)", "LED capacitors", "SMD, back side, beside the data buffer"),
     (r"^732k$", "732 kΩ resistor, 1 % (1206)", "Boost feedback resistors", "SMD, back side, beside the boost"),
     (r"^100k$", "100 kΩ resistor, 1 % (1206)", "Boost feedback resistors", "SMD, back side: R3 below the boost (enable), R4 beside it (feedback)"),
     (r"^330$", "330 Ω resistor (0805)", "Data resistor", "SMD, back side, beside the data buffer and the first LED"),
@@ -43,7 +43,7 @@ KINDS = [
     (r"^1M$", "1 MΩ resistor (1206)", "Gate resistor", "SMD, back side, below the battery MOSFET"),
 ]
 OPTIONAL = ("100 nF capacitor (0805), optional", "LED capacitors",
-            "Not fitted: footprints beside the other LEDs, for extra decoupling if the chain flickers")
+            "Not fitted: a footprint beside every LED, for extra decoupling if the chain glitches on full white")
 SKIP = re.compile(r"^(#|H\d)")          # power flags, mounting holes (not parts)
 
 

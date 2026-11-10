@@ -56,8 +56,8 @@ updated: 2026-10-22T19:00
   LED rail; its input threshold is 2.03 V at 5 V, so the controller's 3.3 V data drives the chain
   at 5 V, through a 330 Ω resistor into the first LED's DIN. Its inputs take 5.5 V with no supply,
   so the controller can't back-power the dark rail.
-- **LED decoupling:** every LED has a 0805 100 nF footprint beside it; every fourth is fitted
-  (LEDs 4, 8, … 32), the others are optional. A 10 µF capacitor sits beside the last LED.
+- **LED decoupling:** a 10 µF capacitor sits beside the last LED. Every LED has an optional 0805
+  100 nF footprint beside it, left empty.
 - **Antenna:** each controller's antenna end is kept clear of the ground fill, and the case is
   plastic.
 
@@ -76,7 +76,7 @@ References and soldering notes for every part are in `fab/BOM.md`.
 | 10 µF capacitors, 1206 (boost input, last LED) | 2 | 2 |
 | 732 kΩ + 2 × 100 kΩ resistors, 1206 (feedback, enable) | 1 + 2 | 1 + 2 |
 | SN74LV1T125 buffer (SOT-23-5), 330 Ω resistor (0805) | 1 + 1 | 1 + 1 |
-| 100 nF capacitors, 0805 (buffer, every fourth LED; 25 optional) | 9 | 9 |
+| 100 nF capacitor, 0805 (buffer; 33 optional beside the LEDs) | 1 | 1 |
 | KP-355085 LiPo battery + JST-PH connector | 1 | 1 |
 | SK12D07VG5 power slide switch | 1 | 1 |
 | AO3401A P-MOSFET + 1 MΩ gate resistor, 1206 (battery switch) | 1 + 1 | 1 + 1 |
@@ -92,7 +92,10 @@ References and soldering notes for every part are in `fab/BOM.md`.
   0.5 mm-pitch pins), 0.15 mm minimum track, 0.2 mm copper-to-edge. That is within JLCPCB's
   2-layer capability.
 - **Routing:** Freerouting does most of the signal routing, then a custom grid maze router
-  finishes the rest. All tracks are then straightened into 0/45/90° runs. Ground is a fill on both
+  finishes the rest, paying for every bend so its paths run straight. All tracks are then
+  straightened into 0/45/90° runs.
+- **Hand soldering:** the LED supply's SMD parts keep 0.5 mm to other parts' pads and 1 mm to
+  through-hole and hotswap pads; the data buffer keeps 1 mm all round. No via sits in their pads. Ground is a fill on both
   layers, joined to every pad through thermal spokes so a hand iron heats the pad rather than the
   plane. Two spokes per pad at least, one on the LED, buffer and capacitor ground pads with room
   for only one (`pcb/keygen.kicad_dru`). [`pcb-routing.png`](https://github.com/milindmadhukar/keygen/releases/download/media/pcb-routing.png) shows both copper layers.

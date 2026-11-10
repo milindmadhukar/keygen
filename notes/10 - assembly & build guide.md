@@ -37,7 +37,6 @@ From `fab/BOM.md` (left 1xx, right 2xx):
 | 100 kΩ resistor, 1 % (1206), R103/R203 | 1 | back | boost enable pull-down, below the boost |
 | SN74LV1T125 buffer (SOT-23-5) + 100 nF (0805), U1x3/C1x2 | 1 + 1 | back | LED data buffer, beside the first LED |
 | 330 Ω resistor (0805), R105/R205 | 1 | back | beside the first LED's DIN |
-| 100 nF capacitors (0805), every fourth of C111–C143 / C211–C243 | 8 | back | beside LEDs 4, 8, … 32; the other footprints are optional |
 | SK12D07VG5 power slide switch (through-hole), SW190/SW290 | 1 | back | top edge, knob out; solder and trim on the front |
 | JST-PH 2-pin side-entry, BT101/BT201 | 1 | back | battery connector; + marked on the silkscreen |
 | 6 mm reset button, SW191/SW291 | 1 | back | labelled GENERATE |
@@ -58,7 +57,7 @@ From `fab/BOM.md` (left 1xx, right 2xx):
 ### 2. Power parts
 - AO3401A and its 1 MΩ gate resistor. The SK12D07VG5 slide switch at the top edge goes on with the through-hole parts.
 - The LED boost first: the TPS61023 (0.5 mm pitch: flux, then a fine tip or hot air; pin 1 to the footprint's mark), its inductor, capacitors and resistors.
-- The SN74LV1T125 buffer, its 100 nF and the 330 Ω beside the first LED, the 10 µF beside the last LED and the 100 nF beside every fourth LED.
+- The SN74LV1T125 buffer, its 100 nF and the 330 Ω beside the first LED, and the 10 µF beside the last LED.
 - JST-PH connector and the reset button.
 - These are the small SMD parts; doing them first keeps the board flat on the mat.
 

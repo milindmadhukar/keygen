@@ -365,8 +365,8 @@ for side, d in SIDES.items():
     caps = [fp(f"C{d}{g.LED_CAP_BASE + i}") for i in range(1, n + 1)]
     far = [c.GetReference() for c, l in zip(caps, leds) if mm((c.GetPosition() - l.GetPosition()).EuclideanNorm()) > 10]
     fitted = [c.GetReference() for c in caps if not c.IsDNP()]
-    ok(not far and len(fitted) == n // g.LED_CAP_EVERY, A,
-       f"{side}: a 100 nF footprint beside each of the {n} LEDs (within 10 mm), {len(fitted)} fitted",
+    ok(not far and not fitted, A,
+       f"{side}: an optional (DNP) 100 nF footprint beside each of the {n} LEDs, within 10 mm",
        f"{side}: LED capacitors far from their LED {far}, fitted {fitted}")
     vih = BUF_VIH_5V
     ok(NRF_VDD - NRF_VOH_DROP > vih, A,

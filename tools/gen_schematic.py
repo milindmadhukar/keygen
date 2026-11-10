@@ -437,10 +437,10 @@ class Sheet:
 PROJECT = "keygen"
 BASE = {"left": 100, "right": 200}          # reference numbering: SW101.. left, SW201.. right
 LED_CAP_BASE = 10        # the 100 nF beside LED n is C(base + 10 + n): C111-C143 on the left
-LED_CAP_EVERY = 4        # every 4th is fitted (LED 4, 8, ... 32); the others are DNP footprints
-
+# None are fitted: the boost's output capacitors and C5 at the chain's end decouple the rail. The
+# footprints stay for a chain that glitches on a full-white step.
 def led_cap_fitted(n):
-    return n % LED_CAP_EVERY == 0
+    return False
 
 def build(side, root, sheet):
     sh = Sheet(PROJECT, f"Keygen - {side} half", root, sheet)
@@ -472,7 +472,7 @@ def build(side, root, sheet):
     nled = len(keys)
     sh.text(f"PER-KEY LEDs  ({nled}) - 5 V rail LED_VDD from the boost (U2); data from the buffer (U3, R5).\n"
             f"A 100 nF footprint beside every LED (C{base + LED_CAP_BASE + 1}-C{base + LED_CAP_BASE + nled}); "
-            f"every {LED_CAP_EVERY}th is fitted, the rest are DNP.", LX0 - 15.24, LY0 - 20.32, 2)
+            f"all DNP, optional.", LX0 - 15.24, LY0 - 20.32, 2)
     for i in range(nled):
         x, y = LX0 + (i % PER) * LDX, LY0 + (i // PER) * LDY
         din = "LED_D0" if i == 0 else f"LED_D{i}"

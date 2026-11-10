@@ -9,9 +9,9 @@ The shopping list with spares and prices is `bom/bom.csv` / `plan/bom.html`.
 |---|---|---|---|
 | JST-PH 2-pin battery connector | 1 | BT101 | through-hole side-entry, back side; check battery polarity first |
 | 22 µF capacitor (1206) | 2 | C101, C104 | SMD, back side, at the boost's output |
-| 100 nF capacitor (0805) | 9 | C102, C114, C118, C122, C126, C130, C134, C138, C142 | SMD, back side: C2 at the data buffer, and beside every fourth LED |
+| 100 nF capacitor (0805) | 1 | C102 | SMD, back side, beside the data buffer |
 | 10 µF capacitor (1206) | 2 | C103, C105 | SMD, back side: C3 at the boost's input, C5 at the last LED |
-| 100 nF capacitor (0805), optional | 25 | C111–C113, C115–C117, C119–C121, C123–C125, C127–C129, C131–C133, C135–C137, C139–C141, C143 | Not fitted: footprints beside the other LEDs, for extra decoupling if the chain flickers |
+| 100 nF capacitor (0805), optional | 33 | C111–C143 | Not fitted: a footprint beside every LED, for extra decoupling if the chain glitches on full white |
 | 1N4148 diode | 34 | D101–D134 | through-hole, back side; band (cathode) toward the square pad |
 | EC11 rotary encoder | 1 | ENC101 | held in the top frame by its M7 nut, 20 mm D shaft |
 | OLED 0.96in I2C | 1 | J101 |  |
@@ -37,9 +37,9 @@ The shopping list with spares and prices is `bom/bom.csv` / `plan/bom.html`.
 |---|---|---|---|
 | JST-PH 2-pin battery connector | 1 | BT201 | through-hole side-entry, back side; check battery polarity first |
 | 22 µF capacitor (1206) | 2 | C201, C204 | SMD, back side, at the boost's output |
-| 100 nF capacitor (0805) | 9 | C202, C214, C218, C222, C226, C230, C234, C238, C242 | SMD, back side: C2 at the data buffer, and beside every fourth LED |
+| 100 nF capacitor (0805) | 1 | C202 | SMD, back side, beside the data buffer |
 | 10 µF capacitor (1206) | 2 | C203, C205 | SMD, back side: C3 at the boost's input, C5 at the last LED |
-| 100 nF capacitor (0805), optional | 25 | C211–C213, C215–C217, C219–C221, C223–C225, C227–C229, C231–C233, C235–C237, C239–C241, C243 | Not fitted: footprints beside the other LEDs, for extra decoupling if the chain flickers |
+| 100 nF capacitor (0805), optional | 33 | C211–C243 | Not fitted: a footprint beside every LED, for extra decoupling if the chain glitches on full white |
 | 1N4148 diode | 34 | D201–D234 | through-hole, back side; band (cathode) toward the square pad |
 | EC11 rotary encoder | 1 | ENC201 | held in the top frame by its M7 nut, 20 mm D shaft |
 | OLED 0.96in I2C | 1 | J201 |  |
@@ -65,9 +65,9 @@ The shopping list with spares and prices is `bom/bom.csv` / `plan/bom.html`.
 |---|---|---|---|
 | JST-PH 2-pin battery connector | 2 | 4 | Robu.in "JST PH 2.0 2 pin" |
 | 22 µF capacitor (1206) | 4 | 8 | [Robu.in, CS3216X7R226K160NRI](https://robu.in/product/cs3216x7r226k160nri-samwha-16v-22uf-x7r-%c2%b110-1206-multilayer-ceramic-capacitors-mlcc-smd-smt-rohs/) |
-| 100 nF capacitor (0805) | 18 | 36 | Robu.in |
+| 100 nF capacitor (0805) | 2 | 4 | Robu.in |
 | 10 µF capacitor (1206) | 4 | 8 | Robu.in / Lamington Road |
-| 100 nF capacitor (0805), optional | 50 | 100 | Robu.in |
+| 100 nF capacitor (0805), optional | 66 | 132 | Robu.in |
 | 1N4148 diode | 68 | 136 | [StacksKB 1N4148 (10-pack)](https://stackskb.com/store/1n4148-through-hole-diode/) |
 | EC11 rotary encoder | 2 | 4 | [Robu.in, Hongyan EC11](https://robu.in/product/hongyan-ec11h-7ce20p1zd20-rotary-encoder-with-push-button-switch-vertical-plug-in-5-pin/) |
 | OLED 0.96in I2C | 2 | 4 |  |
