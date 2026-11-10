@@ -5,7 +5,7 @@ name: 05 - pcb design
 ---
 
 > [!success] Decision (2026-10-19)
-> KiCad 10, **one project** (`pcb/keygen.kicad_pro`) with left and right sheets, and both halves in one board file as **two separate outlines**, each ordered on its own. Key geometry comes from **Redox rev1**; the copper is drawn new. Kailh MX hotswap sockets, 1N4148 through-hole diodes, SK6812MINI-E per-key LEDs on a 5 V boost from the battery, an EC11 encoder and an SSD1306 OLED module on each half, and a LiPo with a slide switch driving a P-MOSFET battery switch. The nice!nano mounts socketed on the underside and provides USB-C. Ground fill stays off each controller's antenna end. JLCPCB, lead-free HASL, black mask with white silkscreen, 5 + 5 boards. Status 2026-10-20: schematic generated and ERC clean; **PCB fully routed, DRC clean with schematic parity**. See [[12 - final design#Schematic]] and [[12 - final design#Controller pin map]].
+> KiCad 10, **one project** (`pcb/keygen.kicad_pro`) with left and right sheets, and both halves in one board file as **two separate outlines**, each ordered on its own. Key geometry comes from **Redox rev1**; the copper is drawn new. Kailh MX hotswap sockets, 1N4148W SMD diodes, SK6812MINI-E per-key LEDs on a 5 V boost from the battery, an EC11 encoder and an SSD1306 OLED module on each half, and a LiPo with a slide switch driving a P-MOSFET battery switch. The nice!nano mounts socketed on the underside and provides USB-C. Ground fill stays off each controller's antenna end. JLCPCB, lead-free HASL, black mask with white silkscreen, 5 + 5 boards. Status 2026-10-20: schematic generated and ERC clean; **PCB fully routed, DRC clean with schematic parity**. See [[12 - final design#Schematic]] and [[12 - final design#Controller pin map]].
 
 ## Board at a glance
 
@@ -31,7 +31,7 @@ Each half is **5 rows × 7 columns, COL2ROW**: each switch connects to its colum
 ## Parts on the board
 
 ### Diodes
-**1N4148, through-hole (DO-35)**, on the back, standing beside each switch. The band (cathode) goes toward the square pad, which is the row side. Through-hole is quick to hand-solder.
+**1N4148W, SOD-123**, on the back, standing beside each switch. The band (cathode) goes toward pad 1, the row side. Nothing comes through to the front, where the Poron switch pads lie flat round the switches. Its pads run 0.7 mm longer outwards than the standard footprint, for an iron.
 
 ### Hotswap sockets
 **Kailh MX hotswap (CPG151101S11)** on the back. Switches press in and pull out without soldering. One per key: 66 in total.

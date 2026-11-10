@@ -20,7 +20,7 @@ OUT = ROOT / "fab"
 KINDS = [
     (r"SW_MX_HS_CPG151101S11_1u", "MX switch, 1u key", "Hotswap sockets", "Kailh socket on the back; switch + 1u keycap on top"),
     (r"SW_MX_HS_CPG151101S11_1\.25u", "MX switch, 1.25u key", "Hotswap sockets", "Kailh socket on the back; switch + 1.25u keycap (the two tall thumb keys turned 90°)"),
-    (r"D_DO-35", "1N4148 diode", "Diodes", "through-hole, back side; band (cathode) toward the square pad"),
+    (r"D_SOD-123", "1N4148W diode", "Diodes", "SOD-123, back side; band (cathode) toward pad 1, the silkscreen bar"),
     (r"SK6812MINI-E", "SK6812MINI-E LED", "Per-key LEDs", "SMD, reverse-mount on the back; mind the corner mark"),
     (r"nice_nano|nRF52840", "nRF52840 SuperMini (nice!nano v2 clone)", "Controller", "on the back, socketed (Mill-Max/low-profile); check B+, GND and VCC first"),
     (r"SK12D07VG5", "SK12D07VG5 power slide switch", "Power switch",
@@ -110,7 +110,7 @@ def compress(refs):
 # Manufacturer part numbers for a fab's assembly BOM. Verify stock/alternates in the fab's
 # parts search before ordering; generic parts list a common equivalent.
 MPN = {
-    "1N4148 diode": "1N4148 (DO-35, e.g. onsemi 1N4148)",
+    "1N4148W diode": "1N4148W-7-F (Diodes Incorporated, SOD-123)",
     "SK6812MINI-E LED": "SK6812MINI-E (OPSCO, LCSC C5149201)",
     "10 µF capacitor (1206)": "CL31A106KBHNNNE (Samsung, 10 µF 50 V X5R 1206)",
     "22 µF capacitor (1206)": "CS3216X7R226K160NRI (Samwha, 22 µF 16 V X7R 1206)",
@@ -145,7 +145,7 @@ def fab_instructions(name, refs):
     if name.endswith("optional"):
         return "DO NOT FIT: optional footprints."
     if name.startswith("1N4148"):
-        return "THT, BOTTOM side. Polarity: band (cathode) to the square pad."
+        return "SMD, BOTTOM side. Polarity: band (cathode) to pad 1."
     if name.startswith("EC11"):
         return "DO NOT FIT: not on the PCB; customer mounts it in the case and plugs it into the 5-pin header."
     if name.startswith("1x5 right-angle"):

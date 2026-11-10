@@ -42,7 +42,7 @@ From `fab/BOM.md` (left 1xx, right 2xx):
 | 6 mm reset button, SW191/SW291 | 1 | back | labelled GENERATE |
 | nRF52840 SuperMini, U101/U201 | 1 | back | socketed; check B+, GND and VCC first |
 | SK6812MINI-E LED | 33 | back | reverse-mount through the board cut-out |
-| 1N4148 diode (DO-35) | 34 | back | band (cathode) toward the square pad; D107/D207 is the encoder's, beside its opening |
+| 1N4148W diode (SOD-123) | 34 | back | band (cathode) toward pad 1; D107/D207 is the encoder's, beside its opening |
 | Kailh MX hotswap socket | 33 | back | |
 | EC11 encoder, ENC101/ENC201 | 1 | top frame | M7 nut on the deck, 17 mm knob on the D shaft, five-wire jumper lead to J102/J202 on the back |
 | MX switch + keycap | 33 | front | tall 1.25u thumb switches turned 90° |
@@ -82,9 +82,9 @@ From `fab/BOM.md` (left 1xx, right 2xx):
 - Iron at 320 °C, plenty of flux, 2–3 seconds per pad.
 
 ### 6. Diodes
-- 1N4148 through-hole, body on the back, **band toward the square pad** (cathode to the row, COL2ROW).
+- 1N4148W, SOD-123, on the back, **band toward pad 1** (cathode to the row, COL2ROW).
 - Include the encoder's diode (D107 left, D207 right) on the back beside its opening.
-- Trim the legs flush so nothing touches a switch. On 26 of the 33 keys per half a switch pad lies over the two joints, so keep them 1 mm tall at most.
+- Nothing comes through to the front: the switch pads lie on flat board.
 
 ### 7. Hotswap sockets
 - Kailh sockets on the back. Tack one pad while holding the socket flat, solder the other fully, then finish the first. Both joints should be concave.
@@ -107,7 +107,7 @@ The case is gasket-mounted: the plate and PCB become one unit that floats on Por
 - Lay the top frame deck-down and press the 8 M2 heat-set inserts into the holes in its underside (about 230–245 °C), flush and no deeper, and let them cool. 1.7 mm of frame covers each hole. [Heat-set insert guide](https://www.youtube.com/watch?v=cyof7fYFcuQ)
 - With the board soldered and tested, put a 0.5 mm shim on the PCB's front over each mounting hole, stand an M2 × 3 mm standoff on it and screw it on from below with an M2 × 5 button head, snug, at all ten holes. They need no plate.
 - Cut the foam from the files in `case/foam/dxf/` or `case/foam/svg/` (DXF for a laser, SVG printed at 100 % as a template): per half a 2 mm EVA plate foam and a 5 mm EVA case foam, each the right way up as drawn.
-- The switch pads go on the PCB's front, not the plate: peel each 0.5 mm Poron ring off its backing sheet with tweezers and stick it round a switch, its notches towards the switch clips and its open middle round the pins and the LED window, over the diode joints. Seven rings per half have a bite snipped out where they meet a standoff's shim.
+- The switch pads go on the PCB's front, not the plate: peel each 0.5 mm Poron ring off its backing sheet with tweezers and stick it round a switch, its notches towards the switch clips and its open middle round the pins and the LED window. Seven rings per half have a bite snipped out where they meet a standoff's shim.
 - Tape the plate foam to the plate's underside, its cut-outs over the plate's and its notches clear for the switch latches.
 - Plate onto the standoffs, foam side down. It is not screwed: the standoffs bear on it and the switches clip it to the PCB.
 
@@ -133,7 +133,7 @@ Key testers: [keyboard-test.space](https://keyboard-test.space), [keyboardchecke
 
 ## Soldering technique
 
-**Through-hole diodes:** bend the leads 90° to the footprint spacing, insert, splay the legs to hold the diode, solder, trim flush. Angle the cutters away so legs don't fly.
+**SMD diodes:** tin pad 1, hold the diode with tweezers, band toward pad 1, and reflow the tinned pad to tack it; solder pad 2, then go back over pad 1.
 
 **Hotswap sockets:** tack, hold flat, solder the other pad fully, reflow the tack. Use plenty of solder; it's a mechanical joint.
 

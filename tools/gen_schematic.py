@@ -74,7 +74,7 @@ ENCODER_POS = {"left": (0, 6), "right": (0, 6)}   # each encoder's push switch s
 FP = {
     "mcu": "keygen:nice_nano_H_USBup",
     "sw": "keygen:SW_MX_HS_CPG151101S11_{}u",      # marbastlib + switch outline (see keygen_footprints)
-    "diode": "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal",
+    "diode": "keygen:D_SOD-123_HandSolder",
     "led": "LED_SMD:LED_SK6812MINI-E_3.2x2.8mm_P1.5mm_ReverseMount",
     "cap": "Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder",
     "enc": "keygen:EC11_Case_Mount",                 # board-only, no pads: holds the 3D models at the shaft
@@ -465,7 +465,7 @@ def build(side, root, sheet):
         else:
             sh.text(f"Encoder S1/S2 (see {R('ENC', 1)})", x - 10.16, y - 2.54)
             sh.nets.setdefault(k, [])
-        sh.symbol("Device:D", R("D", n), "1N4148", x, y + 10.16, FP["diode"], nets={"1": f"ROW{r}", "2": k})
+        sh.symbol("Device:D", R("D", n), "1N4148W", x, y + 10.16, FP["diode"], nets={"1": f"ROW{r}", "2": k})
 
     # ---- LED chain -----------------------------------------------------------------
     LX0, LY0, LDX, LDY, PER = 30.48, 215.9, 38.1, 30.48, 8

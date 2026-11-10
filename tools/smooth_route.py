@@ -59,11 +59,19 @@ class Obstacles:
         for k in self._keys(li, bb): keys |= self.cells.get(k, set())
         return [(k, self.items[k]) for k in keys]
 
+    @staticmethod
+    def hits(shape, seg, clr):
+        """shape.Collide(seg, clr), for a SHAPE_SEGMENT seg. SWIG has no SHAPE_CIRCLE overload that
+        takes a shape, only a SEG: test the centreline with the half-width added to the clearance."""
+        if isinstance(shape, pcbnew.SHAPE_CIRCLE):
+            return shape.Collide(seg.GetSeg(), clr + seg.GetWidth() // 2)
+        return shape.Collide(seg, clr)
+
     def clear(self, li, net, a, b, w):
         a, b = V(*a), V(*b)
         seg = pcbnew.SHAPE_SEGMENT(a, b, w)
         for _, (_, n, shape, clr, _) in self.near(li, a, b, w):
-            if (n != net or n <= 0) and shape.Collide(seg, clr): return False
+            if (n != net or n <= 0) and self.hits(shape, seg, clr): return False
         return True
 
     def touched(self, li, net, segs, w):
@@ -73,7 +81,7 @@ class Obstacles:
             a, b = V(*a), V(*b)
             seg = pcbnew.SHAPE_SEGMENT(a, b, w)
             for k, (_, n, shape, _, _) in self.near(li, a, b, w):
-                if n == net and n > 0 and shape.Collide(seg, 0): out.add(k)
+                if n == net and n > 0 and self.hits(shape, seg, 0): out.add(k)
         return out
 
 

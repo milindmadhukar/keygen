@@ -19,7 +19,7 @@ Counts are for the whole keyboard (two halves). Stores, links, prices and spares
 | nRF52840 SuperMini | 2 | A nice!nano v2 clone, socketed on the back |
 | Round-hole female header + machined male pins | 4 rows of 12 each | The controller's sockets, cut from 1×40 strips |
 | SK6812MINI-E LED | 66 | Reverse-mount, one per key. The fiddliest part: buy spares |
-| 1N4148 diode, DO-35 | 68 | 34 per half: one per key and one for each encoder's push switch |
+| 1N4148W diode, SOD-123 | 68 | 34 per half: one per key and one for each encoder's push switch |
 | Kailh hotswap socket (CPG151101S11) | 66 | |
 | AO3401A P-MOSFET, SOT-23 | 2 | The battery switch |
 | 1 MΩ resistor, 1206 | 2 | |
@@ -443,15 +443,14 @@ the lit side down through the cut-out so it shines out of the front.
 
 ## Diodes
 
-1N4148 **D101–D134 / D201–D234**, body on the back. **D107 / D207** is the encoder's, beside its
-opening.
+1N4148W **D101–D134 / D201–D234**, SOD-123, on the back. **D107 / D207** is the encoder's, beside
+its opening.
 
 ![Diode close-up](https://github.com/milindmadhukar/keygen/releases/download/media/assembly-part-diode.png)
 
-- Band towards the square pad, marked K on the maps.
-- Bend the leads to the footprint spacing, insert, splay the legs, solder on the front, and trim the
-  legs flush so nothing touches a switch. Keep the joints on the front low, 1 mm at most: on most
-  keys a [switch pad](#switch-pads) lies over them.
+- The band (cathode) goes towards pad 1, the end with the silkscreen bar.
+- Tin pad 1. Hold the diode on its pads with tweezers, band towards pad 1, and touch the tinned pad
+  to tack it. Solder pad 2, then go back over pad 1. Nothing comes through to the front.
 
 ---
 
@@ -605,12 +604,10 @@ sharp scissors.
    the five switch holes and the LED window, and its two notches at the top and bottom of the
    opening, the sides the switch's clips are on. Lower it and press it down all round with a
    fingertip.
-4. On 26 of the 33 positions per half, a side of the ring lies over a diode's two joints. Leave it
-   whole and press it down round them: the joints are trimmed flush in [Diodes](#diodes).
-5. On 7 positions per half, a corner of the ring meets a standoff's shim. Hold the ring over its
+4. On 7 positions per half, a corner of the ring meets a standoff's shim. Hold the ring over its
    place first, see where it would ride up on the shim, and snip that bite out with the scissors,
    just clear of the shim. Then stick it down beside the shim, flat.
-6. Check before going on: no ring lies on a shim, a switch hole or an LED window, and no two
+5. Check before going on: no ring lies on a shim, a switch hole or an LED window, and no two
    overlap.
 
 If a batch comes without adhesive, lay the rings in place dry: the switches and the plate foam hold

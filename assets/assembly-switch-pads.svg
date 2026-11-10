@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1010" role="img" aria-labelledby="title desc">
   <title id="title">Sticking the switch pads on the PCB</title>
-  <desc id="desc">Four steps: peel each Poron ring off its blue backing sheet with tweezers; stick it on the PCB's front round a switch's footprint, its notches on the switch's clip sides, over the diode joints; snip the corner off a ring that meets a standoff; and a section with the 0.5 millimetre ring on the PCB, 1 millimetre of air, and the plate foam under the plate.</desc>
+  <desc id="desc">Four steps: peel each Poron ring off its blue backing sheet with tweezers; stick it on the PCB's front round a switch's footprint, its notches on the switch's clip sides; snip the corner off a ring that meets a standoff; and a section with the 0.5 millimetre ring on the PCB, 1 millimetre of air, and the plate foam under the plate.</desc>
   <style>
     text { font-family: DejaVu Sans, Arial, sans-serif; fill: #182234; }
     .title { font-size: 27px; font-weight: 700; }
@@ -68,25 +68,23 @@
   <rect x="569.6" y="363.0" width="40.8" height="36.0" class="led"/>
   <rect x="506.0" y="236.0" width="168.0" height="168.0" class="outline"/>
   <path d="M494.0 212.0 H686.0 Q698.0 212.0 698.0 224.0 V416.0 Q698.0 428.0 686.0 428.0 H494.0 Q482.0 428.0 482.0 416.0 V224.0 Q482.0 212.0 494.0 212.0 Z M504.8 234.8 H563.0 V222.8 H617.0 V234.8 H675.2 V405.2 H617.0 V417.2 H563.0 V405.2 H504.8 Z" fill-rule="evenodd" class="ring"/>
-  <circle cx="689.6" cy="399.2" r="9.6" class="joint" fill-opacity="0.75" stroke-dasharray="4 3"/>
-  <circle cx="689.6" cy="307.8" r="9.6" class="joint" fill-opacity="0.75" stroke-dasharray="4 3"/>
   <path d="M590 228.8 L620.0 178.4 H750" class="lead"/>
   <text x="760.0" y="183.4" class="small">notch: on a clip side of the switch</text>
   <path d="M640.4 341.6 L750 293.6" class="lead"/>
   <text x="760.0" y="298.6" class="small">open middle: round the pins</text>
   <text x="760.0" y="316.6" class="small">and the LED window</text>
-  <path d="M699.2 399.2 L750 399.2" class="lead"/>
-  <text x="760.0" y="404.2" class="small">diode joints: trim them flush;</text>
-  <text x="760.0" y="422.2" class="small">the ring sits over them</text>
+  <path d="M686.6 386.0 L750 386.0" class="lead"/>
+  <text x="760.0" y="391.0" class="small">band: flat board under it,</text>
+  <text x="760.0" y="409.0" class="small">no solder joints</text>
   <path d="M590 411.2 L620.0 461.6 H750" class="lead"/>
   <text x="760.0" y="466.6" class="small">notch: the other clip side</text>
-  <text x="435.0" y="495.0" class="small">Shown: SW120, from the front. Dashed: where the switch's housing goes. Press the ring</text>
-  <text x="435.0" y="514.0" class="small">down all round. 26 of the 33 rings per half lie over a diode's joints.</text>
+  <text x="435.0" y="495.0" class="small">Shown: SW117, from the front. Dashed: where the switch's housing goes. Press the ring</text>
+  <text x="435.0" y="514.0" class="small">down all round. No solder joint lies under any ring: every part under them is on the back.</text>
   <circle cx="55.0" cy="580.0" r="14" class="badge"/><text x="55.0" y="586.0" class="num" text-anchor="middle">3</text>
   <text x="80.0" y="586.0" class="head">Next to a standoff</text>
   <clipPath id="snip"><path d="M0 0 H1200 V1010 H0 Z M191.0 735.0 a56.0 56.0 0 1 0 -112.0 0 a56.0 56.0 0 1 0 112.0 0 Z" clip-rule="evenodd"/></clipPath>
   <clipPath id="win"><rect x="60.0" y="625.0" width="250.0" height="360.0" class="pcb" rx="6"/></clipPath>
-  <g clip-path="url(#win)"><rect x="-45.9" y="604.6" width="640.0" height="640.0" class="pcb" rx="4"/><circle cx="274.1" cy="924.6" r="39.9" class="hole"/><circle cx="172.5" cy="924.6" r="17.5" class="hole"/><circle cx="375.7" cy="924.6" r="17.5" class="hole"/><circle cx="197.9" cy="873.8" r="30.0" class="hole"/><circle cx="324.9" cy="823.0" r="30.0" class="hole"/><rect x="240.1" y="996.2" width="68.0" height="60.0" class="led"/><rect x="134.1" y="784.6" width="280.0" height="280.0" class="outline"/><g clip-path="url(#snip)"><path d="M114.1 744.6 H434.1 Q454.1 744.6 454.1 764.6 V1084.6 Q454.1 1104.6 434.1 1104.6 H114.1 Q94.1 1104.6 94.1 1084.6 V764.6 Q94.1 744.6 114.1 744.6 Z M132.1 782.6 H229.1 V762.6 H319.1 V782.6 H416.1 V1066.6 H319.1 V1086.6 H229.1 V1066.6 H132.1 Z" fill-rule="evenodd" class="ring"/></g><circle cx="59.1" cy="1009.0" r="16.0" class="joint" fill-opacity="0.75" stroke-dasharray="4 3"/><circle cx="59.1" cy="856.6" r="16.0" class="joint" fill-opacity="0.75" stroke-dasharray="4 3"/><circle cx="440.1" cy="1056.6" r="16.0" class="joint" fill-opacity="0.75" stroke-dasharray="4 3"/><circle cx="440.1" cy="904.2" r="16.0" class="joint" fill-opacity="0.75" stroke-dasharray="4 3"/><clipPath id="bite"><path d="M191.0 735.0 a56.0 56.0 0 1 0 -112.0 0 a56.0 56.0 0 1 0 112.0 0 Z"/></clipPath><g clip-path="url(#bite)"><path d="M114.1 744.6 H434.1 Q454.1 744.6 454.1 764.6 V1084.6 Q454.1 1104.6 434.1 1104.6 H114.1 Q94.1 1104.6 94.1 1084.6 V764.6 Q94.1 744.6 114.1 744.6 Z M132.1 782.6 H229.1 V762.6 H319.1 V782.6 H416.1 V1066.6 H319.1 V1086.6 H229.1 V1066.6 H132.1 Z" fill-rule="evenodd" class="ring" fill-opacity="0.35" stroke-dasharray="3 3"/></g><circle cx="135.0" cy="735.0" r="50.0" class="brass" fill-opacity="0.55"/><circle cx="135.0" cy="735.0" r="40.0" class="brass" fill-opacity="0.55"/><path d="M191.0 735.0 a56.0 56.0 0 1 0 -112.0 0 a56.0 56.0 0 1 0 112.0 0 Z" class="cut" stroke-dasharray="6 4"/></g>
+  <g clip-path="url(#win)"><rect x="-45.9" y="604.6" width="640.0" height="640.0" class="pcb" rx="4"/><circle cx="274.1" cy="924.6" r="39.9" class="hole"/><circle cx="172.5" cy="924.6" r="17.5" class="hole"/><circle cx="375.7" cy="924.6" r="17.5" class="hole"/><circle cx="197.9" cy="873.8" r="30.0" class="hole"/><circle cx="324.9" cy="823.0" r="30.0" class="hole"/><rect x="240.1" y="996.2" width="68.0" height="60.0" class="led"/><rect x="134.1" y="784.6" width="280.0" height="280.0" class="outline"/><g clip-path="url(#snip)"><path d="M114.1 744.6 H434.1 Q454.1 744.6 454.1 764.6 V1084.6 Q454.1 1104.6 434.1 1104.6 H114.1 Q94.1 1104.6 94.1 1084.6 V764.6 Q94.1 744.6 114.1 744.6 Z M132.1 782.6 H229.1 V762.6 H319.1 V782.6 H416.1 V1066.6 H319.1 V1086.6 H229.1 V1066.6 H132.1 Z" fill-rule="evenodd" class="ring"/></g><clipPath id="bite"><path d="M191.0 735.0 a56.0 56.0 0 1 0 -112.0 0 a56.0 56.0 0 1 0 112.0 0 Z"/></clipPath><g clip-path="url(#bite)"><path d="M114.1 744.6 H434.1 Q454.1 744.6 454.1 764.6 V1084.6 Q454.1 1104.6 434.1 1104.6 H114.1 Q94.1 1104.6 94.1 1084.6 V764.6 Q94.1 744.6 114.1 744.6 Z M132.1 782.6 H229.1 V762.6 H319.1 V782.6 H416.1 V1066.6 H319.1 V1086.6 H229.1 V1066.6 H132.1 Z" fill-rule="evenodd" class="ring" fill-opacity="0.35" stroke-dasharray="3 3"/></g><circle cx="135.0" cy="735.0" r="50.0" class="brass" fill-opacity="0.55"/><circle cx="135.0" cy="735.0" r="40.0" class="brass" fill-opacity="0.55"/><path d="M191.0 735.0 a56.0 56.0 0 1 0 -112.0 0 a56.0 56.0 0 1 0 112.0 0 Z" class="cut" stroke-dasharray="6 4"/></g>
   <rect x="60.0" y="625.0" width="250.0" height="360.0" class="dim" rx="6"/>
   <text x="330.0" y="660.0" class="small">Shown: part of SW125. 7 rings</text>
   <text x="330.0" y="679.0" class="small">per half meet a standoff. Before</text>

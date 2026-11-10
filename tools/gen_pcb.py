@@ -4,7 +4,7 @@ and draw each half's outline. Routing is not done here.
 
 Key positions come from Redox's KLE layout (19.05 mm per unit). Per-key parts are placed
 relative to each switch:  switch + socket (back), SK6812MINI-E under the switch's LED window
-(back, south), 1N4148 standing east of the switch (back). Everything else is placed by hand
+(back, south), 1N4148W (SOD-123) standing east of the switch (back). Everything else is placed by hand
 below. Footprints keep their schematic link (path) so KiCad's "Update PCB from schematic"
 still works after this script.
 """
@@ -271,7 +271,8 @@ def grow(corners, cx, cy, d):
 # Placement
 # --------------------------------------------------------------------------------------
 LED_OFFSET = (0.0, 5.08)          # SK6812MINI-E under the MX LED window (south of centre)
-DIODE_PAD1 = (8.3, 6.6)           # 1N4148 cathode; anode 7.62 mm north of it
+DIODE_AT = (8.3, 2.79)            # 1N4148W centre, on the back: cathode south, anode north, so nothing
+                                  # reaches the front, where the Poron switch pads lie
 
 # Non-key parts on the LEFT half (mm, KLE frame). The right half mirrors these about MIRROR_X.
 TOP_EDGE = 0.25 * U               # top of the number-row key next to the controller ("5")
@@ -340,7 +341,7 @@ BAT_PLUS = (3.5, 0.0)                        # "+" beside the battery connector'
 # Encoders: one per half, mirrored. The right half's shaft, on the front below the controller and its
 # OLED: a 17 mm knob clears the OLED by 10 mm, the thumb cluster's top keycap by 5.7 mm and H by 9.1 mm.
 ENCODER_SHAFT = (230.5, 58.5)
-ENC_DIODE = (11.0, -11.0 + 3.81)  # its diode on the back, from the shaft (right half): origin is pad 1, pad 2 north
+ENC_DIODE = (11.0, -11.0)         # its diode on the back, from the shaft (right half): its centre, anode north
 ENC_OPENING = (18.0, 20.0)        # the PCB's opening round the encoder, which is fixed to the top frame
 ENC_HEADER = (-19.225, 20.5)      # 1x5 right-angle header on the back, its outer pin from the shaft (right half),
                                   # pins pointing north on both halves, so the jumper plug lies flat beside the opening
@@ -412,7 +413,7 @@ def build():
                 kx, ky, rel = LED_BULK[side]
                 px, py = rot((kx, ky), ro)
                 B.place(f"C{base + 5}", cx + px, cy + py, ro + rel, back=True)
-            east = (span * U / 2 - 1.225, DIODE_PAD1[1]) if span > 1 else DIODE_PAD1
+            east = (span * U / 2 - 1.225, DIODE_AT[1]) if span > 1 else DIODE_AT
             dx, dy = rot(east, ro)
             B.place(f"D{base+n}", cx + dx, cy + dy, ro, back=True, extra=90)
             outline_pts += grow(corners, cx, cy, 0.6)

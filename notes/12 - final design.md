@@ -140,7 +140,7 @@ The matrix is COL2ROW: each switch connects to its column, and the diode cathode
 
 - **Column 6** holds Alt (row 2), Ctrl (row 3) and the 1.25u centre-side thumb key (row 4).
 - **Row 4** holds the extra bottom row and the thumbs.
-- **Both halves:** each encoder's push switch sits at row 0 / column 6, with its own 1N4148 (D107 left, D207 right, on the back beside the encoder's opening).
+- **Both halves:** each encoder's push switch sits at row 0 / column 6, with its own 1N4148W (D107 left, D207 right, on the back beside the encoder's opening).
 - **Left references:** the left keys are SW101–SW106 and SW108–SW134, with diodes D101–D106 and D108–D134.
 
 ### OLED
@@ -191,7 +191,7 @@ The left half is the ZMK central. Plugging USB-C into it is the wired mode, and 
 |---|---|---|---|
 | nRF52840 module (socketed, underside) | 1 | 1 | header |
 | MX switch + Kailh MX hotswap socket | 33 | 33 | hand-solder |
-| 1N4148 diode (DO-35) | 34 | 34 | TH |
+| 1N4148W diode (SOD-123) | 34 | 34 | SMD |
 | SK6812MINI-E (per-key) | 33 | 33 | SMD (hand-solder or JLC assembly) |
 | KP-355085 LiPo + JST-PH 2-pin | 1 | 1 | TH |
 | SK12D07VG5 slide switch | 1 | 1 | TH |

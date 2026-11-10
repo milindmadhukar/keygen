@@ -4,14 +4,14 @@
 assets/assembly-standoffs.svg     how a shim, standoff and screw go on at a mounting hole, and the
                                   fitted section under the plate, to scale
 assets/assembly-switch-pads.svg   peeling a Poron ring off its sheet, where it goes round a switch
-                                  (from a real key, with a diode's joints under it and a standoff
-                                  beside another), and the section through the plate-to-PCB gap
+                                  (on a real key, and beside a standoff on another), and the section
+                                  through the plate-to-PCB gap
 
 The sizes and counts come from case_geometry.py and the PCB, so the figures follow the design.
 
     python3 tools/draw_assembly.py
 """
-import math, sys
+import math, re, sys
 from pathlib import Path
 
 import pcbnew
@@ -107,15 +107,16 @@ def vdim(x, y0, y1, label, side=1):
 
 
 def board_data():
-    """For each switch of the left half (the right is its mirror): the diode joints near it, those
-    under its ring's band, and the standoffs its ring meets, in the switch's own frame seen from the
-    front (LED window down)."""
+    """For each switch of the left half (the right is its mirror): the through-hole joints of other
+    parts near it (on the front, under the switch pads), those under its ring's band, and the
+    standoffs its ring meets, in the switch's own frame seen from the front (LED window down)."""
     b = pcbnew.LoadBoard(str(ROOT / "pcb/keygen.kicad_pcb"))
     fps = {f.GetReference(): f for f in b.GetFootprints()}
     mm = lambda v: (pcbnew.ToMM(v.x), pcbnew.ToMM(v.y))
     holes = [mm(f.GetPosition()) for r, f in fps.items() if r.startswith("H1")]
-    diode_pads = [(mm(p.GetPosition()), pcbnew.ToMM(p.GetSizeX())) for r, f in fps.items()
-                  if r.startswith("D1") for p in f.Pads()]
+    joint_pads = [(mm(p.GetPosition()), pcbnew.ToMM(p.GetSizeX())) for r, f in fps.items()
+                  if re.search(r"1\d\d$", r) and "SW_MX" not in f.GetFPIDAsString() and not r.startswith("H")
+                  for p in f.Pads() if p.GetAttribute() == pcbnew.PAD_ATTRIB_PTH]
     half, band = C.SWITCH_PAD / 2, C.SWITCH_PAD_BAND
     keys = []
     for ref in sorted(r for r in fps if r.startswith("SW1") and "SW_MX" in fps[r].GetFPIDAsString()):
@@ -126,7 +127,7 @@ def board_data():
             dx, dy = p[0] - cx, p[1] - cy
             return (dx * math.cos(a) - dy * math.sin(a), dx * math.sin(a) + dy * math.cos(a))
 
-        joints = [(local(q), d) for q, d in diode_pads]
+        joints = [(local(q), d) for q, d in joint_pads]
         joints = [j for j in joints if max(abs(c) for c in j[0]) < half + 3]
         under = [j for j in joints if max(abs(j[0][0]), abs(j[0][1])) < half + j[1] / 2
                  and max(abs(j[0][0]), abs(j[0][1])) > half - band - j[1] / 2]
@@ -264,8 +265,6 @@ def switch_pads_svg(keys):
     W, H = 1200, 1010
     joints = [k for k in keys if k["under"]]
     standoff = [k for k in keys if k["standoffs"]]
-    mid = C.SWITCH_PAD / 2 - C.SWITCH_PAD_BAND / 2                   # the middle of the band
-    on_band = lambda k: min(abs(max(abs(c) for c in j[0]) - mid) for j in k["under"])
     snipped = lambda k: max(abs(c) for c in k["standoffs"][0])         # nearer: more of the corner snipped
     body = [text(35, 45, "Switch pads: a Poron ring round each switch, stuck on the PCB", "title"),
             text(35, 75, f"{len(keys)} per half on the front of the PCB, after the standoffs and before the plate. "
@@ -288,24 +287,25 @@ def switch_pads_svg(keys):
     body += lines(45, 405, ["Lift each ring off the blue backing", "sheet with tweezers, by its outer edge.",
                             "The side that was on the sheet goes", "down on the PCB. Don't stretch it."], "small", 19)
 
-    # 2: place, on a key with a diode's joints under the band
-    k = min(joints, key=on_band)
+    # 2: place, on a key with nothing else under its ring
+    plain = [k for k in keys if not k["under"] and not k["standoffs"]]
+    k = plain[len(plain) // 2]
     body += [badge(435, 120, 2), text(460, 126, "Place", "head")]
     view, X, Y = key_view(k, 590, 320, 12, 11.0)
     body += view
-    i = C.SWITCH_PAD / 2 - C.SWITCH_PAD_BAND; nd = C.SWITCH_PAD_NOTCH[1]
-    (jx, jy), jd = max(k["under"], key=lambda j: j[0][0])
+    i = C.SWITCH_PAD / 2 - C.SWITCH_PAD_BAND; nd = C.SWITCH_PAD_NOTCH[1]; band = C.SWITCH_PAD / 2 - C.SWITCH_PAD_BAND / 2
     body += [path(f"M{X(0)} {Y(-i - nd / 2)} L{X(2.5)} {Y(-11.8)} H750", "lead"),
              text(760, Y(-11.8) + 5, "notch: on a clip side of the switch", "small"),
              path(f"M{X(4.2)} {Y(1.8)} L750 {Y(-2.2)}", "lead"),
              *lines(760, Y(-2.2) + 5, ["open middle: round the pins", "and the LED window"], "small", 18),
-             path(f"M{X(jx) + jd / 2 * 12} {Y(jy)} L750 {Y(jy)}", "lead"),
-             *lines(760, Y(jy) + 5, ["diode joints: trim them flush;", "the ring sits over them"], "small", 18),
+             path(f"M{X(band)} {Y(5.5)} L750 {Y(5.5)}", "lead"),
+             *lines(760, Y(5.5) + 5, ["band: flat board under it,", "no solder joints"], "small", 18),
              path(f"M{X(0)} {Y(i + nd / 2)} L{X(2.5)} {Y(11.8)} H750", "lead"),
              text(760, Y(11.8) + 5, "notch: the other clip side", "small")]
+    under = (f" {len(joints)} of the {len(keys)} rings per half lie over a through-hole joint." if joints else
+             " No solder joint lies under any ring: every part under them is on the back.")
     body += lines(435, 495, [f"Shown: {k['ref']}, from the front. Dashed: where the switch's housing goes. Press the ring",
-                             f"down all round. {len(joints)} of the {len(keys)} rings per half lie over a diode's joints."],
-                  "small", 19)
+                             "down all round." + under], "small", 19)
 
     # 3: next to a standoff
     k2 = min(standoff, key=snipped); q = k2["standoffs"][0]
@@ -362,7 +362,7 @@ def switch_pads_svg(keys):
                              f"{C.PLATE_FOAM_Z[0] - C.PE_T:g} mm below the plate foam, so nothing presses the plate and PCB",
                              "apart. On the plate it would hold the switch's clips off the plate."], "small", 19)
     desc = (f"Four steps: peel each Poron ring off its blue backing sheet with tweezers; stick it on the PCB's front "
-            f"round a switch's footprint, its notches on the switch's clip sides, over the diode joints; snip the "
+            f"round a switch's footprint, its notches on the switch's clip sides; snip the "
             f"corner off a ring that meets a standoff; and a section with the {C.PE_T:g} millimetre ring on the PCB, "
             f"{C.PLATE_FOAM_Z[0] - C.PE_T:g} millimetre of air, and the plate foam under the plate.")
     return svg(W, H, "Sticking the switch pads on the PCB", desc, body)

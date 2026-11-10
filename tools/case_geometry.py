@@ -128,7 +128,7 @@ MAGNET_RECESS = 0.1            # magnet top under the wedge's top face
 MAGNET_R = 13.0                # the magnets' circle round the steel disc's centre: all four under the disc
 CBORE_MOUTH_R = 2.8            # a case screw's counterbore with its chamfered mouth (gen_case.py)
 RESET_MOUTH_R = 2.0            # the reset pinhole's chamfered mouth (gen_case.py)
-UNDERSIDE_H = 2.0             # hotswap sockets (1.85 mm) and DO-35 diodes (1.75 mm body) under the PCB
+UNDERSIDE_H = 2.0             # hotswap sockets (1.85 mm) and SOD-123 diodes (1.35 mm) under the PCB
 TALL_CLEAR = 3.0               # cell to the controller, battery connector, buttons, encoder and OLED pins
 TALL_REFS = ("U", "BT", "ENC", "J")   # U: the controller only; and the slide switch and reset button (SWx90, SWx91)
 

@@ -151,7 +151,7 @@ flowchart LR
       <tr><td>Key positions</td><td>70 keys, 7×5 per half</td><td>66 keys: same positions minus the inner column. Import <code>redox-layout.json</code> with the KB Placer plugin and delete those 4.</td></tr>
       <tr><td>Controller</td><td>Pro Micro (ATmega32U4)</td><td>nRF52840 SuperMini (nice!nano v2 clone) mounted on the underside under the old inner column, USB-C facing the top edge, plus pads for its 3 extra inner pins</td></tr>
       <tr><td>Switches</td><td>MX/Alps, solder-in</td><td>Kailh MX hotswap sockets</td></tr>
-      <tr><td>Diodes</td><td>1N4148, through-hole, dual-sided</td><td>1N4148 through-hole (DO-35) kept</td></tr>
+      <tr><td>Diodes</td><td>1N4148, through-hole, dual-sided</td><td>1N4148W SMD (SOD-123) on the back</td></tr>
       <tr><td>RGB</td><td>none</td><td>SK6812MINI-E under every key, on one chain</td></tr>
       <tr><td>Link</td><td>TRRS serial</td><td>Bluetooth split; no cable between the halves</td></tr>
       <tr><td>Power</td><td>USB only</td><td>LiPo per half, power slide switch, 5 V LED boost that turns off with the lighting</td></tr>
@@ -167,7 +167,7 @@ flowchart LR
     <tbody>
       <tr><td>nRF52840 SuperMini (nice!nano v2 clone)</td><td class="num">1</td><td class="num">1</td><td><span class="pill th">header</span></td><td>On the back of the PCB, components facing down, socketed with low-profile Mill-Max pins (about 3–4 mm). The case needs that much depth. It charges at about 300 mA with its BOOST link bridged. Before soldering, check B+ (pad 13), GND and VCC (pad 16) with a multimeter; after bridging, confirm the charge current.</td></tr>
       <tr><td>Akko V3 Lavender Purple Pro switch + Kailh hotswap socket</td><td class="num">33</td><td class="num">33</td><td><span class="pill smd">hand-solder</span></td><td>Big pads, easy with an iron.</td></tr>
-      <tr><td>1N4148 diode</td><td class="num">33</td><td class="num">34</td><td><span class="pill th">TH</span></td><td>DO-35, as Redox already uses.</td></tr>
+      <tr><td>1N4148W diode</td><td class="num">33</td><td class="num">34</td><td><span class="pill smd">hand-solder</span></td><td>SOD-123 on the back, pads lengthened for an iron. Nothing reaches the front, where the switch pads lie.</td></tr>
       <tr><td>SK6812MINI-E LED</td><td class="num">33</td><td class="num">33</td><td><span class="pill smd">SMD</span></td><td>Per-key only. The one unavoidably SMD part. Hand-solder as in the Corne video, or have JLCPCB assemble these.</td></tr>
       <tr><td>LiPo cell + JST-PH 2-pin</td><td class="num">1</td><td class="num">1</td><td><span class="pill th">TH</span></td><td>KP-355085 pouch (3.5 × 50 × 85 mm, listed 3000 mAh) with a protection board, as the controller has no over-discharge cut-off; the bay takes up to 5 mm thick and 60 × 88 mm. It lies in a bay sunk 1 mm into the case floor under the outer and middle key columns, held with double-sided tape, 2.5 mm below the solder joints under the PCB and at least 15 mm from the controller's antenna end. The socketed controller already needs about 7.5 mm below the PCB, so the cell adds no case height.</td></tr>
       <tr><td>Battery switch: AO3401A P-MOSFET + 1 MΩ</td><td class="num">1 + 1</td><td class="num">1 + 1</td><td><span class="pill smd">SMD</span></td><td>SOT-23 and 1206 on the back. The slide switch only drives the gate, so the battery current (charging and LEDs) never passes through its 50 mA contacts.</td></tr>

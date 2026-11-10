@@ -1936,8 +1936,8 @@
     (dnp no)
     (uuid "2ad56d89-da85-56ef-bbdc-9f0385979a33")
     (property "Reference" "D201" (at 30.48 54.61 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "1N4148" (at 30.48 67.31 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal"
+    (property "Value" "1N4148W" (at 30.48 67.31 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "keygen:D_SOD-123_HandSolder"
       (at 30.48 60.96 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
@@ -2010,8 +2010,8 @@
     (dnp no)
     (uuid "86e7b2bf-b7ee-5a30-82de-f03a3421a6ee")
     (property "Reference" "D202" (at 71.12 54.61 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "1N4148" (at 71.12 67.31 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal"
+    (property "Value" "1N4148W" (at 71.12 67.31 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "keygen:D_SOD-123_HandSolder"
       (at 71.12 60.96 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
@@ -2084,8 +2084,8 @@
     (dnp no)
     (uuid "8cdf8628-8db3-5be2-a30b-95834b70af83")
     (property "Reference" "D203" (at 111.76 54.61 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "1N4148" (at 111.76 67.31 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal"
+    (property "Value" "1N4148W" (at 111.76 67.31 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "keygen:D_SOD-123_HandSolder"
       (at 111.76 60.96 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
@@ -2158,8 +2158,8 @@
     (dnp no)
     (uuid "8add4b6b-0306-5702-836a-46b1b6c8d27f")
     (property "Reference" "D204" (at 152.4 54.61 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "1N4148" (at 152.4 67.31 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal"
+    (property "Value" "1N4148W" (at 152.4 67.31 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "keygen:D_SOD-123_HandSolder"
       (at 152.4 60.96 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
@@ -2232,8 +2232,8 @@
     (dnp no)
     (uuid "9bb7b927-9d62-59cb-909a-b2a0e93bdc4f")
     (property "Reference" "D205" (at 193.04 54.61 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "1N4148" (at 193.04 67.31 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal"
+    (property "Value" "1N4148W" (at 193.04 67.31 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "keygen:D_SOD-123_HandSolder"
       (at 193.04 60.96 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
@@ -2306,8 +2306,8 @@
     (dnp no)
     (uuid "a890cc24-ba41-5f01-8d7b-5e58933e840e")
     (property "Reference" "D206" (at 233.68 54.61 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "1N4148" (at 233.68 67.31 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal"
+    (property "Value" "1N4148W" (at 233.68 67.31 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "keygen:D_SOD-123_HandSolder"
       (at 233.68 60.96 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
@@ -2349,8 +2349,8 @@
     (dnp no)
     (uuid "fb8b711c-5990-59e9-ba22-ca4082b7cc6b")
     (property "Reference" "D207" (at 274.32 54.61 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "1N4148" (at 274.32 67.31 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal"
+    (property "Value" "1N4148W" (at 274.32 67.31 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "keygen:D_SOD-123_HandSolder"
       (at 274.32 60.96 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
@@ -2423,8 +2423,8 @@
     (dnp no)
     (uuid "ebd94f66-4d59-537a-bdb1-d5b46280471c")
     (property "Reference" "D208" (at 30.48 82.55 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "1N4148" (at 30.48 95.25 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal"
+    (property "Value" "1N4148W" (at 30.48 95.25 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "keygen:D_SOD-123_HandSolder"
       (at 30.48 88.9 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
@@ -2497,8 +2497,8 @@
     (dnp no)
     (uuid "91456da3-d5da-54fc-a485-950b07571f7b")
     (property "Reference" "D209" (at 71.12 82.55 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "1N4148" (at 71.12 95.25 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal"
+    (property "Value" "1N4148W" (at 71.12 95.25 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "keygen:D_SOD-123_HandSolder"
       (at 71.12 88.9 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
@@ -2571,8 +2571,8 @@
     (dnp no)
     (uuid "de4ad28a-562f-5e9f-855d-6811c4441fcb")
     (property "Reference" "D210" (at 111.76 82.55 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "1N4148" (at 111.76 95.25 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal"
+    (property "Value" "1N4148W" (at 111.76 95.25 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "keygen:D_SOD-123_HandSolder"
       (at 111.76 88.9 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
@@ -2645,8 +2645,8 @@
     (dnp no)
     (uuid "18a5b960-61c7-523b-92de-9893089604fd")
     (property "Reference" "D211" (at 152.4 82.55 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "1N4148" (at 152.4 95.25 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal"
+    (property "Value" "1N4148W" (at 152.4 95.25 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "keygen:D_SOD-123_HandSolder"
       (at 152.4 88.9 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
@@ -2719,8 +2719,8 @@
     (dnp no)
     (uuid "9049ea28-c3f0-5913-b652-2a308a6b07f0")
     (property "Reference" "D212" (at 193.04 82.55 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "1N4148" (at 193.04 95.25 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal"
+    (property "Value" "1N4148W" (at 193.04 95.25 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "keygen:D_SOD-123_HandSolder"
       (at 193.04 88.9 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
@@ -2793,8 +2793,8 @@
     (dnp no)
     (uuid "1df4d6d4-b76c-5bcb-a336-a1a360a0c029")
     (property "Reference" "D213" (at 233.68 82.55 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "1N4148" (at 233.68 95.25 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal"
+    (property "Value" "1N4148W" (at 233.68 95.25 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "keygen:D_SOD-123_HandSolder"
       (at 233.68 88.9 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
@@ -2867,8 +2867,8 @@
     (dnp no)
     (uuid "54a8a71a-dcb9-5d35-a0c5-c7c37fecb000")
     (property "Reference" "D214" (at 30.48 110.49 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "1N4148" (at 30.48 123.19 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal"
+    (property "Value" "1N4148W" (at 30.48 123.19 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "keygen:D_SOD-123_HandSolder"
       (at 30.48 116.84 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
@@ -2941,8 +2941,8 @@
     (dnp no)
     (uuid "5e752435-9b93-5736-81ec-c9ac33ed52cd")
     (property "Reference" "D215" (at 71.12 110.49 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "1N4148" (at 71.12 123.19 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal"
+    (property "Value" "1N4148W" (at 71.12 123.19 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "keygen:D_SOD-123_HandSolder"
       (at 71.12 116.84 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
@@ -3015,8 +3015,8 @@
     (dnp no)
     (uuid "fbf8afc2-6c69-5815-9cdd-4313058aab47")
     (property "Reference" "D216" (at 111.76 110.49 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "1N4148" (at 111.76 123.19 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal"
+    (property "Value" "1N4148W" (at 111.76 123.19 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "keygen:D_SOD-123_HandSolder"
       (at 111.76 116.84 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
@@ -3089,8 +3089,8 @@
     (dnp no)
     (uuid "39b36b8a-b7e7-5ca4-b3a3-d8e1dee74ab0")
     (property "Reference" "D217" (at 152.4 110.49 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "1N4148" (at 152.4 123.19 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal"
+    (property "Value" "1N4148W" (at 152.4 123.19 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "keygen:D_SOD-123_HandSolder"
       (at 152.4 116.84 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
@@ -3163,8 +3163,8 @@
     (dnp no)
     (uuid "8e74a433-9732-5b8e-af10-7c01c97ff652")
     (property "Reference" "D218" (at 193.04 110.49 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "1N4148" (at 193.04 123.19 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal"
+    (property "Value" "1N4148W" (at 193.04 123.19 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "keygen:D_SOD-123_HandSolder"
       (at 193.04 116.84 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
@@ -3237,8 +3237,8 @@
     (dnp no)
     (uuid "8ba38635-84bc-5e76-b885-fd472b8c77d2")
     (property "Reference" "D219" (at 233.68 110.49 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "1N4148" (at 233.68 123.19 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal"
+    (property "Value" "1N4148W" (at 233.68 123.19 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "keygen:D_SOD-123_HandSolder"
       (at 233.68 116.84 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
@@ -3311,8 +3311,8 @@
     (dnp no)
     (uuid "1422e57e-60f8-5753-8b1a-d706c14502cc")
     (property "Reference" "D220" (at 274.32 110.49 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "1N4148" (at 274.32 123.19 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal"
+    (property "Value" "1N4148W" (at 274.32 123.19 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "keygen:D_SOD-123_HandSolder"
       (at 274.32 116.84 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
@@ -3385,8 +3385,8 @@
     (dnp no)
     (uuid "704cdeb1-85b4-51eb-87ac-c01a7e1a6e7e")
     (property "Reference" "D221" (at 30.48 138.43 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "1N4148" (at 30.48 151.13 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal"
+    (property "Value" "1N4148W" (at 30.48 151.13 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "keygen:D_SOD-123_HandSolder"
       (at 30.48 144.78 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
@@ -3459,8 +3459,8 @@
     (dnp no)
     (uuid "c173232f-2c63-56d8-a8e6-fc825b865c27")
     (property "Reference" "D222" (at 71.12 138.43 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "1N4148" (at 71.12 151.13 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal"
+    (property "Value" "1N4148W" (at 71.12 151.13 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "keygen:D_SOD-123_HandSolder"
       (at 71.12 144.78 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
@@ -3533,8 +3533,8 @@
     (dnp no)
     (uuid "e06f211b-e2a0-5c9f-ac44-9ca934dd5dd1")
     (property "Reference" "D223" (at 111.76 138.43 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "1N4148" (at 111.76 151.13 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal"
+    (property "Value" "1N4148W" (at 111.76 151.13 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "keygen:D_SOD-123_HandSolder"
       (at 111.76 144.78 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
@@ -3607,8 +3607,8 @@
     (dnp no)
     (uuid "dc50cbfe-2cf2-5980-baaf-73cb8eef03ee")
     (property "Reference" "D224" (at 152.4 138.43 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "1N4148" (at 152.4 151.13 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal"
+    (property "Value" "1N4148W" (at 152.4 151.13 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "keygen:D_SOD-123_HandSolder"
       (at 152.4 144.78 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
@@ -3681,8 +3681,8 @@
     (dnp no)
     (uuid "2ae59ad6-1100-5d18-8f5d-0605d87cf57d")
     (property "Reference" "D225" (at 193.04 138.43 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "1N4148" (at 193.04 151.13 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal"
+    (property "Value" "1N4148W" (at 193.04 151.13 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "keygen:D_SOD-123_HandSolder"
       (at 193.04 144.78 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
@@ -3755,8 +3755,8 @@
     (dnp no)
     (uuid "8ac1f10b-d007-57ae-bf13-b623638e88ea")
     (property "Reference" "D226" (at 233.68 138.43 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "1N4148" (at 233.68 151.13 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal"
+    (property "Value" "1N4148W" (at 233.68 151.13 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "keygen:D_SOD-123_HandSolder"
       (at 233.68 144.78 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
@@ -3829,8 +3829,8 @@
     (dnp no)
     (uuid "e13ebf7e-bbc9-5a08-9e53-d90c7a5820b8")
     (property "Reference" "D227" (at 274.32 138.43 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "1N4148" (at 274.32 151.13 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal"
+    (property "Value" "1N4148W" (at 274.32 151.13 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "keygen:D_SOD-123_HandSolder"
       (at 274.32 144.78 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
@@ -3903,8 +3903,8 @@
     (dnp no)
     (uuid "440d51b0-5abb-528d-a26f-37d415ad1712")
     (property "Reference" "D228" (at 30.48 166.37 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "1N4148" (at 30.48 179.07 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal"
+    (property "Value" "1N4148W" (at 30.48 179.07 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "keygen:D_SOD-123_HandSolder"
       (at 30.48 172.72 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
@@ -3977,8 +3977,8 @@
     (dnp no)
     (uuid "b82a4d13-f5e4-5529-8a49-f187fa44501d")
     (property "Reference" "D229" (at 71.12 166.37 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "1N4148" (at 71.12 179.07 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal"
+    (property "Value" "1N4148W" (at 71.12 179.07 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "keygen:D_SOD-123_HandSolder"
       (at 71.12 172.72 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
@@ -4051,8 +4051,8 @@
     (dnp no)
     (uuid "3d50abaf-e557-5527-b795-8f6e70320f44")
     (property "Reference" "D230" (at 111.76 166.37 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "1N4148" (at 111.76 179.07 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal"
+    (property "Value" "1N4148W" (at 111.76 179.07 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "keygen:D_SOD-123_HandSolder"
       (at 111.76 172.72 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
@@ -4125,8 +4125,8 @@
     (dnp no)
     (uuid "a3a5d8f9-d61b-5e15-b493-90eff17ea00c")
     (property "Reference" "D231" (at 152.4 166.37 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "1N4148" (at 152.4 179.07 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal"
+    (property "Value" "1N4148W" (at 152.4 179.07 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "keygen:D_SOD-123_HandSolder"
       (at 152.4 172.72 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
@@ -4199,8 +4199,8 @@
     (dnp no)
     (uuid "7259fca3-05d9-5250-bb53-ed776d0c6c97")
     (property "Reference" "D232" (at 193.04 166.37 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "1N4148" (at 193.04 179.07 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal"
+    (property "Value" "1N4148W" (at 193.04 179.07 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "keygen:D_SOD-123_HandSolder"
       (at 193.04 172.72 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
@@ -4273,8 +4273,8 @@
     (dnp no)
     (uuid "6008ba3a-c7bf-5b51-a632-f18525fc9c6a")
     (property "Reference" "D233" (at 233.68 166.37 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "1N4148" (at 233.68 179.07 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal"
+    (property "Value" "1N4148W" (at 233.68 179.07 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "keygen:D_SOD-123_HandSolder"
       (at 233.68 172.72 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )
@@ -4347,8 +4347,8 @@
     (dnp no)
     (uuid "cbc13cf8-09eb-5933-b219-05c2287fbe6f")
     (property "Reference" "D234" (at 274.32 166.37 0) (effects (font (size 1.27 1.27))))
-    (property "Value" "1N4148" (at 274.32 179.07 0) (effects (font (size 1.27 1.27))))
-    (property "Footprint" "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal"
+    (property "Value" "1N4148W" (at 274.32 179.07 0) (effects (font (size 1.27 1.27))))
+    (property "Footprint" "keygen:D_SOD-123_HandSolder"
       (at 274.32 172.72 0)
       (effects (font (size 1.27 1.27)) (hide yes))
     )

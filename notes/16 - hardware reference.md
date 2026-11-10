@@ -14,7 +14,7 @@ updated: 2026-10-22T19:00
 
 ## Electronics
 
-- **Matrix:** 5 rows × 7 columns per half, COL2ROW, with a 1N4148 diode per key. Each half's
+- **Matrix:** 5 rows × 7 columns per half, COL2ROW, with a 1N4148W diode (SOD-123, on the back) per key. Each half's
   encoder push switch sits in its matrix at row 0 / column 6.
 - **Controller pins:** both halves use the same pin map, with every edge pin in use. LED data is on
   P0.06 and the LED boost's enable on P0.08. The OLED's I2C is on P0.17 (SDA) and P0.20 (SCL), both
@@ -69,7 +69,7 @@ References and soldering notes for every part are in `fab/BOM.md`.
 |---|---|---|
 | nRF52840 controller (socketed, underside) | 1 | 1 |
 | Akko V3 Lavender Purple Pro switch + Kailh hotswap socket | 33 | 33 |
-| 1N4148 diode (DO-35) | 34 | 34 |
+| 1N4148W diode (SOD-123) | 34 | 34 |
 | SK6812MINI-E RGB LED | 33 | 33 |
 | TPS61023 boost (SOT-563), 1 µH inductor (1210) | 1 + 1 | 1 + 1 |
 | 22 µF capacitors, 1206 (boost output) | 2 | 2 |

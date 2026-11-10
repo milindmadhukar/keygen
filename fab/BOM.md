@@ -12,7 +12,7 @@ The shopping list with spares and prices is `bom/bom.csv` / `plan/bom.html`.
 | 100 nF capacitor (0805) | 1 | C102 | SMD, back side, beside the data buffer |
 | 10 µF capacitor (1206) | 2 | C103, C105 | SMD, back side: C3 at the boost's input, C5 at the last LED |
 | 100 nF capacitor (0805), optional | 33 | C111–C143 | Not fitted: a footprint beside every LED, for extra decoupling if the chain glitches on full white |
-| 1N4148 diode | 34 | D101–D134 | through-hole, back side; band (cathode) toward the square pad |
+| 1N4148W diode | 34 | D101–D134 | SOD-123, back side; band (cathode) toward pad 1, the silkscreen bar |
 | EC11 rotary encoder | 1 | ENC101 | held in the top frame by its M7 nut, 20 mm D shaft |
 | OLED 0.96in I2C | 1 | J101 |  |
 | 1x5 right-angle pin header | 1 | J102 | through-hole, back side, pins lying flat and pointing away from the thumb keys |
@@ -40,7 +40,7 @@ The shopping list with spares and prices is `bom/bom.csv` / `plan/bom.html`.
 | 100 nF capacitor (0805) | 1 | C202 | SMD, back side, beside the data buffer |
 | 10 µF capacitor (1206) | 2 | C203, C205 | SMD, back side: C3 at the boost's input, C5 at the last LED |
 | 100 nF capacitor (0805), optional | 33 | C211–C243 | Not fitted: a footprint beside every LED, for extra decoupling if the chain glitches on full white |
-| 1N4148 diode | 34 | D201–D234 | through-hole, back side; band (cathode) toward the square pad |
+| 1N4148W diode | 34 | D201–D234 | SOD-123, back side; band (cathode) toward pad 1, the silkscreen bar |
 | EC11 rotary encoder | 1 | ENC201 | held in the top frame by its M7 nut, 20 mm D shaft |
 | OLED 0.96in I2C | 1 | J201 |  |
 | 1x5 right-angle pin header | 1 | J202 | through-hole, back side, pins lying flat and pointing away from the thumb keys |
@@ -68,7 +68,7 @@ The shopping list with spares and prices is `bom/bom.csv` / `plan/bom.html`.
 | 100 nF capacitor (0805) | 2 | 4 | [Robu.in, CC0805KKX7R0BB104](https://robu.in/product/cc0805kkx7r0bb104-yageo-100v-100nf-x7r-%c2%b110-0805-multilayer-ceramic-capacitors-mlcc-smd-smt-rohs/) |
 | 10 µF capacitor (1206) | 4 | 8 | Robu.in / Lamington Road |
 | 100 nF capacitor (0805), optional | 66 | 132 | [Robu.in, CC0805KKX7R0BB104](https://robu.in/product/cc0805kkx7r0bb104-yageo-100v-100nf-x7r-%c2%b110-0805-multilayer-ceramic-capacitors-mlcc-smd-smt-rohs/) |
-| 1N4148 diode | 68 | 136 | [StacksKB 1N4148 (10-pack)](https://stackskb.com/store/1n4148-through-hole-diode/) |
+| 1N4148W diode | 68 | 136 | [Robu.in, 1N4148W-7-F](https://robu.in/product/1n4148w-7-f-diodes-incorporated-100v-independent-type-1-25v150ma-4ns-300ma-sod-123-switching-diodes-rohs/) |
 | EC11 rotary encoder | 2 | 4 | [Robu.in, Hongyan EC11](https://robu.in/product/hongyan-ec11h-7ce20p1zd20-rotary-encoder-with-push-button-switch-vertical-plug-in-5-pin/) |
 | OLED 0.96in I2C | 2 | 4 |  |
 | 1x5 right-angle pin header | 2 | 4 | Already owned |

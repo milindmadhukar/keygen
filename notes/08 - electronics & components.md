@@ -5,7 +5,7 @@ name: 08 - electronics & components
 ---
 
 > [!success] Decision (2026-10-19)
-> Each half carries an nRF52840 SuperMini (a nice!nano v2 clone), 33 MX switches in Kailh hotswap sockets, 1N4148 through-hole diodes, 33 per-key **SK6812MINI-E** LEDs, a LiPo on a JST-PH connector, an SK12D07VG5 slide switch driving an AO3401A P-MOSFET battery switch, a reset button, an EC11 encoder (D shaft) with a 17 mm knob, and a 0.96 in. SSD1306 I2C OLED module. USB-C comes from the controller module, the LEDs run from a 5 V TPS61023 boost on the battery, and an SN74LV1T125 buffer drives their data at 5 V. The per-half table is in [[12 - final design#Parts per half]]; the shopping list is [[13 - bill of materials]].
+> Each half carries an nRF52840 SuperMini (a nice!nano v2 clone), 33 MX switches in Kailh hotswap sockets, 1N4148W SMD diodes, 33 per-key **SK6812MINI-E** LEDs, a LiPo on a JST-PH connector, an SK12D07VG5 slide switch driving an AO3401A P-MOSFET battery switch, a reset button, an EC11 encoder (D shaft) with a 17 mm knob, and a 0.96 in. SSD1306 I2C OLED module. USB-C comes from the controller module, the LEDs run from a 5 V TPS61023 boost on the battery, and an SN74LV1T125 buffer drives their data at 5 V. The per-half table is in [[12 - final design#Parts per half]]; the shopping list is [[13 - bill of materials]].
 
 ## Parts per half
 
@@ -13,7 +13,7 @@ name: 08 - electronics & components
 |---|---|---|---|---|
 | nRF52840 SuperMini (nice!nano v2 clone) | 1 | 1 | U101 / U201 | Underside, socketed on low-profile machined pins |
 | MX switch + Kailh MX hotswap socket (CPG151101S11) | 33 | 33 | SW1xx / SW2xx | Sockets on the back; SW101–SW106 and SW108–SW134, the same numbers in 2xx on the right |
-| 1N4148 diode, DO-35 | 34 | 34 | D1xx / D2xx | Through-hole, back side; left D101–D134, right D201–D234 |
+| 1N4148W diode, SOD-123 | 34 | 34 | D1xx / D2xx | SMD, back side; left D101–D134, right D201–D234 |
 | SK6812MINI-E RGB LED | 33 | 33 | LED1xx / LED2xx | Reverse-mount on the back, shining through a PCB cut-out |
 | TPS61023 boost (SOT-563) + 1 µH inductor (1210) | 1 + 1 | 1 + 1 | U102, L101 / U202, L201 | LED rail, 4.95 V; back side beside the battery connector |
 | 22 µF capacitors, 1206 | 2 | 2 | C101, C104 / C201, C204 | Boost output |
@@ -43,7 +43,7 @@ Each half has 34 diodes: 33 for the keys and one for its encoder's push switch, 
 ## Matrix
 
 - 5 rows × 7 columns per half, COL2ROW: each switch connects to its column, and each diode's cathode (the band) faces its row.
-- 1N4148 through-hole diodes on the back; the band goes toward the square pad.
+- 1N4148W SMD diodes on the back; the band goes toward pad 1.
 - Each encoder's push switch sits at row 0 / column 6 in its half's matrix.
 
 ## Per-key RGB
