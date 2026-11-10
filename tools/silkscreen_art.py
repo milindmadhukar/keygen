@@ -521,7 +521,9 @@ def place_labels(b, board):
                 if label_clear(t, board, SILK_EDGE, LABEL_CLEAR):
                     moved.append(f"{fp.GetReference()} {t.GetText()}"); break
             else:
-                t.SetTextAngleDegrees(ang0); t.SetPosition(pos0)
+                # nowhere clear: hide it rather than print it over a pad or a pin-1 mark (the
+                # assembly maps still name the part)
+                t.SetTextAngleDegrees(ang0); t.SetPosition(pos0); t.SetVisible(False)
                 stuck.append(f"{fp.GetReference()} {t.GetText()}")
     return moved, stuck
 
@@ -565,7 +567,7 @@ def main():
     for i in range(board.OutlineCount()): edge.AddOutline(board.Outline(i))
     moved, stuck = place_labels(b, edge)
     print(f"footprint labels: moved {len(moved)}" + (f" ({', '.join(moved)})" if moved else ""))
-    if stuck: print(f"no clear spot for: {', '.join(stuck)}")
+    if stuck: print(f"no clear spot, label hidden: {', '.join(stuck)}")
     inside = grow(board, -EDGE_CLEAR)
     group = pcbnew.PCB_GROUP(b); group.SetName(GROUP); b.Add(group)
     count = 0

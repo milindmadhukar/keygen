@@ -97,6 +97,14 @@ def build(b):
                     obs.add(("pad", fp.GetReference(), k, li), li, net, p.GetEffectiveShape(L), CLR)
                 if p.GetDrillSize().x > 0:
                     obs.add(("phole", fp.GetReference(), k, li), li, -1 if npth else net, p.GetEffectiveHoleShape(), HOLE_CLR)
+    # keep-out rule areas that forbid tracks (the mounting hardware's): a straightened track
+    # must not cut through them
+    for zi, z in enumerate(b.Zones()):
+        if not (z.GetIsRuleArea() and z.GetDoNotAllowTracks()): continue
+        bb = z.GetBoundingBox(); c = bb.GetCenter()
+        shape = pcbnew.SHAPE_CIRCLE(c, max(bb.GetWidth(), bb.GetHeight()) // 2)
+        for li, L in enumerate(LAYERS):
+            if z.IsOnLayer(L): obs.add(("keepout", zi, li), li, -1, shape, 0)
     polys = pcbnew.SHAPE_POLY_SET(); b.GetBoardPolygonOutlines(polys, False)
     chains = []
     for i in range(polys.OutlineCount()):

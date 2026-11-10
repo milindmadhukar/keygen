@@ -115,6 +115,8 @@ def rasterize(b, g):
             l, t, r, bt = toMM(bb.GetLeft()), toMM(bb.GetTop()), toMM(bb.GetRight()), toMM(bb.GetBottom())
             if p.GetAttribute() == pcbnew.PAD_ATTRIB_NPTH:
                 c = p.GetPosition(); cx, cy = toMM(c.x), toMM(c.y); rad = toMM(p.GetDrillSize().x) / 2 + HOLE + W / 2 + SNAP
+                if re.match(r"H\d+$", fp.GetReference()):           # mounting hardware keep-out
+                    rad = route_pcb.HARDWARE_KEEP + W / 2 + SNAP
                 g.mark((0, 1), lambda X, Y: np.hypot(X - cx, Y - cy) <= rad, (cx - rad, cy - rad, cx + rad, cy + rad), BLOCK)
                 continue
             layers = [li_of(L) for L in LAYERS if p.IsOnLayer(L)]

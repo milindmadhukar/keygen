@@ -52,6 +52,28 @@ def antenna_keepouts(b):
             rule_area(b, [(cx - 10, cy + 8), (cx + 10, cy + 8), (cx + 10, cy + 19), (cx - 10, cy + 19)],
                       f"antenna-{fp.GetReference()}")
 
+HARDWARE_KEEP = 3.0     # mm round each mounting hole: the 5 mm shim, the brass standoff and the M2
+                        # head bear on the board there, and only soldermask would part them from copper
+
+def hole_keepouts(b):
+    """No tracks, vias or ground fill within HARDWARE_KEEP of a mounting hole, on either face.
+    Adds only the keep-outs the board doesn't already have."""
+    have = {z.GetZoneName() for z in b.Zones() if z.GetIsRuleArea()}
+    for fp in b.GetFootprints():
+        ref = fp.GetReference()
+        if not (ref.startswith("H") and ref[1:].isdigit()) or f"hardware-{ref}" in have: continue
+        c = fp.GetPosition(); cx, cy = pcbnew.ToMM(c.x), pcbnew.ToMM(c.y)
+        z = pcbnew.ZONE(b)
+        z.SetIsRuleArea(True); z.SetZoneName(f"hardware-{ref}")
+        z.SetDoNotAllowZoneFills(True); z.SetDoNotAllowTracks(True); z.SetDoNotAllowVias(True)
+        z.SetDoNotAllowPads(False); z.SetDoNotAllowFootprints(False)
+        ls = pcbnew.LSET(); ls.AddLayer(pcbnew.F_Cu); ls.AddLayer(pcbnew.B_Cu); z.SetLayerSet(ls)
+        o = z.Outline(); o.NewOutline()
+        for k in range(32):
+            a = 2 * math.pi * k / 32
+            o.Append(mm(cx + HARDWARE_KEEP * math.cos(a)), mm(cy + HARDWARE_KEEP * math.sin(a)))
+        b.Add(z)
+
 def outlines(b):
     polys = pcbnew.SHAPE_POLY_SET()
     b.GetBoardPolygonOutlines(polys, False)
@@ -63,6 +85,7 @@ def outlines(b):
 
 def ground_pours(b):
     antenna_keepouts(b)                       # boards saved before load_without_zones kept them lost theirs
+    hole_keepouts(b)
     for z in [z for z in b.Zones() if not z.GetIsRuleArea()]:
         b.Remove(z)
     for pts in outlines(b):
