@@ -11,6 +11,13 @@ config KEYGEN_BATTERY_LIGHTING
 
 if KEYGEN_BATTERY_LIGHTING
 
+config KEYGEN_LIGHTING_TEST
+    bool "Bring-up build: lighting on from the start, on battery too, nothing saved"
+    help
+      For testing the LEDs as they are soldered: each half lights its strip on its own, without
+      the other half or a key press, and changes nothing in the saved settings. Flash the normal
+      build afterwards.
+
 config KEYGEN_BATTERY_LIGHTING_BRT
     int "Brightness ceiling on battery, percent of the brightness scale"
     range 1 100

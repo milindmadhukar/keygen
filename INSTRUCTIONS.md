@@ -366,7 +366,9 @@ The controller (**U101 / U201**) plugs into sockets on the back, so it can be sw
 upside down compared with most keyboards: chip and USB-C away from the PCB.
 
 1. Before soldering, check the SuperMini with the multimeter: **B+** (pad 13), **GND** and **VCC**
-   (pad 16). Then bridge its **BOOST** link, the two pads of the unfitted 0 Ω link on its back, with a
+   (pad 16). On USB, VCC must read 3.3 V: some SuperMini batches have no 3.3 V regulator and put
+   about 4.7 V there, which would overdrive the OLED's lines. Check `INFO_UF2.TXT` on its drive
+   shows a nice!nano-compatible bootloader. Then bridge its **BOOST** link, the two pads of the unfitted 0 Ω link on its back, with a
    solder blob or a 0 Ω resistor: the charger then charges at about 300 mA.
 2. Cut two 12-pin lengths of the female socket strip and two of the round male pins. Push the socket
    strips into the footprint from the back, push the male pins into the sockets, and lay the
@@ -392,11 +394,16 @@ Keep the pins' plastic carrier on: it stays between the socket and the controlle
 3. **Battery polarity.** With the multimeter, confirm the red wire lands on the PCB's **+** pad
    before plugging in. Swap the crimps if it does not.
 4. Plug the battery in and check that the slide switch turns the half on and off. Leave the switch
-   on while charging.
-5. **Charge current.** With the multimeter in series with the battery and USB plugged in, confirm
+   on while charging. The switch doesn't protect against a reversed cell: off, the battery MOSFET's
+   body diode still conducts, so check the polarity even with it off.
+5. **LED supply, before any LED goes on.** Flash the LED test build (`keygen_left-led-test` or
+   `keygen_right-led-test`, see [Flashing](#flashing)), plug in the battery and USB, and measure the
+   LED rail at C101 / C201 against GND: 4.83–5.08 V. Above that, the boost's feedback resistor
+   R102 / R202 has a bad joint and the rail would sit at 5.5–6 V, past the LEDs' rating: fix it first.
+6. **Charge current.** With the multimeter in series with the battery and USB plugged in, confirm
    about 300 mA. An empty cell takes about ten hours. With no battery fitted, the keys, OLED and
    Bluetooth run from USB, but the lighting has no supply.
-6. **Lead length.** Measure the battery lead from the pouch to the end of the plug. It runs about
+7. **Lead length.** Measure the battery lead from the pouch to the end of the plug. It runs about
    50 mm in the case, from the bay to **BT101 / BT201**; with less than about 80 mm, plug it in
    before taping the cell down (see [Battery](#battery)).
 
@@ -416,11 +423,14 @@ the lit side down through the cut-out so it shines out of the front.
 - The LED's cut corner marks its GND pin. Turn it so that corner sits on pad 1.
 - Iron at 320 °C, plenty of flux, 2–3 seconds per pad. Tin one pad, place the LED in its cut-out,
   reheat the tinned pad, then solder the other three. Kapton tape keeps the neighbouring pads clean.
-- Solder them in number order, six or so at a time, then plug in USB and check they light before
-  going on. Use SYS + `A` to toggle the lighting. The LED rail reads about 4.95 V with the lighting
-  on and near 0 V with it off. On battery the lighting stays off until SYS + `Z` allows it. Measure
-  the LED rail and battery current with USB disconnected, since a dark strip may still draw power if
-  the boost is on.
+- Solder them in number order, six or so at a time, with the battery unplugged. Then, with the LED
+  test build on the controller, plug in the battery and USB: the half lights every LED it has on its
+  own, so each new one should light before you go on. Unplug the battery again before soldering.
+- When all 33 are on, flash the normal build. Then the lighting follows SYS + `A`, and on battery
+  stays off until SYS + `Z` allows it. Check the LED rail reads about 4.95 V with the lighting on
+  and near 0 V with it off, on USB and on battery.
+- The first time the lighting turns on, the boost charges its capacitors in a burst. If a half
+  resets at that moment on a low cell, charge the cell and report it.
 
 > [!NOTE]
 > Data passes from LED to LED in number order, LED101 first, so one bad joint darkens every LED
@@ -741,7 +751,9 @@ plate and PCB. The plate and PCB have openings that clear it as they float. Deta
 
 ## Flashing
 
-The firmware is three UF2 files: `keygen_left`, `keygen_right` and `settings_reset`. To get them,
+The firmware is three UF2 files: `keygen_left`, `keygen_right` and `settings_reset`, plus two for
+bring-up, `keygen_left-led-test` and `keygen_right-led-test`, which light the LEDs on their own, on
+battery too, and save nothing. To get them,
 open the [Firmware workflow](https://github.com/milindmadhukar/keygen/actions/workflows/firmware.yml)
 on GitHub, pick the latest successful run, and download its `keygen-firmware` artifact (this needs a
 GitHub account); unzip it. Artifacts expire after 90 days. Or build them yourself with

@@ -30,15 +30,15 @@ run("west", "zephyr-export")
 
 failed = []
 for t in yaml.safe_load(open("firmware/build.yaml"))["include"]:
-    name = t["shield"]
+    name = t.get("artifact-name", t["shield"] + "-nice_nano")
     cmd = ["west", "build", "-p", "auto", "-s", "zmk/app", "-d", f"build/{name}", "-b", t["board"]]
     if "snippet" in t: cmd += ["-S", t["snippet"]]
-    cmd += ["--", "-DZMK_CONFIG=/work/firmware", "-DZMK_EXTRA_MODULES=/work/keygen-module", f"-DSHIELD={name}",
+    cmd += ["--", "-DZMK_CONFIG=/work/firmware", "-DZMK_EXTRA_MODULES=/work/keygen-module", f"-DSHIELD={t['shield']}",
             *t.get("cmake-args", "").split()]
     print(f"\n=== {name}", flush=True)
     if subprocess.run(cmd).returncode:
         failed.append(name); continue
-    shutil.copy(f"build/{name}/zephyr/zmk.uf2", f"/out/{name}-nice_nano.uf2")
+    shutil.copy(f"build/{name}/zephyr/zmk.uf2", f"/out/{name}.uf2")
 
 print("\nfailed: " + ", ".join(failed) if failed else "\nall builds OK: firmware/out/*.uf2")
 sys.exit(1 if failed else 0)

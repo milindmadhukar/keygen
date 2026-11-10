@@ -66,7 +66,11 @@ static void schedule(int ms) { k_work_reschedule(&enforce_work, K_MSEC(ms)); }
 
 static void save(struct k_work *work) { settings_save_one("kg/batlight/user", &user, sizeof(user)); }
 
-static void changed(void) { k_work_reschedule(&save_work, K_SECONDS(10)); }
+static void changed(void) {
+    if (!IS_ENABLED(CONFIG_KEYGEN_LIGHTING_TEST)) {
+        k_work_reschedule(&save_work, K_SECONDS(10));
+    }
+}
 
 static void supply_off(void) {
     if (device_is_ready(ext_power) && ext_power_get(ext_power) > 0) {
@@ -154,6 +158,10 @@ static int bl_settings_set(const char *name, size_t len, settings_read_cb read_c
 
 static int bl_settings_commit(void) {
     loaded = true;
+    if (IS_ENABLED(CONFIG_KEYGEN_LIGHTING_TEST)) {
+        user.want_on = true;
+        user.allow = true;
+    }
     schedule(500);
     return 0;
 }

@@ -10,3 +10,12 @@ include:
     shield: keygen_right
   - board: nice_nano//zmk
     shield: settings_reset
+  # bring-up: each half lights its LEDs on its own, on battery too, without saving anything
+  - board: nice_nano//zmk
+    shield: keygen_left
+    cmake-args: -DCONFIG_KEYGEN_LIGHTING_TEST=y
+    artifact-name: keygen_left-led-test-nice_nano
+  - board: nice_nano//zmk
+    shield: keygen_right
+    cmake-args: -DCONFIG_KEYGEN_LIGHTING_TEST=y
+    artifact-name: keygen_right-led-test-nice_nano
