@@ -24,7 +24,9 @@ export const Title: React.FC<{ spec: SceneSpec; t: Timing }> = ({ spec }) => {
   const chips = ["66 keys", "Wireless split", "nRF52840 · ZMK", "Per-key RGB", "Encoder + OLED per half"];
   return (
     <AbsoluteFill>
-      <Clip name="hero" />
+      <AbsoluteFill style={{ transform: "translateX(230px) scale(1.25)" }}>
+        <Clip name="hero" />
+      </AbsoluteFill>
       <Shade />
       <div style={{ position: "absolute", left: 120, top: 330 }}>
         <div style={{ fontFamily: mono, fontSize: 26, letterSpacing: 8, color: C.accent, opacity: a }}>BUILD GUIDE</div>
