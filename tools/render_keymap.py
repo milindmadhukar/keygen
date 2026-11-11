@@ -33,6 +33,7 @@ LABELS = {
     "&bt BT_CLR": "BT clear", **{f"&bt BT_SEL {i}": f"BT {i + 1}" for i in range(5)},
     "&rgb_ug RGB_TOG": "LEDs", "&rgb_ug RGB_EFF": "Effect", "&rgb_ug RGB_HUI": "Hue",
     "&rgb_ug RGB_BRI": "Bright +", "&rgb_ug RGB_BRD": "Bright −",
+    "&kg_bl": "LEDs on battery",
 }
 
 CONFIG = {

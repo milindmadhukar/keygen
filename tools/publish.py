@@ -7,7 +7,7 @@ never change (https://github.com/<repo>/releases/download/<tag>/<file>):
 
 media       the pictures in the README and the notes: assets/*.png, *.jpg, *.gif
 build       PCB and plate Gerbers, case and plate STLs and STEPs, foam cut files, the plate print
-            PDFs and the schematic PDF
+            PDFs, the schematic PDF and the printed reference
 datasheets  the part datasheets that docs/datasheets/README.md cites
 
     python3 tools/publish.py [RELEASE ...]      upload what changed (media and build if none named;
@@ -34,9 +34,10 @@ RELEASES = {
         title="Build files",
         about="Everything needed to order and make Keygen: the PCB Gerbers (one zip per half, and both "
               "together), the switch plate Gerbers, DXFs and 1:1 print PDFs, the case STLs to print and "
-              "STEPs, the foam cut files, and the schematic PDF. Ordering notes: fab/ORDER.md and "
+              "STEPs, the foam cut files, the schematic PDF, and the printed reference (key layout and "
+              "board at 1:1, part close-ups, keymap, key matrix and parts lists, on A4). Ordering notes: fab/ORDER.md and "
               "case/plate/PLATE.md in the repo.",
-        globs=["fab/*.zip", "pcb/keygen-schematic.pdf", "case/keygen-case.step", "case/*/stl/*.stl",
+        globs=["fab/*.zip", "pcb/keygen-schematic.pdf", "docs/keygen-reference.pdf", "case/keygen-case.step", "case/*/stl/*.stl",
                "case/*/step/*.step", "case/*/dxf/*.dxf", "case/*/svg/*.svg", "case/*/pdf/*.pdf",
                "case/*/gerber/*.zip"], prune=True),
     "datasheets": dict(

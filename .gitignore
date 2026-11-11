@@ -31,6 +31,7 @@ case/**/*.pdf
 case/**/*.zip
 fab/*.zip
 pcb/keygen-schematic.pdf
+docs/keygen-reference.pdf
 pcb/lib/keygen.3dshapes/Keycap_*
 pcb/lib/keygen.3dshapes/Knob_17mm.step
 pcb/lib/keygen.3dshapes/OLED_096_I2C.step
