@@ -31,7 +31,7 @@ Each half is **5 rows × 7 columns, COL2ROW**: each switch connects to its colum
 ## Parts on the board
 
 ### Diodes
-**1N4148W, SOD-123**, on the back, standing beside each switch. The band (cathode) goes toward pad 1, the row side. Nothing comes through to the front, where the Poron switch pads lie flat round the switches. Its pads run 0.7 mm longer outwards than the standard footprint, for an iron.
+**1N4148W, SOD-123**, on the back, standing beside each switch. The band (cathode) goes toward pad 1, the row side. The silkscreen draws each diode as it looks: an outline with a bar at the cathode end. Nothing comes through to the front, where the Poron switch pads lie flat round the switches. Its pads run 0.7 mm longer outwards than the standard footprint, for an iron.
 
 ### Hotswap sockets
 **Kailh MX hotswap (CPG151101S11)** on the back. Switches press in and pull out without soldering. One per key: 66 in total.

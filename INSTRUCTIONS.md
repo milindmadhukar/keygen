@@ -454,7 +454,8 @@ its opening.
 
 ![Diode close-up](https://github.com/milindmadhukar/keygen/releases/download/media/assembly-part-diode.png)
 
-- The band (cathode) goes towards pad 1, the end with the silkscreen bar.
+- The silkscreen draws each diode as it looks: an outline with a bar at the cathode end, pad 1. Its band
+  goes over that bar.
 - Tin pad 1. Hold the diode on its pads with tweezers, band towards pad 1, and touch the tinned pad
   to tack it. Solder pad 2, then go back over pad 1. Nothing comes through to the front.
 

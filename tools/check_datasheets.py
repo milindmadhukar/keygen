@@ -102,7 +102,7 @@ CHARGE_MA, VBAT_MIN, VBAT_MAX = 300, 3.0, 4.2
 SK_LENS_CW = ["VDD", "DIN", "VSS", "DOUT"]
 SK_VDD_MIN, SK_MA_PER_LED, SK_STATIC_MA = 3.7, 3 * 12, 1.0
 # 1N4148W_Diodes.pdf p. 1: polarity, cathode band. D_SOD-123_HandSolder (KiCad's SOD-123) puts pad 1, the
-# cathode, under its silkscreen bar.
+# cathode, at the bar in its silkscreen outline.
 # Alps_EC11E.pdf (mounting hole drawing): A C B in a row, C (common) in the middle; push switch D/E
 # on the opposite side.
 # JST_PH.pdf: pin 1 / pin 2 only. LiPo packs come wired either way round; check before plugging in.

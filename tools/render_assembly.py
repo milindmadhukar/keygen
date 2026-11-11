@@ -56,7 +56,7 @@ PARTS = [
     ("led", "LED101", "back", "LED (SK6812MINI-E), from the back",
      "Lit side down into the cut-out. Its cut corner goes on pad 1, GND."),
     ("diode", "D101", "back", "Diode (1N4148W), from the back",
-     "SOD-123 on the back: its band towards pad 1, the end with the silkscreen bar."),
+     "SOD-123 on the back: its band over the bar in its silkscreen outline, at pad 1."),
     ("socket", "SW101", "back", "Hotswap socket, from the back",
      "It fits its two pads one way. Plenty of solder: it takes every switch insertion."),
     ("encoder", "J102", "back", "Encoder header, from the back",

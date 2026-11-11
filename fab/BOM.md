@@ -12,7 +12,7 @@ The shopping list with spares and prices is `bom/bom.csv` / `plan/bom.html`.
 | 100 nF capacitor (0805) | 1 | C102 | SMD, back side, beside the data buffer |
 | 10 µF capacitor (1206) | 2 | C103, C105 | SMD, back side: C3 at the boost's input, C5 at the last LED |
 | 100 nF capacitor (0805), optional | 33 | C111–C143 | Not fitted: a footprint beside every LED, for extra decoupling if the chain glitches on full white |
-| 1N4148W diode | 34 | D101–D134 | SOD-123, back side; band (cathode) toward pad 1, the silkscreen bar |
+| 1N4148W diode | 34 | D101–D134 | SOD-123, back side; band (cathode) over the bar in its silkscreen outline, at pad 1 |
 | EC11 rotary encoder | 1 | ENC101 | held in the top frame by its M7 nut, 20 mm D shaft |
 | OLED 0.96in I2C | 1 | J101 |  |
 | 1x5 right-angle pin header | 1 | J102 | through-hole, back side, pins lying flat and pointing away from the thumb keys |
@@ -40,7 +40,7 @@ The shopping list with spares and prices is `bom/bom.csv` / `plan/bom.html`.
 | 100 nF capacitor (0805) | 1 | C202 | SMD, back side, beside the data buffer |
 | 10 µF capacitor (1206) | 2 | C203, C205 | SMD, back side: C3 at the boost's input, C5 at the last LED |
 | 100 nF capacitor (0805), optional | 33 | C211–C243 | Not fitted: a footprint beside every LED, for extra decoupling if the chain glitches on full white |
-| 1N4148W diode | 34 | D201–D234 | SOD-123, back side; band (cathode) toward pad 1, the silkscreen bar |
+| 1N4148W diode | 34 | D201–D234 | SOD-123, back side; band (cathode) over the bar in its silkscreen outline, at pad 1 |
 | EC11 rotary encoder | 1 | ENC201 | held in the top frame by its M7 nut, 20 mm D shaft |
 | OLED 0.96in I2C | 1 | J201 |  |
 | 1x5 right-angle pin header | 1 | J202 | through-hole, back side, pins lying flat and pointing away from the thumb keys |

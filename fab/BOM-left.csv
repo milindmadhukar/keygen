@@ -4,7 +4,7 @@ JST-PH 2-pin battery connector,1,BT101,LiPo 3.7V 3000mAh,Connector_JST:JST_PH_S2
 100 nF capacitor (0805),1,C102,100nF,Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder,"SMD, back side, beside the data buffer"
 10 µF capacitor (1206),2,C103 C105,10uF,Capacitor_SMD:C_1206_3216Metric_Pad1.33x1.80mm_HandSolder,"SMD, back side: C3 at the boost's input, C5 at the last LED"
 "100 nF capacitor (0805), optional",33,C111 C112 C113 C114 C115 C116 C117 C118 C119 C120 C121 C122 C123 C124 C125 C126 C127 C128 C129 C130 C131 C132 C133 C134 C135 C136 C137 C138 C139 C140 C141 C142 C143,100nF,Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder,"Not fitted: a footprint beside every LED, for extra decoupling if the chain glitches on full white"
-1N4148W diode,34,D101 D102 D103 D104 D105 D106 D107 D108 D109 D110 D111 D112 D113 D114 D115 D116 D117 D118 D119 D120 D121 D122 D123 D124 D125 D126 D127 D128 D129 D130 D131 D132 D133 D134,1N4148W,keygen:D_SOD-123_HandSolder,"SOD-123, back side; band (cathode) toward pad 1, the silkscreen bar"
+1N4148W diode,34,D101 D102 D103 D104 D105 D106 D107 D108 D109 D110 D111 D112 D113 D114 D115 D116 D117 D118 D119 D120 D121 D122 D123 D124 D125 D126 D127 D128 D129 D130 D131 D132 D133 D134,1N4148W,keygen:D_SOD-123_HandSolder,"SOD-123, back side; band (cathode) over the bar in its silkscreen outline, at pad 1"
 EC11 rotary encoder,1,ENC101,EC11,keygen:EC11_Case_Mount,"held in the top frame by its M7 nut, 20 mm D shaft"
 OLED 0.96in I2C,1,J101,OLED 0.96in I2C,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical,
 1x5 right-angle pin header,1,J102,"Encoder lead, 1x5 right angle",Connector_PinHeader_2.54mm:PinHeader_1x05_P2.54mm_Horizontal,"through-hole, back side, pins lying flat and pointing away from the thumb keys"

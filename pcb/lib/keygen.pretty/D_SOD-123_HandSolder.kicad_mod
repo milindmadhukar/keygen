@@ -3,7 +3,7 @@
 	(generator "pcbnew")
 	(generator_version "10.0")
 	(layer "F.Cu")
-	(descr "SOD-123 (Keygen: pads 0.7 mm longer outwards, for hand soldering)")
+	(descr "SOD-123 (Keygen: pads 0.7 mm longer outwards, for hand soldering; silkscreen drawn like the part: an outline with the cathode bar at the pad 1 end)")
 	(tags "SOD-123")
 	(property "Reference" "REF**"
 		(at 0 -2 0)
@@ -61,8 +61,37 @@
 		(layer "F.SilkS")
 		)
 	(fp_line
+		(start 3.06 -1)
+		(end 3.06 1)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		)
+	(fp_rect
+		(start -0.95 -1)
+		(end -0.65 1)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill yes)
+		(layer "F.SilkS")
+		)
+	(fp_rect
+		(start -1.4 -0.9)
+		(end -1.05 0.9)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill yes)
+		(layer "F.Fab")
+		)
+	(fp_line
 		(start -3.06 -1)
-		(end 1.65 -1)
+		(end 3.06 -1)
 		(stroke
 			(width 0.12)
 			(type solid)
@@ -71,7 +100,7 @@
 		)
 	(fp_line
 		(start -3.06 1)
-		(end 1.65 1)
+		(end 3.06 1)
 		(stroke
 			(width 0.12)
 			(type solid)

@@ -345,7 +345,7 @@ def map_page(cr, svgs, page, side, half_name, half, scale=1.0, at=None):
     m = 1.0
     box = (x0 - m, y0 - m, x1 + m, y1 + m)
     w, h = (box[2] - box[0]) * scale, (box[3] - box[1]) * scale
-    ox, oy = at or (M, TOP + (BOTTOM - TOP - h) / 2)
+    ox, oy = at or ((W - w) / 2, TOP + (BOTTOM - TOP - h) / 2)
     svg(cr, crop(svgs[side], page(side, *box)), ox, oy, w, h)
     return ox, oy, w, h
 
@@ -531,27 +531,13 @@ def main():
             ruler(cr, M, BOTTOM + 6)
             doc.next()
 
-        # component maps, 1:1
-        notes = {
-            "back": ["Seen from the back, with the board turned over, so left and right are swapped: the "
-                     "left half's controller sits at top left, the right half's at top right.",
-                     "Every part except the switches, the OLED and the encoder goes on this side.",
-                     "Diodes: band toward pad 1. LEDs: lit side down into the cut-out, cut corner on pad 1.",
-                     "Unfitted parts (the optional 100 nF capacitor beside each LED) are not shown.",
-                     "Switch footprints show only their hotswap socket pads.",
-                     "The next two pages enlarge the power parts and show each type of part close up."],
-        }
-        for side in ("back",):
-            for name in ("left", "right"):
-                h = halves[name]
-                cr = doc.page(f"{side.capitalize()} of the {name} half, 1:1",
-                              "Fabrication drawing: part outlines, pads and references.", total)
-                ox, oy, w, hh = map_page(cr, svgs, page, side, name, h)
-                y = TOP + 8
-                for s in notes[side]:
-                    y = paragraph(cr, s, ox + w + 10, y, 2.6, W - M - (ox + w + 10)) + 1.5
-                ruler(cr, M, BOTTOM + 6)
-                doc.next()
+        # the back of each half, 1:1
+        for name in ("left", "right"):
+            cr = doc.page(f"Back of the {name} half, 1:1",
+                          "Board turned over, so left and right are swapped. Diodes: band over the bar.", total)
+            map_page(cr, svgs, page, "back", name, halves[name])
+            ruler(cr, M, BOTTOM + 6)
+            doc.next()
 
         # power parts, enlarged
         cr = doc.page("Power parts beside each controller, from the back",

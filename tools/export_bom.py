@@ -20,7 +20,7 @@ OUT = ROOT / "fab"
 KINDS = [
     (r"SW_MX_HS_CPG151101S11_1u", "MX switch, 1u key", "Hotswap sockets", "Kailh socket on the back; switch + 1u keycap on top"),
     (r"SW_MX_HS_CPG151101S11_1\.25u", "MX switch, 1.25u key", "Hotswap sockets", "Kailh socket on the back; switch + 1.25u keycap (the two tall thumb keys turned 90°)"),
-    (r"D_SOD-123", "1N4148W diode", "Diodes", "SOD-123, back side; band (cathode) toward pad 1, the silkscreen bar"),
+    (r"D_SOD-123", "1N4148W diode", "Diodes", "SOD-123, back side; band (cathode) over the bar in its silkscreen outline, at pad 1"),
     (r"SK6812MINI-E", "SK6812MINI-E LED", "Per-key LEDs", "SMD, reverse-mount on the back; mind the corner mark"),
     (r"nice_nano|nRF52840", "nRF52840 SuperMini (nice!nano v2 clone)", "Controller", "on the back, socketed (Mill-Max/low-profile); check B+, GND and VCC first"),
     (r"SK12D07VG5", "SK12D07VG5 power slide switch", "Power switch",
