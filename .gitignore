@@ -40,3 +40,6 @@ pcb/lib/keygen.3dshapes/SW_SK12D07VG5.wrl
 # The part datasheets live in the "datasheets" release: python3 tools/publish.py --fetch datasheets
 docs/datasheets/*.pdf
 docs/datasheets/*.png
+
+# The build-guide video project: kept locally, never in git.
+video/
