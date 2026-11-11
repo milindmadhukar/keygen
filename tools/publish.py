@@ -34,8 +34,8 @@ RELEASES = {
         title="Build files",
         about="Everything needed to order and make Keygen: the PCB Gerbers (one zip per half, and both "
               "together), the switch plate Gerbers, DXFs and 1:1 print PDFs, the case STLs to print and "
-              "STEPs, the foam cut files, the schematic PDF, and the printed reference (key layout and "
-              "board at 1:1, part close-ups, keymap, key matrix and parts lists, on A4). Ordering notes: fab/ORDER.md and "
+              "STEPs, the foam cut files, the schematic PDF, and the printed reference (key layout, case "
+              "footprint and board at 1:1, part close-ups, keymap, key matrix and parts lists, on A4). Ordering notes: fab/ORDER.md and "
               "case/plate/PLATE.md in the repo.",
         globs=["fab/*.zip", "pcb/keygen-schematic.pdf", "docs/keygen-reference.pdf", "case/keygen-case.step", "case/*/stl/*.stl",
                "case/*/step/*.step", "case/*/dxf/*.dxf", "case/*/svg/*.svg", "case/*/pdf/*.pdf",

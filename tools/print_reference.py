@@ -4,6 +4,7 @@ black and white.
 
     cover                 contents, the scale check, both halves at 1:2
     key layout 1:1        each half: every keycap with its legend on each layer and its switch
+    case footprint 1:1    each assembled case half from above, to cut out and try on the desk
     back 1:1              each half turned over: where every part goes, by reference
     power parts           the small parts beside each controller, enlarged
     parts close up        one part of each type, with its orientation marks and how it goes in
@@ -15,7 +16,7 @@ Positions come from pcb/keygen.kicad_pcb, legends from the keymap pictures (asse
 the parts lists from fab/BOM.md. Print at 100 % ("Actual size", not "Fit to page") and measure the
 100 mm ruler on a 1:1 page.
 
-    python3 tools/print_reference.py
+    ~/.venvs/keygen-cad/bin/python tools/print_reference.py      (pcbnew, shapely, PyGObject's Rsvg)
 """
 import html, math, re, subprocess, sys, tempfile
 from pathlib import Path
@@ -23,6 +24,7 @@ from pathlib import Path
 import cairo
 import gi
 import pcbnew
+from shapely.geometry import Polygon
 
 gi.require_version("Rsvg", "2.0")
 gi.require_foreign("cairo")
@@ -293,6 +295,34 @@ def key_legend(cr):
     cr.restore()
 
 
+def case_footprint(cr, h):
+    """One assembled case half from above, centred: the case edge (the PCB outline grown by the
+    wall, as gen_case.py builds it), the PCB edge, the keycaps, the knob, the OLED and the largest
+    battery below the PCB."""
+    outer = Polygon(h["outline"]).buffer(C.WALL_OUT, join_style="mitre", mitre_limit=10)
+    x0, y0, x1, y1 = outer.bounds
+    cr.save()
+    cr.translate((W - (x1 - x0)) / 2 - x0, TOP + (BOTTOM - TOP - (y1 - y0)) / 2 - y0)
+    outline_path(cr, list(outer.exterior.coords)); cr.set_line_width(0.45); cr.stroke()
+    outline_path(cr, h["outline"])
+    cr.set_dash([1.8, 1.2]); cr.set_line_width(0.22); cr.set_source_rgb(GREY, GREY, GREY); cr.stroke()
+    cr.set_dash([]); cr.set_line_width(0.18); cr.set_source_rgb(0.65, 0.65, 0.65)
+    for k in h["keys"]:
+        cr.save(); cr.translate(k["x"], k["y"]); cr.rotate(math.radians(k["rot"]))
+        P.rrect(cr, k["w"] * G.U - C.CAP_GAP, k["h"] * G.U - C.CAP_GAP, 1.0); cr.stroke()
+        cr.restore()
+    cr.set_source_rgb(0, 0, 0)
+    bx0, by0, bx1, by1 = C.battery(h)["cell"]
+    cr.rectangle(bx0, by0, bx1 - bx0, by1 - by0)
+    cr.set_dash([3.0, 1.5]); cr.set_line_width(0.3); cr.stroke(); cr.set_dash([])
+    for ex, ey in h["enc"]:
+        cr.new_path(); cr.arc(ex, ey, C.KNOB_D / 2, 0, 2 * math.pi); cr.set_line_width(0.3); cr.stroke()
+    ox0, oy0, ox1, oy1 = h["oled"]
+    cr.rectangle(ox0, oy0, ox1 - ox0, oy1 - oy0); cr.stroke()
+    cr.restore()
+    return x1 - x0, y1 - y0
+
+
 # ---------------------------------------------------------------------------------------------
 # component maps (kicad-cli SVG of the fabrication layers)
 
@@ -483,6 +513,7 @@ def main():
             bom_pages.append((name, chunk))
 
         contents = [("Key layout, left half", "1:1"), ("Key layout, right half", "1:1"),
+                    ("Case footprint, left half", "1:1"), ("Case footprint, right half", "1:1"),
                     ("Back of the left half: where each part goes", "1:1"),
                     ("Back of the right half: where each part goes", "1:1"),
                     ("Power parts beside each controller", "enlarged"), ("Parts close up: how each type goes in", "enlarged"),
@@ -528,6 +559,15 @@ def main():
                           f"From above, as you type on it. Board {bw:.1f} × {bh:.1f} mm; USB-C at the top.", total)
             layout(cr, h, by_side(keys, side), by_side(knobs, side), leg, (W - bw) / 2, TOP + (BOTTOM - TOP - bh) / 2)
             key_legend(cr)
+            ruler(cr, M, BOTTOM + 6)
+            doc.next()
+
+        # case footprint, 1:1
+        for name in ("left", "right"):
+            cr = doc.page(f"Case footprint, {name} half, 1:1", "", total)
+            w, hh = case_footprint(cr, C.halves()[name])
+            text(cr, f"Solid: case edge, {w:.1f} × {hh:.1f} mm.  Grey dashed: PCB edge.  "
+                 "Light grey: keycaps.  Long dashes: the largest battery below the PCB.", M, 18.5, 2.8, grey=0.25)
             ruler(cr, M, BOTTOM + 6)
             doc.next()
 

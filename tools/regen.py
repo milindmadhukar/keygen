@@ -107,7 +107,7 @@ STEPS = [
      ["fab/keygen-gerbers.zip", "fab/keygen-left-gerbers.zip", "fab/keygen-right-gerbers.zip", "fab/ORDER.md"]),
     ("assembly-bom", [PY, "tools/export_bom.py"], ["pcb/*.kicad_sch", "bom/bom.csv"], ["fab/BOM.md", "fab/BOM-*.csv"]),
     ("bom-page", [PY, "tools/render_bom.py"], ["bom/bom.csv"], ["plan/bom.html", "notes/13 - bill of materials.md"]),
-    ("print-reference", [PY, "tools/print_reference.py"], [PCB, "assets/keymap-*.svg", "fab/BOM.md"],
+    ("print-reference", [CAD, "tools/print_reference.py"], [PCB, "assets/keymap-*.svg", "fab/BOM.md"],
      ["docs/keygen-reference.pdf"]),
 ]
 LOCAL = {"blender", "encoder-mockup"}

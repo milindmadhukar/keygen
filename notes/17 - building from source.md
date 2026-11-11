@@ -120,7 +120,7 @@ python3 tools/render_routing.py  # assets/pcb-routing.png
 python3 tools/render_assembly.py # assets/assembly-*.png: maps, the which-side overview and part close-ups
 python3 tools/draw_assembly.py   # assets/assembly-{standoffs,switch-pads}.svg: fitting the standoffs and switch pads
 python3 tools/render_keymap.py   # assets/keymap-*.svg: one picture per keymap layer
-python3 tools/print_reference.py # docs/keygen-reference.pdf: the printed A4 reference
+~/.venvs/keygen-cad/bin/python tools/print_reference.py # docs/keygen-reference.pdf: the printed A4 reference
 python3 tools/gen_oled_assets.py # firmware/module/src/ui/kg_assets.{c,h}: the OLED fonts, icons and logo
 python3 tools/render_oled.py     # assets/oled-*.gif, oled-{left,right}.svg: the OLED screens (gcc, Pillow)
 python3 tools/gen_zmk_layout.py  # firmware/boards/shields/keygen/keygen-layouts.dtsi
@@ -185,7 +185,7 @@ from `tools/regen.py`. A fresh clone runs every step on its first `regen.py`.
 | `pcb/plate/keygen-plate.kicad_pcb` | The switch plate as a KiCad board, both halves | `gen_plate.py` |
 | `case/` | Everything outside the PCB, one folder per part and one folder per file type inside it (below) | `gen_case.py`, `gen_plate.py`, `plate_print.py` |
 | `pcb/keygen-schematic.pdf` | Printable schematic | `kicad-cli sch export pdf` |
-| `docs/keygen-reference.pdf` | The printed reference, A4 in black and white: key layout with every layer's legends and the back of each half at 1:1, power parts and part close-ups, keymap, key matrix and controller pads, parts lists to tick | `print_reference.py` |
+| `docs/keygen-reference.pdf` | The printed reference, A4 in black and white: key layout with every layer's legends, the case footprint and the back of each half at 1:1, power parts and part close-ups, keymap, key matrix and controller pads, parts lists to tick | `print_reference.py` |
 | `pcb/lib/keygen.3dshapes/` | 3D models for KiCad's 3D view: knob, OLED module, DSA keycaps (also as STL, for Blender), controller | `gen_models.py`, `gen_keycaps.py`, `gen_schematic.py` |
 | `assets/render-*.png` | The board (assembled and bare), case and plate renders | `render_board.py`, `render_case.py` |
 | `assets/render-studio-*` | The Blender stills and GIFs | `render_blender.py`, `blend_render.py` |

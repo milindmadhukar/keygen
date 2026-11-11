@@ -131,7 +131,7 @@ Renders of the case parts, the plate and the routing are in the [`media` release
 | [Design notes](notes/index.md) | The Obsidian design notes: layout, controller, PCB, case, final design, datasheet audit |
 | [Encoder mount](docs/encoder-mount.md) | The encoder boss, knob clearance, the plate and PCB openings, the cable and a printable test coupon |
 | [Build plan](plan/index.html) | Layout drawing, connectivity, parts, pin budget and checklist. Open it in a browser |
-| [Printed reference (PDF)](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-reference.pdf) | A4, black and white: each half's key layout with every layer's legends and the back of the board at 1:1, the power parts and each part type close up, the keymap, the key matrix with the controller's pads, and the parts lists |
+| [Printed reference (PDF)](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-reference.pdf) | A4, black and white: each half's key layout with every layer's legends, the case footprint and the back of the board at 1:1, the power parts and each part type close up, the keymap, the key matrix with the controller's pads, and the parts lists |
 | [Schematic (PDF)](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-schematic.pdf) | A top sheet with left (refs 1xx) and right (refs 2xx) sub-sheets |
 | [KiCad project](pcb/keygen.kicad_pro) | Schematic and PCB, KiCad 10. Both halves are in one board file as two separate outlines |
 | [Build files](https://github.com/milindmadhukar/keygen/releases/tag/build) | The PCB and plate Gerbers, case and wedge STLs and STEPs, foam cut files and plate print PDFs, as a release |

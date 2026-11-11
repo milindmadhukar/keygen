@@ -139,7 +139,7 @@ before you solder it.
 
 The same maps, at full size, are in the printed reference,
 [`keygen-reference.pdf`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-reference.pdf):
-each half's key layout and the back of the board at 1:1, the power parts and each part type close
+each half's key layout, the case footprint and the back of the board at 1:1, the power parts and each part type close
 up, the keymap, the key matrix and the parts lists to tick off, on A4 in black and white. Print it at
 100 % ("Actual size") and check its 100 mm ruler.
 
