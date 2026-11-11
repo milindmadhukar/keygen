@@ -526,7 +526,7 @@ def main():
             bw, bh = h["box"][2] - h["box"][0], h["box"][3] - h["box"][1]
             cr = doc.page(f"Key layout, {side} half, 1:1",
                           f"From above, as you type on it. Board {bw:.1f} × {bh:.1f} mm; USB-C at the top.", total)
-            layout(cr, h, by_side(keys, side), by_side(knobs, side), leg, M, TOP + (BOTTOM - TOP - bh) / 2)
+            layout(cr, h, by_side(keys, side), by_side(knobs, side), leg, (W - bw) / 2, TOP + (BOTTOM - TOP - bh) / 2)
             key_legend(cr)
             ruler(cr, M, BOTTOM + 6)
             doc.next()
