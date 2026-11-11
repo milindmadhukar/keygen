@@ -318,9 +318,10 @@ def board_svgs(tmp):
         for fp in b.GetFootprints():
             ref = fp.GetReference()
             switch = re.fullmatch(r"SW\d+", ref) and int(ref[2:]) % 100 < 90
-            for pad in fp.Pads():                    # on no layer, so never drawn
+            for pad in fp.Pads():
                 if fp.IsDNP() or (refs and switch and pad.HasHole()):
-                    pad.SetLayerSet(pcbnew.LSET())
+                    pad.SetAttribute(pcbnew.PAD_ATTRIB_NPTH)    # a plated pad keeps its copper layers
+                    pad.SetLayerSet(pcbnew.LSET())               # on no layer, so never drawn
         b.Save(str(A.TMP))
         for side in ("back",) if refs else ("back", "front"):
             f = tmp / f"{side}{'' if refs else '-bare'}.svg"
