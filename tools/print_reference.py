@@ -278,31 +278,19 @@ def layout(cr, half, keys, knobs, leg, ox, oy, scale=1.0, detail=True):
     cr.restore()
 
 
-def key_legend(cr, x, y):
-    """The sample keycap that says which legend is which."""
-    text(cr, "Reading a key", x, y, 3.2, bold=True)
-    s = 3.0
-    cr.save(); cr.translate(x + 30, y + 34); cr.scale(s, s)
+def key_legend(cr):
+    """A small sample keycap in the page's bottom right corner: which legend is which layer."""
+    s = 1.5
     w = G.U - CAP_GAP
+    x, y = W - M - w * s / 2, BOTTOM - w * s / 2
+    text(cr, "Legends", x, y - w * s / 2 - 1.5, 2.4, align="centre", grey=GREY)
+    cr.save(); cr.translate(x, y); cr.scale(s, s)
     P.rrect(cr, w, w, 1.2); cr.set_line_width(0.3 / s); cr.stroke()
-    text(cr, "Base", 0, 0.6, 3.2, bold=True, align="centre")
+    text(cr, "Base", 0, 0.2, 3.2, bold=True, align="centre")
     for lab, corner in (("Nav", "tl"), ("Fn", "tr"), ("System", "bl"), ("hold", "br")):
         corner_text(cr, [lab], corner, w, w, w / 2 - 2.0, 1.1, 1.5, italic=lab == "hold")
     text(cr, "SW1xx", 0, w / 2 - 1.1 - 3.2, 1.05, align="centre", grey=GREY)
     cr.restore()
-    notes = [
-        "Middle: the key on the base layer, bold.",
-        "Top left: the Nav layer (hold Nav).",
-        "Top right: the Fn layer (hold Fn).",
-        "Bottom left: the System layer (Nav and Fn together).",
-        "Bottom right, italic: what the key does when held.",
-        "Grey: the switch's reference on the board.",
-        "Dashed circle: the encoder knob; it lists its press and its turn per layer.",
-        "Dashed box: the OLED.  Circles: the M2 standoff holes.",
-    ]
-    yy = y + 66
-    for n in notes:
-        yy = paragraph(cr, n, x, yy, 2.5, 84) + 0.8
 
 
 # ---------------------------------------------------------------------------------------------
@@ -539,7 +527,7 @@ def main():
             cr = doc.page(f"Key layout, {side} half, 1:1",
                           f"From above, as you type on it. Board {bw:.1f} × {bh:.1f} mm; USB-C at the top.", total)
             layout(cr, h, by_side(keys, side), by_side(knobs, side), leg, M, TOP + (BOTTOM - TOP - bh) / 2)
-            key_legend(cr, M + bw + 14, TOP + 6)
+            key_legend(cr)
             ruler(cr, M, BOTTOM + 6)
             doc.next()
 
