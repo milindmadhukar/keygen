@@ -66,7 +66,7 @@ The shopping list with spares and prices is `bom/bom.csv` / `plan/bom.html`.
 | JST-PH 2-pin battery connector | 2 | 4 | Robu.in "JST PH 2.0 2 pin" |
 | 22 µF capacitor (1206) | 4 | 8 | [Robu.in, CS3216X7R226K160NRI](https://robu.in/product/cs3216x7r226k160nri-samwha-16v-22uf-x7r-%c2%b110-1206-multilayer-ceramic-capacitors-mlcc-smd-smt-rohs/) |
 | 100 nF capacitor (0805) | 2 | 4 | [Robu.in, CC0805KKX7R0BB104](https://robu.in/product/cc0805kkx7r0bb104-yageo-100v-100nf-x7r-%c2%b110-0805-multilayer-ceramic-capacitors-mlcc-smd-smt-rohs/) |
-| 10 µF capacitor (1206) | 4 | 8 | Robu.in / Lamington Road |
+| 10 µF capacitor (1206) | 4 | 8 | [Robu.in, CS3216X7R106K250NRI](https://robu.in/product/cs3216x7r106k250nri-samwha-25v-10uf-x7r-%c2%b110-1206-multilayer-ceramic-capacitors-mlcc-smd-smt-rohs/) |
 | 100 nF capacitor (0805), optional | 66 | 132 | [Robu.in, CC0805KKX7R0BB104](https://robu.in/product/cc0805kkx7r0bb104-yageo-100v-100nf-x7r-%c2%b110-0805-multilayer-ceramic-capacitors-mlcc-smd-smt-rohs/) |
 | 1N4148W diode | 68 | 136 | [Robu.in, 1N4148W-7-F](https://robu.in/product/1n4148w-7-f-diodes-incorporated-100v-independent-type-1-25v150ma-4ns-300ma-sod-123-switching-diodes-rohs/) |
 | EC11 rotary encoder | 2 | 4 | [Robu.in, Hongyan EC11](https://robu.in/product/hongyan-ec11h-7ce20p1zd20-rotary-encoder-with-push-button-switch-vertical-plug-in-5-pin/) |

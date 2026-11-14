@@ -112,7 +112,7 @@ def compress(refs):
 MPN = {
     "1N4148W diode": "1N4148W-7-F (Diodes Incorporated, SOD-123)",
     "SK6812MINI-E LED": "SK6812MINI-E (OPSCO, LCSC C5149201)",
-    "10 µF capacitor (1206)": "CL31A106KBHNNNE (Samsung, 10 µF 50 V X5R 1206)",
+    "10 µF capacitor (1206)": "CS3216X7R106K250NRI (Samwha, 10 µF 25 V X7R 1206)",
     "22 µF capacitor (1206)": "CS3216X7R226K160NRI (Samwha, 22 µF 16 V X7R 1206)",
     "100 nF capacitor (0805)": "100 nF 50 V X7R 0805 (any)",
     "TPS61023 boost converter (SOT-563)": "TPS61023DRLR (Texas Instruments)",
