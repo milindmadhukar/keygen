@@ -110,12 +110,12 @@ python3 tools/render_keymap.py   # assets/keymap-*.svg, with keymap-drawer throu
 
 The screens in [`module/src/ui`](module/src/ui) are not yet built into the firmware, which still
 runs ZMK's status screen. [`tools/render_oled.py`](../tools/render_oled.py) compiles them on the PC
-and plays scripted scenes through them; the pictures below are its output, pixel for pixel, at the
-panel's 2:1 with square pixels.
+and plays scripted scenes through them; the videos below (MP4, linked from each picture) are its
+output, pixel for pixel, at the panel's 2:1 with square pixels.
 
 ```sh
 python3 tools/gen_oled_assets.py   # module/src/ui/kg_assets.{c,h}: fonts, icons and logo
-python3 tools/render_oled.py       # assets/oled-*.gif and oled-{left,right}.svg (needs gcc and Pillow)
+python3 tools/render_oled.py       # assets/oled-*.mp4 and oled-{left,right}.svg (needs gcc, Pillow and ffmpeg)
 ```
 
 ### Boot
@@ -127,13 +127,13 @@ each half, then dissolves into the status screen; a key press skips it.
 
 | Left | Right |
 |---|---|
-| ![Left OLED boot: the KEYGEN logo drawn in over star dust and a crescent moon](https://github.com/milindmadhukar/keygen/releases/download/media/oled-boot-left.gif) | ![Right OLED boot: a serial generated and accepted between two spinning cubes](https://github.com/milindmadhukar/keygen/releases/download/media/oled-boot-right.gif) |
+| [![Left OLED boot: the KEYGEN logo drawn in over star dust and a crescent moon](https://github.com/milindmadhukar/keygen/releases/download/media/oled-boot-left-poster.png)](https://github.com/milindmadhukar/keygen/releases/download/media/oled-boot-left.mp4) | [![Right OLED boot: a serial generated and accepted between two spinning cubes](https://github.com/milindmadhukar/keygen/releases/download/media/oled-boot-right-poster.png)](https://github.com/milindmadhukar/keygen/releases/download/media/oled-boot-right.mp4) |
 
 ### Status
 
 | Left | Right |
 |---|---|
-| ![Left OLED status: output, profiles, batteries, layers, modifiers and WPM](https://github.com/milindmadhukar/keygen/releases/download/media/oled-left.gif) | ![Right OLED status: link, battery, the layer and a WPM graph](https://github.com/milindmadhukar/keygen/releases/download/media/oled-right.gif) |
+| [![Left OLED status: output, profiles, batteries, layers, modifiers and WPM](https://github.com/milindmadhukar/keygen/releases/download/media/oled-left-poster.png)](https://github.com/milindmadhukar/keygen/releases/download/media/oled-left.mp4) | [![Right OLED status: link, battery, the layer and a WPM graph](https://github.com/milindmadhukar/keygen/releases/download/media/oled-right-poster.png)](https://github.com/milindmadhukar/keygen/releases/download/media/oled-right.mp4) |
 
 - Left: the output (USB, or the Bluetooth profile with ✓ when connected), the link to the right
   half and caps lock along the top; the five profiles (lit when active, outlined when paired,
@@ -150,7 +150,7 @@ On the right OLED, beside the right knob. Turning the knob changes the selected 
 it moves to the next: power, effect (Solid, Breathe, Spectrum, Swirl), hue, saturation, brightness
 and speed. On battery power it notes that the LEDs light only on USB power.
 
-![Right OLED lighting menu: power, effect, hue, saturation, brightness and speed](https://github.com/milindmadhukar/keygen/releases/download/media/oled-light-menu.gif)
+[![Right OLED lighting menu: power, effect, hue, saturation, brightness and speed](https://github.com/milindmadhukar/keygen/releases/download/media/oled-light-menu-poster.png)](https://github.com/milindmadhukar/keygen/releases/download/media/oled-light-menu.mp4)
 
 ## Hardware support
 

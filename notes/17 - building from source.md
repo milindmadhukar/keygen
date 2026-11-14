@@ -122,10 +122,10 @@ python3 tools/draw_assembly.py   # assets/assembly-{standoffs,switch-pads}.svg: 
 python3 tools/render_keymap.py   # assets/keymap-*.svg: one picture per keymap layer
 ~/.venvs/keygen-cad/bin/python tools/print_reference.py # docs/keygen-reference.pdf: the printed A4 reference
 python3 tools/gen_oled_assets.py # firmware/module/src/ui/kg_assets.{c,h}: the OLED fonts, icons and logo
-python3 tools/render_oled.py     # assets/oled-*.gif, oled-{left,right}.svg: the OLED screens (gcc, Pillow)
+python3 tools/render_oled.py     # assets/oled-*.mp4, oled-{left,right}.svg: the OLED screens (gcc, Pillow, ffmpeg)
 python3 tools/gen_zmk_layout.py  # firmware/boards/shields/keygen/keygen-layouts.dtsi
 python3 tools/gen_blend.py       # blender/keygen-parts.blend (local, see below)
-python3 tools/render_blender.py  # assets/render-studio-*: the Blender stills and GIFs
+python3 tools/render_blender.py  # assets/render-studio-*: the Blender stills and videos
 ```
 
 ## Blender scene
@@ -153,14 +153,22 @@ black-mask PCB.
 - The LED colours are `LED_SCHEME` in `tools/blend_scene.py` (`gradient`, `lavender`, `white`,
   `rainbow`), and the materials are defined there too.
 - `tools/render_blender.py` (the `studio-renders` step) renders the README's pictures from the
-  studio file with Cycles: `assets/render-studio-{hero,top,thumbs,oled,side,bottom}.jpg` at 1920 × 1080,
-  and the `render-studio-{leds,turntable,bootup}.gif` animations. `bootup` shows both OLEDs in a
-  closeup using frames from the firmware simulator. The bottom view turns the
-  keyboard over onto the floor, its LEDs off. The hero uses the studio camera, so moving it moves the
-  README picture; the other views are set up in `tools/blend_render.py`. Pass a view name, for
-  example `python3 tools/render_blender.py bootup`, to render only that asset. `--preview` renders
-  small and noisy into `/tmp/keygen-preview/`. The README keeps the hero inline and lists extra
-  media as inline images and animations inside a dropdown.
+  studio file: the stills `assets/render-studio-{hero,top,thumbs,oled,side,bottom}.jpg` with Cycles
+  at 1920 × 1080, and the videos `render-studio-{film,leds,turntable,bootup}.mp4` with EEVEE at
+  1920 × 1080 and 30 frames a second, on the discrete GPU (`DRI_PRIME=1`). EEVEE renders a frame in
+  about 4 s where Cycles on the CPU takes 40; every light casts shadows, or the LED lights would shine
+  through the case. `film` is the hero video, one 16.5 s take: both OLEDs boot in the dark, the LEDs
+  sweep on from the middle, the camera glides low along the keys under a rainbow wave, then rises to
+  the studio camera as the LEDs settle into the studio scheme. Its camera path is the `shots` table
+  in `film()`. `bootup` shows both OLEDs in a closeup; both use frames from the firmware simulator.
+  Each video gets a poster, `render-studio-<video>-poster.jpg`, one of its frames with a play mark:
+  GitHub does not play a release asset's video inside a README, so the README shows the poster,
+  linked to the MP4. The bottom view turns the keyboard over onto the floor, its LEDs off. The hero
+  uses the studio camera, so moving it moves the README picture and the film's last shot; the other
+  views are set up in `tools/blend_render.py`. Pass a view name, for example
+  `python3 tools/render_blender.py bootup`, to render only that asset. `--preview` renders small and
+  noisy into `$TMPDIR/keygen-preview/`, a few frames of each video as a contact sheet. The README keeps
+  the hero picture and the film inline and lists the other media inside a dropdown.
 
 ## Generated files
 
@@ -170,7 +178,7 @@ the generated 3D models) are not in git. When `main` is pushed, `.githooks/pre-p
 push while anything is stale, then runs `tools/publish.py`, which uploads whatever changed to two
 releases whose tags never move, so their links stay put:
 
-- [`media`](https://github.com/milindmadhukar/keygen/releases/tag/media): the renders and GIFs the README and these notes show;
+- [`media`](https://github.com/milindmadhukar/keygen/releases/tag/media): the renders and videos the README and these notes show;
 - [`build`](https://github.com/milindmadhukar/keygen/releases/tag/build): everything to order, print or cut, and the schematic PDF.
 
 The part datasheets are a third release, [`datasheets`](https://github.com/milindmadhukar/keygen/releases/tag/datasheets).
@@ -188,12 +196,12 @@ from `tools/regen.py`. A fresh clone runs every step on its first `regen.py`.
 | `docs/keygen-reference.pdf` | The printed reference, A4 in black and white: key layout with every layer's legends, the case footprint and the back of each half at 1:1, power parts and part close-ups, keymap, key matrix and controller pads, parts lists to tick | `print_reference.py` |
 | `pcb/lib/keygen.3dshapes/` | 3D models for KiCad's 3D view: knob, OLED module, DSA keycaps (also as STL, for Blender), controller | `gen_models.py`, `gen_keycaps.py`, `gen_schematic.py` |
 | `assets/render-*.png` | The board (assembled and bare), case and plate renders | `render_board.py`, `render_case.py` |
-| `assets/render-studio-*` | The Blender stills and GIFs | `render_blender.py`, `blend_render.py` |
+| `assets/render-studio-*` | The Blender stills, videos and posters | `render_blender.py`, `blend_render.py` |
 | `assets/pcb-routing.png` | Both copper layers | `render_routing.py` |
 | `assets/assembly-*.png` | Assembly maps: every part's reference on each side of each half, the power parts enlarged, the overview of which part goes on which side, and a close-up of each part type with its orientation (`assembly-part-*.png`) | `render_assembly.py` |
 | `assets/assembly-standoffs.svg`, `assets/assembly-switch-pads.svg` | How to fit the standoffs and stick the switch pads, drawn from the board and `case_geometry.py` | `draw_assembly.py` |
 | `assets/keymap-*.svg` | One picture per keymap layer | `render_keymap.py` |
-| `assets/oled-*.gif`, `assets/oled-*.svg` | The OLED screens: the boot animation, both status screens and the lighting menu as GIFs, and each half's status screen as an SVG for Blender; from the screen code in `firmware/module/src/ui`, built for the PC | `render_oled.py` |
+| `assets/oled-*.mp4`, `assets/oled-*-poster.png`, `assets/oled-*.svg` | The OLED screens: the boot animation, both status screens and the lighting menu as MP4s with a poster each, and each half's status screen as an SVG for Blender; from the screen code in `firmware/module/src/ui`, built for the PC | `render_oled.py` |
 | `firmware/module/src/ui/kg_assets.{c,h}` | The OLED fonts, icons and logo | `gen_oled_assets.py` |
 | `firmware/boards/shields/keygen/keygen-layouts.dtsi` | ZMK matrix transform and physical layout | `gen_zmk_layout.py` |
 | `tools/regen.lock` | The input hashes each step last ran with | `regen.py` |

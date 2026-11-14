@@ -22,7 +22,7 @@ tools/regen.local.lock
 # releases "media" (README pictures) and "build" (manufacturing and CAD files) on every push to main.
 assets/*.png
 assets/*.jpg
-assets/*.gif
+assets/*.mp4
 case/**/*.step
 case/**/*.stl
 case/**/*.dxf

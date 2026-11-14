@@ -5,7 +5,7 @@ The renders, the manufacturing and CAD files and the datasheets are not in git (
 They are assets of three releases of the repo, each under a fixed tag, so their download URLs
 never change (https://github.com/<repo>/releases/download/<tag>/<file>):
 
-media       the pictures in the README and the notes: assets/*.png, *.jpg, *.gif
+media       the pictures in the README and the notes: assets/*.png, *.jpg, *.mp4
 build       PCB and plate Gerbers, case and plate STLs and STEPs, foam cut files, the plate print
             PDFs, the schematic PDF and the printed reference
 datasheets  the part datasheets that docs/datasheets/README.md cites
@@ -29,7 +29,7 @@ RELEASES = {
     "media": dict(
         title="README pictures",
         about="The renders and animations shown in the README and the design notes.",
-        globs=["assets/*.png", "assets/*.jpg", "assets/*.gif"], prune=True),
+        globs=["assets/*.png", "assets/*.jpg", "assets/*.mp4"], prune=True),
     "build": dict(
         title="Build files",
         about="Everything needed to order and make Keygen: the PCB Gerbers (one zip per half, and both "

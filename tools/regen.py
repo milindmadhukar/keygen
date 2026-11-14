@@ -60,7 +60,7 @@ STEPS = [
     ("oled-assets", [PY, "tools/gen_oled_assets.py"], [],
      ["firmware/module/src/ui/kg_assets.c", "firmware/module/src/ui/kg_assets.h"]),
     ("oled", [PY, "tools/render_oled.py"], ["firmware/module/src/ui/**", "firmware/module/sim/**"],
-     ["assets/oled-*.svg", "assets/oled-*.gif"]),
+     ["assets/oled-*.svg", "assets/oled-*.mp4", "assets/oled-*-poster.png"]),
     ("models", [CAD, "tools/gen_models.py"], [],
      ["pcb/lib/keygen.3dshapes/Knob_17mm.step", "pcb/lib/keygen.3dshapes/OLED_096_I2C.step"]),
     ("plate", [PY, "tools/gen_plate.py"], [PCB],
@@ -97,12 +97,8 @@ STEPS = [
      [PCB, "pcb/keygen.kicad_pro", "pcb/lib/**", *SUBMODULES, "case/*/stl/*.stl", "tools/gen_blend.py",
       "tools/blend_scene.py", "tools/blend_render.py", "blender/keygen.blend", "tools/render_oled.py",
       "assets/oled-*.svg", "firmware/module/src/ui/**", "firmware/module/sim/**"],
-     ["assets/render-studio-*.jpg", "assets/render-studio-*.gif", "assets/render-studio-bootup.gif"]),
-    ("studio-tented", [PY, "tools/render_blender.py", "--tented"],
-     [PCB, "pcb/keygen.kicad_pro", "pcb/lib/**", *SUBMODULES, "case/*/stl/*.stl", "tools/gen_blend.py",
-      "tools/blend_scene.py", "tools/blend_render.py", "blender/keygen.blend", "tools/render_oled.py",
-      "assets/oled-*.svg"],
-     ["assets/render-studio-tented-*.jpg", "assets/render-studio-tented-*.gif"]),
+     ["assets/render-studio-*.jpg", "assets/render-studio-*.mp4", "assets/render-studio-film.mp4",
+      "assets/render-studio-bootup.mp4"]),
     ("fab", [PY, "tools/export_fab.py"], [PCB, "pcb/keygen.kicad_pro"],
      ["fab/keygen-gerbers.zip", "fab/keygen-left-gerbers.zip", "fab/keygen-right-gerbers.zip", "fab/ORDER.md"]),
     ("assembly-bom", [PY, "tools/export_bom.py"], ["pcb/*.kicad_sch", "bom/bom.csv"], ["fab/BOM.md", "fab/BOM-*.csv"]),
@@ -111,7 +107,7 @@ STEPS = [
      ["docs/keygen-reference.pdf"]),
 ]
 LOCAL = {"blender", "encoder-mockup"}
-ON_REQUEST = {"blender", "encoder-mockup", "studio-renders", "studio-tented"}
+ON_REQUEST = {"blender", "encoder-mockup", "studio-renders"}
 
 
 def git(*args):

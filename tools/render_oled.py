@@ -8,15 +8,18 @@ them, and turns the frames into:
     assets/oled-left.svg, oled-right.svg   the state in the renders: both halves on USB power, the
                                            left connected to Bluetooth profile 1, on the Base layer
                                            (tools/gen_blend.py reads them for the Blender scene)
-    assets/oled-boot-left.gif, oled-boot-right.gif   the boot animation on each half
-    assets/oled-left.gif, oled-right.gif   the status screens through layers, modifiers, caps lock,
+    assets/oled-boot-left.mp4, oled-boot-right.mp4   the boot animation on each half
+    assets/oled-left.mp4, oled-right.mp4   the status screens through layers, modifiers, caps lock,
                                            a profile change, USB and a lost link
-    assets/oled-light-menu.gif             the lighting menu on the right half
+    assets/oled-light-menu.mp4             the lighting menu on the right half
+    assets/oled-<video>-poster.png         a frame of each video with a play mark, for the docs to link
 
     python3 tools/render_oled.py
 """
 import re, subprocess, tempfile
 from pathlib import Path
+
+import media
 
 ROOT = Path(__file__).resolve().parent.parent
 UI = ROOT / "firmware/module/src/ui"
@@ -25,9 +28,11 @@ W, H = 128, 64
 PIXEL = "#F2F4F6"                        # a white OLED
 GLASS = "#050506"
 # The panel: 128 x 64 over a 21.7 x 10.9 mm active area, square pixels on a 0.17 mm pitch, each lit
-# over about 90 % of it. The GIFs draw a pixel as 9 of every 10 GIF pixels, unlit ones as the glass.
-SCALE, LIT, BORDER = 10, 9, 4            # GIF pixels per OLED pixel, lit of them, OLED pixels of glass
-GIFS = ["boot-left", "boot-right", "left", "right", "light-menu"]
+# over about 90 % of it. The videos draw a pixel as 9 of every 10 video pixels, unlit ones as the glass.
+SCALE, LIT, BORDER = 10, 9, 4            # video pixels per OLED pixel, lit of them, OLED pixels of glass
+FPS = 30
+# each video, and where its poster is, in ms from its start
+VIDEOS = {"boot-left": 4600, "boot-right": 4600, "left": 2500, "right": 2500, "light-menu": 3000}
 
 
 def frames(path):
@@ -68,30 +73,37 @@ def read_svg(path):
     return px
 
 
-def gif(scene, path):
-    """The scene as an animated GIF at the panel's 2:1, each lit pixel a square with the panel's gap."""
+def video(scene, path, poster_ms):
+    """The scene as an MP4 at the panel's 2:1, each lit pixel a square with the panel's gap, and its
+    poster: the frame at poster_ms with a play mark."""
     from PIL import Image
     hexrgb = lambda c: tuple(int(c[i:i + 2], 16) for i in (1, 3, 5))
     palette = [*hexrgb(GLASS), *hexrgb(PIXEL)]
     cell, lit = SCALE, LIT
     size = ((W + 2 * BORDER) * cell, (H + 2 * BORDER) * cell)
-    images, durations = [], []
+    images, ends, cache, elapsed = [], [], {}, 0
     for ms, px in scene:
-        if images and px == images[-1][0]:
-            durations[-1] += ms
-            continue
-        img = Image.new("P", size, 0)
-        img.putpalette(palette)
-        for y, row in enumerate(px):
-            for x, on in enumerate(row):
-                if on:
-                    x0, y0 = (x + BORDER) * cell, (y + BORDER) * cell
-                    img.paste(1, (x0, y0, x0 + lit, y0 + lit))
-        images.append((px, img))
-        durations.append(ms)
-    first, *rest = [img for _, img in images]
-    first.save(path, save_all=True, append_images=rest, duration=durations, loop=0, optimize=False,
-               disposal=1)
+        key = bytes(v for row in px for v in row)
+        if key not in cache:
+            img = Image.new("P", size, 0)
+            img.putpalette(palette)
+            for y, row in enumerate(px):
+                for x, on in enumerate(row):
+                    if on:
+                        x0, y0 = (x + BORDER) * cell, (y + BORDER) * cell
+                        img.paste(1, (x0, y0, x0 + lit, y0 + lit))
+            cache[key] = img.convert("RGB")
+        elapsed += ms
+        images.append(cache[key]); ends.append(elapsed)
+
+    def at(ms):
+        return images[min(next((i for i, e in enumerate(ends) if e > ms), len(ends) - 1), len(images) - 1)]
+    count = max(1, round(elapsed * FPS / 1000))
+    media.mp4_raw((at(f * 1000 / FPS).tobytes() for f in range(count)), size, FPS, path)
+    with tempfile.TemporaryDirectory(prefix="kg-oled-poster-") as tmp:
+        frame = Path(tmp) / "frame.png"
+        at(poster_ms).save(frame)
+        media.poster(frame, path.with_name(f"{path.stem}-poster.png"))
 
 
 def simulate(tmp):
@@ -110,10 +122,10 @@ def main():
             out = ROOT / f"assets/oled-{side}.svg"
             out.write_text(svg(frames(Path(tmp) / f"still-{side}.frames")[-1][1]))
             print(f"wrote {out.relative_to(ROOT)}")
-        for name in GIFS:
-            out = ROOT / f"assets/oled-{name}.gif"
-            gif(frames(Path(tmp) / f"{name}.frames"), out)
-            print(f"wrote {out.relative_to(ROOT)}")
+        for name, poster_ms in VIDEOS.items():
+            out = ROOT / f"assets/oled-{name}.mp4"
+            video(frames(Path(tmp) / f"{name}.frames"), out, poster_ms)
+            print(f"wrote {out.relative_to(ROOT)} and its poster")
 
 
 if __name__ == "__main__":

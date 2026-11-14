@@ -10,31 +10,44 @@ thumbs.png            close up on the left half's knob, OLED and thumb cluster
 oled.png              close up on the left half's OLED, showing its status screen, and the knob
 side.png              low along the back edge: the case's profile, the USB-C ports and power switches
 bottom.png            straight down on the keyboard turned over on the floor: the case's underside
-leds_####.png         the hero view, a rainbow wave running across the LEDs (a looping GIF's frames)
-turntable_####.png    one turn round the keyboard (a looping GIF's frames)
+leds_####.png         the hero view, a rainbow wave running across the LEDs (a looping video's frames)
+turntable_####.png    one turn round the keyboard (a looping video's frames)
 bootup_####.png       close-up of both OLEDs showing the firmware boot sequence
+film_####.png         the hero film: the OLEDs boot in the dark, the LEDs sweep on, the camera glides low
+                      along the keys under a rainbow wave and rises to the studio camera as the LEDs
+                      settle into the studio colours
 
-The linked parts are swapped for a local copy first, so the LEDs and the camera can be animated.
---preview renders small and noisy, to check a change quickly. --tented stands each half on its wedge.
+<outdir> keeps what is done: a still or frame already there, whole, is not rendered again, so a run
+that stops part way picks up where it left off. Before each still and frame, a hot GPU or CPU waits to
+cool, and the GPU rests between frames (tools/thermal.py).
+
+The stills render with Cycles; the animations, 1920 x 1080 at 30 frames a second, with EEVEE (on the GPU,
+with shadows, so the LEDs light only the caps). The linked parts are swapped for a local copy first, so
+the LEDs and the camera can be animated. --preview renders small and noisy, and only a few frames of each
+animation, to check a change quickly.
 """
-import bisect, colorsys, math, sys
+import bisect, colorsys, math, sys, time
 from array import array
 from pathlib import Path
 
-import bmesh, bpy
-from mathutils import Matrix, Vector
+import bpy
+from mathutils import Vector
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import thermal
 
 argv = sys.argv[sys.argv.index("--") + 1:]
 OUT = Path(argv[0])
 PREVIEW = "--preview" in argv
-TENTED = "--tented" in argv
 VIEWS = [a for a in argv[1:] if not a.startswith("--")] or ["hero", "top", "thumbs", "oled", "side", "leds",
-                                                             "turntable", "bottom"]
+                                                             "turntable", "film", "bottom"]
 
 STILL = dict(width=1920, height=1080, samples=128)
-FRAMES = dict(width=640, height=360, samples=16)
-LED_FRAMES, TURN_FRAMES = 36, 48
+MOTION = dict(width=1920, height=1080, samples=32)    # EEVEE samples per frame
+FPS = 30
+LED_FRAMES, TURN_FRAMES = 4 * FPS, 8 * FPS
 WAVE_SPAN = 0.7            # hues across the keyboard at once in the LED wave
+PREVIEW_FRAMES = 6         # frames of each animation that --preview renders, spread over its length
 
 
 def log(msg):
@@ -62,51 +75,6 @@ def bounds(col):
     lo = Vector((min(p.x for p in pts), min(p.y for p in pts), min(p.z for p in pts)))
     hi = Vector((max(p.x for p in pts), max(p.y for p in pts), max(p.z for p in pts)))
     return lo, hi
-
-
-def split_halves(col, mid):
-    """Cut every mesh that spans the gap between the halves in two, so each half can move on its own."""
-    bpy.context.view_layer.update()
-    for o in [o for o in col.all_objects if o.type == "MESH"]:
-        xs = [(o.matrix_world @ Vector(c)).x for c in o.bound_box]
-        if not min(xs) < mid < max(xs):
-            continue
-        twin = o.copy(); twin.data = o.data.copy()
-        for c in o.users_collection:
-            c.objects.link(twin)
-        for ob, on_left in ((o, True), (twin, False)):
-            bm = bmesh.new(); bm.from_mesh(ob.data)
-            bmesh.ops.delete(bm, geom=[v for v in bm.verts if ((ob.matrix_world @ v.co).x < mid) != on_left], context="VERTS")
-            bm.to_mesh(ob.data); bm.free()
-
-
-def tent(col, floor_z):
-    """Stand each half on its wedge: tilt it about the wedge's outer bottom edge, and set that edge on the floor."""
-    wedges = next(c for c in col.children if c.name.split(".")[0] == "Wedges").objects
-    bpy.context.view_layer.update()
-    box = lambda o: [o.matrix_world @ Vector(c) for o_ in [o] for c in o_.bound_box]
-    left = next(o for o in wedges if o.name.startswith("left"))
-    right = next(o for o in wedges if o.name.startswith("right"))
-    mid = (max(p.x for p in box(left)) + min(p.x for p in box(right))) / 2
-    turn = {}
-    for w, side, sign in ((left, "left", -1), (right, "right", 1)):
-        w.hide_render = w.hide_viewport = False
-        pts = box(w)
-        x = min(p.x for p in pts) if side == "left" else max(p.x for p in pts)
-        pivot = Vector((x, 0, max(p.z for p in pts) - w["tent_edge"]))
-        turn[side] = (Matrix.Translation((x, 0, floor_z)) @ Matrix.Rotation(sign * math.radians(w["tent_angle"]), 4, "Y")
-                      @ Matrix.Translation(-pivot))
-    split_halves(col, mid)
-    bpy.context.view_layer.update()
-    placed = []
-    for o in col.all_objects:
-        pts = box(o) if o.type == "MESH" else [o.matrix_world.translation]
-        placed.append((o, o.matrix_world.copy(), sum(p.x for p in pts) / len(pts) < mid))
-    for o, world, on_left in placed:
-        o.parent = None
-        o.matrix_world = turn["left" if on_left else "right"] @ world
-    bpy.context.view_layer.update()
-    log("tented on the wedges")
 
 
 def turn_over(col, lo, centre):
@@ -149,31 +117,80 @@ def camera(name, location, target, lens=50, fstop=None, ortho=None):
     return cam
 
 
-def settings(scene, s):
+def settings(scene, s, engine="CYCLES"):
     k = 0.25 if PREVIEW else 1.0
     scene.render.resolution_x, scene.render.resolution_y = int(s["width"] * k), int(s["height"] * k)
     scene.render.resolution_percentage = 100
-    scene.cycles.samples = max(4, int(s["samples"] * k))
-    scene.cycles.use_denoising = True
     scene.render.image_settings.file_format = "PNG"
+    if engine == "CYCLES":
+        scene.render.engine = "CYCLES"
+        scene.cycles.samples = max(4, int(s["samples"] * k))
+        scene.cycles.use_denoising = True
+        return
+    scene.render.engine = "BLENDER_EEVEE"           # every light casts shadows: else the LEDs shine through the case
+    ee = scene.eevee
+    ee.taa_render_samples = max(4, int(s["samples"] * k))
+    ee.use_shadows = True
+    ee.shadow_ray_count, ee.shadow_step_count = 1, 4
+    ee.use_raytracing = True
+    ee.ray_tracing_options.resolution_scale = "1"
+    for light in bpy.data.lights:
+        light.use_shadow = True
+
+
+def done(path):
+    """A whole PNG is already at path (a run cut off mid-write leaves a part of one)."""
+    try:
+        with open(path, "rb") as f:
+            f.seek(-12, 2)
+            return b"IEND" in f.read()
+    except OSError:
+        return False
+
+
+def render(scene, path):
+    """Render the current frame to path, unless it is already there."""
+    if not PREVIEW and done(path):
+        return False
+    thermal.wait_cool(log=log)
+    scene.render.filepath = str(path)
+    start = time.monotonic()
+    bpy.ops.render.render(write_still=True)
+    if scene.render.engine != "CYCLES":                      # rest the GPU
+        time.sleep(thermal.REST * (time.monotonic() - start))
+    return True
 
 
 def still(scene, name, cam, aspect=16 / 9):
     settings(scene, dict(STILL, height=round(STILL["width"] / aspect)))
     scene.camera = cam
-    scene.render.filepath = str(OUT / f"{name}.png")
-    bpy.ops.render.render(write_still=True)
-    log(f"rendered {name}")
+    log(f"rendered {name}" if render(scene, OUT / f"{name}.png") else f"{name}: already done")
 
 
-def animation(scene, name, cam, frames):
-    settings(scene, FRAMES)
+def frames_to_render(count, preview):
+    """Every frame, or with --preview a few spread over the whole animation."""
+    if not PREVIEW:
+        return list(range(1, count + 1))
+    return sorted({1 + round(i * (count - 1) / (preview - 1)) for i in range(preview)})
+
+
+def animation(scene, name, cam, count, each_frame=None, preview=PREVIEW_FRAMES):
+    """Render frames 1..count to <name>_####.png, calling each_frame(frame) first to set the scene."""
+    settings(scene, MOTION, engine="EEVEE")
     scene.camera = cam
-    scene.frame_start, scene.frame_end = 1, frames if not PREVIEW else min(frames, 6)
-    scene.render.use_persistent_data = True          # keep the scene between frames; only lights and camera move
-    scene.render.filepath = str(OUT / f"{name}_")
-    bpy.ops.render.render(animation=True)
-    log(f"rendered {name}: {scene.frame_end} frames")
+    scene.render.fps = FPS
+    scene.frame_start, scene.frame_end = 1, count
+    for f in frames_to_render(count, preview):
+        path = OUT / f"{name}_{f:04d}.png"
+        if not PREVIEW and done(path):
+            continue
+        scene.frame_set(f)
+        if each_frame:
+            each_frame(f)
+        render(scene, path)
+        if f % 30 == 0 or f == count:
+            log(f"{name} frame {f}/{count}")
+    log(f"rendered {name}: {count} frames")
 
 
 def boot_frames(side):
@@ -205,36 +222,29 @@ def show_boot_frame(image, framebuffer):
     image.pack()
 
 
-def bootup(scene, col):
+def oled_screens(col):
+    """Both OLEDs' screen objects, their centres, and a function to put a boot frame on them at a time."""
     screens = [next(o for o in col.all_objects if o.name.startswith(f"OLED {side} screen"))
                for side in ("left", "right")]
     points = [sum((screen.matrix_world @ v.co for v in screen.data.vertices), Vector()) / 4
               for screen in screens]
-    target = (points[0] + points[1]) / 2
-    cam = camera("Both OLEDs booting", target + Vector((0, -0.035, 0.20)), target, lens=60, fstop=11.0)
     sequences = {side: boot_frames(side) for side in ("left", "right")}
     duration = max(times[-1] for times, _ in sequences.values())
-    fps = 15
-    count = math.ceil(duration * fps / 1000)
-    settings(scene, FRAMES)
-    scene.cycles.samples = 8
-    if PREVIEW:
-        scene.render.resolution_x, scene.render.resolution_y = 640, 360
-        scene.cycles.samples = 4
-    scene.camera = cam
-    scene.render.use_persistent_data = False
-    output_count = min(count, 6) if PREVIEW else count
-    for frame in range(1, output_count + 1):
-        ms = (frame - 1) * duration / (output_count - 1) if PREVIEW else (frame - 1) * 1000 / fps
-        scene.frame_set(frame)
+    dark = bytes(128 * 64 // 8)
+
+    def show(ms):
+        """The boot sequence at ms after power on: dark before it, its last frame after it."""
         for side, (times, images) in sequences.items():
-            idx = min(bisect.bisect_right(times, ms), len(images) - 1)
-            show_boot_frame(bpy.data.images[f"OLED {side}"], images[idx])
-        scene.render.filepath = str(OUT / f"bootup_{frame:04d}.png")
-        bpy.ops.render.render(write_still=True)
-        if frame % 10 == 0 or frame == count:
-            log(f"bootup frame {frame}/{count}")
-    log(f"rendered bootup: {output_count} frames")
+            image = dark if ms < 0 else images[min(bisect.bisect_right(times, ms), len(images) - 1)]
+            show_boot_frame(bpy.data.images[f"OLED {side}"], image)
+    return points, duration, show
+
+
+def bootup(scene, col):
+    points, duration, show = oled_screens(col)
+    target = (points[0] + points[1]) / 2
+    cam = camera("Both OLEDs booting", target + Vector((0, -0.035, 0.20)), target, lens=60, fstop=11.0)
+    animation(scene, "bootup", cam, math.ceil(duration * FPS / 1000), lambda f: show((f - 1) * 1000 / FPS))
 
 
 def led_wave(col, frames):
@@ -255,20 +265,126 @@ def led_wave(col, frames):
                 light.keyframe_insert("color", frame=f)
 
 
+class Leds:
+    """The per-key LEDs: set each one's colour and brightness for a frame. Made before anything animates
+    them, so it holds the studio scheme."""
+
+    def __init__(self, col):
+        self.leds = [o for o in col.all_objects if "led_color" in o.keys()]
+        lights = {o.name.removesuffix(" light"): o for o in col.all_objects if o.type == "LIGHT"}
+        self.lights = [lights.get(o.name.split(".")[0]) for o in self.leds]
+        self.studio = [Vector(o["led_color"][:3]) for o in self.leds]     # the studio scheme
+        self.power = next(l.data.energy for l in self.lights if l)
+        xs = [o.location.x for o in self.leds]
+        self.x0, self.span = min(xs), max(xs) - min(xs)
+        self.mid = (min(xs) + max(xs)) / 2
+
+    def x(self, i):
+        """0 at the left edge to 1 at the right."""
+        return (self.leds[i].location.x - self.x0) / self.span
+
+    def set(self, colour):
+        """colour(i): (r, g, b, brightness 0..1) of LED i. Drops any keyframes, the LED wave's."""
+        for i, (o, light) in enumerate(zip(self.leds, self.lights)):
+            r, g, b, k = colour(i)
+            o.animation_data_clear()
+            o["led_color"] = (r * k, g * k, b * k, 1.0)
+            o.update_tag()
+            if light:
+                light.data.animation_data_clear()
+                light.data.color = (r, g, b)
+                light.data.energy = self.power * k
+                light.data.update_tag()
+
+
+def smoothstep(a, b, x):
+    t = min(1.0, max(0.0, (x - a) / (b - a)))
+    return t * t * (3 - 2 * t)
+
+
+def spline(keys, t):
+    """A smooth path through keys [(time, value)], value a tuple: a cubic Hermite with Catmull-Rom
+    tangents inside, and at rest at both ends."""
+    ts = [k[0] for k in keys]
+    if t <= ts[0]:
+        return keys[0][1]
+    if t >= ts[-1]:
+        return keys[-1][1]
+    i = bisect.bisect_right(ts, t) - 1
+    def tangent(j):
+        if j in (0, len(keys) - 1):
+            return [0.0] * len(keys[j][1])
+        dt = ts[j + 1] - ts[j - 1]
+        return [(b - a) / dt for a, b in zip(keys[j - 1][1], keys[j + 1][1])]
+    t0, t1 = ts[i], ts[i + 1]
+    h, u = t1 - t0, (t - t0) / (t1 - t0)
+    m0, m1 = tangent(i), tangent(i + 1)
+    h00, h10, h01, h11 = 2 * u**3 - 3 * u**2 + 1, u**3 - 2 * u**2 + u, -2 * u**3 + 3 * u**2, u**3 - u**2
+    return tuple(h00 * p0 + h10 * h * a + h01 * p1 + h11 * h * b
+                 for p0, p1, a, b in zip(keys[i][1], keys[i + 1][1], m0, m1))
+
+
+BOOT_AT = 0.4              # s into the film the OLEDs power on
+FILM_LENGTH = 16.5         # s
+
+
+def film(scene, col, hero, leds):
+    """One take: close on both OLEDs booting in the dark; the LEDs sweep on from the middle; a low glide
+    along the keys under a rainbow wave; a rise to the studio camera as the LEDs settle into the studio
+    scheme."""
+    points, _, show = oled_screens(col)
+    oled = (points[0] + points[1]) / 2
+    target = next(o for o in scene.objects if o.name == "Camera target").location.copy()
+    home = hero.matrix_world.translation.copy()
+    v = lambda *c: tuple(c)
+    # time (s): camera, the point it looks at and focuses on, lens (mm), f-stop
+    shots = [
+        (0.0, oled + Vector((-0.035, -0.085, 0.17)), oled + Vector((-0.010, 0, 0)), 50, 5.6),
+        (5.0, oled + Vector((0.030, -0.075, 0.15)), oled + Vector((0.008, 0, 0)), 50, 5.6),
+        (7.8, Vector((0.46, -0.30, 0.11)), Vector((0.32, -0.15, 0.005)), 40, 4.0),
+        (10.8, Vector((0.26, -0.36, 0.10)), Vector((0.15, -0.15, 0.005)), 40, 4.0),
+        (14.2, home, target, hero.data.lens, hero.data.dof.aperture_fstop),
+        (FILM_LENGTH, home.lerp(target, 0.05), target, hero.data.lens, hero.data.dof.aperture_fstop),
+    ]
+    path = [(t, v(*c, *a, lens, fs)) for t, c, a, lens, fs in shots]
+    cam = camera("Film", shots[0][1], shots[0][2], lens=shots[0][3])
+    cam.data.dof.use_dof = True
+    on = BOOT_AT + 5.0                                   # the LEDs come on as the boot sequence ends
+    settle = (11.0, 13.8)                                # the rainbow fades into the studio colours
+
+    def frame(f):
+        t = (f - 1) / FPS
+        p = spline(path, t)
+        cam.location = p[:3]
+        look_at(cam, Vector(p[3:6]))
+        cam.data.lens = p[6]
+        cam.data.dof.aperture_fstop = p[7]
+        cam.data.dof.focus_distance = (Vector(p[3:6]) - Vector(p[:3])).length
+        show((t - BOOT_AT) * 1000)
+        mix = smoothstep(*settle, t)
+
+        def colour(i):
+            x = leds.x(i)
+            k = smoothstep(0, 0.35, t - on - abs(x - 0.5) * 1.2)      # from the middle outwards
+            rgb = Vector(colorsys.hsv_to_rgb((x * WAVE_SPAN - (t - on) / 4.0) % 1.0, 0.85, 1.0))
+            return (*rgb.lerp(leds.studio[i], mix), k)
+        leds.set(colour)
+
+    animation(scene, "film", cam, round(FILM_LENGTH * FPS), frame, preview=15)
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     scene = bpy.context.scene
     col = localise()
-    if TENTED:
-        floor_z = bounds(col)[0].z
-        tent(col, floor_z)
     lo, hi = bounds(col)
-    if TENTED:
-        lo.z = floor_z
     centre, size = (lo + hi) / 2, hi - lo
     hero = scene.camera
+    leds = Leds(col)
     bpy.context.preferences.edit.keyframe_new_interpolation_type = "LINEAR"
 
+    if "film" in VIEWS:                                        # first: it ends with the scene as it began
+        film(scene, col, hero, leds)
     if "hero" in VIEWS:
         still(scene, "hero", hero)
     if "top" in VIEWS:

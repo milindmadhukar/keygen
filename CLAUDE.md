@@ -26,7 +26,7 @@ each generator's inputs against `tools/regen.lock` and reruns only the stale ste
   fails, the error comes back as the hook's feedback: fix the source, don't skip the step.
 - the git pre-commit hook (`.githooks/pre-commit`) refuses a commit while anything is stale.
 
-Generated binaries are not in git: the renders and GIFs, the Gerber zips, the case, plate and foam
+Generated binaries are not in git: the renders and videos, the Gerber zips, the case, plate and foam
 files, the schematic PDF and the generated 3D models are gitignored. The git pre-push hook
 (`.githooks/pre-push`) runs `tools/publish.py` when `main` is pushed, which uploads whatever changed
 to the GitHub releases `media` (README pictures) and `build` (manufacturing and CAD files), under
@@ -42,8 +42,8 @@ never committed (its hash is in the ignored `tools/regen.local.lock`). `blender/
 it and is edited by hand. A new
 generator, or a new file a generator reads, goes into the `STEPS` table in `tools/regen.py`.
 
-The Blender steps, the parts file (`blender`) and the Cycles studio renders (`studio-renders`, and
-`studio-tented` on the wedges), run only on request: `tools/regen.py --blender`, or
+The Blender steps, the parts file (`blender`) and the studio renders and videos (`studio-renders`),
+run only on request: `tools/regen.py --blender`, or
 `--force studio-renders`. The hooks and
 `--check` skip them, so render only when Milind asks for new pictures.
 
