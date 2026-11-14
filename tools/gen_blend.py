@@ -29,7 +29,8 @@ import render_oled
 ROOT = Path(__file__).resolve().parent.parent
 PCB = ROOT / "pcb/keygen.kicad_pcb"
 TMP = ROOT / "pcb/_blend.kicad_pcb"           # beside the real board so ${KIPRJMOD} models resolve
-KEYCAPS = re.compile(r'\t\t\(model "[^"]*Keycap_[^"]*"\n(?:\t\t\t[^\n]*\n)*\t\t\)\n')
+# a footprint's keycap model block, whatever the file's indentation (tabs or spaces)
+KEYCAPS = re.compile(r'^([ \t]*)\(model "[^"]*Keycap_[^"]*"\n(?:\1[ \t]+[^\n]*\n)*\1\)\n', re.M)
 SCENE = ROOT / "tools/blend_scene.py"
 
 
@@ -62,7 +63,11 @@ def main():
     with tempfile.TemporaryDirectory() as tmp:
         tmp = Path(tmp)
         (tmp / "scene.json").write_text(json.dumps(board_data(), indent=1))
-        TMP.write_text(KEYCAPS.sub("", PCB.read_text()))
+        board = PCB.read_text()
+        stripped, n = KEYCAPS.subn("", board)
+        if n != board.count("Keycap_") or not n:            # left in, they would hide the scene's smoke caps
+            sys.exit(f"left {board.count('Keycap_') - n} of {board.count('Keycap_')} keycap models in the board")
+        TMP.write_text(stripped)
         try:
             subprocess.run(["kicad-cli", "pcb", "export", "glb", "-f", "-o", str(tmp / "board.glb"),
                             "--user-origin", "0x0mm", "--subst-models", "--include-tracks", "--include-pads",
