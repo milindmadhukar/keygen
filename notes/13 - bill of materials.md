@@ -62,7 +62,7 @@ Quantities cover **the keyboard with spares**. Prices are what the listings show
 
 | Part | Spec | Per kb | Buy | India | Import | Price | Status |
 |---|---|---|---|---|---|---|---|
-| Main PCBs | 2-layer FR4, 1.6 mm, lead-free HASL, 1 oz, black mask, left and right designs (each half ~16 × 13 cm)<br>*Minimum 5 per design, so 5 left + 5 right. Mark on PCB: Remove Mark.* | 2 | 5 + 5 | [Lion Circuits](https://lioncircuits.com/) as a fallback (Bengaluru, ₹3,400 per design) | [JLCPCB](https://cart.jlcpcb.com/quote), UPS to India | US$15.40 per design + US$9.83 shipping, plus customs | in cart |
+| Main PCBs | 2-layer FR4, 1.6 mm, lead-free HASL, 1 oz, black mask, left and right designs (each half ~16 × 13 cm)<br>*Ordered 2026-11-14 in JLCONE, order W2026111414014404 (Y17 left, Y18 right). Minimum 5 per design, so 5 left + 5 right. Mark on PCB: Remove Mark.* | 2 | 5 + 5 | [Lion Circuits](https://lioncircuits.com/) as a fallback (Bengaluru, ₹3,400 per design) | [JLCPCB](https://cart.jlcpcb.com/quote), UPS to India | US$33.94 for both with UPS to India and a US$5 JLCONE coupon, plus customs | ordered |
 | Switch plate | Clear polycarbonate solid sheet, 1.5 mm, 6 × 24 in. (152 × 610 mm), CNC-routed into both halves with case/plate/dxf/<br>*Each half (169.8 × 130.6 mm) needs a 178 × 139 mm piece; a strip holds three. Routed, not laser-cut. Cutting notes in case/plate/PLATE.md. The Gerbers in case/plate/gerber/ order the same plate in FR-4 from a PCB fab instead.* | 2 | 1 pack of 2 sheets | [Amazon.in, V-LITE 1.5 mm](https://www.amazon.in/dp/B0GXG2SW48), size 6x24IN, then a CNC router service |  | ₹704 per 2 | ordered |
 
 ## Switches & keycaps
