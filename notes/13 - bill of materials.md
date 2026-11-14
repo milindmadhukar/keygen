@@ -69,7 +69,7 @@ Quantities cover **the keyboard with spares**. Prices are what the listings show
 
 | Part | Spec | Per kb | Buy | India | Import | Price | Status |
 |---|---|---|---|---|---|---|---|
-| Switches | Akko V3 Lavender Purple Pro: tactile, 5-pin, 40 gf operating / 55 gf bump, 3.8 mm travel, clear PC top, POM stem<br>*Light, rounded tactile and not loud. The clear top lets the per-key LEDs through. 24 spare.* | 66 | 90 (2 × 45) | [StacksKB, pack of 45](https://stackskb.com/store/akko-v3-lavender-purple-pro-switch-pack-of-45/) | AKKO official store | ₹1,099 per 45 (₹2,198) | decided |
+| Switches | Akko V3 Lavender Purple Pro: tactile, 5-pin, 40 gf operating / 55 gf bump, 3.8 mm travel, clear PC top, POM stem<br>*StacksKB order #40698, 2026-11-14. Light, rounded tactile and not loud. The clear top lets the per-key LEDs through. 24 spare.* | 66 | 90 (2 × 45) | [StacksKB, pack of 45](https://stackskb.com/store/akko-v3-lavender-purple-pro-switch-pack-of-45/) | AKKO official store | ₹1,099 per 45 (₹2,198) | ordered |
 | Keycaps | Blank DSA PBT, smoke translucent (LBlack), 52 × 1u, 14 × 1.25u, every key the same<br>*No stabilizers (nothing over 1.25u). One seller, so the smoke shade matches across sizes.* | 66 | 60 × 1u (50 + 10); 20 × 1.25u | — | AliExpress, SZElectronic Store, all in one order to Australia: [1u, 50pcs LBlack](https://www.aliexpress.com/item/1005008827240220.html), [1u, 10pcs LBlack](https://www.aliexpress.com/item/1005010720096151.html), [1.25u, 20pcs LBlack](https://www.aliexpress.com/item/1005008827506189.html) | AU$10.89 + AU$3.89 + AU$8.09 (AU$22.87) | in cart |
 
 ## Case
@@ -100,4 +100,4 @@ Quantities cover **the keyboard with spares**. Prices are what the listings show
 | Testing | Multimeter, IPA, thin double-sided tape for the battery and the plate foam (0.3 mm at most)<br>*Test each LED column as you go: one bad joint kills the chain after it.* | — | — | Robu.in / Amazon.in | — | — | check what you have |
 | Flux | No-clean 559 flux paste, 10 ml syringe<br>*For the SK6812MINI-E and SOT-23 joints.* | — | 1 | [Amazon.in, SCHOFIC UV-559](https://www.amazon.in/dp/B0F4RKKKX7) | AliExpress | ₹390 | ordered |
 | Kapton tape | Polyimide tape, 12 mm wide, 33 m<br>*Masks neighbouring pads while soldering the LEDs.* | — | 1 roll | [Amazon.in, AR Kapton 12 mm](https://www.amazon.in/dp/B0DQYJ7569) | AliExpress | ₹139 | ordered |
-| Puller | 2-in-1 keycap and switch puller, steel wire<br>*Switches come out of the hotswap sockets from above, through the plate.* | — | 1 | [StacksKB Switch Puller + Keycap puller](https://stackskb.com/store/switch-puller-keycap-puller/) | AliExpress | ₹200 | decided |
+| Puller | 2-in-1 keycap and switch puller, steel wire<br>*StacksKB order #40698, 2026-11-14. Switches come out of the hotswap sockets from above, through the plate.* | — | 1 | [StacksKB Switch Puller + Keycap puller](https://stackskb.com/store/switch-puller-keycap-puller/) | AliExpress | ₹200 | ordered |
