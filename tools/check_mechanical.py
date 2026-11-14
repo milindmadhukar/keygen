@@ -190,6 +190,11 @@ for side, h in C.halves().items():
     side_gap = C.LEVER_SLOT_W / 2 - C.LEVER_TONGUE_CLEAR - (kw + g.SLIDE_TRAVEL) / 2 - C.POCKET_CLEAR
     require(side_gap >= 0.5, f"{side} power switch knob can touch the sides of its slot")
 require(C.LEVER_SLOT_Z[0] - C.BOTTOM_Z >= 3.0, "too little wall under the power switch's slot")
+# the port recess: over the port and the slot, and under the split, so the top frame's wall is whole
+roof = G.recess_roof()
+require(roof - max(port_z1, C.LEVER_SLOT_Z[1]) >= 0.5, "the port recess's roof is too close to the USB-C port or the lever slot")
+for side, h in C.halves().items():
+    require(G.port_cuts(h)[1].bounding_box().max.Z <= C.SPLIT_Z + 0.01, f"{side} port recess reaches the top frame")
 print(f"power switch: knob {proud:.1f} mm proud of the wall ({proud - C.POCKET_CLEAR:.1f}-{proud + C.POCKET_CLEAR:.1f} as the stack "
       f"floats), in a {C.LEVER_SLOT_W:g} x {C.LEVER_SLOT_Z[1] - C.LEVER_SLOT_Z[0]:.1f} mm slot with {C.LEVER_CLEAR:g} mm "
       f"above and below it at full float and {side_gap:.1f} mm each side at the end of its travel")

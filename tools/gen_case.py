@@ -27,8 +27,9 @@ blind holes in the top frame's underside), so the top has no holes and the screw
 counterbores, below the flat underside. The bottom shell
 has a rounded USB-C port, sized for a cable's plug wherever the floating stack carries it, in front of a
 pocket inside the wall for the controller's end; a slot for the power switch's knob, open up to the
-split and closed above the knob by a tongue on the top frame (the wall thinned outside both); and a
-guided pinhole under the reset button. The LiPo lies in a bay sunk into the
+split and closed above the knob by a tongue on the top frame; outside both, a recess thins the wall, up
+to just over them, its roof sloped at 45 degrees, under the top frame's full wall, so the top edge runs
+straight; and a guided pinhole under the reset button. The LiPo lies in a bay sunk into the
 floor, clear of the solder joints above it. The underside is flat.
 
 The top frame's deck is level with its rim and covers the plate everywhere but the keycaps, the
@@ -54,7 +55,8 @@ import math, sys
 from pathlib import Path
 
 from build123d import (Align, Axis, Box, Circle, Color, Compound, Cone, Cylinder, ExportDXF, ExportSVG, Face, Kind, Polygon, Pos,
-                       Rectangle, RectangleRounded, Rot, Unit, Wire, export_step, export_stl, extrude, fillet, loft, offset)
+                       Plane, Rectangle, RectangleRounded, Rot, Unit, Wire, export_step, export_stl, extrude, fillet, loft,
+                       offset)
 
 from shapely import Point, Polygon as SPoly, box, unary_union
 from shapely.affinity import rotate
@@ -82,6 +84,7 @@ NANO_POCKET_W = C.NANO_W + 2.0         # the controller's end, which overhangs t
 RESET_HOLE_D, RESET_TUBE_D = 2.0, 5.0  # paperclip hole, and the guide tube round it
 RESET_BUTTON_H = 5.0                   # 6 mm tact switch, 5 mm tall, on the PCB underside
 EPS = 0.01
+RECESS_ROOF = 1.0                      # the port recess's roof over the USB-C port and the lever slot
 NOTCH_FILL = 8.0                       # deck notches between keycap windows narrower than this are cut away
 CASE_COLOUR = Color(0x2E2E33)
 PLATE_COLOUR = Color(0xC8D6DC, alpha=0x60)   # clear polycarbonate, see-through
@@ -106,6 +109,16 @@ def edge_box(e, s0, s1, out0, out1, z0, z1):
     cx, cy = xy(e.at(s, o))
     ang = math.degrees(math.atan2(-e.d[1], e.d[0]))
     return Pos(cx, cy, z0) * Rot(0, 0, ang) * Box(s1 - s0, out1 - out0, z1 - z0, align=Z)
+
+
+def edge_prism(e, s0, s1, profile):
+    """A prism on edge e from s0 to s1 along it, its cross-section `profile` [(out, z)]: mm outward, z."""
+    n, d = xy(e.n), xy(e.d)
+    up = d[0] * n[1] - d[1] * n[0] > 0                # the section plane's y (= z_dir x x_dir) must point up
+    o = xy(e.at(s0 if up else s1))
+    along = (d[0], d[1], 0) if up else (-d[0], -d[1], 0)
+    plane = Plane(origin=(o[0], o[1], 0), x_dir=(n[0], n[1], 0), z_dir=along)
+    return extrude(plane * Polygon(*profile, align=None), s1 - s0, dir=along)   # along, whichever way it winds
 
 
 def dir_box(p, u, along0, along1, width, z0, z1):
@@ -194,25 +207,40 @@ def nano_pocket(h):
     return (-3.0, along1, NANO_POCKET_W), [(c[0] + side[0], c[1] + side[1]), (c[0] - side[0], c[1] - side[1])]
 
 
+def recess_roof():
+    """z of the port recess's roof at its inner face: RECESS_ROOF over the USB-C port and the lever slot."""
+    return max(C.usb_port()[2], C.LEVER_SLOT_Z[1]) + RECESS_ROOF
+
+
+def recess(e, s0, s1, out0, z0):
+    """The recess in the outer wall on edge e, from s0 to s1: from out0 outward and z0 up to the roof,
+    which slopes up outward at 45 degrees, so the bottom shell prints without support under it."""
+    far, roof = C.WALL_OUT + 3.0, recess_roof()
+    if roof + far - out0 <= C.SPLIT_Z:
+        return edge_prism(e, s0, s1, [(out0, z0), (out0, roof), (far, roof + far - out0), (far, z0)])
+    return edge_prism(e, s0, s1, [(out0, z0), (out0, roof), (out0 + C.SPLIT_Z - roof, C.SPLIT_Z), (far, C.SPLIT_Z), (far, z0)])
+
+
 def port_cuts(h, z0=C.BOTTOM_Z - 1):
-    """The thinned wall outside the USB-C and the switch lever, as edge-aligned boxes from z0 up:
-    PORT_WALL in front of the controller's pocket, and PORT_WALL past the inner wall round the lever."""
+    """The thinned wall outside the USB-C and the switch lever, a recess in the outer face of the bottom
+    shell (and of the wedge under it): PORT_WALL in front of the controller's pocket, and PORT_WALL past
+    the inner wall round the lever. It stops under the split, so the top frame keeps its full wall and
+    the case's top edge runs straight."""
     e = h["port_edge"]
     s_usb, s_lev = e.s_of(h["usb"]), e.s_of(h["lever"])
     lo, hi = min(s_usb, s_lev) - 10.0, max(s_usb, s_lev) + 8.0
-    if lo < 10.0: lo = -(C.WALL_OUT + 2.0)          # run the notch off the corner
+    if lo < 10.0: lo = -(C.WALL_OUT + 2.0)          # run the recess off the corner
     if hi > e.len - 10.0: hi = e.len + C.WALL_OUT + 2.0
     _, corners = nano_pocket(h)
     out = lambda p: (p[0] - e.a[0]) * e.n[0] + (p[1] - e.a[1]) * e.n[1]
     deep = max(out(p) for p in corners) + C.PORT_WALL
     ps = sorted(e.s_of(p) for p in corners)
-    z = (z0, C.TOP_Z + 1)
     if s_lev > s_usb:
         boxes = [(lo, ps[1] + C.PORT_WALL, deep), (ps[1] + C.PORT_WALL, hi, C.WALL_IN + C.PORT_WALL)]
     else:
         boxes = [(lo, ps[0] - C.PORT_WALL, C.WALL_IN + C.PORT_WALL), (ps[0] - C.PORT_WALL, hi, deep)]
-    notch = [edge_box(e, s0, s1, out0, C.WALL_OUT + 3.0, *z) for s0, s1, out0 in boxes]
-    return e, notch[0] + notch[1], s_lev, deep
+    cuts = [recess(e, s0, s1, out0, z0) for s0, s1, out0 in boxes]
+    return e, cuts[0] + cuts[1], s_lev, deep
 
 
 def build(h):
@@ -282,7 +310,7 @@ def build(h):
     z0, z1 = C.TOP_Z - C.CAP_CHAMFER, C.TOP_Z + 0.1
     for k in h["keys"]:
         top -= loft([Pos(0, 0, z0) * to_face(key_window(k)), Pos(0, 0, z1) * to_face(key_window(k, z1 - z0))], ruled=True)
-    cuts = [notch]
+    cuts = []
     for t in tab_list:                               # pocket for the tab and the upper gasket strip
         cuts.append(edge_box(t["edge"], t["s"] - C.TAB_W / 2 - C.POCKET_CLEAR, t["s"] + C.TAB_W / 2 + C.POCKET_CLEAR,
                              -2.0, C.TAB_D + C.POCKET_CLEAR, C.SPLIT_Z - 1, C.CEIL_Z))
@@ -295,9 +323,12 @@ def build(h):
 
 
 def lever_tongue(h):
-    """The top frame's tongue down into the bottom shell's lever slot, filling it above the knob."""
+    """The top frame's tongue down into the bottom shell's lever slot: in the wall, down to just over
+    the knob, and past it out to the case's outer face, down to the port recess's roof."""
     e, s, t = h["port_edge"], h["port_edge"].s_of(h["lever"]), C.LEVER_SLOT_W / 2 - C.LEVER_TONGUE_CLEAR
-    return edge_box(e, s - t, s + t, C.WALL_IN, C.WALL_IN + C.PORT_WALL, C.LEVER_SLOT_Z[1], C.SPLIT_Z + EPS)
+    inner = edge_box(e, s - t, s + t, C.WALL_IN, C.WALL_IN + C.PORT_WALL, C.LEVER_SLOT_Z[1], C.SPLIT_Z + EPS)
+    outer = edge_box(e, s - t, s + t, C.WALL_IN + C.PORT_WALL - EPS, C.WALL_OUT, recess_roof() - 1.0, C.SPLIT_Z + EPS)
+    return inner + (outer - recess(e, s - t - 1.0, s + t + 1.0, C.WALL_IN + C.PORT_WALL, recess_roof() - 2.0))
 
 
 def oled_mount(h):
