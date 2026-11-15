@@ -1,6 +1,6 @@
 ---
 created: 2026-03-09
-updated: 2026-10-22T17:53
+updated: 2026-11-15T15:05
 name: 09 - case design
 ---
 
@@ -90,6 +90,8 @@ The OLED's right-angle header in, the standoffs screwed to the PCB, a switch pad
 - [FreeCAD](https://www.freecad.org/): opens the STEP files for a look or a hand edit
 - [Heat-set insert guide (video)](https://www.youtube.com/watch?v=cyof7fYFcuQ)
 - [Mantaray keyboard case files](https://github.com/tuxedocurly/mantaray_keyboard/tree/main/case): a reference 3D-printed split case with M2 heat-set inserts and a floor reset hole
+- [Sofle V2 gasket-mounted case](https://github.com/kthrasher1/SofleV2Case): a reference gasket-mounted split case, the plate held at its edges between Poron strips under the top shell's lip
+- [Gasket-mounted Corne case](https://www.thingiverse.com/thing:6455098): a reference 1.5 mm plate on tabs between 1.5–2 mm Poron
 
 ### Video notes
 - [[How To Build A Corne Keyboard - Beginners Guide]]: 3D-printed tented case with screw-in tenting legs (18 mm front / 40 mm rear)
