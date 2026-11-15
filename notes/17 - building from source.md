@@ -155,9 +155,11 @@ black-mask PCB.
 - `tools/render_blender.py` (the `studio-renders` step) renders the README's pictures from the
   studio file: the stills `assets/render-studio-{hero,top,thumbs,oled,side,bottom}.jpg` with Cycles
   at 1920 × 1080, and the videos `render-studio-{film,leds,turntable,bootup}.mp4` with EEVEE at
-  1920 × 1080 and 30 frames a second, on the discrete GPU (`DRI_PRIME=1`). EEVEE renders a frame in
-  about 4 s where Cycles on the CPU takes 40; every light casts shadows, or the LED lights would shine
-  through the case. `film` is the hero video, one 16.5 s take: both OLEDs boot in the dark, the LEDs
+  1920 × 1080 and 30 frames a second, on the discrete GPU (`DRI_PRIME=1`). EEVEE renders a frame (16
+  samples) in a few seconds where Cycles on the CPU takes 40; every light casts shadows, or the LED lights
+  would shine through the case. The GPU heats fast, so `tools/thermal.py` pauses between frames and
+  freezes Blender when it runs hot; a run that stops keeps its finished frames in `$TMPDIR/keygen-studio/`
+  and picks up from there. A full run takes about an hour with the laptop's fans on maximum. `film` is the hero video, one 16.5 s take: both OLEDs boot in the dark, the LEDs
   sweep on from the middle, the camera glides low along the keys under a rainbow wave, then rises to
   the studio camera as the LEDs settle into the studio scheme. Its camera path is the `shots` table
   in `film()`. `bootup` shows both OLEDs in a closeup; both use frames from the firmware simulator.

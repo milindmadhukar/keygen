@@ -4,16 +4,16 @@
 The GPU junction temperature swings by 20 °C within seconds: it peaks while a frame renders and drops
 as soon as it ends. So there are two guards. Between frames, blend_render.py waits while anything is
 over PAUSE, and rests the GPU for REST times each frame's time. Watchdog, run by render_blender.py, polls
-twice a second and freezes the Blender process (SIGSTOP) over FREEZE, mid-frame if need be, until it
+ten times a second and freezes the Blender process (SIGSTOP) over FREEZE, mid-frame if need be, until it
 cools.
 """
 import os, signal, threading, time
 from pathlib import Path
 
 # (hwmon driver, sensor label): (over this °C, wait until under this)
-PAUSE = {("amdgpu", "junction"): (88, 72), ("k10temp", "Tctl"): (95, 80)}
-FREEZE = {("amdgpu", "junction"): (95, 75)}
-REST = 0.5                 # after each GPU frame, rest this many times as long as it took
+PAUSE = {("amdgpu", "junction"): (85, 75), ("k10temp", "Tctl"): (95, 80)}
+FREEZE = {("amdgpu", "junction"): (88, 75)}
+REST = 0.25                # after each GPU frame, rest this many times as long as it took
 
 
 def temperatures(keys):
@@ -60,7 +60,7 @@ class Watchdog(threading.Thread):
         self.pid, self.log, self.stopped, self.freezes = pid, log, threading.Event(), 0
 
     def run(self):
-        while not self.stopped.wait(0.5):
+        while not self.stopped.wait(0.1):
             hot = over(FREEZE)
             if not hot:
                 continue

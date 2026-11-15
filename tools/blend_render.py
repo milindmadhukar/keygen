@@ -43,7 +43,7 @@ VIEWS = [a for a in argv[1:] if not a.startswith("--")] or ["hero", "top", "thum
                                                              "turntable", "film", "bottom"]
 
 STILL = dict(width=1920, height=1080, samples=128)
-MOTION = dict(width=1920, height=1080, samples=32)    # EEVEE samples per frame
+MOTION = dict(width=1920, height=1080, samples=16)    # EEVEE samples per frame: about half the heat of 32, alike at 1080p
 FPS = 30
 LED_FRAMES, TURN_FRAMES = 4 * FPS, 8 * FPS
 WAVE_SPAN = 0.7            # hues across the keyboard at once in the LED wave
