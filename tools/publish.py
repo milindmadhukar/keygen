@@ -39,7 +39,7 @@ RELEASES = {
               "case/plate/PLATE.md in the repo.",
         globs=["fab/*.zip", "pcb/keygen-schematic.pdf", "docs/keygen-reference.pdf", "case/keygen-case.step", "case/*/stl/*.stl",
                "case/*/step/*.step", "case/*/dxf/*.dxf", "case/*/svg/*.svg", "case/*/pdf/*.pdf",
-               "case/*/gerber/*.zip"], prune=True),
+               "case/*/gerber/*.zip", "case/3mf/*.3mf"], prune=True),
     "datasheets": dict(
         title="Part datasheets",
         about="The manufacturers' datasheets that docs/datasheets/README.md cites, page by page. They "

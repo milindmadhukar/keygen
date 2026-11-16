@@ -278,7 +278,10 @@ Print [`keygen-left-bottom.stl`](https://github.com/milindmadhukar/keygen/releas
 [`keygen-right-top.stl`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-right-top.stl)
 in PETG at 0.2 mm layers and 90 % infill, dense for weight and a deeper sound: the bottom shells
 floor-down and the top frames deck-down, without supports. A printing service can print from the
-same settings.
+same settings. For a Bambu Lab X1E, [`keygen-case.3mf`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-case.3mf)
+is the Bambu Studio project with all four parts set up on four plates (5 walls, 90 % infill, Generic
+PETG on the textured PEI plate): about 9.5 hours and 295 g in all. Open it, slice, check each plate,
+and send it from there.
 
 The tenting wedges are optional and can come later:
 [`keygen-left-wedge.stl`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-left-wedge.stl)

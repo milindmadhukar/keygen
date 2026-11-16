@@ -29,6 +29,7 @@ case/**/*.dxf
 case/**/*.svg
 case/**/*.pdf
 case/**/*.zip
+case/**/*.3mf
 fab/*.zip
 pcb/keygen-schematic.pdf
 docs/keygen-reference.pdf
@@ -43,3 +44,4 @@ docs/datasheets/*.png
 
 # The build-guide video project: kept locally, never in git.
 video/
+/result.json

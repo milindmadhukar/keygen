@@ -75,6 +75,8 @@ STEPS = [
       "case/wedge/stl/*.stl", "case/wedge/step/*.step",
       "case/foam/dxf/*.dxf", "case/foam/svg/*.svg", "case/foam/step/*.step",
       "case/hardware/step/*.step"]),
+    ("print-3mf", [PY, "tools/gen_print3mf.py"], ["case/bottom/stl/*.stl", "case/top/stl/*.stl", "case/3mf/keygen-print.json"],
+     ["case/3mf/keygen-case.3mf"]),
     ("assembly-figures", [PY, "tools/draw_assembly.py"], [PCB],
      ["assets/assembly-standoffs.svg", "assets/assembly-switch-pads.svg"]),
     ("encoder-mockup", [CAD, "tools/mock_encoder_mount.py"], [],

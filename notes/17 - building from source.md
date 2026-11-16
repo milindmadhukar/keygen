@@ -31,6 +31,7 @@ updated: 2026-10-25T23:55
   (2025 or later; the 2021.01 release cannot run KeyV2), as `openscad` or `$KEYGEN_OPENSCAD`
 - For the Blender scene: [Blender](https://www.blender.org) 5.2, as `blender` or `$KEYGEN_BLENDER`
 - For the OLED screens: `gcc` and Python's `Pillow`
+- For the case print project: [Bambu Studio](https://bambulab.com/en/download/studio) as `bambu-studio`, opened once so its presets are installed
 
 ```sh
 git clone --recursive https://github.com/milindmadhukar/keygen.git
@@ -103,6 +104,7 @@ python3 tools/gen_schematic.py                      # schematic: pcb/*.kicad_sch
 python3 tools/gen_plate.py                          # plate: pcb/plate/, case/plate/{gerber,dxf}/, case/plate/PLATE.md
 ~/.venvs/keygen-cad/bin/python tools/gen_case.py    # case: case/{bottom,top}/, case/plate/{stl,step}/, case/foam/, case/hardware/, the fit check
 ~/.venvs/keygen-cad/bin/python tools/check_mechanical.py  # pairwise and tolerance clearances, plus the 3D fit check
+python3 tools/gen_print3mf.py                      # print-3mf: case/3mf/keygen-case.3mf, the Bambu Studio project for the case
 python3 tools/render_case.py                        # case-renders: assets/render-case*.png, assets/render-plate.png
 ~/.venvs/keygen-cad/bin/python tools/gen_models.py  # models: pcb/lib/keygen.3dshapes/: the knob and OLED 3D models
 ```
@@ -209,7 +211,7 @@ from `tools/regen.py`. A fresh clone runs every step on its first `regen.py`.
 | `tools/regen.lock` | The input hashes each step last ran with | `regen.py` |
 | `blender/keygen-parts.blend` | The Blender parts and materials (gitignored) | `gen_blend.py`, `blend_scene.py` |
 
-The `case/` folder, after `tools/regen.py` has run (only `PLATE.md` is in git):
+The `case/` folder, after `tools/regen.py` has run (only `PLATE.md` and `keygen-print.json` are in git):
 
 ```
 case/
@@ -217,6 +219,8 @@ case/
 ├── bottom/  stl/  step/                bottom shells (print the STL)
 ├── top/     stl/  step/                top frames (print the STL)
 ├── wedge/   stl/  step/                tenting wedges (print the STL)
+├── 3mf/     keygen-case.3mf            Bambu Studio project: the four case parts on four plates, set up to print
+│            keygen-print.json          its printer, filament and settings (in git)
 ├── plate/   gerber/  dxf/  stl/  step/  pdf/  switch plates: Gerbers to order, CNC/laser cut files, meshes, solids, 1:1 paper print
 │   └── PLATE.md                        plate order-form settings
 ├── foam/    dxf/  svg/  step/          plate and case foam: 1:1 cut files, solids; switch pads and

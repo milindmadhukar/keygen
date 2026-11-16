@@ -1,0 +1,15 @@
+{
+  "machine": "Bambu Lab X1E 0.4 nozzle",
+  "filament": "Generic PETG",
+  "process": {
+    "name": "Keygen PETG X1E 0.4 - 90% infill",
+    "inherits": "0.20mm Standard @BBL X1C",
+    "sparse_infill_density": "90%",
+    "skeleton_infill_density": "90%",
+    "skin_infill_density": "90%",
+    "wall_loops": "5",
+    "bottom_shell_layers": "5",
+    "enable_support": "0",
+    "curr_bed_type": "Textured PEI Plate"
+  }
+}
