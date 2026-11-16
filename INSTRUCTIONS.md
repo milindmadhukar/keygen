@@ -82,7 +82,7 @@ Counts are for the whole keyboard (two halves). Stores, links, prices and spares
 
 - A temperature-controlled soldering iron with a fine tip (300–350 °C; 320 °C for the LEDs)
 - Solder, no-clean flux paste in a syringe, desoldering wick, heat-shrink tubing
-- Superglue, for the OLED plug and the floor magnets, and a paint pen
+- Superglue for the OLED plug, hot glue for the floor magnets, and a paint pen
 - Flush cutters, fine tweezers, and small sharp scissors for the switch pads
 - A multimeter: continuity, polarity, battery voltage, and current for the charge check
 - Calipers, for the OLED module, the controller sockets and their pins
@@ -279,9 +279,9 @@ Print [`keygen-left-bottom.stl`](https://github.com/milindmadhukar/keygen/releas
 in PETG at 0.2 mm layers and 90 % infill, dense for weight and a deeper sound: the bottom shells
 floor-down and the top frames deck-down, without supports. A printing service can print from the
 same settings. For a Bambu Lab X1E, [`keygen-case.3mf`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-case.3mf)
-is the Bambu Studio project with all four parts set up on four plates (5 walls, 90 % infill, Generic
-PETG on the textured PEI plate): about 9.5 hours and 295 g in all. Open it, slice, check each plate,
-and send it from there.
+is the Bambu Studio project with all four parts on four plates, already sliced for the 0.4 mm
+nozzle with Generic PLA on the textured PEI plate (5 walls, 90 % infill): about 9 hours and 300 g in
+all. Open it, check each plate, and send it from there.
 
 The tenting wedges are optional and can come later:
 [`keygen-left-wedge.stl`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-left-wedge.stl)
@@ -687,14 +687,17 @@ floor, keys out. The two halves need opposite poles facing out of their floors:
 
 1. Stack all eight magnets into one column; they line up by themselves. Slide them off the top one
    at a time and mark each one's top face with the paint pen.
-2. **Left half:** superglue four magnets into the round pockets inside the floor, **marked face
-   down**, pressed until they bottom on the floor's thin skin. **Right half:** the other four,
-   **marked face up**.
-3. Glue them one at a time, away from the loose ones so they don't jump together, and let the glue
-   cure. Then hold the two bottom shells floor to floor, the left one flipped over onto the right:
-   they should pull together. If one pocket pushes back, that magnet is the wrong way up.
+2. **Left half:** with the bottom shell upside down, put a dab of hot glue into each of the four
+   round pockets in the floor's underside and press a magnet in, **marked face out**, until it
+   bottoms; it sits 0.2 mm under the floor. **Right half:** the other four, **marked face in**.
+3. Use a low-temperature glue gun if you have one: a magnet loses strength if it gets hot. Glue
+   them one at a time, away from the loose ones so they don't jump together, and scrape any glue
+   standing proud of the floor flush once it sets. Then hold the two bottom shells floor to floor,
+   the left one flipped over onto the right: they should pull together. If one pocket pushes back,
+   that magnet is the wrong way round.
 
-The magnets stand 0.6 mm proud of the floor, into holes in the case foam.
+Inside the shell, each pocket is closed by a low round boss on the floor, which sits in a hole in
+the case foam.
 
 ---
 

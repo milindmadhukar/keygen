@@ -100,8 +100,8 @@ for side, h in C.halves().items():
     recess_floor = min(C.wedge_thickness(h, p) - (C.FOOT_PROUD - C.WEDGE_GAP) for p in feet)
     require(magnet_disc >= 0.0 and magnet_web >= 2.0, f"{side} floor magnets off the steel disc, or too close together")
     require(disc_floor >= 2.0 and recess_floor >= 2.0, f"{side} wedge too thin under the steel disc or a foot")
-    magnet_cavity = min(Polygon(h["outline"]).buffer(C.WALL_IN, join_style=2).exterior.distance(Point(p)) for p in C.magnets(h)) - C.MAGNET_POCKET_D / 2
-    magnet_keep = min(Point(p).buffer(C.MAGNET_POCKET_D / 2).distance(box(*k)) for p in C.magnets(h)
+    magnet_cavity = min(Polygon(h["outline"]).buffer(C.WALL_IN, join_style=2).exterior.distance(Point(p)) for p in C.magnets(h)) - C.MAGNET_BOSS_D / 2
+    magnet_keep = min(Point(p).buffer(C.MAGNET_BOSS_D / 2).distance(box(*k)) for p in C.magnets(h)
                       for k in [C.battery(h)["bay"], h["controller"]])
     require(magnet_cavity >= 2.0 and magnet_keep >= 1.5, f"{side} a floor magnet is too close to the wall, the battery bay or the controller")
     if side == "right":
@@ -154,10 +154,10 @@ for side, h in C.halves().items():
 _, battery_gap, pressed_gap = C.battery_heights()
 require(pressed_gap >= 1.0 - 1e-9, "battery contacts underside at full gasket travel")
 require(C.FLOAT_GAP >= 1.5, "controller has insufficient float travel")
-require(C.MAGNET_SKIN >= 0.6 and C.FLOOR_T - C.MAGNET_SKIN <= C.MAGNET_T, "floor magnet pockets too deep, or the magnets sink below the floor")
-require(C.MAGNET_T - (C.FLOOR_T - C.MAGNET_SKIN) <= C.CASE_FOAM_T - 1.0, "floor magnets stand too far into the case foam")
+require(C.MAGNET_CAP >= 0.6 and C.MAGNET_BOSS_D - C.MAGNET_POCKET_D >= 3.0, "floor magnet boss too thin over or round its pocket")
+require(C.MAGNET_BOSS_TOP - C.FLOOR_T <= C.CASE_FOAM_T - 1.0, "floor magnet bosses stand too far into the case foam")
 require(C.STEEL_POCKET_DEPTH >= C.STEEL_T + 0.1, "steel disc stands proud of the wedge")
-require(C.MAGNET_SKIN + C.WEDGE_GAP + C.STEEL_POCKET_DEPTH - C.STEEL_T <= 1.3, "floor magnets too far from the wedge's steel disc")
+require(C.MAGNET_RECESS + C.WEDGE_GAP + C.STEEL_POCKET_DEPTH - C.STEEL_T <= 1.3, "floor magnets too far from the wedge's steel disc")
 require(C.FOOT_MARK_D >= C.FOOT_D + 0.5 and C.FOOT_MARK_DEPTH <= 0.5, "foot recesses too small or too deep")
 require(abs(C.CBORE_MOUTH_R - (G.CBORE_D / 2 + G.CBORE_CHAMFER)) < 1e-9 and abs(C.RESET_MOUTH_R - G.RESET_HOLE_D) < 1e-9,
         "case_geometry's counterbore or pinhole size differs from gen_case's")

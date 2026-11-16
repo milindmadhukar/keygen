@@ -1,8 +1,8 @@
 {
   "machine": "Bambu Lab X1E 0.4 nozzle",
-  "filament": "Generic PETG",
+  "filament": "Generic PLA",
   "process": {
-    "name": "Keygen PETG X1E 0.4 - 90% infill",
+    "name": "Keygen PLA X1E 0.4 - 90% infill",
     "inherits": "0.20mm Standard @BBL X1C",
     "sparse_infill_density": "90%",
     "skeleton_infill_density": "90%",

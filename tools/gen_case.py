@@ -284,10 +284,12 @@ def build(h):
     bottom -= cylinder(h["reset"], RESET_HOLE_D, C.BOTTOM_Z - 1, tube_top + 1)
     rx, ry = xy(h["reset"])
     bottom -= Pos(rx, ry, C.BOTTOM_Z - EPS) * Cone(RESET_HOLE_D, RESET_HOLE_D / 2, 1.0, align=Z)
-    # the four magnets, in pockets from inside down to a thin skin: they hold the wedge's steel disc,
-    # and the other half's magnets when the halves are stacked floor to floor
+    # the four magnets, hot-glued into pockets in the floor's underside, each under a boss on the floor
+    # inside: they hold the wedge's steel disc, and the other half's magnets when the halves are
+    # stacked floor to floor
     for p in C.magnets(h):
-        bottom -= cylinder(p, C.MAGNET_POCKET_D, C.BOTTOM_Z + C.MAGNET_SKIN, C.CAVITY_Z + EPS)
+        bottom += cylinder(p, C.MAGNET_BOSS_D, C.CAVITY_Z - EPS, C.BOTTOM_Z + C.MAGNET_BOSS_TOP)
+        bottom -= cylinder(p, C.MAGNET_POCKET_D, C.BOTTOM_Z - 1, C.BOTTOM_Z + C.MAGNET_RECESS + C.MAGNET_T)
     # a shallow round recess under each rubber foot, which places it
     for p in C.feet(h):
         bottom -= cylinder(p, C.FOOT_MARK_D, C.BOTTOM_Z - 1, C.BOTTOM_Z + C.FOOT_MARK_DEPTH)
@@ -417,7 +419,7 @@ def foams(h):
     cavity = (board[0].buffer(g, join_style="mitre", mitre_limit=10), offset(board[1], g, kind=Kind.INTERSECTION))
     under = [cut_rect(C.battery(h)["bay"]), cut_rect(grown(h["controller"], C.FOAM_PART_CLEAR)),
              cut_circle(h["reset"], RESET_TUBE_D + 2 * C.FOAM_PART_CLEAR)]
-    under += [cut_circle(p, C.MAGNET_POCKET_D + 2 * C.FOAM_HOLE_CLEAR) for p in C.magnets(h)]
+    under += [cut_circle(p, C.MAGNET_BOSS_D + 2 * C.FOAM_HOLE_CLEAR) for p in C.magnets(h)]
     under += [cut_rect(grown(t, C.FOAM_PART_CLEAR)) for t in h["tall"]]
     under += [cut_rect(grown(C.encoder_bay(h), C.FOAM_PART_CLEAR))]
     case_foam = board_less(cavity, under)

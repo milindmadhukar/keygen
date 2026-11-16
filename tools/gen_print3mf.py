@@ -4,11 +4,11 @@
 Four plates, one part each: both bottom shells floor-down as the STLs lie, and both top frames
 flipped deck-down. The printer, filament and print settings are in case/3mf/keygen-print.json: the
 process there names the Bambu preset it starts from and the settings Keygen changes (90 % infill,
-5 walls, 5 bottom layers, no supports, the textured PEI plate PETG needs). This script resolves
-each preset's chain of parents from the installed Bambu Studio's presets
-(~/.config/BambuStudio/system/BBL), builds the project with the Bambu Studio command line, then
-slices it once to check that every plate slices with nothing off the plate, and prints each plate's
-time and filament. The tenting wedges are not in it.
+5 walls, 5 bottom layers, no supports, the textured PEI plate). This script resolves each preset's
+chain of parents from the installed Bambu Studio's presets (~/.config/BambuStudio/system/BBL),
+builds the project with the Bambu Studio command line and slices every plate, failing if a plate
+does not slice or has a part off it. It writes the sliced project, so it opens in Bambu Studio
+ready to send, and prints each plate's time and filament. The tenting wedges are not in it.
 
 Needs bambu-studio on the PATH; its presets are not hashed by tools/regen.py, so a Bambu Studio
 update reaches the project on the next change to the case, or with --force print-3mf.
@@ -105,7 +105,7 @@ def main():
         print(f"total {int(total_t) // 3600} h {int(total_t) % 3600 // 60:02d} min, {total_g:.0f} g {conf['filament']} "
               f"on a {conf['machine']}")
         OUT.parent.mkdir(parents=True, exist_ok=True)
-        OUT.write_bytes(project.read_bytes())
+        OUT.write_bytes(sliced.read_bytes())
 
 
 if __name__ == "__main__":

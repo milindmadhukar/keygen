@@ -125,10 +125,13 @@ WEDGE_ANGLE = 13.0             # the optional tenting wedge lifts the inner edge
 WEDGE_EDGE = 4.0               # its thickness along the outer edge
 WEDGE_GAP = 0.3                # its top face under the floor: the half stands on its feet, in the recesses
 FOOT_RECESS_D = 12.0           # recess round each foot, which takes a foot stuck 2 mm off its mark
-MAGNET_D, MAGNET_T = 10.0, 3.0 # N35 disc magnet, four per half, superglued into the floor from inside: they hold
+MAGNET_D, MAGNET_T = 10.0, 3.0 # N35 disc magnet, four per half, hot-glued into the floor from below: they hold
                                # the wedge's steel disc, and the other half's magnets when stacked floor to floor
-MAGNET_POCKET_D = 10.3         # its pocket in the floor, with room for the glue
-MAGNET_SKIN = 0.6              # floor left under each magnet; the magnet stands proud of the floor into the case foam
+MAGNET_POCKET_D = 10.6         # its pocket in the floor's underside, with room round it for the hot glue
+MAGNET_RECESS = 0.2            # magnet face under the floor's underside, for a skim of glue
+MAGNET_CAP = 0.6               # plastic over the magnet, inside
+MAGNET_BOSS_D = 14.0           # a round boss on the floor inside over each pocket, as the floor is no thicker than a magnet
+MAGNET_BOSS_TOP = MAGNET_RECESS + MAGNET_T + MAGNET_CAP   # its top above the floor's underside
 MAGNET_R = 13.0                # the magnets' circle round the steel disc's centre: all four over the disc
 CBORE_MOUTH_R = 2.8            # a case screw's counterbore with its chamfered mouth (gen_case.py)
 RESET_MOUTH_R = 2.0            # the reset pinhole's chamfered mouth (gen_case.py)
