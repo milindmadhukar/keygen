@@ -22,7 +22,7 @@ name: 08 - electronics & components
 | SN74LV1T125 buffer (SOT-23-5) + 100 nF, 0805 | 1 + 1 | 1 + 1 | U103, C102 / U203, C202 | LED data buffer, beside the first LED |
 | 330 Ω resistor, 0805 | 1 | 1 | R105 / R205 | Beside the first LED's DIN |
 | 100 nF capacitors, 0805 | 0 (33 optional) | 0 (33 optional) | C111–C143 / C211–C243 | One footprint beside every LED, left empty |
-| KP-355085 LiPo pouch + JST-PH 2-pin side-entry connector (S2B-PH-K-S) | 1 | 1 | BT101 / BT201 | Connector on the back |
+| KP 357090P LiPo pouch + JST-PH 2-pin side-entry connector (S2B-PH-K-S) | 1 | 1 | BT101 / BT201 | Connector on the back |
 | SK12D07VG5 right-angle slide switch | 1 | 1 | SW190 / SW290 | Through-hole, back side at the top edge, knob out |
 | AO3401A P-MOSFET, SOT-23 + 1 MΩ resistor, 1206 | 1 + 1 | 1 + 1 | Q101, R101 / Q201, R201 | Battery switch |
 | 6 mm reset button | 1 | 1 | SW191 / SW291 | Through-hole, back side; double-tap for the bootloader |
@@ -66,10 +66,10 @@ Each half has 34 diodes: 33 for the keys and one for its encoder's push switch, 
 
 ## Power
 
-- **Battery:** 3.7 V KP-355085 LiPo pouch (3.5 × 50 × 85 mm, listed 3000 mAh), on a JST-PH 2.0 lead, at most 60 × 88 mm including its protection board. The controller has no over-discharge cut-off, so the cell needs a protection board: a cell sold without one gets a DW01A module. It lies in a bay sunk 1.6 mm into the case floor. With a 6.1 mm installed battery stack and assumed 2 mm underside parts, clearance is 2.5 mm at rest and 1.0 mm at full gasket travel; it stays at least 15 mm from the antenna end. Placement: [[12 - final design#Power]] and [[14 - case & plate requirements]].
+- **Battery:** 3.7 V KP 357090P LiPo pouch (3.5 × 70 × 90 mm, listed 4000 mAh), its bare leads soldered to a JST-PH 2.0 plug. The controller has no over-discharge cut-off, so the cell needs a protection board: a cell without its own gets a separate 1S 3 A board on its lead end. The bay takes the cell and board up to 70 × 96 mm. It lies in a bay sunk 1.6 mm into the case floor. With a 6.1 mm installed battery stack and assumed 2 mm underside parts, clearance is 2.5 mm at rest and 1.0 mm at full gasket travel; it stays at least 15 mm from the antenna end. Placement: [[12 - final design#Power]] and [[14 - case & plate requirements]].
 - **Polarity:** LiPo packs come wired both ways. Check that the red wire lands on the + pad marked on the silkscreen before plugging in.
 - **Battery switch:** the SK12D07VG5 only drives the gate of the AO3401A, which carries the battery current, so charging and LED current never pass through the switch contacts. Source to the battery, drain to B+; the 1 MΩ resistor holds the gate at the source when the switch is off, and the switch's pin 3 is unconnected, since it makes before it breaks. The knob, 2 × 2 mm, stands 4 mm out of the body and slides 2 mm. Leave the switch on while charging.
-- **Charging:** through each half's own USB-C, at about 300 mA: about ten hours for an empty cell with lighting off. A 1-to-2 USB-C cable supplies both halves from one source. Runtime needs measurement after the LED rail is proven off on battery (see [`docs/logic-audit.md`](../docs/logic-audit.md)).
+- **Charging:** through each half's own USB-C, at about 300 mA: about fourteen hours for an empty 4000 mAh cell with lighting off. A 1-to-2 USB-C cable supplies both halves from one source. Runtime needs measurement after the LED rail is proven off on battery (see [`docs/logic-audit.md`](../docs/logic-audit.md)).
 
 ## Mounting and case hardware
 

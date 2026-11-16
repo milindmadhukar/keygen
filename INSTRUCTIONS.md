@@ -40,8 +40,9 @@ Counts are for the whole keyboard (two halves). Stores, links, prices and spares
 | 0.96 in. I2C OLED, pins GND VCC SCL SDA | 2 | Some modules swap GND and VCC: don't use those |
 | 1×4 right-angle male pin header, 2.54 mm | 2 | Soldered into J101 / J201; cut from a 1×40 strip |
 | Female–female jumper wire, 2.54 mm | 8 | Four per OLED, their plug ends glued into one 4-pin plug; the other ends are cut off and soldered to the OLED |
-| LiPo KP-355085 (3.5 × 50 × 85 mm) | 2 | With a protection board |
-| JST-PH 2.0 plug with 10 cm wires, 2-pin | 2 | For a battery without a JST-PH plug: solder its leads to the plug's wires and heat-shrink each joint |
+| LiPo KP 357090P (3.5 × 70 × 90 mm) | 2 | With a protection board; bare leads |
+| 1S 3.7 V protection board, 3 A | 2 | Only for a cell without its own |
+| JST-PH 2.0 plug with wires, 2-pin | 2 | Soldered to the battery's leads, or its protection board's P+ and P−; heat-shrink each joint |
 
 ### Switches, keycaps and knobs
 
@@ -190,8 +191,13 @@ order-form settings and what to check in the fab's design check (DFM) report are
 ### When the parts arrive
 
 - **OLED modules:** the pin order printed on the module is GND, VCC, SCL, SDA.
-- **Batteries:** each cell has a protection board (a small circuit board under the tape at the lead
-  end). The controller has no over-discharge cut-off; fit a DW01A module to a cell without one.
+- **Batteries:** look for a protection board, a small circuit board under the tape at the lead
+  end. The controller has no over-discharge cut-off, so a cell without one gets the separate 1S
+  protection board: the cell's leads to its B+ and B−, the JST-PH plug's wires to its P+ and P−,
+  the board taped flat with Kapton across the cell's lead end. Then measure the cell with its board:
+  the bay takes up to 70 × 96 mm and 5 mm thick. If it is smaller, set `BATTERY_W` and `BATTERY_L`
+  in [`tools/case_geometry.py`](tools/case_geometry.py) to it and run `tools/regen.py` before
+  printing the case.
 - **Battery connectors:** the side-entry type (S2B-PH-K-S), whose opening faces sideways, not up.
 - **Encoders:** a D-shaped (half-round) shaft, to match the knob, 20 mm long from the top of the
   encoder's body (its tip 26.5 mm above the body's base).
@@ -399,7 +405,7 @@ Keep the pins' plastic carrier on: it stays between the socket and the controlle
 ## Bring-up
 
 1. Flash the firmware (see [Flashing](#flashing)) and check that the half shows up over USB.
-2. **Protection board.** Check the cell has one. Fit a DW01A module to a cell without one.
+2. **Protection board.** Check the cell has one, its own or the separate 1S board (see [When the parts arrive](#when-the-parts-arrive)).
 3. **Battery polarity.** With the multimeter, confirm the red wire lands on the PCB's **+** pad
    before plugging in. Swap the crimps if it does not.
 4. Plug the battery in and check that the slide switch turns the half on and off. Leave the switch
@@ -410,7 +416,7 @@ Keep the pins' plastic carrier on: it stays between the socket and the controlle
    LED rail at C101 / C201 against GND: 4.83–5.08 V. Above that, the boost's feedback resistor
    R102 / R202 has a bad joint and the rail would sit at 5.5–6 V, past the LEDs' rating: fix it first.
 6. **Charge current.** With the multimeter in series with the battery and USB plugged in, confirm
-   about 300 mA. An empty cell takes about ten hours. With no battery fitted, the keys, OLED and
+   about 300 mA. An empty 4000 mAh cell takes about fourteen hours. With no battery fitted, the keys, OLED and
    Bluetooth run from USB, but the lighting has no supply.
 7. **Lead length.** Measure the battery lead from the pouch to the end of the plug. It runs about
    50 mm in the case, from the bay to **BT101 / BT201**; with less than about 80 mm, plug it in

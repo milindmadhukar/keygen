@@ -26,8 +26,8 @@ updated: 2026-10-22T19:00
   lower end with its header along its bottom edge, and the firmware turns the image 180°. It runs
   from the controller's switched 3.3 V output (VCC), which the firmware keeps on through P0.13.
 - **Power and charging:** each half has its own LiPo and charges through its own controller's
-  USB-C at about 300 mA (TP4054, with the controller's BOOST link bridged), about ten hours for an
-  empty cell; a 1-to-2 USB-C cable charges both from one charger. On USB the controller and the
+  USB-C at about 300 mA (TP4054, with the controller's BOOST link bridged), about fourteen hours for
+  an empty 4000 mAh cell; a 1-to-2 USB-C cable charges both from one charger. On USB the controller and the
   OLED run from USB through the module's diode and P-MOSFET; the LED boost runs from B+, so bright
   white lighting can still draw more from the cell than the charger replaces. The battery level
   reads full while plugged in. With no battery fitted, the keys, OLED and Bluetooth run from USB
@@ -37,9 +37,9 @@ updated: 2026-10-22T19:00
   P-MOSFET, which carries the battery current: source on the battery, drain on B+. A 1 MΩ resistor
   holds the gate at the source when the switch is off; the switch's pin 3 is unconnected. Leave the
   switch on while charging.
-- **Battery:** a KP-355085 LiPo pouch (3.5 × 50 × 85 mm, listed 3000 mAh) with a protection board, as
+- **Battery:** a KP 357090P LiPo pouch (3.5 × 70 × 90 mm, listed 4000 mAh) with a protection board, as
   the controller has no over-discharge cut-off. It lies in a bay sunk 1.6 mm into the case floor,
-  which takes up to a 60 × 88 mm cell with a 6.1 mm installed height envelope, under the outer
+  which takes up to a 70 × 96 mm cell and board with a 6.1 mm installed height envelope, under the outer
   and middle key columns, its lead end towards
   the battery connector. With a 6.1 mm installed battery stack, it clears assumed 2 mm underside
   parts by 4.4 mm at rest and 2.9 mm at full gasket travel, and stays at least 15 mm from the
@@ -77,7 +77,7 @@ References and soldering notes for every part are in `fab/BOM.md`.
 | 732 kΩ + 2 × 100 kΩ resistors, 1206 (feedback, enable) | 1 + 2 | 1 + 2 |
 | SN74LV1T125 buffer (SOT-23-5), 330 Ω resistor (0805) | 1 + 1 | 1 + 1 |
 | 100 nF capacitor, 0805 (buffer; 33 optional beside the LEDs) | 1 | 1 |
-| KP-355085 LiPo battery + JST-PH connector | 1 | 1 |
+| KP 357090P LiPo battery + JST-PH connector | 1 | 1 |
 | SK12D07VG5 power slide switch | 1 | 1 |
 | AO3401A P-MOSFET + 1 MΩ gate resistor, 1206 (battery switch) | 1 + 1 | 1 + 1 |
 | 6 mm reset button | 1 | 1 |

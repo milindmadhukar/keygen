@@ -120,7 +120,7 @@ def page(cr, side, h):
     cr.restore()
 
     label(cr, "Solid black: case edge   Gray dashed: PCB edge   Light gray: keycaps", 16, 212, 2.8)
-    label(cr, "Black dashed: 88 x 60 mm maximum battery below PCB", 16, 218, 2.8)
+    label(cr, f"Black dashed: {C.BATTERY_L:g} x {C.BATTERY_W:g} mm maximum battery below PCB", 16, 218, 2.8)
     label(cr, "Circle: encoder knob   Rectangle: OLED module", 16, 224, 2.8)
     label(cr, "The assembled case has thickness; paper shows its plan footprint only.", 16, 234, 2.8)
     ruler(cr)

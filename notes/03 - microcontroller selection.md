@@ -15,7 +15,7 @@ name: 03 - microcontroller selection
 - **USB:** USB-C on the module, which is the keyboard's USB port
 - **Format:** Pro Micro footprint (marbastlib's `nice_nano_H_USBup`), with USB facing the top edge
 - **Firmware:** ZMK builds it as the nice!nano v2 (target `nice_nano//zmk`); flashing is drag-and-drop UF2 after a double-tap of reset
-- **Charger:** an on-board TP4054 LiPo charger, at about 300 mA with the BOOST link on the back (an unfitted 0 Ω link) bridged, as Keygen has it: about ten hours for an empty cell. It has no over-discharge cut-off, so the battery carries its own protection board.
+- **Charger:** an on-board TP4054 LiPo charger, at about 300 mA with the BOOST link on the back (an unfitted 0 Ω link) bridged, as Keygen has it: about fourteen hours for an empty 4000 mAh cell. It has no over-discharge cut-off, so the battery carries its own protection board.
 - **Power path:** on USB, the controller runs from USB through a diode, and a P-MOSFET takes the battery out of its supply. The LED boost runs from the cell rail (B+), so bright white lighting can draw more than the charger supplies. With no battery fitted, the keys, OLED and Bluetooth run from USB and the lighting has no supply. The battery level reads full while plugged in, since ZMK measures the controller supply (VDDH).
 - **Check on arrival:** before soldering, check B+ (pad 13), GND and VCC (pad 16) with a multimeter. After bridging the BOOST link, confirm the charge current.
 - **Switched VCC:** an on-board MOSFET on P0.13 cuts the 3.3 V VCC rail. Keygen's VCC (pad 16) powers only the OLED, and the firmware holds P0.13 high with a gpio-hog so it stays on. The LEDs run from a 5 V boost on the battery, enabled from P0.08.

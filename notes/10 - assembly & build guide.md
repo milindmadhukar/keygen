@@ -71,9 +71,9 @@ From `fab/BOM.md` (left 1xx, right 2xx):
 ### 4. Bring-up
 - Flash the firmware (see [[#Flashing]]) and check the half enumerates over USB.
 - **Battery polarity:** JST-PH packs come wired both ways round. With a multimeter, confirm the red wire lands on the PCB's **+** pad before plugging in. Swap the crimps if it doesn't.
-- **Protection board:** check the cell has one; the controller has no over-discharge cut-off. Add a DW01A module to a cell without one.
+- **Protection board:** check the cell has one; the controller has no over-discharge cut-off. A cell without its own gets the separate 1S protection board: its leads to B+ and B−, the JST-PH plug's wires to P+ and P−, taped with Kapton across the lead end.
 - Plug the battery in, then check the slide switch turns the half on and off. Leave the switch **on** while charging.
-- **Charge current:** with the multimeter in series with the battery, confirm about 300 mA on USB. An empty cell takes about ten hours.
+- **Charge current:** with the multimeter in series with the battery, confirm about 300 mA on USB. An empty 4000 mAh cell takes about fourteen hours.
 - **LED rail:** about 4.95 V at the boost's output with the lighting on, near 0 V with it off.
 
 ### 5. LEDs, one column at a time
