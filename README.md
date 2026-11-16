@@ -41,7 +41,7 @@ clearances, including the battery stack at full gasket travel.
 | Power | KP 357090P LiPo pouch per half (3.5 × 70 × 90 mm, listed 4000 mAh) with a protection board, JST-PH connector, slide switch driving a P-MOSFET battery switch. Each half charges from its own USB-C at about 300 mA |
 | PCB | 2 layers, FR-4 1.6 mm, 1 oz copper, HASL, black soldermask with white silkscreen. One half is 160.2 × 126.0 mm |
 | Switch plate | Clear polycarbonate 1.5 mm, CNC-routed, with eight gasket tabs per half |
-| Case | 3D-printed PETG, gasket-mounted: a bottom shell and a top frame per half, 175.4 × 143.7 × 24.5 mm. The top frame covers the plate round the keycaps and the knob, and holds the OLED and the encoder. Rubber feet, and a steel disc set flush into each floor |
+| Case | 3D-printed PETG, gasket-mounted: a bottom shell and a top frame per half, 175.4 × 143.7 × 24.5 mm. The top frame covers the plate round the keycaps and the knob, and holds the OLED and the encoder. Rubber feet, and four magnets in each floor, which hold the halves together stacked floor to floor |
 | Foam | Poron ring switch pads (0.5 mm) on the PCB, EVA plate foam (2 mm) taped under the plate, EVA case foam (5 mm) on the case floor |
 | Firmware | [ZMK](https://zmk.dev) `main` (Zephyr 4.1): QWERTY base with Nav, Fn and System layers, ZMK Studio |
 

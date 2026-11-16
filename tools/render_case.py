@@ -11,7 +11,7 @@ render-case-bottom.png    the case from below: floor, case screw counterbores, r
                           switch openings
 render-case-wedge.png     the keyboard tented on its wedges, from the front: each half turned to the wedge's
                           angle, so the desk runs level under both
-render-case-wedge-parts.png   the wedges alone: the foot recesses and the magnet pockets in their top faces
+render-case-wedge-parts.png   the wedges alone: the foot recesses and the steel disc pockets in their top faces
 render-plate.png          the switch plates, top view
 
 The case views attach the parts from case/*/step/ (run gen_case.py first) to a copy of the board as 3D

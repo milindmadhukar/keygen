@@ -95,10 +95,23 @@ for side, h in C.halves().items():
             f"{side} a foot is too close to the floor's edge, a counterbore, the pinhole or the steel disc")
     magnet_disc = min(C.STEEL_D / 2 - math.dist(p, C.steel_disc(h)) - C.MAGNET_D / 2 for p in C.magnets(h))
     magnet_web = min(math.dist(a, b) for a in C.magnets(h) for b in C.magnets(h) if a != b) - C.MAGNET_POCKET_D
-    magnet_floor = min(C.wedge_thickness(h, p) - C.MAGNET_T - C.MAGNET_RECESS for p in C.magnets(h))
-    recess_floor = min(C.wedge_thickness(h, p) - (C.FOOT_H - C.WEDGE_GAP) for p in feet)
-    require(magnet_disc >= 0.0 and magnet_web >= 2.0, f"{side} wedge magnets off the steel disc, or too close together")
-    require(magnet_floor >= 2.0 and recess_floor >= 2.0, f"{side} wedge too thin under a magnet or a foot")
+    cx, cy = C.steel_disc(h)
+    disc_floor = min(C.wedge_thickness(h, (cx + dx * C.STEEL_POCKET_D / 2, cy)) for dx in (-1, 1)) - C.STEEL_POCKET_DEPTH
+    recess_floor = min(C.wedge_thickness(h, p) - (C.FOOT_PROUD - C.WEDGE_GAP) for p in feet)
+    require(magnet_disc >= 0.0 and magnet_web >= 2.0, f"{side} floor magnets off the steel disc, or too close together")
+    require(disc_floor >= 2.0 and recess_floor >= 2.0, f"{side} wedge too thin under the steel disc or a foot")
+    magnet_cavity = min(Polygon(h["outline"]).buffer(C.WALL_IN, join_style=2).exterior.distance(Point(p)) for p in C.magnets(h)) - C.MAGNET_POCKET_D / 2
+    magnet_keep = min(Point(p).buffer(C.MAGNET_POCKET_D / 2).distance(box(*k)) for p in C.magnets(h)
+                      for k in [C.battery(h)["bay"], h["controller"]])
+    require(magnet_cavity >= 2.0 and magnet_keep >= 1.5, f"{side} a floor magnet is too close to the wall, the battery bay or the controller")
+    if side == "right":
+        left = C.halves()["left"]
+        mirrored = sorted(C._mirror(h, p) for p in C.magnets(left))
+        require(all(math.dist(a, b) < 1e-6 for a, b in zip(mirrored, sorted(C.magnets(h)))),
+                "the halves' floor magnets don't meet when stacked floor to floor")
+        landing = [C._mirror(h, p) for p in C.feet(left)]
+        stack_feet = min(math.dist(a, b) for a in landing for b in feet) - C.FOOT_MARK_D / 2 - C.FOOT_D / 2
+        require(stack_feet >= 1.0, "stacked floor to floor, a foot lands on the other half's foot")
     require(not len(board.FindFootprintByReference("ENC101" if side == "left" else "ENC201").Pads()),
             f"{side} encoder footprint has pads: it is fixed to the top frame, not soldered to the PCB")
     connector = board.FindFootprintByReference("J102" if side == "left" else "J202")
@@ -141,9 +154,11 @@ for side, h in C.halves().items():
 _, battery_gap, pressed_gap = C.battery_heights()
 require(pressed_gap >= 1.0 - 1e-9, "battery contacts underside at full gasket travel")
 require(C.FLOAT_GAP >= 1.5, "controller has insufficient float travel")
-require(C.FLOOR_T - C.STEEL_POCKET_DEPTH >= 1.8, "floor too thin over the steel disc's pocket")
-require(C.STEEL_POCKET_DEPTH >= C.STEEL_T + 0.1, "steel disc stands proud of the floor")
-require(C.WEDGE_GAP + C.MAGNET_RECESS + C.STEEL_POCKET_DEPTH - C.STEEL_T <= 1.0, "wedge magnets too far from the steel disc")
+require(C.MAGNET_SKIN >= 0.6 and C.FLOOR_T - C.MAGNET_SKIN <= C.MAGNET_T, "floor magnet pockets too deep, or the magnets sink below the floor")
+require(C.MAGNET_T - (C.FLOOR_T - C.MAGNET_SKIN) <= C.CASE_FOAM_T - 1.0, "floor magnets stand too far into the case foam")
+require(C.STEEL_POCKET_DEPTH >= C.STEEL_T + 0.1, "steel disc stands proud of the wedge")
+require(C.MAGNET_SKIN + C.WEDGE_GAP + C.STEEL_POCKET_DEPTH - C.STEEL_T <= 1.3, "floor magnets too far from the wedge's steel disc")
+require(C.FOOT_MARK_D >= C.FOOT_D + 0.5 and C.FOOT_MARK_DEPTH <= 0.5, "foot recesses too small or too deep")
 require(abs(C.CBORE_MOUTH_R - (G.CBORE_D / 2 + G.CBORE_CHAMFER)) < 1e-9 and abs(C.RESET_MOUTH_R - G.RESET_HOLE_D) < 1e-9,
         "case_geometry's counterbore or pinhole size differs from gen_case's")
 threads = C.standoff_threads()

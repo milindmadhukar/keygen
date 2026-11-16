@@ -73,16 +73,16 @@ Counts are for the whole keyboard (two halves). Stores, links, prices and spares
 | Part | Count | Remarks |
 | :--- | :---: | :--- |
 | Silicone bumper, 8 × 3 mm | 16 | 8 without the wedges |
-| Round steel plate, 40 mm, self-adhesive | 2 | Sits flush in a pocket in each floor |
+| Round steel plate, 40 mm, self-adhesive | 2 | Sits flush in a pocket in each wedge |
 | 3D-printed tenting wedge | 2 | Optional |
-| Neodymium disc magnet, 10 × 3 mm, N35 | 8 | For the wedges |
+| Neodymium disc magnet, 10 × 3 mm, N35 | 8 | Four in each floor: they hold the wedge and stack the halves |
 | USB-A to 2 × USB-C cable | 1 | Optional: both halves from one port |
 
 ## Tools
 
 - A temperature-controlled soldering iron with a fine tip (300–350 °C; 320 °C for the LEDs)
 - Solder, no-clean flux paste in a syringe, desoldering wick, heat-shrink tubing
-- Superglue, for the OLED plug and the wedge magnets, and a paint pen
+- Superglue, for the OLED plug and the floor magnets, and a paint pen
 - Flush cutters, fine tweezers, and small sharp scissors for the switch pads
 - A multimeter: continuity, polarity, battery voltage, and current for the charge check
 - Calipers, for the OLED module, the controller sockets and their pins
@@ -277,15 +277,13 @@ Print [`keygen-left-bottom.stl`](https://github.com/milindmadhukar/keygen/releas
 [`keygen-left-top.stl`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-left-top.stl) and
 [`keygen-right-top.stl`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-right-top.stl)
 in PETG at 0.2 mm layers and 90 % infill, dense for weight and a deeper sound: the bottom shells
-floor-down and the top frames deck-down, without supports (the 40 mm pocket for the steel disc in
-each floor is bridged). A printing service can print from the same settings.
+floor-down and the top frames deck-down, without supports. A printing service can print from the
+same settings.
 
 The tenting wedges are optional and can come later:
 [`keygen-left-wedge.stl`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-left-wedge.stl)
 and [`keygen-right-wedge.stl`](https://github.com/milindmadhukar/keygen/releases/download/build/keygen-right-wedge.stl),
-in PETG at 0.2 mm layers and 20 % infill, top face down as the STLs lie, without supports. Their
-magnet pockets are printed against the bed: if a magnet won't go in, sand the mouth rather than
-forcing it.
+in PETG at 0.2 mm layers and 20 % infill, top face down as the STLs lie, without supports.
 
 > [!NOTE]
 > The fits are close: 1.0 mm from the plate edge to the wall, 0.5 mm round each gasket tab.
@@ -679,6 +677,24 @@ them cool.
 
 ---
 
+## Floor magnets
+
+The four 10 × 3 mm magnets in each floor hold the wedge's steel disc, and stack the halves floor to
+floor, keys out. The two halves need opposite poles facing out of their floors:
+
+1. Stack all eight magnets into one column; they line up by themselves. Slide them off the top one
+   at a time and mark each one's top face with the paint pen.
+2. **Left half:** superglue four magnets into the round pockets inside the floor, **marked face
+   down**, pressed until they bottom on the floor's thin skin. **Right half:** the other four,
+   **marked face up**.
+3. Glue them one at a time, away from the loose ones so they don't jump together, and let the glue
+   cure. Then hold the two bottom shells floor to floor, the left one flipped over onto the right:
+   they should pull together. If one pocket pushes back, that magnet is the wrong way up.
+
+The magnets stand 0.6 mm proud of the floor, into holes in the case foam.
+
+---
+
 ## Battery
 
 - Tape the pouch into the bay in the bottom shell's floor with thin double-sided tape, its lead end
@@ -782,20 +798,16 @@ plate and PCB. The plate and PCB have openings that clear it as they float. Deta
 
 ## Feet and tenting
 
-1. **Rubber feet.** Stick four 8 mm silicone bumpers on the floor, centred about 7 mm in from the
-   edges: at the outer bottom corner and the tip under the thumb cluster, and at the outer and inner
-   top corners with their centres 17 mm below the top edge. Nearer the edge than that, the outer top foot
-   covers a screw counterbore, and the inner one the USB-C opening. Keep each one clear of the
-   counterbores and the reset pinhole.
+1. **Rubber feet.** Stick an 8 mm silicone bumper into each of the four shallow 9 mm round recesses
+   in the floor. The right half's sit further in than the left's, so the halves stacked floor to
+   floor rest foot on floor, and the floor magnets hold them together.
 2. **Steel disc.** Press a 40 mm round steel plate, adhesive side down, into the round pocket in the
-   floor. It sits flush, like the screw heads.
-3. **Wedges (optional).** Try the half on its wedge first: each foot must drop into its 12 mm recess
-   in the wedge's top face. Then put a drop of superglue in each of the four 10 mm pockets and press
-   in a magnet until it bottoms, one at a time and away from the others so they don't jump together.
-   Try the first magnet on the disc before gluing the rest. Let the glue cure with the half off the wedge. Stick four bumpers on the wedge's flat underside,
-   near its corners.
+   wedge's top face. It sits flush.
+3. **Wedges (optional).** Try the half on its wedge: each foot must drop into its 12 mm recess in
+   the wedge's top face, and the floor magnets pull onto the disc. Stick four bumpers on the wedge's
+   flat underside, near its corners.
 4. **Tenting.** Set the half on its wedge, thick side towards the middle of the desk. Its feet drop
-   into the recesses and the magnets hold the disc. Lift it off to lay the half flat on its feet, or
+   into the recesses and the floor magnets hold the disc. Lift it off to lay the half flat on its feet, or
    to reach the reset pinhole.
 
 ![Keygen turned over, showing the underside of both bottom shells](https://github.com/milindmadhukar/keygen/releases/download/media/render-studio-bottom.jpg)

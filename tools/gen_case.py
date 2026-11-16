@@ -146,8 +146,8 @@ def rect(r):
 def wedge(h):
     """The tenting wedge under the floor, on the case's axes: the floor's outline, its top face just
     under the floor and its flat underside tilted WEDGE_ANGLE, so the walls carry on from the case's.
-    The rubber feet stand in recesses in the top face, and the magnets lie in pockets under the
-    steel disc."""
+    The rubber feet stand in recesses in the top face, and the steel disc lies flush in a pocket in
+    it, under the floor magnets."""
     top = C.BOTTOM_Z - C.WEDGE_GAP
     sign = 1 if h["side"] == "left" else -1
     tall = C.WEDGE_EDGE + 300 * math.tan(math.radians(C.WEDGE_ANGLE))
@@ -155,9 +155,8 @@ def wedge(h):
     body -= port_cuts(h, top - tall - 1)[1]
     body -= Pos(C.outer_x(h), 0, top - C.WEDGE_EDGE) * Rot(0, sign * C.WEDGE_ANGLE, 0) * Box(1000, 1000, 400, align=(Align.CENTER, Align.CENTER, Align.MAX))
     for p in C.feet(h):
-        body -= cylinder(p, C.FOOT_RECESS_D, C.BOTTOM_Z - C.FOOT_H, top + 1)
-    for p in C.magnets(h):
-        body -= cylinder(p, C.MAGNET_POCKET_D, top - C.MAGNET_RECESS - C.MAGNET_T, top + 1)
+        body -= cylinder(p, C.FOOT_RECESS_D, C.BOTTOM_Z - C.FOOT_PROUD, top + 1)
+    body -= cylinder(C.steel_disc(h), C.STEEL_POCKET_D, top - C.STEEL_POCKET_DEPTH, top + 1)
     return body
 
 
@@ -285,8 +284,13 @@ def build(h):
     bottom -= cylinder(h["reset"], RESET_HOLE_D, C.BOTTOM_Z - 1, tube_top + 1)
     rx, ry = xy(h["reset"])
     bottom -= Pos(rx, ry, C.BOTTOM_Z - EPS) * Cone(RESET_HOLE_D, RESET_HOLE_D / 2, 1.0, align=Z)
-    # the tenting stand's steel disc, flush in the floor's underside like the screw heads
-    bottom -= cylinder(C.steel_disc(h), C.STEEL_POCKET_D, C.BOTTOM_Z - 1, C.BOTTOM_Z + C.STEEL_POCKET_DEPTH)
+    # the four magnets, in pockets from inside down to a thin skin: they hold the wedge's steel disc,
+    # and the other half's magnets when the halves are stacked floor to floor
+    for p in C.magnets(h):
+        bottom -= cylinder(p, C.MAGNET_POCKET_D, C.BOTTOM_Z + C.MAGNET_SKIN, C.CAVITY_Z + EPS)
+    # a shallow round recess under each rubber foot, which places it
+    for p in C.feet(h):
+        bottom -= cylinder(p, C.FOOT_MARK_D, C.BOTTOM_Z - 1, C.BOTTOM_Z + C.FOOT_MARK_DEPTH)
 
     # top frame: the ring round the plate from the split up to the gasket ceiling, then the deck over
     # the plate, level with the rim, with windows for the keycaps and the OLED and a hole for the encoder
@@ -413,6 +417,7 @@ def foams(h):
     cavity = (board[0].buffer(g, join_style="mitre", mitre_limit=10), offset(board[1], g, kind=Kind.INTERSECTION))
     under = [cut_rect(C.battery(h)["bay"]), cut_rect(grown(h["controller"], C.FOAM_PART_CLEAR)),
              cut_circle(h["reset"], RESET_TUBE_D + 2 * C.FOAM_PART_CLEAR)]
+    under += [cut_circle(p, C.MAGNET_POCKET_D + 2 * C.FOAM_HOLE_CLEAR) for p in C.magnets(h)]
     under += [cut_rect(grown(t, C.FOAM_PART_CLEAR)) for t in h["tall"]]
     under += [cut_rect(grown(C.encoder_bay(h), C.FOAM_PART_CLEAR))]
     case_foam = board_less(cavity, under)

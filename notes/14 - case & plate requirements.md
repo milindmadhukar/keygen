@@ -58,7 +58,7 @@ All the ports are on the **top edge** of each half, next to the controller, so o
 
 ## Ergonomics and feel
 
-- **Tenting.** An optional printed 13° wedge per half, its four magnets on a 40 mm steel disc set flush into a 1.0 mm pocket in the inner half of the floor, at least 15 mm from the controller's antenna end and clear of the battery bay.
+- **Tenting and stacking.** Four 10 × 3 mm magnets in each floor, from inside, on the inner half, at least 15 mm from the controller's antenna end and clear of the battery bay. They hold an optional printed 13° wedge per half by a 40 mm steel disc flush in its top face, and the two halves stacked floor to floor, keys out, the right half's magnets with the opposite pole out.
 - **Rubber feet** and **foam** (EVA case foam, Poron switch pads) for a thocky sound. See [[07 - switch & keycap selection]].
 - **Keycaps.** Blank DSA PBT, smoke translucent: 52 × 1u, 14 × 1.25u. Switches: Akko V3 Lavender Purple Pro.
 

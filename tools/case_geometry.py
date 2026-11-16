@@ -110,22 +110,26 @@ BATTERY_TAPE = 0.3             # double-sided mounting tape
 BATTERY_STACK_T = BATTERY_T + BATTERY_SIZE_TOL + BATTERY_GROWTH + BATTERY_TAPE
 BATTERY_CLEAR = 1.5            # cell to the bay wall, each side
 BAY_DEPTH = 1.6                # the bay is sunk this far into the floor, leaving 1.4 mm under the cell
-STEEL_D, STEEL_T = 40.0, 0.6   # round steel plate the tenting wedge's magnets hold to (LIRAMARK)
-STEEL_POCKET_D = STEEL_D + 0.6 # its pocket in the floor's underside, 0.3 mm round the plate,
-STEEL_POCKET_DEPTH = 1.0       # deep enough for the plate and its tape (about 0.75 mm) with the pocket's
-                               # bridged ceiling sagging a little, so the plate sits flush, like the screws
-STEEL_KEEP = 2.0               # pocket to the battery bay, the screw counterbores and the reset pinhole
-STEEL_EDGE_KEEP = 12.0         # pocket to the floor's edge, which keeps it clear of the feet
+STEEL_D, STEEL_T = 40.0, 0.6   # round steel plate (LIRAMARK) in the tenting wedge's top face, under the floor magnets
+STEEL_POCKET_D = STEEL_D + 0.6 # its pocket in the wedge's top face, 0.3 mm round the plate,
+STEEL_POCKET_DEPTH = 1.0       # deep enough for the plate and its tape (about 0.75 mm), so it sits flush
+STEEL_KEEP = 2.0               # the magnets' disc to the battery bay, the screw counterbores and the reset pinhole
+STEEL_EDGE_KEEP = 12.0         # the magnets' disc to the floor's edge, which keeps it clear of the feet
 FOOT_D, FOOT_H = 8.0, 3.0      # silicone bumper, stuck on the floor by hand
+FOOT_MARK_D, FOOT_MARK_DEPTH = 9.0, 0.4   # shallow round recess in the floor's underside that places each foot
+FOOT_PROUD = FOOT_H - FOOT_MARK_DEPTH     # how far a foot stands below the floor
 FOOT_IN, FOOT_TOP_IN = 7.0, 17.0   # foot centres from the floor's edges, and the top two from its top edge
+FOOT_STACK_SHIFT = 14.0        # the right half's feet, moved this far in from the left's mirrored places, so the
+                               # halves stacked floor to floor rest foot on floor, not foot on foot
 WEDGE_ANGLE = 13.0             # the optional tenting wedge lifts the inner edge by this much
 WEDGE_EDGE = 4.0               # its thickness along the outer edge
 WEDGE_GAP = 0.3                # its top face under the floor: the half stands on its feet, in the recesses
 FOOT_RECESS_D = 12.0           # recess round each foot, which takes a foot stuck 2 mm off its mark
-MAGNET_D, MAGNET_T = 10.0, 3.0 # N35 disc magnet, four per wedge, superglued in under the steel disc
-MAGNET_POCKET_D = 10.3         # its pocket in the wedge's top face, with room for the glue
-MAGNET_RECESS = 0.1            # magnet top under the wedge's top face
-MAGNET_R = 13.0                # the magnets' circle round the steel disc's centre: all four under the disc
+MAGNET_D, MAGNET_T = 10.0, 3.0 # N35 disc magnet, four per half, superglued into the floor from inside: they hold
+                               # the wedge's steel disc, and the other half's magnets when stacked floor to floor
+MAGNET_POCKET_D = 10.3         # its pocket in the floor, with room for the glue
+MAGNET_SKIN = 0.6              # floor left under each magnet; the magnet stands proud of the floor into the case foam
+MAGNET_R = 13.0                # the magnets' circle round the steel disc's centre: all four over the disc
 CBORE_MOUTH_R = 2.8            # a case screw's counterbore with its chamfered mouth (gen_case.py)
 RESET_MOUTH_R = 2.0            # the reset pinhole's chamfered mouth (gen_case.py)
 UNDERSIDE_H = 2.0             # hotswap sockets (1.85 mm) and SOD-123 diodes (1.35 mm) under the PCB
@@ -538,11 +542,11 @@ def _steel_disc(side):
 
 
 def steel_disc(h):
-    """The centre (x, y) of the steel disc the tenting wedge's magnets hold to, set flush into a pocket in the floor's
-    underside: on the inner half, ANTENNA_KEEP from the antenna end, STEEL_EDGE_KEEP in from the
-    floor's edge (clear of the feet) and STEEL_KEEP off the battery bay, whose floor is thinner, and
-    off the screw counterbores and the reset pinhole, as far from all of them as it can be. The right
-    half's is the left's, mirrored."""
+    """The centre (x, y) of the floor magnets and of the steel disc in the wedge's top face under them:
+    on the inner half, ANTENNA_KEEP from the antenna end, STEEL_EDGE_KEEP in from the floor's edge
+    (clear of the feet) and STEEL_KEEP off the battery bay, whose floor is thinner, and off the screw
+    counterbores and the reset pinhole, as far from all of them as it can be. The right half's is the
+    left's, mirrored, so the halves' magnets meet when stacked floor to floor."""
     return _steel_disc(h["side"])
 
 
@@ -562,7 +566,12 @@ def outer_x(h):
 def _feet(side):
     h = halves()[side]
     if side == "right":
-        return [_mirror(h, p) for p in _feet("left")]
+        from shapely.geometry import Polygon
+        cx, cy = Polygon(floor_outline(h)).centroid.coords[0]
+        def moved_in(p):
+            d = math.dist(p, (cx, cy))
+            return (p[0] + (cx - p[0]) * FOOT_STACK_SHIFT / d, p[1] + (cy - p[1]) * FOOT_STACK_SHIFT / d)
+        return [moved_in(_mirror(h, p)) for p in _feet("left")]
     from shapely.geometry import LineString, Polygon
     floor = Polygon(floor_outline(h))
     inset = floor.buffer(-FOOT_IN, join_style=2)
@@ -582,12 +591,14 @@ def _feet(side):
 def feet(h):
     """The four rubber feet, [(x, y)]: at the outer bottom corner and the tip under the thumbs, FOOT_IN
     in from the edges, and at the outer and inner top, FOOT_IN from the side and FOOT_TOP_IN below the
-    top edge. The right half's are the left's, mirrored."""
+    top edge. The right half's are the left's, mirrored and moved FOOT_STACK_SHIFT towards the floor's
+    middle, so stacked floor to floor each foot lands on the other floor."""
     return _feet(h["side"])
 
 
 def magnets(h):
-    """The tenting wedge's four magnets, [(x, y)], in a square under the steel disc."""
+    """The four floor magnets, [(x, y)], in a square over the wedge's steel disc; the right half's
+    are the left's, mirrored."""
     cx, cy = steel_disc(h)
     return [(cx + MAGNET_R * dx, cy + MAGNET_R * dy) for dx, dy in ((1, 0), (0, 1), (-1, 0), (0, -1))]
 
